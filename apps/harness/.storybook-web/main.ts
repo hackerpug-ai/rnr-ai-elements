@@ -1,42 +1,40 @@
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { StorybookConfig } from '@storybook/react-native-web-vite';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { ENGINE, UI_DIR, CSS_ENTRY } = require('../engine.config');
+// Pure ESM — no require, no createRequire. engine.config.json is plain data so the CJS
+// metro config and this ESM config share one source without an interop shim.
+const root = path.resolve(import.meta.dirname, '..');
+const cfg = JSON.parse(readFileSync(path.join(root, 'engine.config.json'), 'utf8')) as {
+  uiDir: Record<string, string>;
+};
+const ENGINE = process.env.ENGINE === 'nativewind' ? 'nativewind' : 'uniwind';
 
-/**
- * Web Storybook, one instance per engine. The engine is fixed at launch by the ENGINE
- * env var — it selects the Vite plugin, the CSS entry, and which RNR component tree
- * @/components/ui resolves to. Exactly the same substitution the registry build script
- * performs when it fans one source out to both variants.
- */
 const main: StorybookConfig = {
   stories: ['../src/**/*.stories.?(ts|tsx|js|jsx)'],
   addons: [],
-  framework: {
-    name: '@storybook/react-native-web-vite',
-    options: { pluginReactOptions: { jsxRuntime: 'automatic' } },
-  },
+  framework: { name: '@storybook/react-native-web-vite', options: {} },
   viteFinal: async (config) => {
-    const root = path.resolve(__dirname, '..');
-
     config.resolve = config.resolve ?? {};
     config.resolve.alias = {
       ...(config.resolve.alias ?? {}),
-      // Engine-specific RNR tree first — order matters, the more specific alias wins.
-      '@/components/ui': path.join(root, 'src', UI_DIR[ENGINE]),
+      // More specific alias first — it must win over the bare '@'.
+      '@/components/ui': path.join(root, 'src', cfg.uiDir[ENGINE]),
       '@': path.join(root, 'src'),
     };
-
-    config.plugins = config.plugins ?? [];
     if (ENGINE === 'uniwind') {
-      const { uniwind } = await import('uniwind/vite');
+      // BOTH are required. tailwindcss() compiles the @theme block; uniwind() is what
+      // actually turns className into React Native styles. With only the first, stories
+      // render as unstyled text — the components mount fine and nothing errors, which is
+      // why this has to be checked by looking at a story, not by an HTTP 200.
       const tailwindcss = (await import('@tailwindcss/vite')).default;
-      config.plugins.push(tailwindcss(), uniwind({ cssEntryFile: CSS_ENTRY.uniwind }));
+      const { uniwind } = await import('uniwind/vite');
+      config.plugins = [
+        ...(config.plugins ?? []),
+        tailwindcss(),
+        uniwind({ cssEntryFile: path.join(root, 'src/global.css') }),
+      ];
     }
-    // NativeWind's web path is handled by react-native-web-vite's babel pipeline plus
-    // the postcss config; it needs no extra Vite plugin here.
-
     return config;
   },
 };
