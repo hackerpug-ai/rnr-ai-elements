@@ -180,3 +180,51 @@ One package cannot hold two Tailwind majors, and `.npmrc` sets `node-linker=hois
 Note this is not a defect in the plan — **RNR does not run both engines at once either.**
 It ships source for both and consumers pick one. "Verify both" therefore means two builds,
 not one bundle.
+
+---
+
+# Storybook status — honest
+
+## Fixed (main was crashing before this)
+
+`pnpm storybook:web` crashed with `ReferenceError: require is not defined in ES module
+scope`. Root package.json has `"type": "module"`, so Storybook loads `main.ts` as ESM while
+I had written `require()` and `__dirname` in it — in BOTH harness packages. Replaced with
+`import.meta.dirname` and a plain-JSON `engine.config.json` that the CJS metro config and
+the ESM Storybook config can each read without an interop shim.
+
+## Working, verified by looking
+
+- Both servers start and return HTTP 200 (`:6006` uniwind, `:6007` nativewind).
+- Both index the same 3 stories.
+- **The custom toolbar renders and works** — the Engine item reads
+  "Uniwind · Tailwind v4", the Theme item reads "Light".
+- Components mount and lay out correctly: height, padding, border-radius, border, shadow
+  and gap all apply. `ghost` and `link` correctly render with no fill.
+
+## NOT working — one specific, unresolved defect
+
+**In the Storybook *web* path only, every `--color-*` resolves to `unset`,** so variant
+backgrounds are missing: `bg-primary` should be near-black and `bg-destructive` red; both
+render transparent. Geometry is right, colour is absent.
+
+The cause is narrowed but not fixed. Uniwind compiles `@variant light/dark` to
+`:root:where(.light, .light *)` plus a `prefers-color-scheme` fallback. Inside the
+Storybook iframe neither selector matches, so the base `--color-*: unset` wins. Three fixes
+were tried and none resolved it:
+
+1. adding the `uniwind/vite` plugin alongside `@tailwindcss/vite` — necessary, not sufficient
+2. importing `global.css` into the preview — necessary, not sufficient
+3. setting `.light`/`.dark` explicitly on `document.documentElement`, and passing an
+   absolute `cssEntryFile` — no change
+
+**Important scope limit: this is a Storybook-web-only defect, not an engine or theme
+defect.** The Metro path is proven — `expo export` compiles the same tokens to real values
+in both schemes (`--color-background: #fff` / `#0a0a0a`) on both engines. So the theme, the
+token values, and both engines are correct; what is unproven is the react-native-web + Vite
+rendering path.
+
+Next thing to try, in order: run the **device** Storybook (`@storybook/react-native`, Metro-
+based) since Metro is the proven path and it is the designated sign-off gate anyway; and
+check whether `uniwind/vite` expects to be registered before `@tailwindcss/vite` or needs
+its own `postcss` step under react-native-web.
