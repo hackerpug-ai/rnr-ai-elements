@@ -35,7 +35,11 @@
           "nativewind",
           "uniwind"
         ],
-        "style_harness_engine": "uniwind"
+        "style_harness_engine": "uniwind",
+        "style_harness": {
+          "uniwind": "apps/harness (tailwindcss 4.3.3)",
+          "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
+        }
       },
       "phase": "equip",
       "gates": {
@@ -75,7 +79,9 @@
         "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
         "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
-        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+        "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
+        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     },
     "mobile-android": {
@@ -102,7 +108,11 @@
           "nativewind",
           "uniwind"
         ],
-        "style_harness_engine": "uniwind"
+        "style_harness_engine": "uniwind",
+        "style_harness": {
+          "uniwind": "apps/harness (tailwindcss 4.3.3)",
+          "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
+        }
       },
       "phase": "equip",
       "gates": {
@@ -142,7 +152,9 @@
         "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
         "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
-        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+        "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
+        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     },
     "web-mobile": {
@@ -169,7 +181,11 @@
           "nativewind",
           "uniwind"
         ],
-        "style_harness_engine": "uniwind"
+        "style_harness_engine": "uniwind",
+        "style_harness": {
+          "uniwind": "apps/harness (tailwindcss 4.3.3)",
+          "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
+        }
       },
       "phase": "equip",
       "gates": {
@@ -209,7 +225,9 @@
         "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
         "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
-        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+        "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
+        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     },
     "web-desktop": {
@@ -236,7 +254,11 @@
           "nativewind",
           "uniwind"
         ],
-        "style_harness_engine": "uniwind"
+        "style_harness_engine": "uniwind",
+        "style_harness": {
+          "uniwind": "apps/harness (tailwindcss 4.3.3)",
+          "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
+        }
       },
       "phase": "equip",
       "gates": {
@@ -276,7 +298,9 @@
         "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
         "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
-        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+        "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
+        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     }
   },
@@ -287,6 +311,9 @@
     "prd_correction_needed": "PRD 01-scope.md and 11-technical-requirements/ record 'Uniwind-only for v1' with a named deferral trigger. That trigger has fired. AGENTS.md Tech Stack says the same. Both need updating to dual-engine.",
     "scaffold_gate": "Deliberately still PENDING. The workflow's step 9 requires the sandbox to run and token stories to render; Storybook is not installed yet. The workspace, theme, all 32 RNR components, PortalHost and a hello-world are done and verified (0 tsc errors, real Metro bundle). Marking the gate passed before Storybook exists would be fake success.",
     "pin_corrections": "Three corrections verified against sources, not inferred: react-native is 0.86.3 (Expo 57's pin, confirmed by Expo's own scaffolder) not 0.87.1; @react-native-reusables/cli is 1.0.0 not 0.7.1; Expo 57's template pins typescript ~6.0.3 while AGENTS.md/PRD say 7.0.2 \u2014 harness runs 6.0.3, workspace root holds 7.0.2.",
-    "cli_findings": "RNR's `init` is interactive and cannot be scripted (hangs on a TTY prompt with piped stdin). `add` works non-interactively with --yes --all --overwrite --styling-library. components.json REQUIRES aliases.utils \u2014 omitting it fails validation with 'Invalid components.json'. RNR's doctor asks for tailwindcss-animate even on the uniwind path, which is a Tailwind v3 plugin the styling contract forbids in the uniwind emit."
+    "cli_findings": "RNR's `init` is interactive and cannot be scripted (hangs on a TTY prompt with piped stdin). `add` works non-interactively with --yes --all --overwrite --styling-library. components.json REQUIRES aliases.utils \u2014 omitting it fails validation with 'Invalid components.json'. RNR's doctor asks for tailwindcss-animate even on the uniwind path, which is a Tailwind v3 plugin the styling contract forbids in the uniwind emit.",
+    "hoisting_correction": "node-linker=hoisted was REMOVED. It was added on the assumption that pnpm's symlinks trip Metro; that assumption was wrong for Expo 57 / Metro, and hoisting actively broke dual-engine support by flattening nativewind into the root where it resolved tailwindcss@4 instead of its package-local v3. With pnpm's default isolated linker, apps/harness resolves tailwindcss 4.3.3 and apps/harness-nativewind resolves 3.4.19, and both engines build.",
+    "engine_toggle": "The Storybook Engine toolbar item cannot hot-swap engines \u2014 both are bundler transforms and NativeWind 4 requires Tailwind v3 while Uniwind requires v4. It reports the running engine and hard-refreshes to the other server, which is why each engine has its own workspace package and port.",
+    "rtk_warning": "`rtk` wraps tsc and reported 'TypeScript: No errors found' on a run that exited 1 with a real TS2688 error. Verify gates with the direct binary when an exit code and the printed output disagree."
   }
 }

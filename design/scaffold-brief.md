@@ -132,3 +132,51 @@ customization page ends up matching us or not.
 
 Choosing NativeWind would also dissolve both conflicts in this brief at once: the adapter
 would match, and a vetted built-in contract already exists.
+
+---
+
+# Storybook dual-engine toolbar — what's built, and the blocker
+
+## Built and working
+
+- **Custom toolbar** (`apps/harness/.storybook/preview.tsx`) per
+  storybook.js.org/docs/essentials/toolbars-and-globals, with two globals:
+  - `theme` — a **real runtime global**. Light/dark, re-renders every story, driven by
+    `Uniwind.setTheme()` or NativeWind's `colorScheme.set()` depending on the build.
+  - `engine` — reports which engine built this instance and navigates to the other one.
+- **Engine as a build-time switch**: `engine.config.js` reads `ENGINE`, and `metro.config.js`
+  branches between `withUniwindConfig` and `withNativeWind`, swapping the CSS entry and
+  aliasing `@/components/ui` to that engine's RNR tree. Same substitution the registry
+  build script performs.
+- **Both RNR trees present**: `src/components/ui` (uniwind) and `src/components/ui.nativewind`.
+- **Both themes present**: `src/global.css` (v4 `@theme`) and `src/global.nativewind.css`
+  (v3 `:root`/`.dark:root`) + `tailwind.config.js`. Identical RNR values, different syntax.
+- Scripts for each engine on its own port (6006 uniwind / 6007 nativewind) and per-engine
+  `expo export` builds.
+
+## Empirical result worth keeping
+
+After the CLI rewrites imports on install, the two RNR component trees differ in
+**exactly one file — `icon.tsx`** (`withUniwind` vs `cssInterop`). All 32 other files are
+byte-identical, import paths included. That is the strongest form of the dual-engine
+argument: the engine surface is one file, and it is RNR's file, not ours.
+
+## The blocker
+
+`ENGINE=uniwind expo export` → **succeeds** (996 modules).
+`ENGINE=nativewind expo export` → **fails: "NativeWind only supports Tailwind CSS v3"**.
+
+Verified peer requirements:
+
+| Package | tailwindcss peer |
+|---|---|
+| `uniwind@1.11.0` | v4 (Tailwind v4 CSS-first is the whole point) |
+| `nativewind@4.2.6` (latest **stable**) | `>3.3.0` — **v3 only** |
+| `nativewind@5.0.0-preview.4` (**prerelease**) | `>4.1.11` — v4 |
+
+One package cannot hold two Tailwind majors, and `.npmrc` sets `node-linker=hoisted`
+(required, because pnpm's symlinked store trips Metro) which flattens the tree further.
+
+Note this is not a defect in the plan — **RNR does not run both engines at once either.**
+It ships source for both and consumers pick one. "Verify both" therefore means two builds,
+not one bundle.
