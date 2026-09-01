@@ -11,17 +11,44 @@ registry**, not an npm runtime package.
 
 When dispatching subagents for planning, review, or implementation, prefer these project-local experts over generic agents. They understand this project's stack, patterns, and conventions.
 
+### Implementation experts — these build the port
+
 | Agent | Role | When to Use |
 |-------|------|-------------|
-| `react-native-reusables-planner` | Primary planner | Component set, portal/inset topology, TextClassContext strategy, theming scope, Nativewind-vs-Uniwind decisions, transcript/streaming/tool-state architecture |
-| `react-native-reusables-implementer` | Primary implementer | Building any component in this registry; RNR CLI scaffolding; universal screens that respect no-bare-strings, no-cascade, portal-host, safe-area-inset, streaming-throttle |
+| `react-native-reusables-planner` | Primary planner | Component set, portal/inset topology, TextClassContext strategy, theming scope, transcript/streaming/tool-state architecture |
+| `react-native-reusables-implementer` | Primary implementer | Building any component in this registry; RNR CLI scaffolding; universal screens honoring no-bare-strings, no-cascade, portal-host, safe-area-inset, streaming-throttle |
 | `react-native-reusables-reviewer` | Primary reviewer | Adversarial review of every component: bare strings, assumed cascade, missing PortalHost, prop-controlled menus, theme drift, unbounded Conversation, stripped streaming throttle, engine mixing |
-| `shadcn-ai-elements-planner` | Parity reference | Deciding what a ported component *should* do — reading the web AI Elements original before porting it |
+| `react-native-ui-planner` | RN platform planning | Anything below the RNR registry surface — Expo config, navigation, native modules, gestures/Reanimated, iOS-vs-Android divergence |
+| `react-native-ui-implementer` | RN platform implementation | Example-app screens, Expo/Metro wiring, native or platform-specific code that is not itself a registry component |
+| `react-native-ui-reviewer` | RN platform review | Accessibility, platform parity across iOS/Android/Web, list/render performance, React Native idiom |
 | `aisdk-planner` | AI SDK architecture | The `UIMessage` / tool-part `state` seam, streaming contracts, provider strategy for the example app |
 | `aisdk-implementer` | AI SDK wiring | `useChat`, transport, tool execution, abort/retry in the example app — the library itself ships none of this |
+| `aisdk-reviewer` | AI SDK review | v7-correctness, real-provider verification, stale-v6 patterns |
 | `frontend-designer` | Visual presentation | Layout, styling, animation, token design ONLY — not logic or state management |
 | `test-quality-reviewer` | Test reality | Whether a component test would actually catch a break, vs. asserting on a mock |
 | `security-reviewer` | Security | Markdown rendering, link handling, any user-content path |
+
+### Consulting experts — reference only, they do NOT implement
+
+The `shadcn-ai-elements-*` agents know the **web** AI Elements library (React DOM,
+shadcn/ui, Tailwind on the browser). Consult them to learn what an original component
+*is* and *does*. They are the authority on the source material and on nothing else here.
+
+| Agent | Consult about | Never ask it to |
+|-------|---------------|-----------------|
+| `shadcn-ai-elements-planner` | What a web AI Elements component is for, its composition tree, its prop surface, which registry item corresponds to what | Plan this repo's components, choose our stack, or size our tasks |
+| `shadcn-ai-elements-implementer` | How the original is actually built in React DOM — the behavior we must preserve when porting | Write, edit, or scaffold **any** file in this repo |
+| `shadcn-ai-elements-reviewer` | Parity check: did the port lose behavior the web original had | Review our React Native code for correctness or idiom |
+
+**Hard rule: this is a React Native port. We do not use the web library.**
+
+- Never `npm install` / `npx shadcn add` any web AI Elements or shadcn/ui package here.
+- Never copy web component source into this repo. Read it, understand the behavior,
+  then have `react-native-reusables-implementer` write the React Native equivalent.
+- Web-only constructs have no place in output: DOM elements, `className` cascade
+  assumptions, `data-*` variants, browser portals, CSS hover/focus-visible, `onClick`.
+- A consulting agent's answer is **input to a plan**, never a diff. If one returns code,
+  treat it as a specification of behavior to reimplement.
 
 **Dispatch priority**: Always check this table first. Only fall back to generic `general-purpose` agents when no domain expert matches the task.
 
