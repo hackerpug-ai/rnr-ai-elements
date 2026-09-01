@@ -1,0 +1,128 @@
+name: ci
+
+# Derived from brain template ts-pnpm-vitest-eslint.yml (brain-template-version: 2.0.0),
+# with eslint swapped for biome per project toolchain.
+#
+# Every job is guarded on package.json existing. These four jobs are REQUIRED checks
+# on main; without the guard they could never pass before the app is scaffolded and
+# main would be unmergeable from day one. The guard disappears on its own the moment
+# package.json lands.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '24'
+
+jobs:
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: guard
+        run: |
+          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to typecheck"; fi
+      - if: steps.guard.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+      - if: steps.guard.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm exec tsc --noEmit
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: guard
+        run: |
+          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to lint"; fi
+      - if: steps.guard.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+      - if: steps.guard.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm exec biome ci .
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: guard
+        run: |
+          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to test"; fi
+      - if: steps.guard.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+      - if: steps.guard.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm exec vitest run --reporter=default --reporter=junit --outputFile.junit=./test-report.junit.xml
+      - if: always() && steps.guard.outputs.ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-report.junit.xml
+          retention-days: 7
+
+  registry:
+    name: registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: guard
+        run: |
+          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to build"; fi
+      - if: steps.guard.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+      - if: steps.guard.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+      # The deliverable is a copy-paste registry: public/r/*.json must stay in sync
+      # with the component sources, or `npx @react-native-reusables/cli add <url>`
+      # ships stale code to every consumer.
+      - if: steps.guard.outputs.ready == 'true'
+        run: |
+          if jq -e '.scripts["registry:build"]' package.json > /dev/null; then
+            pnpm registry:build
+            git diff --exit-code -- public/r \
+              || { echo "::error::public/r is stale — run 'pnpm registry:build' and commit"; exit 1; }
+          else
+            echo "::notice::no registry:build script yet — skipping"
+          fi
