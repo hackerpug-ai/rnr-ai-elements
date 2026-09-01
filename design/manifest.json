@@ -1,0 +1,292 @@
+{
+  "version": "6.0.0",
+  "created": "2026-09-01",
+  "goal": "A React Native Reusables port of Vercel's AI Elements \u2014 universal iOS, Android and Web AI chat and agent UI, distributed as a copy-paste registry.",
+  "vibe": "Match React Native Reusables for all shared vocabulary \u2014 radius, spacing rhythm, type ramp, borders, press states, motion durations \u2014 while genuinely new AI surfaces (streaming shimmer, tool status badges, reasoning trace) carry their own visual treatment so an agent action reads as distinct from ordinary app chrome. Distinctness comes from composition and existing roles only; the library declares no new tokens.",
+  "spec": ".spec/prds/mvp/README.md",
+  "references": [],
+  "gates": {
+    "discover": "passed",
+    "target": "passed",
+    "equip": "passed"
+  },
+  "platforms": {
+    "mobile-ios": {
+      "tools": {
+        "framework": "expo",
+        "style": "uniwind+nativewind",
+        "components": "react-native-reusables",
+        "icons": "lucide-react-native",
+        "sandbox": "storybook-native",
+        "style_docs": {
+          "uniwind": "https://docs.uniwind.dev/quickstart",
+          "nativewind": "https://www.nativewind.dev/getting-started/introduction",
+          "rnr_customization": "https://reactnativereusables.com/docs/customization"
+        },
+        "style_contract": "rnr-dual-engine-registry",
+        "style_contract_source": "researched",
+        "style_contract_enforcement": "hard-fail",
+        "style_contract_overrides": {},
+        "component_contract": "react-native-reusables",
+        "component_contract_source": "builtin",
+        "component_contract_enforcement": "hard-fail",
+        "component_contract_overrides": {},
+        "style_variants": [
+          "nativewind",
+          "uniwind"
+        ],
+        "style_harness_engine": "uniwind"
+      },
+      "phase": "equip",
+      "gates": {
+        "scaffold": "pending",
+        "plan": "pending",
+        "atoms": "pending",
+        "molecules": "pending",
+        "compose": "pending"
+      },
+      "screens": [
+        {
+          "name": "example-chat",
+          "route": "/",
+          "states": [
+            "empty",
+            "streaming",
+            "tool-approval",
+            "error"
+          ],
+          "distributed": false,
+          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+        }
+      ],
+      "capture": {
+        "command": "pnpm storybook:capture",
+        "medium": "png",
+        "goldens": "design/goldens/mobile-ios"
+      },
+      "pinned": [],
+      "deprecations": {},
+      "scaffold_progress": {
+        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
+        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
+        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+      }
+    },
+    "mobile-android": {
+      "tools": {
+        "framework": "expo",
+        "style": "uniwind+nativewind",
+        "components": "react-native-reusables",
+        "icons": "lucide-react-native",
+        "sandbox": "storybook-native",
+        "style_docs": {
+          "uniwind": "https://docs.uniwind.dev/quickstart",
+          "nativewind": "https://www.nativewind.dev/getting-started/introduction",
+          "rnr_customization": "https://reactnativereusables.com/docs/customization"
+        },
+        "style_contract": "rnr-dual-engine-registry",
+        "style_contract_source": "researched",
+        "style_contract_enforcement": "hard-fail",
+        "style_contract_overrides": {},
+        "component_contract": "react-native-reusables",
+        "component_contract_source": "builtin",
+        "component_contract_enforcement": "hard-fail",
+        "component_contract_overrides": {},
+        "style_variants": [
+          "nativewind",
+          "uniwind"
+        ],
+        "style_harness_engine": "uniwind"
+      },
+      "phase": "equip",
+      "gates": {
+        "scaffold": "pending",
+        "plan": "pending",
+        "atoms": "pending",
+        "molecules": "pending",
+        "compose": "pending"
+      },
+      "screens": [
+        {
+          "name": "example-chat",
+          "route": "/",
+          "states": [
+            "empty",
+            "streaming",
+            "tool-approval",
+            "error"
+          ],
+          "distributed": false,
+          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+        }
+      ],
+      "capture": {
+        "command": "pnpm storybook:capture",
+        "medium": "png",
+        "goldens": "design/goldens/mobile-android"
+      },
+      "pinned": [],
+      "deprecations": {},
+      "scaffold_progress": {
+        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
+        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
+        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+      }
+    },
+    "web-mobile": {
+      "tools": {
+        "framework": "expo",
+        "style": "uniwind+nativewind",
+        "components": "react-native-reusables",
+        "icons": "lucide-react-native",
+        "sandbox": "storybook",
+        "style_docs": {
+          "uniwind": "https://docs.uniwind.dev/quickstart",
+          "nativewind": "https://www.nativewind.dev/getting-started/introduction",
+          "rnr_customization": "https://reactnativereusables.com/docs/customization"
+        },
+        "style_contract": "rnr-dual-engine-registry",
+        "style_contract_source": "researched",
+        "style_contract_enforcement": "hard-fail",
+        "style_contract_overrides": {},
+        "component_contract": "react-native-reusables",
+        "component_contract_source": "builtin",
+        "component_contract_enforcement": "hard-fail",
+        "component_contract_overrides": {},
+        "style_variants": [
+          "nativewind",
+          "uniwind"
+        ],
+        "style_harness_engine": "uniwind"
+      },
+      "phase": "equip",
+      "gates": {
+        "scaffold": "pending",
+        "plan": "pending",
+        "atoms": "pending",
+        "molecules": "pending",
+        "compose": "pending"
+      },
+      "screens": [
+        {
+          "name": "example-chat",
+          "route": "/",
+          "states": [
+            "empty",
+            "streaming",
+            "tool-approval",
+            "error"
+          ],
+          "distributed": false,
+          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+        }
+      ],
+      "capture": {
+        "command": "pnpm storybook:capture",
+        "medium": "png",
+        "goldens": "design/goldens/web-mobile"
+      },
+      "pinned": [],
+      "deprecations": {},
+      "scaffold_progress": {
+        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
+        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
+        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+      }
+    },
+    "web-desktop": {
+      "tools": {
+        "framework": "expo",
+        "style": "uniwind+nativewind",
+        "components": "react-native-reusables",
+        "icons": "lucide-react-native",
+        "sandbox": "storybook",
+        "style_docs": {
+          "uniwind": "https://docs.uniwind.dev/quickstart",
+          "nativewind": "https://www.nativewind.dev/getting-started/introduction",
+          "rnr_customization": "https://reactnativereusables.com/docs/customization"
+        },
+        "style_contract": "rnr-dual-engine-registry",
+        "style_contract_source": "researched",
+        "style_contract_enforcement": "hard-fail",
+        "style_contract_overrides": {},
+        "component_contract": "react-native-reusables",
+        "component_contract_source": "builtin",
+        "component_contract_enforcement": "hard-fail",
+        "component_contract_overrides": {},
+        "style_variants": [
+          "nativewind",
+          "uniwind"
+        ],
+        "style_harness_engine": "uniwind"
+      },
+      "phase": "equip",
+      "gates": {
+        "scaffold": "pending",
+        "plan": "pending",
+        "atoms": "pending",
+        "molecules": "pending",
+        "compose": "pending"
+      },
+      "screens": [
+        {
+          "name": "example-chat",
+          "route": "/",
+          "states": [
+            "empty",
+            "streaming",
+            "tool-approval",
+            "error"
+          ],
+          "distributed": false,
+          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+        }
+      ],
+      "capture": {
+        "command": "pnpm storybook:capture",
+        "medium": "png",
+        "goldens": "design/goldens/web-desktop"
+      },
+      "pinned": [],
+      "deprecations": {},
+      "scaffold_progress": {
+        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
+        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
+        "REMAINING": "Storybook (device + web) not installed; token stories not generated; nativewind variant emit not built; registry package empty"
+      }
+    }
+  },
+  "notes": {
+    "dual_engine": "The registry emits BOTH nativewind and uniwind variants at 32/32 parity, mirroring RNR. Measured basis: RNR's own two variants differ only by an import-path segment and formatting \u2014 125 identical class tokens, zero nativewind-only classes, and the only two uniwind-only classes live in icon.tsx, which we consume from RNR rather than write. Our source stays engine-agnostic; the build fans it out by rewriting the alias segment and the registryDependencies URL segment.",
+    "harness_engine": "Storybook runs on ONE engine (uniwind) because a sandbox needs a single bundler. The nativewind variant is validated by CI installing it into a clean Expo app and typechecking, which is proportionate given the emitted delta is an import path.",
+    "customization": "Consumers get RNR's own customization contract unchanged: the library declares no tokens (verified \u2014 RNR registry items ship no cssVars and no theme.ts), and components ride cn + cva + TextClassContext through the consumer's aliases. A consumer on either RNR setup is supported.",
+    "prd_correction_needed": "PRD 01-scope.md and 11-technical-requirements/ record 'Uniwind-only for v1' with a named deferral trigger. That trigger has fired. AGENTS.md Tech Stack says the same. Both need updating to dual-engine.",
+    "scaffold_gate": "Deliberately still PENDING. The workflow's step 9 requires the sandbox to run and token stories to render; Storybook is not installed yet. The workspace, theme, all 32 RNR components, PortalHost and a hello-world are done and verified (0 tsc errors, real Metro bundle). Marking the gate passed before Storybook exists would be fake success.",
+    "pin_corrections": "Three corrections verified against sources, not inferred: react-native is 0.86.3 (Expo 57's pin, confirmed by Expo's own scaffolder) not 0.87.1; @react-native-reusables/cli is 1.0.0 not 0.7.1; Expo 57's template pins typescript ~6.0.3 while AGENTS.md/PRD say 7.0.2 \u2014 harness runs 6.0.3, workspace root holds 7.0.2.",
+    "cli_findings": "RNR's `init` is interactive and cannot be scripted (hangs on a TTY prompt with piped stdin). `add` works non-interactively with --yes --all --overwrite --styling-library. components.json REQUIRES aliases.utils \u2014 omitting it fails validation with 'Invalid components.json'. RNR's doctor asks for tailwindcss-animate even on the uniwind path, which is a Tailwind v3 plugin the styling contract forbids in the uniwind emit."
+  }
+}
