@@ -6,12 +6,19 @@
  * every forbiddenPatterns / mustInclude entry. Editing the contract changes the gate.
  * There is no second copy of the rules to drift.
  */
-import { readFileSync, existsSync } from 'node:fs';
-import { globSync } from 'node:fs';
+import { existsSync, globSync, readFileSync } from 'node:fs';
 
 const CONTRACT = 'design/research/styling/rnr-dual-engine-registry.md';
 
-type Check = { id: string; mode?: string; glob: string[]; exclude?: string[]; regex: string; rationale?: string; description?: string };
+type Check = {
+  id: string;
+  mode?: string;
+  glob: string[];
+  exclude?: string[];
+  regex: string;
+  rationale?: string;
+  description?: string;
+};
 
 function loadChecks(): { forbiddenPatterns: Check[]; mustInclude: Check[] } {
   if (!existsSync(CONTRACT)) {
@@ -24,20 +31,23 @@ function loadChecks(): { forbiddenPatterns: Check[]; mustInclude: Check[] } {
     try {
       const parsed = JSON.parse(b);
       if (parsed.forbiddenPatterns) return parsed;
-    } catch { /* try the next block */ }
+    } catch {
+      /* try the next block */
+    }
   }
   console.error('FAIL: no parseable checks block in the contract');
   process.exit(2);
 }
 
+/** node:fs globSync returns paths as strings unless withFileTypes is set. */
+function expand(pattern: string): string[] {
+  return globSync(pattern).map((entry) => String(entry));
+}
+
 function files(globs: string[], exclude: string[] = []): string[] {
   const out = new Set<string>();
-  for (const g of globs) {
-    for (const f of globSync(g, { nodir: true } as never) as string[]) out.add(f);
-  }
-  for (const g of exclude) {
-    for (const f of globSync(g, { nodir: true } as never) as string[]) out.delete(f);
-  }
+  for (const g of globs) for (const f of expand(g)) out.add(f);
+  for (const g of exclude) for (const f of expand(g)) out.delete(f);
   return [...out];
 }
 
@@ -57,7 +67,9 @@ for (const c of forbiddenPatterns) {
     lines.forEach((line, i) => {
       re.lastIndex = 0;
       if (re.test(line)) {
-        console.error(`FAIL [${c.id}] ${f}:${i + 1}\n       ${line.trim().slice(0, 120)}\n       ${c.rationale ?? ''}`);
+        console.error(
+          `FAIL [${c.id}] ${f}:${i + 1}\n       ${line.trim().slice(0, 120)}\n       ${c.rationale ?? ''}`,
+        );
         failures++;
       }
     });
@@ -68,7 +80,9 @@ for (const c of mustInclude) {
   const re = new RegExp(c.regex);
   for (const f of files(c.glob, c.exclude)) {
     if (!re.test(readFileSync(f, 'utf8'))) {
-      console.error(`FAIL [${c.id}] ${f} is missing a required pattern\n       ${c.description ?? ''}`);
+      console.error(
+        `FAIL [${c.id}] ${f} is missing a required pattern\n       ${c.description ?? ''}`,
+      );
       failures++;
     }
   }
@@ -79,4 +93,6 @@ if (failures > 0) {
   console.error(`\n${failures} contract violation(s) across ${scanned} registry source file(s).`);
   process.exit(1);
 }
-console.log(`contract OK — ${forbiddenPatterns.length} forbidden + ${mustInclude.length} required checks, ${scanned} registry source file(s) scanned.`);
+console.log(
+  `contract OK — ${forbiddenPatterns.length} forbidden + ${mustInclude.length} required checks, ${scanned} registry source file(s) scanned.`,
+);
