@@ -1,7 +1,13 @@
 {
-  "name": "harness",
+  "name": "harness-nativewind",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "storybook:web": "ENGINE=nativewind storybook dev -p 6007 -c .storybook-web",
+    "storybook:device": "ENGINE=nativewind STORYBOOK=1 expo start",
+    "build": "ENGINE=nativewind expo export --platform web --output-dir /tmp/rnr-nw"
+  },
   "dependencies": {
     "@expo/ui": "~57.0.15",
     "@rn-primitives/accordion": "^1.5.2",
@@ -55,7 +61,7 @@
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.10.1",
     "tailwind-merge": "^3.3.1",
-    "uniwind": "^1.11.0"
+    "nativewind": "^4.2.6"
   },
   "devDependencies": {
     "@storybook/icons": "^2.1.0",
@@ -66,24 +72,8 @@
     "concurrently": "^9.2.4",
     "nativewind": "^4.2.6",
     "storybook": "^10.5.10",
-    "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",
-    "vite": "^7.3.6"
-  },
-  "scripts": {
-    "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "lint": "expo lint",
-    "storybook:device": "ENGINE=uniwind STORYBOOK=1 expo start",
-    "storybook:web": "ENGINE=uniwind storybook dev -p 6006 -c .storybook-web",
-    "storybook:web:nativewind": "ENGINE=nativewind storybook dev -p 6007 -c .storybook-web",
-    "storybook:web:both": "concurrently -n uniwind,nativewind -c cyan,magenta \"pnpm storybook:web\" \"pnpm storybook:web:nativewind\"",
-    "storybook:device:nativewind": "ENGINE=nativewind STORYBOOK=1 expo start",
-    "build:uniwind": "ENGINE=uniwind expo export --platform web --output-dir /tmp/rnr-ai-uniwind",
-    "build:nativewind": "ENGINE=nativewind expo export --platform web --output-dir /tmp/rnr-ai-nativewind"
-  },
-  "private": true
+    "vite": "^7",
+    "tailwindcss": "^3.4.17"
+  }
 }
