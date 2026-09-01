@@ -65,24 +65,65 @@ This project targets: **iOS, Android, Web**
 
 ## Tech Stack
 
-Pinned deliberately. `expo-ai-elements` (Expo 55) and the react-native-reusables KB (Expo 56)
-are both behind current; this project starts on **current**, not on either KB's pins.
+Pinned to **Expo SDK 57's own resolver**, not to npm `latest`. Verified against
+`expo/expo@sdk-57 packages/expo/bundledNativeModules.json` on 2026-09-01.
 
-| Layer | Choice | Version (verified on npm 2026-09-01) |
+| Layer | Choice | Version |
 |---|---|---|
-| Language | TypeScript | **7.0.2** (the Go-native compiler — `latest`) |
+| Language | TypeScript | **7.0.2** (the Go-native compiler) |
 | Package manager | pnpm | 10.32.1 |
 | Lint / format | Biome | 2.5.11 |
-| Tests | Vitest | 4.1.11 |
+| Tests (logic) | Vitest | 4.1.11 |
+| Dev + sign-off | Storybook | `@storybook/react-native` 10.5.4 (device) + `@storybook/react-native-web-vite` 10.5.10 (web) |
 | Styling engine | **Uniwind** | 1.11.0 |
-| CSS | **Tailwind v4** | 4.3.3 — `@theme` block + `oklch`, no `tailwind.config.js` |
+| CSS | **Tailwind v4** | 4.3.3 — `@theme` + `oklch`, no `tailwind.config.js` |
 | Base UI | React Native Reusables (registry) | CLI 0.7.1 · `@rn-primitives/*` 1.5.2 |
-| App shell | Expo | 57.0.19 · React Native 0.87.1 |
+| App shell | Expo | 57.0.19 |
+| React Native | **0.86.3** | Expo 57's pin. **npm latest is 0.87.1 — do not take it.** |
 | Node | Node | 24 |
 | AI SDK (example app only) | `ai` / `@ai-sdk/react` | 7.0.89 / 4.0.92 |
 
+**Always `npx expo install`. Never `npm install`, never npm `latest.`** Several packages
+have npm latest ahead of Expo's pin, and taking latest breaks the native build at runtime
+rather than at install:
+
+| Package | Expo 57 pin | npm latest |
+|---|---|---|
+| `react-native-gesture-handler` | ~2.32.0 | 3.2.1 (**major**) |
+| `react-native-webview` | 13.16.1 | 14.0.1 (**major**) |
+| `react-native-reanimated` | 4.5.1 | 4.6.0 |
+| `@shopify/flash-list` | 2.0.2 | 2.3.2 |
+| `lucide-react-native` | not bundled | 1.39.0 (**major** vs RNR's ^0.577) |
+
+CI runs `npx expo-doctor` so drift fails the build instead of surfacing as a native crash.
+
 **Styling engine is Uniwind, not Nativewind.** Tailwind **v4** syntax only. A component
 written with a `tailwind.config.js` mental model or HSL tokens is wrong for this repo.
+Note: the RNR Rosetta KB's `theming.md` documents the **Nativewind** path and is superseded
+here by its `MIGRATION.md` v1.1.0. Anyone briefed with `theming.md` alone will produce a
+component that silently does not theme.
+
+## Distribution — registry only, no npm package
+
+`react-native-reusables` is **not published to npm** (only `@react-native-reusables/cli`
+is). RNR components resolve at the **consumer's** `@/components/ui/*` alias, which an npm
+package cannot import from. A packaged library would have to vendor its own copies of the
+29 reused primitives — two `Button`s in one app, and a consumer token edit that reaches
+theirs but not ours.
+
+So the shipped artifact is `public/r/*.json` plus committed `.tsx` sources, installed with
+the RNR CLI. `registryDependencies` entries are **always absolute https URLs**; a short
+name like `"card"` resolves against the shadcn **web** registry and installs a DOM
+component.
+
+## Expo Go vs dev client
+
+The **core** chat and agent surface runs in **Expo Go**. A dev client is required only for
+four opt-in items: `react-native-enriched-markdown` (a Fabric native module, confirmed
+absent from Expo 57's bundled list), `react-native-streamdown`, `expo-speech-recognition`,
+and audio capture beyond `expo-audio`'s Expo Go surface. This is why `message` takes an
+injected `renderMarkdown` prop with a plain RNR `Text` default — without that seam the
+whole chat shell becomes dev-client-only.
 
 ### What this library owns, and what it does not
 
@@ -114,29 +155,63 @@ discoveries. Three that matter:
 Also read `~/Projects/brain/.rosetta/docs/react-native-reusables/` — it overrides model
 priors from the pre-2025 RNR rewrite and from shadcn/ui web reflexes.
 
-## Known Risk — Vitest and React Native components
+## Known Risk — Vitest cannot assert a React Native style
 
-Vitest is this project's test runner by decision. Be aware of what that costs: React
-Native ships **untranspiled Flow-typed source**, which is why `jest-expo` (57.0.5) is the
-mature default for rendering RN components in a test. The Vitest path needs
-`vitest-react-native` (**0.1.5** — early) or a hand-rolled alias/transform config.
+Vitest is this project's test runner by decision. The cost is **two stacked problems**, and
+the second has no fix inside Vitest:
 
-Treat "render an RNR component under Vitest and assert on it" as **its own first task**,
-proven end to end before component work depends on it. If it cannot be made to work, say
-so and raise it — do not quietly swap in a mock renderer and call the component tested.
+1. React Native ships untranspiled Flow-typed source, which is why `jest-expo` (57.0.5)
+   exists. The Vitest path needs `vitest-react-native` (**0.1.5** — early) or a hand-rolled
+   transform.
+2. **Uniwind compiles classes in the Metro transform.** Under Vitest a `className` is an
+   inert string, so even a working render cannot assert a single style.
+
+Verification is therefore tiered by what each tool can actually observe:
+
+| Tier | Owns |
+|---|---|
+| **Vitest** | markdown part-serializer, ANSI tokenizer, stack-trace parser, tool-status→badge map, throttle scheduler, registry build/freshness/token scripts, AI SDK type conformance |
+| **Storybook on device** | render, style, portal layering, safe-area insets, keyboard, Reanimated timing, streaming frame rate, theming flip — **the sign-off gate** |
+| **Storybook on web** | prop matrices, fast iteration, the public gallery — **never sufficient alone** |
+| **CI shell** | a registry item installs into a clean Expo app and typechecks |
+
+Run the render-under-Vitest question as its **own first task** with a hard timebox and a
+written go/no-go. Fallback is `jest-expo` as a second runner for rendering only.
+**Absolute floor: never substitute a mock renderer and report a component as tested.**
 
 ## Dev Setup
 
-Not scaffolded yet. First task is standing up the Expo 57 + Uniwind + Tailwind v4 app
-and the registry build. Once it exists:
+Not scaffolded yet. The first task is the **proven-reference-flow spike**: stand up the
+Expo 57 + Uniwind + Tailwind v4 workspace, the registry build, and Storybook, then take ONE
+component (`message`) the whole distance — story renders on iOS and Android, theming flip
+verified in light and dark, registry item installs into a clean Expo app, renders there
+against a real streaming route. Until that is green, nothing downstream is trustworthy.
+
+Once it exists:
 
 ```bash
-pnpm install
-pnpm exec tsc --noEmit      # typecheck  (CI job: typecheck)
-pnpm exec biome ci .        # lint       (CI job: lint)
-pnpm exec vitest run        # tests      (CI job: test)
-pnpm registry:build         # public/r/*.json (CI job: registry — fails if stale)
+pnpm install                     # ALWAYS npx expo install for RN/Expo packages
+pnpm exec tsc --noEmit           # typecheck   (CI job: typecheck)
+pnpm exec biome ci .             # lint        (CI job: lint)
+pnpm exec vitest run             # logic tests (CI job: test)
+pnpm registry:build              # public/r/*.json (CI job: registry — fails if stale)
+pnpm exec expo-doctor            # pin drift   (CI job: registry)
+
+pnpm storybook:web               # iteration + gallery
+pnpm storybook:device            # THE SIGN-OFF GATE — iOS simulator + Android emulator
 ```
+
+**A component is not done on the strength of a web story.** `react-native-web` does not
+reproduce portal layering, safe-area insets, keyboard avoidance, or native animation
+timing. Every completion claim cites an on-device story.
+
+## Spec
+
+- PRD: [`.spec/prds/mvp/`](.spec/prds/mvp/README.md) — 23 use cases, 95 acceptance criteria,
+  95 test criteria, all 49 components carrying a porting verdict.
+- Scenarios: `.spec/scenarios/` — 46 visible, 60 holdout, 7 cross-UC journeys.
+  Holdouts are run by the reviewer and CI only; never hand them to an implementer.
+- Coverage: [`.spec/scenarios/coverage-matrix.md`](.spec/scenarios/coverage-matrix.md).
 
 ## Scratch artifacts
 
