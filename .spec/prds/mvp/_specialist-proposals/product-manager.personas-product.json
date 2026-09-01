@@ -1,0 +1,771 @@
+{
+ "user_personas": [
+  {
+   "name": "Ship-It Expo Developer",
+   "role": "Solo or small-team app developer adding an AI chat screen to an existing Expo app",
+   "goals": [
+    "Have a working, good-looking chat screen on iOS and Android within a day, not a sprint",
+    "Avoid hand-rolling streaming scroll, keyboard avoidance, and markdown rendering",
+    "Own the code in their repo so they can edit it, not fight a black-box npm component"
+   ],
+   "pain_points": [
+    "AI Elements is web-only: div, span, onClick, className cascade, hover, iframe \u2014 none of it survives a copy-paste into React Native",
+    "Stick-to-bottom transcript scrolling during token streaming is the single hardest thing to get right in RN and every hand-rolled attempt jitters",
+    "The existing RN port (expo-ai-elements) ships no component code in its npm package, and its pending rewrite drops RNR entirely",
+    "Markdown plus syntax-highlighted code on RN is a cliff: no shiki, no dangerouslySetInnerHTML, no <pre>"
+   ]
+  },
+  {
+   "name": "Design-System Owner",
+   "role": "Front-end lead maintaining a themed RNR app with brand tokens and dark mode",
+   "goals": [
+    "Add AI surfaces without introducing a second visual dialect into the app",
+    "Change one token and have every screen move together",
+    "Never patch a vendored component file to fix a color or radius"
+   ],
+   "pain_points": [
+    "Bolting on a chat library means two token systems, two dark-mode mechanisms, and permanent drift",
+    "Once a developer edits a copied component to fix a mismatched border, the copy-paste upgrade path is dead",
+    "Reviewers cannot tell whether a mismatch is a bug or an intentional library style"
+   ]
+  },
+  {
+   "name": "Agent-App Builder",
+   "role": "Developer shipping an agentic product (tool calls, approvals, plans) with a mobile client",
+   "goals": [
+    "Render every AI SDK tool-part state without inventing UI per state",
+    "Get human-in-the-loop approval working on a phone with real touch targets",
+    "Show reasoning, plans, and task progress without the transcript reflowing"
+   ],
+   "pain_points": [
+    "Tool, reasoning, task, and confirmation UI is the part everyone rebuilds badly and inconsistently",
+    "Approve/deny buttons designed for a mouse become mis-tap hazards on a phone",
+    "Agent output includes developer artifacts (terminal, test results, stack traces) that assume a wide screen"
+   ]
+  },
+  {
+   "name": "Web-to-Mobile Porter",
+   "role": "Developer with a shipping shadcn/AI Elements web app who now needs the mobile client",
+   "goals": [
+    "Keep the same component names and mental model across web and mobile",
+    "Know quickly which of their web screens have no mobile equivalent",
+    "Reuse their existing useChat wiring unchanged"
+   ],
+   "pain_points": [
+    "No map exists from an AI Elements web component to its mobile counterpart or its absence",
+    "Discovering that canvas, sandbox, and jsx-preview cannot exist on a phone only after building around them",
+    "Silent behavioral differences (hover-only affordances) that pass review on web and are unreachable on touch"
+   ]
+  },
+  {
+   "name": "Chat End User on a Phone",
+   "role": "The person actually using the AI app the developer ships",
+   "goals": [
+    "Ask a question one-handed and read the answer as it streams",
+    "Scroll back to re-read something without losing the live response",
+    "Copy an answer, tap a source, approve an action, without hunting for a target"
+   ],
+   "pain_points": [
+    "The keyboard covers the composer or the text being typed",
+    "The transcript jumps or unsticks mid-stream",
+    "Code blocks wrap into unreadable soup or cannot be copied",
+    "Buttons sized for a cursor are mis-tapped with a thumb"
+   ]
+  },
+  {
+   "name": "Registry Maintainer",
+   "role": "Owner of the rnr-ai-elements repo and its CI merge gate",
+   "goals": [
+    "Ship exactly like RNR: copy-paste registry, RNR CLI, no runtime package",
+    "Keep every component provably token-driven so coherence does not rot",
+    "Justify every newly created primitive against the documented RNR gap list"
+   ],
+   "pain_points": [
+    "26 of the 55 shadcn primitives AI Elements depends on have no RNR equivalent, so naive porting stalls immediately",
+    "Without a mechanical check, hardcoded colors creep in and the one-design-system promise silently breaks",
+    "Scope creep toward building all 26 missing primitives instead of only the ones a shipped component needs"
+   ]
+  }
+ ],
+ "user_needs": [
+  "A day-one usable AI chat on a phone from a small set of components: conversation, message, prompt-input, code-block, suggestion, sources, shimmer, image",
+  "Streaming transcript behavior that stays pinned during token streaming and yields to the user the moment they scroll up",
+  "A composer that survives the mobile keyboard: auto-growing multiline input, safe-area insets, visible send button, in-flight disable",
+  "Markdown plus fenced-code rendering as native views, since message content is the payload and no separate response component exists in the 49",
+  "Theme values resolved exclusively from RNR tokens so one token edit moves both libraries together",
+  "Reuse of the 29 RNR primitives that already exist, and creation of a new primitive only when a shipped component demands it",
+  "Complete coverage of AI SDK tool-part states (pending, running, complete, error) in one component",
+  "Human-in-the-loop approval with platform-minimum touch targets and a persistent resolved state",
+  "Press-based disclosure everywhere the web version relies on hover",
+  "A published per-component verdict so a web developer knows what ported, what changed, and what does not exist",
+  "Installation identical to RNR: one CLI add command, code lands in the developer's tree, peer dependencies declared",
+  "An example app that demonstrates every component in loading, empty, error, and populated states on a real device"
+ ],
+ "pain_points": [
+  "AI Elements is structurally web: DOM elements, CSS cascade, hover affordances, iframes, react-flow, and runtime JSX evaluation",
+  "Prior art does not solve it: expo-ai-elements ships a registry-only npm package with no component code, and its rewrite abandons RNR primitives, so adopting it forks the design system",
+  "52 percent primitive coverage means roughly half the dependency surface is missing before a single AI component is written",
+  "Four components (canvas, node, edge, connection) are a react-flow graph editor, one (jsx-preview) needs runtime JSX evaluation, and one (sandbox) needs server-backed execution \u2014 pretending these port is a lie",
+  "Hover-driven components (context, inline-citation) are unreachable on touch without an interaction redesign",
+  "Drag-to-resize layout (panel) has no thumb equivalent",
+  "Device enumeration (mic-selector) does not exist on mobile OSes, which expose audio routes instead",
+  "Per-token re-render of a full transcript drops frames on mid-range Android",
+  "Any hardcoded color or radius that slips in permanently breaks the one-design-system promise and is invisible in code review"
+ ],
+ "user_journeys": [
+  {
+   "name": "First chat screen in under an hour",
+   "steps": [
+    "Developer has an existing Expo SDK 57 app already using RNR components",
+    "Developer runs the RNR CLI add command for conversation, message, and prompt-input",
+    "CLI resolves RNR primitive dependencies and writes editable component source into the project tree",
+    "Developer wires the components to their existing useChat stream with no adapter layer",
+    "Developer runs on an iOS simulator, an Android device, and web from one codebase",
+    "Developer sees a streaming answer pin to the bottom, the keyboard avoid the composer, and the surfaces match their existing RNR screens"
+   ]
+  },
+  {
+   "name": "Make it match my brand",
+   "steps": [
+    "Design-system owner opens their existing RNR theme token file",
+    "Owner changes the primary color and the base radius",
+    "Owner reloads and sees chat bubbles, tool cards, composer, and their pre-existing RNR cards all move together",
+    "Owner toggles the device to dark mode and sees every AI surface flip in the same frame as the rest of the app",
+    "Owner opens no component file and writes no override"
+   ]
+  },
+  {
+   "name": "Turn a chat into an agent surface",
+   "steps": [
+    "Agent-app builder adds tool, reasoning, task, plan, and confirmation",
+    "Agent streams reasoning into an auto-opened disclosure that collapses when the answer begins",
+    "Tool call renders pending, then running, then complete, without the transcript reflowing",
+    "Agent requests a destructive action and a confirmation card appears with thumb-sized approve and deny controls",
+    "Builder taps approve, the card resolves in place, and the resolved state stays visible in the transcript"
+   ]
+  },
+  {
+   "name": "Port an existing AI Elements web screen",
+   "steps": [
+    "Web-to-mobile porter lists the components used on their web screen",
+    "Porter opens the porting-verdict table and looks up each component by its web name",
+    "Porter finds conversation, message, tool, and sources ship at parity or adapted",
+    "Porter finds web-preview is substituted by a native webview and requires a declared peer dependency",
+    "Porter finds canvas and sandbox are out of scope with a stated reason and a named alternative",
+    "Porter rescopes the mobile screen before writing code rather than after"
+   ]
+  },
+  {
+   "name": "Ask a question one-handed on a phone",
+   "steps": [
+    "End user opens the app and taps the composer with a thumb",
+    "Keyboard opens and the composer lifts above it, still fully visible",
+    "User types a multi-line question and taps send; composer clears and disables",
+    "Answer streams in, pinned to the bottom of the transcript",
+    "User scrolls up to re-read an earlier message and the view stays where they put it while streaming continues",
+    "User taps scroll-to-bottom, copies a code block with one tap, and taps a citation to open the source"
+   ]
+  },
+  {
+   "name": "Upgrade a component without losing edits",
+   "steps": [
+    "Developer has locally edited a copied component",
+    "Developer re-runs the RNR CLI for an updated version",
+    "CLI shows what would be overwritten before writing",
+    "Developer reviews the diff and accepts or declines per file",
+    "Developer verifies the example app still renders every state after the update"
+   ]
+  }
+ ],
+ "functional_groups": [
+  {
+   "name": "Foundation and Theming",
+   "prefix": "FOUND",
+   "description": "The RNR token bridge, dark-mode parity, the reuse-first primitive policy, and demand-driven creation of the missing shadcn primitives (scroll-area, item, empty, spinner, kbd, field, input-group, button-group) that shipped components actually require.",
+   "rationale": "Constraint 3 (one design system on a mobile device) and constraint 5 (RNR theming passthrough) are the binding promises of the whole initiative. Nothing in any other group can be visually coherent until this lands, and 26 of 55 dependency primitives are missing, so every other group blocks on a subset of this one. It is also the only group where the correct outcome is invisible when right and glaring when wrong, which is why it needs its own acceptance criteria and its own CI check."
+  },
+  {
+   "name": "Core Chat Surface",
+   "prefix": "CHAT",
+   "description": "The day-one usable AI chat: conversation transcript with streaming stick-to-bottom, message with markdown and code rendering, prompt-input composer with keyboard handling and attachments, suggestions, questions, queue, checkpoint, sources, inline citations, images, shimmer, toolbar, snippet, open-in-chat.",
+   "rationale": "This is the minimum set that makes the library worth installing. A developer who gets only this group has a shipping product; a developer who gets everything else without it has nothing. It is also where all the genuinely hard native work lives (scroll pinning, keyboard avoidance, markdown), so it must be delivered as one coherent slice rather than component-by-component."
+  },
+  {
+   "name": "Agent and Tool Surface",
+   "prefix": "AGENT",
+   "description": "Tool call lifecycle, reasoning and chain-of-thought disclosure, task and plan progress, human-in-the-loop confirmation, agent and persona identity, context budget, artifact container, run controls, schema display.",
+   "rationale": "A separable second slice with its own testable gate: everything here is driven by agent stream events rather than user input, and all of it is optional for a plain chat app. Grouping by this delivery shape means the group can ship after CHAT without blocking it, and it shares one dominant risk (state-change rendering without transcript reflow) that is worth testing once across the whole group."
+  },
+  {
+   "name": "Coding-Agent Surfaces",
+   "prefix": "CODE",
+   "description": "Developer-artifact display for coding agents: file-tree, terminal, test-results, stack-trace, commit, package-info, environment-variables, and the native webview substitute for web-preview.",
+   "rationale": "These share one product problem that none of the chat or agent components have: dense, wide, monospace content on a phone-width screen. They also share one audience (developers using a coding agent) and are the group most likely to be cut or deferred by a consumer-app developer. Keeping them separate keeps that cut cheap."
+  },
+  {
+   "name": "Voice and Audio",
+   "prefix": "VOICE",
+   "description": "Speech capture and live transcription, audio route selection, generated-audio playback, and voice selection.",
+   "rationale": "This is the only group that requires native permissions and native modules (audio recording, playback, route selection), which makes it the only group with an install-time cost to the developer beyond copied code. Isolating it keeps the rest of the library dependency-free and lets a developer who does not want microphone permissions skip the whole group."
+  },
+  {
+   "name": "Registry, Compatibility and Docs",
+   "prefix": "REG",
+   "description": "RNR CLI installability, registry entries with declared peer dependencies, Expo SDK 57 compatibility across iOS, Android and web, published per-component porting verdicts including documented non-goals, and a live example app demonstrating every state.",
+   "rationale": "Constraints 6 and 7 (distribute exactly like RNR, fully Expo compatible) are product promises about how the library is obtained, not about what it renders, so they need their own criteria. This group also owns the honest public record of what did and did not port, which is the artifact that saves a web-to-mobile porter from building around a component that does not exist."
+  }
+ ],
+ "use_cases_draft": [
+  {
+   "id": "UC-FOUND-01",
+   "group": "FOUND",
+   "title": "RNR theme tokens drive every ported component",
+   "description": "Every color, radius, spacing, and type value in every ported component resolves from the host app's RNR theme rather than from a literal, so a single token edit propagates across both libraries.",
+   "acceptance_criteria": [
+    "Developer can change a single RNR theme token such as the primary color or the base radius and see both RNR components and AI Elements components change together on iOS, Android, and web without editing any component file.",
+    "Developer can apply an existing RNR theme configuration from a shipping app to this library without adding a second provider, a second token file, or a per-component override.",
+    "System resolves every color, radius, and spacing value in every shipped component from an RNR theme token rather than from a hardcoded literal.",
+    "Maintainer can run a CI check that fails the build when any shipped component file contains a hardcoded color or radius literal instead of a theme token."
+   ]
+  },
+  {
+   "id": "UC-FOUND-02",
+   "group": "FOUND",
+   "title": "Dark mode flips both libraries in the same frame",
+   "description": "Color scheme is read from the same mechanism the host RNR app already uses, so no AI surface is left behind on an appearance change.",
+   "acceptance_criteria": [
+    "End user can switch the device between light and dark appearance and see every AI Elements surface flip in the same frame as the surrounding RNR screen.",
+    "Developer can toggle the app color scheme at runtime and see no component retain a light-mode background, border, or text color.",
+    "System reads the active color scheme from the same RNR mechanism the host app already uses rather than from a library-local scheme state."
+   ]
+  },
+  {
+   "id": "UC-FOUND-03",
+   "group": "FOUND",
+   "title": "Reuse RNR first, create a primitive only on demand",
+   "description": "The 29 primitives RNR already ships are reused directly; new primitives are created only when a shipped component requires one from the documented 26-item gap list.",
+   "acceptance_criteria": [
+    "Developer can install any shipped component and get RNR's own primitive wherever RNR already ships one, with no duplicated fork of accordion, dialog, popover, or the other reused primitives.",
+    "Maintainer can justify each newly created primitive by naming the shipped component that requires it and the gap-list entry it fills.",
+    "Developer can use a newly created primitive such as scroll-area, item, empty, or spinner with the same prop and styling conventions RNR uses for its own primitives.",
+    "System exposes no primitive that duplicates an existing RNR component under a different name."
+   ]
+  },
+  {
+   "id": "UC-FOUND-04",
+   "group": "FOUND",
+   "title": "One design system on a mobile device",
+   "description": "The binding product promise made observable: on a phone, a reviewer cannot tell which library rendered which surface.",
+   "acceptance_criteria": [
+    "Design-system owner can place an RNR demo screen and an AI Elements chat screen side by side on a phone and cannot identify which library rendered which surface from radius, border color, type scale, or spacing.",
+    "Design-system owner can review a per-component screenshot comparison against the AI Elements web reference and confirm the mobile version reads as the same design system.",
+    "Developer can adopt these components into an already-themed RNR app without opening a component file to correct a mismatched color, radius, or font.",
+    "Design-system owner can point to any visual difference from the web reference and find it recorded as a deliberate mobile adaptation rather than an accident."
+   ]
+  },
+  {
+   "id": "UC-CHAT-01",
+   "group": "CHAT",
+   "title": "Streaming transcript that stays pinned and yields on scroll",
+   "description": "The conversation container keeps a streaming response at the bottom, releases the pin the moment the user scrolls up, and offers an explicit way back.",
+   "acceptance_criteria": [
+    "End user can watch a streaming assistant response stay pinned to the bottom of the transcript without the view jumping or stuttering on a mid-range Android device.",
+    "End user can scroll up mid-stream to read an earlier message and stay where they scrolled until they tap the scroll-to-bottom control.",
+    "End user can open a transcript of 200 or more messages and scroll it at a steady frame rate on a physical device.",
+    "Developer can mount the conversation component in an Expo screen and see it respect safe-area insets on a notched iPhone and on a gesture-navigation Android device."
+   ]
+  },
+  {
+   "id": "UC-CHAT-02",
+   "group": "CHAT",
+   "title": "Message rendering with markdown, code, and images",
+   "description": "Role-differentiated message bubbles that render streamed markdown, fenced code, and generated images as native views.",
+   "acceptance_criteria": [
+    "End user can distinguish a user message from an assistant message by alignment, surface color, and avatar without reading the text.",
+    "End user can read a streamed markdown answer with headings, lists, links, bold text, and fenced code rendered as native views rather than as raw markdown characters.",
+    "End user can scroll a long code block horizontally without wrapping and copy its contents to the clipboard with one tap.",
+    "End user can view a model-generated image inline in the transcript at its correct aspect ratio.",
+    "End user can see a shimmer placeholder while an assistant message is awaiting its first token."
+   ]
+  },
+  {
+   "id": "UC-CHAT-03",
+   "group": "CHAT",
+   "title": "Composer that survives the mobile keyboard",
+   "description": "The prompt input handles keyboard avoidance, multiline growth, attachments, model selection, and in-flight state.",
+   "acceptance_criteria": [
+    "End user can tap the composer and see the keyboard open without it covering the text being typed or the send button.",
+    "End user can type a multi-line prompt and watch the composer grow to a bounded maximum height before it begins scrolling internally.",
+    "End user can attach a photo or a file from the native device picker and see it as a removable chip above the composer before sending.",
+    "End user can switch models from the composer using a bottom-sheet picker sized for one-handed use.",
+    "End user can send a prompt with a visible send button and see the composer clear and disable while the request is in flight."
+   ]
+  },
+  {
+   "id": "UC-CHAT-04",
+   "group": "CHAT",
+   "title": "Prompt entry points and conversation markers",
+   "description": "Suggestion pills, clarifying questions, a message queue, and checkpoint markers give the user ways into and around the conversation.",
+   "acceptance_criteria": [
+    "End user can swipe a horizontal row of suggestion pills and tap one to send it as a prompt.",
+    "End user can tap a clarifying question offered by the assistant and have it sent without retyping it.",
+    "End user can queue a follow-up message while a response is still streaming and see it listed with a control to remove it before it sends.",
+    "End user can see a checkpoint marker in the transcript indicating where a conversation was restored or branched."
+   ]
+  },
+  {
+   "id": "UC-CHAT-05",
+   "group": "CHAT",
+   "title": "Sources and citations reachable by touch",
+   "description": "Grouped sources and inline citations that open by press rather than by hover, and hand off to the platform browser or another chat app.",
+   "acceptance_criteria": [
+    "End user can expand a collapsed sources list at the end of an answer and see each source title and domain.",
+    "End user can tap an inline citation and see the source detail in a popover opened by press rather than by hover.",
+    "End user can tap a source and open it in the device browser through the platform link handler.",
+    "End user can send the current conversation to an external chat application from an open-in-chat control."
+   ]
+  },
+  {
+   "id": "UC-AGENT-01",
+   "group": "AGENT",
+   "title": "Tool call lifecycle rendered in place",
+   "description": "A single component covers every tool-part state and shows inputs and outputs without disturbing the transcript.",
+   "acceptance_criteria": [
+    "End user can see a tool call render its name and current state as pending, running, complete, or error without the transcript reflowing when the state changes.",
+    "End user can expand a tool call to read its input arguments and its output result.",
+    "End user can see an errored tool call visually distinguished from a completed one by color and icon drawn from theme tokens.",
+    "Developer can render every AI SDK tool-part state through this component without encountering a state the component does not handle."
+   ]
+  },
+  {
+   "id": "UC-AGENT-02",
+   "group": "AGENT",
+   "title": "Reasoning and chain-of-thought disclosure",
+   "description": "Reasoning streams into an auto-opened disclosure, collapses when the answer begins, and remains reopenable.",
+   "acceptance_criteria": [
+    "End user can watch reasoning text stream into an automatically opened disclosure and see it collapse on its own once the final answer begins.",
+    "End user can reopen a collapsed reasoning block and read the full retained text.",
+    "End user can see how long the model reasoned displayed on the collapsed reasoning header.",
+    "End user can follow a multi-step chain of thought with per-step status without leaving the transcript."
+   ]
+  },
+  {
+   "id": "UC-AGENT-03",
+   "group": "AGENT",
+   "title": "Plan and task progress",
+   "description": "An agent's plan and its running tasks are visible as ordered, status-bearing lists that update in place.",
+   "acceptance_criteria": [
+    "End user can see an agent plan as an ordered list of steps with each step's current status.",
+    "End user can watch a task move from pending to running to complete in place without the list reordering.",
+    "End user can expand a task to see the files or items it touched.",
+    "End user can tell at a glance how many steps remain in a running plan."
+   ]
+  },
+  {
+   "id": "UC-AGENT-04",
+   "group": "AGENT",
+   "title": "Human-in-the-loop confirmation sized for a thumb",
+   "description": "Approve and deny for a requested agent action, with the request legible before approval and the outcome persistent afterward.",
+   "acceptance_criteria": [
+    "End user can approve or deny a requested tool call from the transcript using controls that meet the platform minimum touch-target size.",
+    "End user can read exactly which action is being requested, including its arguments, before approving it.",
+    "End user can see the confirmation resolve into an approved or denied state that remains visible in the transcript afterward.",
+    "Developer can wire approve and deny to their own handlers without the component deciding the outcome itself."
+   ]
+  },
+  {
+   "id": "UC-AGENT-05",
+   "group": "AGENT",
+   "title": "Agent identity, context budget, artifacts, and run controls",
+   "description": "Who is acting, how much context is left, what was produced, and how to control the run.",
+   "acceptance_criteria": [
+    "End user can see which agent or persona produced a message from an identity header showing its name and avatar.",
+    "End user can tap a context indicator and see token usage and remaining context budget in a press-opened popover.",
+    "End user can open a generated artifact in a full-screen sheet and return to the transcript with the scroll position preserved.",
+    "End user can start, pause, or stop an agent run from a thumb-reachable control bar.",
+    "Developer can display a tool's parameter schema in a nested view that remains legible at phone width."
+   ]
+  },
+  {
+   "id": "UC-CODE-01",
+   "group": "CODE",
+   "title": "Repository and environment context on a phone screen",
+   "description": "File tree, commits, package info, and environment variables rendered for narrow screens with copy and reveal affordances.",
+   "acceptance_criteria": [
+    "Developer can browse a file tree of the agent workspace and expand and collapse directories on a phone-width screen.",
+    "Developer can view a commit hash, message, and author, and copy the hash with one tap.",
+    "Developer can see package information including name, version, and an install command that copies to the clipboard.",
+    "Developer can view environment variables with values masked by default and reveal a single value on demand."
+   ]
+  },
+  {
+   "id": "UC-CODE-02",
+   "group": "CODE",
+   "title": "Run output: terminal, tests, and stack traces",
+   "description": "Dense monospace output that scrolls rather than wraps, and summarizes rather than dumps.",
+   "acceptance_criteria": [
+    "Developer can read terminal output in a monospace view that scrolls horizontally without wrapping and vertically without dropping frames.",
+    "Developer can see a test run summarized as passed, failed, and skipped counts, and expand a failing test to read its message.",
+    "Developer can read a stack trace with each frame file and line legible at phone width.",
+    "Developer can copy any run output block to the clipboard with one tap."
+   ]
+  },
+  {
+   "id": "UC-CODE-03",
+   "group": "CODE",
+   "title": "Live web preview through a native webview",
+   "description": "The web-preview surface is delivered as a native webview with an explicit dependency contract and a real error state.",
+   "acceptance_criteria": [
+    "Developer can render a live web preview inside a native webview with a visible URL bar and a reload control.",
+    "Developer can install the preview component and be told at install time that it requires the react-native-webview peer dependency.",
+    "Developer can see the preview surface show an explicit error state when the previewed URL fails to load rather than a blank white view.",
+    "Developer can build the rest of the library without installing the webview dependency at all."
+   ]
+  },
+  {
+   "id": "UC-VOICE-01",
+   "group": "VOICE",
+   "title": "Speech capture, routing, and live transcription",
+   "description": "Record a spoken prompt with visible feedback, see it transcribed live, and choose the audio input route the mobile OS actually exposes.",
+   "acceptance_criteria": [
+    "End user can hold a microphone control to record a prompt and see a live input-level indicator while recording.",
+    "End user can watch their speech appear as a live transcript and edit it before sending.",
+    "End user can choose an audio input route such as built-in microphone, wired headset, or Bluetooth from a native route picker.",
+    "Developer can install the speech components and be told at install time which audio modules and runtime permissions they require."
+   ]
+  },
+  {
+   "id": "UC-VOICE-02",
+   "group": "VOICE",
+   "title": "Generated audio playback and voice selection",
+   "description": "Play back a spoken response with real transport controls and pick the synthesis voice.",
+   "acceptance_criteria": [
+    "End user can play a generated audio response with play, pause, and a scrubbable progress bar.",
+    "End user can select a text-to-speech voice from a bottom-sheet list showing each voice name and language.",
+    "End user can continue playback while scrolling the transcript without the audio restarting.",
+    "End user can see elapsed and total duration while an audio response plays."
+   ]
+  },
+  {
+   "id": "UC-REG-01",
+   "group": "REG",
+   "title": "Install exactly like RNR",
+   "description": "Distribution is a copy-paste registry driven by the RNR CLI; the code lands in the developer's tree and stays editable.",
+   "acceptance_criteria": [
+    "Developer can install any shipped component with a single RNR CLI add command and see it appear in their project source tree as editable code.",
+    "Developer can install a component and have its RNR primitive dependencies resolved and installed automatically.",
+    "Developer can re-run the CLI for an updated component and be shown what would be overwritten before it is written.",
+    "Maintainer can run a CI job that validates every registry entry resolves and installs into a clean Expo application."
+   ]
+  },
+  {
+   "id": "UC-REG-02",
+   "group": "REG",
+   "title": "Expo compatibility across iOS, Android, and web",
+   "description": "One codebase runs on all three targets under Expo SDK 57 with no web-only construct anywhere in the shipped source.",
+   "acceptance_criteria": [
+    "Developer can run every shipped component in an Expo SDK 57 application on iOS, Android, and web from a single codebase.",
+    "Developer can install any component that requires a native module and see its peer dependency and required permissions declared in its registry entry.",
+    "Developer can use any component that requires no custom native module inside an Expo Go session.",
+    "System contains no web-only construct such as a DOM element, an iframe, a hover-only interaction, or a CSS cascade assumption in any shipped component."
+   ]
+  },
+  {
+   "id": "UC-REG-03",
+   "group": "REG",
+   "title": "Published porting verdicts and honest non-goals",
+   "description": "Every one of the 49 AI Elements components has a public verdict, and every out-of-scope component names an alternative.",
+   "acceptance_criteria": [
+    "Developer can read a per-component porting verdict stating whether it ships at parity, adapted, substituted, or not at all, together with the reason.",
+    "Developer can find a named mobile alternative for every component marked out of scope.",
+    "Developer arriving from AI Elements on the web can look up a component by its web name and find its mobile counterpart or its documented absence.",
+    "Maintainer can show that all 49 AI Elements components carry a verdict with no component left unaddressed."
+   ]
+  },
+  {
+   "id": "UC-REG-04",
+   "group": "REG",
+   "title": "Storybook demonstrates every component and every state",
+   "description": "A Storybook running BOTH on device (@storybook/react-native) and on web (@storybook/react-native-web-vite) from one set of story files, proving each component in loading, empty, error and populated states. The device build is the sign-off gate.",
+   "acceptance_criteria": [
+    "Developer can open Storybook on an iOS simulator and an Android emulator and see every shipped component with interactive controls for its props.",
+    "Developer can open the same story set in a web browser and see every shipped component render through react-native-web.",
+    "Developer can see each component demonstrated in its loading, empty, error, and populated states.",
+    "Design-system owner can switch Storybook to a custom token set and confirm every component tracks it in both light and dark mode.",
+    "Maintainer can show that no component is marked done on the strength of a web story alone \u2014 every completion cites an on-device story."
+   ]
+  }
+ ],
+ "scope_in": [
+  "Day-one chat set delivered first and together: conversation, message, prompt-input, code-block, suggestion, sources, shimmer, image",
+  "Streaming markdown and fenced-code rendering inside message, since the 49-component list contains no separate response component and message content is the payload",
+  "Agent surface: tool, reasoning, chain-of-thought, task, plan, confirmation, context, agent, persona, artifact, schema-display, controls",
+  "Coding-agent display surfaces: file-tree, terminal, test-results, stack-trace, commit, package-info, environment-variables",
+  "Voice family behind declared native dependencies: speech-input, transcription, audio-player, voice-selector, audio route selection",
+  "RNR theme token passthrough as the sole styling source, verified by a CI check for hardcoded literals",
+  "Reuse of the 29 existing RNR primitives; creation of gap primitives only when a shipped component requires one",
+  "Press-based replacements for every hover-only interaction",
+  "RNR CLI copy-paste registry distribution with declared peer dependencies",
+  "Expo SDK 57 support on iOS, Android, and web from a single codebase",
+  "Published porting verdicts for all 49 components, including the ones that do not ship",
+  "Example app covering loading, empty, error, and populated states for every shipped component"
+ ],
+ "scope_out": [
+  "Node-graph editing: canvas, node, edge, and connection are a react-flow workspace and have no mobile product in this initiative",
+  "Runtime JSX evaluation: jsx-preview requires evaluating arbitrary JSX at runtime, which Hermes and app-store policy do not support",
+  "Server-backed code execution: sandbox requires a hosted execution service, which is out of a component registry's scope",
+  "Any runtime npm package of components; distribution is registry copy-paste only, matching RNR",
+  "Any server, account, authentication, or hosted service of our own",
+  "Building all 26 missing shadcn primitives; only primitives a shipped component demands are created",
+  "Chat state management, model routing, or provider wiring; these components render whatever the developer's AI SDK stream provides",
+  "Desktop-class multi-pane layouts and drag-to-resize interactions",
+  "Pixel-identical parity with the web reference where touch requires a different interaction; the promise is design-system coherence, not pixel cloning"
+ ],
+ "porting_verdicts": [
+  {
+   "component": "agent",
+   "verdict": "port-at-parity",
+   "reason": "Identity card composed from RNR avatar, card, badge, and text; no browser API and no hover dependency."
+  },
+  {
+   "component": "artifact",
+   "verdict": "port-adapted",
+   "reason": "Web renders it as a side panel next to the transcript. A phone has no side; it becomes a full-screen sheet with a return control that preserves transcript scroll position."
+  },
+  {
+   "component": "attachments",
+   "verdict": "native-substitute",
+   "reason": "The chip row ports at parity, but file acquisition cannot: drag-and-drop and the file input are replaced by the native image and document pickers, which changes the permission and dependency contract."
+  },
+  {
+   "component": "audio-player",
+   "verdict": "native-substitute",
+   "reason": "Built on the HTML audio element. Replaced by a native audio module; transport controls and progress bar keep the same product surface."
+  },
+  {
+   "component": "canvas",
+   "verdict": "out-of-scope",
+   "reason": "It is a react-flow workspace. There is no react-flow on React Native, and a pan-and-pinch node graph on a phone is a separate product, not a port. Alternative: render the same agent structure as the plan and task lists."
+  },
+  {
+   "component": "chain-of-thought",
+   "verdict": "port-at-parity",
+   "reason": "Collapsible step list built from RNR collapsible, text, and icon; behavior is identical on touch."
+  },
+  {
+   "component": "checkpoint",
+   "verdict": "port-at-parity",
+   "reason": "A labelled divider in the transcript composed from RNR separator, badge, and text."
+  },
+  {
+   "component": "code-block",
+   "verdict": "native-substitute",
+   "reason": "Web highlighting relies on a DOM-emitting highlighter and CSS overflow. Requires a React Native safe tokenizer rendering into Text spans plus a horizontal ScrollView and a clipboard copy action."
+  },
+  {
+   "component": "commit",
+   "verdict": "port-at-parity",
+   "reason": "Card of hash, message, and author with a copy action; composes from RNR card, text, and button."
+  },
+  {
+   "component": "confirmation",
+   "verdict": "port-at-parity",
+   "reason": "Composes from RNR card and button. Only change is enforcing platform minimum touch targets, which is a sizing token, not a different component."
+  },
+  {
+   "component": "connection",
+   "verdict": "out-of-scope",
+   "reason": "Part of the react-flow canvas family; it is an SVG connection line with pointer-drag semantics that has no meaning outside a node editor."
+  },
+  {
+   "component": "context",
+   "verdict": "port-adapted",
+   "reason": "Token and cost breakdown is revealed on hover in the web version. On touch it becomes a press-opened popover; the data displayed is unchanged."
+  },
+  {
+   "component": "controls",
+   "verdict": "port-adapted",
+   "reason": "The button and toggle cluster ports from RNR primitives, but placement must move into thumb reach and targets must meet the platform minimum, which changes layout rather than composition."
+  },
+  {
+   "component": "conversation",
+   "verdict": "native-substitute",
+   "reason": "The whole value is stick-to-bottom scrolling, which on web comes from an overflow container plus a scroll hook. React Native needs a list with maintainVisibleContentPosition or an inverted list plus keyboard and safe-area handling. Same product surface, entirely different implementation, and the highest-risk item in the initiative."
+  },
+  {
+   "component": "edge",
+   "verdict": "out-of-scope",
+   "reason": "react-flow canvas family; an SVG edge path with no standalone mobile use."
+  },
+  {
+   "component": "environment-variables",
+   "verdict": "port-at-parity",
+   "reason": "Masked key and value rows with a reveal toggle; composes from RNR input, toggle, and button."
+  },
+  {
+   "component": "file-tree",
+   "verdict": "port-adapted",
+   "reason": "The nested rows port, but deep indentation is unusable at phone width; needs horizontal scroll or a drill-in navigation model, which changes the interaction."
+  },
+  {
+   "component": "image",
+   "verdict": "port-at-parity",
+   "reason": "React Native Image accepts data URIs, so generated images render with the same props and aspect-ratio behavior."
+  },
+  {
+   "component": "inline-citation",
+   "verdict": "port-adapted",
+   "reason": "Hover cards do not exist on touch and inline positioning inside React Native Text is constrained; becomes a pressable inline chip that opens a popover."
+  },
+  {
+   "component": "jsx-preview",
+   "verdict": "out-of-scope",
+   "reason": "It evaluates a JSX string at runtime. Hermes has no runtime JSX transform and shipping an evaluator is an app-store and security problem. Alternative: render the described UI server-side and show it as an artifact or a web preview."
+  },
+  {
+   "component": "message",
+   "verdict": "port-at-parity",
+   "reason": "Role-based alignment, surface, and avatar all compose from RNR primitives. Note that its content rendering pulls in the markdown renderer decision, which is the real work."
+  },
+  {
+   "component": "mic-selector",
+   "verdict": "native-substitute",
+   "reason": "Web enumerates input devices through the media devices API. iOS and Android do not expose an enumerable input device list; they expose audio routes. Ships as a route picker (built-in, wired, Bluetooth) with the same product job."
+  },
+  {
+   "component": "model-selector",
+   "verdict": "port-adapted",
+   "reason": "A dropdown on web; on mobile the correct pattern is a bottom sheet with search, sized for one-handed use. Same selection contract, different presentation."
+  },
+  {
+   "component": "node",
+   "verdict": "out-of-scope",
+   "reason": "react-flow canvas family; a draggable graph node with no standalone mobile use."
+  },
+  {
+   "component": "open-in-chat",
+   "verdict": "port-adapted",
+   "reason": "Same buttons and same targets, but window opening is replaced by the platform link handler, and unavailable targets must be hidden rather than opened into a dead tab."
+  },
+  {
+   "component": "package-info",
+   "verdict": "port-at-parity",
+   "reason": "Card of package name, version, and a copyable install command; all RNR primitives."
+  },
+  {
+   "component": "panel",
+   "verdict": "native-substitute",
+   "reason": "Built on drag-to-resize split panes, which requires a pointer and screen width a phone does not have. Ships as a tabs or bottom-sheet layout that serves the same job of showing a secondary surface beside the transcript."
+  },
+  {
+   "component": "persona",
+   "verdict": "port-at-parity",
+   "reason": "Avatar, name, and description card composed from RNR primitives."
+  },
+  {
+   "component": "plan",
+   "verdict": "port-at-parity",
+   "reason": "Ordered step list with per-step status; composes from RNR collapsible, badge, icon, and text."
+  },
+  {
+   "component": "prompt-input",
+   "verdict": "native-substitute",
+   "reason": "Looks the same but almost nothing underneath survives: keyboard avoidance, auto-growing multiline TextInput, safe-area insets, and an explicit send button replacing enter-to-submit. Second-highest-risk item after conversation."
+  },
+  {
+   "component": "question",
+   "verdict": "port-at-parity",
+   "reason": "A pressable card or pill for a clarifying question; RNR button and card."
+  },
+  {
+   "component": "queue",
+   "verdict": "port-at-parity",
+   "reason": "A list of pending messages with a remove action; RNR list composition plus the new item primitive."
+  },
+  {
+   "component": "reasoning",
+   "verdict": "port-at-parity",
+   "reason": "Auto-opening and auto-collapsing disclosure with a duration label; RNR collapsible plus the shimmer substitute."
+  },
+  {
+   "component": "sandbox",
+   "verdict": "out-of-scope",
+   "reason": "It fronts a hosted code-execution service and renders its output through a browser surface. A component registry cannot ship the execution half, and the display half is already covered by terminal and web-preview."
+  },
+  {
+   "component": "schema-display",
+   "verdict": "port-adapted",
+   "reason": "The nested schema tree ports, but nesting depth and key widths need collapsing and horizontal scroll to stay legible at phone width."
+  },
+  {
+   "component": "shimmer",
+   "verdict": "native-substitute",
+   "reason": "The web effect is an animated CSS gradient with background-clip on text. React Native needs a Reanimated driver with a masked view; visually equivalent, structurally different."
+  },
+  {
+   "component": "snippet",
+   "verdict": "port-adapted",
+   "reason": "Tabs and code line port from RNR tabs and text, but clipboard access moves to the native clipboard module and long commands need horizontal scroll."
+  },
+  {
+   "component": "sources",
+   "verdict": "port-at-parity",
+   "reason": "Collapsible list of source rows; RNR collapsible, separator, and text."
+  },
+  {
+   "component": "speech-input",
+   "verdict": "native-substitute",
+   "reason": "Built on browser media recording and speech recognition. Requires native audio recording plus a speech recognition module, runtime microphone permission, and a level indicator driven by native metering."
+  },
+  {
+   "component": "stack-trace",
+   "verdict": "port-at-parity",
+   "reason": "Monospace frame list with expandable frames; needs horizontal scroll but no interaction redesign."
+  },
+  {
+   "component": "suggestion",
+   "verdict": "port-at-parity",
+   "reason": "Horizontally scrollable pill row maps directly to a horizontal ScrollView plus RNR buttons, and swiping is a better fit on touch than on web."
+  },
+  {
+   "component": "task",
+   "verdict": "port-at-parity",
+   "reason": "Collapsible task row with status and touched files; RNR collapsible, badge, and text."
+  },
+  {
+   "component": "terminal",
+   "verdict": "port-adapted",
+   "reason": "Ships as a read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens. An interactive pseudo-terminal is explicitly not part of this."
+  },
+  {
+   "component": "test-results",
+   "verdict": "port-at-parity",
+   "reason": "Pass, fail, and skip counts with expandable per-test rows; composes from RNR badge, collapsible, and text."
+  },
+  {
+   "component": "tool",
+   "verdict": "port-at-parity",
+   "reason": "The central agent component. State header plus input and output disclosure, all from RNR collapsible, badge, and code-block. Must cover every AI SDK tool-part state."
+  },
+  {
+   "component": "toolbar",
+   "verdict": "port-at-parity",
+   "reason": "A row of icon buttons above or below the composer; RNR button and toggle-group with mobile touch-target sizing."
+  },
+  {
+   "component": "transcription",
+   "verdict": "port-at-parity",
+   "reason": "Display-only live transcript text with an interim and final distinction; capture belongs to speech-input, so this component itself has no browser dependency."
+  },
+  {
+   "component": "voice-selector",
+   "verdict": "port-adapted",
+   "reason": "Voice list ports, but the picker becomes a bottom sheet and the available voice set comes from the native speech synthesis provider rather than the browser."
+  },
+  {
+   "component": "web-preview",
+   "verdict": "native-substitute",
+   "reason": "An iframe with a URL bar and console. Replaced by a native webview with the same URL bar and reload affordance, shipped as an opt-in registry entry that declares react-native-webview as a peer dependency. The console pane does not port and is dropped."
+  }
+ ]
+}

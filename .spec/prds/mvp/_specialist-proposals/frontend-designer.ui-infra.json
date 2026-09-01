@@ -1,0 +1,882 @@
+{
+ "design_libraries": [
+  "react-native-reusables registry \u2014 UNIWIND variant only (https://reactnativereusables.com/r/uniwind/<name>.json). 29 of the 55 shadcn primitives AI Elements needs are consumed verbatim; never vendored, never forked.",
+  "@rn-primitives/* 1.5.2 \u2014 behavior layer under RNR (accordion, collapsible, select, dropdown-menu, popover, tooltip, progress, separator, avatar, portal, slot).",
+  "uniwind 1.11.0 + tailwindcss 4.3.3 \u2014 styling engine. Tailwind v4 `@import \"tailwindcss\"` + `@theme` + `oklch()`, NO tailwind.config.js, NO `inlineRem`, NO `.dark:root`. theming.md in the RNR KB documents the Nativewind path and is WRONG for this repo; MIGRATION.md v1.1.0 is the correction.",
+  "class-variance-authority + clsx + tailwind-merge \u2014 every variant surface is a `cva` whose class order is `cn(variants, contextClass, className)`, identical to RNR.",
+  "lucide-react-native, consumed ONLY through RNR's `<Icon as={X} />` wrapper (uniwind build uses `withUniwind`, not `cssInterop`). A raw Lucide element silently ignores className.",
+  "react-native-reanimated (+ react-native-worklets) \u2014 all motion. RNR's `NativeOnlyAnimatedView` is the wrapper of record.",
+  "react-native-gesture-handler \u2014 scrollable Select shim, long-press/pan surfaces, canvas pan-zoom.",
+  "react-native-safe-area-context \u2014 `useSafeAreaInsets()` feeding `contentInsets` on every anchored overlay and the composer's bottom pad.",
+  "expo-clipboard \u2014 copy affordances (code-block, snippet, message actions).",
+  "NEW DEPENDENCIES, each scoped to one element and each a design-risk item: react-native-webview (web-preview, jsx-preview, sandbox), react-native-svg (canvas/node/edge/connection, schema-display connectors), expo-av or expo-audio (audio-player, speech-input level meter). Nothing else may be added without an explicit decision.",
+  "EXPLICITLY BANNED: motion/react, streamdown/Streamdown (web), shiki with the WASM engine as a default, tailwindcss-animate, @radix-ui/*, any @repo/shadcn-ui import, and the entire `ai-elements` npm package. Read the web source for behavior; never install or copy it.",
+  "UNDER EVALUATION, not adopted: react-native-streamdown (markdown streaming). Its documented `workletizableModules` option was renamed upstream to `importForwarding.moduleNames`; the stale key is silently ignored and crashes markdown streaming. Prove on device before it enters the dependency set."
+ ],
+ "style_tokens": {
+  "source": "The CONSUMER's `global.css` \u2014 their Tailwind v4 `@theme` block under `@layer theme { :root { @variant light { \u2026 } @variant dark { \u2026 } } }`, resolved by Uniwind. This library declares ZERO tokens: it ships no `global.css`, no `@theme` block, no `--*` custom property, no `THEME`/`NAV_THEME` object, and no color literal (`#`, `rgb(`, `hsl(`, `oklch(`) in any component. Every color is a Tailwind utility naming a semantic role. The acceptance test for this rule is mechanical: swap the consumer's `@theme` for a different shadcn theme, rebuild, and every AI element must recolor with no library edit and no diff. A grep for `#[0-9a-fA-F]{3,8}` in `registry/**/*.tsx` returning any hit outside a documented foreign-surface bridge is a build failure.",
+  "roles_consumed": [
+   "background / foreground \u2014 screen and default text (Text base is `text-foreground text-base`)",
+   "card / card-foreground \u2014 every AI Elements container surface; Card publishes `text-card-foreground` via TextClassContext",
+   "popover / popover-foreground \u2014 portalled overlays and ToolContent's text color (matches the web original's `text-popover-foreground`)",
+   "primary / primary-foreground \u2014 user message bubble, send button, Progress indicator, link text",
+   "secondary / secondary-foreground \u2014 status badges (web AI Elements uses `variant=\"secondary\"` for tool status), Skeleton base (`bg-secondary dark:bg-muted`)",
+   "muted / muted-foreground \u2014 code surfaces, tool parameter panels (`bg-muted/50`), Shimmer resting color, timestamps, ChainOfThought connectors, all secondary labels",
+   "accent / accent-foreground \u2014 press/hover feedback on ghost and outline controls (`active:bg-accent`)",
+   "destructive \u2014 output-error, delete/stop actions, denial states (RNR ships destructive WITHOUT a paired destructive-foreground in the uniwind button; it uses literal `text-white`)",
+   "border \u2014 every 1px rule, Separator (`h-[1px] bg-border`), card and tool-card outlines",
+   "input \u2014 form control borders; `dark:bg-input/30` is RNR's dark-mode field fill idiom",
+   "ring \u2014 web focus-visible ring at `ring-ring/50 ring-[3px]`. Inert on native, still emitted for platform parity",
+   "radius \u2014 drives `rounded-md` / `rounded-xl` / `rounded-full`. Never bypassed with an arbitrary px value",
+   "chart-1..chart-5 \u2014 OPTIONAL, used only if a data-viz element (test-results pass/fail bars) needs a series palette; degrades to muted/primary if the consumer's theme omits them"
+  ],
+  "new_tokens_needed": [
+   {
+    "token": "NONE \u2014 the recommendation is zero new tokens, and this is a hard rule, not a preference",
+    "why": "The library is distributed as a copy-paste registry into an EXISTING RNR app. Any `@theme` entry we require is a manual edit to the consumer's `global.css` at install time. That edit is (a) invisible to the RNR CLI, which copies component files and registry dependencies but does not merge theme blocks; (b) silently broken when omitted \u2014 an unresolved `--color-reasoning` renders transparent or falls back, not an error; and (c) permanently un-synced when the consumer later swaps themes. Every new token is therefore a latent visual-parity bug with no failure signal. The promise 'little visible difference from the RNR system' is only enforceable if the color set is literally identical.",
+    "alternative": "Compose from existing roles with opacity modifiers, exactly as RNR does. RNR itself never adds a role to express a new state: it writes `bg-primary/20` (Progress track), `bg-muted/50`, `dark:bg-input/30`, `active:bg-primary/90`, `dark:bg-destructive/60`, `ring-ring/50`. Every AI Elements surface resolves the same way."
+   },
+   {
+    "token": "REJECTED CANDIDATE: --color-reasoning / a 'thinking trace' surface",
+    "why": "Reasoning is visually a disclosure over a lower-emphasis body of text \u2014 a semantic weight, not a new hue.",
+    "alternative": "`bg-muted/50` container + `text-muted-foreground` body + `border-border`, disclosed by Collapsible wearing Accordion's trigger styling. Zero new tokens. The web original does exactly this."
+   },
+   {
+    "token": "REJECTED CANDIDATE: --color-success / --color-warning for tool status",
+    "why": "AI Elements needs green (output-available), orange (output-denied), red (output-error). RNR has only `destructive`.",
+    "alternative": "Map error \u2192 `text-destructive` (a real RNR role). For success and denial use Tailwind v4's BUILT-IN palette \u2014 `text-green-600 dark:text-green-500`, `text-orange-600 dark:text-orange-500` \u2014 which requires no `@theme` entry because Tailwind ships the default palette. This is byte-for-byte what the web original does (`text-green-600`, `text-orange-600`, `text-red-600`). Parity is preserved by the strongest available argument: OUR DEVIATION SET EQUALS THE WEB ORIGINAL'S DEVIATION SET. Where AI Elements-on-web uses a shadcn token, we use the RNR token; where it departs from shadcn, we depart from RNR by the identical amount, in the identical place. Confine these three literals to one exported `statusColor` map so they are auditable in a single file."
+   },
+   {
+    "token": "REJECTED CANDIDATE: --color-code-* / a syntax-highlight palette",
+    "why": "Syntax colors are a closed palette owned by a highlighter theme; they cannot be expressed as semantic roles.",
+    "alternative": "Treat the code-block INTERIOR as a foreign surface, which is what it already is on the web (shiki emits inline hex that is not a shadcn token). The block's CHROME \u2014 border, radius, header, copy button, background \u2014 stays 100% RNR (`bg-muted`, `border-border`, `rounded-md`). MVP interior is unhighlighted mono on `bg-muted`, matching RNR's own `Text variant=\"code\"` recipe (`bg-muted rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold`). Highlighting arrives later as an opt-in prop, and when it does its palette is a prop-supplied theme object, never an `@theme` entry."
+   },
+   {
+    "token": "REAL GAP, not a color token: a native monospace font family",
+    "why": "RNR writes `font-mono` in `Text variant=\"code\"`, but Tailwind's `font-mono` is a CSS font STACK. React Native needs a single resolvable family name. Whether Uniwind 1.11 resolves `font-mono` to a working native family is UNVERIFIED \u2014 I could not confirm it from source, and expo-ai-elements sidestepped it entirely with a hand-rolled `MONO_STYLE` in `lib/fonts.ts`. code-block, terminal, stack-trace, snippet, schema-display, and tool-input all depend on it.",
+    "alternative": "Do NOT add a font token. Ship ONE shared `lib/mono.ts` exporting `Platform.select({ ios: 'Menlo', android: 'monospace', default: 'monospace' })`, used by every mono surface \u2014 and delete it the moment a device test proves `font-mono` resolves. Whichever way it lands, it MUST be one file: six components each choosing their own family is guaranteed drift."
+   }
+  ]
+ },
+ "visual_parity_contract": [
+  {
+   "property": "Corner radius vocabulary",
+   "must_match": "Exactly three values, all derived from the consumer's `--radius`: `rounded-md` for controls and inset panels (button, input, skeleton, accordion trigger, tool card), `rounded-xl` for elevated containers (card), `rounded-full` for pills and circles (badge, avatar, progress track, scroll-to-bottom button). Never `rounded-sm`, `rounded-lg`, `rounded-2xl`, or any `rounded-[Npx]`.",
+   "source": "rnr-token",
+   "risk": "LOW. Enforceable by lint: reject any `rounded-` class outside the allowed set. Note the shape law this encodes \u2014 a message bubble is a card, so it is `rounded-xl`; a tool card is an inset panel, so it is `rounded-md`, which is exactly what the web original uses."
+  },
+  {
+   "property": "Border width and color",
+   "must_match": "`border` (1px, RN's default StyleSheet border) plus `border-border` on surfaces or `border-input` on form fields. No `hairlineWidth()` \u2014 that is a Nativewind-preset helper and does not exist on the Uniwind path. No `border-2`. No colored borders except `dark:border-input`.",
+   "source": "rnr-token",
+   "risk": "LOW, with one trap: an agent porting from the Nativewind KB will reach for `border-hairline`, which resolves to nothing here and renders a borderless card."
+  },
+  {
+   "property": "Surface color roles",
+   "must_match": "`bg-background` (screen), `bg-card` (elevated container), `bg-popover` (portalled overlay), `bg-muted` / `bg-muted/50` (code and parameter panels), `bg-secondary` (badges, skeleton), `bg-primary` (user bubble, send), `bg-accent` (press feedback). No literal color anywhere.",
+   "source": "rnr-token",
+   "risk": "LOW, given the grep gate on color literals."
+  },
+  {
+   "property": "Text color roles",
+   "must_match": "`text-foreground` (default, from Text's base), `text-muted-foreground` (secondary, timestamps, shimmer rest, ChainOfThought connectors), `text-card-foreground` (inside Card, published via TextClassContext, not written per-Text), `text-popover-foreground` (inside ToolContent), `text-primary-foreground` (on primary fills).",
+   "source": "rnr-token",
+   "risk": "MEDIUM \u2014 this is where the no-cascade law bites. A `<View className=\"text-muted-foreground\">` wrapping a `<Text>` is silently ignored on native. Any AI Elements component that intends to influence descendant text MUST publish through `TextClassContext.Provider`, the way Card, Button, Badge, Accordion, and Tooltip all do. Getting this wrong produces text at the wrong emphasis with zero warning."
+  },
+  {
+   "property": "Type ramp",
+   "must_match": "Only what RNR's `textVariants` defines: base `text-base` (16); `text-sm font-medium leading-none` (variant `small`); `text-muted-foreground text-sm` (variant `muted`); `text-xs font-medium` (badge text); `font-mono text-sm font-semibold` on `bg-muted` (variant `code`); `text-xl/2xl/3xl/4xl` for h4\u2192h1. Two hard floors: nothing smaller than `text-xs` (12), and headings go through `<Text variant=\"h3\">` (which emits `role=\"heading\"` + `aria-level`) rather than a hand-written size class.",
+   "source": "rnr-token",
+   "risk": "MEDIUM. The web AI Elements lean on `text-xs` for section labels (`ToolInput`'s uppercase 'Parameters'), which is already at the floor. Any further shrink to fit a phone breaks BOTH parity and the accessibility contrast/size floor."
+  },
+  {
+   "property": "Control height and horizontal padding",
+   "must_match": "Button `h-10 px-4 py-2 sm:h-9`; `sm` size `h-9 px-3 sm:h-8`; `lg` `h-11 px-6 sm:h-10`; `icon` `h-10 w-10 sm:h-9 sm:w-9`. Input `h-10 px-3 py-1 sm:h-9`. Read the `sm:` correctly \u2014 base IS the mobile value and `sm:` steps DOWN for wide viewports. Never author a bare `h-11` or `h-12` control to chase a 44pt target.",
+   "source": "rnr-token",
+   "risk": "HIGH \u2014 the single most likely parity break in the project. An agent applying '44pt minimum touch target' naively will emit `h-11` buttons, and every chat control will be 4pt taller than every other button on the screen. That is precisely the 'that bit is the chat library' tell. The touch-target rule in density_reconciliation exists to close this."
+  },
+  {
+   "property": "Elevation / shadow",
+   "must_match": "`shadow-sm shadow-black/5` and nothing else, applied only where RNR applies it (button non-ghost variants, card, input). Android's `elevation` prop, custom `shadowOffset`/`shadowRadius`, and any `shadow-md`/`shadow-lg` are prohibited. Tool cards, per the web original, carry `rounded-md border` and NO shadow.",
+   "source": "rnr-token",
+   "risk": "LOW visually, MEDIUM on platform parity \u2014 iOS renders `shadow-*` and Android historically needs `elevation`. Whichever way Uniwind 1.11 compiles it, the result must be identical to an adjacent RNR Card on the same screen. Verify by screenshotting an RNR Card beside an AI Elements Artifact card on Android."
+  },
+  {
+   "property": "Press state",
+   "must_match": "`active:bg-primary/90` (default), `active:bg-secondary/80` (secondary), `active:bg-destructive/90` (destructive), `active:bg-accent` + `dark:active:bg-accent/50` (ghost), `active:bg-accent` + `dark:active:bg-input/50` (outline), and `active:underline` for link. Disabled is `opacity-50`. Text follows via `group-active:text-accent-foreground` published through TextClassContext.",
+   "source": "rnr-token",
+   "risk": "MEDIUM. The web source only carries `hover:` \u2014 porting it literally produces a component that is completely inert to touch, and this passes every code review because the class string looks right. Every `Platform.select({ web: 'hover:X' })` must be paired with a base `active:X`."
+  },
+  {
+   "property": "Focus ring",
+   "must_match": "`focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none`, emitted ONLY inside `Platform.select({ web })`. Native gets no focus ring, because RNR's own components give none.",
+   "source": "rnr-token",
+   "risk": "LOW for parity. The temptation to 'improve' by adding a native focus ring is itself the parity break \u2014 it would appear on AI Elements controls and nowhere else in the app. Native keyboard/switch-control focus is OS-drawn."
+  },
+  {
+   "property": "Icon sizing and rendering path",
+   "must_match": "`<Icon as={WrenchIcon} className=\"text-muted-foreground size-4\" size={16} />`. 16pt default, 12pt (`size-3`) inside a Badge. Never `<WrenchIcon className=\"size-4\" />` \u2014 a raw Lucide element ignores className entirely under the Uniwind `withUniwind` wrapper and renders at its default size in its default color.",
+   "source": "rnr-token",
+   "risk": "HIGH likelihood, LOW severity. Web AI Elements source is full of raw `<XIcon className=\"size-4\" />`, so a literal port reproduces the bug in every file. Grep-able: any `lucide-react-native` import used as a JSX element rather than passed to `as=`."
+  },
+  {
+   "property": "Motion durations",
+   "must_match": "Pick from RNR's observed vocabulary, invent nothing: 150ms overlay entrance (Tooltip `FadeInDown.duration(150)`), 200ms layout transition and exit (`LinearTransition.duration(200)`, `FadeOut.duration(150)`), 250ms open / 200ms close for a chevron rotation (`withTiming(1, {duration:250})` / `withTiming(0, {duration:200})`), 1000ms for the pulse loop (Skeleton). Every entering/exiting animation chains `.reduceMotion(ReduceMotion.System)`.",
+   "source": "rnr-token (convention, read off RNR source)",
+   "risk": "MEDIUM. The web Shimmer runs a 2000ms linear loop; adopting 2000ms gives this library a motion identity distinct from the host app. Motion is a parity property even though it never appears in a screenshot \u2014 a screen where the chat disclosure animates at a different tempo than the settings accordion reads as two libraries."
+  },
+  {
+   "property": "Spacing rhythm",
+   "must_match": "Card internals `gap-6` with `px-6` and `py-6`. Control internals `gap-2` (button), `gap-1` (badge), `gap-1.5` (button sm), `gap-4` (accordion trigger row). Vertical padding `py-4` (accordion trigger), `py-0.5` (badge), `py-2` (button). Only Tailwind scale steps \u2014 no arbitrary `p-[13px]`.",
+   "source": "rnr-token",
+   "risk": "MEDIUM. AI Elements web uses `p-3` for tool headers and `space-y-4` for content \u2014 both valid scale steps, but `p-3` (12) against RNR's `px-6` (24) card padding means a tool card nested inside an Artifact card has a visibly tighter gutter than the card around it. Pick one gutter per nesting level and hold it."
+  },
+  {
+   "property": "Avatar, badge, separator, progress geometry",
+   "must_match": "Avatar `size-8 rounded-full` with `bg-muted` fallback. Badge `rounded-full border px-2 py-0.5 gap-1` + `text-xs font-medium`. Separator `h-[1px] w-full bg-border`. Progress `h-2 w-full rounded-full bg-primary/20` with a `bg-primary` indicator.",
+   "source": "rnr-token",
+   "risk": "LOW. Note Badge is `rounded-full` in RNR uniwind (the older Nativewind build was `rounded-md`) \u2014 a stale prior produces square status badges beside round RNR ones."
+  },
+  {
+   "property": "Monospace font family",
+   "must_match": "One family, one file, used by every mono surface.",
+   "source": "invented",
+   "risk": "MEDIUM \u2014 RED FLAG, and the only invented value I would accept without argument, because it is a platform mapping rather than a design decision. Still: verify first whether Uniwind resolves `font-mono` natively. If it does, delete the file and inherit whatever RNR's `Text variant=\"code\"` already renders \u2014 that is strictly better parity than any font we pick."
+  },
+  {
+   "property": "Streaming shimmer treatment",
+   "must_match": "The house pulse: `text-muted-foreground` at rest, animated by Reanimated `withRepeat(withTiming(0.5, {duration:1000}), -1, true)` on opacity \u2014 Skeleton's exact signature.",
+   "source": "invented (unavoidable \u2014 see design_risks)",
+   "risk": "HIGH. There is no React Native equivalent of `background-clip: text` with a moving gradient. This value cannot be sourced from RNR because RNR has no shimmering-text precedent; the closest thing it owns is Skeleton's pulse. Borrowing that signature makes an invented treatment read as house style rather than as a foreign component."
+  },
+  {
+   "property": "Syntax highlight palette",
+   "must_match": "Deviation permitted INSIDE the code block only; chrome stays RNR.",
+   "source": "invented (controlled)",
+   "risk": "MEDIUM, and defensible: the web original's shiki hex is equally foreign to shadcn tokens. Parity is preserved because our deviation matches theirs in kind, location, and extent."
+  },
+  {
+   "property": "Tool status semantic colors",
+   "must_match": "error \u2192 `text-destructive`; success \u2192 `text-green-600 dark:text-green-500`; denial \u2192 `text-orange-600 dark:text-orange-500`. All three confined to one exported map.",
+   "source": "invented (controlled \u2014 Tailwind built-in palette, no @theme entry required)",
+   "risk": "MEDIUM. Success green is the only color on the screen that answers to no theme. If the consumer's brand is green, their primary and our success badge collide. Mitigation: expose the map as an overridable prop so a consumer can point success at their own role, defaulting to the web original's value."
+  }
+ ],
+ "web_to_native_translation": [
+  {
+   "web_interaction": "`hover:bg-accent` / `hover:bg-primary/90` background feedback",
+   "native_equivalent": "`active:bg-accent` / `active:bg-primary/90` on Pressable, with the hover class retained inside `Platform.select({ web })`. RNR ships both on every variant.",
+   "changes_visual": false,
+   "parity_impact": "NONE. This is RNR's own idiom copied verbatim. The real hazard is omission, not translation: a port that keeps only `hover:` yields a control that is visually identical at rest and completely dead under a thumb \u2014 invisible in a screenshot, obvious in the hand."
+  },
+  {
+   "web_interaction": "`focus-visible:ring-ring/50 ring-[3px]` keyboard focus ring",
+   "native_equivalent": "Nothing on native; the OS draws its own focus/switch-control indicator. The class stays in `Platform.select({ web })` so the web build keeps parity with shadcn.",
+   "changes_visual": false,
+   "parity_impact": "NONE on native, since no RNR component draws a focus ring there either. Adding one 'for accessibility' would be the parity break, and would not help \u2014 VoiceOver and TalkBack use their own cursor."
+  },
+  {
+   "web_interaction": "`transition-colors` / `transition-all` \u2014 150ms color easing on state change",
+   "native_equivalent": "Instant style swap. Pressable's `active:` styles apply without interpolation unless you hand-animate with Reanimated.",
+   "changes_visual": true,
+   "parity_impact": "NONE. RNR's own buttons snap on native \u2014 this is the host app's existing behavior, so matching it IS the parity. Hand-animating our press states to feel 'smoother' would make AI Elements controls the only ones on screen that fade. Do not."
+  },
+  {
+   "web_interaction": "Tooltip on hover (prompt-input controls, toolbar affordances, model-selector hints)",
+   "native_equivalent": "RNR's Tooltip primitive opens on press on native, portalled, with `FadeInDown.duration(150)` and `insets={contentInsets}`. Better still, drop the tooltip: a press-to-reveal tooltip competes with the button's own action.",
+   "changes_visual": false,
+   "parity_impact": "LOW visually, MEDIUM on information architecture. Any affordance whose meaning is carried ONLY by a hover tooltip becomes unlabeled on a phone. Rule: every icon-only control needs `accessibilityLabel`, and if the label is load-bearing for a sighted user, show text instead of relying on the tooltip."
+  },
+  {
+   "web_interaction": "Right-click context menu (message actions, file-tree node actions)",
+   "native_equivalent": "Long-press via RNR's ContextMenu (portalled, needs `insets`).",
+   "changes_visual": false,
+   "parity_impact": "NONE. RNR ships ContextMenu with native long-press semantics; this is the host app's existing gesture vocabulary."
+  },
+  {
+   "web_interaction": "`data-[state=open]:rotate-180` chevron on disclosure triggers (reasoning, tool, chain-of-thought, sources, task, plan)",
+   "native_equivalent": "Reanimated, copied from RNR's Accordion verbatim: `useDerivedValue(() => isExpanded ? withTiming(1,{duration:250}) : withTiming(0,{duration:200}))` driving `rotate: ${progress.value * 180}deg`. `data-*` selectors never match on native.",
+   "changes_visual": false,
+   "parity_impact": "NONE if copied from Accordion \u2014 the tempo then matches every other disclosure in the app. HIGH if hand-rolled with a different duration or a spring, which is the likely outcome of six components each solving it independently. Extract ONE `useChevronRotation()` hook (the pattern appears in at least six of the 49) and have all of them consume it."
+  },
+  {
+   "web_interaction": "Scrollbars \u2014 visible track showing position and overflow in the transcript, code blocks, and tables",
+   "native_equivalent": "Momentum scroll with a transient indicator, plus an explicit affordance: `ConversationScrollButton` (a `Button size=\"icon\" variant=\"outline\"` with `rounded-full`) that appears when scrolled away from the bottom. Auto-scroll only fires when the user is within ~50px of the bottom, so it never yanks someone reading history.",
+   "changes_visual": true,
+   "parity_impact": "LOW. A new element appears that the web has no equivalent of \u2014 but it is assembled entirely from RNR Button + Icon, so it reads as house vocabulary. Overflow in code blocks and tables becomes an unmarked horizontal ScrollView, meaning clipped content has NO visual cue. Consider a right-edge fade or a scroll hint; do not solve it by shrinking the text."
+  },
+  {
+   "web_interaction": "Dense desktop spacing throughout (p-3 headers, size-6 icon buttons, multi-column rows)",
+   "native_equivalent": "Adopt RNR's own responsive posture rather than the web library's: base classes are the MOBILE size, `sm:` steps down for wide viewports (`h-10 \u2026 sm:h-9`).",
+   "changes_visual": true,
+   "parity_impact": "NONE against RNR \u2014 which is the axis that matters. This is the pivot of the whole port: we do not port AI Elements' density and then loosen it, we author at RNR's mobile density and let `sm:` produce the compact web build. Deviation from the web screenshot is expected and correct."
+  },
+  {
+   "web_interaction": "Fixed/sticky bottom composer above the fold",
+   "native_equivalent": "`KeyboardAvoidingView` (`padding` on iOS, `height` on Android) wrapping the scroll container, with the composer as a sibling below it, plus `useSafeAreaInsets().bottom` padding for the home indicator and Android gesture bar.",
+   "changes_visual": true,
+   "parity_impact": "NONE. Every RNR screen with a bottom-pinned element does this. The trap is doubling up \u2014 an extra KeyboardAvoidingView around Conversation floats the composer above the keyboard, and it looks like a layout bug in our library specifically."
+  },
+  {
+   "web_interaction": "Text selection with the cursor, then Cmd-C",
+   "native_equivalent": "Long-press selection (`selectable` on Text) plus an explicit copy Button using expo-clipboard, which is what AI Elements already does for code blocks and message actions.",
+   "changes_visual": true,
+   "parity_impact": "LOW. The copy button is an RNR `Button variant=\"ghost\" size=\"icon\"` with a Lucide Copy icon \u2014 house vocabulary. It appears more often than on the web because it has to."
+  },
+  {
+   "web_interaction": "Drag-and-drop file attachment onto the composer",
+   "native_equivalent": "A `Button variant=\"ghost\" size=\"icon\"` opening expo-document-picker / expo-image-picker, with results rendered as a horizontally scrolling row of Badge- or Card-shaped chips above the input.",
+   "changes_visual": true,
+   "parity_impact": "LOW. The drop zone disappears; the chip row is Badge/Card vocabulary. The drop target on the web build should be kept inside `Platform.select({ web })`."
+  },
+  {
+   "web_interaction": "Resizable split panes (`panel`, `resizable`, `sidebar`, `canvas` inspector)",
+   "native_equivalent": "Tabs (RNR ships Tabs) for two peer panes, or a bottom sheet for a secondary pane \u2014 except RNR ships NO sheet, drawer, resizable, or sidebar, so a sheet must be built.",
+   "changes_visual": true,
+   "parity_impact": "HIGH \u2014 the largest in the project. This is structural, not stylistic: two side-by-side panes become one pane plus navigation. Tabs preserves parity because Tabs is RNR vocabulary. A hand-built bottom sheet does NOT, because there is no RNR sheet to match, so its radius, drag handle, backdrop opacity, and spring would all be invented. Prefer Tabs. If a sheet is unavoidable, build it once, use it everywhere, and derive every value from the contract above."
+  },
+  {
+   "web_interaction": "`overflow-auto` inner scroll regions (code blocks, test-results tables, schema-display, terminal)",
+   "native_equivalent": "Explicit horizontal `ScrollView` with `showsHorizontalScrollIndicator` left at the platform default.",
+   "changes_visual": true,
+   "parity_impact": "LOW. Note RNR has no `scroll-area` component, so there is no RNR styling to match \u2014 a bare ScrollView with the container's own `bg-muted` and `rounded-md` is the parity-safe choice. Do not add a custom scrollbar."
+  },
+  {
+   "web_interaction": "`animate-pulse` on the tool 'input-available' clock icon",
+   "native_equivalent": "Reanimated opacity repeat at Skeleton's 1000ms, gated on `useReducedMotion()`.",
+   "changes_visual": false,
+   "parity_impact": "NONE if it borrows Skeleton's timing. Tailwind's `animate-pulse` is a CSS keyframe and will not run on native \u2014 it silently does nothing, so the icon just sits there and the port looks 'fine'."
+  },
+  {
+   "web_interaction": "Streaming markdown re-render on every token",
+   "native_equivalent": "An ~80ms buffer while `isStreaming`, applying the final text immediately on stream end, with `collapsable={false}` on the wrapper and a custom memo comparator. Empty-while-streaming shows the Shimmer rather than a separate spinner.",
+   "changes_visual": true,
+   "parity_impact": "NONE \u2014 it is a frame-rate mitigation, not a style. It matters here because dropped frames read as 'the chat library is janky', which is a visible difference of exactly the kind the promise forbids. Removing the throttle 'to reduce latency' is the documented regression."
+  },
+  {
+   "web_interaction": "Haptics \u2014 no web equivalent exists",
+   "native_equivalent": "expo-haptics on send, on stop, on tool approval/denial.",
+   "changes_visual": false,
+   "parity_impact": "MEDIUM, and the recommendation is DO NOT SHIP IT by default. RNR components produce no haptics. If ours buzz and the host app's do not, the chat surface feels like a different library even though it looks identical \u2014 parity is a felt property, not only a seen one. Expose an opt-in prop; default off."
+  }
+ ],
+ "component_reuse": [
+  {
+   "element": "message",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Text",
+    "TextClassContext",
+    "Avatar",
+    "View"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "conversation",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Button (scroll-to-bottom, icon/outline/rounded-full)",
+    "Icon"
+   ],
+   "new_vocabulary": "None visually. Architecturally it is a ScrollView masquerading as a FlatList \u2014 mounts every message. Window it or swap in FlashList; this is a task, not a footnote."
+  },
+  {
+   "element": "prompt-input",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Textarea",
+    "Button",
+    "Icon",
+    "Select (model picker)",
+    "DropdownMenu"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "suggestion",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Button (variant=outline, size=sm)"
+   ],
+   "new_vocabulary": "Horizontal ScrollView row \u2014 RN core, not a new visual."
+  },
+  {
+   "element": "model-selector",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Select",
+    "Icon"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "mic-selector",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Select",
+    "Icon"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "voice-selector",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Select",
+    "Icon"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "persona",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Avatar",
+    "Card",
+    "Text"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "agent",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "Avatar",
+    "Badge",
+    "Text",
+    "Separator"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "artifact",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "CardHeader",
+    "Button",
+    "Icon"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "checkpoint",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Separator",
+    "Badge",
+    "Text"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "commit",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "Avatar",
+    "Badge",
+    "Text"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "confirmation",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "AlertDialog",
+    "Button"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "context",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Progress",
+    "Popover",
+    "Text",
+    "Badge"
+   ],
+   "new_vocabulary": "Web draws a circular usage ring; RNR Progress is linear only. Substituting the linear bar is a deliberate parity-over-web-fidelity call \u2014 it looks like RNR, which is the promise."
+  },
+  {
+   "element": "environment-variables",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "Input",
+    "Label",
+    "Button",
+    "Separator"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "image",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "AspectRatio",
+    "Card",
+    "Skeleton (loading)"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "inline-citation",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Badge",
+    "Popover",
+    "Text"
+   ],
+   "new_vocabulary": "HoverCard is web-only in spirit; on native use Popover (press) so the citation is reachable by thumb."
+  },
+  {
+   "element": "open-in-chat",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Button",
+    "DropdownMenu",
+    "Icon"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "package-info",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "Badge",
+    "Text",
+    "Separator"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "plan",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "Collapsible",
+    "Checkbox",
+    "Button",
+    "Separator"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "question",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "RadioGroup",
+    "Button",
+    "Label"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "queue",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Card",
+    "Badge",
+    "Separator",
+    "Text"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "snippet",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Text (variant=code)",
+    "Button (copy)"
+   ],
+   "new_vocabulary": "Inherits RNR's own code recipe (`bg-muted rounded font-mono text-sm font-semibold`) \u2014 the parity reference for every other mono surface."
+  },
+  {
+   "element": "sources",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Collapsible",
+    "Badge",
+    "Text",
+    "Icon"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "task",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Collapsible",
+    "Icon",
+    "Text",
+    "Badge"
+   ],
+   "new_vocabulary": null
+  },
+  {
+   "element": "toolbar",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Button (ghost/icon)",
+    "DropdownMenu (overflow)",
+    "Separator",
+    "Icon"
+   ],
+   "new_vocabulary": "No new visual \u2014 but this is where the density rule bites hardest: 5\u20136 web icon buttons must collapse to 3 + a 'more' menu on a phone."
+  },
+  {
+   "element": "attachments",
+   "composition": "pure-rnr",
+   "rnr_components_used": [
+    "Badge",
+    "Card",
+    "Button",
+    "Icon",
+    "Avatar (thumbnails)"
+   ],
+   "new_vocabulary": "Drop zone is web-only; native gets a picker button plus a horizontal chip row."
+  },
+  {
+   "element": "shimmer",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Text"
+   ],
+   "new_vocabulary": "HIGHEST RISK. Web is `bg-clip-text` + a moving gradient via motion/react \u2014 no React Native equivalent. Native answer: opacity pulse on `text-muted-foreground` reusing Skeleton's EXACT signature (1000ms, 1\u21920.5, withRepeat reverse). A masked LinearGradient sweep is closer to the web but adds @react-native-masked-view and a motion identity RNR does not have. Ship the pulse; leave the gradient as a documented opt-in."
+  },
+  {
+   "element": "code-block",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Card/View (bg-muted, border-border, rounded-md)",
+    "Button (copy)",
+    "Select (language)",
+    "Text (variant=code)"
+   ],
+   "new_vocabulary": "Syntax color (shiki's closed hex palette), line numbers in a gutter, horizontal scroll, mono font. MVP: unhighlighted mono on bg-muted \u2014 chrome is 100% RNR, interior is a declared foreign surface exactly as it is on the web."
+  },
+  {
+   "element": "reasoning",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Collapsible",
+    "Icon (Brain, ChevronDown)",
+    "Text"
+   ],
+   "new_vocabulary": "Live duration counter ('Thought for 8s') and shimmering trigger while streaming. CRITICAL: RNR's Collapsible is a BARE primitive re-export with zero styling \u2014 take the trigger's look from Accordion (`flex-row items-start justify-between gap-4 rounded-md py-4` + 250/200ms chevron) or the disclosure look is invented. Also inherits the web's auto-open-on-stream / auto-close-1s-after behavior."
+  },
+  {
+   "element": "tool",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Collapsible",
+    "Badge (secondary, rounded-full, gap-1.5, text-xs)",
+    "Icon",
+    "CodeBlock"
+   ],
+   "new_vocabulary": "Seven-state status vocabulary with non-token colors (green/orange/red). Same unstyled-Collapsible trap as reasoning. `ToolContent` uses `text-popover-foreground`, which must be published via TextClassContext, not written on each Text."
+  },
+  {
+   "element": "chain-of-thought",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Collapsible",
+    "Icon",
+    "Text",
+    "Badge",
+    "Separator"
+   ],
+   "new_vocabulary": "Vertical stepper: connector rails between steps plus per-step status dots. RNR has no stepper. Build the rail from `bg-border` 1px Views and the dots from `size-2 rounded-full` \u2014 no new tokens, but the composition is invented."
+  },
+  {
+   "element": "terminal",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "View (bg-muted, border, rounded-md)",
+    "Text",
+    "Button (copy)"
+   ],
+   "new_vocabulary": "Mono block with a prompt glyph and ANSI-ish emphasis. Share the code-block shell."
+  },
+  {
+   "element": "stack-trace",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "View",
+    "Text",
+    "Collapsible (frame expansion)"
+   ],
+   "new_vocabulary": "Mono frames with an app-vs-vendor emphasis split and file:line links. Share the code-block shell."
+  },
+  {
+   "element": "test-results",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Badge",
+    "Progress",
+    "Collapsible",
+    "Text",
+    "Separator"
+   ],
+   "new_vocabulary": "Pass/fail semantic color (same green/red exception as tool status) plus a tabular layout \u2014 RNR ships no table. Rows built from flex Views scrolling horizontally."
+  },
+  {
+   "element": "schema-display",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Collapsible",
+    "Text (variant=code)",
+    "Badge"
+   ],
+   "new_vocabulary": "Nested type tree with indentation guides and type-name coloring. Same family as file-tree \u2014 build ONE tree renderer and let both consume it."
+  },
+  {
+   "element": "file-tree",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Collapsible",
+    "Icon",
+    "Text"
+   ],
+   "new_vocabulary": "Indentation guide rails and per-node chevrons. Indentation must cap (~16pt/level) with horizontal scroll or deep trees become unreadable on a phone."
+  },
+  {
+   "element": "sandbox",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Card",
+    "Tabs",
+    "Button"
+   ],
+   "new_vocabulary": "Container chrome plus embedded terminal/preview. Depends on WebView."
+  },
+  {
+   "element": "web-preview",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Card",
+    "Input (URL bar)",
+    "Button (nav)",
+    "Icon"
+   ],
+   "new_vocabulary": "Browser chrome around react-native-webview. Nav bar is pure RNR; the viewport is a foreign surface by definition. Security review required on any user-supplied URL."
+  },
+  {
+   "element": "jsx-preview",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Card",
+    "Tabs (code/preview)"
+   ],
+   "new_vocabulary": "Live-render viewport. On RN there is no DOM to render JSX into \u2014 this is the element most likely to be descoped rather than ported."
+  },
+  {
+   "element": "canvas",
+   "composition": "new-visual",
+   "rnr_components_used": [],
+   "new_vocabulary": "HIGHEST RISK after shimmer. Infinite pan/zoom surface \u2014 web uses react-flow, which has no RN equivalent. Needs Gesture Handler + Reanimated + react-native-svg, an entirely invented grid/background treatment, and gesture conflict resolution with the parent ScrollView. Zero RNR precedent."
+  },
+  {
+   "element": "node",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Card",
+    "Badge",
+    "Text"
+   ],
+   "new_vocabulary": "The card body can be pure RNR; connection handles/ports are invented. Absolute positioning inside canvas."
+  },
+  {
+   "element": "edge",
+   "composition": "new-visual",
+   "rnr_components_used": [],
+   "new_vocabulary": "Bezier paths in react-native-svg. Stroke must be `border`-role-derived, which means reading the token value in JS rather than via className \u2014 the same foreign-surface bridge problem as markdown styling."
+  },
+  {
+   "element": "connection",
+   "composition": "new-visual",
+   "rnr_components_used": [],
+   "new_vocabulary": "Drag-to-connect gesture with a live preview path. Same SVG + token-bridge issue as edge."
+  },
+  {
+   "element": "panel",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Tabs (recommended native substitution)"
+   ],
+   "new_vocabulary": "Resizable split with a drag handle. RNR ships no resizable. On a phone, substitute Tabs \u2014 that keeps it inside RNR vocabulary. Building a real resizable is the parity-expensive path."
+  },
+  {
+   "element": "controls",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Button",
+    "Toggle",
+    "Icon"
+   ],
+   "new_vocabulary": "Media transport with a seek scrubber. Buttons are pure RNR; the scrubber is a slider and RNR ships none \u2014 its track/thumb geometry and press state would be invented. Consider deriving it from Progress (`h-2 rounded-full bg-primary/20` + `bg-primary` fill) plus a `size-4 rounded-full bg-primary` thumb so it at least inherits RNR geometry."
+  },
+  {
+   "element": "audio-player",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Card",
+    "Button",
+    "Progress",
+    "Text"
+   ],
+   "new_vocabulary": "Waveform rendering and a scrubbing gesture. Waveform has no token or precedent \u2014 degrade to Progress + a time label unless waveform is a product requirement."
+  },
+  {
+   "element": "speech-input",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Button (icon)",
+    "Badge"
+   ],
+   "new_vocabulary": "Live input-level meter (animated bars) and a recording state. Requires expo-av permissions plus a Reanimated amplitude loop. Reduced-motion handling required."
+  },
+  {
+   "element": "transcription",
+   "composition": "new-visual",
+   "rnr_components_used": [
+    "Text",
+    "Badge",
+    "Card"
+   ],
+   "new_vocabulary": "Word-level active highlighting synced to playback. Achievable with nested `<Text>` and `bg-accent`, so tokens are fine \u2014 the timing/highlight mechanic is what is new."
+  }
+ ],
+ "density_reconciliation": {
+  "touch_target_rule": "Keep RNR's VISUAL box; grow only the INVISIBLE hit area. RNR's mobile default control is `h-10` (40pt) and its icon button is `h-10 w-10` \u2014 both 4pt under Apple's 44pt HIG and Android's 48dp guidance. The resolution is `hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}`, which yields a 44x44 effective target with a zero-pixel visual delta. This passes through RNR's Button unchanged, because Button spreads `...props` straight onto Pressable \u2014 verified in its source. Three corollaries, all hard rules: (1) NEVER author `h-11`/`h-12` to reach 44pt \u2014 an AI Elements button taller than the host app's buttons is the exact 'that's the chat library' tell; (2) adjacent interactive elements need >=8pt of separation so expanded hit areas do not overlap and steal each other's taps; (3) hitSlop is the ONLY sanctioned deviation from RNR's box model, and it is sanctioned precisely because it is invisible.",
+  "where_density_gives": [
+   "ACTION TOOLBARS (toolbar, message actions, prompt-input controls). Web shows 5\u20136 ghost icon buttons; at RNR's 40pt that is 200\u2013240pt of width on a ~390pt screen. Show at most 3 inline, overflow the rest into a DropdownMenu behind a `MoreHorizontal` icon button \u2014 or a long-press ContextMenu on the message itself. Both are RNR components, so the resulting screen still reads as RNR.",
+   "TABULAR AND CODE CONTENT (code-block, test-results, schema-display, terminal, stack-trace). Never shrink to fit: scroll horizontally inside a ScrollView. `text-xs` (12) is the floor and it is already in use for the web's section labels, so there is no room below it. Shrinking would break the type ramp AND the accessibility size floor in one move.",
+   "MULTI-PANE LAYOUTS (panel, canvas + inspector, sandbox, sidebar-shaped surfaces). Two side-by-side panes become RNR Tabs, or a primary pane plus a modal detail. Prefer Tabs \u2014 it is RNR vocabulary and costs nothing in parity.",
+   "TREE INDENTATION (file-tree, schema-display). Cap the per-level indent at ~16pt and scroll horizontally past ~4 levels. Web's ~24pt/level exhausts a phone's width by depth 5.",
+   "LONG PAYLOADS (tool inputs/outputs, JSON blobs, reasoning traces). Collapse to N lines with a 'Show more' `Button variant=\"link\" size=\"sm\"`. AI Elements already collapses tool content behind a disclosure; extend the same idea one level deeper.",
+   "DISCLOSURE DEFAULTS. On the web, Tool and Reasoning can afford to sit open. On a phone, default everything except the actively streaming reasoning trace to collapsed, so the transcript stays scannable.",
+   "SPACING \u2014 AND THIS IS THE ONE THAT GOES THE OTHER WAY. RNR's mobile density is LOOSER than AI Elements' desktop density (`px-6`/`py-6`/`gap-6` cards vs the web's `p-3`/`p-4`). Where the two disagree, take RNR's. We are not compressing a desktop layout onto a phone; we are authoring at the host app's existing mobile rhythm."
+  ],
+  "parity_cost": "NEAR ZERO for the touch-target rule \u2014 hitSlop changes no pixel, so a screenshot diff against an RNR screen is clean. LOW for overflow menus, horizontal scroll, and collapse-by-default: each is assembled from DropdownMenu, ContextMenu, ScrollView, and Button, all already present in the host app, so the added elements read as RNR rather than as ours. HIGH, and unavoidable, for multi-pane collapse: turning two panes into Tabs is a structural change no styling can hide. It is nonetheless the CHEAPEST high-cost option, because Tabs is RNR's own component \u2014 the alternative, a hand-built resizable or bottom sheet, would invent a drag handle, a backdrop opacity, a spring curve, and a radius with no RNR reference to match, and would therefore break parity harder than the layout change it was meant to avoid. Net: density gives in the places where RNR itself already has an answer, and the promise survives."
+ },
+ "ui_constraints": [
+  "ZERO tokens declared. No `@theme` block, no `--*` property, no `global.css`, no THEME/NAV_THEME object ships from this library. CI gate: grep `registry/**/*.tsx` for `#[0-9a-fA-F]{3,8}`, `rgb(`, `hsl(`, `oklch(` \u2014 any hit outside a documented foreign-surface bridge fails the build.",
+  "Uniwind + Tailwind v4 ONLY. No `tailwind.config.js`, no `hsl(var(--token))`, no `.dark:root`, no `inlineRem`, no `hairlineWidth()`, no `tailwindcss-animate`. Those are Nativewind-path constructs and are inert or wrong here. The RNR KB's theming.md documents the Nativewind path; MIGRATION.md v1.1.0 is the correction that governs.",
+  "No bare strings. Every label is inside `<Text>`. This is the single most common LLM-generated RNR bug and it is a hard render error, not a style issue.",
+  "No cascade. A parent's `className` never reaches a descendant `Text`. Any component intending to influence descendant text publishes via `TextClassContext.Provider` \u2014 as Card, Button, Badge, Accordion, and Tooltip all do.",
+  "Class order is always `cn(variants, contextClass, className)` so a consumer's `className` wins. Non-negotiable: it is the override path the theming promise depends on.",
+  "Web-only utilities live exclusively inside `Platform.select({ web })`: `hover:`, `focus-visible:`, `transition-*`, `outline-none`, `cursor-*`, `whitespace-nowrap`, `select-*`, `data-[\u2026]:`, `[&>svg]:`, `has-[>svg]:`. Every `hover:` needs a base `active:` twin.",
+  "Native state styling is prop/state-driven Reanimated, never `data-[state=open]:`. Extract ONE chevron-rotation hook (250ms open / 200ms close) \u2014 the pattern recurs in at least six of the 49 elements, well past the Rule of 2.",
+  "Icons only via `<Icon as={X} />`. A raw Lucide element silently ignores className under `withUniwind`.",
+  "Every portalled surface needs `<PortalHost />` at the consumer's root \u2014 documented as an install prerequisite \u2014 and every ANCHORED surface (Select, DropdownMenu, ContextMenu, Menubar, HoverCard) needs `insets={contentInsets}` derived from `useSafeAreaInsets()` with the registry's Android `bottom + 24`. Missing either fails silently: no error, nothing on screen, and it reproduces only on hardware.",
+  "Overlays keep the `FullWindowOverlay` iOS guard and animate through `NativeOnlyAnimatedView` with `.reduceMotion(ReduceMotion.System)`.",
+  "Menu-family close is `TriggerRef.close()`, never `setOpen(false)`.",
+  "Motion durations come from the fixed set {150 overlay-in, 200 layout/exit, 250 chevron-open, 1000 pulse}. New durations require an explicit decision.",
+  "hitSlop is the only sanctioned deviation from RNR's box model, precisely because it is invisible.",
+  "`text-xs` (12) is the type floor. Content that does not fit scrolls; it never shrinks.",
+  "One shared mono-font module, one shared status-color map, one shared chevron hook, one shared code-block shell (consumed by code-block, terminal, stack-trace, snippet, tool-input, schema-display), one shared tree renderer (file-tree + schema-display). Each of these appears well past the Rule of 2; duplicating any of them guarantees drift.",
+  "Foreign-surface bridge: markdown style objects and any future syntax theme MUST derive their values from the consumer's resolved theme at runtime, never from hardcoded hex. expo-ai-elements' hardcoded `DARK_MARKDOWN_STYLE` is the anti-pattern \u2014 it is why re-theming markdown there is a manual edit to a copied file.",
+  "New runtime dependencies (webview, svg, av, masked-view) are per-element and must be declared in that element's registry item only, so a consumer installing `message` does not pull a WebView."
+ ],
+ "accessibility": {
+  "contrast_floor": "WCAG 2.2 AA: 4.5:1 for body text, 3:1 for large text (>=18pt regular or 14pt bold) and for icons and control boundaries that carry meaning. The floor is inherited, not re-derived \u2014 RNR's default oklch palette already clears it for foreground/background and muted-foreground/background, so any pair we compose is the only new burden. Two pairs must be measured rather than assumed: (1) `text-muted-foreground` on `bg-muted/50`, used for tool parameter panels and reasoning bodies \u2014 this is foreground-on-tinted-surface and is the most likely failure in the whole library; and (2) the status colors `green-600`/`orange-600` on `bg-secondary` badge fills in BOTH schemes, since they answer to no theme and were chosen by the web original for a white desktop background. Because status is also carried by a distinct icon (CheckCircle / XCircle / Clock / Circle) and a text label, color is never the sole channel \u2014 which satisfies WCAG 1.4.1 independently of the ratio and is the reason the green is tolerable at all.",
+  "reduced_motion": "RNR's convention is `.reduceMotion(ReduceMotion.System)` chained onto every Reanimated entering/exiting animation \u2014 verified in Tooltip and mandated across the registry. Every overlay and disclosure we ship follows it verbatim, which makes disclosure motion compliant for free. BUT RNR's own Skeleton does NOT honor it: its `withRepeat(withTiming(0.5, {duration:1000}), -1, true)` loop runs regardless. Looping animations therefore get no free pass, and this library has several \u2014 shimmer, the tool `input-available` pulse, the speech-input level meter, and any streaming indicator. Rule: every LOOPING animation is gated on `useReducedMotion()` from react-native-reanimated and falls back to a static resting state (shimmer becomes plain `text-muted-foreground`; the pulsing clock icon becomes a still clock icon). This is one place we are stricter than RNR, which is acceptable because it changes nothing visually when reduced motion is OFF \u2014 the parity promise is untouched. A continuously looping animation is also a WCAG 2.2.2 concern (>5s of moving content needs a pause mechanism), and streaming responses routinely exceed five seconds.",
+  "screen_reader_streaming": "The hardest problem in the library, and the one most likely to ship broken because it is invisible in a screenshot. A `<Text>` whose content mutates 10\u201320 times per second makes VoiceOver and TalkBack restart their utterance on every change \u2014 the user hears the first three words, forever. Even the 80ms throttle still yields ~12 mutations/second. The contract: (1) WHILE STREAMING, the mutating text is hidden from the accessibility tree (`accessibilityElementsHidden` on iOS, `importantForAccessibility=\"no-hide-descendants\"` on Android) and a single STABLE sibling node exposes `accessibilityLabel=\"Assistant is responding\"`; (2) ON STREAM END, the hidden state lifts, the full text becomes one readable node, and exactly ONE `AccessibilityInfo.announceForAccessibility()` fires with the completed message \u2014 a single announcement, not a live region. (3) `accessibilityLiveRegion=\"polite\"` is used ONLY on nodes that change at human pace \u2014 the tool status badge transitioning input-streaming to output-available is a legitimate live region; the streaming text body is not. (4) The reasoning duration counter must NEVER be a live region \u2014 a per-second tick would chatter continuously; announce once on completion as 'Thought for 8 seconds'. (5) Every icon-only control carries `accessibilityLabel` and `accessibilityRole` (RNR's Button already sets `role=\"button\"`; Text's h1\u2013h4 variants already emit `role=\"heading\"` + `aria-level`, which is why headings must go through the variant rather than a hand-written size class). (6) Disclosure triggers expose `accessibilityState={{ expanded }}`. NONE of this is provable from source review \u2014 it requires a device pass with VoiceOver and TalkBack against a real token stream, not the simulated setTimeout demo.",
+  "dark_mode_mechanism": "Entirely the consumer's, with zero wiring from us. Their `global.css` carries `@layer theme { :root { @variant light { \u2026 } @variant dark { \u2026 } } }`; Uniwind resolves the active variant; `useColorScheme()` selects the app scheme. Because this library declares no token and no color literal, dark mode works the instant it is installed and keeps working when the consumer swaps themes. The acceptance test is mechanical: swap the consumer's `@theme` block for a different shadcn theme, rebuild, screenshot both schemes \u2014 every AI element must recolor with no library edit. RNR's own dark-mode idioms are inherited too (`dark:bg-input/30` field fills, `dark:bg-destructive/60`, `dark:active:bg-accent/50`, Skeleton's `bg-secondary dark:bg-muted`), which is what makes our surfaces match the host app in dark mode rather than merely being dark. THE ONE EXCEPTION, and it is the highest-severity theming risk in the project: renderers that consume STYLE OBJECTS rather than classes \u2014 the markdown renderer, and any future syntax highlighter \u2014 cannot read Tailwind classes at all. They need theme VALUES in JavaScript. Those values must be read from the consumer's resolved theme at runtime, never hardcoded. expo-ai-elements hardcoded a `DARK_MARKDOWN_STYLE` hex constant and shipped no light-mode object at all, which is exactly why re-theming markdown there is a manual edit to a copied file \u2014 the failure this library exists to avoid. Note also that `NAV_THEME`/`lib/theme.ts` is the CONSUMER's concern (native header and tab-bar chrome); we neither ship nor require it, but any documented example screen must mention it, because a correctly themed body above a stale native header is the classic RNR half-done theme."
+ },
+ "design_risks": [
+  {
+   "risk": "Shimmer has no native equivalent. The web implementation is `background-clip: text` with a moving gradient driven by motion/react; React Native supports neither. Whatever we build is invented, and it is the single most visible streaming affordance in the library \u2014 it is on screen during the first seconds of every response.",
+   "severity": "high",
+   "mitigation": "Reuse RNR Skeleton's exact motion signature \u2014 opacity 1\u21920.5, 1000ms, `withRepeat(..., -1, true)` \u2014 on text colored `text-muted-foreground` (which is also the web's resting color). An invented treatment that borrows the house pulse reads as house style; a 2000ms gradient sweep reads as a foreign component. Gate on `useReducedMotion()`. Ship the masked-gradient variant, if ever, as opt-in with its own dependency."
+  },
+  {
+   "risk": "RNR's Collapsible is a BARE primitive re-export \u2014 zero styling, no trigger layout, no chevron, no animation. At least six elements (reasoning, tool, chain-of-thought, sources, task, plan) are built on it and will each invent their own disclosure look.",
+   "severity": "high",
+   "mitigation": "Extract ONE `<AiDisclosure>` whose trigger styling is lifted verbatim from RNR's Accordion (`flex-row items-start justify-between gap-4 rounded-md py-4 disabled:opacity-50`, TextClassContext publishing `text-left text-sm font-medium`, chevron rotating 180deg over 250ms open / 200ms close, `LinearTransition.duration(200)` on the item). Six independent implementations is six chances to drift, and drift here is directly visible: two disclosures on one screen animating at different tempos."
+  },
+  {
+   "risk": "Foreign-surface theming. Markdown and any syntax highlighter consume STYLE OBJECTS, not classes, so Tailwind cannot reach them. expo-ai-elements' precedent is a hardcoded hex `DARK_MARKDOWN_STYLE` with no light-mode counterpart \u2014 meaning the largest area of every assistant message is the one area the consumer's theme does not control.",
+   "severity": "high",
+   "mitigation": "Build one runtime theme bridge that reads the consumer's resolved token values and derives BOTH a light and a dark markdown style object from them. Every key (paragraph, h1\u2013h6, strong, em, link, code, codeBlock, blockquote, list bullet/marker, math, thematicBreak, table header/stripe) maps to a role \u2014 body to foreground, links to primary, code to muted + border, table stripes to muted/50. Zero hex. Acceptance: swap the consumer's theme and the markdown recolors."
+  },
+  {
+   "risk": "The 44pt touch-target rule gets applied naively as `h-11`, making every AI Elements control visibly taller than every RNR control on the same screen.",
+   "severity": "high",
+   "mitigation": "Write the hitSlop rule into the component template and the reviewer's checklist as a hard constraint, with the reasoning attached so it survives a long session. Add a CI grep rejecting `h-11`/`h-12`/`min-h-[44px]` on any Pressable outside RNR's own `size=\"lg\"`. This is a rule that will be re-litigated by a well-meaning agent every few sessions; it needs a mechanical gate, not a comment."
+  },
+  {
+   "risk": "canvas / node / edge / connection have no RNR precedent whatsoever \u2014 no pan-zoom surface, no SVG usage, no graph vocabulary. Grid background, node handles, edge stroke, and selection states would all be invented at once, and edge colors must be read as JS values (another foreign-surface bridge).",
+   "severity": "high",
+   "mitigation": "Descope from MVP. These four are the least chat-critical of the 49 and the most parity-expensive. If required later, ship them as a separately installed registry group with an explicit note that they introduce visual vocabulary outside the RNR system \u2014 an honest boundary beats a silent one. Their gesture handling also conflicts with the parent Conversation ScrollView, which is its own multi-day problem."
+  },
+  {
+   "risk": "`font-mono` may silently not resolve to a real family under Uniwind on native. Six elements depend on it, and RNR's own `Text variant=\"code\"` uses it \u2014 so if it is broken, it is broken in the host app too and 'matching' means matching a bug.",
+   "severity": "medium",
+   "mitigation": "Verify on device as a day-one task, before any mono element is built. If it resolves, use it and add no file. If it does not, one shared `lib/mono.ts` with `Platform.select({ ios: 'Menlo', android: 'monospace' })` consumed by all six. Either way, one decision in one place."
+  },
+  {
+   "risk": "Tool status green and orange answer to no theme. A consumer whose brand primary is green gets a success badge indistinguishable from their primary action color.",
+   "severity": "medium",
+   "mitigation": "Confine all three literals to one exported `statusColor` map, default to the web original's values (so our deviation matches theirs exactly), and expose the map as an overridable prop. Status is also carried by icon and label, so the color is reinforcement rather than the sole channel \u2014 the failure degrades to 'less obvious', not 'unreadable'."
+  },
+  {
+   "risk": "Conversation is a ScrollView wearing FlatList's prop signature (`data`/`renderItem`/`keyExtractor`) and mounts every message. It passes review, passes the demo, and degrades only once real users accumulate history.",
+   "severity": "medium",
+   "mitigation": "Not a styling issue but a VISIBLE one \u2014 dropped frames read as 'the chat library is janky', which is a visible difference of exactly the kind the promise forbids. Ship FlashList or a windowed FlatList from the start, or the API is a trap for every consumer. Verify with a 500-message transcript and the keyboard open, on device."
+  },
+  {
+   "risk": "The web source is full of raw `<XIcon className=\"size-4\" />`. Ported literally, icons silently ignore className and render at default size and color \u2014 in every file, on every platform, with no error.",
+   "severity": "medium",
+   "mitigation": "CI grep: any `lucide-react-native` import used directly as a JSX element rather than passed to `<Icon as={} />` fails the build. Mechanical, because this one is a pure copy-paste reflex and prose will not stop it."
+  },
+  {
+   "risk": "Web-only `hover:`-only press feedback ported without an `active:` twin. Renders identically at rest, so a screenshot review passes; the control is simply dead under a thumb.",
+   "severity": "medium",
+   "mitigation": "Lint rule: any `Platform.select({ web: '\u2026hover:\u2026' })` requires a sibling `active:` in the base string. Add 'pressed every interactive element on device' to the review gate \u2014 this one cannot be caught by reading code."
+  },
+  {
+   "risk": "Missing PortalHost or missing `contentInsets` on anchored content. Overlays render NOTHING with no error, or sit under the notch or the Android gesture bar. Works on web, works in a default simulator pose, fails on hardware.",
+   "severity": "medium",
+   "mitigation": "Document `<PortalHost />` as an install prerequisite in every registry item that portals. Ship `contentInsets` (with the registry's Android `bottom + 24`) inside our components rather than making consumers supply it. Require device screenshots with a notch and gesture bar in both schemes for any overlay change."
+  },
+  {
+   "risk": "Multi-pane elements (panel, sandbox, canvas inspector) collapsing to a hand-built bottom sheet, since RNR ships no sheet, drawer, resizable, or sidebar. Every value in that sheet \u2014 radius, drag handle, backdrop opacity, spring, shadow \u2014 would be invented with no RNR reference to match.",
+   "severity": "medium",
+   "mitigation": "Prefer RNR Tabs, which costs a structural change but zero visual invention. If a sheet becomes unavoidable, build exactly one, derive every value from the visual parity contract above (`rounded-xl`, `bg-card`, `border-border`, `shadow-sm shadow-black/5`, 200ms), and treat it as a new RNR-shaped primitive rather than an AI Elements detail \u2014 which is also the honest signal that it belongs upstream in RNR, not here."
+  },
+  {
+   "risk": "Someone reads the RNR KB's theming.md and applies the Nativewind path \u2014 `tailwind.config.js`, `hsl(var(--token))`, `.dark:root`, `inlineRem: 16`, `hairlineWidth()`, `tailwindcss-animate`. Symptoms are silent: tokens ignored, dark mode never applies, borderless cards.",
+   "severity": "medium",
+   "mitigation": "theming.md documents the Nativewind path and is superseded for this repo by MIGRATION.md v1.1.0. State the engine at the top of every component file's review checklist. AGENTS.md already carries the rule; the gap is that theming.md is the more inviting document to read."
+  },
+  {
+   "risk": "Streaming text announced continuously by VoiceOver/TalkBack, making assistant responses unusable with a screen reader. Invisible in every screenshot and in every code review.",
+   "severity": "medium",
+   "mitigation": "The stable-wrapper contract in accessibility.screen_reader_streaming, verified on device with VoiceOver and TalkBack against a REAL provider stream \u2014 the simulated setTimeout demo chunks too politely to reproduce the failure."
+  },
+  {
+   "risk": "Shared patterns implemented independently across the 49 elements \u2014 chevron rotation (6+ occurrences), the code-block shell (6), tree rendering (2), status colors (3), mono font (6), copy-to-clipboard (4+). Each duplication is a future drift point, and drift is precisely what the parity promise forbids.",
+   "severity": "medium",
+   "mitigation": "Extract each on its SECOND occurrence, per the Rule of 2 \u2014 every one of these is already past the threshold at planning time, so they are day-one shared modules, not refactors. Build them before the elements that consume them."
+  },
+  {
+   "risk": "Haptics or 'improved' native focus indicators added with good intent, giving the library a felt or seen identity the host app lacks.",
+   "severity": "low",
+   "mitigation": "Default off, opt-in via prop. The promise is that a developer cannot point at a screen and identify the chat library \u2014 that includes what it feels like under the thumb, not only what a screenshot shows."
+  },
+  {
+   "risk": "The `context` element's circular usage ring substituted with RNR's linear Progress, and `panel` substituted with Tabs, are deliberate departures from the web's appearance.",
+   "severity": "low",
+   "mitigation": "Correct by construction, and worth stating plainly so it is not later 'fixed': when RNR and web AI Elements disagree, RNR wins. The promise is parity with the host design system, not fidelity to the web screenshot."
+  }
+ ]
+}

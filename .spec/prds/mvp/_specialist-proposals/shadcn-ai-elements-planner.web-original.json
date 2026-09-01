@@ -1,0 +1,2734 @@
+{
+ "components": [
+  {
+   "name": "agent",
+   "purpose": "Renders an agent's configuration card \u2014 name, model, instructions, tool roster, and output schema \u2014 so a user can see what the agent is before or while it runs.",
+   "composition": {
+    "subcomponents": [
+     "Agent",
+     "AgentHeader",
+     "AgentContent",
+     "AgentInstructions",
+     "AgentTools",
+     "AgentTool",
+     "AgentOutput"
+    ],
+    "shadcn_primitives": [
+     "accordion",
+     "card",
+     "badge",
+     "avatar"
+    ]
+   },
+   "essential_behavior": [
+    "AgentTools is an accordion: each AgentTool collapses to a one-line description and expands to reveal that tool's inputSchema",
+    "AgentInstructions renders its string child as markdown, not plain text",
+    "AgentOutput renders the output schema as syntax-highlighted code",
+    "AgentHeader shows the model identifier as a distinct badge from the agent name"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Shiki syntax highlighting for AgentOutput schema",
+     "why_web_only": "Shiki emits themed HTML spans; there is no DOM to hydrate in RN",
+     "port_advice": "Use a tokenizer that emits <Text> runs, or accept monospace-plus-color-by-token-type"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "AgentTool.value (accordion item value, required)",
+     "AgentHeader.name",
+     "AgentHeader.model",
+     "AgentOutput.schema"
+    ],
+    "context_published": "none of its own; AgentTools relies on Accordion's context",
+    "ai_sdk_expectations": "AgentTool takes an AI SDK `Tool` object ({ description, inputSchema }). No message parts."
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "artifact",
+   "purpose": "A framed container for a discrete generated deliverable (a document, a code file, a rendered output) that sits beside or above the transcript rather than inside a bubble.",
+   "composition": {
+    "subcomponents": [
+     "Artifact",
+     "ArtifactHeader",
+     "ArtifactTitle",
+     "ArtifactDescription",
+     "ArtifactActions",
+     "ArtifactAction",
+     "ArtifactClose",
+     "ArtifactContent"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "tooltip",
+     "card"
+    ]
+   },
+   "essential_behavior": [
+    "Header stays fixed while ArtifactContent scrolls independently of the transcript",
+    "ArtifactAction is icon-plus-tooltip; the label is not visible until hover on web",
+    "ArtifactClose dismisses the artifact without unmounting the conversation behind it"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Tooltip-on-hover for ArtifactAction labels",
+     "why_web_only": "There is no hover on touch; a tooltip that only appears on hover is an invisible label on mobile",
+     "port_advice": "Show the label inline, or use icon + short text; do not port hover-only affordances"
+    },
+    {
+     "artifact": "Side-by-side / split-pane placement next to the transcript",
+     "why_web_only": "Assumes wide viewport",
+     "port_advice": "On phone this is a full-screen sheet or a pushed route, not a side panel"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "ArtifactAction.icon",
+     "ArtifactAction.label",
+     "ArtifactAction.tooltip"
+    ],
+    "context_published": "none \u2014 pure layout shell",
+    "ai_sdk_expectations": "none; you decide what an artifact is from your own tool output"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "attachments",
+   "purpose": "Displays files and referenced sources attached to a message or staged in the composer, with previews and per-item removal.",
+   "composition": {
+    "subcomponents": [
+     "Attachments",
+     "Attachment",
+     "AttachmentPreview",
+     "AttachmentInfo",
+     "AttachmentRemove",
+     "AttachmentEmpty",
+     "AttachmentHoverCard",
+     "AttachmentHoverCardTrigger",
+     "AttachmentHoverCardContent"
+    ],
+    "shadcn_primitives": [
+     "hover-card",
+     "button",
+     "badge",
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "Three layout variants \u2014 grid, inline, list \u2014 that change density, not content",
+    "AttachmentPreview branches on media category: image thumbnail, video poster, or a type icon fallback",
+    "AttachmentRemove is revealed on hover over the item on web, and calls the per-item onRemove",
+    "getMediaCategory(attachment) classifies into image|video|audio|document|source|unknown; getAttachmentLabel falls back to 'Image'/'Attachment' when there is no filename"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Hover-revealed remove button",
+     "why_web_only": "No hover state on touch \u2014 the remove control would be permanently invisible",
+     "port_advice": "Always-visible small X, or long-press/swipe-to-remove"
+    },
+    {
+     "artifact": "AttachmentHoverCard full-size preview on hover",
+     "why_web_only": "Hover-triggered popover",
+     "port_advice": "Tap-to-open a modal preview; the hovercard subtree can be dropped entirely"
+    },
+    {
+     "artifact": "CSS grid auto-fill for the grid variant",
+     "why_web_only": "RN flexbox has no grid auto-placement",
+     "port_advice": "Fixed-column flex wrap computed from container width"
+    },
+    {
+     "artifact": "blob: object URLs for local previews",
+     "why_web_only": "URL.createObjectURL is a browser API",
+     "port_advice": "Use the file:// URI from the picker; see the prompt-input blob\u2192data rule"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "Attachments.variant",
+     "Attachment.data (FileUIPart | SourceDocumentUIPart with id)",
+     "Attachment.onRemove",
+     "AttachmentRemove.label"
+    ],
+    "context_published": "Attachment publishes the current attachment record to its children",
+    "ai_sdk_expectations": "AI SDK `FileUIPart` and `SourceDocumentUIPart` shapes (mediaType, filename, url)"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "audio-player",
+   "purpose": "Plays a generated or referenced audio clip with transport controls, scrubbing, and volume \u2014 the surface for TTS output.",
+   "composition": {
+    "subcomponents": [
+     "AudioPlayer",
+     "AudioPlayerElement",
+     "AudioPlayerControlBar",
+     "AudioPlayerPlayButton",
+     "AudioPlayerSeekBackwardButton",
+     "AudioPlayerSeekForwardButton",
+     "AudioPlayerTimeDisplay",
+     "AudioPlayerTimeRange",
+     "AudioPlayerDurationDisplay",
+     "AudioPlayerMuteButton",
+     "AudioPlayerVolumeRange"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "button-group"
+    ]
+   },
+   "essential_behavior": [
+    "Accepts either a remote URL (src) or an AI SDK speech result and builds a data: URL from base64 + mediaType",
+    "Seek buttons jump by seekOffset seconds (default 10) rather than to an absolute position",
+    "Time display and duration display are separate slots so a compact bar can drop one",
+    "Scrubbing the time range seeks without restarting playback"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "media-chrome Web Components (MediaController, MediaPlayButton, MediaTimeRange\u2026)",
+     "why_web_only": "Custom Elements registry does not exist in RN",
+     "port_advice": "Rebuild the whole control bar over expo-audio/react-native-track-player; only the slot names and seekOffset semantics survive"
+    },
+    {
+     "artifact": "data:audio/mpeg;base64 src on an <audio> element",
+     "why_web_only": "RN audio players generally will not stream a huge base64 data URI",
+     "port_advice": "Write the base64 to a cache file and play the file:// URI"
+    },
+    {
+     "artifact": "Volume slider",
+     "why_web_only": "Mobile OSes own volume via hardware keys; in-app volume sliders are an anti-pattern on iOS",
+     "port_advice": "Drop the volume range; keep mute"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "AudioPlayerElement.src",
+     "AudioPlayerElement.data ({ base64, format, mediaType, uint8Array })",
+     "seekOffset"
+    ],
+    "context_published": "MediaController context consumed by every control (web-component context, not React context)",
+    "ai_sdk_expectations": "AI SDK speech `Result` shape (base64 + mediaType) from generateSpeech"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "canvas",
+   "purpose": "An infinite pan/zoom workspace for rendering an agent's graph \u2014 nodes, edges, and their connections \u2014 as a spatial diagram.",
+   "composition": {
+    "subcomponents": [
+     "Canvas (root; hosts Node/Edge/Connection/Panel/Controls/Toolbar)"
+    ],
+    "shadcn_primitives": [
+     "none directly \u2014 it is @xyflow/react's ReactFlow with AI-oriented defaults"
+    ]
+   },
+   "essential_behavior": [
+    "Pan on scroll, selection on drag, auto-fit on mount, delete keys bound, double-click zoom disabled, pan-on-drag disabled",
+    "Registers edgeTypes/nodeTypes maps so nodes and edges are pluggable components",
+    "Children (Controls, Panel) render as overlays positioned above the graph, not in graph coordinates"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "@xyflow/react (React Flow) entirely",
+     "why_web_only": "React Flow is DOM+SVG: absolutely positioned divs with CSS transform matrices, SVG edge paths, wheel/pointer events, ResizeObserver, and getBoundingClientRect-based node measurement",
+     "port_advice": "There is no drop-in. Rebuild on react-native-gesture-handler (pinch/pan) + reanimated (transform) + react-native-svg (edges), or cut canvas from the port and revisit as its own project"
+    },
+    {
+     "artifact": "Scroll-wheel pan and keyboard delete bindings",
+     "why_web_only": "No wheel events, no hardware Delete key on phone",
+     "port_advice": "Pinch-zoom, two-finger pan, long-press-to-delete"
+    },
+    {
+     "artifact": "DOM measurement for node sizing and auto-fit",
+     "why_web_only": "getBoundingClientRect has no RN equivalent; onLayout is async and per-view",
+     "port_advice": "Require explicit node dimensions, or accumulate onLayout before computing fit"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "nodes",
+     "edges",
+     "nodeTypes",
+     "edgeTypes",
+     "all ReactFlowProps"
+    ],
+    "context_published": "React Flow's internal store (useReactFlow), consumed by Controls/Panel/Toolbar/Node handles",
+    "ai_sdk_expectations": "none \u2014 you map your own agent graph into node/edge arrays"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "chain-of-thought",
+   "purpose": "A collapsible stepwise trace of the model's reasoning, richer than plain reasoning text: each step has a status, and steps can carry search results and images.",
+   "composition": {
+    "subcomponents": [
+     "ChainOfThought",
+     "ChainOfThoughtHeader",
+     "ChainOfThoughtContent",
+     "ChainOfThoughtStep",
+     "ChainOfThoughtSearchResults",
+     "ChainOfThoughtSearchResult",
+     "ChainOfThoughtImage"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "Steps render as a vertical timeline: each has an icon (default a dot), a label, an optional description, and a status that changes the icon/color",
+    "Search results render as a wrapped row of badges under their step",
+    "ChainOfThoughtImage takes an optional caption below the image",
+    "Collapsed by default; header is the trigger"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "CSS pseudo-element connector line between timeline steps",
+     "why_web_only": "::before/::after with absolute positioning",
+     "port_advice": "Render an explicit 1px View as the rail, or a per-step left border View"
+    },
+    {
+     "artifact": "Sub-components throw outside <ChainOfThought>",
+     "why_web_only": "Not browser-specific, but it is a hard composition law worth preserving",
+     "port_advice": "Keep the throwing context \u2014 it catches \u00e0-la-carte misuse at dev time"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "open",
+     "defaultOpen (false)",
+     "onOpenChange",
+     "ChainOfThoughtStep.status",
+     "ChainOfThoughtStep.icon",
+     "ChainOfThoughtStep.label",
+     "ChainOfThoughtStep.description"
+    ],
+    "context_published": "ChainOfThought context \u2014 sub-components throw with 'ChainOfThought components must be used within ChainOfThought'",
+    "ai_sdk_expectations": "not a first-class AI SDK part; you derive steps from your own agent events"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "checkpoint",
+   "purpose": "Marks a restorable point in the conversation so the user can rewind the transcript to that message.",
+   "composition": {
+    "subcomponents": [
+     "Checkpoint",
+     "CheckpointIcon",
+     "CheckpointTrigger"
+    ],
+    "shadcn_primitives": [
+     "separator",
+     "button",
+     "tooltip"
+    ]
+   },
+   "essential_behavior": [
+    "Renders as a horizontal rule through the transcript with the icon/label centered on it \u2014 it reads as a divider, not a message",
+    "The trigger's action is destructive-ish: it truncates the message array (setMessages(messages.slice(0, i + 1)))",
+    "Default icon is a bookmark; the whole row is inline between messages"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Separator line rendered behind centered content via absolute positioning / flex with border",
+     "why_web_only": "Cosmetic only",
+     "port_advice": "Row of [flex-1 hairline View][content][flex-1 hairline View] \u2014 trivially portable"
+    },
+    {
+     "artifact": "Hover tooltip on the restore trigger",
+     "why_web_only": "No hover",
+     "port_advice": "Visible label; and confirm before truncating, since a mistap loses transcript"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "CheckpointTrigger.tooltip",
+     "CheckpointTrigger.variant",
+     "CheckpointTrigger.size"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "consumes the useChat `messages` array and calls `setMessages` \u2014 this is the one component that mutates chat state"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "code-block",
+   "purpose": "Renders a fenced code block with syntax highlighting, an optional filename header, line numbers, and a copy button \u2014 the single most common non-prose thing an LLM emits.",
+   "composition": {
+    "subcomponents": [
+     "CodeBlock",
+     "CodeBlockHeader",
+     "CodeBlockTitle",
+     "CodeBlockFilename",
+     "CodeBlockActions",
+     "CodeBlockCopyButton",
+     "CodeBlockContainer",
+     "CodeBlockContent",
+     "CodeBlockLanguageSelector",
+     "CodeBlockLanguageSelectorTrigger",
+     "CodeBlockLanguageSelectorContent",
+     "CodeBlockLanguageSelectorItem",
+     "CodeBlockLanguageSelectorValue"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "select",
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "Syntax highlighting per BundledLanguage; unknown languages degrade to plain monospace instead of erroring",
+    "Copy button flips to a check icon for ~2000ms then reverts (timeout prop)",
+    "Copy failure calls onError rather than silently doing nothing",
+    "Optional line numbers in a non-selectable gutter",
+    "Long lines scroll horizontally; they do not wrap"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Shiki-generated HTML (nested <span> with inline styles) inside <pre><code>",
+     "why_web_only": "Emits an HTML string; there is no dangerouslySetInnerHTML equivalent for RN text",
+     "port_advice": "Use Shiki's token API (codeToTokens) and map tokens to <Text> children \u2014 the highlighting theme survives, the HTML does not"
+    },
+    {
+     "artifact": "navigator.clipboard.writeText",
+     "why_web_only": "Browser clipboard API",
+     "port_advice": "expo-clipboard; keep the same onCopy/onError/timeout contract"
+    },
+    {
+     "artifact": "Horizontal overflow scroll on <pre>",
+     "why_web_only": "CSS overflow-x",
+     "port_advice": "Horizontal ScrollView per block; watch nesting inside the vertical transcript scroller"
+    },
+    {
+     "artifact": "user-select:none on the line-number gutter",
+     "why_web_only": "CSS user-select",
+     "port_advice": "selectable={false} on the gutter Text"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "code (string)",
+     "language (BundledLanguage)",
+     "showLineNumbers (false)",
+     "CodeBlockCopyButton.timeout (2000)",
+     "onCopy",
+     "onError"
+    ],
+    "context_published": "CodeBlock publishes { code, language } so CodeBlockCopyButton needs no props",
+    "ai_sdk_expectations": "indirect \u2014 MessageResponse's markdown renderer routes fenced blocks here"
+   },
+   "tier": "minimum-chat"
+  },
+  {
+   "name": "commit",
+   "purpose": "Renders a git commit an agent made or is proposing \u2014 message, hash, author, timestamp, and the changed-file list with +/- counts.",
+   "composition": {
+    "subcomponents": [
+     "Commit",
+     "CommitHeader",
+     "CommitMessage",
+     "CommitContent",
+     "CommitFiles",
+     "CommitFile",
+     "CommitFileInfo",
+     "CommitFileStatus",
+     "CommitFilePath",
+     "CommitFileIcon",
+     "CommitFileChanges",
+     "CommitFileAdditions",
+     "CommitFileDeletions",
+     "CommitHash",
+     "CommitCopyButton",
+     "CommitAuthor",
+     "CommitAuthorAvatar",
+     "CommitTimestamp",
+     "CommitMetadata",
+     "CommitInfo",
+     "CommitActions",
+     "CommitSeparator"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "avatar",
+     "badge",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Collapsed shows message + metadata; expanded reveals the file list",
+    "CommitFileStatus maps to a single letter and color: added=A green, modified=M yellow, deleted=D red, renamed=R blue",
+    "CommitTimestamp renders a relative time ('2 hours ago') by default from a Date",
+    "CommitCopyButton copies the hash, not the message"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "<time> semantic element",
+     "why_web_only": "HTML element with datetime attribute",
+     "port_advice": "Plain Text; keep the relative-time formatting"
+    },
+    {
+     "artifact": "Clipboard API for hash copy",
+     "why_web_only": "navigator.clipboard",
+     "port_advice": "expo-clipboard"
+    },
+    {
+     "artifact": "Monospace path truncation with CSS text-overflow ellipsis in the middle",
+     "why_web_only": "CSS ellipsis is end-only anyway; middle-truncation is a JS hack",
+     "port_advice": "numberOfLines={1} ellipsizeMode='middle' \u2014 RN actually does this better than the web"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "CommitFileStatus.status",
+     "CommitFileAdditions.count",
+     "CommitFileDeletions.count",
+     "CommitAuthorAvatar.initials",
+     "CommitTimestamp.date",
+     "CommitCopyButton.hash"
+    ],
+    "context_published": "Commit publishes the commit record so CommitMessage/CommitHash can default from it",
+    "ai_sdk_expectations": "none \u2014 driven by your own tool output"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "confirmation",
+   "purpose": "The human-in-the-loop gate: renders a tool's approval request with Accept/Reject, then the resolved outcome. Without it a gated agent silently stalls.",
+   "composition": {
+    "subcomponents": [
+     "Confirmation",
+     "ConfirmationTitle",
+     "ConfirmationRequest",
+     "ConfirmationAccepted",
+     "ConfirmationRejected",
+     "ConfirmationActions",
+     "ConfirmationAction"
+    ],
+    "shadcn_primitives": [
+     "alert",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Renders NOTHING when there is no approval object, or when state is input-streaming / input-available \u2014 the first child is null",
+    "ConfirmationActions only renders in the approval-requested state; after a response the buttons disappear",
+    "ConfirmationAccepted shows only when approval.approved === true; ConfirmationRejected only when false",
+    "Responding calls back into the chat with { id: approval.id, approved: boolean }"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "none of substance \u2014 this is layout plus a state machine",
+     "why_web_only": "n/a",
+     "port_advice": "Port as-is; it is one of the highest-value/lowest-risk components in the set"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "approval (ToolUIPart approval object with id)",
+     "state (tool-part state union)"
+    ],
+    "context_published": "Confirmation publishes { approval, state } to its children \u2014 sub-components branch on it",
+    "ai_sdk_expectations": "AI SDK tool-part `state` plus the approval record; response goes to addToolApprovalResponse({ id, approved })"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "connection",
+   "purpose": "Draws the in-flight line while a user drags a new edge between two node handles on a canvas.",
+   "composition": {
+    "subcomponents": [
+     "Connection (single component, used as React Flow's connectionLineComponent)"
+    ],
+    "shadcn_primitives": [
+     "none"
+    ]
+   },
+   "essential_behavior": [
+    "Animated bezier from the source handle to the pointer, with a circle marker at the pointer end",
+    "Takes fromX/fromY/toX/toY plus fromPosition/toPosition, and connectionStatus (valid/invalid/null) to color the line"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "SVG <path> with a computed bezier and SMIL/CSS animation, rendered into React Flow's connection layer",
+     "why_web_only": "It is an SVG child of the React Flow renderer and receives pointer coordinates from DOM events",
+     "port_advice": "Only meaningful if canvas is rebuilt. Then: react-native-svg Path + reanimated shared values fed by a PanGesture"
+    },
+    {
+     "artifact": "Pointer coordinates in viewport space",
+     "why_web_only": "clientX/clientY",
+     "port_advice": "Gesture handler absoluteX/absoluteY translated into canvas space"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "fromX",
+     "fromY",
+     "toX",
+     "toY",
+     "fromPosition",
+     "toPosition",
+     "connectionStatus"
+    ],
+    "context_published": "none \u2014 it is a render-prop slot for React Flow",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "context",
+   "purpose": "Shows how much of the model's context window the conversation has consumed, broken down by input/output/reasoning/cached tokens, with estimated cost.",
+   "composition": {
+    "subcomponents": [
+     "Context",
+     "ContextTrigger",
+     "ContextContent",
+     "ContextContentHeader",
+     "ContextContentBody",
+     "ContextContentFooter",
+     "ContextInputUsage",
+     "ContextOutputUsage",
+     "ContextReasoningUsage",
+     "ContextCacheUsage"
+    ],
+    "shadcn_primitives": [
+     "hover-card",
+     "progress",
+     "badge",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Trigger is a compact percentage + icon; the breakdown lives behind a hover card",
+    "Each usage row renders NOTHING when its token count is zero \u2014 a model with no reasoning tokens shows no reasoning row",
+    "Token counts use Intl.NumberFormat compact notation: exact below 1000, then K / M / B",
+    "Cost is computed via tokenlens from modelId and only appears when modelId is supplied",
+    "Header shows a progress bar of usedTokens / maxTokens"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "HoverCard as the disclosure mechanism",
+     "why_web_only": "Hover has no touch equivalent; on mobile the entire breakdown would be unreachable",
+     "port_advice": "RNR has hover-card but on touch it needs press-to-open; consider a bottom sheet or popover instead"
+    },
+    {
+     "artifact": "Intl.NumberFormat compact notation",
+     "why_web_only": "Hermes ships a reduced Intl; compact notation support varies",
+     "port_advice": "Verify on Hermes with the intl polyfill, or hand-roll the K/M/B formatter"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "maxTokens",
+     "usedTokens",
+     "usage (LanguageModelUsage)",
+     "modelId",
+     "defaultOpen"
+    ],
+    "context_published": "Context publishes usage/maxTokens/modelId; ContextTrigger throws with 'Context components must be used within Context'",
+    "ai_sdk_expectations": "AI SDK `LanguageModelUsage` ({ inputTokens, outputTokens, reasoningTokens, cachedInputTokens }) off the finished response"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "controls",
+   "purpose": "The zoom-in / zoom-out / fit-view / lock cluster for a canvas.",
+   "composition": {
+    "subcomponents": [
+     "Controls (styled wrapper over @xyflow/react Controls)"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "button-group"
+    ]
+   },
+   "essential_behavior": [
+    "Four togglable buttons: showZoom, showFitView, showInteractive, plus position",
+    "Acts on the React Flow viewport store, not on any prop you pass"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Depends on React Flow's useReactFlow store for zoomIn/zoomOut/fitView",
+     "why_web_only": "That store does not exist without the DOM renderer",
+     "port_advice": "Only ships if canvas ships; then wire to your reanimated scale/translate shared values"
+    },
+    {
+     "artifact": "Discrete zoom buttons as the primary zoom affordance",
+     "why_web_only": "Desktop has no pinch",
+     "port_advice": "Pinch is the primary gesture on mobile; fit-view is the only button worth keeping"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "showZoom",
+     "showFitView",
+     "showInteractive",
+     "position"
+    ],
+    "context_published": "none; consumes React Flow context",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "conversation",
+   "purpose": "The transcript scroller \u2014 keeps the newest message visible while streaming without fighting a user who has scrolled up to read history.",
+   "composition": {
+    "subcomponents": [
+     "Conversation",
+     "ConversationContent",
+     "ConversationScrollButton",
+     "ConversationEmptyState",
+     "ConversationDownload"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "scroll-area",
+     "empty"
+    ]
+   },
+   "essential_behavior": [
+    "Sticks to the bottom as content streams in, and RELEASES stickiness the moment the user scrolls up \u2014 it must never yank a reader back down mid-token",
+    "ConversationScrollButton renders ONLY while not at the bottom; pressing it calls scrollToBottom()",
+    "ConversationEmptyState occupies the scroller when messages is empty (title/description/icon/children)",
+    "ConversationDownload serializes messages to Markdown via messagesToMarkdown(messages, formatMessage?) and hands the user a file",
+    "Content grows from the bottom \u2014 a two-message conversation sits at the bottom of the viewport, not the top"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "use-stick-to-bottom, which does ResizeObserver + scrollHeight/scrollTop math on a div",
+     "why_web_only": "No ResizeObserver; RN scroll metrics come from onScroll/onContentSizeChange events, and scroll position is async",
+     "port_advice": "Rebuild on FlatList inverted, or ScrollView + onContentSizeChange + a nearBottom threshold. This is the single highest-risk behavior in the whole port and deserves its own task"
+    },
+    {
+     "artifact": "Non-virtualized DOM list (the browser tolerates hundreds of message divs)",
+     "why_web_only": "The DOM is cheap enough that the web version never had to virtualize; RN mounting 500 message views is a memory cliff",
+     "port_advice": "Use FlatList/FlashList from day one. The prior RN port shipped a ScrollView + .map() and its own KB flags this as the defect most likely to ship unnoticed"
+    },
+    {
+     "artifact": "Blob + anchor download for ConversationDownload",
+     "why_web_only": "No filesystem download in RN",
+     "port_advice": "expo-file-system write + expo-sharing share sheet"
+    },
+    {
+     "artifact": "No keyboard handling (the browser resizes the viewport)",
+     "why_web_only": "n/a \u2014 it is a missing behavior, not an artifact",
+     "port_advice": "The RN version MUST add KeyboardAvoidingView + safe-area insets; the web component has nothing to copy here"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "contextRef",
+     "instance (StickToBottomInstance)",
+     "children (render-prop or nodes)",
+     "ConversationDownload.messages",
+     "ConversationDownload.filename",
+     "ConversationDownload.formatMessage"
+    ],
+    "context_published": "StickToBottom context: { isAtBottom, scrollToBottom } consumed by ConversationScrollButton",
+    "ai_sdk_expectations": "ConversationDownload takes `UIMessage[]`; the scroller itself is content-agnostic"
+   },
+   "tier": "minimum-chat"
+  },
+  {
+   "name": "edge",
+   "purpose": "The line between two canvas nodes \u2014 either a dashed preview or a solid line with a dot animating along it to show data flow.",
+   "composition": {
+    "subcomponents": [
+     "Edge.Temporary",
+     "Edge.Animated"
+    ],
+    "shadcn_primitives": [
+     "none"
+    ]
+   },
+   "essential_behavior": [
+    "Temporary: dashed bezier in the ring color, for preview/proposed connections",
+    "Animated: solid path with a circle traversing it on a 2-second infinite loop \u2014 the loop is the whole point (it reads as 'data is moving')",
+    "Registered by name in the canvas edgeTypes map; requires a const assertion on the type map or TypeScript widens it"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "SVG <path> with getBezierPath from @xyflow/react plus SMIL/CSS keyframe animation",
+     "why_web_only": "SVG path + CSS animation in the React Flow SVG layer",
+     "port_advice": "react-native-svg Path + reanimated withRepeat along a computed path; there is no getBezierPath, you compute the control points yourself"
+    },
+    {
+     "artifact": "markerEnd arrowhead via SVG <marker> defs",
+     "why_web_only": "SVG marker element",
+     "port_advice": "Draw the arrowhead as an explicit Polygon"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "id",
+     "source",
+     "target",
+     "sourceX/Y",
+     "targetX/Y (Temporary only)",
+     "sourcePosition",
+     "targetPosition",
+     "markerEnd",
+     "style (Animated only)"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "environment-variables",
+   "purpose": "Displays a set of env vars an agent needs or set, with values masked by default and a per-var copy in shell-export form.",
+   "composition": {
+    "subcomponents": [
+     "EnvironmentVariables",
+     "EnvironmentVariablesHeader",
+     "EnvironmentVariablesTitle",
+     "EnvironmentVariablesToggle",
+     "EnvironmentVariablesContent",
+     "EnvironmentVariable",
+     "EnvironmentVariableName",
+     "EnvironmentVariableValue",
+     "EnvironmentVariableRequired",
+     "EnvironmentVariableCopyButton",
+     "EnvironmentVariableGroup"
+    ],
+    "shadcn_primitives": [
+     "switch",
+     "badge",
+     "button",
+     "input"
+    ]
+   },
+   "essential_behavior": [
+    "Values are MASKED until the toggle is flipped \u2014 showing a secret by default is the failure mode this component exists to prevent",
+    "Copy emits `export KEY=\"value\"` (copyFormat), not the bare value",
+    "Required vars carry a distinct badge",
+    "The toggle is global to the group, not per-var"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Clipboard API",
+     "why_web_only": "navigator.clipboard",
+     "port_advice": "expo-clipboard"
+    },
+    {
+     "artifact": "CSS text-security / monospace bullet masking",
+     "why_web_only": "Cosmetic",
+     "port_advice": "Replace the string with bullets in JS; do not rely on secureTextEntry for non-inputs"
+    },
+    {
+     "artifact": "Copying a secret to the OS clipboard at all",
+     "why_web_only": "Mobile clipboards are shared across apps and surfaced in system UI",
+     "port_advice": "Consider a clipboard clear-after-timeout, and never log the value"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "showValues",
+     "defaultShowValues (false)",
+     "onShowValuesChange",
+     "EnvironmentVariable.name",
+     "EnvironmentVariable.value",
+     "copyFormat"
+    ],
+    "context_published": "EnvironmentVariables publishes showValues; EnvironmentVariable publishes { name, value } so children default from it",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "file-tree",
+   "purpose": "A hierarchical file/folder browser for the workspace an agent is operating on, with independent select and expand.",
+   "composition": {
+    "subcomponents": [
+     "FileTree",
+     "FileTreeFolder",
+     "FileTreeFile",
+     "FileTreeIcon",
+     "FileTreeName",
+     "FileTreeActions"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "button",
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "CRITICAL: the chevron expands/collapses; the NAME selects. One tap must not do both. This is an explicit, tested law in the web library",
+    "Expanded state is a Set<string> of paths \u2014 controlled via expanded/onExpandedChange or uncontrolled via defaultExpanded",
+    "selectedPath highlights exactly one row across the whole tree",
+    "FileTreeActions stops click propagation so an action does not also select the row",
+    "Indentation depth is derived from nesting, not from a prop"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Hover-revealed FileTreeActions",
+     "why_web_only": "No hover",
+     "port_advice": "Always-visible or long-press context menu"
+    },
+    {
+     "artifact": "Two distinct hit targets (chevron vs name) inside a ~24px row",
+     "why_web_only": "A mouse can hit an 12px chevron; a finger cannot",
+     "port_advice": "Preserve the semantic split but give each target \u226544pt. If you cannot, pick ONE behavior per tap and expose the other via long-press \u2014 do NOT collapse them into 'tap does both'"
+    },
+    {
+     "artifact": "Deep nesting with horizontal overflow scroll",
+     "why_web_only": "Wide viewport tolerates deep indent",
+     "port_advice": "Cap indent per level (~12pt) and truncate names; or use a drill-down navigation instead of a tree on phone"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "expanded (Set<string>)",
+     "defaultExpanded (new Set())",
+     "selectedPath",
+     "onSelect(path)",
+     "onExpandedChange(Set)"
+    ],
+    "context_published": "FileTree publishes { expanded, selectedPath, onSelect, toggle } to folders and files",
+    "ai_sdk_expectations": "none \u2014 you supply the tree"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "image",
+   "purpose": "Renders an image the model generated, from AI SDK's base64 result rather than a URL.",
+   "composition": {
+    "subcomponents": [
+     "Image (single component)"
+    ],
+    "shadcn_primitives": [
+     "aspect-ratio (optional)"
+    ]
+   },
+   "essential_behavior": [
+    "Builds `data:{mediaType};base64,{base64}` internally \u2014 the caller passes the AI SDK result object, not a src",
+    "Defaults to max-width 100% / height auto so a 1024px image does not blow out the bubble",
+    "alt is a real prop, not optional decoration"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "data: URI in an <img> src",
+     "why_web_only": "RN Image accepts data URIs but a multi-MB base64 string through the JS bridge is a memory and jank problem",
+     "port_advice": "Write base64 to cache with expo-file-system and pass a file:// uri; keep the same prop shape so callers do not change"
+    },
+    {
+     "artifact": "CSS max-width:100%; height:auto intrinsic sizing",
+     "why_web_only": "RN Image needs explicit dimensions or resizeMode + a container",
+     "port_advice": "Use aspect ratio from the generation request, or Image.getSize before layout"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "base64",
+     "mediaType",
+     "uint8Array",
+     "alt",
+     "className"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "AI SDK `Experimental_GeneratedImage` from experimental_generateImage"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "inline-citation",
+   "purpose": "A superscript-style citation marker inside prose that reveals the cited sources \u2014 title, URL, description, and quoted excerpt \u2014 without leaving the message.",
+   "composition": {
+    "subcomponents": [
+     "InlineCitation",
+     "InlineCitationText",
+     "InlineCitationCard",
+     "InlineCitationCardTrigger",
+     "InlineCitationCardBody",
+     "InlineCitationCarousel",
+     "InlineCitationCarouselHeader",
+     "InlineCitationCarouselIndex",
+     "InlineCitationCarouselPrev",
+     "InlineCitationCarouselNext",
+     "InlineCitationCarouselContent",
+     "InlineCitationCarouselItem",
+     "InlineCitationSource",
+     "InlineCitationQuote"
+    ],
+    "shadcn_primitives": [
+     "hover-card",
+     "carousel",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "The trigger badge shows a count derived from sources.length, and the hostname of the first source",
+    "Multiple sources for one citation are paged through in a carousel with a live 'n/total' index",
+    "InlineCitationQuote renders the supporting excerpt, not just the link",
+    "The marker sits inline in flowing text without breaking the line box"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "HoverCard trigger",
+     "why_web_only": "Hover",
+     "port_advice": "Tap opens a bottom sheet; a hover-only citation is unreachable on phone"
+    },
+    {
+     "artifact": "Embla carousel (transform-based track, drag physics, DOM measurement)",
+     "why_web_only": "Embla is DOM-only",
+     "port_advice": "Horizontal paging FlatList with pagingEnabled; keep the index indicator"
+    },
+    {
+     "artifact": "Inline placement inside a text run",
+     "why_web_only": "RN cannot place an arbitrary View inline in a Text without a nested <Text> or measured hack",
+     "port_advice": "Render the marker as a pressable <Text> child inside the paragraph Text; a View child will break the line box"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "InlineCitationCardTrigger.sources (string[])",
+     "InlineCitationCarouselIndex.count/current",
+     "InlineCitationSource.title/url/description"
+    ],
+    "context_published": "carousel context for prev/next/index",
+    "ai_sdk_expectations": "pairs with AI SDK `source-url` / `source-document` parts (sendSources on the route)"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "jsx-preview",
+   "purpose": "Renders JSX the model is streaming as live UI \u2014 generative UI where the model authors the markup.",
+   "composition": {
+    "subcomponents": [
+     "JSXPreview",
+     "JSXPreviewContent",
+     "JSXPreviewError"
+    ],
+    "shadcn_primitives": [
+     "alert (for the error state)"
+    ]
+   },
+   "essential_behavior": [
+    "While isStreaming is true it auto-closes unclosed tags and strips tags cut off mid-attribute, so the preview does not flash between tokens",
+    "On a parse error it falls back to the LAST SUCCESSFULLY RENDERED JSX rather than blanking",
+    "components map whitelists which component names the JSX may reference; bindings supplies variables",
+    "onError surfaces parse failures without unmounting"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "react-jsx-parser, which parses a JSX string into React elements against an HTML element namespace",
+     "why_web_only": "Its default output is DOM intrinsics (div/span/p). RN has no intrinsic elements \u2014 an unmapped tag renders nothing",
+     "port_advice": "Every tag must map to an RN component. Either ship a strict allowlist (View/Text/Image/RNR components) and reject everything else, or drop this component. Do not carry over an open-tag parser"
+    },
+    {
+     "artifact": "Effectively evaluating model-authored markup",
+     "why_web_only": "The web version's blast radius is a div; in an app it is your component tree",
+     "port_advice": "Treat as untrusted input. Allowlist only. This is the highest-security-risk component in the set"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "jsx (string, required)",
+     "isStreaming",
+     "components (Record<string, ComponentType>)",
+     "bindings (Record<string, unknown>)",
+     "onError"
+    ],
+    "context_published": "JSXPreview publishes parse state; JSXPreviewContent throws with 'JSXPreview components must be used within JSXPreview'",
+    "ai_sdk_expectations": "consumes a streaming text part that happens to contain JSX"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "message",
+   "purpose": "One turn in the transcript \u2014 the bubble, its role-based alignment/styling, its markdown body, its per-message actions, and response branching.",
+   "composition": {
+    "subcomponents": [
+     "Message",
+     "MessageContent",
+     "MessageResponse",
+     "MessageActions",
+     "MessageAction",
+     "MessageToolbar",
+     "MessageBranch",
+     "MessageBranchContent",
+     "MessageBranchSelector",
+     "MessageBranchPrevious",
+     "MessageBranchNext",
+     "MessageBranchPage"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "avatar",
+     "tooltip",
+     "button-group"
+    ]
+   },
+   "essential_behavior": [
+    "The prop is `from`, NOT `role` \u2014 <Message from={message.role}>. Getting this wrong is the most common port error",
+    "User messages get a contained bubble with primary background and reverse the row; assistant messages render full-width and unbubbled",
+    "MessageResponse children is a STRING of markdown \u2014 never React nodes, never AI SDK parts. parseIncompleteMarkdown defaults true so a half-streamed **bold** does not render literal asterisks",
+    "MessageBranchSelector hides itself when there is only one branch",
+    "MessageAction is icon + tooltip label"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Streamdown / remark-gfm / rehype-katex markdown pipeline emitting HTML",
+     "why_web_only": "Produces an HTML tree; tables, task lists, footnotes and KaTeX all assume DOM",
+     "port_advice": "This is the biggest single sub-project. Pick an RN markdown renderer, map every node type to RNR text styles, and decide explicitly whether tables/math ship. Do not assume parity"
+    },
+    {
+     "artifact": "parseIncompleteMarkdown operating on an HTML-producing parser",
+     "why_web_only": "The algorithm is renderer-agnostic; the integration is not",
+     "port_advice": "KEEP this behavior \u2014 without it every streamed message flickers raw syntax. Port the incomplete-token logic into whatever renderer you choose"
+    },
+    {
+     "artifact": "Hover-revealed MessageActions",
+     "why_web_only": "No hover",
+     "port_advice": "Always-visible action row under assistant messages, or long-press menu"
+    },
+    {
+     "artifact": "max-width via CSS ch/percentage on prose",
+     "why_web_only": "CSS units",
+     "port_advice": "Percentage of container width; bubbles should not span full width on tablet"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "from (role)",
+     "MessageContent.variant ('contained')",
+     "MessageResponse.children (string)",
+     "MessageResponse.parseIncompleteMarkdown (true)",
+     "MessageResponse.components",
+     "MessageResponse.allowedImagePrefixes / allowedLinkPrefixes",
+     "MessageBranch.defaultBranch",
+     "MessageBranch.onBranchChange"
+    ],
+    "context_published": "Message publishes { from }; MessageBranch publishes branch index \u2014 MessageBranchNext throws with 'MessageBranch components must be used within MessageBranch'",
+    "ai_sdk_expectations": "AI SDK `UIMessage` (NOT the removed `ConversationMessage` type); you switch over message.parts and route text parts to MessageResponse"
+   },
+   "tier": "minimum-chat"
+  },
+  {
+   "name": "mic-selector",
+   "purpose": "Lets the user pick which microphone the voice input uses, listing the OS's available audio input devices.",
+   "composition": {
+    "subcomponents": [
+     "MicSelector",
+     "MicSelectorTrigger",
+     "MicSelectorValue",
+     "MicSelectorContent",
+     "MicSelectorInput",
+     "MicSelectorList",
+     "MicSelectorItem",
+     "MicSelectorEmpty",
+     "MicSelectorLabel",
+     "useAudioDevices"
+    ],
+    "shadcn_primitives": [
+     "popover",
+     "command",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Opening the selector without mic permission triggers the permission request \u2014 the device list is empty until permission is granted",
+    "MicSelectorList is a render-prop over MediaDeviceInfo[]",
+    "MicSelectorLabel strips the trailing '(XXXX:XXXX)' hardware IDs browsers append to device labels",
+    "Trigger measures its own width so the popover matches it"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "navigator.mediaDevices.enumerateDevices() + getUserMedia({audio:true})",
+     "why_web_only": "There is no RN API that enumerates audio input devices the way the browser does",
+     "port_advice": "iOS/Android do not expose an arbitrary device list to apps; the platform owns routing (AVAudioSession route picker, Bluetooth). This component has no honest native equivalent \u2014 either drop it or replace with a system route picker"
+    },
+    {
+     "artifact": "Hardware-ID label parsing",
+     "why_web_only": "That suffix is a Chrome artifact",
+     "port_advice": "Dead code natively"
+    },
+    {
+     "artifact": "cmdk Command palette with type-to-filter",
+     "why_web_only": "cmdk is DOM-only and RNR has no command primitive",
+     "port_advice": "If kept, rebuild as bottom sheet + FlatList + TextInput filter"
+    },
+    {
+     "artifact": "Trigger width measurement via getBoundingClientRect",
+     "why_web_only": "DOM measurement",
+     "port_advice": "onLayout, or just use full-width sheet"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "value (deviceId)",
+     "onValueChange",
+     "open",
+     "onOpenChange",
+     "defaultValue"
+    ],
+    "context_published": "MicSelector publishes { devices, value, setValue }; useAudioDevices returns { devices, loading, error, hasPermission, loadDevices }",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "model-selector",
+   "purpose": "A searchable command palette for choosing the model, grouped by provider with provider logos and keyboard shortcuts.",
+   "composition": {
+    "subcomponents": [
+     "ModelSelector",
+     "ModelSelectorTrigger",
+     "ModelSelectorContent",
+     "ModelSelectorDialog",
+     "ModelSelectorInput",
+     "ModelSelectorList",
+     "ModelSelectorGroup",
+     "ModelSelectorItem",
+     "ModelSelectorName",
+     "ModelSelectorLogo",
+     "ModelSelectorLogoGroup",
+     "ModelSelectorShortcut",
+     "ModelSelectorSeparator",
+     "ModelSelectorEmpty"
+    ],
+    "shadcn_primitives": [
+     "dialog",
+     "command",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Type-to-filter across all groups, with an explicit empty state when nothing matches",
+    "ModelSelectorLogo derives its src from the provider name: https://models.dev/logos/{provider}.svg",
+    "Grouped by provider with headings and separators",
+    "ModelSelectorShortcut displays a keybinding hint (\u23181)"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "cmdk Command + Dialog as a \u2318K palette",
+     "why_web_only": "cmdk is DOM; a keyboard-shortcut palette is a desktop idiom",
+     "port_advice": "Bottom sheet + sectioned FlatList + TextInput filter. Drop ModelSelectorShortcut entirely \u2014 there is no \u2318 on a phone"
+    },
+    {
+     "artifact": "Remote SVG logos from models.dev",
+     "why_web_only": "RN Image does not render SVG without react-native-svg + a remote-SVG loader",
+     "port_advice": "Bundle PNG logos, or use react-native-svg with SvgUri and a fallback"
+    },
+    {
+     "artifact": "Autofocused search input on open",
+     "why_web_only": "Desktop keyboard is always present; on mobile it slams the keyboard up",
+     "port_advice": "Do not autofocus; let the user tap the field"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "open",
+     "onOpenChange",
+     "ModelSelectorItem.value",
+     "ModelSelectorItem.onSelect",
+     "ModelSelectorLogo.provider"
+    ],
+    "context_published": "Command context for filtering/selection",
+    "ai_sdk_expectations": "none directly; the chosen id is passed to your route as the model"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "node",
+   "purpose": "One box on the canvas \u2014 a card with a title, description, body, footer, and connection handles on its left and right edges.",
+   "composition": {
+    "subcomponents": [
+     "Node",
+     "NodeHeader",
+     "NodeTitle",
+     "NodeDescription",
+     "NodeAction",
+     "NodeContent",
+     "NodeFooter"
+    ],
+    "shadcn_primitives": [
+     "card (Node is literally Card; NodeHeader\u2192CardHeader, NodeContent\u2192CardContent, etc.)"
+    ]
+   },
+   "essential_behavior": [
+    "The card body itself is 100% portable \u2014 it is a shadcn Card with named slots",
+    "The non-portable part is `handles`: a target handle on the left edge and a source handle on the right, which are the anchor points edges attach to",
+    "handles={{ source: false, target: false }} makes a terminal node"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "@xyflow/react Handle components positioned with CSS absolute + Position enum",
+     "why_web_only": "Handles register themselves with the React Flow store and are measured in DOM coordinates to compute edge endpoints",
+     "port_advice": "The Card ships today from RNR. The handle contract does not \u2014 it requires the canvas's coordinate store. If canvas is cut, ship Node as a plain card and drop `handles`"
+    },
+    {
+     "artifact": "Absolute positioning within a transformed canvas layer",
+     "why_web_only": "CSS transform matrix on a parent",
+     "port_advice": "reanimated transform on an Animated.View if canvas is rebuilt"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "handles ({ source, target })",
+     "all Card slot props"
+    ],
+    "context_published": "none of its own; handles publish into React Flow's store",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "open-in-chat",
+   "purpose": "Offers to continue the current query in an external AI product (ChatGPT, Claude, v0, Cursor, T3, Scira) via a deep link.",
+   "composition": {
+    "subcomponents": [
+     "OpenIn",
+     "OpenInTrigger",
+     "OpenInContent",
+     "OpenInLabel",
+     "OpenInItem",
+     "OpenInSeparator",
+     "OpenInChatGPT",
+     "OpenInClaude",
+     "OpenInT3",
+     "OpenInScira",
+     "OpenInv0",
+     "OpenInCursor"
+    ],
+    "shadcn_primitives": [
+     "dropdown-menu",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Each provider item builds its own URL with the shared query from OpenIn context \u2014 the caller sets query once",
+    "It is a menu of outbound links, nothing more"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "window.open / <a target=_blank> to https URLs",
+     "why_web_only": "Opening a new tab",
+     "port_advice": "Linking.openURL. Prefer native app deep links with an https fallback; check canOpenURL"
+    },
+    {
+     "artifact": "Requires the Open Code file to carry 'use client'",
+     "why_web_only": "Next.js RSC directive",
+     "port_advice": "Strip it"
+    },
+    {
+     "artifact": "Sending the user out of the app entirely",
+     "why_web_only": "Cheap on web, a full app switch on mobile",
+     "port_advice": "Confirm before leaving, or reconsider whether this ships at all"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "query (string)",
+     "defaultOpen"
+    ],
+    "context_published": "OpenIn publishes { query }; OpenInChatGPT throws with 'OpenIn components must be used within an OpenIn provider'",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "package-info",
+   "purpose": "Shows a dependency an agent is proposing to add, upgrade, or remove \u2014 with the semver change classified and color-coded.",
+   "composition": {
+    "subcomponents": [
+     "PackageInfo",
+     "PackageInfoHeader",
+     "PackageInfoName",
+     "PackageInfoChangeType",
+     "PackageInfoVersion",
+     "PackageInfoDescription",
+     "PackageInfoContent",
+     "PackageInfoDependencies",
+     "PackageInfoDependency"
+    ],
+    "shadcn_primitives": [
+     "badge",
+     "card",
+     "collapsible"
+    ]
+   },
+   "essential_behavior": [
+    "changeType drives the badge color: major=red, minor=yellow, patch=green, added=blue, removed=gray \u2014 the color IS the risk signal",
+    "PackageInfoVersion renders the transition (18.0.0 \u2192 19.0.0), not a single version",
+    "Transitive dependencies list under the package"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Color-only encoding of change severity",
+     "why_web_only": "Not web-only, but it is an accessibility bug worth fixing in the port",
+     "port_advice": "Keep the color AND the word ('major'); never encode risk by hue alone"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "name",
+     "changeType",
+     "currentVersion",
+     "newVersion",
+     "PackageInfoDependency.name/version"
+    ],
+    "context_published": "PackageInfo publishes { name, changeType, versions } so children default from it",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "panel",
+   "purpose": "A floating overlay container pinned to a corner or edge of the canvas, above the graph.",
+   "composition": {
+    "subcomponents": [
+     "Panel (styled @xyflow/react Panel)"
+    ],
+    "shadcn_primitives": [
+     "card"
+    ]
+   },
+   "essential_behavior": [
+    "position: top-left | top-right | bottom-left | bottom-right | top-center | bottom-center",
+    "Stays fixed while the graph pans and zooms beneath it \u2014 it is in screen space, not graph space"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Positioned via React Flow's Panel, which is CSS-absolute inside the flow wrapper and deliberately outside the transform layer",
+     "why_web_only": "Depends on the React Flow DOM structure",
+     "port_advice": "Trivially replaced by an absolutely positioned View \u2014 but it is only meaningful if canvas exists. Standalone, it is a 10-line component you would not ship as a library item"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "position"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "persona",
+   "purpose": "An animated visual avatar for a voice agent that reacts to conversational state \u2014 idle, listening, thinking, speaking, asleep.",
+   "composition": {
+    "subcomponents": [
+     "Persona (single component)"
+    ],
+    "shadcn_primitives": [
+     "none"
+    ]
+   },
+   "essential_behavior": [
+    "State drives the animation: listening pulses, thinking churns, speaking modulates \u2014 the state transition is the entire product value",
+    "Six visual variants (obsidian, mana, opal, halo, glint, command); ANY other value throws",
+    "Lifecycle callbacks: onLoad, onLoadError, onReady, onPlay, onPause, onStop"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Rive rendered over a WebGL2 canvas context",
+     "why_web_only": "WebGL2 canvas context",
+     "port_advice": "rive-react-native exists and is the honest substitute \u2014 the .riv asset and the state-machine input names port directly. This is the rare 'web-shaped' component with a real native runtime"
+    },
+    {
+     "artifact": "Deferred WebGL2 context creation to survive React Strict Mode double-mount",
+     "why_web_only": "Browsers cap simultaneous WebGL contexts (~16); Vite Strict Mode double-mounts exhaust it",
+     "port_advice": "The specific bug does not exist in RN, but the lesson does: do not create the Rive instance in a mount effect that can double-fire"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "state (idle|listening|thinking|speaking|asleep)",
+     "variant (obsidian|mana|opal|halo|glint|command)",
+     "onLoad/onLoadError/onReady/onPlay/onPause/onStop"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "none directly; state is derived from your voice pipeline"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "plan",
+   "purpose": "Shows the agent's proposed plan \u2014 a title, description, and step list \u2014 that the user reads before or while execution runs.",
+   "composition": {
+    "subcomponents": [
+     "Plan",
+     "PlanHeader",
+     "PlanTitle",
+     "PlanDescription",
+     "PlanAction",
+     "PlanTrigger",
+     "PlanContent",
+     "PlanFooter"
+    ],
+    "shadcn_primitives": [
+     "card",
+     "collapsible",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "isStreaming puts a shimmer on the title and description while the plan is still being written \u2014 the user sees the plan forming",
+    "PlanTrigger is a CollapsibleTrigger rendered as a chevron button; the header is not itself the trigger",
+    "PlanFooter carries approve/reject style actions"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Shimmer via CSS background-clip:text + animated gradient",
+     "why_web_only": "background-clip:text does not exist in RN",
+     "port_advice": "See the shimmer entry \u2014 MaskedView + LinearGradient, or an opacity pulse"
+    },
+    {
+     "artifact": "group-data-[state=open] chevron rotation",
+     "why_web_only": "CSS group selectors",
+     "port_advice": "reanimated rotate driven by open state"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "open",
+     "defaultOpen",
+     "onOpenChange",
+     "isStreaming"
+    ],
+    "context_published": "Plan publishes { isStreaming }; PlanTitle/PlanDescription throw with 'Plan components must be used within Plan'",
+    "ai_sdk_expectations": "typically driven by a streamed structured object (useObject) rather than a message part"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "prompt-input",
+   "purpose": "The composer \u2014 text entry, attachments, model/tool selectors, and the submit/stop control. It owns the input state and the submit contract.",
+   "composition": {
+    "subcomponents": [
+     "PromptInput",
+     "PromptInputProvider",
+     "PromptInputBody",
+     "PromptInputHeader",
+     "PromptInputTextarea",
+     "PromptInputFooter",
+     "PromptInputTools",
+     "PromptInputSubmit",
+     "PromptInputButton",
+     "PromptInputActionMenu",
+     "PromptInputActionMenuTrigger",
+     "PromptInputActionMenuContent",
+     "PromptInputActionMenuItem",
+     "PromptInputActionAddAttachments",
+     "PromptInputActionAddScreenshot",
+     "PromptInputSelect(+Trigger/Value/Content/Item)",
+     "PromptInputCommand(+Input/List/Group/Item/Empty/Separator)",
+     "PromptInputHoverCard(+Trigger/Content)",
+     "PromptInputTab(+Body/Item/Label)",
+     "PromptInputTabsList",
+     "usePromptInputAttachments",
+     "usePromptInputController",
+     "usePromptInputReferencedSources"
+    ],
+    "shadcn_primitives": [
+     "input-group",
+     "textarea",
+     "button",
+     "dropdown-menu",
+     "select",
+     "command",
+     "hover-card",
+     "tooltip"
+    ]
+   },
+   "essential_behavior": [
+    "Enter submits. Shift+Enter inserts a newline. An IME composition Enter (isComposing) MUST NOT submit \u2014 this is explicitly tested",
+    "A resolved onSubmit clears the textarea, attachments, and referenced sources. An onSubmit that THROWS or REJECTS must leave them intact \u2014 losing a user's typed message and attachments on a network failure is the failure this rule prevents",
+    "Attachment rejection is explicit: maxFiles, maxFileSize, and accept each call onError({ code: 'max_files' | 'max_file_size' | 'accept' }) and skip the file",
+    "Attachment URLs are converted from blob: to data: before submit \u2014 a blob: URL sent to a server is a dead reference",
+    "Submit button swaps by ChatStatus: idle \u2192 send icon, submitted/streaming \u2192 stop icon",
+    "PromptInputButton tooltip accepts a string or { content, shortcut, side }"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "keydown with e.key === 'Enter', e.shiftKey, and e.nativeEvent.isComposing",
+     "why_web_only": "RN TextInput has no isComposing and no Shift modifier on a soft keyboard",
+     "port_advice": "The whole submit-key contract is meaningless on a phone keyboard. Use an explicit send button as the ONLY submit path; on iPad/hardware keyboards use onKeyPress. Do not try to port the key handling"
+    },
+    {
+     "artifact": "globalDrop \u2014 window-level dragover/drop listeners for drag-and-drop files",
+     "why_web_only": "No drag-and-drop on phone",
+     "port_advice": "Drop entirely; replace with expo-image-picker / expo-document-picker"
+    },
+    {
+     "artifact": "PromptInputActionAddScreenshot via getDisplayMedia",
+     "why_web_only": "Screen capture API",
+     "port_advice": "No RN equivalent for arbitrary screen capture; drop or replace with camera capture"
+    },
+    {
+     "artifact": "Auto-growing textarea driven by scrollHeight measurement",
+     "why_web_only": "DOM measurement",
+     "port_advice": "TextInput multiline + onContentSizeChange with a maxHeight cap"
+    },
+    {
+     "artifact": "syncHiddenInput (a hidden <input type=file> for form submission)",
+     "why_web_only": "HTML forms",
+     "port_advice": "Dead concept"
+    },
+    {
+     "artifact": "Composer positioned by CSS with no keyboard awareness",
+     "why_web_only": "The browser resizes the viewport for you",
+     "port_advice": "KeyboardAvoidingView / react-native-keyboard-controller plus bottom safe-area inset. This is required behavior the web version has nothing to teach you about"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "onSubmit((message, event) => void)",
+     "accept",
+     "multiple",
+     "globalDrop",
+     "syncHiddenInput",
+     "maxFiles",
+     "maxFileSize",
+     "onError",
+     "PromptInputSubmit.status (ChatStatus)",
+     "PromptInputProvider.initialInput"
+    ],
+    "context_published": "PromptInput publishes attachments + text state. usePromptInputController() THROWS unless wrapped in <PromptInputProvider>. usePromptInputAttachments() gives { files, add, remove, clear, openFileDialog }",
+    "ai_sdk_expectations": "onSubmit receives a PromptInputMessage ({ text, files }); status is the AI SDK `ChatStatus` union (submitted | streaming | error | ready)"
+   },
+   "tier": "minimum-chat"
+  },
+  {
+   "name": "question",
+   "purpose": "Lets the agent ask the user a structured question mid-conversation \u2014 pick from options, and/or type a free-text answer \u2014 and returns a typed result.",
+   "composition": {
+    "subcomponents": [
+     "Question",
+     "QuestionPrompt",
+     "QuestionOptions",
+     "QuestionOption",
+     "QuestionInput",
+     "QuestionSubmit"
+    ],
+    "shadcn_primitives": [
+     "radio-group",
+     "checkbox",
+     "input",
+     "button",
+     "card"
+    ]
+   },
+   "essential_behavior": [
+    "selectionMode='multiple' turns options into checkboxes; otherwise single-select",
+    "QuestionSubmit is DISABLED until there is at least one selected value OR non-empty trimmed text \u2014 an empty answer cannot be submitted",
+    "onSubmit receives ({ selectedValues, text }, event) \u2014 options and free text come back together, not either/or",
+    "onValueChange fires on selection change without submitting"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Disabled-button styling as the only affordance for 'you must answer first'",
+     "why_web_only": "Not web-only, but a disabled button on touch gives no feedback on tap",
+     "port_advice": "Keep disabled, but consider a hint; a dead-feeling button is the #1 mobile complaint"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "selectionMode ('multiple')",
+     "onValueChange",
+     "onSubmit",
+     "QuestionOption.value"
+    ],
+    "context_published": "Question publishes { selectedValues, text, selectionMode } to its children",
+    "ai_sdk_expectations": "commonly driven by a tool part whose output is the answer; not a built-in AI SDK type"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "queue",
+   "purpose": "Shows work the agent has lined up but not started \u2014 queued user messages, pending todos, staged attachments \u2014 grouped into collapsible sections.",
+   "composition": {
+    "subcomponents": [
+     "Queue",
+     "QueueSection",
+     "QueueSectionTrigger",
+     "QueueSectionLabel",
+     "QueueSectionContent",
+     "QueueList",
+     "QueueItem",
+     "QueueItemIndicator",
+     "QueueItemContent",
+     "QueueItemDescription",
+     "QueueItemActions",
+     "QueueItemAction",
+     "QueueItemAttachment",
+     "QueueItemImage",
+     "QueueItemFile"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "scroll-area",
+     "button",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "Completed items get strikethrough plus reduced opacity \u2014 completion is visible without removal",
+    "QueueSectionLabel shows a live count next to the section name",
+    "Sections default open",
+    "Per-item actions are revealed on hover"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Hover-revealed QueueItemActions",
+     "why_web_only": "No hover",
+     "port_advice": "Swipe-to-action (react-native-gesture-handler Swipeable) is the idiomatic mobile answer; always-visible is the safe one"
+    },
+    {
+     "artifact": "Nested ScrollArea inside a page that also scrolls",
+     "why_web_only": "Nested scroll containers are routine on web; on RN nested same-axis scrollers fight each other",
+     "port_advice": "Do not nest a vertical QueueList inside the vertical transcript. Cap the height or make it a separate screen"
+    },
+    {
+     "artifact": "CSS line-through",
+     "why_web_only": "Cosmetic",
+     "port_advice": "textDecorationLine: 'line-through' \u2014 works, but is unreliable on Android for multi-line text; verify"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "QueueSection.defaultOpen (true)",
+     "QueueItemIndicator.completed",
+     "QueueItemContent.completed",
+     "QueueSectionLabel.label/count/icon"
+    ],
+    "context_published": "QueueSection uses Collapsible context",
+    "ai_sdk_expectations": "QueueMessage { id, parts: QueueMessagePart[] } mirrors the UIMessage shape; QueueTodo { id, title, description?, status? } is its own"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "reasoning",
+   "purpose": "The collapsible 'thinking' block \u2014 shows the model's reasoning tokens while it works, then collapses out of the way.",
+   "composition": {
+    "subcomponents": [
+     "Reasoning",
+     "ReasoningTrigger",
+     "ReasoningContent",
+     "useReasoning"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "Auto-opens while isStreaming is true and auto-closes shortly after it goes false \u2014 the user watches thinking happen, then it gets out of the way",
+    "EXCEPTION: defaultOpen keeps it open and it must NOT auto-close",
+    "isStreaming={false} at mount starts CLOSED \u2014 old messages in loaded history do not all spring open",
+    "Tracks how long isStreaming stayed true and shows a duration ('Thought for 5 seconds'). If isStreaming is hardcoded the duration is nonsense",
+    "ReasoningContent children is a markdown string"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "CSS height/grid-rows transition for the collapse animation",
+     "why_web_only": "CSS cannot animate to auto height in RN",
+     "port_advice": "reanimated LayoutAnimation or measured height; RNR collapsible already solves this"
+    },
+    {
+     "artifact": "Same markdown pipeline as MessageResponse",
+     "why_web_only": "see message",
+     "port_advice": "Reuse whatever renderer you pick for MessageResponse"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "isStreaming (false)",
+     "open",
+     "defaultOpen (true)",
+     "onOpenChange",
+     "duration (seconds)"
+    ],
+    "context_published": "useReasoning() \u2192 { isStreaming, isOpen, setIsOpen, duration }; ReasoningTrigger throws with 'Reasoning components must be used within Reasoning'",
+    "ai_sdk_expectations": "AI SDK `reasoning` message part; requires toUIMessageStreamResponse({ sendReasoning: true }) on the route or there are no reasoning parts to render"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "sandbox",
+   "purpose": "A collapsible code-execution card: the code the agent ran on one tab, its output on another, with a status badge driven by the tool state.",
+   "composition": {
+    "subcomponents": [
+     "Sandbox",
+     "SandboxHeader",
+     "SandboxContent",
+     "SandboxTabs",
+     "SandboxTabsBar",
+     "SandboxTabsList",
+     "SandboxTabsTrigger",
+     "SandboxTabContent"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "tabs",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "SandboxHeader takes the tool-part state and renders Pending / Running / Completed / Error",
+    "Code and output are tabs, not stacked \u2014 the user chooses which to look at",
+    "Designed to hold CodeBlock on one tab and Terminal/StackTrace on the other"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "None in the shell itself \u2014 Collapsible + Tabs, both of which RNR ships",
+     "why_web_only": "n/a",
+     "port_advice": "The shell is a direct port. Its risk is entirely inherited from code-block and terminal"
+    },
+    {
+     "artifact": "Tab bar assuming enough width for 3-4 labels",
+     "why_web_only": "Wide viewport",
+     "port_advice": "Two tabs max on phone; scrollable tab bar beyond that"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "defaultOpen",
+     "SandboxHeader.title",
+     "SandboxHeader.state (required)",
+     "SandboxTabs.defaultValue",
+     "SandboxTabs.onValueChange"
+    ],
+    "context_published": "Collapsible + Tabs contexts",
+    "ai_sdk_expectations": "SandboxHeader.state is the AI SDK tool-part state union"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "schema-display",
+   "purpose": "Documents an API endpoint the agent is describing or calling \u2014 method, path, parameters, request body, response body \u2014 as expandable typed sections.",
+   "composition": {
+    "subcomponents": [
+     "SchemaDisplay",
+     "SchemaDisplayHeader",
+     "SchemaDisplayMethod",
+     "SchemaDisplayPath",
+     "SchemaDisplayDescription",
+     "SchemaDisplayContent",
+     "SchemaDisplayParameters",
+     "SchemaDisplayParameter",
+     "SchemaDisplayRequest",
+     "SchemaDisplayResponse",
+     "SchemaDisplayProperty",
+     "SchemaDisplayExample"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "badge",
+     "card"
+    ]
+   },
+   "essential_behavior": [
+    "Method badge is color-coded: GET green, POST blue, PUT orange, PATCH yellow, DELETE red",
+    "SchemaDisplayPath highlights {param} segments distinctly from the literal path",
+    "SchemaDisplayProperty is RECURSIVE \u2014 nested objects and array items expand in place",
+    "Parameters carry a location (path | query | header) and a required flag"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Recursive nesting with per-level indentation and horizontal overflow",
+     "why_web_only": "Deep nesting assumes width",
+     "port_advice": "Cap visual depth; beyond ~3 levels, drill down to a new screen rather than indenting"
+    },
+    {
+     "artifact": "Monospace path with inline highlighted spans",
+     "why_web_only": "Inline spans in a text run",
+     "port_advice": "Nested <Text> children inside the path Text"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "method",
+     "path",
+     "description",
+     "parameters (SchemaParameter[])",
+     "requestBody / responseBody (SchemaProperty[])"
+    ],
+    "context_published": "SchemaDisplay publishes the schema so children default from it",
+    "ai_sdk_expectations": "none built-in; commonly fed from a tool's inputSchema"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "shimmer",
+   "purpose": "The visual signal that text is still being generated \u2014 a highlight sweeping across the words rather than a spinner beside them.",
+   "composition": {
+    "subcomponents": [
+     "Shimmer (single component; `as` polymorphic)"
+    ],
+    "shadcn_primitives": [
+     "none"
+    ]
+   },
+   "essential_behavior": [
+    "A light band travels left-to-right across the text on a loop (duration default 2s)",
+    "The band width scales with content length: --spread = children.length * spread px, so a short label and a long sentence sweep at a comparable visual rate",
+    "It is applied TO text, not next to it \u2014 used by Plan and Terminal for streaming states"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "CSS background-image linear-gradient + background-clip:text + animated background-position",
+     "why_web_only": "background-clip:text has no RN equivalent \u2014 this is the core technique and it does not exist",
+     "port_advice": "MaskedView with the Text as the mask and an animated LinearGradient behind it (works, costs a native view), OR accept a simpler animated-opacity pulse. Decide once and use it everywhere; a per-component improvisation will look inconsistent"
+    },
+    {
+     "artifact": "Framer Motion driving the background-position keyframes",
+     "why_web_only": "DOM animation library",
+     "port_advice": "reanimated withRepeat on a shared value"
+    },
+    {
+     "artifact": "Polymorphic `as` prop rendering any HTML element",
+     "why_web_only": "Intrinsic elements",
+     "port_advice": "Restrict to Text; there is nothing else to shim"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "children (string)",
+     "as (ElementType)",
+     "duration (2)",
+     "spread (2)"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "none \u2014 you gate it on your own isStreaming flag"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "snippet",
+   "purpose": "A one-line copyable command or value \u2014 the install-command pill.",
+   "composition": {
+    "subcomponents": [
+     "Snippet",
+     "SnippetInput",
+     "SnippetText",
+     "SnippetAddon",
+     "SnippetCopyButton"
+    ],
+    "shadcn_primitives": [
+     "input-group",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "The input is readOnly and its value comes from the Snippet root's code prop \u2014 the user cannot edit it but can select it",
+    "SnippetAddon supplies a non-copied prefix such as `$`",
+    "Copy flips to a check for ~2000ms; failures go to onError"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "readOnly <input> as the display element so text is selectable",
+     "why_web_only": "RN TextInput editable={false} is not the same selection experience",
+     "port_advice": "Use a selectable Text; the input framing exists purely so desktop users can drag-select. On mobile, copy is the only real path"
+    },
+    {
+     "artifact": "Clipboard API",
+     "why_web_only": "navigator.clipboard",
+     "port_advice": "expo-clipboard"
+    },
+    {
+     "artifact": "Single-line horizontal overflow for long commands",
+     "why_web_only": "CSS overflow",
+     "port_advice": "Horizontal ScrollView or ellipsize; the copy button matters more than seeing the whole string"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "code (string, required)",
+     "SnippetCopyButton.onCopy/onError/timeout"
+    ],
+    "context_published": "Snippet publishes { code }",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "sources",
+   "purpose": "A collapsible list of the citations behind a response, collapsed to a count until the user wants them.",
+   "composition": {
+    "subcomponents": [
+     "Sources",
+     "SourcesTrigger",
+     "SourcesContent",
+     "Source"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "badge",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "SourcesTrigger takes an explicit count and renders 'Used N sources'; it is collapsed by default",
+    "Each Source is an outbound link that must open in a new context with rel='noreferrer' \u2014 the user should not lose the chat",
+    "Sits below the message body, not inside it"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "<a target=_blank rel=noreferrer>",
+     "why_web_only": "Anchor semantics",
+     "port_advice": "Linking.openURL, or an in-app browser (expo-web-browser) so the user returns to the chat. Prefer the in-app browser \u2014 a full app switch per citation is hostile"
+    },
+    {
+     "artifact": "Favicon fetched from the source origin",
+     "why_web_only": "Implicit browser image loading of a third-party URL",
+     "port_advice": "Optional; costs a network request per source and leaks the read to that origin"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "SourcesTrigger.count (required)",
+     "Source.href",
+     "Source.title"
+    ],
+    "context_published": "Collapsible context; SourcesTrigger throws outside Sources",
+    "ai_sdk_expectations": "AI SDK `source-url` / `source-document` parts; requires toUIMessageStreamResponse({ sendSources: true })"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "speech-input",
+   "purpose": "The push-to-talk button that turns speech into composer text.",
+   "composition": {
+    "subcomponents": [
+     "SpeechInput (single button; extends Button)"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "tooltip"
+    ]
+   },
+   "essential_behavior": [
+    "Two engines: Web Speech API when present, MediaRecorder + a caller-supplied onAudioRecorded transcriber as fallback",
+    "With NEITHER available the button renders DISABLED and a tap does nothing \u2014 it never pretends to listen",
+    "Only FINAL transcripts fire onTranscriptionChange; interim results and empty strings are suppressed",
+    "lang defaults to 'en-US'"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "window.SpeechRecognition / webkitSpeechRecognition",
+     "why_web_only": "Chrome-only browser API that streams audio to Google's servers",
+     "port_advice": "No RN equivalent. Use expo-speech-recognition (on-device iOS/Android), or make onAudioRecorded the ONLY path and transcribe server-side with AI SDK transcribe()"
+    },
+    {
+     "artifact": "MediaRecorder + getUserMedia",
+     "why_web_only": "Browser media APIs",
+     "port_advice": "expo-audio recording; keep the onAudioRecorded(blob) \u2192 transcript contract, changing Blob to a file URI"
+    },
+    {
+     "artifact": "Capability sniffing at render time to decide disabled state",
+     "why_web_only": "Feature detection on window",
+     "port_advice": "Permission state, not feature detection \u2014 on mobile the capability exists but permission may be denied. Handle denied explicitly"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "onTranscriptionChange(text)",
+     "onAudioRecorded(blob) => Promise<string>",
+     "lang ('en-US')"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "pairs with AI SDK transcribe() when using the recorder fallback"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "stack-trace",
+   "purpose": "Renders a JavaScript/Node error with its frames parsed, internal frames de-emphasized, and file paths clickable back into the editor.",
+   "composition": {
+    "subcomponents": [
+     "StackTrace",
+     "StackTraceHeader",
+     "StackTraceError",
+     "StackTraceErrorType",
+     "StackTraceErrorMessage",
+     "StackTraceActions",
+     "StackTraceCopyButton",
+     "StackTraceExpandButton",
+     "StackTraceContent",
+     "StackTraceFrames"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "button",
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "Parses the raw trace string into error type, message, and frames \u2014 the caller passes one string, not a structure",
+    "showInternalFrames={false} HIDES node_modules and node: frames; when shown they are dimmed. Your code is visually separated from the runtime's",
+    "onFilePathClick(path, line, column) makes frames actionable",
+    "Content is height-capped (maxHeight default 400) and scrolls inside the card"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Nested scroll region with a fixed max-height inside the transcript",
+     "why_web_only": "Nested same-axis scrollers",
+     "port_advice": "Cap the height and expand-in-place, or push to a detail screen. Do not nest a vertical scroller inside the transcript scroller"
+    },
+    {
+     "artifact": "Clipboard copy of the full trace",
+     "why_web_only": "navigator.clipboard",
+     "port_advice": "expo-clipboard"
+    },
+    {
+     "artifact": "onFilePathClick opening an editor via a custom URL scheme",
+     "why_web_only": "vscode:// from a browser",
+     "port_advice": "There is no editor on the phone. Keep the callback (a host app might route it) but expect it unused"
+    },
+    {
+     "artifact": "Monospace long lines with horizontal overflow",
+     "why_web_only": "CSS overflow",
+     "port_advice": "Horizontal ScrollView per frame, or wrap with a hanging indent"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "trace (string)",
+     "open",
+     "defaultOpen (false)",
+     "onOpenChange",
+     "onFilePathClick",
+     "StackTraceContent.maxHeight (400)",
+     "StackTraceFrames.showInternalFrames (true)"
+    ],
+    "context_published": "StackTrace publishes the parsed trace; StackTraceHeader throws with 'StackTrace components must be used within StackTrace'",
+    "ai_sdk_expectations": "typically fed from a tool part's errorText"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "suggestion",
+   "purpose": "The starter prompts / follow-up chips a user can tap instead of typing.",
+   "composition": {
+    "subcomponents": [
+     "Suggestions",
+     "Suggestion"
+    ],
+    "shadcn_primitives": [
+     "scroll-area",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "A horizontally scrolling row that does not wrap \u2014 the row scrolls, the layout does not reflow",
+    "onClick receives the suggestion STRING, not an event \u2014 the caller sends it directly",
+    "Typically paired with ConversationEmptyState on first load and regenerated as follow-ups"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "ScrollArea with a custom-styled scrollbar",
+     "why_web_only": "There are no visible scrollbars on mobile",
+     "port_advice": "Horizontal ScrollView with showsHorizontalScrollIndicator={false}; add a fade edge so the user knows there is more"
+    },
+    {
+     "artifact": "Hover states on chips",
+     "why_web_only": "No hover",
+     "port_advice": "Pressed state instead"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "Suggestion.suggestion (string, required)",
+     "Suggestion.onClick(suggestion)"
+    ],
+    "context_published": "none",
+    "ai_sdk_expectations": "none \u2014 you generate the strings"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "task",
+   "purpose": "A collapsible checklist of what the agent did or is doing, with file references \u2014 the 'searched 3 files, edited 2' summary.",
+   "composition": {
+    "subcomponents": [
+     "Task",
+     "TaskTrigger",
+     "TaskContent",
+     "TaskItem",
+     "TaskItemFile"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "defaultOpen is TRUE \u2014 unlike Reasoning, tasks show their work by default",
+    "TaskTrigger.title is required and is the collapsed summary line",
+    "TaskItemFile renders a file chip inline within a task item's sentence ('Read <file.txt>')",
+    "Commonly driven by a streamed structured object, so titles arrive before items"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "File chips flowing inline within a sentence via inline-flex",
+     "why_web_only": "RN cannot place a View inline inside a Text run",
+     "port_advice": "Render the chip as a styled nested <Text>, not a View, or restructure to chip-on-its-own-line"
+    },
+    {
+     "artifact": "Icon color from a per-file `color` string",
+     "why_web_only": "Arbitrary CSS color",
+     "port_advice": "Works, but map through RNR theme tokens so it survives dark mode"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "defaultOpen (true)",
+     "TaskTrigger.title (required)"
+    ],
+    "context_published": "Collapsible context",
+    "ai_sdk_expectations": "commonly useObject with a tasks schema ({ title, items[], status }) rather than message parts"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "terminal",
+   "purpose": "Shows command output with ANSI colors, live streaming, and a clear/copy header \u2014 the console the agent is writing to.",
+   "composition": {
+    "subcomponents": [
+     "Terminal",
+     "TerminalHeader",
+     "TerminalTitle",
+     "TerminalStatus",
+     "TerminalActions",
+     "TerminalCopyButton",
+     "TerminalClearButton",
+     "TerminalContent"
+    ],
+    "shadcn_primitives": [
+     "button",
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "ANSI escape sequences are parsed and rendered as color, not printed as literal \\x1b[32m",
+    "autoScroll (default true) pins to the newest line as output arrives",
+    "isStreaming shows a status line and a pulsing block cursor at the end of the output",
+    "TerminalClearButton renders ONLY if the Terminal root was given onClear \u2014 no dead button",
+    "Copy copies the Terminal's `output` string (with ANSI stripped or raw, per implementation), not the selected text"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "ansi-to-react emitting nested <span> with inline color styles inside <pre>",
+     "why_web_only": "HTML output",
+     "port_advice": "Parse ANSI to token runs and render nested <Text>. Map the 16 ANSI colors onto RNR theme tokens so they read in both light and dark \u2014 raw ANSI green on a light background is unreadable"
+    },
+    {
+     "artifact": "<pre> whitespace preservation and horizontal overflow",
+     "why_web_only": "CSS white-space:pre",
+     "port_advice": "Monospace Text with explicit newlines; horizontal ScrollView for long lines"
+    },
+    {
+     "artifact": "CSS animate-pulse cursor",
+     "why_web_only": "CSS keyframes",
+     "port_advice": "reanimated opacity loop"
+    },
+    {
+     "artifact": "Clipboard API",
+     "why_web_only": "navigator.clipboard",
+     "port_advice": "expo-clipboard"
+    },
+    {
+     "artifact": "Auto-scroll via scrollTop = scrollHeight",
+     "why_web_only": "Synchronous DOM scroll",
+     "port_advice": "scrollToEnd on onContentSizeChange; same near-bottom courtesy as Conversation applies"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "output (string)",
+     "isStreaming (false)",
+     "autoScroll (true)",
+     "onClear"
+    ],
+    "context_published": "Terminal publishes { output, isStreaming, onClear } \u2014 TerminalCopyButton and TerminalClearButton take no data props",
+    "ai_sdk_expectations": "typically a tool part's streamed output string"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "test-results",
+   "purpose": "Renders a test run \u2014 pass/fail/skip counts, duration, a pass-rate bar, and per-suite expandable failures with error messages and stacks.",
+   "composition": {
+    "subcomponents": [
+     "TestResults",
+     "TestResultsHeader",
+     "TestResultsSummary",
+     "TestResultsDuration",
+     "TestResultsProgress",
+     "TestResultsContent",
+     "TestSuite",
+     "TestSuiteName",
+     "TestSuiteContent",
+     "TestSuiteStats",
+     "Test",
+     "TestStatus",
+     "TestName",
+     "TestDuration",
+     "TestError",
+     "TestErrorMessage",
+     "TestErrorStack"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "progress",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "Duration formatting switches unit: under 1s shows ms ('500ms'), at or above 1s shows two-decimal seconds ('3.50s')",
+    "TestResultsProgress shows both 'N/M tests passed' and a percentage",
+    "Status colors: passed green, failed red, skipped yellow, running blue",
+    "Suites are COLLAPSED by default \u2014 you pass defaultOpen to start expanded. A failing run does not auto-expand",
+    "TestError nests message and stack under the failing test"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Deeply nested collapsibles (results \u2192 suite \u2192 test \u2192 error \u2192 stack) each with its own scroll",
+     "why_web_only": "Nesting depth assumes width and mouse precision",
+     "port_advice": "Flatten to two levels on phone; make a failing test a drill-down screen rather than a fourth nesting level"
+    },
+    {
+     "artifact": "Color-only pass/fail encoding",
+     "why_web_only": "Accessibility gap, not a browser gap",
+     "port_advice": "Keep icons alongside color"
+    },
+    {
+     "artifact": "<pre> stack rendering",
+     "why_web_only": "CSS white-space:pre",
+     "port_advice": "See terminal/stack-trace; reuse the same monospace block"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "summary ({ passed, failed, skipped, total, duration })",
+     "TestSuite.name/status/defaultOpen",
+     "Test.name/status/duration",
+     "TestSuiteStats.passed/failed/skipped (each default 0)"
+    ],
+    "context_published": "TestResults publishes the summary so TestResultsSummary/Duration/Progress take no props",
+    "ai_sdk_expectations": "none \u2014 driven by your own test-runner tool output"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "tool",
+   "purpose": "The tool-call card \u2014 name, arguments, result or error, and a status badge. It is the primary reason a chat UI reads as an agent.",
+   "composition": {
+    "subcomponents": [
+     "Tool",
+     "ToolHeader",
+     "ToolContent",
+     "ToolInput",
+     "ToolOutput",
+     "getStatusBadge",
+     "ToolPart type"
+    ],
+    "shadcn_primitives": [
+     "collapsible",
+     "badge",
+     "card"
+    ]
+   },
+   "essential_behavior": [
+    "ToolHeader maps state to a badge with NO mapping layer: input-streaming\u2192Pending, input-available\u2192Running, output-available\u2192Completed, output-error\u2192Error, approval-requested\u2192Awaiting Approval, approval-responded\u2192Responded, output-denied\u2192Denied",
+    "type='tool-web-search' derives the label 'web-search' by stripping the prefix, UNLESS title is set \u2014 then title wins",
+    "For type='dynamic-tool' the label comes from toolName",
+    "ToolInput renders the arguments as formatted JSON under a 'Parameters' heading \u2014 and renders while arguments are still STREAMING IN (input-streaming), so it must tolerate partial/invalid JSON",
+    "ToolOutput heading is 'Result' with output, 'Error' with errorText; with BOTH undefined it renders empty (not a spinner, not an error)",
+    "ToolContent is only visible when the Tool is open",
+    "Sub-components THROW outside <Tool> \u2014 there is no standalone ToolHeader"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Chevron rotation via a `group` class on the Collapsible wrapper + group-data-[state=open]:rotate-180",
+     "why_web_only": "Tailwind group selectors and CSS transforms",
+     "port_advice": "reanimated rotation bound to open state; the missing-`group` bug simply does not exist"
+    },
+    {
+     "artifact": "JSON.stringify(input, null, 2) into a <pre> with horizontal overflow",
+     "why_web_only": "CSS pre + overflow",
+     "port_advice": "Monospace Text + horizontal ScrollView; consider a collapsed key/value list instead of raw JSON on a narrow screen \u2014 raw JSON at 375pt is unreadable"
+    },
+    {
+     "artifact": "Wide two-column parameter layout",
+     "why_web_only": "Width",
+     "port_advice": "Stack label over value"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "Tool.defaultOpen",
+     "ToolHeader.type (required)",
+     "ToolHeader.state (required)",
+     "ToolHeader.title",
+     "ToolHeader.toolName",
+     "ToolInput.input",
+     "ToolOutput.output",
+     "ToolOutput.errorText"
+    ],
+    "context_published": "Tool publishes { state } \u2014 useToolContext() throws 'Tool sub-components must be used within <Tool>' rather than returning a default",
+    "ai_sdk_expectations": "THE integration seam. `ToolPart = ToolUIPart | DynamicToolUIPart`. part.state flows into `state` with no adapter \u2014 the unions are identical. part.input / part.output / part.errorText map 1:1"
+   },
+   "tier": "agent-surface"
+  },
+  {
+   "name": "toolbar",
+   "purpose": "A floating action bar attached to a specific canvas node, appearing above or beside it.",
+   "composition": {
+    "subcomponents": [
+     "Toolbar (styled @xyflow/react NodeToolbar)"
+    ],
+    "shadcn_primitives": [
+     "button-group",
+     "button"
+    ]
+   },
+   "essential_behavior": [
+    "Positions itself relative to its owning node and follows it as the canvas pans/zooms",
+    "isVisible / offset / position control when and where it appears",
+    "Composed INSIDE a nodeTypes component, never mounted as a page-level control"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "NodeToolbar, which reads the node's measured DOM rect and the viewport transform to place itself",
+     "why_web_only": "Requires React Flow's measurement store",
+     "port_advice": "Only ships with canvas. Standalone it is a positioned View \u2014 not worth a registry item"
+    },
+    {
+     "artifact": "Appears on node hover/selection",
+     "why_web_only": "Hover",
+     "port_advice": "Selection only on touch"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "position",
+     "offset",
+     "isVisible"
+    ],
+    "context_published": "none; consumes React Flow node context",
+    "ai_sdk_expectations": "none"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "transcription",
+   "purpose": "Renders timestamped speech segments synced to audio playback, where tapping a segment seeks the audio to that moment.",
+   "composition": {
+    "subcomponents": [
+     "Transcription",
+     "TranscriptionSegment"
+    ],
+    "shadcn_primitives": [
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "children is a RENDER FUNCTION (segment, index) => ReactNode, not static nodes \u2014 you can render TranscriptionSegment or your own markup",
+    "Three visual states derived from currentTime: active (currentTime within [startSecond, endSecond]) gets primary color; past gets muted; future gets muted at lower opacity",
+    "Tapping a segment calls onSeek(segment.startSecond). With NO onSeek the tap is a no-op and the cursor stays default \u2014 it never invents a seek",
+    "Segments whose text is empty or whitespace are DROPPED before reaching children",
+    "currentTime defaults to 0, so with no controlled time the first segment is active"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "Keyboard Enter/Space activation on the segment <button>",
+     "why_web_only": "Keyboard semantics",
+     "port_advice": "Pressable with accessibilityRole='button'; the keyboard path is dead"
+    },
+    {
+     "artifact": "cursor-pointer vs cursor-default as the affordance that a segment is seekable",
+     "why_web_only": "There is no cursor on touch \u2014 the only signal that this is tappable disappears entirely",
+     "port_advice": "Add a visible affordance (timestamp chip, underline, or pressed state) or the user will never discover click-to-seek"
+    },
+    {
+     "artifact": "Auto-scrolling the active segment into view via scrollIntoView",
+     "why_web_only": "DOM method",
+     "port_advice": "FlatList scrollToIndex with the same near-viewport courtesy as Conversation"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "segments (TranscriptionSegment[])",
+     "currentTime (0)",
+     "onSeek(time)",
+     "children (render function)"
+    ],
+    "context_published": "Transcription publishes segment context \u2014 TranscriptionSegment throws 'Transcription components must be used within Transcription'",
+    "ai_sdk_expectations": "AI SDK transcribe() segments: { text, startSecond, endSecond }"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "voice-selector",
+   "purpose": "A searchable picker for a TTS voice, showing each voice's gender, accent, and age, with an audio preview per voice.",
+   "composition": {
+    "subcomponents": [
+     "VoiceSelector",
+     "VoiceSelectorTrigger",
+     "VoiceSelectorContent",
+     "VoiceSelectorDialog",
+     "VoiceSelectorInput",
+     "VoiceSelectorList",
+     "VoiceSelectorGroup",
+     "VoiceSelectorItem",
+     "VoiceSelectorName",
+     "VoiceSelectorDescription",
+     "VoiceSelectorAttributes",
+     "VoiceSelectorGender",
+     "VoiceSelectorAccent",
+     "VoiceSelectorAge",
+     "VoiceSelectorBullet",
+     "VoiceSelectorPreview",
+     "VoiceSelectorShortcut",
+     "VoiceSelectorSeparator",
+     "VoiceSelectorEmpty",
+     "useVoiceSelector"
+    ],
+    "shadcn_primitives": [
+     "dialog",
+     "command",
+     "button",
+     "badge"
+    ]
+   },
+   "essential_behavior": [
+    "CRITICAL: tapping VoiceSelectorPreview inside an item PLAYS the sample and must NOT select the voice. Two nested targets, two distinct outcomes",
+    "Preview has three states: play, playing (pause icon), loading (disabled)",
+    "VoiceSelectorAccent maps 30 lowercase accent keys to flag emoji; the lookup is CASE-SENSITIVE ('AMERICAN' renders nothing)",
+    "VoiceSelectorGender maps to icons; unknown values fall back rather than throwing",
+    "Type-to-filter with an explicit empty state"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "cmdk Command inside a Dialog",
+     "why_web_only": "cmdk is DOM; RNR has no command primitive (it is in the 26-component gap list)",
+     "port_advice": "Bottom sheet + FlatList + TextInput filter"
+    },
+    {
+     "artifact": "Nested interactive targets (preview button inside a selectable row) with event.stopPropagation",
+     "why_web_only": "DOM event bubbling; on touch a nested small button inside a full-width row is a mistap generator",
+     "port_advice": "Preserve the two behaviors but give the preview a \u226544pt target visually separated from the row, and verify the row press does not fire"
+    },
+    {
+     "artifact": "VoiceSelectorShortcut (\u2318K style hints)",
+     "why_web_only": "No modifier keys",
+     "port_advice": "Drop"
+    },
+    {
+     "artifact": "Flag emoji for accents",
+     "why_web_only": "Not web-only, but emoji flag rendering differs across Android versions and some are blank",
+     "port_advice": "Verify on Android; consider text labels"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "value / defaultValue",
+     "onValueChange",
+     "open / defaultOpen",
+     "onOpenChange",
+     "modal (true)",
+     "VoiceSelectorItem.value/onSelect",
+     "VoiceSelectorPreview.playing/loading/onPlay"
+    ],
+    "context_published": "useVoiceSelector() \u2192 { value, setValue, open, setOpen }; throws 'VoiceSelector components must be used within VoiceSelector' outside the root",
+    "ai_sdk_expectations": "the selected id feeds AI SDK generateSpeech"
+   },
+   "tier": "specialist"
+  },
+  {
+   "name": "web-preview",
+   "purpose": "Embeds a live preview of a URL the agent generated or is working on, with a URL bar, navigation, and a captured console.",
+   "composition": {
+    "subcomponents": [
+     "WebPreview",
+     "WebPreviewNavigation",
+     "WebPreviewNavigationButton",
+     "WebPreviewUrl",
+     "WebPreviewBody",
+     "WebPreviewConsole"
+    ],
+    "shadcn_primitives": [
+     "input",
+     "button",
+     "tooltip",
+     "collapsible",
+     "scroll-area"
+    ]
+   },
+   "essential_behavior": [
+    "URL bar is editable: typing a URL and pressing Enter navigates and calls onUrlChange",
+    "WebPreviewBody ALWAYS carries a sandbox attribute \u2014 untrusted generated content is never given full privileges",
+    "A loading slot renders while the frame loads",
+    "WebPreviewConsole toggles a log panel with level-colored entries and an explicit 'No console output' empty state"
+   ],
+   "browser_artifacts": [
+    {
+     "artifact": "<iframe> with the sandbox attribute",
+     "why_web_only": "iframe is a DOM element; sandbox is an HTML attribute with no direct analogue",
+     "port_advice": "react-native-webview is the substitute and it is real \u2014 but sandbox does NOT map. You must lock it down yourself: originWhitelist, javaScriptEnabled, allowFileAccess=false, allowsInlineMediaPlayback, and setSupportMultipleWindows(false). Treat this as a security task, not a rename"
+    },
+    {
+     "artifact": "Console capture by injecting into the iframe's window.console",
+     "why_web_only": "Same-origin script injection into a child document",
+     "port_advice": "WebView injectedJavaScriptBeforeContentLoaded overriding console.* to postMessage, read via onMessage. Achievable, but it is real work"
+    },
+    {
+     "artifact": "Back/forward navigation buttons driven by iframe history",
+     "why_web_only": "Browser history object",
+     "port_advice": "WebView ref goBack/goForward with canGoBack/canGoForward from onNavigationStateChange"
+    },
+    {
+     "artifact": "Editable URL bar as a primary affordance",
+     "why_web_only": "Desktop browser idiom",
+     "port_advice": "Read-only URL display is more honest on mobile; a keyboard-driven address bar inside a chat is unlikely to be used"
+    }
+   ],
+   "state_contract": {
+    "controlled_props": [
+     "defaultUrl",
+     "onUrlChange(url)",
+     "WebPreviewBody.src",
+     "WebPreviewBody.loading",
+     "WebPreviewConsole.logs ({ level, message, timestamp }[])",
+     "WebPreviewNavigationButton.tooltip/disabled/onClick"
+    ],
+    "context_published": "WebPreview publishes { url, setUrl } \u2014 WebPreviewUrl throws 'WebPreview components must be used within a WebPreview'",
+    "ai_sdk_expectations": "none; the URL comes from your deploy/sandbox tool"
+   },
+   "tier": "agent-surface"
+  }
+ ],
+ "minimum_chat_set": [
+  "conversation",
+  "message",
+  "prompt-input",
+  "code-block"
+ ],
+ "inherently_web_shaped": [
+  {
+   "name": "canvas",
+   "verdict": "needs-full-rethink",
+   "reason": "It is @xyflow/react end to end: absolutely-positioned divs under a CSS transform matrix, SVG edge layer, wheel/pointer events, ResizeObserver and getBoundingClientRect node measurement. Nothing survives except the concept. A native version is react-native-gesture-handler + reanimated + react-native-svg and is a project of its own, not a port task. Recommend cutting it from MVP and shipping the other 42 first."
+  },
+  {
+   "name": "node",
+   "verdict": "native-substitute-exists",
+   "reason": "The card body IS shadcn Card, and RNR ships Card \u2014 NodeHeader/NodeTitle/NodeDescription/NodeContent/NodeFooter port on day one. What does not port is `handles`, which only has meaning inside React Flow's coordinate store. Ship Node as a plain card; drop the handle prop unless canvas is rebuilt."
+  },
+  {
+   "name": "edge",
+   "verdict": "drop",
+   "reason": "SVG bezier paths computed by React Flow's getBezierPath, animated by CSS/SMIL, with SVG <marker> arrowheads, rendered into React Flow's SVG layer. Meaningless without canvas. If canvas is ever rebuilt, this is react-native-svg Path + reanimated withRepeat \u2014 a rewrite, not a port."
+  },
+  {
+   "name": "connection",
+   "verdict": "drop",
+   "reason": "It is a render-prop slot React Flow calls with live pointer coordinates during an edge drag. Both the caller and the coordinate space are absent in RN."
+  },
+  {
+   "name": "panel",
+   "verdict": "drop",
+   "reason": "Technically a native substitute exists \u2014 it is an absolutely positioned View outside the transform layer \u2014 but that is roughly ten lines and only meaningful with canvas. Not worth a registry item on its own."
+  },
+  {
+   "name": "controls",
+   "verdict": "drop",
+   "reason": "Zoom-in/zoom-out buttons acting on React Flow's viewport store. Discrete zoom buttons are a desktop idiom; on touch, pinch replaces them. Only fit-view would be worth keeping, and only if canvas exists."
+  },
+  {
+   "name": "toolbar",
+   "verdict": "drop",
+   "reason": "@xyflow/react NodeToolbar \u2014 it places itself from the owning node's measured DOM rect and the viewport transform, and is composed inside a nodeTypes component. Also hover/selection-triggered. No standalone value."
+  },
+  {
+   "name": "web-preview",
+   "verdict": "native-substitute-exists",
+   "reason": "react-native-webview is a genuine substitute for the iframe, and the URL bar / nav / console composition all port. Two caveats that must be planned, not assumed: (1) the iframe `sandbox` attribute has NO WebView equivalent \u2014 you must reproduce the isolation manually via originWhitelist, javaScriptEnabled, allowFileAccess, and blocking new windows; (2) console capture requires injectedJavaScriptBeforeContentLoaded + postMessage/onMessage rather than direct console patching."
+  },
+  {
+   "name": "jsx-preview",
+   "verdict": "needs-full-rethink",
+   "reason": "react-jsx-parser parses a model-authored JSX string against HTML intrinsics. RN has no intrinsic elements, so an unmapped tag renders nothing at all \u2014 the component would silently show blank. It is also the highest-security-risk item in the set: on web the blast radius is a div, in an app it is your component tree. If it ships, it must be a strict allowlist interpreter mapping to View/Text/Image/RNR components with everything else rejected. Keep the streaming behaviors (auto-close unclosed tags, strip mid-attribute cutoffs, fall back to last-good JSX) \u2014 those are renderer-agnostic and are what stop the preview flashing."
+  },
+  {
+   "name": "sandbox",
+   "verdict": "native-substitute-exists",
+   "reason": "The shell is only Collapsible + Tabs + a status badge, and RNR ships both primitives. Its risk is entirely inherited from code-block and terminal, not from the container. Narrow the tab bar to two tabs on phone."
+  },
+  {
+   "name": "terminal",
+   "verdict": "native-substitute-exists",
+   "reason": "Substantial but tractable. ansi-to-react emits HTML spans and must be replaced with an ANSI tokenizer feeding nested <Text>. Everything else \u2014 auto-scroll, streaming cursor, clear/copy, the onClear-gates-the-button rule \u2014 ports directly. One design decision to make once: map the 16 ANSI colors onto RNR theme tokens so output is legible in light mode, rather than passing raw ANSI colors through."
+  },
+  {
+   "name": "artifact",
+   "verdict": "native-substitute-exists",
+   "reason": "It is a header + actions + scrollable content shell with no web-specific machinery. The only real change is placement: on web it is a side panel next to the transcript; on a phone it must be a full-screen sheet or a pushed route. Also strip the hover-only tooltips on ArtifactAction."
+  },
+  {
+   "name": "file-tree",
+   "verdict": "native-substitute-exists",
+   "reason": "Nested collapsibles, which RNR ships. Two things need genuine mobile design work rather than translation: (1) the chevron-expands / name-selects split lives in a ~24px row that a finger cannot resolve \u2014 either give each target \u226544pt or move one behavior to long-press, but do NOT merge them; (2) hover-revealed FileTreeActions become invisible on touch. Deep indent also needs capping or replacing with drill-down."
+  },
+  {
+   "name": "chart-shaped components",
+   "verdict": "drop",
+   "reason": "CORRECTION for the port team: there is no chart component among the 49. `chart` appears only in the 55-primitive dependency list and NO AI Elements component in the inventory consumes it. The actual data visualization inside AI Elements is shadcn `progress` bars \u2014 in context (token usage), test-results (pass rate), and package-info \u2014 all of which RNR already ships. If you later port the shadcn `chart` primitive itself, note it is a thin wrapper over Recharts (SVG + DOM measurement + hover tooltips) with no RN path; that would be victory-vega/react-native-svg territory, and it is out of scope for this inventory."
+  },
+  {
+   "name": "persona",
+   "verdict": "native-substitute-exists",
+   "reason": "Looks maximally web-shaped (WebGL2 canvas) but is the exception: it is Rive, and rive-react-native is a first-party runtime. The .riv asset, the six variants, and the five state-machine inputs port directly. The specific web bug (Strict Mode double-mount exhausting the WebGL context limit) does not exist in RN, though its lesson \u2014 do not create the runtime instance in a mount effect that can double-fire \u2014 still applies."
+  },
+  {
+   "name": "audio-player",
+   "verdict": "needs-full-rethink",
+   "reason": "Built on media-chrome Web Components (MediaController, MediaPlayButton, MediaTimeRange\u2026). Custom Elements do not exist in RN, so every control is a rewrite over expo-audio or react-native-track-player. Only the slot names and the seekOffset semantics survive. Also drop the volume slider \u2014 mobile OSes own volume."
+  },
+  {
+   "name": "speech-input",
+   "verdict": "needs-full-rethink",
+   "reason": "Its primary engine is window.SpeechRecognition, a Chrome-only API. The MediaRecorder fallback also has no direct equivalent. Rebuild on expo-speech-recognition (on-device) or make the onAudioRecorded \u2192 server transcribe() path the only route. Keep two behaviors verbatim: only FINAL transcripts fire onTranscriptionChange, and with no engine available the button is disabled rather than fake-listening."
+  },
+  {
+   "name": "mic-selector",
+   "verdict": "drop",
+   "reason": "Built on navigator.mediaDevices.enumerateDevices(). iOS and Android deliberately do not expose an arbitrary audio-input device list to apps \u2014 the platform owns routing via AVAudioSession / Bluetooth. There is no honest native equivalent. Either drop it or replace it with a system route picker, which is a different component with a different API."
+  },
+  {
+   "name": "model-selector / voice-selector",
+   "verdict": "native-substitute-exists",
+   "reason": "Both are cmdk Command palettes in a Dialog. cmdk is DOM-only and `command` is in the 26-component RNR gap list, so you will build the primitive once: bottom sheet + sectioned FlatList + TextInput filter, and reuse it for both. Drop the \u2318K shortcut slots. Preserve voice-selector's law that preview PLAYS and does not select \u2014 and give that nested button a real touch target."
+  }
+ ],
+ "ai_sdk_seam": {
+  "types_touched": [
+   "UIMessage (NOT ConversationMessage \u2014 that name was removed in 1.9.0)",
+   "UIMessage.parts[] discriminated by type: 'text' | 'reasoning' | 'tool-{name}' | 'dynamic-tool' | 'source-url' | 'source-document' | 'file'",
+   "ToolUIPart and DynamicToolUIPart (exported together as ToolPart)",
+   "ToolUIPart fields consumed: type, state, input, output, errorText, toolCallId, approval",
+   "FileUIPart and SourceDocumentUIPart (attachments)",
+   "ChatStatus ('submitted' | 'streaming' | 'error' | 'ready') for PromptInputSubmit",
+   "LanguageModelUsage ({ inputTokens, outputTokens, reasoningTokens, cachedInputTokens }) for context",
+   "Tool ({ description, inputSchema }) for AgentTool",
+   "Experimental_GeneratedImage for image",
+   "speech Result ({ base64, mediaType }) for audio-player",
+   "transcribe() segments ({ text, startSecond, endSecond }) for transcription"
+  ],
+  "tool_state_union": [
+   "input-streaming",
+   "input-available",
+   "approval-requested",
+   "approval-responded",
+   "output-available",
+   "output-error",
+   "output-denied"
+  ],
+  "notes": "This union is the ONE place where AI Elements and the AI SDK already line up with zero adapter \u2014 <ToolHeader state={part.state}> type-checks against a UIMessage tool part directly. Preserve it verbatim in the port; a hand-rolled status union type-checks locally and silently drifts on the next SDK upgrade. Badge mapping is fixed: input-streaming\u2192Pending, input-available\u2192Running, output-available\u2192Completed, output-error\u2192Error, approval-requested\u2192Awaiting Approval, approval-responded\u2192Responded, output-denied\u2192Denied. Two states are usually skipped and should be planned deliberately: (a) input-streaming renders while the model is still emitting arguments, so ToolInput must survive partial/invalid JSON and it is the shortest-lived state and therefore the most likely to be visually broken; (b) approval-requested/approval-responded are the human-in-the-loop path \u2014 without a real UI and a real response call (addToolApprovalResponse({ id, approved })) a gated agent silently stalls forever. Route-side flags matter: reasoning parts only exist with toUIMessageStreamResponse({ sendReasoning: true }), and source parts only with sendSources: true \u2014 a port team that sees no reasoning/sources is looking at a route gap, not a component bug. Finally: NONE of these 49 files call a model, own message state, or implement retry/abort/persistence. They are views over state you own (useChat or equivalent). The RN port inherits that boundary exactly \u2014 and inherits two responsibilities the web components never had to carry: keyboard avoidance and safe-area insets around the composer, and virtualization of the transcript."
+ }
+}
