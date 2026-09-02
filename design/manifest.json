@@ -41,11 +41,11 @@
           "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
         }
       },
-      "phase": "atoms",
+      "phase": "molecules",
       "gates": {
         "scaffold": "passed",
         "plan": "passed",
-        "atoms": "pending",
+        "atoms": "passed",
         "molecules": "pending",
         "compose": "pending"
       },
@@ -109,6 +109,17 @@
         "status": "COMPLETE \u2014 verified on device",
         "evidence": "iOS simulator screenshot: AI Elements/Suggestion/Default renders rounded-full outline chips, theme-driven, with the row clipping at the viewport edge (scrolls, never wraps \u2014 the web original's essential behavior).",
         "proves": "registry source -> engine fan-out -> harness resolves via the same alias rewrite the RNR CLI performs -> renders on device. public/r/{nativewind,uniwind}/suggestion.json both emitted with correct per-engine imports and registryDependencies."
+      },
+      "wave_2": {
+        "atoms": [
+          "empty",
+          "item",
+          "input-group",
+          "sheet"
+        ],
+        "status": "COMPLETE",
+        "evidence": "iOS simulator: Base Primitives/Item Rows renders outline + muted + plain rows, Icon via RNR's wrapper, TextClassContext differentiating title from description. All four bundle (4484 modules). Contract passes on 5 registry sources.",
+        "note": "sheet mounts its own NAMED PortalHost (useSheetPortalHost) \u2014 without it any RNR overlay opened inside renders BEHIND the sheet, silently, on device only."
       }
     },
     "mobile-android": {

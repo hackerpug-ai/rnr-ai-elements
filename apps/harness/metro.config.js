@@ -12,6 +12,7 @@ const config = getDefaultConfig(__dirname);
 // Point @/components/ui at this engine's RNR tree — the same substitution the registry
 // build script makes when fanning one source into two variants.
 const REGISTRY_SRC = path.resolve(__dirname, '../../packages/registry/src');
+const fsExists = (p) => { try { return fs.statSync(p).isFile(); } catch { return false; } };
 
 config.watchFolders = [...(config.watchFolders ?? []), REGISTRY_SRC];
 
@@ -39,6 +40,13 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   }
   if (moduleName === '@/components/ui' || moduleName.startsWith('@/components/ui/')) {
     const rest = moduleName.slice('@/components/ui'.length);
+    // OUR base primitives target components/ui/ deliberately — a consumer edits ONE
+    // directory, not two. So resolve registry source first and fall back to RNR's
+    // installed tree, which is exactly the shape a consumer's folder has after install.
+    const ours = path.join(REGISTRY_SRC, 'components/ui' + rest + '.tsx');
+    if (rest && fsExists(ours)) {
+      return context.resolveRequest(context, path.join(REGISTRY_SRC, 'components/ui' + rest), platform);
+    }
     return context.resolveRequest(
       context,
       path.join(__dirname, 'src', cfg.uiDir[ENGINE] + rest),

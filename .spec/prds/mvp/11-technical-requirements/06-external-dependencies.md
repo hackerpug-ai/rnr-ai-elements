@@ -18,12 +18,14 @@ latest breaks the native build at runtime rather than at install:
 
 | Package | Expo 57 pin | npm latest | Delta |
 |---|---|---|---|
-| `react-native` | 0.86.3 | 0.87.1 | minor |
+| `react-native` | 0.86.3 | 0.87.1 | minor — **0.86.3 confirmed by Expo's own scaffolder** |
 | `react-native-gesture-handler` | ~2.32.0 | 3.2.1 | **major** |
 | `react-native-webview` | 13.16.1 | 14.0.1 | **major** |
 | `react-native-reanimated` | 4.5.1 | 4.6.0 | minor |
 | `@shopify/flash-list` | 2.0.2 | 2.3.2 | minor |
 | `lucide-react-native` | (not bundled) | 1.39.0 | **major vs RNR's ^0.577** |
+| `@react-native-reusables/cli` | n/a | **1.0.0** | the KB and v1.0.0 of this PRD both said 0.7.1 |
+| `typescript` | **~6.0.3** (Expo 57 template) | 7.0.2 | harness uses Expo's pin; workspace root uses 7.0.2 |
 
 CI runs `npx expo-doctor` so drift fails the build instead of surfacing as a native crash.
 
