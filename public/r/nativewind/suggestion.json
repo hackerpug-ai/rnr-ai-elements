@@ -1,0 +1,18 @@
+{
+  "name": "suggestion",
+  "type": "registry:component",
+  "title": "Suggestion",
+  "description": "Starter prompts and follow-up chips a user taps instead of typing. Horizontal scrolling row; onPress receives the suggestion string.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/nativewind/button.json",
+    "https://reactnativereusables.com/r/nativewind/text.json"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ai/suggestion.tsx",
+      "type": "registry:component",
+      "target": "components/ai/suggestion.tsx",
+      "content": "import { Button } from '@/registry/nativewind/components/ui/button';\nimport { Text } from '@/registry/nativewind/components/ui/text';\nimport { cn } from '@/registry/nativewind/lib/utils';\nimport { ScrollView, type ScrollViewProps } from 'react-native';\n\n/**\n * Suggestion — starter prompts and follow-up chips a user taps instead of typing.\n *\n * Ported from Vercel AI Elements. Behaviors preserved from the web original:\n *  - the row SCROLLS horizontally and never wraps; layout does not reflow\n *  - `onPress` receives the suggestion STRING, not an event, so the caller can send it\n *    directly without unwrapping anything\n *\n * Deliberate native adaptations:\n *  - the web `ScrollArea` exists to restyle browser scrollbar chrome. React Native has no\n *    scrollbar chrome, so a plain horizontal ScrollView IS the scroll area. No primitive.\n *  - the web chips carry `hover:` only. On touch that renders identically at rest and is\n *    dead under a thumb, so press feedback comes from RNR Button's own `active:` variants.\n *  - `onClick` is `onPress`, the React Native name.\n *\n * Styling is entirely RNR's: this file declares no token and no colour.\n */\n\nexport type SuggestionsProps = ScrollViewProps & {\n  className?: string;\n  contentClassName?: string;\n};\n\nfunction Suggestions({ className, contentClassName, children, ...props }: SuggestionsProps) {\n  return (\n    <ScrollView\n      horizontal\n      showsHorizontalScrollIndicator={false}\n      keyboardShouldPersistTaps=\"handled\"\n      className={cn('w-full', className)}\n      contentContainerClassName={cn('flex-row gap-2 px-1 py-2', contentClassName)}\n      {...props}\n    >\n      {children}\n    </ScrollView>\n  );\n}\n\nexport type SuggestionProps = Omit<React.ComponentProps<typeof Button>, 'onPress' | 'children'> & {\n  /** The prompt text. Also what `onPress` receives. */\n  suggestion: string;\n  /** Receives the suggestion string, not a press event. */\n  onPress?: (suggestion: string) => void;\n};\n\nfunction Suggestion({\n  suggestion,\n  onPress,\n  className,\n  variant = 'outline',\n  size = 'sm',\n  ...props\n}: SuggestionProps) {\n  return (\n    <Button\n      variant={variant}\n      size={size}\n      className={cn('rounded-full', className)}\n      onPress={() => onPress?.(suggestion)}\n      accessibilityRole=\"button\"\n      accessibilityLabel={suggestion}\n      {...props}\n    >\n      <Text>{suggestion}</Text>\n    </Button>\n  );\n}\n\nexport { Suggestion, Suggestions };\n"
+    }
+  ]
+}
