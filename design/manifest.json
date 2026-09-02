@@ -41,12 +41,12 @@
           "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
         }
       },
-      "phase": "organisms",
+      "phase": "molecules",
       "gates": {
         "scaffold": "passed",
         "plan": "passed",
         "atoms": "passed",
-        "molecules": "passed",
+        "molecules": "pending",
         "compose": "pending"
       },
       "screens": [
@@ -87,22 +87,25 @@
       "build_plan": {
         "scope_rule": "Components that map directly to AI Elements. Nothing duplicating RNR. Nothing a consumer cannot install.",
         "tokens": "SKIP \u2014 the library declares none; consuming RNR's is the promise",
-        "atoms": 12,
+        "atoms": 10,
         "molecules": 9,
         "organisms": 34,
         "screens": 1,
-        "total_registry_items": 55,
+        "total_registry_items": 53,
         "cut_on_consumer_test": [
           "field",
           "navigation-menu",
           "spinner",
-          "toast"
+          "toast",
+          "sidebar",
+          "toaster"
         ],
         "deleted_from_sandbox": [
           "RNR Button story",
           "design token stories"
         ],
-        "plan_file": "design/build-plan.md"
+        "plan_file": "design/build-plan.md",
+        "cut_correction": "sidebar and toaster were in the atom list on FALSE POSITIVES from the derivation: 'sidebar' matched the word context in 'a SidebarProvider context', and 'toaster' matched 'queue' in 'a module-level queue store'. Neither is a component reference, and no in-scope component lists either as a dependency. toaster also had nothing to host, since toast was already cut. Atoms 12 -> 10, total 55 -> 53."
       },
       "wave_1": {
         "component": "suggestion",
@@ -141,7 +144,115 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 11
+      "registry_items": 11,
+      "atoms": [
+        {
+          "name": "breadcrumb",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/breadcrumb.tsx"
+        },
+        {
+          "name": "button-group",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/button-group.tsx"
+        },
+        {
+          "name": "command",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/command.tsx"
+        },
+        {
+          "name": "empty",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/empty.tsx"
+        },
+        {
+          "name": "input-group",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/input-group.tsx"
+        },
+        {
+          "name": "item",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/item.tsx"
+        },
+        {
+          "name": "kbd",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/kbd.tsx"
+        },
+        {
+          "name": "sheet",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/sheet.tsx"
+        },
+        {
+          "name": "slider",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/slider.tsx"
+        },
+        {
+          "name": "table",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/table.tsx"
+        }
+      ],
+      "molecules": [
+        {
+          "name": "checkpoint",
+          "status": "pending"
+        },
+        {
+          "name": "controls",
+          "status": "pending"
+        },
+        {
+          "name": "image",
+          "status": "pending"
+        },
+        {
+          "name": "panel",
+          "status": "pending"
+        },
+        {
+          "name": "persona",
+          "status": "pending"
+        },
+        {
+          "name": "shimmer",
+          "status": "pending"
+        },
+        {
+          "name": "speech-input",
+          "status": "pending"
+        },
+        {
+          "name": "suggestion",
+          "status": "verified"
+        },
+        {
+          "name": "toolbar",
+          "status": "pending"
+        }
+      ],
+      "gate_correction": "atoms and molecules were marked passed after Waves 2 and 3 with 4/12 and 1/9 built. That was a partial gate reported complete, which the runtime contract forbids. Reset to pending; the inventory below is now the record of what actually exists.",
+      "wave_4": {
+        "atoms": [
+          "breadcrumb",
+          "button-group",
+          "command",
+          "kbd",
+          "slider",
+          "table"
+        ],
+        "status": "COMPLETE",
+        "evidence": "iOS simulator: Base Primitives/Wave 2/Data Table renders header + bordered rows with the DESCRIPTION column clipping at the viewport edge \u2014 the horizontal ScrollView working. 4510 modules bundle.",
+        "corrections": [
+          "sidebar and toaster CUT \u2014 both were in the atom list on false positives from my derivation ('sidebar' matched the word context in 'a SidebarProvider context'; 'toaster' matched 'queue' in 'a module-level queue store'). No in-scope component lists either. Atoms 12 -> 10.",
+          "npm view reported every @rn-primitives package as NOT PUBLISHED, including ones installed and working. A direct registry probe confirmed slider/table/toast all exist at 1.5.2. Second time a wrapped command has misreported \u2014 verify against the registry or the installed tree, not npm view.",
+          "SliderPrimitive.Root requires `value` in its own min..max scale; our API is normalised 0..1, so the component maps between them."
+        ]
+      }
     },
     "mobile-android": {
       "tools": {
