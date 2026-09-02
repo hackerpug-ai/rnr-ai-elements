@@ -46,7 +46,7 @@ jobs:
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm install --frozen-lockfile
       - if: steps.guard.outputs.ready == 'true'
-        run: pnpm exec tsc --noEmit
+        run: pnpm exec tsc --noEmit && pnpm --filter @rnr-ai-elements/registry exec tsc --noEmit
 
   lint:
     name: lint

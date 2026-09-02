@@ -4,6 +4,115 @@
   "homepage": "https://github.com/hackerpug-ai/rnr-ai-elements",
   "items": [
     {
+      "name": "mono",
+      "type": "registry:lib",
+      "title": "Mono font",
+      "description": "One monospace family for every mono surface. Delete once font-mono is proven to resolve under the styling engine.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/lib/mono.ts",
+          "type": "registry:lib",
+          "target": "lib/mono.ts"
+        }
+      ]
+    },
+    {
+      "name": "markdown",
+      "type": "registry:lib",
+      "title": "Markdown repair",
+      "description": "Closes unterminated emphasis and code runs in a streaming chunk. Without it every streamed message flashes literal markdown syntax mid-token.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/lib/markdown.ts",
+          "type": "registry:lib",
+          "target": "lib/markdown.ts"
+        }
+      ]
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP \u2014 chrome is 100% RNR.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/code-block.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/code-block.tsx"
+        }
+      ],
+      "dependencies": [
+        "expo-clipboard"
+      ]
+    },
+    {
+      "name": "conversation",
+      "type": "registry:component",
+      "title": "Conversation",
+      "description": "Virtualized transcript. Inverted FlatList with maintainVisibleContentPosition, so stick-to-bottom is free and releases the moment the user scrolls up. Keyboard avoidance and safe-area insets, which the web original has nothing to copy for.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/conversation.tsx",
+          "type": "registry:component",
+          "target": "components/ai/conversation.tsx"
+        }
+      ],
+      "dependencies": [
+        "react-native-safe-area-context"
+      ]
+    },
+    {
+      "name": "message",
+      "type": "registry:component",
+      "title": "Message",
+      "description": "One turn. The prop is `from`, not `role`. Markdown is INJECTED via renderMarkdown and defaults to plain Text, which keeps the core Expo Go-clean.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/avatar.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/markdown.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/message.tsx",
+          "type": "registry:component",
+          "target": "components/ai/message.tsx"
+        }
+      ]
+    },
+    {
+      "name": "prompt-input",
+      "type": "registry:component",
+      "title": "Prompt Input",
+      "description": "The composer. Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT INTACT. Auto-grows to a cap, then scrolls.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/input-group.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/prompt-input.tsx",
+          "type": "registry:component",
+          "target": "components/ai/prompt-input.tsx"
+        }
+      ],
+      "dependencies": [
+        "react-native-safe-area-context"
+      ]
+    },
+    {
       "name": "empty",
       "type": "registry:ui",
       "title": "Empty",

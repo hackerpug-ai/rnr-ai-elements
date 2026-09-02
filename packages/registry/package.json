@@ -1,0 +1,27 @@
+{
+  "name": "@rnr-ai-elements/registry",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Registry SOURCE. Never published — the shipped artifact is public/r/*.json, which the RNR CLI installs by URL. These deps exist only so the sources typecheck.",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "class-variance-authority": "*",
+    "clsx": "*",
+    "expo-clipboard": "*",
+    "lucide-react-native": "*",
+    "react": "*",
+    "react-native": "*",
+    "react-native-reanimated": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-screens": "*",
+    "tailwind-merge": "*",
+    "@rn-primitives/dialog": "*",
+    "@rn-primitives/portal": "*"
+  }
+}

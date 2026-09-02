@@ -1,0 +1,82 @@
+/**
+ * The RNR boundary.
+ *
+ * Registry sources import `@/registry/{engine}/…` — aliases that do not resolve until the
+ * RNR CLI rewrites them into a consumer's tree at install time. This file declares that
+ * boundary so OUR logic typechecks in isolation.
+ *
+ * NO TOP-LEVEL IMPORTS. A .d.ts with a top-level import is a module, and `declare module`
+ * inside a module is an AUGMENTATION of something that must already exist — which these do
+ * not. Each block imports what it needs internally so these stay ambient declarations.
+ *
+ * These are real interfaces, not `any`: a wrong prop still fails here. They deliberately do
+ * not restate RNR's full API — RNR owns that, and duplicating it would rot.
+ */
+
+declare module '@/registry/{engine}/lib/utils' {
+  export function cn(...inputs: unknown[]): string;
+}
+
+declare module '@/registry/{engine}/components/ui/text' {
+  import type * as React from 'react';
+  import type { TextProps } from 'react-native';
+  export const Text: React.ComponentType<
+    TextProps & {
+      className?: string;
+      variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'blockquote' | 'code' | 'lead' | 'large' | 'small' | 'muted';
+    }
+  >;
+  export const TextClassContext: React.Context<string | undefined>;
+}
+
+declare module '@/registry/{engine}/components/ui/button' {
+  import type * as React from 'react';
+  import type { PressableProps } from 'react-native';
+  export const Button: React.ComponentType<
+    PressableProps & {
+      className?: string;
+      variant?: 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link';
+      size?: 'default' | 'sm' | 'lg' | 'icon';
+      children?: React.ReactNode;
+    }
+  >;
+  export function buttonVariants(opts?: Record<string, unknown>): string;
+}
+
+declare module '@/registry/{engine}/components/ui/icon' {
+  import type * as React from 'react';
+  import type { LucideIcon } from 'lucide-react-native';
+  export const Icon: React.ComponentType<{
+    as: LucideIcon;
+    size?: number;
+    color?: string;
+    className?: string;
+  }>;
+}
+
+declare module '@/registry/{engine}/components/ui/avatar' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export const Avatar: React.ComponentType<ViewProps & { alt: string; className?: string; children?: React.ReactNode }>;
+  export const AvatarImage: React.ComponentType<{ source: { uri: string }; className?: string }>;
+  export const AvatarFallback: React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+}
+
+declare module '@/registry/{engine}/components/ui/separator' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export const Separator: React.ComponentType<ViewProps & { className?: string; orientation?: 'horizontal' | 'vertical' }>;
+}
+
+// ---- OUR base primitives. Declared for the same reason: at install time they are files
+// in the CONSUMER's components/ui/, not modules in this package.
+declare module '@/registry/{engine}/components/ui/input-group' {
+  import type * as React from 'react';
+  import type { TextInputProps, ViewProps } from 'react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const InputGroup: Slot;
+  export const InputGroupAddon: Slot;
+  export const InputGroupActions: Slot;
+  export const InputGroupInput: React.ComponentType<TextInputProps & { className?: string }>;
+  export const InputGroupText: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+}
