@@ -1,8 +1,8 @@
 {
   "version": "6.0.0",
   "created": "2026-09-01",
-  "goal": "A React Native Reusables port of Vercel's AI Elements \u2014 universal iOS, Android and Web AI chat and agent UI, distributed as a copy-paste registry.",
-  "vibe": "Match React Native Reusables for all shared vocabulary \u2014 radius, spacing rhythm, type ramp, borders, press states, motion durations \u2014 while genuinely new AI surfaces (streaming shimmer, tool status badges, reasoning trace) carry their own visual treatment so an agent action reads as distinct from ordinary app chrome. Distinctness comes from composition and existing roles only; the library declares no new tokens.",
+  "goal": "A React Native Reusables port of Vercel's AI Elements — universal iOS, Android and Web AI chat and agent UI, distributed as a copy-paste registry.",
+  "vibe": "Match React Native Reusables for all shared vocabulary — radius, spacing rhythm, type ramp, borders, press states, motion durations — while genuinely new AI surfaces (streaming shimmer, tool status badges, reasoning trace) carry their own visual treatment so an agent action reads as distinct from ordinary app chrome. Distinctness comes from composition and existing roles only; the library declares no new tokens.",
   "spec": ".spec/prds/mvp/README.md",
   "references": [],
   "gates": {
@@ -47,7 +47,8 @@
         "plan": "passed",
         "atoms": "passed",
         "molecules": "passed",
-        "compose": "pending"
+        "compose": "pending",
+        "organisms": "pending"
       },
       "screens": [
         {
@@ -60,7 +61,7 @@
             "error"
           ],
           "distributed": false,
-          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+          "note": "The only view. Not part of the registry and never shipped to a consumer — it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
         }
       ],
       "capture": {
@@ -71,22 +72,22 @@
       "pinned": [],
       "deprecations": {},
       "scaffold_progress": {
-        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
-        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
-        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
-        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
-        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
-        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
-        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "workspace": "done — pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done — apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done — metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done — src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done — all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done — <PortalHost /> mounted as last root child",
+        "hello_world": "done — src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
-        "storybook": "PASSED on device. .rnstorybook/ (not .storybook \u2014 that is web), withStorybook metro wrapper, custom index.js entry (expo-router would otherwise always win). iOS bundle 2767 modules, runs in Expo Go.",
+        "storybook": "PASSED on device. .rnstorybook/ (not .storybook — that is web), withStorybook metro wrapper, custom index.js entry (expo-router would otherwise always win). iOS bundle 2767 modules, runs in Expo Go.",
         "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom.",
-        "verified_on_device": "Screenshot evidence, iPhone 17 simulator: bg-card renders white with a visible border, bg-muted/50 light grey, bg-primary NEAR-BLACK with white text (#171717 / #fafafa \u2014 RNR exact values). This is the same bg-primary that renders transparent in web Storybook, which localises that defect to react-native-web and clears the engine, theme and token values.",
+        "verified_on_device": "Screenshot evidence, iPhone 17 simulator: bg-card renders white with a visible border, bg-muted/50 light grey, bg-primary NEAR-BLACK with white text (#171717 / #fafafa — RNR exact values). This is the same bg-primary that renders transparent in web Storybook, which localises that defect to react-native-web and clears the engine, theme and token values.",
         "known_defect": "Web Storybook: --color-* resolve to unset, so variant backgrounds are missing. Geometry is correct. Device is the sign-off gate per the PRD, so this does not block; web remains usable for prop matrices."
       },
       "build_plan": {
         "scope_rule": "Components that map directly to AI Elements. Nothing duplicating RNR. Nothing a consumer cannot install.",
-        "tokens": "SKIP \u2014 the library declares none; consuming RNR's is the promise",
+        "tokens": "SKIP — the library declares none; consuming RNR's is the promise",
         "atoms": 10,
         "molecules": 6,
         "organisms": 34,
@@ -106,13 +107,13 @@
         ],
         "plan_file": "design/build-plan.md",
         "cut_correction": "sidebar and toaster were in the atom list on FALSE POSITIVES from the derivation: 'sidebar' matched the word context in 'a SidebarProvider context', and 'toaster' matched 'queue' in 'a module-level queue store'. Neither is a component reference, and no in-scope component lists either as a dependency. toaster also had nothing to host, since toast was already cut. Atoms 12 -> 10, total 55 -> 53.",
-        "canvas_family_correction": "controls, toolbar and panel moved OUT OF SCOPE. The product lens read them as a generic media transport, an icon row and a split pane. The web-original lens \u2014 the authority on what the web component IS \u2014 says controls is React Flow's zoom cluster acting on its viewport store, toolbar is @xyflow/react NodeToolbar positioned from the owning node's measured DOM rect inside a nodeTypes component, and panel is an absolutely positioned View inside the transform layer. All three verdict 'drop'. canvas/node/edge/connection are already out of scope, so their satellites cannot function. Molecules 9 -> 6, total 53 -> 50, out-of-scope 6 -> 9.",
+        "canvas_family_correction": "controls, toolbar and panel moved OUT OF SCOPE. The product lens read them as a generic media transport, an icon row and a split pane. The web-original lens — the authority on what the web component IS — says controls is React Flow's zoom cluster acting on its viewport store, toolbar is @xyflow/react NodeToolbar positioned from the owning node's measured DOM rect inside a nodeTypes component, and panel is an absolutely positioned View inside the transform layer. All three verdict 'drop'. canvas/node/edge/connection are already out of scope, so their satellites cannot function. Molecules 9 -> 6, total 53 -> 50, out-of-scope 6 -> 9.",
         "persona_note": "persona is Rive (WebGL2 on web; rive-react-native natively), NOT the avatar card the product lens described. Shipped here as the identity card WITHOUT the animated avatar, which keeps the registry dependency-free; the Rive runtime would be an opt-in item if ever wanted."
       },
       "wave_1": {
         "component": "suggestion",
-        "status": "COMPLETE \u2014 verified on device",
-        "evidence": "iOS simulator screenshot: AI Elements/Suggestion/Default renders rounded-full outline chips, theme-driven, with the row clipping at the viewport edge (scrolls, never wraps \u2014 the web original's essential behavior).",
+        "status": "COMPLETE — verified on device",
+        "evidence": "iOS simulator screenshot: AI Elements/Suggestion/Default renders rounded-full outline chips, theme-driven, with the row clipping at the viewport edge (scrolls, never wraps — the web original's essential behavior).",
         "proves": "registry source -> engine fan-out -> harness resolves via the same alias rewrite the RNR CLI performs -> renders on device. public/r/{nativewind,uniwind}/suggestion.json both emitted with correct per-engine imports and registryDependencies."
       },
       "wave_2": {
@@ -124,7 +125,7 @@
         ],
         "status": "COMPLETE",
         "evidence": "iOS simulator: Base Primitives/Item Rows renders outline + muted + plain rows, Icon via RNR's wrapper, TextClassContext differentiating title from description. All four bundle (4484 modules). Contract passes on 5 registry sources.",
-        "note": "sheet mounts its own NAMED PortalHost (useSheetPortalHost) \u2014 without it any RNR overlay opened inside renders BEHIND the sheet, silently, on device only."
+        "note": "sheet mounts its own NAMED PortalHost (useSheetPortalHost) — without it any RNR overlay opened inside renders BEHIND the sheet, silently, on device only."
       },
       "wave_3": {
         "components": [
@@ -138,15 +139,15 @@
           "markdown"
         ],
         "status": "COMPLETE",
-        "evidence": "iOS simulator: AI Elements/Chat/Populated renders a real chat \u2014 user bubble on bg-primary right-aligned, assistant full-width with avatar, code-block with filename header + copy + line-number gutter, composer with send button. Content sits at the BOTTOM of the viewport, which is the inverted FlatList reproducing the web original's grow-from-bottom.",
+        "evidence": "iOS simulator: AI Elements/Chat/Populated renders a real chat — user bubble on bg-primary right-aligned, assistant full-width with avatar, code-block with filename header + copy + line-number gutter, composer with send button. Content sits at the BOTTOM of the viewport, which is the inverted FlatList reproducing the web original's grow-from-bottom.",
         "key_decisions": {
-          "conversation": "Inverted FlatList + maintainVisibleContentPosition. Stick-to-bottom is free (offset 0 IS the bottom) and releases the moment the user scrolls up, never taken back. Virtualized from day one \u2014 the prior RN port shipped ScrollView + .map().",
-          "message": "prop is `from` not `role` (the documented most-common port error). Markdown INJECTED via renderMarkdown, default plain Text \u2014 that seam keeps the core Expo Go-clean.",
+          "conversation": "Inverted FlatList + maintainVisibleContentPosition. Stick-to-bottom is free (offset 0 IS the bottom) and releases the moment the user scrolls up, never taken back. Virtualized from day one — the prior RN port shipped ScrollView + .map().",
+          "message": "prop is `from` not `role` (the documented most-common port error). Markdown INJECTED via renderMarkdown, default plain Text — that seam keeps the core Expo Go-clean.",
           "prompt-input": "Explicit send button is the ONLY submit path; the web Enter/Shift+Enter/IME contract is meaningless on a soft keyboard. A REJECTED onSubmit leaves the text intact.",
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 11,
+      "registry_items": 28,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -242,10 +243,10 @@
           "table"
         ],
         "status": "COMPLETE",
-        "evidence": "iOS simulator: Base Primitives/Wave 2/Data Table renders header + bordered rows with the DESCRIPTION column clipping at the viewport edge \u2014 the horizontal ScrollView working. 4510 modules bundle.",
+        "evidence": "iOS simulator: Base Primitives/Wave 2/Data Table renders header + bordered rows with the DESCRIPTION column clipping at the viewport edge — the horizontal ScrollView working. 4510 modules bundle.",
         "corrections": [
-          "sidebar and toaster CUT \u2014 both were in the atom list on false positives from my derivation ('sidebar' matched the word context in 'a SidebarProvider context'; 'toaster' matched 'queue' in 'a module-level queue store'). No in-scope component lists either. Atoms 12 -> 10.",
-          "npm view reported every @rn-primitives package as NOT PUBLISHED, including ones installed and working. A direct registry probe confirmed slider/table/toast all exist at 1.5.2. Second time a wrapped command has misreported \u2014 verify against the registry or the installed tree, not npm view.",
+          "sidebar and toaster CUT — both were in the atom list on false positives from my derivation ('sidebar' matched the word context in 'a SidebarProvider context'; 'toaster' matched 'queue' in 'a module-level queue store'). No in-scope component lists either. Atoms 12 -> 10.",
+          "npm view reported every @rn-primitives package as NOT PUBLISHED, including ones installed and working. A direct registry probe confirmed slider/table/toast all exist at 1.5.2. Second time a wrapped command has misreported — verify against the registry or the installed tree, not npm view.",
           "SliderPrimitive.Root requires `value` in its own min..max scale; our API is normalised 0..1, so the component maps between them."
         ]
       },
@@ -258,11 +259,194 @@
           "speech-input"
         ],
         "status": "COMPLETE",
-        "evidence": "iOS simulator: AI Elements/Molecules/Streaming Shimmer captured mid-pulse \u2014 two active rows faded at reduced opacity while active={false} sits at full text-muted-foreground. 4515 modules bundle.",
+        "evidence": "iOS simulator: AI Elements/Molecules/Streaming Shimmer captured mid-pulse — two active rows faded at reduced opacity while active={false} sits at full text-muted-foreground. 4515 modules bundle.",
         "scope_correction": "controls, toolbar and panel moved OUT OF SCOPE as canvas-family. The web-original lens (authority on what the web component IS) verdicts all three 'drop': controls is React Flow's zoom cluster on its viewport store, toolbar is @xyflow/react NodeToolbar positioned from a node's measured DOM rect, panel is a positioned View inside the transform layer. The product lens had misread them as a media transport, an icon row and a split pane. canvas/node/edge/connection are already out of scope, so their satellites cannot function. Molecules 9 -> 6, total 53 -> 50.",
         "persona_divergence": "The web persona is a Rive animation (WebGL2 on web, rive-react-native natively), not the avatar card the product lens described. Shipped as the identity surface WITHOUT the animated avatar, so no consumer inherits a native animation runtime for a component most use as a header. Recorded as a real gap in the verdict table rather than implied parity.",
-        "shimmer_note": "The only genuinely invented treatment in the port. React Native has no background-clip:text, so it reuses RNR Skeleton's exact motion signature (opacity 1->0.5, 1000ms, withRepeat reverse) rather than the web's 2000ms gradient sweep \u2014 an invented treatment that borrows the house pulse reads as house style. Gated on useReducedMotion, where RNR's own Skeleton is not.",
+        "shimmer_note": "The only genuinely invented treatment in the port. React Native has no background-clip:text, so it reuses RNR Skeleton's exact motion signature (opacity 1->0.5, 1000ms, withRepeat reverse) rather than the web's 2000ms gradient sweep — an invented treatment that borrows the house pulse reads as house style. Gated on useReducedMotion, where RNR's own Skeleton is not.",
         "speech_input_note": "Ships the web original's caller-supplied-transcriber contract as the ONLY contract, so no speech dependency enters anyone's install graph. Disabled with no engine wired (never fake-listening); only final non-empty transcripts fire; permission-denied is a distinct state because on mobile capability != permission."
+      },
+      "organisms": [
+        {
+          "name": "agent",
+          "status": "pending"
+        },
+        {
+          "name": "artifact",
+          "status": "pending"
+        },
+        {
+          "name": "attachments",
+          "status": "pending"
+        },
+        {
+          "name": "audio-player",
+          "status": "pending"
+        },
+        {
+          "name": "chain-of-thought",
+          "status": "pending"
+        },
+        {
+          "name": "code-block",
+          "status": "verified",
+          "file": "packages/registry/src/components/ui/code-block.tsx",
+          "note": "Wave 3 — the minimum chat, verified on device"
+        },
+        {
+          "name": "commit",
+          "status": "pending"
+        },
+        {
+          "name": "confirmation",
+          "status": "pending"
+        },
+        {
+          "name": "context",
+          "status": "pending"
+        },
+        {
+          "name": "conversation",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/conversation.tsx",
+          "note": "Wave 3 — the minimum chat, verified on device"
+        },
+        {
+          "name": "environment-variables",
+          "status": "pending"
+        },
+        {
+          "name": "file-tree",
+          "status": "pending"
+        },
+        {
+          "name": "inline-citation",
+          "status": "pending"
+        },
+        {
+          "name": "message",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/message.tsx",
+          "note": "Wave 3 — the minimum chat, verified on device"
+        },
+        {
+          "name": "mic-selector",
+          "status": "pending"
+        },
+        {
+          "name": "model-selector",
+          "status": "pending"
+        },
+        {
+          "name": "open-in-chat",
+          "status": "pending"
+        },
+        {
+          "name": "package-info",
+          "status": "pending"
+        },
+        {
+          "name": "plan",
+          "status": "pending"
+        },
+        {
+          "name": "prompt-input",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/prompt-input.tsx",
+          "note": "Wave 3 — the minimum chat, verified on device"
+        },
+        {
+          "name": "question",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/question.tsx",
+          "note": "Wave 6 — agent surface, verified on device"
+        },
+        {
+          "name": "queue",
+          "status": "pending"
+        },
+        {
+          "name": "reasoning",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/reasoning.tsx",
+          "note": "Wave 6 — agent surface, verified on device"
+        },
+        {
+          "name": "schema-display",
+          "status": "pending"
+        },
+        {
+          "name": "snippet",
+          "status": "pending"
+        },
+        {
+          "name": "sources",
+          "status": "pending"
+        },
+        {
+          "name": "stack-trace",
+          "status": "pending"
+        },
+        {
+          "name": "task",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/task.tsx",
+          "logic": "packages/registry/src/components/ai/task.logic.ts",
+          "note": "Wave 6 — agent surface, verified on device"
+        },
+        {
+          "name": "terminal",
+          "status": "pending"
+        },
+        {
+          "name": "test-results",
+          "status": "pending"
+        },
+        {
+          "name": "tool",
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/tool.tsx",
+          "logic": "packages/registry/src/components/ai/tool.logic.ts",
+          "note": "Wave 6 — agent surface, verified on device"
+        },
+        {
+          "name": "transcription",
+          "status": "pending"
+        },
+        {
+          "name": "voice-selector",
+          "status": "pending"
+        },
+        {
+          "name": "web-preview",
+          "status": "pending"
+        }
+      ],
+      "wave_6": {
+        "organisms": [
+          "tool",
+          "reasoning",
+          "task",
+          "question"
+        ],
+        "libs": [
+          "status",
+          "reasoning-lifecycle"
+        ],
+        "status": "COMPLETE — reviewed, fixed, verified on device",
+        "evidence": [
+          "iOS simulator, AI Elements/Agent/Agent Turn: all four organisms composed inside a real Message. ToolOutput renders the STRING '2 matches in packages/api' — the crash-canary for the review's BLOCKING fix (bare string in a View is a guaranteed RN crash; pre-fix this story red-screens). Reasoning shows the 'Thought for a few seconds' fallback (web 1.6.1 path), question renders stacked tap-to-send options.",
+          "iOS simulator, AI Elements/Agent/Task Board: all four task statuses with distinct icons (hollow ring / clock / check / x), collapsed-by-default group + expanded group, file chips (schema.sql, migrations/0002.sql) as gray pills.",
+          "iOS simulator, AI Elements/Agent/Tool Lifecycle: all 7 AI SDK tool-part states with verbatim badges; error card expanded showing PARAMETERS + destructive-token red error text (rgb(239,68,68)); Running badge captured mid-pulse at reduced opacity — RNR Skeleton's 1000ms signature working on device."
+        ],
+        "review": "react-native-reusables-reviewer: 1 BLOCKING (ToolOutput raw string crash), 1 MAJOR (relative .ts import shipped in emitted JSON — breaks consumer typecheck, TS5097), 3 MINOR. All fixed: string outputs wrapped in selectable Text; status lib moved to the @/registry/{engine}/lib/status alias (tsconfig paths wildcarded in registry + root, vitest regex alias added, allowImportingTsExtensions dropped from the registry package); ReasoningTrigger carries accessibilityState busy+expanded; ToolContent publishes text-foreground not text-popover-foreground; PRD task verdict corrected to port-adapted (defaultOpen divergence now on the record).",
+        "reviewer_verdicts": "tool FIX-FIRST (fixed), task FIX-FIRST (fixed), reasoning SHIP, question SHIP, scripts SHIP",
+        "gate_discoveries": [
+          "pixel-perfect component-contract gate (verify-styling-contract.mjs against react-native-reusables.md, run at packages/registry root where src/ lives) found checkpoint.tsx importing raw Pressable — a Wave 5 molecule defect the internal checker missed. Fixed on the vendored ghost Button; all layers re-verified.",
+          "check:registry referenced scripts/check-registry-fresh.ts which was NEVER COMMITTED — baseline-proven by the implementer (ERR_MODULE_NOT_FOUND on a clean tree); the script was written and drift-detects (byte-compare, never writes).",
+          "build-registry.ts fired main() on import (argv[1] guard) — silently rebuilding public/r inside the freshness check; guard fixed to import.meta.url comparison.",
+          "scripts/check-tokens.ts is ALSO referenced-but-missing in package.json — flagged, not fixed (outside this wave)."
+        ],
+        "gates": "typecheck 0 · vitest 50/50 · biome 0 · registry:build 28x2 · check:registry fresh · styling contract 0 violations (62 files) · component contract 0 violations (15 files, after checkpoint fix)"
       }
     },
     "mobile-android": {
@@ -314,7 +498,7 @@
             "error"
           ],
           "distributed": false,
-          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+          "note": "The only view. Not part of the registry and never shipped to a consumer — it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
         }
       ],
       "capture": {
@@ -325,16 +509,16 @@
       "pinned": [],
       "deprecations": {},
       "scaffold_progress": {
-        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
-        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
-        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
-        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
-        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
-        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
-        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "workspace": "done — pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done — apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done — metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done — src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done — all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done — <PortalHost /> mounted as last root child",
+        "hello_world": "done — src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
         "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
-        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "storybook": "configured — custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
         "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     },
@@ -387,7 +571,7 @@
             "error"
           ],
           "distributed": false,
-          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+          "note": "The only view. Not part of the registry and never shipped to a consumer — it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
         }
       ],
       "capture": {
@@ -398,16 +582,16 @@
       "pinned": [],
       "deprecations": {},
       "scaffold_progress": {
-        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
-        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
-        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
-        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
-        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
-        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
-        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "workspace": "done — pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done — apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done — metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done — src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done — all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done — <PortalHost /> mounted as last root child",
+        "hello_world": "done — src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
         "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
-        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "storybook": "configured — custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
         "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     },
@@ -460,7 +644,7 @@
             "error"
           ],
           "distributed": false,
-          "note": "The only view. Not part of the registry and never shipped to a consumer \u2014 it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
+          "note": "The only view. Not part of the registry and never shipped to a consumer — it exists so components can be seen composed into a real AI chat. Storybook carries everything else."
         }
       ],
       "capture": {
@@ -471,30 +655,30 @@
       "pinned": [],
       "deprecations": {},
       "scaffold_progress": {
-        "workspace": "done \u2014 pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
-        "harness": "done \u2014 apps/harness, Expo 57.0.19 + expo-router + react-native-web",
-        "engine_wiring": "done \u2014 metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
-        "theme": "done \u2014 src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
-        "rnr_components": "done \u2014 all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
-        "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
-        "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
+        "workspace": "done — pnpm workspace, node-linker=hoisted (pnpm's symlinked store trips Metro)",
+        "harness": "done — apps/harness, Expo 57.0.19 + expo-router + react-native-web",
+        "engine_wiring": "done — metro.config.js withUniwindConfig OUTERMOST, cssEntryFile relative",
+        "theme": "done — src/global.css, RNR's own token values in Tailwind v4 @layer theme shape",
+        "rnr_components": "done — all 32 pulled via CLI 1.0.0 --styling-library uniwind; 24 @rn-primitives auto-installed",
+        "portal_host": "done — <PortalHost /> mounted as last root child",
+        "hello_world": "done — src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
         "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
-        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
+        "storybook": "configured — custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
         "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
       }
     }
   },
   "notes": {
-    "dual_engine": "The registry emits BOTH nativewind and uniwind variants at 32/32 parity, mirroring RNR. Measured basis: RNR's own two variants differ only by an import-path segment and formatting \u2014 125 identical class tokens, zero nativewind-only classes, and the only two uniwind-only classes live in icon.tsx, which we consume from RNR rather than write. Our source stays engine-agnostic; the build fans it out by rewriting the alias segment and the registryDependencies URL segment.",
+    "dual_engine": "The registry emits BOTH nativewind and uniwind variants at 32/32 parity, mirroring RNR. Measured basis: RNR's own two variants differ only by an import-path segment and formatting — 125 identical class tokens, zero nativewind-only classes, and the only two uniwind-only classes live in icon.tsx, which we consume from RNR rather than write. Our source stays engine-agnostic; the build fans it out by rewriting the alias segment and the registryDependencies URL segment.",
     "harness_engine": "Storybook runs on ONE engine (uniwind) because a sandbox needs a single bundler. The nativewind variant is validated by CI installing it into a clean Expo app and typechecking, which is proportionate given the emitted delta is an import path.",
-    "customization": "Consumers get RNR's own customization contract unchanged: the library declares no tokens (verified \u2014 RNR registry items ship no cssVars and no theme.ts), and components ride cn + cva + TextClassContext through the consumer's aliases. A consumer on either RNR setup is supported.",
+    "customization": "Consumers get RNR's own customization contract unchanged: the library declares no tokens (verified — RNR registry items ship no cssVars and no theme.ts), and components ride cn + cva + TextClassContext through the consumer's aliases. A consumer on either RNR setup is supported.",
     "prd_correction_needed": "PRD 01-scope.md and 11-technical-requirements/ record 'Uniwind-only for v1' with a named deferral trigger. That trigger has fired. AGENTS.md Tech Stack says the same. Both need updating to dual-engine.",
     "scaffold_gate": "Deliberately still PENDING. The workflow's step 9 requires the sandbox to run and token stories to render; Storybook is not installed yet. The workspace, theme, all 32 RNR components, PortalHost and a hello-world are done and verified (0 tsc errors, real Metro bundle). Marking the gate passed before Storybook exists would be fake success.",
-    "pin_corrections": "Three corrections verified against sources, not inferred: react-native is 0.86.3 (Expo 57's pin, confirmed by Expo's own scaffolder) not 0.87.1; @react-native-reusables/cli is 1.0.0 not 0.7.1; Expo 57's template pins typescript ~6.0.3 while AGENTS.md/PRD say 7.0.2 \u2014 harness runs 6.0.3, workspace root holds 7.0.2.",
-    "cli_findings": "RNR's `init` is interactive and cannot be scripted (hangs on a TTY prompt with piped stdin). `add` works non-interactively with --yes --all --overwrite --styling-library. components.json REQUIRES aliases.utils \u2014 omitting it fails validation with 'Invalid components.json'. RNR's doctor asks for tailwindcss-animate even on the uniwind path, which is a Tailwind v3 plugin the styling contract forbids in the uniwind emit.",
+    "pin_corrections": "Three corrections verified against sources, not inferred: react-native is 0.86.3 (Expo 57's pin, confirmed by Expo's own scaffolder) not 0.87.1; @react-native-reusables/cli is 1.0.0 not 0.7.1; Expo 57's template pins typescript ~6.0.3 while AGENTS.md/PRD say 7.0.2 — harness runs 6.0.3, workspace root holds 7.0.2.",
+    "cli_findings": "RNR's `init` is interactive and cannot be scripted (hangs on a TTY prompt with piped stdin). `add` works non-interactively with --yes --all --overwrite --styling-library. components.json REQUIRES aliases.utils — omitting it fails validation with 'Invalid components.json'. RNR's doctor asks for tailwindcss-animate even on the uniwind path, which is a Tailwind v3 plugin the styling contract forbids in the uniwind emit.",
     "hoisting_correction": "node-linker=hoisted was REMOVED. It was added on the assumption that pnpm's symlinks trip Metro; that assumption was wrong for Expo 57 / Metro, and hoisting actively broke dual-engine support by flattening nativewind into the root where it resolved tailwindcss@4 instead of its package-local v3. With pnpm's default isolated linker, apps/harness resolves tailwindcss 4.3.3 and apps/harness-nativewind resolves 3.4.19, and both engines build.",
-    "engine_toggle": "The Storybook Engine toolbar item cannot hot-swap engines \u2014 both are bundler transforms and NativeWind 4 requires Tailwind v3 while Uniwind requires v4. It reports the running engine and hard-refreshes to the other server, which is why each engine has its own workspace package and port.",
+    "engine_toggle": "The Storybook Engine toolbar item cannot hot-swap engines — both are bundler transforms and NativeWind 4 requires Tailwind v3 while Uniwind requires v4. It reports the running engine and hard-refreshes to the other server, which is why each engine has its own workspace package and port.",
     "rtk_warning": "`rtk` wraps tsc and reported 'TypeScript: No errors found' on a run that exited 1 with a real TS2688 error. Verify gates with the direct binary when an exit code and the printed output disagree.",
     "sandbox_scope": "The sandbox contains ONLY components this library ships. RNR already exports tokens and Button, and consumers get those from RNR directly, so re-storying them here would duplicate RNR and demo nothing installable. The scaffold smoke stories (RNR Button, design tokens) were deleted once they had done their job of proving the pipeline; their evidence is recorded above."
   }

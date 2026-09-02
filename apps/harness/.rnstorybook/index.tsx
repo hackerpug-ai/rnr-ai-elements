@@ -5,7 +5,7 @@ import { view } from './storybook.requires';
 const StorybookUI = view.getStorybookUI({
   storage: AsyncStorage,
   // Open on a real component rather than whatever was last viewed on this simulator.
-  initialSelection: { kind: 'AI Elements/Molecules', name: 'Streaming Shimmer' },
+  initialSelection: { kind: 'AI Elements/Agent', name: 'Agent Turn' },
 });
 
 export default StorybookUI;

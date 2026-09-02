@@ -68,6 +68,68 @@ declare module '@/registry/{engine}/components/ui/separator' {
   export const Separator: React.ComponentType<ViewProps & { className?: string; orientation?: 'horizontal' | 'vertical' }>;
 }
 
+declare module '@/registry/{engine}/components/ui/badge' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export const Badge: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      variant?: 'default' | 'secondary' | 'destructive' | 'outline';
+      children?: React.ReactNode;
+    }
+  >;
+  export function badgeVariants(opts?: Record<string, unknown>): string;
+}
+
+declare module '@/registry/{engine}/components/ui/collapsible' {
+  import type * as React from 'react';
+  import type { PressableProps, ViewProps } from 'react-native';
+  export const Collapsible: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      open?: boolean;
+      defaultOpen?: boolean;
+      onOpenChange?: (open: boolean) => void;
+      disabled?: boolean;
+      children?: React.ReactNode;
+    }
+  >;
+  export const CollapsibleTrigger: React.ComponentType<
+    PressableProps & { className?: string; asChild?: boolean; children?: React.ReactNode }
+  >;
+  export const CollapsibleContent: React.ComponentType<
+    ViewProps & { className?: string; forceMount?: boolean; children?: React.ReactNode }
+  >;
+}
+
+declare module '@/registry/{engine}/components/ui/card' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const Card: Slot;
+  export const CardHeader: Slot;
+  export const CardContent: Slot;
+  export const CardFooter: Slot;
+  export const CardTitle: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+  export const CardDescription: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+}
+
+declare module '@/registry/{engine}/components/ui/native-only-animated-view' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  // `entering`/`exiting` carry Reanimated FadeIn/FadeOut objects. Typed as unknown so
+  // the boundary stays decoupled from Reanimated's animation-class surface; the real
+  // component (RNR's, at consumer compile time) owns the precise type.
+  export const NativeOnlyAnimatedView: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      entering?: unknown;
+      exiting?: unknown;
+      children?: React.ReactNode;
+    }
+  >;
+}
+
 // ---- OUR base primitives. Declared for the same reason: at install time they are files
 // in the CONSUMER's components/ui/, not modules in this package.
 declare module '@/registry/{engine}/components/ui/input-group' {
