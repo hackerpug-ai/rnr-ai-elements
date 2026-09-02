@@ -4,6 +4,111 @@
   "homepage": "https://github.com/hackerpug-ai/rnr-ai-elements",
   "items": [
     {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always \u2014 correct, not a compromise.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/kbd.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/kbd.tsx"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Path trail for file-tree and web-preview headers. A horizontal ScrollView, not the web's wrap-and-ellipsis: a phone bar overflows before it wraps.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/breadcrumb.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "description": "Segmented row. React Native has no :first-child and Tailwind descendant selectors compile to nothing, so corner rounding is published through context.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/button-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb \u2014 the web size is a mouse target.",
+      "registryDependencies": [],
+      "dependencies": [
+        "@rn-primitives/slider"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/slider.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Styled shell over @rn-primitives/table, which RNR does not wrap. Horizontally scrollable by default; a phone-width table with 3+ columns must scroll rather than shrink.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "dependencies": [
+        "@rn-primitives/table"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "The searchable picker. cmdk is DOM/keyboard-first with no mobile analogue, so on a phone the palette IS a bottom sheet with a filter and a virtualized list.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/sheet.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/input-group.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/empty.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/command.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/command.tsx"
+        }
+      ]
+    },
+    {
       "name": "mono",
       "type": "registry:lib",
       "title": "Mono font",

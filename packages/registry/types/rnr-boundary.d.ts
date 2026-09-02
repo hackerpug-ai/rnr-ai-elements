@@ -80,3 +80,59 @@ declare module '@/registry/{engine}/components/ui/input-group' {
   export const InputGroupInput: React.ComponentType<TextInputProps & { className?: string }>;
   export const InputGroupText: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
 }
+
+declare module '@/registry/{engine}/components/ui/empty' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  import type { LucideIcon } from 'lucide-react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const Empty: Slot;
+  export const EmptyActions: Slot;
+  export const EmptyTitle: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+  export const EmptyDescription: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+  export const EmptyIcon: React.ComponentType<{ as: LucideIcon; className?: string }>;
+}
+
+declare module '@/registry/{engine}/components/ui/item' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const Item: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      children?: React.ReactNode;
+      variant?: 'default' | 'outline' | 'muted';
+      onPress?: () => void;
+    }
+  >;
+  export const ItemMedia: Slot;
+  export const ItemContent: Slot;
+  export const ItemActions: Slot;
+  export const ItemTitle: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+  export const ItemDescription: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+}
+
+declare module '@/registry/{engine}/components/ui/sheet' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export const Sheet: React.ComponentType<{
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    children?: React.ReactNode;
+  }>;
+  export const SheetTrigger: React.ComponentType<{ asChild?: boolean; children?: React.ReactNode }>;
+  export const SheetClose: React.ComponentType<{ asChild?: boolean; children?: React.ReactNode }>;
+  export const SheetContent: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      children?: React.ReactNode;
+      side?: 'bottom' | 'top' | 'left' | 'right';
+      portalHostName?: string;
+    }
+  >;
+  export const SheetHeader: React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const SheetFooter: React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const SheetTitle: React.ComponentType<{ children?: React.ReactNode }>;
+  export const SheetDescription: React.ComponentType<{ children?: React.ReactNode }>;
+  export function useSheetPortalHost(): string | undefined;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "table",
+  "type": "registry:ui",
+  "title": "Table",
+  "description": "Styled shell over @rn-primitives/table, which RNR does not wrap. Horizontally scrollable by default; a phone-width table with 3+ columns must scroll rather than shrink.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/uniwind/text.json"
+  ],
+  "dependencies": [
+    "@rn-primitives/table"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ui/table.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/table.tsx",
+      "content": "import { Text, TextClassContext } from '@/registry/uniwind/components/ui/text';\nimport { cn } from '@/registry/uniwind/lib/utils';\nimport * as TablePrimitive from '@rn-primitives/table';\nimport * as React from 'react';\nimport { ScrollView, type ViewProps } from 'react-native';\n\n/**\n * Table — RNR does not wrap @rn-primitives/table, so this is the styled shell.\n * Backs schema-display, test-results, package-info and environment-variables.\n *\n * WRAPPED IN A HORIZONTAL SCROLLVIEW BY DEFAULT. A phone-width table with more than two\n * columns has to scroll; the web's `table-layout` has no React Native equivalent, and\n * shrinking text to fit would break both the type ramp and the accessibility floor.\n *\n * Column widths are explicit flex values, never `auto` — there is no layout algorithm here\n * to infer them.\n */\n\nfunction Table({ className, children, scrollable = true, ...props }: ViewProps & { scrollable?: boolean }) {\n  const table = (\n    <TablePrimitive.Root className={cn('w-full', className)} {...props}>\n      {children}\n    </TablePrimitive.Root>\n  );\n  if (!scrollable) return table;\n  return (\n    <ScrollView horizontal showsHorizontalScrollIndicator={false}>\n      {table}\n    </ScrollView>\n  );\n}\n\nfunction TableHeader({ className, ...props }: React.ComponentProps<typeof TablePrimitive.Header>) {\n  return (\n    <TextClassContext.Provider value=\"text-xs font-medium text-muted-foreground\">\n      <TablePrimitive.Header className={cn('border-b border-border', className)} {...props} />\n    </TextClassContext.Provider>\n  );\n}\n\nfunction TableBody({ className, ...props }: React.ComponentProps<typeof TablePrimitive.Body>) {\n  return <TablePrimitive.Body className={cn('', className)} {...props} />;\n}\n\nfunction TableRow({ className, ...props }: React.ComponentProps<typeof TablePrimitive.Row>) {\n  return (\n    <TablePrimitive.Row\n      className={cn('flex-row border-b border-border active:bg-accent', className)}\n      {...props}\n    />\n  );\n}\n\nfunction TableHead({ className, ...props }: React.ComponentProps<typeof TablePrimitive.Head>) {\n  return <TablePrimitive.Head className={cn('px-3 py-2', className)} {...props} />;\n}\n\nfunction TableCell({ className, ...props }: React.ComponentProps<typeof TablePrimitive.Cell>) {\n  return <TablePrimitive.Cell className={cn('justify-center px-3 py-2', className)} {...props} />;\n}\n\nfunction TableCellText({ className, ...props }: React.ComponentProps<typeof Text>) {\n  return <Text numberOfLines={1} className={cn('text-sm text-foreground', className)} {...props} />;\n}\n\nexport { Table, TableBody, TableCell, TableCellText, TableHead, TableHeader, TableRow };\n"
+    }
+  ]
+}

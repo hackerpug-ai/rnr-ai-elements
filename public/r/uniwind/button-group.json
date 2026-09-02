@@ -1,0 +1,17 @@
+{
+  "name": "button-group",
+  "type": "registry:ui",
+  "title": "Button Group",
+  "description": "Segmented row. React Native has no :first-child and Tailwind descendant selectors compile to nothing, so corner rounding is published through context.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/uniwind/button.json"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ui/button-group.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/button-group.tsx",
+      "content": "import { cn } from '@/registry/uniwind/lib/utils';\nimport * as React from 'react';\nimport { View, type ViewProps } from 'react-native';\n\n/**\n * ButtonGroup — a segmented row for controls, toolbar and message actions.\n *\n * React Native has NO `:first-child` / `:last-child`, and Tailwind's descendant selectors\n * (`[&>*:first-child]:`) compile to nothing here. So corner rounding is published through\n * context and read by each child rather than selected for. That is the whole reason this\n * is a component and not a `flex-row` div.\n */\n\ntype Position = 'first' | 'middle' | 'last' | 'only';\nconst ButtonGroupContext = React.createContext<Position>('only');\n\n/** Corner classes for a child's position. Apply to the child's own className. */\nexport function useButtonGroupPosition(): { position: Position; className: string } {\n  const position = React.useContext(ButtonGroupContext);\n  const className =\n    position === 'only'\n      ? ''\n      : position === 'first'\n        ? 'rounded-r-none border-r-0'\n        : position === 'last'\n          ? 'rounded-l-none'\n          : 'rounded-none border-r-0';\n  return { position, className };\n}\n\nfunction ButtonGroup({ className, children, ...props }: ViewProps) {\n  const items = React.Children.toArray(children).filter(Boolean);\n  return (\n    <View className={cn('flex-row items-center', className)} accessibilityRole=\"toolbar\" {...props}>\n      {items.map((child, i) => {\n        const position: Position =\n          items.length === 1 ? 'only' : i === 0 ? 'first' : i === items.length - 1 ? 'last' : 'middle';\n        return (\n          <ButtonGroupContext.Provider key={i} value={position}>\n            {child}\n          </ButtonGroupContext.Provider>\n        );\n      })}\n    </View>\n  );\n}\n\n/** Wrap a child to receive its group corner classes without threading props by hand. */\nfunction ButtonGroupItem({ className, children, ...props }: ViewProps) {\n  const { className: pos } = useButtonGroupPosition();\n  return (\n    <View className={cn(pos, className)} {...props}>\n      {children}\n    </View>\n  );\n}\n\nexport { ButtonGroup, ButtonGroupItem };\n"
+    }
+  ]
+}
