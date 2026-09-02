@@ -13,7 +13,7 @@ const item = (over: Partial<RegistryItem> = {}): RegistryItem => ({
   registryDependencies: ['https://reactnativereusables.com/r/{engine}/text.json'],
   files: [
     {
-      path: 'packages/registry/src/{engine}/components/ai/conversation.tsx',
+      path: 'packages/registry/src/components/ai/conversation.tsx',
       type: 'registry:component',
       target: 'components/ai/conversation.tsx',
     },
@@ -41,12 +41,15 @@ describe('engine fan-out', () => {
     expect(out).not.toContain('{engine}');
   });
 
-  it('resolves paths, targets and registry dependencies per engine', () => {
+  it('leaves the SOURCE path engine-free and substitutes deps and target', () => {
     const built = buildItem(item(), 'uniwind', () => 'source');
     expect(built.registryDependencies).toEqual([
       'https://reactnativereusables.com/r/uniwind/text.json',
     ]);
-    expect(built.files[0].path).toContain('/uniwind/');
+    // There is ONE shared source tree. Substituting its path would imply two, which is
+    // the duplication this design exists to avoid.
+    expect(built.files[0].path).not.toContain('/uniwind/');
+    expect(built.files[0].path).toBe('packages/registry/src/components/ai/conversation.tsx');
     // target is the CONSUMER's path and must not carry the engine segment
     expect(built.files[0].target).toBe('components/ai/conversation.tsx');
   });

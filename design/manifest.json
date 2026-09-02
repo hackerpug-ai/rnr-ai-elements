@@ -41,10 +41,10 @@
           "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
         }
       },
-      "phase": "equip",
+      "phase": "atoms",
       "gates": {
-        "scaffold": "pending",
-        "plan": "pending",
+        "scaffold": "passed",
+        "plan": "passed",
         "atoms": "pending",
         "molecules": "pending",
         "compose": "pending"
@@ -79,9 +79,36 @@
         "portal_host": "done \u2014 <PortalHost /> mounted as last root child",
         "hello_world": "done \u2014 src/app/index.tsx, buttons + muted surface, all token-driven",
         "verified": "tsc --noEmit 0 errors; expo export bundles 996 modules; 26 --color- declarations compile to RNR's exact values in both schemes",
-        "REMAINING": "Storybook dev servers not yet smoke-run; token stories not generated; registry package still empty",
-        "storybook": "configured \u2014 custom toolbar with engine + theme globals; one instance per engine (6006 uniwind / 6007 nativewind)",
-        "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom."
+        "storybook": "PASSED on device. .rnstorybook/ (not .storybook \u2014 that is web), withStorybook metro wrapper, custom index.js entry (expo-router would otherwise always win). iOS bundle 2767 modules, runs in Expo Go.",
+        "dual_engine_verified": "BOTH engines export: uniwind 821 modules, nativewind 788 modules. Identical token values in each engine idiom.",
+        "verified_on_device": "Screenshot evidence, iPhone 17 simulator: bg-card renders white with a visible border, bg-muted/50 light grey, bg-primary NEAR-BLACK with white text (#171717 / #fafafa \u2014 RNR exact values). This is the same bg-primary that renders transparent in web Storybook, which localises that defect to react-native-web and clears the engine, theme and token values.",
+        "known_defect": "Web Storybook: --color-* resolve to unset, so variant backgrounds are missing. Geometry is correct. Device is the sign-off gate per the PRD, so this does not block; web remains usable for prop matrices."
+      },
+      "build_plan": {
+        "scope_rule": "Components that map directly to AI Elements. Nothing duplicating RNR. Nothing a consumer cannot install.",
+        "tokens": "SKIP \u2014 the library declares none; consuming RNR's is the promise",
+        "atoms": 12,
+        "molecules": 9,
+        "organisms": 34,
+        "screens": 1,
+        "total_registry_items": 55,
+        "cut_on_consumer_test": [
+          "field",
+          "navigation-menu",
+          "spinner",
+          "toast"
+        ],
+        "deleted_from_sandbox": [
+          "RNR Button story",
+          "design token stories"
+        ],
+        "plan_file": "design/build-plan.md"
+      },
+      "wave_1": {
+        "component": "suggestion",
+        "status": "COMPLETE \u2014 verified on device",
+        "evidence": "iOS simulator screenshot: AI Elements/Suggestion/Default renders rounded-full outline chips, theme-driven, with the row clipping at the viewport edge (scrolls, never wraps \u2014 the web original's essential behavior).",
+        "proves": "registry source -> engine fan-out -> harness resolves via the same alias rewrite the RNR CLI performs -> renders on device. public/r/{nativewind,uniwind}/suggestion.json both emitted with correct per-engine imports and registryDependencies."
       }
     },
     "mobile-android": {
@@ -314,6 +341,7 @@
     "cli_findings": "RNR's `init` is interactive and cannot be scripted (hangs on a TTY prompt with piped stdin). `add` works non-interactively with --yes --all --overwrite --styling-library. components.json REQUIRES aliases.utils \u2014 omitting it fails validation with 'Invalid components.json'. RNR's doctor asks for tailwindcss-animate even on the uniwind path, which is a Tailwind v3 plugin the styling contract forbids in the uniwind emit.",
     "hoisting_correction": "node-linker=hoisted was REMOVED. It was added on the assumption that pnpm's symlinks trip Metro; that assumption was wrong for Expo 57 / Metro, and hoisting actively broke dual-engine support by flattening nativewind into the root where it resolved tailwindcss@4 instead of its package-local v3. With pnpm's default isolated linker, apps/harness resolves tailwindcss 4.3.3 and apps/harness-nativewind resolves 3.4.19, and both engines build.",
     "engine_toggle": "The Storybook Engine toolbar item cannot hot-swap engines \u2014 both are bundler transforms and NativeWind 4 requires Tailwind v3 while Uniwind requires v4. It reports the running engine and hard-refreshes to the other server, which is why each engine has its own workspace package and port.",
-    "rtk_warning": "`rtk` wraps tsc and reported 'TypeScript: No errors found' on a run that exited 1 with a real TS2688 error. Verify gates with the direct binary when an exit code and the printed output disagree."
+    "rtk_warning": "`rtk` wraps tsc and reported 'TypeScript: No errors found' on a run that exited 1 with a real TS2688 error. Verify gates with the direct binary when an exit code and the printed output disagree.",
+    "sandbox_scope": "The sandbox contains ONLY components this library ships. RNR already exports tokens and Button, and consumers get those from RNR directly, so re-storying them here would duplicate RNR and demo nothing installable. The scaffold smoke stories (RNR Button, design tokens) were deleted once they had done their job of proving the pipeline; their evidence is recorded above."
   }
 }

@@ -57,7 +57,17 @@ export function rewriteSource(source: string, engine: Engine): string {
   return resolveEngine(source, engine);
 }
 
-/** Builds one item for one engine. Throws on a short-name registry dependency. */
+/**
+ * Builds one item for one engine.
+ *
+ * The SOURCE path carries no engine segment — there is one shared, engine-agnostic tree.
+ * Only the file CONTENT (its `@/registry/{engine}/...` import aliases) and the
+ * registryDependencies get substituted. That is the whole fan-out, and it works because
+ * our source never calls an engine API: RNR's Icon owns the only real divergence and we
+ * consume it rather than write it.
+ *
+ * Throws on a short-name registry dependency.
+ */
 export function buildItem(
   item: RegistryItem,
   engine: Engine,
@@ -77,9 +87,10 @@ export function buildItem(
     registryDependencies: item.registryDependencies?.map((d) => resolveEngine(d, engine)),
     files: item.files.map((f) => ({
       ...f,
-      path: resolveEngine(f.path, engine),
+      // path is shared across engines; target is the consumer's path
+      path: f.path,
       target: resolveEngine(f.target, engine),
-      content: rewriteSource(readFile(resolveEngine(f.path, engine)), engine),
+      content: rewriteSource(readFile(f.path), engine),
     })) as RegistryFile[],
   };
 }

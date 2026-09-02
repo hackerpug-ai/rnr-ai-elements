@@ -2,5 +2,23 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "rnr-ai-elements",
   "homepage": "https://github.com/hackerpug-ai/rnr-ai-elements",
-  "items": []
+  "items": [
+    {
+      "name": "suggestion",
+      "type": "registry:component",
+      "title": "Suggestion",
+      "description": "Starter prompts and follow-up chips a user taps instead of typing. Horizontal scrolling row; onPress receives the suggestion string.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/suggestion.tsx",
+          "type": "registry:component",
+          "target": "components/ai/suggestion.tsx"
+        }
+      ]
+    }
+  ]
 }

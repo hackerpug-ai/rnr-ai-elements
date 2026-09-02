@@ -270,8 +270,8 @@ AI surfaces must read as distinct from ordinary app chrome. That distinctness co
       "id": "cn-from-consumer-utils",
       "glob": ["packages/registry/src/**/components/**/*.tsx"],
       "exclude": ["**/index.{ts,tsx}", "**/*.stories.*", "**/*.test.*", "**/*.spec.*"],
-      "regex": "from ['\"]@/lib/utils['\"]",
-      "description": "cn is imported from the consumer's @/lib/utils, never redefined locally."
+      "regex": "from ['\"]@/(registry/\\{engine\\}/)?lib/utils['\"]",
+      "description": "cn is imported, never redefined locally. Registry SOURCE uses the @/registry/{engine}/lib/utils alias — RNR's own components do the same, and the CLI rewrites it to the consumer's @/lib/utils on install. Both forms satisfy the rule; a local definition does not, and is caught separately by local-cn-copy."
     }
   ]
 }
