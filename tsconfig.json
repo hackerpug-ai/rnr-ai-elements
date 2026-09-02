@@ -14,8 +14,13 @@
   "include": [
     "scripts/**/*.ts",
     "packages/registry/scripts/**/*.ts",
-    "packages/registry/src/**/*.ts",
+    "packages/registry/src/lib/markdown.ts",
     "tests/**/*.ts"
   ],
-  "exclude": ["node_modules", "apps", "**/*.tsx"]
+  "exclude": [
+    "node_modules",
+    "apps",
+    "packages/registry/src/components",
+    "packages/registry/src/lib/mono.ts"
+  ]
 }

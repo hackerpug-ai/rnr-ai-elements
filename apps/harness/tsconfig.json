@@ -3,6 +3,13 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      "@/components/ai/*": [
+        "../../packages/registry/src/components/ai/*"
+      ],
+      "@/components/ui/*": [
+        "../../packages/registry/src/components/ui/*",
+        "./src/components/ui/*"
+      ],
       "@/*": [
         "./src/*"
       ],

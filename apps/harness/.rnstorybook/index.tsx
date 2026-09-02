@@ -5,7 +5,7 @@ import { view } from './storybook.requires';
 const StorybookUI = view.getStorybookUI({
   storage: AsyncStorage,
   // Open on a real component rather than whatever was last viewed on this simulator.
-  initialSelection: { kind: 'Base Primitives', name: 'Item Rows' },
+  initialSelection: { kind: 'AI Elements/Chat', name: 'Populated' },
 });
 
 export default StorybookUI;

@@ -41,12 +41,12 @@
           "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
         }
       },
-      "phase": "molecules",
+      "phase": "organisms",
       "gates": {
         "scaffold": "passed",
         "plan": "passed",
         "atoms": "passed",
-        "molecules": "pending",
+        "molecules": "passed",
         "compose": "pending"
       },
       "screens": [
@@ -120,7 +120,28 @@
         "status": "COMPLETE",
         "evidence": "iOS simulator: Base Primitives/Item Rows renders outline + muted + plain rows, Icon via RNR's wrapper, TextClassContext differentiating title from description. All four bundle (4484 modules). Contract passes on 5 registry sources.",
         "note": "sheet mounts its own NAMED PortalHost (useSheetPortalHost) \u2014 without it any RNR overlay opened inside renders BEHIND the sheet, silently, on device only."
-      }
+      },
+      "wave_3": {
+        "components": [
+          "code-block",
+          "conversation",
+          "message",
+          "prompt-input"
+        ],
+        "libs": [
+          "mono",
+          "markdown"
+        ],
+        "status": "COMPLETE",
+        "evidence": "iOS simulator: AI Elements/Chat/Populated renders a real chat \u2014 user bubble on bg-primary right-aligned, assistant full-width with avatar, code-block with filename header + copy + line-number gutter, composer with send button. Content sits at the BOTTOM of the viewport, which is the inverted FlatList reproducing the web original's grow-from-bottom.",
+        "key_decisions": {
+          "conversation": "Inverted FlatList + maintainVisibleContentPosition. Stick-to-bottom is free (offset 0 IS the bottom) and releases the moment the user scrolls up, never taken back. Virtualized from day one \u2014 the prior RN port shipped ScrollView + .map().",
+          "message": "prop is `from` not `role` (the documented most-common port error). Markdown INJECTED via renderMarkdown, default plain Text \u2014 that seam keeps the core Expo Go-clean.",
+          "prompt-input": "Explicit send button is the ONLY submit path; the web Enter/Shift+Enter/IME contract is meaningless on a soft keyboard. A REJECTED onSubmit leaves the text intact.",
+          "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
+        }
+      },
+      "registry_items": 11
     },
     "mobile-android": {
       "tools": {

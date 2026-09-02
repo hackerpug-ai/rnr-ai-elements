@@ -6,7 +6,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && pnpm --filter @rnr-ai-elements/registry typecheck",
     "lint": "biome ci .",
     "test": "vitest run",
     "storybook:device": "pnpm --filter harness storybook:device",

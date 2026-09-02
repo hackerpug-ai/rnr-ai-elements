@@ -22,14 +22,32 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   // harness exercises the SAME source the registry ships rather than a copy.
   if (moduleName.startsWith('@/registry/{engine}/')) {
     const rest = moduleName.replace('@/registry/{engine}/', '');
-    if (rest.startsWith('components/ui/'))
+    if (rest.startsWith('components/ui/')) {
+      const name = rest.replace('components/ui/', '');
+      // OUR base primitives first, then RNR's installed tree — the same one-directory
+      // shape a consumer's project has after install.
+      const ours = path.join(REGISTRY_SRC, 'components/ui', `${name}.tsx`);
+      if (fsExists(ours))
+        return context.resolveRequest(context, path.join(REGISTRY_SRC, 'components/ui', name), platform);
       return context.resolveRequest(
         context,
-        path.join(__dirname, 'src', cfg.uiDir[ENGINE], rest.replace('components/ui/', '')),
+        path.join(__dirname, 'src', cfg.uiDir[ENGINE], name),
         platform,
       );
-    if (rest.startsWith('lib/'))
-      return context.resolveRequest(context, path.join(__dirname, 'src/lib', rest.replace('lib/', '')), platform);
+    }
+    if (rest.startsWith('components/ai/'))
+      return context.resolveRequest(
+        context,
+        path.join(REGISTRY_SRC, 'components/ai', rest.replace('components/ai/', '')),
+        platform,
+      );
+    if (rest.startsWith('lib/')) {
+      const name = rest.replace('lib/', '');
+      // OUR registry libs (mono, markdown) first, then RNR's installed lib/utils.
+      const ours = path.join(REGISTRY_SRC, 'lib', `${name}.ts`);
+      if (fsExists(ours)) return context.resolveRequest(context, path.join(REGISTRY_SRC, 'lib', name), platform);
+      return context.resolveRequest(context, path.join(__dirname, 'src/lib', name), platform);
+    }
   }
   if (moduleName.startsWith('@/components/ai/')) {
     return context.resolveRequest(
