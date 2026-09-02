@@ -4,6 +4,90 @@
   "homepage": "https://github.com/hackerpug-ai/rnr-ai-elements",
   "items": [
     {
+      "name": "shimmer",
+      "type": "registry:component",
+      "title": "Shimmer",
+      "description": "The still-generating signal, applied to text. React Native has no background-clip:text, so this reuses RNR Skeleton's exact pulse (1000ms, opacity 1->0.5) rather than inventing a tempo. Gated on reduced motion.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/shimmer.tsx",
+          "type": "registry:component",
+          "target": "components/ai/shimmer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "checkpoint",
+      "type": "registry:component",
+      "title": "Checkpoint",
+      "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first \u2014 the web puts it behind a hover tooltip, which does not exist on touch.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/checkpoint.tsx",
+          "type": "registry:component",
+          "target": "components/ai/checkpoint.tsx"
+        }
+      ]
+    },
+    {
+      "name": "image",
+      "type": "registry:component",
+      "title": "Image",
+      "description": "A model-generated image. Takes the AI SDK result object and builds the data URI internally, preserving the web prop shape. alt becomes accessibilityLabel.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/image.tsx",
+          "type": "registry:component",
+          "target": "components/ai/image.tsx"
+        }
+      ]
+    },
+    {
+      "name": "persona",
+      "type": "registry:component",
+      "title": "Persona",
+      "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation \u2014 the animated avatar is not ported, so no consumer inherits a native animation runtime.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/avatar.json",
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/persona.tsx",
+          "type": "registry:component",
+          "target": "components/ai/persona.tsx"
+        }
+      ]
+    },
+    {
+      "name": "speech-input",
+      "type": "registry:component",
+      "title": "Speech Input",
+      "description": "Push-to-talk. Ships the web original's caller-supplied-transcriber contract as the ONLY contract, so no speech dependency lands in anyone's install graph. Disabled when no engine is wired; only final transcripts fire.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/speech-input.tsx",
+          "type": "registry:component",
+          "target": "components/ai/speech-input.tsx"
+        }
+      ]
+    },
+    {
       "name": "kbd",
       "type": "registry:ui",
       "title": "Kbd",
