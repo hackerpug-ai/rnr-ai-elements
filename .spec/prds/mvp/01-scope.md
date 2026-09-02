@@ -53,8 +53,16 @@ scope_posture: full
   layering, safe-area insets, keyboard avoidance, or native animation timing, so a
   component can pass every web story and still be wrong on a phone.
 
-## Deferred, with a named trigger
+## Dual-engine — the deferral trigger fired
 
-- **Nativewind engine variants.** v1 is Uniwind-only, but `src/uniwind/` is in the path
-  from the first commit so `src/nativewind/` can be added without moving a file. Trigger:
-  the first real Nativewind consumer asks, or before tagging 1.0 — whichever comes first.
+v1.0.0 scoped this as Uniwind-only with a named trigger. **The trigger fired during
+scaffold and both engines are now in scope.** The registry emits `nativewind` and `uniwind`
+variants at parity, as RNR does.
+
+It turned out cheap for a measured reason: after the RNR CLI rewrites imports on install,
+its own two trees differ in **exactly one file, `icon.tsx`** — 125 identical class tokens,
+zero nativewind-only classes. That file is RNR's, so our source stays engine-agnostic and
+the build fans it out by rewriting a path segment.
+
+Each engine needs its own harness package, because `nativewind@4.2.6` requires Tailwind v3
+while `uniwind@1.11` requires v4 and one package cannot hold both majors.

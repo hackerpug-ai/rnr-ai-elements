@@ -1,6 +1,6 @@
 ---
 title: rnr-ai-elements MVP
-version: 1.0.0
+version: 1.1.0
 scope_posture: full
 pr_sequencing: false
 base_branches: []
@@ -15,7 +15,7 @@ distributed as a copy-paste registry, inheriting the consumer's RNR theme with z
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0.0 |
+| Version | 1.1.0 |
 | Scope Posture | Full feature (default) |
 | PR Sequencing | Disabled |
 | Base Branches | None (lands on trunk) |
@@ -72,7 +72,7 @@ distributed as a copy-paste registry, inheriting the consumer's RNR theme with z
 | Decision | Value | Why |
 |---|---|---|
 | Distribution | Registry only | RNR's own model; an npm package cannot reach the consumer's `@/components/ui` alias |
-| Styling engine | Uniwind + Tailwind v4, v1 only | `src/uniwind/` in the path from commit one; Nativewind deferred with a named trigger |
+| Styling engine | **Both**, at parity, as RNR does | The two trees differ in one file (`icon.tsx`, RNR's); our source is engine-agnostic |
 | Dev + sign-off surface | Storybook, both runtimes | Device build is the gate; web build is iteration and gallery |
 | Test runner | Vitest for logic; device tier for render | Uniwind compiles classes in Metro — Vitest cannot assert a style at all |
 | Merge gate | Solo (CI green, self-merge) | Set by `/init-project`; main is ruleset-protected |
@@ -82,6 +82,7 @@ distributed as a copy-paste registry, inheriting the consumer's RNR theme with z
 | Version | Date | Changes | Trigger |
 |---------|------|---------|---------|
 | 1.0.0 | 2026-09-01 | Initial PRD | New initiative |
+| 1.1.0 | 2026-09-02 | Dual-engine deferral trigger fired — registry now emits nativewind AND uniwind. Pin corrections verified against sources: react-native 0.86.3 (not 0.87.1), RNR CLI 1.0.0 (not 0.7.1), typescript ~6.0.3 in the harness (Expo 57's pin). | Scaffold findings |
 
 ## Next Steps
 

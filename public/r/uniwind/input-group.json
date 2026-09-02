@@ -1,0 +1,19 @@
+{
+  "name": "input-group",
+  "type": "registry:ui",
+  "title": "Input Group",
+  "description": "Leading and trailing addons around a TextInput, with its own focus ring (React Native has no :focus-within). Backs prompt-input and every filter field.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/uniwind/text.json",
+    "https://reactnativereusables.com/r/uniwind/input.json",
+    "https://reactnativereusables.com/r/uniwind/button.json"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ui/input-group.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/input-group.tsx",
+      "content": "import { Text, TextClassContext } from '@/registry/uniwind/components/ui/text';\nimport { cn } from '@/registry/uniwind/lib/utils';\nimport * as React from 'react';\nimport { Platform, TextInput, View, type TextInputProps, type ViewProps } from 'react-native';\n\n/**\n * InputGroup — leading/trailing addons around a TextInput.\n *\n * RNR ships no `input-group`. Highest-leverage item of the whole gap: prompt-input is\n * built on it, and so are the filter fields in command, attachments and\n * environment-variables.\n *\n * It owns its own focus ring. React Native has no `:focus-within`, so the ring is driven\n * by onFocus/onBlur state on the wrapper rather than by a CSS selector — without this the\n * group simply never shows focus, silently.\n */\n\ntype InputGroupContextValue = { focused: boolean; setFocused: (v: boolean) => void };\nconst InputGroupContext = React.createContext<InputGroupContextValue | null>(null);\n\nfunction useInputGroup() {\n  const ctx = React.useContext(InputGroupContext);\n  if (!ctx) throw new Error('InputGroup sub-components must be used within <InputGroup>');\n  return ctx;\n}\n\nfunction InputGroup({ className, ...props }: ViewProps) {\n  const [focused, setFocused] = React.useState(false);\n  return (\n    <InputGroupContext.Provider value={{ focused, setFocused }}>\n      <View\n        className={cn(\n          'flex-row items-center gap-2 rounded-md border border-input bg-background px-3',\n          'dark:bg-input/30',\n          focused && 'border-ring ring-2 ring-ring/50',\n          className,\n        )}\n        {...props}\n      />\n    </InputGroupContext.Provider>\n  );\n}\n\n/** The text field. Reports focus up so the wrapper can draw the ring. */\nfunction InputGroupInput({ className, onFocus, onBlur, ...props }: TextInputProps) {\n  const { setFocused } = useInputGroup();\n  return (\n    <TextInput\n      className={cn(\n        'h-10 flex-1 py-2 text-base text-foreground sm:h-9',\n        Platform.select({ web: 'outline-none' }),\n        className,\n      )}\n      placeholderClassName=\"text-muted-foreground\"\n      onFocus={(e) => {\n        setFocused(true);\n        onFocus?.(e);\n      }}\n      onBlur={(e) => {\n        setFocused(false);\n        onBlur?.(e);\n      }}\n      {...props}\n    />\n  );\n}\n\n/** Non-interactive leading/trailing content — an icon, a `$` prefix, a unit. */\nfunction InputGroupAddon({ className, ...props }: ViewProps) {\n  return (\n    <TextClassContext.Provider value=\"text-sm text-muted-foreground\">\n      <View className={cn('shrink-0 flex-row items-center gap-1', className)} {...props} />\n    </TextClassContext.Provider>\n  );\n}\n\n/** Interactive trailing slot — a send button, a clear button. */\nfunction InputGroupActions({ className, ...props }: ViewProps) {\n  return <View className={cn('shrink-0 flex-row items-center gap-1', className)} {...props} />;\n}\n\nfunction InputGroupText({ className, ...props }: React.ComponentProps<typeof Text>) {\n  return <Text className={cn('text-sm text-muted-foreground', className)} {...props} />;\n}\n\nexport { InputGroup, InputGroupActions, InputGroupAddon, InputGroupInput, InputGroupText };\n"
+    }
+  ]
+}

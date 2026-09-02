@@ -70,14 +70,14 @@ Pinned to **Expo SDK 57's own resolver**, not to npm `latest`. Verified against
 
 | Layer | Choice | Version |
 |---|---|---|
-| Language | TypeScript | **7.0.2** (the Go-native compiler) |
+| Language | TypeScript | **6.0.3** in the harness (Expo 57's pin) · 7.0.2 at the workspace root |
 | Package manager | pnpm | 10.32.1 |
 | Lint / format | Biome | 2.5.11 |
 | Tests (logic) | Vitest | 4.1.11 |
 | Dev + sign-off | Storybook | `@storybook/react-native` 10.5.4 (device) + `@storybook/react-native-web-vite` 10.5.10 (web) |
-| Styling engine | **Uniwind** | 1.11.0 |
+| Styling engine | **Uniwind AND NativeWind** | uniwind 1.11.0 (Tailwind v4) · nativewind 4.2.6 (Tailwind v3) |
 | CSS | **Tailwind v4** | 4.3.3 — `@theme` + `oklch`, no `tailwind.config.js` |
-| Base UI | React Native Reusables (registry) | CLI 0.7.1 · `@rn-primitives/*` 1.5.2 |
+| Base UI | React Native Reusables (registry) | CLI **1.0.0** · `@rn-primitives/*` 1.5.2 |
 | App shell | Expo | 57.0.19 |
 | React Native | **0.86.3** | Expo 57's pin. **npm latest is 0.87.1 — do not take it.** |
 | Node | Node | 24 |
@@ -97,8 +97,19 @@ rather than at install:
 
 CI runs `npx expo-doctor` so drift fails the build instead of surfacing as a native crash.
 
-**Styling engine is Uniwind, not Nativewind.** Tailwind **v4** syntax only. A component
-written with a `tailwind.config.js` mental model or HSL tokens is wrong for this repo.
+**The registry ships BOTH engines**, at parity, exactly as RNR does. Registry source is
+**engine-agnostic**: it never imports `uniwind` or `nativewind` and never calls `withUniwind`
+or `cssInterop`. The build fans one source into `public/r/{nativewind,uniwind}/` by rewriting
+the import alias segment and the registry-dependency URL segment.
+
+Measured basis: after the RNR CLI rewrites imports on install, its own two component trees
+differ in **exactly one file — `icon.tsx`**. All 32 others are byte-identical. That one file
+is RNR's, not ours, so we never write engine-specific code. The styling contract hard-fails
+any that appears.
+
+Each engine has its own harness package because their Tailwind majors conflict:
+`apps/harness` (uniwind, Tailwind v4, :6006) and `apps/harness-nativewind`
+(nativewind, Tailwind v3, :6007).
 Note: the RNR Rosetta KB's `theming.md` documents the **Nativewind** path and is superseded
 here by its `MIGRATION.md` v1.1.0. Anyone briefed with `theming.md` alone will produce a
 component that silently does not theme.

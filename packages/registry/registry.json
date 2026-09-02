@@ -4,6 +4,81 @@
   "homepage": "https://github.com/hackerpug-ai/rnr-ai-elements",
   "items": [
     {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "Icon, title, description and an optional action slot. The fallback surface for conversation, file-tree, sources, attachments and test-results.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/empty.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/empty.tsx"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "Generic media / content / actions row. Sources, file-tree, attachments, model-selector, queue, plan and task all render lists of these.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://reactnativereusables.com/r/{engine}/separator.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/item.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/item.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "Leading and trailing addons around a TextInput, with its own focus ring (React Native has no :focus-within). Backs prompt-input and every filter field.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://reactnativereusables.com/r/{engine}/input.json",
+        "https://reactnativereusables.com/r/{engine}/button.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/input-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Bottom/top/left/right sheet built on @rn-primitives/dialog and styled from RNR's dialog. Mounts its OWN named PortalHost so nested overlays layer above it instead of behind. Backs drawer, command, sidebar, panel, open-in-chat and model-selector.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ui/sheet.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sheet.tsx"
+        }
+      ],
+      "dependencies": [
+        "@rn-primitives/dialog",
+        "@rn-primitives/portal",
+        "react-native-reanimated",
+        "react-native-screens"
+      ]
+    },
+    {
       "name": "suggestion",
       "type": "registry:component",
       "title": "Suggestion",
