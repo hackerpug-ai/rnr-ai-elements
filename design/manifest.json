@@ -41,12 +41,12 @@
           "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
         }
       },
-      "phase": "molecules",
+      "phase": "organisms",
       "gates": {
         "scaffold": "passed",
         "plan": "passed",
         "atoms": "passed",
-        "molecules": "pending",
+        "molecules": "passed",
         "compose": "pending"
       },
       "screens": [
@@ -88,10 +88,10 @@
         "scope_rule": "Components that map directly to AI Elements. Nothing duplicating RNR. Nothing a consumer cannot install.",
         "tokens": "SKIP \u2014 the library declares none; consuming RNR's is the promise",
         "atoms": 10,
-        "molecules": 9,
+        "molecules": 6,
         "organisms": 34,
         "screens": 1,
-        "total_registry_items": 53,
+        "total_registry_items": 50,
         "cut_on_consumer_test": [
           "field",
           "navigation-menu",
@@ -105,7 +105,9 @@
           "design token stories"
         ],
         "plan_file": "design/build-plan.md",
-        "cut_correction": "sidebar and toaster were in the atom list on FALSE POSITIVES from the derivation: 'sidebar' matched the word context in 'a SidebarProvider context', and 'toaster' matched 'queue' in 'a module-level queue store'. Neither is a component reference, and no in-scope component lists either as a dependency. toaster also had nothing to host, since toast was already cut. Atoms 12 -> 10, total 55 -> 53."
+        "cut_correction": "sidebar and toaster were in the atom list on FALSE POSITIVES from the derivation: 'sidebar' matched the word context in 'a SidebarProvider context', and 'toaster' matched 'queue' in 'a module-level queue store'. Neither is a component reference, and no in-scope component lists either as a dependency. toaster also had nothing to host, since toast was already cut. Atoms 12 -> 10, total 55 -> 53.",
+        "canvas_family_correction": "controls, toolbar and panel moved OUT OF SCOPE. The product lens read them as a generic media transport, an icon row and a split pane. The web-original lens \u2014 the authority on what the web component IS \u2014 says controls is React Flow's zoom cluster acting on its viewport store, toolbar is @xyflow/react NodeToolbar positioned from the owning node's measured DOM rect inside a nodeTypes component, and panel is an absolutely positioned View inside the transform layer. All three verdict 'drop'. canvas/node/edge/connection are already out of scope, so their satellites cannot function. Molecules 9 -> 6, total 53 -> 50, out-of-scope 6 -> 9.",
+        "persona_note": "persona is Rive (WebGL2 on web; rive-react-native natively), NOT the avatar card the product lens described. Shipped here as the identity card WITHOUT the animated avatar, which keeps the registry dependency-free; the Rive runtime would be an opt-in item if ever wanted."
       },
       "wave_1": {
         "component": "suggestion",
@@ -200,39 +202,33 @@
       "molecules": [
         {
           "name": "checkpoint",
-          "status": "pending"
-        },
-        {
-          "name": "controls",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/checkpoint.tsx"
         },
         {
           "name": "image",
-          "status": "pending"
-        },
-        {
-          "name": "panel",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/image.tsx"
         },
         {
           "name": "persona",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/persona.tsx"
         },
         {
           "name": "shimmer",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/shimmer.tsx"
         },
         {
           "name": "speech-input",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/speech-input.tsx"
         },
         {
           "name": "suggestion",
-          "status": "verified"
-        },
-        {
-          "name": "toolbar",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/suggestion.tsx"
         }
       ],
       "gate_correction": "atoms and molecules were marked passed after Waves 2 and 3 with 4/12 and 1/9 built. That was a partial gate reported complete, which the runtime contract forbids. Reset to pending; the inventory below is now the record of what actually exists.",
@@ -252,6 +248,21 @@
           "npm view reported every @rn-primitives package as NOT PUBLISHED, including ones installed and working. A direct registry probe confirmed slider/table/toast all exist at 1.5.2. Second time a wrapped command has misreported \u2014 verify against the registry or the installed tree, not npm view.",
           "SliderPrimitive.Root requires `value` in its own min..max scale; our API is normalised 0..1, so the component maps between them."
         ]
+      },
+      "wave_5": {
+        "molecules": [
+          "checkpoint",
+          "image",
+          "persona",
+          "shimmer",
+          "speech-input"
+        ],
+        "status": "COMPLETE",
+        "evidence": "iOS simulator: AI Elements/Molecules/Streaming Shimmer captured mid-pulse \u2014 two active rows faded at reduced opacity while active={false} sits at full text-muted-foreground. 4515 modules bundle.",
+        "scope_correction": "controls, toolbar and panel moved OUT OF SCOPE as canvas-family. The web-original lens (authority on what the web component IS) verdicts all three 'drop': controls is React Flow's zoom cluster on its viewport store, toolbar is @xyflow/react NodeToolbar positioned from a node's measured DOM rect, panel is a positioned View inside the transform layer. The product lens had misread them as a media transport, an icon row and a split pane. canvas/node/edge/connection are already out of scope, so their satellites cannot function. Molecules 9 -> 6, total 53 -> 50.",
+        "persona_divergence": "The web persona is a Rive animation (WebGL2 on web, rive-react-native natively), not the avatar card the product lens described. Shipped as the identity surface WITHOUT the animated avatar, so no consumer inherits a native animation runtime for a component most use as a header. Recorded as a real gap in the verdict table rather than implied parity.",
+        "shimmer_note": "The only genuinely invented treatment in the port. React Native has no background-clip:text, so it reuses RNR Skeleton's exact motion signature (opacity 1->0.5, 1000ms, withRepeat reverse) rather than the web's 2000ms gradient sweep \u2014 an invented treatment that borrows the house pulse reads as house style. Gated on useReducedMotion, where RNR's own Skeleton is not.",
+        "speech_input_note": "Ships the web original's caller-supplied-transcriber contract as the ONLY contract, so no speech dependency enters anyone's install graph. Disabled with no engine wired (never fake-listening); only final non-empty transcripts fire; permission-denied is a distinct state because on mobile capability != permission."
       }
     },
     "mobile-android": {
