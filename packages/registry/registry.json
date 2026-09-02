@@ -392,6 +392,135 @@
           "target": "components/ai/suggestion.tsx"
         }
       ]
+    },
+    {
+      "name": "status",
+      "type": "registry:lib",
+      "title": "Agent status vocabulary",
+      "description": "The ONE status-tone map for every agent surface. Confines the styling contract's three permitted non-token colors (text-destructive, green-600, orange-600) to a single auditable file; pending and running resolve through RNR tokens only.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/lib/status.ts",
+          "type": "registry:lib",
+          "target": "lib/status.ts"
+        }
+      ]
+    },
+    {
+      "name": "reasoning-lifecycle",
+      "type": "registry:lib",
+      "title": "Reasoning lifecycle",
+      "description": "The reasoning disclosure's state machine as a pure, time-injected reducer: auto-open on stream start, auto-close 1000ms after it ends, defaultOpen pinned open, and any user interaction standing the automation down for good.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/lib/reasoning-lifecycle.ts",
+          "type": "registry:lib",
+          "target": "lib/reasoning-lifecycle.ts"
+        }
+      ]
+    },
+    {
+      "name": "tool",
+      "type": "registry:component",
+      "title": "Tool",
+      "description": "The tool-call card: status badge and disclosure for arguments and result. Covers every AI SDK tool-part state with no unmapped case; input renders while arguments are still streaming and never throws on partial JSON; both output and errorText undefined renders empty, exactly as the web original.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/tool.tsx",
+          "type": "registry:component",
+          "target": "components/ai/tool.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/tool.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/tool.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "reasoning",
+      "type": "registry:component",
+      "title": "Reasoning",
+      "description": "The collapsible thinking trace. Auto-opens while streaming, auto-closes one second after the answer begins, never overrides the user, and shows the frozen duration on the collapsed header. Markdown is injected via renderMarkdown and defaults to plain Text, keeping the core Expo Go-clean.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/reasoning-lifecycle.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/markdown.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/reasoning.tsx",
+          "type": "registry:component",
+          "target": "components/ai/reasoning.tsx"
+        }
+      ]
+    },
+    {
+      "name": "task",
+      "type": "registry:component",
+      "title": "Task",
+      "description": "What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by default on a phone — status stays glanceable on the trigger row — the one divergence from the web original, which opens by default.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/native-only-animated-view.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/task.tsx",
+          "type": "registry:component",
+          "target": "components/ai/task.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/task.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/task.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "question",
+      "type": "registry:component",
+      "title": "Question",
+      "description": "The agent asks, the user answers with one tap — the PRD's touch verdict, where a tap IS the submission and the choice persists in the transcript afterward. The web original's select-then-submit and free-text modes are dropped with it.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/card.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/question.tsx",
+          "type": "registry:component",
+          "target": "components/ai/question.tsx"
+        }
+      ]
     }
   ]
 }

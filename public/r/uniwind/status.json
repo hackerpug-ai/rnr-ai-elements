@@ -1,0 +1,15 @@
+{
+  "name": "status",
+  "type": "registry:lib",
+  "title": "Agent status vocabulary",
+  "description": "The ONE status-tone map for every agent surface. Confines the styling contract's three permitted non-token colors (text-destructive, green-600, orange-600) to a single auditable file; pending and running resolve through RNR tokens only.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/registry/src/lib/status.ts",
+      "type": "registry:lib",
+      "target": "lib/status.ts",
+      "content": "/**\n * The ONE status vocabulary for every agent surface — tool, task, and whatever\n * status-bearing component follows (test-results, plan, chain-of-thought).\n *\n * WHY THIS FILE EXISTS. The styling contract permits exactly three non-token colors,\n * and only because the web original makes the identical deviation: `text-destructive`\n * (a real RNR role) plus Tailwind's built-in `green-600` / `orange-600` for success and\n * denial, which need no `@theme` entry because Tailwind ships the default palette. A\n * deviation used twice is a pattern; used in five files it is five places to drift. So\n * all of it is confined to this one exported map, auditable in a single file, exactly\n * as the contract requires.\n *\n * Two rules travel with the map:\n *  1. COLOR IS NEVER THE SOLE CHANNEL. Every status is also carried by a distinct icon\n *     and a text label (WCAG 1.4.1), which is what makes the unthemed green tolerable.\n *  2. NO NEW ROLE. `pending` and `running` resolve through RNR tokens only\n *     (`text-muted-foreground`, `text-primary`); a consumer's palette flip moves them\n *     like everything else.\n *\n * Zero imports on purpose: this file is imported by pure logic modules and must stay\n * loadable under Vitest, which cannot resolve a react-native module graph.\n */\n\n/** Semantic tone — the only key set allowed to carry a non-token color. */\nexport type StatusTone = 'pending' | 'running' | 'success' | 'error' | 'denied';\n\n/**\n * tone → text class. The three escape-hatch colors (destructive / green-600 /\n * orange-600) live ONLY here; dark-mode twins ride along exactly as the web original\n * writes them (`dark:text-green-500`, `dark:text-orange-500`).\n */\nexport const statusColor: Record<StatusTone, string> = {\n  pending: 'text-muted-foreground',\n  running: 'text-primary',\n  success: 'text-green-600 dark:text-green-500',\n  error: 'text-destructive',\n  denied: 'text-orange-600 dark:text-orange-500',\n};\n"
+    }
+  ]
+}

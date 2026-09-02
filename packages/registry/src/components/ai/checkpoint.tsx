@@ -1,9 +1,10 @@
+import { Button } from '@/registry/{engine}/components/ui/button';
 import { Icon } from '@/registry/{engine}/components/ui/icon';
 import { Text } from '@/registry/{engine}/components/ui/text';
 import { cn } from '@/registry/{engine}/lib/utils';
 import { BookmarkIcon, type LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { Alert, Pressable, View, type ViewProps } from 'react-native';
+import { Alert, View, type ViewProps } from 'react-native';
 
 /**
  * Checkpoint — a restorable point in the transcript.
@@ -62,16 +63,19 @@ function CheckpointTrigger({
     );
   }
   return (
-    <Pressable
+    <Button
+      variant="ghost"
       onPress={press}
-      accessibilityRole="button"
       accessibilityLabel={`${label}. Removes everything after this point.`}
       hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-      className={cn('flex-row items-center gap-1 rounded-full border border-border px-2 py-1 active:bg-accent', className)}
+      className={cn(
+        'h-auto gap-1 rounded-full border border-border px-2 py-1',
+        className,
+      )}
     >
       <CheckpointIcon />
       <Text className="text-xs text-muted-foreground">{label}</Text>
-    </Pressable>
+    </Button>
   );
 }
 

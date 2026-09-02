@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": [
+      "ES2023"
+    ],
     "module": "Preserve",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
@@ -12,10 +14,17 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "paths": {
-      "@/registry/{engine}/components/ai/*": ["./src/components/ai/*"],
-      "@/registry/{engine}/lib/mono": ["./src/lib/mono.ts"],
-      "@/registry/{engine}/lib/markdown": ["./src/lib/markdown.ts"]
+      "@/registry/{engine}/components/ai/*": [
+        "./src/components/ai/*"
+      ],
+      "@/registry/{engine}/lib/*": [
+        "./src/lib/*"
+      ]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "types/**/*.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "types/**/*.d.ts"
+  ]
 }

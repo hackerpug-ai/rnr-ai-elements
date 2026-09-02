@@ -16,7 +16,8 @@
  * lets the `registry` CI job diff a fresh build against the committed tree.
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 export const ENGINES = ['nativewind', 'uniwind'] as const;
 export type Engine = (typeof ENGINES)[number];
@@ -129,4 +130,8 @@ function main(): void {
   }
 }
 
-if (process.argv[1] && dirname(process.argv[1]).endsWith('scripts')) main();
+// Run main() only when THIS file is the entrypoint. Matching on the directory used to
+// fire the build from any script under scripts/ that merely imported the pure helpers —
+// which made check-registry-fresh silently REGENERATE public/r before comparing,
+// destroying the very staleness signal it exists to report.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
