@@ -1223,6 +1223,34 @@
           "target": "components/ai/test-results.logic.ts"
         }
       ]
+    },
+    {
+      "name": "web-preview",
+      "type": "registry:component",
+      "title": "Web Preview",
+      "description": "A live page rendered inside the app (UC-CODE-03), native-substitute per the PRD verdict: the iframe is replaced by a native webview with the same URL bar and reload affordance. OPT-IN — the one item in the library that names a native module: react-native-webview is recorded here as an install-time dependency (AC-2's notice) and imported as a PEER in the source, while the registry package itself takes no dependency on it (types come from the ambient boundary declaration), so everything else installs and builds without it (AC-4). The console pane does not port and is dropped, per the verdict. The iframe sandbox has NO webview equivalent, so the lockdown is a fixed prop set at the render layer: originWhitelist http/https only, javaScriptEnabled pinned (the upstream sandbox's allow-scripts grant), file access and file-to-file universal access off, multiple windows off — and every commit is normalized then allowlisted BEFORE the webview sees it (web-preview.logic, Vitest-owned; scheme-less drafts gain https, loopback hosts gain http, javascript:/data:/file: are refused through onRefuse, never silently), with the body re-normalizing at render so the guard is not downgradable. AC-3: onError/onRenderProcessGone render an explicit failure panel — icon, title, failing host, Retry wired to the context reload — never a blank white view; HTTP error pages are content, exactly as the web iframe renders them. Upstream parts at parity (WebPreview/WebPreviewNavigation/WebPreviewNavigationButton/WebPreviewUrl/WebPreviewBody + the useWebPreview throw): the NavigationButton's tooltip becomes the accessibility label, the loading node overlays while the webview reports loading, Enter commits the URL bar (never per-keystroke), and the reload command rides the context because the web's consumer-wired iframe ref has no RN counterpart.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/input-group.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/url.json"
+      ],
+      "dependencies": [
+        "react-native-webview"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/web-preview.tsx",
+          "type": "registry:component",
+          "target": "components/ai/web-preview.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/web-preview.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/web-preview.logic.ts"
+        }
+      ]
     }
   ]
 }

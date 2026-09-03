@@ -112,6 +112,16 @@ const SAFELIST = [
   'pl-10',
   'bg-destructive/10',
   'bg-muted/30',
+
+  // Wave 14 (web-preview — the FINAL organism): classes whose only in-repo home is a
+  // new file (cross-file scan at HEAD). inset-0 is the webview body's loading overlay
+  // and failure panel (the AC-3 explicit error state); h-96 and h-72 are the story
+  // board's bounded hosts — the webview, like the web original's size-full iframe,
+  // needs a sized parent. Same wave-9 pattern: new-file classes can drop from the
+  // compiled style map, so their first in-repo home is declared here.
+  'inset-0',
+  'h-96',
+  'h-72',
 ] as const;
 
 void SAFELIST;

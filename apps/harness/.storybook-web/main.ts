@@ -19,6 +19,10 @@ const main: StorybookConfig = {
     config.resolve.alias = {
       ...(config.resolve.alias ?? {}),
       // More specific alias first — it must win over the bare '@'.
+      // web-preview's react-native-webview PEER: the registry source tree takes no
+      // dependency on it (same story as the Metro shims), so pin this harness's own
+      // Expo-pinned install rather than trusting the fallback walk.
+      'react-native-webview': path.join(root, 'node_modules', 'react-native-webview'),
       '@/components/ui': path.join(root, 'src', cfg.uiDir[ENGINE]),
       '@': path.join(root, 'src'),
     };
