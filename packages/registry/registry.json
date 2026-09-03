@@ -962,6 +962,52 @@
           "target": "components/ai/voice-selector.logic.ts"
         }
       ]
+    },
+    {
+      "name": "audio-player",
+      "type": "registry:component",
+      "title": "Audio Player",
+      "description": "Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4). Native-substitute per the PRD verdict — the HTML audio element is replaced by the CALLER'S audio module (expo-audio, a native player, an <audio> element on web): state-in/callbacks-out, no audio dependency in the registry, Expo Go-clean. Upstream part set at parity: play/pause, ±seek buttons (seekOffset 10 → seekOffsetMs 10000, clamped), time/duration displays, scrubber and volume over the slider atom, ButtonGroup control bar. AudioPlayerElement dropped on the record (it IS the substitution). Unwired seams disable their controls — never pretend; AC-3 (playback survives transcript scrolling) holds by construction: nothing here plays.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/button-group.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/slider.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/audio-player.tsx",
+          "type": "registry:component",
+          "target": "components/ai/audio-player.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/audio-player.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/audio-player.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "transcription",
+      "type": "registry:component",
+      "title": "Transcription",
+      "description": "The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD verdict — display-only; capture belongs to speech-input, so no browser dependency and nothing to substitute. Segments colorized by playback position (active text-primary, past text-muted-foreground, future text-muted-foreground/60 — upstream byte-classes), press-to-seek to the segment start ONLY when onSeek is wired (otherwise a no-op — onSeek is not invented), empty/whitespace segments never render (upstream byte-trap), render-prop children preserved for custom segment rendering, and the hook throw outside the root at byte parity. The verdict's interim/final distinction ships as a caller-supplied interimText display seam (declared addition — upstream has no interim part). Speaker labels, events, and search/highlight not shipped: the upstream part set carries none.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/transcription.tsx",
+          "type": "registry:component",
+          "target": "components/ai/transcription.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/transcription.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/transcription.logic.ts"
+        }
+      ]
     }
   ]
 }

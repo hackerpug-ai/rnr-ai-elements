@@ -274,6 +274,33 @@ declare module '@/registry/{engine}/components/ui/progress' {
   >;
 }
 
+declare module '@/registry/{engine}/components/ui/slider' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  // onValueChange is the @rn-primitives/slider Root shape (number[] in the
+  // primitive's min..max scale); the union keeps callers of both shapes honest —
+  // consumers convert to their own scale (audio-player divides by 100).
+  export const Slider: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      /** Normalized 0..1 — the wave-4 value contract; mapped onto 0..100 internally. */
+      value?: number;
+      onValueChange?: (value: number[]) => void;
+      disabled?: boolean;
+      children?: React.ReactNode;
+    }
+  >;
+}
+
+declare module '@/registry/{engine}/components/ui/button-group' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const ButtonGroup: Slot;
+  export const ButtonGroupItem: Slot;
+  export function useButtonGroupPosition(): { position: 'first' | 'middle' | 'last' | 'only'; className: string };
+}
+
 declare module '@/registry/{engine}/components/ui/dropdown-menu' {
   import type * as React from 'react';
   import type { ViewProps } from 'react-native';
