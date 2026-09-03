@@ -134,13 +134,20 @@ declare module '@/registry/{engine}/components/ui/native-only-animated-view' {
 // in the CONSUMER's components/ui/, not modules in this package.
 declare module '@/registry/{engine}/components/ui/input-group' {
   import type * as React from 'react';
-  import type { TextInputProps, ViewProps } from 'react-native';
+  import type { StyleProp, TextStyle, TextInputProps, ViewProps } from 'react-native';
   type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
   export const InputGroup: Slot;
   export const InputGroupAddon: Slot;
   export const InputGroupActions: Slot;
   export const InputGroupInput: React.ComponentType<TextInputProps & { className?: string }>;
-  export const InputGroupText: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+  // Real InputGroupText is React.ComponentProps<typeof Text>, so style flows through to
+  // the vendored Text (snippet's mono family rides it). Declared here because the
+  // simplified type above hid a prop the runtime accepts.
+  export const InputGroupText: React.ComponentType<{
+    className?: string;
+    style?: StyleProp<TextStyle>;
+    children?: React.ReactNode;
+  }>;
 }
 
 declare module '@/registry/{engine}/components/ui/empty' {

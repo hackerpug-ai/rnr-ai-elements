@@ -24,6 +24,17 @@
   --font-sans: 'Spline Sans', Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --radius: 0.625rem;
+
+  /* The status escape-hatch palette slice. Tailwind's default palette provides these
+   * in a standard web consumer, but uniwind's RN interop does not carry Tailwind's
+   * default @theme — only the --color-* vars this file declares. Without these three,
+   * `text-green-600` / `dark:text-green-500` / `text-orange-600` (lib/status.ts's
+   * sanctioned non-token colors) compile to nothing on device. Values are Tailwind
+   * v4's own defaults, transcribed so a status success reads exactly as the web
+   * library's consumer sees it. */
+  --color-green-500: oklch(0.723 0.219 149.579);
+  --color-green-600: oklch(0.627 0.194 149.214);
+  --color-orange-600: oklch(0.646 0.222 41.116);
 }
 
 @layer theme {

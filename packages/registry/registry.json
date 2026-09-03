@@ -668,6 +668,143 @@
           "target": "components/ai/queue.logic.ts"
         }
       ]
+    },
+    {
+      "name": "url",
+      "type": "registry:lib",
+      "title": "URL helpers",
+      "description": "The one place a source URL becomes display parts and an open decision: no-throw hostname extraction (the web's bare new URL() throws take transcripts down; this falls back) and the http/https scheme allowlist guarding the Linking.openURL hop that replaces the web anchor's target=_blank. Backs sources and inline-citation.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/lib/url.ts",
+          "type": "registry:lib",
+          "target": "lib/url.ts"
+        }
+      ]
+    },
+    {
+      "name": "sources",
+      "type": "registry:component",
+      "title": "Sources",
+      "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive \u2014 title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table \u2014 there is no SourcesTable upstream.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/url.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/sources.tsx",
+          "type": "registry:component",
+          "target": "components/ai/sources.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/sources.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/sources.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "inline-citation",
+      "type": "registry:component",
+      "title": "Inline Citation",
+      "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface \u2014 a popover or sheet hosting this registry's Sources \u2014 is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source).",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/url.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/inline-citation.tsx",
+          "type": "registry:component",
+          "target": "components/ai/inline-citation.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/inline-citation.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/inline-citation.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "artifact",
+      "type": "registry:component",
+      "title": "Artifact",
+      "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship \u2014 neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped \u2014 hover surfaces are dead under a thumb; label becomes the accessibility label.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/card.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/artifact.tsx",
+          "type": "registry:component",
+          "target": "components/ai/artifact.tsx"
+        }
+      ]
+    },
+    {
+      "name": "snippet",
+      "type": "registry:component",
+      "title": "Snippet",
+      "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own \u2014 there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship \u2014 neither exists upstream. Monospace rides lib/mono.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/input-group.json"
+      ],
+      "dependencies": [
+        "expo-clipboard"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/snippet.tsx",
+          "type": "registry:component",
+          "target": "components/ai/snippet.tsx"
+        }
+      ]
+    },
+    {
+      "name": "commit",
+      "type": "registry:component",
+      "title": "Commit",
+      "description": "A commit reference row with its changed files behind a disclosure: hash chip, message, author, relative timestamp, and per-file +/- counts (UC-CODE-01 AC-2: copy the hash with one tap). File rows compose the item primitive; additions/deletions carry the web's green/red on the house status map and show nothing at zero. The web's four-hue file-status palette compresses onto the three permitted escapes with the A/M/D/R letters carrying the difference; the timestamp is hand-rolled over the same day math so Hermes Intl variance and the Vitest tier are both served; the touch affordance the web left to cursor-hover is the house rotating chevron.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/avatar.json",
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "expo-clipboard"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/commit.tsx",
+          "type": "registry:component",
+          "target": "components/ai/commit.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/commit.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/commit.logic.ts"
+        }
+      ]
     }
   ]
 }
