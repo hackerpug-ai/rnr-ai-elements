@@ -67,6 +67,26 @@ const SAFELIST = [
   'text-muted-foreground/60',
   'bg-muted-foreground/40',
   'size-1.5',
+
+  // Wave-12 (terminal/file-tree/environment-variables/package-info): the only classes
+  // in the wave absent from every older file (cross-file scan at HEAD). The scroll
+  // bounds are the two new components' default hosts (terminal max-h-64, file-tree
+  // max-h-80) plus the DevTools story's tighter terminal (max-h-24); min-w-full makes
+  // a horizontal ScrollView's content fill its host before overflowing; w-40 is the
+  // env-vars/dependencies table's key column and items-stretch lets the file-tree's
+  // two press targets span the full row height (their touch target). font-bold and
+  // text-background exist ONLY inside terminal.logic.ts's ANSI class map (string
+  // constants the scanner cannot see as JSX) — the exact case this file exists for.
+  'max-h-24',
+  'max-h-64',
+  'max-h-80',
+  'min-w-full',
+  'w-40',
+  'items-stretch',
+  'font-bold',
+  'text-background',
+  'underline',
+  'dark:text-orange-500',
 ] as const;
 
 void SAFELIST;
