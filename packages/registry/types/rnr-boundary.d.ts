@@ -205,3 +205,80 @@ declare module '@/registry/{engine}/components/ui/sheet' {
   export const SheetDescription: React.ComponentType<{ children?: React.ReactNode }>;
   export function useSheetPortalHost(): string | undefined;
 }
+
+declare module '@/registry/{engine}/components/ui/popover' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export type ContentInsets = { top: number; bottom: number; left: number; right: number };
+  export const Popover: React.ComponentType<{
+    children?: React.ReactNode;
+  }>;
+  export const PopoverTrigger: React.ComponentType<{
+    asChild?: boolean;
+    children?: React.ReactNode;
+  }>;
+  export const PopoverContent: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      children?: React.ReactNode;
+      align?: 'start' | 'center' | 'end';
+      side?: 'top' | 'bottom' | 'left' | 'right';
+      sideOffset?: number;
+      portalHost?: string;
+      insets?: ContentInsets;
+    }
+  >;
+}
+
+declare module '@/registry/{engine}/components/ui/progress' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export const Progress: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      indicatorClassName?: string;
+      value?: number;
+      children?: React.ReactNode;
+    }
+  >;
+}
+
+declare module '@/registry/{engine}/components/ui/dropdown-menu' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  export type ContentInsets = { top: number; bottom: number; left: number; right: number };
+  export const DropdownMenu: React.ComponentType<{
+    children?: React.ReactNode;
+  }>;
+  export const DropdownMenuTrigger: React.ComponentType<{
+    asChild?: boolean;
+    children?: React.ReactNode;
+  }>;
+  export const DropdownMenuContent: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      children?: React.ReactNode;
+      align?: 'start' | 'center' | 'end';
+      side?: 'top' | 'bottom' | 'left' | 'right';
+      sideOffset?: number;
+      alignOffset?: number;
+      portalHost?: string;
+      insets?: ContentInsets;
+    }
+  >;
+  export const DropdownMenuItem: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      children?: React.ReactNode;
+      onPress?: () => void;
+      disabled?: boolean;
+      closeOnPress?: boolean;
+    }
+  >;
+  export const DropdownMenuLabel: React.ComponentType<
+    ViewProps & { className?: string; children?: React.ReactNode }
+  >;
+  export const DropdownMenuSeparator: React.ComponentType<
+    ViewProps & { className?: string }
+  >;
+}

@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 39,
+      "registry_items": 42,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -281,7 +281,9 @@
         },
         {
           "name": "attachments",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/attachments.tsx",
+          "note": "Wave 9 — chat surfaces, verified on device"
         },
         {
           "name": "audio-player",
@@ -315,7 +317,9 @@
         },
         {
           "name": "context",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/context.tsx",
+          "note": "Wave 9 — chat surfaces, verified on device"
         },
         {
           "name": "conversation",
@@ -353,7 +357,9 @@
         },
         {
           "name": "open-in-chat",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/open-in-chat.tsx",
+          "note": "Wave 9 — chat surfaces, verified on device"
         },
         {
           "name": "package-info",
@@ -443,7 +449,8 @@
         },
         {
           "name": "web-preview",
-          "status": "pending"
+          "status": "pending",
+          "note": "STOPPED per PRD verdict: requires a live native webview (react-native-webview peer dep, dev-client only). Awaiting decision: dev-client wave vs PRD amendment to chrome-over-non-live. Upstream part inventory captured in wave_9 receipt."
         }
       ],
       "wave_6": {
@@ -531,6 +538,30 @@
           "note_for_consumers": "A standard shadcn/Tailwind consumer compiles these from the default palette; the harness (a consumer) now declares the slice explicitly. Docs note for the registry README when it ships."
         },
         "gates": "typecheck 0 · vitest 153/153 · biome 0 · registry 39x2 fresh · styling contract 0 violations · component contract 0 violations"
+      },
+      "wave_9": {
+        "organisms": [
+          "attachments",
+          "context",
+          "open-in-chat"
+        ],
+        "stopped": [
+          "web-preview"
+        ],
+        "status": "COMPLETE for 3 of 4 — web-preview blocked on a product decision, not on engineering",
+        "evidence": [
+          "iOS simulator, AI Elements/Chat Surfaces/Attachments Board: all five sections — inline chips WITH filenames (after two layout fixes), square 96pt grid tiles with remove controls, item-atom list rows with name/mime/state (red 'Upload failed'), disabled-remove chip, 'No attachments' empty state.",
+          "iOS simulator, AI Elements/Chat Surfaces/Context Board: all five trigger poses (30%/85%/4.1%/62% x2) with percent + gauge icon; provider-throw and zero-row traps covered by tests. Popover-OPEN state requires a human tap (primitives expose no controlled open; no headless tap injector available) — flagged for one-tap human QA.",
+          "iOS simulator, AI Elements/Chat Surfaces/Open In Board: default 'Open in chat' bordered chevron trigger (41pt, house h-10) + custom consumer chip pose; URL templates byte-pinned by tests. Dropdown-OPEN state same human-QA flag as popover."
+        ],
+        "review": "react-native-reusables-reviewer: ZERO blocking. 2 MAJOR fixed (open-in-chat registryDependencies missing button.json — the only outlier of 17 button-importing components, emitted graph now complete; attachments grid tile accessible:true flattened the remove Button out of the a11y tree — grouping rescoped to the preview leaf per the QueueItemIndicator pattern). MINOR: inline chip 2pt overflow theoretical — cleared on device (chip renders cleanly at rest).",
+        "device_incident": {
+          "symptom": "Attachments Board cold-rebuild render: grid tiles exploded to full-height columns, filenames absent from inline chips, sections below the grid pushed off-canvas.",
+          "root_cause_one": "The wave-7 uniwind new-file class-drop, RECONFIRMED on cold rebuild: size-24/size-12/flex-wrap/px-1.5 had ZERO compiled style-map entries while identical classes from older files compiled. Fixed by extending apps/harness/src/class-safelist.tsx (all four now compile; grid tiles square). Belt-and-braces inline sizes added to tile (96x96) and preview (20/48) per the persona hardening rule. NOTE: the safelist is now the standing mitigation for every new wave — extend it when device verification shows absent visuals.",
+          "root_cause_two": "A real RN layout difference, not the pipeline: Yoga gives a flexBasis-0 child ZERO width inside a shrink-wrapping row (CSS min-content sizing does not apply), so the filename Text measured zero. Fixed: the inline chip gets maxWidth 240 and the info wrapper uses content basis (flexBasis auto via style, className drops flex-1 for inline) — chips now wrap to the name up to the cap. Documented in-code."
+        },
+        "human_qa": "context popover and open-in-chat dropdown OPEN states (portal layering, insets) need one human tap each — @rn-primitives expose no controlled open and no headless tap injector is available (osascript click blocked by accessibility consent). 60-second manual check in device Storybook.",
+        "gates": "typecheck 0 · vitest 184/184 · biome 0 · registry 42x2 fresh · styling contract 0 violations · component contract 0 violations"
       }
     },
     "mobile-android": {
