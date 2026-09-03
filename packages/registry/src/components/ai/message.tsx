@@ -50,7 +50,10 @@ function MessageAvatar({
   className,
 }: { source?: string; fallback: string; className?: string }) {
   return (
-    <Avatar alt={fallback} className={cn('size-8', className)}>
+    // Explicit RN style sizing: same rationale as persona.tsx — the vendored Avatar's
+    // percent-sized fallback balloons to the nearest definite ancestor if the root's
+    // class-driven size is ever missing from the runtime stylesheet.
+    <Avatar alt={fallback} className={cn('size-8', className)} style={{ width: 32, height: 32 }}>
       {source ? <AvatarImage source={{ uri: source }} /> : null}
       <AvatarFallback>
         <Text className="text-xs">{fallback}</Text>

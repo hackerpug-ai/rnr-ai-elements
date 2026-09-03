@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 28,
+      "registry_items": 33,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -268,7 +268,10 @@
       "organisms": [
         {
           "name": "agent",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/agent.tsx",
+          "logic": "packages/registry/src/components/ai/agent.logic.ts",
+          "note": "Wave 7 — identity/run surface, verified on device"
         },
         {
           "name": "artifact",
@@ -284,7 +287,10 @@
         },
         {
           "name": "chain-of-thought",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/chain-of-thought.tsx",
+          "logic": "packages/registry/src/components/ai/chain-of-thought.logic.ts",
+          "note": "Wave 7 — identity/run surface, verified on device"
         },
         {
           "name": "code-block",
@@ -298,7 +304,10 @@
         },
         {
           "name": "confirmation",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/confirmation.tsx",
+          "logic": "packages/registry/src/components/ai/confirmation.logic.ts",
+          "note": "Wave 7 — identity/run surface, verified on device"
         },
         {
           "name": "context",
@@ -346,7 +355,10 @@
         },
         {
           "name": "plan",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/plan.tsx",
+          "logic": "packages/registry/src/components/ai/plan.logic.ts",
+          "note": "Wave 7 — identity/run surface, verified on device"
         },
         {
           "name": "prompt-input",
@@ -362,7 +374,10 @@
         },
         {
           "name": "queue",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/queue.tsx",
+          "logic": "packages/registry/src/components/ai/queue.logic.ts",
+          "note": "Wave 7 — identity/run surface, verified on device"
         },
         {
           "name": "reasoning",
@@ -447,6 +462,36 @@
           "scripts/check-tokens.ts is ALSO referenced-but-missing in package.json — flagged, not fixed (outside this wave)."
         ],
         "gates": "typecheck 0 · vitest 50/50 · biome 0 · registry:build 28x2 · check:registry fresh · styling contract 0 violations (62 files) · component contract 0 violations (15 files, after checkpoint fix)"
+      },
+      "wave_7": {
+        "organisms": [
+          "agent",
+          "chain-of-thought",
+          "plan",
+          "confirmation",
+          "queue"
+        ],
+        "status": "COMPLETE — reviewed, fixed, verified on device",
+        "evidence": [
+          "iOS simulator, AI Elements/Run/Run Turn: all four exposed organisms composed in one Message — agent card (persona composed, run badge pulsing mid-capture), chain-of-thought steps with rail, confirmation Approve(destructive)/Deny(outline), queue rows with remove controls and completed strike-through.",
+          "iOS simulator, AI Elements/Run/Agent Run States: 5 cards, every run badge (Idle/Running/Paused/Error/Done), 40pt avatars, red only on the Error badge.",
+          "iOS simulator, AI Elements/Run/Plan Board: expanded plan with 5 step rows (check/clock/x icons), file chips (release.md, ci/integration.yml), progress badge '1 of 5 complete · 4 remaining', streaming card with 'No steps yet'.",
+          "iOS simulator, AI Elements/Run/Confirmation Card: HITL card, red Approve + outlined Deny, resolved-state persistence.",
+          "iOS simulator, AI Elements/Run/Queue Board + Chain Of Thought Board: full standalone renders."
+        ],
+        "review": "react-native-reusables-reviewer: ZERO blocking/major — all five SHIP. 8 MINOR found; 5 fixed in-wave (queue remove touch target to the 44pt house formula; queue indicator + chain step status icons carry screen-reader labels via accessible View groups; ACTION_BUTTONS exhaustively typed as a Record; paused start button reads Resume). 3 tracked as notes (shared ToolStatus union for confirmation+tool in a future lib consolidation; QueueItemImage label path; plan running-count in the badge copy).",
+        "device_incident": {
+          "symptom": "Persona avatar ballooned to a full-height bg-muted panel whenever a Collapsible-based sibling coexisted; queue strike-through and chain rail invisible. Reproduced 5x, order- and wrapper-independent.",
+          "root_cause": "uniwind dev pipeline intermittently DROPS classes from newly-added files on incremental Metro rebuilds — the live-served bundle lacked size-10, line-through and w-px as compiled rules while shipping their class strings. All three symptoms map 1:1 to the drops. NOT a component or Yoga bug; release bundles compile JS+CSS together so production risk is low. Upstream-worthy.",
+          "fix": "Engine-agnostic inline style hardening in our components only: persona/message avatars carry explicit width/height; queue completed text sets textDecorationLine inline; chain rail sets width:1 inline. Proven under the live dropping bundle (rnr-fix-under-failure.png) — pre-fix that state produced the balloon, post-fix a 40x40 avatar.",
+          "hardened_files": [
+            "packages/registry/src/components/ai/persona.tsx",
+            "packages/registry/src/components/ai/message.tsx",
+            "packages/registry/src/components/ai/queue.tsx",
+            "packages/registry/src/components/ai/chain-of-thought.tsx"
+          ]
+        },
+        "gates": "typecheck 0 · vitest 106/106 · biome 0 · registry 33x2 fresh · styling contract 0 violations · component contract 0 violations"
       }
     },
     "mobile-android": {

@@ -521,6 +521,153 @@
           "target": "components/ai/question.tsx"
         }
       ]
+    },
+    {
+      "name": "agent",
+      "type": "registry:component",
+      "title": "Agent",
+      "description": "The identity/run surface: the persona molecule in the header plus a run-state badge and the thumb-reachable Start/Pause/Stop control bar the web config card never had. The run is the caller's — controlled status, reported verbs, dead bar when no handler is wired. The web card's instructions/tools/output body is deferred to its own surfaces.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/card.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/persona.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/agent.tsx",
+          "type": "registry:component",
+          "target": "components/ai/agent.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/agent.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/agent.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "chain-of-thought",
+      "type": "registry:component",
+      "title": "Chain of Thought",
+      "description": "The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with per-step status joined by a rail; the disclosure reuses the reasoning lifecycle (auto-open on stream, auto-close after, user toggle stands it down) rather than forking it. The collapsed badge counts steps from data — the collapsed content is unmounted, so the count must not live in the tree.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/native-only-animated-view.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/reasoning-lifecycle.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/chain-of-thought.tsx",
+          "type": "registry:component",
+          "target": "components/ai/chain-of-thought.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/chain-of-thought.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/chain-of-thought.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "plan",
+      "type": "registry:component",
+      "title": "Plan",
+      "description": "The agent's plan: a card + collapsible shell whose steps are the TASK organism's own rows — composed by the consumer, never a fork of task's internals. Title and description shimmer while streaming, at web parity, on the Shimmer organism's house pulse; the footer badge keeps the remaining count glanceable even collapsed. defaultOpen stays true — a plan is the overview the user asked for, unlike task's phone-density collapse.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/card.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/shimmer.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/task.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/plan.tsx",
+          "type": "registry:component",
+          "target": "components/ai/plan.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/plan.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/plan.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "confirmation",
+      "type": "registry:component",
+      "title": "Confirmation",
+      "description": "Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING without an approval or while arguments are still streaming — the web contract, made total in a Vitest-owned phase machine. Once answered the pair stays: the chosen side resolves with a check, the other disables, and the outcome persists in the transcript (question.tsx's persistence, replacing the web's swap-to-Accepted/Rejected rows).",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/card.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/confirmation.tsx",
+          "type": "registry:component",
+          "target": "components/ai/confirmation.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/confirmation.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/confirmation.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "queue",
+      "type": "registry:component",
+      "title": "Queue",
+      "description": "The queued-actions list: a collapsible section with the count on the trigger and a remove action per row. The component NEVER owns the queue — caller state, onRemove callback, and the pure remove/enqueue/count helpers in queue.logic. Rows compose the item primitive; actions are always visible (the web's hover-reveal is dead on touch) and the list scrolls under a max-h cap.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/queue.tsx",
+          "type": "registry:component",
+          "target": "components/ai/queue.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/queue.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/queue.logic.ts"
+        }
+      ]
     }
   ]
 }
