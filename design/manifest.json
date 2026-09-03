@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 47,
+      "registry_items": 51,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -331,11 +331,15 @@
         },
         {
           "name": "environment-variables",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/environment-variables.tsx",
+          "note": "Wave 12 - dev tools I, verified on device"
         },
         {
           "name": "file-tree",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/file-tree.tsx",
+          "note": "Wave 12 - dev tools I, verified on device"
         },
         {
           "name": "inline-citation",
@@ -369,7 +373,9 @@
         },
         {
           "name": "package-info",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/package-info.tsx",
+          "note": "Wave 12 - dev tools I, verified on device"
         },
         {
           "name": "plan",
@@ -432,7 +438,9 @@
         },
         {
           "name": "terminal",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/terminal.tsx",
+          "note": "Wave 12 - dev tools I, verified on device"
         },
         {
           "name": "test-results",
@@ -608,6 +616,24 @@
           "fix": "Modifier forms added to the class safelist; all three now compile (style-map entries 1/1/2). Interim verified at exactly 60% muted on device. Cosmetic note: italic maps but Expo Go system fonts lack an italic face - slant invisible; class still correct for consumers with italic-capable fonts."
         },
         "gates": "typecheck 0 - vitest 267/267 - biome 0 - registry 47x2 fresh - both contracts 0 violations"
+      },
+      "wave_12": {
+        "organisms": [
+          "terminal",
+          "file-tree",
+          "environment-variables",
+          "package-info"
+        ],
+        "status": "COMPLETE - reviewed, fixed, verified on device",
+        "evidence": [
+          "iOS simulator, AI Elements/Dev Tools/Terminal Board: log lines STACKED VERTICALLY (E1 fix proven line-by-line), ANSI->theme colors live (green 19,172,76 / orange 244,94,30 / red 239,84,84 - exact compression values), long line horizontal-scrolls (mid-word clip at the edge, never wraps), streaming shimmer captured, header status right-aligned.",
+          "iOS simulator, AI Elements/Dev Tools/File Tree Board: rows stacked vertically (E1 fix), depth indentation (+48px per level), chevron-vs-leaf icon distinction, the two-target law (chevron toggles, name selects) at the 44pt floor.",
+          "iOS simulator, AI Elements/Dev Tools/Environment Variables Board: KEY/VALUE table on the table atom, mono keys, masked values (8-24 bullets, clamp ellipsis), required outline badge, per-row eye (default composition), global Switch off-state, group header rows.",
+          "iOS simulator, AI Elements/Dev Tools/Package Info Board: version transitions with arrows, the five change-type badges (monochrome by declared compression), dependency table, mono install row with copy icon."
+        ],
+        "review": "FIX-FIRST -> fixed. 3 blockers: E1 terminal+file-tree placed vertical stacks directly inside horizontal ScrollViews (row container flattens them onto one strip - fixed with inner column Views per the code-block precedent); E2 environment-variables registry graph missing badge.json; E3 underline emitted by the ANSI tokenizer but absent from the safelist. ALSO: the hard-fail component-contract gate caught file-tree using raw Pressable for its two targets (the review passed it) - recomposed on the vendored ghost Button, the contract named Pressable replacement, with button.json added to the graph. W1: dark:text-orange-500 safelisted (the denied-tone dark twin).",
+        "notes": "Copy-button glyphs merge at OCR fidelity on row 1 (eye+copy adjacent); the pattern is identical to device-proven snippet/code-block. PackageInfoDescription not composed in the board story (story choice; part is a styled Text).",
+        "gates": "typecheck 0 - vitest 326/326 - biome 0 - registry 51x2 fresh - both contracts 0 violations"
       }
     },
     "mobile-android": {

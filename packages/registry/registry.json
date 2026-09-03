@@ -1008,6 +1008,120 @@
           "target": "components/ai/transcription.logic.ts"
         }
       ]
+    },
+    {
+      "name": "terminal",
+      "type": "registry:component",
+      "title": "Terminal",
+      "description": "Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4). Port-adapted per the PRD verdict — an interactive pseudo-terminal is explicitly NOT part of this: the caller hands a string, the component renders it. Upstream part set at parity (Header/Title/Status/Actions/ClearButton/CopyButton/Content; output/isStreaming/autoScroll/onClear). ansi-to-react is replaced by a pure SGR tokenizer (terminal.logic.ts, Vitest-owned) whose 16-color map compresses onto the house palette — RNR roles plus the three sanctioned status colors; bright is a weight bump, 256/truecolor resolves to default, non-SGR escapes strip, attributes persist across newlines. Copy hands over stripAnsi(output) — escape codes are useless on a clipboard. autoScroll sticks to the bottom while on; the clear button ENABLES only when onClear is wired; isStreaming shows the reduced-motion-gated shimmer pulse.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/shimmer.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "expo-clipboard",
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/terminal.tsx",
+          "type": "registry:component",
+          "target": "components/ai/terminal.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/terminal.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/terminal.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "file-tree",
+      "type": "registry:component",
+      "title": "File Tree",
+      "description": "The agent workspace browser (UC-CODE-01 AC-1: expand and collapse directories on a phone-width screen). Port-adapted per the PRD verdict, which offers horizontal scroll OR drill-in; the port takes the horizontal-scroll branch — the whole tree sits in axis-scrolled ScrollViews so depth pushes right instead of crushing names. Upstream part set at parity and the caller-supplied tree arrives as COMPOSED JSX (FileTreeFolder/FileTreeFile parts), not a data prop: expanded/defaultExpanded/onExpandedChange (Set<string>), selectedPath/onSelect. The inventory's composition law is binding and touch-shaped: the CHEVRON expands/collapses, the NAME selects, one tap never does both — two targets per row, both at the 44pt floor via hitSlop. Rows compose the item atom; an empty tree falls back to the empty atom; folder state is a copy-on-write toggle in file-tree.logic (Vitest-owned, mutation-proof).",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/empty.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
+        "https://reactnativereusables.com/r/{engine}/button.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/file-tree.tsx",
+          "type": "registry:component",
+          "target": "components/ai/file-tree.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/file-tree.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/file-tree.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "environment-variables",
+      "type": "registry:component",
+      "title": "Environment Variables",
+      "description": "Masked key/value rows for the agent's environment (UC-CODE-01 AC-4: masked by default, reveal a single value on demand). Port-at-parity per the PRD verdict. Upstream part set at parity (Header/Title/Toggle/Content/Variable/Name/Value/Required/CopyButton/Group; showValues/defaultShowValues=false/onShowValuesChange) — the Toggle is RNR's vendored Switch, matching the KB's documented composition. ONE declared addition: upstream's reveal is global-only, so each row also carries a per-value eye toggle to satisfy AC-4's single-value wording; the clipboard always receives the REAL value (the mask is a display guard, documented in the logic). The copy emits the KB's documented export KEY=\"value\" line with quotes escaped. Composed on the table atom per the build plan: one KEY/VALUE table, fixed column sizes, horizontal scroll for overflowing keys, groups as label rows, mono keys via lib/mono. No input ships — the upstream part set has no editable field; editing the environment is the caller's app.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/switch.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/table.json",
+        "https://reactnativereusables.com/r/{engine}/badge.json"
+      ],
+      "dependencies": [
+        "expo-clipboard"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/environment-variables.tsx",
+          "type": "registry:component",
+          "target": "components/ai/environment-variables.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/environment-variables.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/environment-variables.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "package-info",
+      "type": "registry:component",
+      "title": "Package Info",
+      "description": "Card of package name, version, and a copyable install command (UC-CODE-01 AC-3) — port-at-parity per the PRD verdict, all RNR primitives. Upstream part set at parity (Header/Name/Version/Description/Content/Dependencies/Dependency/ChangeType; name/currentVersion/newVersion/changeType): the version line is the KB's version transition display (current → next, null renders nothing), and the web's five change-type hues compress onto the house status vocabulary with the badge WORD carrying the kind. ONE declared addition: upstream ships no install-command part but AC-3 is binding, so PackageInfoInstall composes the existing Snippet organism inside the card — the new version pins the install when present, otherwise latest. Dependencies render as ONE table (package/version) per the build plan, fixed column sizes, horizontal scroll, mono identifiers via lib/mono.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/snippet.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/table.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/package-info.tsx",
+          "type": "registry:component",
+          "target": "components/ai/package-info.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/package-info.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/package-info.logic.ts"
+        }
+      ]
     }
   ]
 }

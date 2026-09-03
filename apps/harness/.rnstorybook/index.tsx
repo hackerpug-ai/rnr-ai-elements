@@ -5,7 +5,7 @@ import { view } from './storybook.requires';
 const StorybookUI = view.getStorybookUI({
   storage: AsyncStorage,
   // Open on a real component rather than whatever was last viewed on this simulator.
-  initialSelection: { kind: 'AI Elements/Audio', name: 'Voice Reply Pair' },
+  initialSelection: { kind: 'AI Elements/Dev Tools', name: 'Package Info Board' },
 });
 
 export default StorybookUI;

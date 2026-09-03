@@ -301,6 +301,49 @@ declare module '@/registry/{engine}/components/ui/button-group' {
   export function useButtonGroupPosition(): { position: 'first' | 'middle' | 'last' | 'only'; className: string };
 }
 
+declare module '@/registry/{engine}/components/ui/switch' {
+  import type * as React from 'react';
+  import type { PressableProps } from 'react-native';
+  // RNR's Switch Root is a Pressable (checked/onCheckedChange), so press-level props
+  // (hitSlop, accessibility*) flow through its spread — declared for the same reason
+  // everything here is declared: the module only exists after the CLI rewrite.
+  export const Switch: React.ComponentType<
+    PressableProps & {
+      className?: string;
+      checked?: boolean;
+      onCheckedChange?: (checked: boolean) => void;
+      disabled?: boolean;
+    }
+  >;
+}
+
+declare module '@/registry/{engine}/components/ui/table' {
+  import type * as React from 'react';
+  import type { StyleProp, TextStyle, ViewProps } from 'react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const Table: React.ComponentType<
+    ViewProps & {
+      className?: string;
+      /** Wrap in a horizontal ScrollView (the default — phone-width tables scroll). */
+      scrollable?: boolean;
+      children?: React.ReactNode;
+    }
+  >;
+  export const TableHeader: Slot;
+  export const TableBody: Slot;
+  export const TableRow: Slot;
+  export const TableHead: Slot;
+  export const TableCell: Slot;
+  // Real TableCellText is React.ComponentProps<typeof Text>, so style flows through to
+  // the vendored Text (the env-var/package rows ride the house mono family).
+  export const TableCellText: React.ComponentType<{
+    className?: string;
+    style?: StyleProp<TextStyle>;
+    numberOfLines?: number;
+    children?: React.ReactNode;
+  }>;
+}
+
 declare module '@/registry/{engine}/components/ui/dropdown-menu' {
   import type * as React from 'react';
   import type { ViewProps } from 'react-native';
