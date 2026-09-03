@@ -17,6 +17,20 @@ const fsExists = (p) => { try { return fs.statSync(p).isFile(); } catch { return
 config.watchFolders = [...(config.watchFolders ?? []), REGISTRY_SRC];
 
 config.resolver.resolveRequest = (context, moduleName, platform) => {
+  // web-preview imports react-native-webview as a PEER: the registry package takes no
+  // dependency on it (its typecheck reads the ambient boundary declaration), so the
+  // module does not resolve from packages/registry the way reanimated and friends do.
+  // A real consumer resolves it from their own node_modules after the CLI installs it;
+  // this harness IS that consumer (apps/harness/package.json carries the Expo-pinned
+  // 13.16.1), so the peer lookup is pointed here. No other native module needs this —
+  // if a second one ever appears, generalize this into a peer-map.
+  if (moduleName === 'react-native-webview' || moduleName.startsWith('react-native-webview/')) {
+    return context.resolveRequest(
+      context,
+      path.join(__dirname, 'node_modules', 'react-native-webview'),
+      platform,
+    );
+  }
   // Registry sources are engine-agnostic and carry a literal {engine} in their import
   // aliases. Resolve them here the way the RNR CLI resolves them on install, so the
   // harness exercises the SAME source the registry ships rather than a copy.

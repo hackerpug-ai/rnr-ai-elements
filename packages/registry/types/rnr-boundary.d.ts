@@ -410,3 +410,43 @@ declare module '@/registry/{engine}/components/ui/dropdown-menu' {
     ViewProps & { className?: string }
   >;
 }
+
+// ---- The one native-module PEER: react-native-webview, for the opt-in web-preview
+// item. DIFFERENT FROM THE BLOCKS ABOVE — those alias modules that exist only after
+// the RNR CLI's install-time rewrite; this one is a real npm package that this package
+// DELIBERATELY DOES NOT DECLARE (no dep, no peer in package.json — pnpm's
+// auto-install-peers would materialize its real types and collide with this ambient
+// declaration, and the "builds without it" guarantee would rot). Typecheck reads THIS;
+// the consumer's real types take over after install (the surface below mirrors the
+// real package's shape for exactly the members web-preview.tsx touches, so the
+// emitted source typechecks against both). If react-native-webview EVER resolves in
+// this package, this block must be deleted, not augmented.
+declare module 'react-native-webview' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+
+  export interface WebViewProps extends ViewProps {
+    source?: { uri?: string };
+    originWhitelist?: string[];
+    javaScriptEnabled?: boolean;
+    allowFileAccess?: boolean;
+    allowFileAccessFromFileURLs?: boolean;
+    allowUniversalAccessFromFileURLs?: boolean;
+    setSupportMultipleWindows?: boolean;
+    onLoadStart?: () => void;
+    onLoadEnd?: () => void;
+    onError?: () => void;
+    onRenderProcessGone?: () => void;
+  }
+
+  // The instance surface web-preview uses (reload); the rest mirrors the real class
+  // so a consumer's own ref code stays honest about what exists.
+  export class WebView extends React.Component<WebViewProps> {
+    reload(): void;
+    goBack(): void;
+    goForward(): void;
+    stopLoading(): void;
+    injectJavaScript(script: string): void;
+  }
+  export default WebView;
+}

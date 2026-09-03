@@ -41,14 +41,17 @@
           "nativewind": "apps/harness-nativewind (tailwindcss 3.4.19)"
         }
       },
-      "phase": "organisms",
+      "phase": "compose",
       "gates": {
         "scaffold": "passed",
         "plan": "passed",
         "atoms": "passed",
         "molecules": "passed",
         "compose": "pending",
-        "organisms": "pending"
+        "organisms": "passed",
+        "organisms_styling_contract": "passed",
+        "organisms_component_contract": "passed",
+        "organisms_capture": "deviation-recorded"
       },
       "screens": [
         {
@@ -147,7 +150,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 55,
+      "registry_items": 56,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -473,8 +476,9 @@
         },
         {
           "name": "web-preview",
-          "status": "pending",
-          "note": "STOPPED per PRD verdict: requires a live native webview (react-native-webview peer dep, dev-client only). Awaiting decision: dev-client wave vs PRD amendment to chrome-over-non-live. Upstream part inventory captured in wave_9 receipt."
+          "status": "verified",
+          "note": "Wave 14 - live native webview per the PRD verdict, verified live in Expo Go (no dev client needed - react-native-webview 13.16.1 is Expo Go-compatible, empirically proven)",
+          "file": "packages/registry/src/components/ai/web-preview.tsx"
         }
       ],
       "wave_6": {
@@ -663,6 +667,20 @@
           "standing_rule": "NEW WAVES (if any): avoid /NN modifier classes on colors entirely; use token classes or the safelisted escape colors."
         },
         "gates": "typecheck 0 - vitest 365/365 - biome 0 - registry 55x2 fresh - both contracts 0 violations"
+      },
+      "wave_14": {
+        "organisms": [
+          "web-preview"
+        ],
+        "status": "COMPLETE - reviewed (SHIP, zero blocking), verified LIVE on device",
+        "the_fork_that_dissolved": "Wave 9 stopped assuming react-native-webview was dev-client-only. Empirical check: it is in Expo 57 bundledNativeModules (pin 13.16.1) AND the Expo Go 57 binary carries RCTWebView symbols; harness install via npx expo install succeeded. The PRD-faithful path (live webview, peer-dep opt-in item) executed with zero compromise to the Expo Go core.",
+        "evidence": [
+          "iOS simulator, AI Elements/Web Preview/Web Preview Board: a LIVE NATIVE WEBVIEW rendering https://example.com inside Expo Go (AC-1) - the real page content ('Example Domain' heading + body text) in the preview zone; URL bar committing https://example.com; the .invalid failure card with red icon, 'Preview failed to load', host, and Retry (AC-3). No 'Cannot find native module' - the metro shim resolves."
+        ],
+        "architecture": "Registry takes NO webview dependency - the item records dependencies:[\"react-native-webview\"] like shimmer records reanimated (AC-2 install notice); the ambient boundary declaration is load-bearing (RED-proven: registry typecheck fails without it; AC-4). Consumer-side resolver shims (both harnesses + web vite) mirror what a real consumer node_modules provides; nativewind redirects to the SAME pnpm store path (no dual RNCWebView registration - the prior art crash).",
+        "security": "The binding scenario locked down and non-loosenable: originWhitelist https/http, javaScriptEnabled pinned explicit, file-access triple false, setSupportMultipleWindows false. normalizePreviewUrl in BOTH the commit path and the body (context-fed state cannot downgrade the guard); refusals -> empty surface + onRefuse, never silent; javascript:/data:/file:/about:/ftp:/blob:/ws: dead before the webview layer (17 test cases, reviewer re-exercised the hostile drafts in Node). Residual disclosed: allow-scripts semantics = the loaded page JS runs at webview level (upstream parity, documented in-header).",
+        "review": "SHIP, zero blocking. Info notes for the record: 27 assertions not 24; percentage not numeric sizing in a comment; ws/wss unasserted but correctly refused; controlled-value path unexercised (uncontrolled device-proven).",
+        "gates": "typecheck 0 - vitest 382/382 - biome 0 - registry 56x2 fresh - both contracts 0 violations"
       }
     },
     "mobile-android": {
@@ -896,6 +914,8 @@
     "hoisting_correction": "node-linker=hoisted was REMOVED. It was added on the assumption that pnpm's symlinks trip Metro; that assumption was wrong for Expo 57 / Metro, and hoisting actively broke dual-engine support by flattening nativewind into the root where it resolved tailwindcss@4 instead of its package-local v3. With pnpm's default isolated linker, apps/harness resolves tailwindcss 4.3.3 and apps/harness-nativewind resolves 3.4.19, and both engines build.",
     "engine_toggle": "The Storybook Engine toolbar item cannot hot-swap engines — both are bundler transforms and NativeWind 4 requires Tailwind v3 while Uniwind requires v4. It reports the running engine and hard-refreshes to the other server, which is why each engine has its own workspace package and port.",
     "rtk_warning": "`rtk` wraps tsc and reported 'TypeScript: No errors found' on a run that exited 1 with a real TS2688 error. Verify gates with the direct binary when an exit code and the printed output disagree.",
-    "sandbox_scope": "The sandbox contains ONLY components this library ships. RNR already exports tokens and Button, and consumers get those from RNR directly, so re-storying them here would duplicate RNR and demo nothing installable. The scaffold smoke stories (RNR Button, design tokens) were deleted once they had done their job of proving the pipeline; their evidence is recorded above."
+    "sandbox_scope": "The sandbox contains ONLY components this library ships. RNR already exports tokens and Button, and consumers get those from RNR directly, so re-storying them here would duplicate RNR and demo nothing installable. The scaffold smoke stories (RNR Button, design tokens) were deleted once they had done their job of proving the pipeline; their evidence is recorded above.",
+    "organisms_capture_deviation": "verify-catalog --layer organisms was not run: the manifest capture.command (pnpm storybook:capture) has never existed as a script, and atoms/molecules layers passed on per-wave device evidence (the AGENTS.md sign-off gate) without it. The organisms layer follows that precedent: 9 waves of device captures in wave_1..wave_14 receipts. Wiring a real capture pipeline (55 items x stories, automated screenshotting) is future infra - proportionate to record rather than block.",
+    "pipeline_lessons": "Four engine defects found and mitigated across the organisms build, all recorded in wave receipts: (1) new-file classes intermittently drop from the compiled style map - the class safelist is the standing mitigation; (2) opacity-MODIFIER classes (/NN) compile with an unresolved base color and render unreliably - avoid them, use token classes; (3) the CSS scanner never sees class literals in .ts data maps - safelist or JSX them; (4) nested-Text color inheritance under the mono inline style is unreliable - make dimming explicit per segment. Also: Storybook needs its own root PortalHost (preview.tsx) because it replaces the app shell."
   }
 }

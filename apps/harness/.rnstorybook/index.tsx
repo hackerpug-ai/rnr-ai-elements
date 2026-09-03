@@ -5,7 +5,7 @@ import { view } from './storybook.requires';
 const StorybookUI = view.getStorybookUI({
   storage: AsyncStorage,
   // Open on a real component rather than whatever was last viewed on this simulator.
-  initialSelection: { kind: 'AI Elements/Data', name: 'Stack Trace Board' },
+  initialSelection: { kind: 'AI Elements/Web Preview', name: 'Web Preview Board' },
 });
 
 export default StorybookUI;

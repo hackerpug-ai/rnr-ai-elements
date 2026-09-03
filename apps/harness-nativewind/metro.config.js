@@ -19,6 +19,17 @@ const config = getDefaultConfig(projectRoot);
 // substitution the registry build script makes when fanning one source into two variants.
 config.watchFolders = [sharedSrc, workspaceRoot];
 config.resolver.resolveRequest = (context, moduleName, platform) => {
+  // web-preview's react-native-webview PEER. This package deliberately does NOT
+  // install the webview — the uniwind harness's Expo-pinned 13.16.1 is the ONE store
+  // instance, and this redirect resolves to that same pnpm store entry (a second
+  // install would double-register the RNCWebView native module, the dual-tree
+  // failure the prior art paid for). Own node_modules first, so a future local
+  // install simply wins.
+  if (moduleName === 'react-native-webview' || moduleName.startsWith('react-native-webview/')) {
+    const own = path.join(projectRoot, 'node_modules', 'react-native-webview');
+    const shared = path.join(projectRoot, '../harness/node_modules/react-native-webview');
+    return context.resolveRequest(context, fs.existsSync(own) ? own : shared, platform);
+  }
   if (moduleName === '@/components/ui' || moduleName.startsWith('@/components/ui/')) {
     const rest = moduleName.slice('@/components/ui'.length);
     return context.resolveRequest(context, path.join(sharedSrc, 'components/ui.nativewind' + rest), platform);
