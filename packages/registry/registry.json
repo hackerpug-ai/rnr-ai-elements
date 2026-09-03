@@ -26,7 +26,7 @@
       "name": "checkpoint",
       "type": "registry:component",
       "title": "Checkpoint",
-      "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first \u2014 the web puts it behind a hover tooltip, which does not exist on touch.",
+      "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first — the web puts it behind a hover tooltip, which does not exist on touch.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json",
         "https://reactnativereusables.com/r/{engine}/icon.json"
@@ -57,7 +57,7 @@
       "name": "persona",
       "type": "registry:component",
       "title": "Persona",
-      "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation \u2014 the animated avatar is not ported, so no consumer inherits a native animation runtime.",
+      "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation — the animated avatar is not ported, so no consumer inherits a native animation runtime.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/avatar.json",
         "https://reactnativereusables.com/r/{engine}/text.json"
@@ -91,7 +91,7 @@
       "name": "kbd",
       "type": "registry:ui",
       "title": "Kbd",
-      "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always \u2014 correct, not a compromise.",
+      "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always — correct, not a compromise.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json"
       ],
@@ -140,7 +140,7 @@
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb \u2014 the web size is a mouse target.",
+      "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb — the web size is a mouse target.",
       "registryDependencies": [],
       "dependencies": [
         "@rn-primitives/slider"
@@ -224,7 +224,7 @@
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP \u2014 chrome is 100% RNR.",
+      "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP — chrome is 100% RNR.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -687,7 +687,7 @@
       "name": "sources",
       "type": "registry:component",
       "title": "Sources",
-      "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive \u2014 title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table \u2014 there is no SourcesTable upstream.",
+      "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive — title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table — there is no SourcesTable upstream.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -715,7 +715,7 @@
       "name": "inline-citation",
       "type": "registry:component",
       "title": "Inline Citation",
-      "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface \u2014 a popover or sheet hosting this registry's Sources \u2014 is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source).",
+      "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface — a popover or sheet hosting this registry's Sources — is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json",
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/url.json"
@@ -737,7 +737,7 @@
       "name": "artifact",
       "type": "registry:component",
       "title": "Artifact",
-      "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship \u2014 neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped \u2014 hover surfaces are dead under a thumb; label becomes the accessibility label.",
+      "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship — neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped — hover surfaces are dead under a thumb; label becomes the accessibility label.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/card.json",
@@ -756,7 +756,7 @@
       "name": "snippet",
       "type": "registry:component",
       "title": "Snippet",
-      "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own \u2014 there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship \u2014 neither exists upstream. Monospace rides lib/mono.",
+      "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own — there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship — neither exists upstream. Monospace rides lib/mono.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -803,6 +803,82 @@
           "path": "packages/registry/src/components/ai/commit.logic.ts",
           "type": "registry:component",
           "target": "components/ai/commit.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "attachments",
+      "type": "registry:component",
+      "title": "Attachments",
+      "description": "The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants, with list rows composed on the item primitive. File acquisition does NOT port — the PRD verdict replaces drag-and-drop and the file input with the caller's native pickers and their permission contracts. Remove is always visible (the web's hover-reveal is dead on touch) and DISABLES rather than disappears without onRemove; per-file upload state ('uploading' | 'done' | 'error') is the display seam for the caller-owned lifecycle. The hover preview card and the <video> thumbnail do not ship — hover is unreachable under a thumb and a media dependency for one tile is out of contract.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/empty.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/attachments.tsx",
+          "type": "registry:component",
+          "target": "components/ai/attachments.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/attachments.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/attachments.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "context",
+      "type": "registry:component",
+      "title": "Context",
+      "description": "The context-window budget chip and its press-opened breakdown (the PRD verdict turns the web's hover card into a popover; the data displayed is unchanged). Composes RNR popover and progress; ContextContent passes insets through to the anchored content, the consumer's per-screen ritual. Cost is INJECTED, not computed — the web prices with tokenlens, a dependency this registry does not take, so rows and footer take caller-formatted costText and an unsupplied cost renders the web's own unknown-marker instead of a lying $0.00. The SVG progress ring is a themed PieChartIcon: a raw Svg cannot receive className without engine-specific cssInterop, which the styling contract forbids in registry source. Zero-token usage rows render nothing, upstream trap parity.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/popover.json",
+        "https://reactnativereusables.com/r/{engine}/progress.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/context.tsx",
+          "type": "registry:component",
+          "target": "components/ai/context.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/context.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/context.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "open-in-chat",
+      "type": "registry:component",
+      "title": "Open In Chat",
+      "description": "The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same six targets and the same menu as the web, with the anchor's target=_blank replaced by the platform link handler behind lib/url's http/https allowlist. The URL templates are the contract and are reproduced byte-what-upstream-produces (hints=search on ChatGPT included). A caller-supplied onOpen replaces the hop; a refused or failed open surfaces through onOpenError, never silently. Unavailable targets are hidden by composition — the consumer mounts only the rows that exist for their users. Brand SVGs are web assets: rows ship themed lucide marks in the same slot, titles carry the identity.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/dropdown-menu.json",
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/url.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/open-in-chat.tsx",
+          "type": "registry:component",
+          "target": "components/ai/open-in-chat.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/open-in-chat.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/open-in-chat.logic.ts"
         }
       ]
     }

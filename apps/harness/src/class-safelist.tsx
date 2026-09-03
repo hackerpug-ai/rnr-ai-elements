@@ -22,6 +22,23 @@ const SAFELIST = [
   'text-green-500',
   'dark:text-green-500',
   'text-orange-600',
+
+  // Wave-9 (attachments/context/open-in-chat): classes whose only JSX home is a
+  // new file. The engine's CSS build intermittently omits NEW-file classes from the
+  // compiled style map even on cold rebuilds (wave-7 root cause, reconfirmed on
+  // attachments.tsx — size-24/size-12/flex-wrap had zero compiled entries while
+  // identical classes from older files compiled). Declaring them here forces
+  // generation. New waves: extend this block when device verification shows a
+  // missing class — the pattern is any 'absent visual + zero style-map entry'.
+  'flex-wrap',
+  'gap-1',
+  'gap-1.5',
+  'gap-2',
+  'h-8',
+  'px-1.5',
+  'size-3',
+  'size-12',
+  'size-24',
 ] as const;
 
 void SAFELIST;
