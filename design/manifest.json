@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 33,
+      "registry_items": 39,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -275,7 +275,9 @@
         },
         {
           "name": "artifact",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/artifact.tsx",
+          "note": "Wave 8 — content I (citations & artifacts), verified on device"
         },
         {
           "name": "attachments",
@@ -300,7 +302,9 @@
         },
         {
           "name": "commit",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/commit.tsx",
+          "note": "Wave 8 — content I (citations & artifacts), verified on device"
         },
         {
           "name": "confirmation",
@@ -329,7 +333,9 @@
         },
         {
           "name": "inline-citation",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/inline-citation.tsx",
+          "note": "Wave 8 — content I (citations & artifacts), verified on device"
         },
         {
           "name": "message",
@@ -391,11 +397,15 @@
         },
         {
           "name": "snippet",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/snippet.tsx",
+          "note": "Wave 8 — content I (citations & artifacts), verified on device"
         },
         {
           "name": "sources",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/sources.tsx",
+          "note": "Wave 8 — content I (citations & artifacts), verified on device"
         },
         {
           "name": "stack-trace",
@@ -492,6 +502,35 @@
           ]
         },
         "gates": "typecheck 0 · vitest 106/106 · biome 0 · registry 33x2 fresh · styling contract 0 violations · component contract 0 violations"
+      },
+      "wave_8": {
+        "organisms": [
+          "sources",
+          "inline-citation",
+          "artifact",
+          "snippet",
+          "commit"
+        ],
+        "libs": [
+          "url"
+        ],
+        "status": "COMPLETE — reviewed, fixed, verified on device",
+        "evidence": [
+          "iOS simulator, AI Elements/Content/Sources Board: 3 sections (collapsed, expanded, favicon), source rows composing the item atom with title+domain per UC-CHAT-05, chevrons, opt-in favicon chip.",
+          "iOS simulator, AI Elements/Content/Citation Inline: three chip variants (multi 'reactnativereusables.com +2', single 'github.com', 'unknown') embedded INSIDE paragraph text — Text-nested, no View-in-Text; no-throw where the web crashes on malformed URLs.",
+          "iOS simulator, AI Elements/Content/Snippet Board: InputGroup-composed snippets with $ addon, mono command text, copy icon; long command truncates at edge (scroll-not-wrap) — readOnly+selectable contract.",
+          "iOS simulator, AI Elements/Content/Commit Board: expanded card with avatar initials, sha pill, file rows carrying A/M/D/R letters; additions GREEN (#16a34a: 'A +184', 'A +47'), deletions RED (#ef4444: 'D -33'), M/R neutral with letters carrying distinction (WCAG 1.4.1); collapsed card renders sha + relative date.",
+          "iOS simulator, AI Elements/Content/Artifact Board: bounded-host artifact with header chrome (title, description, download/open actions, close) and CodeBlock content rendering resolveEngine source."
+        ],
+        "review": "react-native-reusables-reviewer: ZERO blocking. 1 MAJOR fixed (source rows announced as button — accessibilityRole=\"link\" added; Item spread-order verified). Minors fixed: CommitHeader gained active:opacity-80 twin; onOpen doc-comment warns to re-apply isSafeOpenUrl. Notes tracked: copy-flip pattern triplicated across commit/snippet/code-block (useCopy consolidation candidate), favicon letter-chip contrast, formatRelativeDate rounding parity vs Intl.",
+        "upstream_corrections_verified": "Both implementer claims confirmed against the KB: artifact has NO ArtifactTrigger/versioning upstream (8-part set only); Snippet composes InputGroup with no Header/Tabs. The port ships the true upstream surfaces.",
+        "device_incident": {
+          "symptom": "Commit additions rendered black — and grepping history showed GREEN HAD NEVER RENDERED ON DEVICE in any wave (wave 6 ToolLifecycle/TaskBoard evidence shows zero green). Red worked.",
+          "root_cause": "The CSS build never compiled the three sanctioned escape-hatch colors. Their literals live ONLY in registry .ts data maps (lib/status.ts), which the class scanner does not reach — text-destructive compiled solely because RNR vendored files use it in JSX literals. A latent defect since Wave 6, invisible to Vitest (asserts class strings), web Storybook (own color defect), and the contract greps (literals present in source).",
+          "fix": "Consumer-side: harness global.css @theme declares the Tailwind-default palette slice (--color-green-500/600, --color-orange-600) AND src/class-safelist.tsx exposes the literals in scanned scope. Bundle-verified: all three classes now COMPILED; device proof shows green A/+ counts live. Retroactively repairs wave 6/7 success states (tool Completed, task completed, agent done were silently colorless).",
+          "note_for_consumers": "A standard shadcn/Tailwind consumer compiles these from the default palette; the harness (a consumer) now declares the slice explicitly. Docs note for the registry README when it ships."
+        },
+        "gates": "typecheck 0 · vitest 153/153 · biome 0 · registry 39x2 fresh · styling contract 0 violations · component contract 0 violations"
       }
     },
     "mobile-android": {

@@ -1,4 +1,5 @@
 import '@/global.css';
+import '@/class-safelist';
 
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
