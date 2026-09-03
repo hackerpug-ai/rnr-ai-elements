@@ -39,6 +39,18 @@ const SAFELIST = [
   'size-3',
   'size-12',
   'size-24',
+
+  // Wave-10 (model/mic/voice-selector + the rewritten command atom): only two classes
+  // in the wave are absent from every older file — both pre-existing wave-2 Command
+  // classes that now live ONLY in command.tsx (rewritten this wave): the sheet height
+  // and the empty-state padding. Every class the three new selector files use resolves
+  // in older sources (verified by cross-file scan), but the scan-then-declare rule
+  // stands: absent visual + zero style-map entry is the pattern these prevent.
+  'h-3/4',
+  'py-10',
+
+  // Wave-10 stories (device-visible fixtures): the attribute-anatomy name column.
+  'w-24',
 ] as const;
 
 void SAFELIST;

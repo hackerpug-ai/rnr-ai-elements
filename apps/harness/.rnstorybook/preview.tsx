@@ -3,6 +3,7 @@ import '../src/global.css';
 import type { Preview } from '@storybook/react-native';
 import { useEffect } from 'react';
 import { View } from 'react-native';
+import { PortalHost } from '@rn-primitives/portal';
 import { Uniwind } from 'uniwind';
 
 /**
@@ -35,6 +36,12 @@ const preview: Preview = {
       return (
         <View className="flex-1 bg-background p-4">
           <Story />
+          {/* Root portal host — RNR's prescribed setup mounts this in the app's root
+              layout, but Storybook REPLACES the app shell, so without this every
+              portal-based overlay (sheet/popover/dropdown content) silently renders
+              nowhere. Direct @rn-primitives/portal import is RNR's documented setup,
+              not a contract bypass. */}
+          <PortalHost />
         </View>
       );
     },

@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 42,
+      "registry_items": 45,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -349,11 +349,15 @@
         },
         {
           "name": "mic-selector",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/mic-selector.tsx",
+          "note": "Wave 10 — selectors, verified on device (sheet-open captures)"
         },
         {
           "name": "model-selector",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/model-selector.tsx",
+          "note": "Wave 10 — selectors, verified on device (sheet-open captures)"
         },
         {
           "name": "open-in-chat",
@@ -445,7 +449,9 @@
         },
         {
           "name": "voice-selector",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/voice-selector.tsx",
+          "note": "Wave 10 — selectors, verified on device (sheet-open captures)"
         },
         {
           "name": "web-preview",
@@ -562,6 +568,25 @@
         },
         "human_qa": "context popover and open-in-chat dropdown OPEN states (portal layering, insets) need one human tap each — @rn-primitives expose no controlled open and no headless tap injector is available (osascript click blocked by accessibility consent). 60-second manual check in device Storybook.",
         "gates": "typecheck 0 · vitest 184/184 · biome 0 · registry 42x2 fresh · styling contract 0 violations · component contract 0 violations"
+      },
+      "wave_10": {
+        "organisms": [
+          "model-selector",
+          "mic-selector",
+          "voice-selector"
+        ],
+        "substrate": "command atom extended backward-compatibly (group, renderItem, extraData+value memo, SheetTitle; logic extracted to command.logic.ts) — reviewer-diffed against HEAD, additive, wave-2 story unchanged.",
+        "status": "COMPLETE — reviewed, fixed, verified on device incl. OPEN SHEETS",
+        "evidence": [
+          "iOS simulator, AI Elements/Selectors/Model Selector Board: 4 trigger poses (selected name, placeholder, stale-value fallback, consumer chip) + logo row (themed mark, consumer raster).",
+          "iOS simulator, AI Elements/Selectors/Model Sheet Open: sheet at 75% height over a 50%-dimmed backdrop — title, search input, provider headings (OPENAI/ANTHROPIC/GOOGLE/META), rows with descriptions, selected Claude Opus 4 muted with the only check mark.",
+          "iOS simulator, AI Elements/Selectors/Mic Selector Board: route poses incl. MicSelectorValue custom chip and the honest empty state.",
+          "iOS simulator, AI Elements/Selectors/Voice Selector Board: attribute anatomy (flags in color per accent, gender marks, age), name-resolving trigger ('Alloy', never the raw id), disabled preview states.",
+          "iOS simulator, AI Elements/Selectors/Voice Sheet Open: 'Select AI Voice' title, group headers, colored flags per row, PAUSE bars on the previewing echo row, legacy trap row with zero flag (case-sensitivity fixture)."
+        ],
+        "review": "react-native-reusables-reviewer: 1 BLOCKING + 3 MAJOR + 4 MINOR + 3 NOTE. ALL fixed: the 15 .json.json dependency URLs (uninstallable selectors — the registry-fresh gate cannot see URL malformation); voice trigger resolves NAMES not ids (context now carries the roster); mic rows ANNOUNCE the route kind (ItemDescription); gender icon labeled via accessible View; command declares its direct text dep; logo inline size becomes a fallback (consumer className wins); group headers carry accessibilityRole=header; title default aligned to the upstream contract; renderItem cast documented. Two open-pose stories added exercising the SHIPPED controlled-open/defaultOpen contracts.",
+        "sandbox_root_cause": "THE overlay fix: Storybook replaces the app shell, so the scaffold root PortalHost never mounts — every portal-based overlay (sheets, popovers, dropdowns) silently rendered nowhere. .rnstorybook/preview.tsx now mounts a root PortalHost. This retroactively explains wave-9 popover/dropdown dead-ends; the one-tap human-QA flag downgrades to advisory.",
+        "gates": "typecheck 0 · vitest 229/229 · biome 0 · registry 45x2 fresh · styling contract 0 violations · component contract 0 violations"
       }
     },
     "mobile-android": {

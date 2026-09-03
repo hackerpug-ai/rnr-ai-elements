@@ -6,11 +6,18 @@ import {
   InputGroupInput,
 } from '@/registry/{engine}/components/ui/input-group';
 import { Item, ItemContent, ItemDescription, ItemTitle } from '@/registry/{engine}/components/ui/item';
-import { Sheet, SheetContent, useSheetPortalHost } from '@/registry/{engine}/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, useSheetPortalHost } from '@/registry/{engine}/components/ui/sheet';
+import { Text } from '@/registry/{engine}/components/ui/text';
 import { cn } from '@/registry/{engine}/lib/utils';
 import { SearchIcon, SearchXIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { FlatList, View } from 'react-native';
+import {
+  buildCommandRows,
+  filterCommandItems,
+  type CommandItem,
+  type CommandRow,
+} from './command.logic';
 
 /**
  * Command — the searchable picker.
@@ -24,11 +31,22 @@ import { FlatList, View } from 'react-native';
  * VIRTUALIZED — a FlatList, not a mapped ScrollView. A voice picker can carry hundreds of
  * entries and this is the surface where that shows.
  *
+ * GROUPING — CommandItem carries an optional `group`; buildCommandRows (command.logic)
+ * interleaves one heading per group, in first-appearance order, after the filter runs
+ * (a group whose items all fail the filter renders no header).
+ *
+ * CUSTOM ROWS — `renderItem` replaces the default item-atom row for palettes whose rows
+ * carry more than title + description (voice-selector's two-target preview row). It
+ * receives the item and the selection state; the default row is what mic-selector uses.
+ *
+ * TITLE — an optional SheetTitle. A dialog with no title is an a11y hole, and
+ * voice-selector's upstream contract ships one ("Select AI Voice").
+ *
  * Anything overlay-shaped opened from inside must use the sheet's own portal host, or it
  * renders behind the sheet. `useCommandPortalHost()` re-exports it for that.
  */
 
-export type CommandItem = { value: string; label: string; description?: string; keywords?: string };
+export type { CommandItem };
 
 type CommandProps = {
   open: boolean;
@@ -39,7 +57,17 @@ type CommandProps = {
   placeholder?: string;
   emptyTitle?: string;
   emptyDescription?: string;
+  /** Sheet title — announced by screen readers; renders as the palette's heading row. */
+  title?: string;
   className?: string;
+  /** Replace the default item-atom row. Receives the item and its selection state. */
+  renderItem?: (info: { item: CommandItem; selected: boolean }) => React.ReactNode;
+  /**
+   * FlatList extraData — pass any state your renderItem reads from outside `items`
+   * (voice-selector's previewing/previewLoading ids). Without it the list would keep
+   * stale rows while the sheet is open.
+   */
+  extraData?: unknown;
   children?: React.ReactNode;
 };
 
@@ -55,28 +83,68 @@ function Command({
   placeholder = 'Search…',
   emptyTitle = 'No matches',
   emptyDescription = 'Try a different search.',
+  title,
   className,
+  renderItem,
+  extraData,
   children,
 }: CommandProps) {
   const [query, setQuery] = React.useState('');
 
-  const filtered = React.useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return items;
-    return items.filter((i) =>
-      `${i.label} ${i.description ?? ''} ${i.keywords ?? ''}`.toLowerCase().includes(q),
-    );
-  }, [items, query]);
+  const filtered = React.useMemo(
+    () => filterCommandItems(items, query),
+    [items, query],
+  );
+  const rows = React.useMemo(() => buildCommandRows(filtered, value), [filtered, value]);
 
   // Reset the filter when the palette closes, so reopening is not mid-search.
   React.useEffect(() => {
     if (!open) setQuery('');
   }, [open]);
 
+  function renderRow({ item }: { item: CommandRow }): React.ReactElement | null {
+    if (item.kind === 'header') {
+      return (
+        <Text
+          accessibilityRole="header"
+          className="px-3 pb-1 pt-3 text-xs font-medium uppercase text-muted-foreground"
+        >
+          {item.label}
+        </Text>
+      );
+    }
+    if (renderItem) {
+      // The public contract is ReactNode (lenient for consumers); the list needs an
+      // element or null, so a bare string/number render collapses here.
+      return renderItem({ item: item.item, selected: item.selected }) as React.ReactElement | null;
+    }
+    return (
+      <Item
+        variant={item.selected ? 'muted' : 'default'}
+        onPress={() => {
+          onSelect(item.item.value);
+          onOpenChange(false);
+        }}
+      >
+        <ItemContent>
+          <ItemTitle>{item.item.label}</ItemTitle>
+          {item.item.description ? (
+            <ItemDescription>{item.item.description}</ItemDescription>
+          ) : null}
+        </ItemContent>
+      </Item>
+    );
+  }
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       {children}
       <SheetContent side="bottom" className={cn('h-3/4', className)}>
+        {title ? (
+          <SheetTitle className="text-base font-semibold text-foreground">
+            {title}
+          </SheetTitle>
+        ) : null}
         <InputGroup>
           <InputGroupAddon>
             <Icon as={SearchIcon} size={16} className="text-muted-foreground" />
@@ -100,24 +168,12 @@ function Command({
           </Empty>
         ) : (
           <FlatList
-            data={filtered}
-            keyExtractor={(i: CommandItem) => i.value}
+            data={rows}
+            keyExtractor={(r: CommandRow) => r.key}
+            renderItem={renderRow}
+            extraData={extraData}
             keyboardShouldPersistTaps="handled"
             contentContainerClassName="gap-1 pb-4"
-            renderItem={({ item }: { item: CommandItem }) => (
-              <Item
-                variant={item.value === value ? 'muted' : 'default'}
-                onPress={() => {
-                  onSelect(item.value);
-                  onOpenChange(false);
-                }}
-              >
-                <ItemContent>
-                  <ItemTitle>{item.label}</ItemTitle>
-                  {item.description ? <ItemDescription>{item.description}</ItemDescription> : null}
-                </ItemContent>
-              </Item>
-            )}
           />
         )}
       </SheetContent>

@@ -201,9 +201,40 @@ declare module '@/registry/{engine}/components/ui/sheet' {
   >;
   export const SheetHeader: React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
   export const SheetFooter: React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
-  export const SheetTitle: React.ComponentType<{ children?: React.ReactNode }>;
+  export const SheetTitle: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
   export const SheetDescription: React.ComponentType<{ children?: React.ReactNode }>;
   export function useSheetPortalHost(): string | undefined;
+}
+
+declare module '@/registry/{engine}/components/ui/command' {
+  import type * as React from 'react';
+  export type CommandItem = {
+    value: string;
+    label: string;
+    description?: string;
+    keywords?: string;
+    group?: string;
+  };
+  export const Command: React.ComponentType<{
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    items: readonly CommandItem[];
+    value?: string;
+    onSelect: (value: string) => void;
+    placeholder?: string;
+    emptyTitle?: string;
+    emptyDescription?: string;
+    title?: string;
+    className?: string;
+    renderItem?: (info: { item: CommandItem; selected: boolean }) => React.ReactNode;
+    extraData?: unknown;
+    children?: React.ReactNode;
+  }>;
+  export const CommandFooter: React.ComponentType<{
+    className?: string;
+    children?: React.ReactNode;
+  }>;
+  export function useCommandPortalHost(): string | undefined;
 }
 
 declare module '@/registry/{engine}/components/ui/popover' {
