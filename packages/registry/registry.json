@@ -1122,6 +1122,107 @@
           "target": "components/ai/package-info.logic.ts"
         }
       ]
+    },
+    {
+      "name": "stack-trace-parser",
+      "type": "registry:lib",
+      "title": "Stack trace parser",
+      "description": "The pure V8/Node stack-trace parser (UC-CODE-02 AC-3) — registry:lib per the data-schema contract, which binds StackFrame/ParsedStackTrace here with real Vitest coverage against real captured traces. Splits the `Type: message` header, parses `at fn (file:line:col)` and `at file:line:col` frames, keeps unparseable lines as raw frames so a foreign trace never loses one, and FLAGS internal frames (node:, node_modules, internal/) — hiding is the renderer's decision, never the parser's.",
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "packages/registry/src/lib/stack-trace.ts",
+          "type": "registry:lib",
+          "target": "lib/stack-trace.ts"
+        }
+      ]
+    },
+    {
+      "name": "stack-trace",
+      "type": "registry:component",
+      "title": "Stack Trace",
+      "description": "The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: every frame's file and line legible at phone width; the raw trace copies with one tap) — port-at-parity per the PRD verdict, mono frame list with expandable frames and horizontal scroll. Upstream part set at parity (Header/Error/ErrorType/ErrorMessage/Actions/CopyButton/ExpandButton/Content/Frames; trace/open/defaultOpen=false/onOpenChange/onFilePathClick): copy hands over the RAW trace, internal frames dim to text-muted-foreground/50 and vanish under showInternalFrames=false (the upstream trap), and the expand button is verified against source to be a PASSIVE rotating chevron — the header is the only toggle. Frames scroll RIGHT in a bounded host (max-h-64, the house form of the web's 400px inline bound); without onFilePathClick the file:line:col renders unpressable — disabled, never pretend.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/stack-trace-parser.json"
+      ],
+      "dependencies": [
+        "expo-clipboard",
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/stack-trace.tsx",
+          "type": "registry:component",
+          "target": "components/ai/stack-trace.tsx"
+        }
+      ]
+    },
+    {
+      "name": "schema-display",
+      "type": "registry:component",
+      "title": "Schema Display",
+      "description": "A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's parameter schema in a nested view that remains legible at phone width) — port-adapted per the PRD verdict: the upstream collapse structure (Parameters/Request/Response default open, property nodes open while depth < 2) ports byte-for-byte and the port ADDS the verdict's horizontal scroll — every section body sits in a horizontal ScrollView with the wave-12 column wrapper, so deep chains push right instead of crushing key widths. Upstream part set at parity (Header/Method/Path/Description/Content/Parameters/Parameter/Request/Response/Property-recursive/Body/Example). The web's five method washes compress onto the house status vocabulary with the mono verb as the badge word; path {param} highlighting becomes parsePathSegments data painted with the accent role — replacing the web's dangerouslySetInnerHTML; the Example composes the CodeBlock organism.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/code-block.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/schema-display.tsx",
+          "type": "registry:component",
+          "target": "components/ai/schema-display.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/schema-display.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/schema-display.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "test-results",
+      "type": "registry:component",
+      "title": "Test Results",
+      "description": "A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/failed/skipped counts and a failing test that expands to its message) — port-at-parity per the PRD verdict, composed from RNR badge, collapsible, and text. Upstream part set at parity (Header/Summary/Duration/Progress/Content + TestSuite/Name/Stats/Content + Test/Status/Name/Duration + TestError/Message/Stack): the passed badge always renders, failed/skipped only when non-zero, suites default COLLAPSED per the KB, per-test durations are ALWAYS milliseconds (upstream never seconds them — two formats, not one smart function), and the status hues compress onto lib/status with distinct icons and count words so color is never the sole channel. TestResultsProgress composes RNR Progress over the pass fraction per the data-schema contract (\"no chart\"), keeping both text labels byte-for-byte; rows compose the item atom; an empty content falls back to the empty atom.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/badge.json",
+        "https://reactnativereusables.com/r/{engine}/collapsible.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/progress.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/empty.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/mono.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/status.json"
+      ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/test-results.tsx",
+          "type": "registry:component",
+          "target": "components/ai/test-results.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/test-results.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/test-results.logic.ts"
+        }
+      ]
     }
   ]
 }

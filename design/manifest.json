@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 51,
+      "registry_items": 55,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -411,7 +411,9 @@
         },
         {
           "name": "schema-display",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/schema-display.tsx",
+          "note": "Wave 13 - data organisms, verified on device"
         },
         {
           "name": "snippet",
@@ -427,7 +429,9 @@
         },
         {
           "name": "stack-trace",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/stack-trace.tsx",
+          "note": "Wave 13 - data organisms, verified on device"
         },
         {
           "name": "task",
@@ -444,7 +448,9 @@
         },
         {
           "name": "test-results",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/test-results.tsx",
+          "note": "Wave 13 - data organisms, verified on device"
         },
         {
           "name": "tool",
@@ -634,6 +640,29 @@
         "review": "FIX-FIRST -> fixed. 3 blockers: E1 terminal+file-tree placed vertical stacks directly inside horizontal ScrollViews (row container flattens them onto one strip - fixed with inner column Views per the code-block precedent); E2 environment-variables registry graph missing badge.json; E3 underline emitted by the ANSI tokenizer but absent from the safelist. ALSO: the hard-fail component-contract gate caught file-tree using raw Pressable for its two targets (the review passed it) - recomposed on the vendored ghost Button, the contract named Pressable replacement, with button.json added to the graph. W1: dark:text-orange-500 safelisted (the denied-tone dark twin).",
         "notes": "Copy-button glyphs merge at OCR fidelity on row 1 (eye+copy adjacent); the pattern is identical to device-proven snippet/code-block. PackageInfoDescription not composed in the board story (story choice; part is a styled Text).",
         "gates": "typecheck 0 - vitest 326/326 - biome 0 - registry 51x2 fresh - both contracts 0 violations"
+      },
+      "wave_13": {
+        "organisms": [
+          "schema-display",
+          "stack-trace",
+          "test-results"
+        ],
+        "libs": [
+          "stack-trace-parser"
+        ],
+        "status": "COMPLETE - reviewed, fixed, verified on device. THE FINAL COMPONENT WAVE.",
+        "evidence": [
+          "iOS simulator, AI Elements/Data/Test Results Board: failing run with green/red/orange summary badges on pale washes, '14/17 tests passed / 82%' with a near-black (bg-primary) progress fill, suite row rendering name + status icon + counts together (the E1 throw + name-loss both fixed), expanded test rows with durations (42ms byte-parity), AssertionError panel with destructive red on a pale wash, passing-run card with zero-badges-hidden, empty-state fallback.",
+          "iOS simulator, AI Elements/Data/Schema Display Board: POST endpoint card, path split at exact values (base /api/users/ at 115 muted, {userId} at 23 primary - the invisible-contrast bug fixed), one-level-per-depth indentation, description alignment (double-indent fixed), property/type/description rows.",
+          "iOS simulator, AI Elements/Data/Stack Trace Board: real Node trace with TWO-TIER dimming (node:/node_modules frames ~120 gray, app frames core-15 black), faint bg-muted/50 content tint, destructive-red error type+message, copy affordances, deep-path card, bare-throw card."
+        ],
+        "review": "3 errors + 1 warning, all fixed: E1 TestSuiteName rendered Test-context parts (runtime throw on every composition - suite status now rendered from suite context, story fixed, component renders name always with children augmenting); E2 schema-display collapsible descriptions double-indented (indent+24 -> 24); E3 schema-display graph missing icon.json (the wave-10/12 recurrence); W1 two /NN modifier forms missing from the safelist.",
+        "device_incident": {
+          "root_cause": "The /NN opacity-modifier classes COMPILE but with an unresolved base: style entries emit rt.colorMix(\"unset\", NN%, transparent) instead of a theme-var lookup. Whether such an entry renders at runtime is unreliable (the transcription interim dimmed; stack dimming and bg tints did not). The modifier machinery is effectively broken for colors in this engine.",
+          "fix": "Deterministic equivalents replaced at the three failing sites: internal-frame dimming text-muted-foreground/50 -> text-muted-foreground (explicit per segment - nested-Text color inheritance under the mono inline style also proved unreliable, so no segment relies on it); text-foreground/90 -> text-foreground; bg-muted/30 -> bg-muted/50 (device-proven since wave 5). Schema path contrast: non-param segments now carry text-muted-foreground (they carried NO class, and primary vs foreground is invisible in RNR light theme - a real fidelity bug the review also missed).",
+          "standing_rule": "NEW WAVES (if any): avoid /NN modifier classes on colors entirely; use token classes or the safelisted escape colors."
+        },
+        "gates": "typecheck 0 - vitest 365/365 - biome 0 - registry 55x2 fresh - both contracts 0 violations"
       }
     },
     "mobile-android": {
