@@ -51,6 +51,22 @@ const SAFELIST = [
 
   // Wave-10 stories (device-visible fixtures): the attribute-anatomy name column.
   'w-24',
+
+  // Wave-11 (audio-player/transcription): the only tokens in the wave absent from
+  // every older file (cross-file scan). tabular-nums keeps the transport clock's
+  // digits from jittering the row as it ticks; max-w-xs bounds the volume slider in
+  // custom compositions. Same wave-9/10 pattern: new-file classes can drop from the
+  // compiled style map, so their first in-repo home is declared here.
+  'max-w-xs',
+  'tabular-nums',
+
+  // Wave-11 finding — a SYSTEMATIC subtype: opacity-MODIFIER classes (/NN) never
+  // compiled regardless of file age (text-muted-foreground/60 has been in code-block
+  // since wave 3 rendering full-opacity; sheet's bg-muted-foreground/40 grabber since
+  // wave 2; size-1.5 likewise). Declaring the modifier forms forces generation.
+  'text-muted-foreground/60',
+  'bg-muted-foreground/40',
+  'size-1.5',
 ] as const;
 
 void SAFELIST;

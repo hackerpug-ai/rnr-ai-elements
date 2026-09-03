@@ -147,7 +147,7 @@
           "code-block": "Unhighlighted MVP; chrome 100% RNR. Horizontal scroll, no wrap. Copy flips 2000ms and reports failure."
         }
       },
-      "registry_items": 45,
+      "registry_items": 47,
       "atoms": [
         {
           "name": "breadcrumb",
@@ -287,7 +287,9 @@
         },
         {
           "name": "audio-player",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/audio-player.tsx",
+          "note": "Wave 11 - audio pair, verified on device"
         },
         {
           "name": "chain-of-thought",
@@ -445,7 +447,9 @@
         },
         {
           "name": "transcription",
-          "status": "pending"
+          "status": "verified",
+          "file": "packages/registry/src/components/ai/transcription.tsx",
+          "note": "Wave 11 - audio pair, verified on device"
         },
         {
           "name": "voice-selector",
@@ -587,6 +591,23 @@
         "review": "react-native-reusables-reviewer: 1 BLOCKING + 3 MAJOR + 4 MINOR + 3 NOTE. ALL fixed: the 15 .json.json dependency URLs (uninstallable selectors — the registry-fresh gate cannot see URL malformation); voice trigger resolves NAMES not ids (context now carries the roster); mic rows ANNOUNCE the route kind (ItemDescription); gender icon labeled via accessible View; command declares its direct text dep; logo inline size becomes a fallback (consumer className wins); group headers carry accessibilityRole=header; title default aligned to the upstream contract; renderItem cast documented. Two open-pose stories added exercising the SHIPPED controlled-open/defaultOpen contracts.",
         "sandbox_root_cause": "THE overlay fix: Storybook replaces the app shell, so the scaffold root PortalHost never mounts — every portal-based overlay (sheets, popovers, dropdowns) silently rendered nowhere. .rnstorybook/preview.tsx now mounts a root PortalHost. This retroactively explains wave-9 popover/dropdown dead-ends; the one-tap human-QA flag downgrades to advisory.",
         "gates": "typecheck 0 · vitest 229/229 · biome 0 · registry 45x2 fresh · styling contract 0 violations · component contract 0 violations"
+      },
+      "wave_11": {
+        "organisms": [
+          "audio-player",
+          "transcription"
+        ],
+        "status": "COMPLETE - reviewed, fixed, verified on device",
+        "audio_decision": "audio-player BUILT caller-seam (speech-input precedent) - the verdict prescribes a product surface (\"transport controls and progress bar keep the same product surface\") over an unnamed native module, not web-preview-style peer-dep language. Reviewer re-read the verdict and affirmed. transcription port-at-parity (display-only, no dependency).",
+        "evidence": [
+          "iOS simulator, AI Elements/Audio/Voice Reply Pair: the canonical pairing - clock 0:08, scrub row + transport + volume rows, past segments uniform muted, the ACTIVE segment (containing 8s) near-black via text-primary, interim dictation line exactly 60%-muted (measured 171 vs 115 ink) after the modifier-class fix. Transcript-to-engine seek bridge converted on BOTH sides after the review 1000x units fix."
+        ],
+        "review": "Both components SHIP. Fixed: the pairing story s/ms seek mismatch (review MEDIUM - the exact silent-units class); slider boundary over-declaration narrowed to the real number[] contract; seekable segment tap target raised (py-1); seekOffsetMs doc corrected; ButtonGroup corner-machinery divergence declared in-code. Notes: mute ladder at volume=0 shows Volume1; scrubber enabled-but-inert without durationMs; duration label occluded by the Storybook floating button in the capture.",
+        "device_incident": {
+          "root_cause": "A SYSTEMATIC subtype of the class-drop: opacity-MODIFIER classes (/NN) never compiled regardless of file age - text-muted-foreground/60 (code-block gutter, wave 3), bg-muted-foreground/40 (sheet grabber, wave 2) and size-1.5 were all silently full-opacity/unsized until now. The style-map format check (\"class\": [entries...) is the reliable compiled-set probe; string occurrences prove nothing.",
+          "fix": "Modifier forms added to the class safelist; all three now compile (style-map entries 1/1/2). Interim verified at exactly 60% muted on device. Cosmetic note: italic maps but Expo Go system fonts lack an italic face - slant invisible; class still correct for consumers with italic-capable fonts."
+        },
+        "gates": "typecheck 0 - vitest 267/267 - biome 0 - registry 47x2 fresh - both contracts 0 violations"
       }
     },
     "mobile-android": {
