@@ -162,6 +162,33 @@ declare module '@/registry/{engine}/components/ui/empty' {
   export const EmptyIcon: React.ComponentType<{ as: LucideIcon; className?: string }>;
 }
 
+declare module '@/registry/{engine}/components/ui/code-block' {
+  import type * as React from 'react';
+  import type { ViewProps } from 'react-native';
+  type Slot = React.ComponentType<ViewProps & { className?: string; children?: React.ReactNode }>;
+  export const CodeBlock: React.ComponentType<
+    ViewProps & {
+      code: string;
+      language?: string;
+      className?: string;
+      children?: React.ReactNode;
+    }
+  >;
+  export const CodeBlockHeader: Slot;
+  export const CodeBlockActions: Slot;
+  export const CodeBlockFilename: React.ComponentType<{ className?: string; children?: React.ReactNode }>;
+  export const CodeBlockCopyButton: React.ComponentType<{
+    timeout?: number;
+    onCopy?: () => void;
+    onError?: (error: unknown) => void;
+    className?: string;
+  }>;
+  export const CodeBlockContent: React.ComponentType<{
+    showLineNumbers?: boolean;
+    className?: string;
+  }>;
+}
+
 declare module '@/registry/{engine}/components/ui/item' {
   import type * as React from 'react';
   import type { ViewProps } from 'react-native';

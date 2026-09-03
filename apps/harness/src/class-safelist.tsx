@@ -87,6 +87,31 @@ const SAFELIST = [
   'text-background',
   'underline',
   'dark:text-orange-500',
+
+  // Wave 13 (schema-display/stack-trace/test-results): classes whose only in-repo
+  // home is a new file (cross-file scan at HEAD), plus the wave-11 systematic subtype
+  // — opacity-MODIFIER forms — added regardless of age. text-foreground/90 and
+  // text-muted-foreground/50 are the stack-trace frame rows' byte-classes (the
+  // upstream internal/app dimming); text-muted-foreground/50 has an older RNR home
+  // (input.tsx) but /NN forms never compiled from file age alone. The trigger rows'
+  // active:bg-muted/50 and the web twins hover:bg-muted/50, hover:text-primary are
+  // modifier forms whose only home is the wave. The spacing four (mx-4 mb-4, the
+  // schema Example margins; mt-1/mt-2, description and error offsets; pr-4, the leaf
+  // property's right pad; pl-10, the parameter indent) are the wave's only new
+  // spacing tokens.
+  'text-foreground/90',
+  'text-muted-foreground/50',
+  'active:bg-muted/50',
+  'hover:bg-muted/50',
+  'hover:text-primary',
+  'mx-4',
+  'mb-4',
+  'mt-1',
+  'mt-2',
+  'pr-4',
+  'pl-10',
+  'bg-destructive/10',
+  'bg-muted/30',
 ] as const;
 
 void SAFELIST;
