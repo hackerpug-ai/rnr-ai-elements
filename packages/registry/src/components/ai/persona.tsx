@@ -38,7 +38,13 @@ function Persona({ name, description, avatarUri, status, className, ...props }: 
 
   return (
     <View className={cn('flex-row items-center gap-3', className)} {...props}>
-      <Avatar alt={name} className="size-10">
+      {/* Explicit RN style sizing, redundant with `size-10` on purpose. The avatar's
+          percent-sized fallback (`size-full`) resolves against the nearest DEFINITE
+          ancestor when the root loses its class-driven size — observed on device as a
+          full-screen `bg-muted` pill when the runtime stylesheet dropped the size rules
+          (stale uniwind stylesheet state). A numeric style bypasses the stylesheet, so
+          the fallback can never exceed 40pt in any engine. */}
+      <Avatar alt={name} className="size-10" style={{ width: 40, height: 40 }}>
         {avatarUri ? <AvatarImage source={{ uri: avatarUri }} /> : null}
         <AvatarFallback>
           <Text className="text-sm font-medium">{initials}</Text>
