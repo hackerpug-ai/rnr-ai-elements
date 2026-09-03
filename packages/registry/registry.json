@@ -182,13 +182,19 @@
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/sheet.json",
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/input-group.json",
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json",
-        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/empty.json"
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/empty.json",
+        "https://reactnativereusables.com/r/{engine}/text.json"
       ],
       "files": [
         {
           "path": "packages/registry/src/components/ui/command.tsx",
           "type": "registry:ui",
           "target": "components/ui/command.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ui/command.logic.ts",
+          "type": "registry:ui",
+          "target": "components/ui/command.logic.ts"
         }
       ]
     },
@@ -879,6 +885,81 @@
           "path": "packages/registry/src/components/ai/open-in-chat.logic.ts",
           "type": "registry:component",
           "target": "components/ai/open-in-chat.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "model-selector",
+      "type": "registry:component",
+      "title": "Model Selector",
+      "description": "The searchable model picker, composed on the command atom. Port-adapted per the PRD verdict: a dropdown on web becomes a bottom sheet with search, sized for one-handed use — same selection contract (value is the model id your route receives), different presentation. Provider grouping survives as section headings; the provider doubles as a filter keyword. ModelSelectorShortcut (⌘ hints) is dropped — there is no ⌘ on a phone — and the remote models.dev SVG logo is a declared substitution (themed mark, consumer-supplied raster source; modelSelectorLogoUrl keeps the URL derivation as data).",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/command.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/model-selector.tsx",
+          "type": "registry:component",
+          "target": "components/ai/model-selector.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/model-selector.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/model-selector.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "mic-selector",
+      "type": "registry:component",
+      "title": "Mic Selector",
+      "description": "The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio routes, not an enumerable input device list, so the route list is CALLER-SUPPLIED — the web's useAudioDevices (getUserMedia) does not port, and an empty list renders an honest empty state the consumer can point at permission denial. Composed on the command atom with the route-kind marks (built-in, wired, bluetooth, other); routes order built-in first, caller order preserved within a kind.",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/command.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/mic-selector.tsx",
+          "type": "registry:component",
+          "target": "components/ai/mic-selector.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/mic-selector.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/mic-selector.logic.ts"
+        }
+      ]
+    },
+    {
+      "name": "voice-selector",
+      "type": "registry:component",
+      "title": "Voice Selector",
+      "description": "The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from the caller's native speech synthesis provider — no audio dependency in the registry, preview playback is a caller callback reported back through previewingId/previewLoadingId. The PRD composition law is structural: the preview button lives in the row's action slot, so pressing it PLAYS and NEVER selects; three states (play, playing, loading-disabled), disabled-when-unwired. Upstream traps at byte parity: useVoiceSelector throws outside the root, the accent lookup is CASE-SENSITIVE ('AMERICAN' renders no flag), unknown genders fall back, explicit empty state. Shortcut and dialog parts dropped (no ⌘ on a phone; the sheet is the presentation).",
+      "registryDependencies": [
+        "https://reactnativereusables.com/r/{engine}/button.json",
+        "https://reactnativereusables.com/r/{engine}/icon.json",
+        "https://reactnativereusables.com/r/{engine}/text.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/command.json",
+        "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/item.json"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/src/components/ai/voice-selector.tsx",
+          "type": "registry:component",
+          "target": "components/ai/voice-selector.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/voice-selector.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/voice-selector.logic.ts"
         }
       ]
     }
