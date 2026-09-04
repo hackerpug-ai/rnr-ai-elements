@@ -1,6 +1,7 @@
 # Coverage Matrix — UC x journey x tier
 
-Generated 2026-09-01 from `.spec/scenarios/`. Verified by
+Generated 2026-09-01, extended 2026-09-04 with `UC-REG-05` / `UC-REG-06`, from
+`.spec/scenarios/`. Verified by
 `brain/tools/flow-coverage/flow_coverage_check.py --prd .spec/scenarios` (exit 0).
 
 | UC | Title | Visible | Holdout | Journeys |
@@ -28,8 +29,10 @@ Generated 2026-09-01 from `.spec/scenarios/`. Verified by
 | `UC-REG-02` | Expo compatibility across iOS, Android, and web | 2 | 3 | `mvp-full-arc` |
 | `UC-REG-03` | Published porting verdicts and honest non-goals | 2 | 2 | `port-lookup` |
 | `UC-REG-04` | Storybook demonstrates every component and every state | 2 | 3 | `mvp-full-arc`, `theming-passthrough` |
+| `UC-REG-05` | RNR is a declared, checkable peer dependency | 2 | 2 | `mvp-full-arc` |
+| `UC-REG-06` | Versioned public distribution | 2 | 2 | `mvp-full-arc` |
 
-**Totals:** 46 visible · 60 holdout scenarios across 23 use cases · 7 cross-UC journeys
+**Totals:** 50 visible · 64 holdout scenarios across 25 use cases · 7 cross-UC journeys
 
 ## Journeys
 
@@ -38,7 +41,7 @@ Generated 2026-09-01 from `.spec/scenarios/`. Verified by
 | [`agent-surface`](./journeys/agent-surface.scenario.md) | 1 | 1 | 5 |
 | [`chat-navigation`](./journeys/chat-navigation.scenario.md) | 1 | 1 | 2 |
 | [`coding-agent`](./journeys/coding-agent.scenario.md) | 1 | 1 | 2 |
-| [`mvp-full-arc`](./journeys/mvp-full-arc.scenario.md) | 1 | 1 | 8 |
+| [`mvp-full-arc`](./journeys/mvp-full-arc.scenario.md) | 1 | 1 | 10 |
 | [`port-lookup`](./journeys/port-lookup.scenario.md) | 1 | 1 | 2 |
 | [`theming-passthrough`](./journeys/theming-passthrough.scenario.md) | 1 | 1 | 4 |
 | [`voice`](./journeys/voice.scenario.md) | 1 | 1 | 2 |

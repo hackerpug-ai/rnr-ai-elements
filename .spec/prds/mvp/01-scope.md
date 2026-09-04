@@ -1,7 +1,7 @@
 ---
 stability: FEATURE_SPEC
-last_validated: 2026-09-01
-prd_version: 1.0.0
+last_validated: 2026-09-04
+prd_version: 2.0.0
 scope_posture: full
 ---
 
@@ -13,11 +13,12 @@ scope_posture: full
 
 - Day-one chat set delivered first and together: conversation, message, prompt-input, code-block, suggestion, sources, shimmer, image
 - Streaming markdown and fenced-code rendering inside message, since the 49-component list contains no separate response component and message content is the payload
-- Agent surface: tool, reasoning, chain-of-thought, task, plan, confirmation, context, agent, persona, artifact, schema-display, controls
+- Agent surface: tool, reasoning, chain-of-thought, task, plan, confirmation, context, agent, persona, artifact, schema-display, question, queue — with the start/pause/stop run control bar built **inside `agent`** rather than as a separate `controls` component
 - Coding-agent display surfaces: file-tree, terminal, test-results, stack-trace, commit, package-info, environment-variables
 - Voice family behind declared native dependencies: speech-input, transcription, audio-player, voice-selector, audio route selection
 - RNR theme token passthrough as the sole styling source, verified by a CI check for hardcoded literals
-- Reuse of the 29 existing RNR primitives; creation of gap primitives only when a shipped component requires one
+- Reuse of RNR primitives by registry URL (14 distinct RNR items in the shipped set); creation of gap primitives only when a shipped component requires one
+- Shared logic modules shipped as their own `registry:lib` items (`markdown`, `mono`, `status`, `url`, `reasoning-lifecycle`, `stack-trace-parser`), so installing one component pulls exactly the logic that component needs
 - Press-based replacements for every hover-only interaction
 - RNR CLI copy-paste registry distribution with declared peer dependencies
 - Expo SDK 57 support on iOS, Android, and web from a single codebase
@@ -35,6 +36,7 @@ scope_posture: full
 ## Out of scope
 
 - Node-graph editing: canvas, node, edge, and connection are a react-flow workspace and have no mobile product in this initiative
+- **The three react-flow satellites — `controls`, `toolbar`, `panel`** *(moved out of scope at v2.0.0)*. Each was read during planning as a generic mobile surface; the web source shows all three are bound to the canvas that is already out of scope: `controls` acts on React Flow's viewport store, `toolbar` is `NodeToolbar` positioned from a node's measured DOM rect, `panel` is absolutely positioned inside the transform layer. The product jobs they were standing in for ship elsewhere — run controls inside `agent`, message actions inside `message`, secondary surfaces as `sheet`
 - Runtime JSX evaluation: jsx-preview requires evaluating arbitrary JSX at runtime, which Hermes and app-store policy do not support
 - Server-backed code execution: sandbox requires a hosted execution service, which is out of a component registry's scope
 - Any runtime npm package of components; distribution is registry copy-paste only, matching RNR

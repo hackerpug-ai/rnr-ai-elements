@@ -1,12 +1,12 @@
 ---
 stability: TEST_SPEC
-last_validated: 2026-09-01
-prd_version: 1.0.0
+last_validated: 2026-09-04
+prd_version: 2.0.0
 ---
 
 # E2E / Human Testing Criteria — rnr-ai-elements MVP
 
-Version 1.0.0 · 2026-09-01
+Version 2.0.0 · 2026-09-04
 
 Every acceptance criterion in every use case has at least one criterion here. Each carries
 an observable pass condition — no "it should work".
@@ -226,7 +226,27 @@ outcome (scroll position, badge text, throttle behavior), never on the model's p
 | `T-REG-016` | Design-system owner can switch Storybook to a custom token set and confirm every component tracks it in both light and dark mode | AC-4 | `[human-gate]` | A human on a physical device, side by side with an RNR reference screen, in both light and dark. | PASS when the observed behavior matches verbatim: "Design-system owner can switch Storybook to a custom token set and confirm every component tracks it in both light and dark mode". FAIL on any deviation, on a silent no-op, or on evidence captured from the web Storybook alone. |
 | `T-REG-017` | Maintainer can show that no component is marked done on the strength of a web story alone — every completion cites an on-device story | AC-5 | `[human-gate]` | A human on a physical device, side by side with an RNR reference screen, in both light and dark. | PASS when the observed behavior matches verbatim: "Maintainer can show that no component is marked done on the strength of a web story alone — every completion cites an on-device story". FAIL on any deviation, on a silent no-op, or on evidence captured from the web Storybook alone. |
 
-*17 criteria for REG.*
+### UC-REG-05: RNR is a declared, checkable peer dependency
+
+| # | Criterion | AC Ref | Type | Setup | Pass/Fail |
+|---|---|---|---|---|---|
+| `T-REG-018` | Developer can read, on any shipped item, the exact list of RNR items it requires, and install those RNR items in the same CLI run that installs the component | AC-1 | `[integration-test]` | Freshly created Expo SDK 57 app, `rnr init` run, `node_modules/@/components/ui` empty of the target primitives. Run `npx @react-native-reusables/cli add <item-url>` for an item whose entry declares RNR deps (e.g. `message` → avatar, text). | PASS when every `reactnativereusables.com/r/<engine>/*.json` URL named in the item's `registryDependencies` lands as a file in the consumer tree in that one command, AND the item's own file typechecks. FAIL if any declared RNR item is absent afterwards, or if the CLI resolves it from our registry instead of RNR's. |
+| `T-REG-019` | Developer installing into an Expo app that has not been initialized for RNR is told which prerequisite is missing at install time, rather than discovering it as a module-not-found error at build time | AC-2 | `[integration-test]` | Freshly created Expo SDK 57 app with **no** `components.json` and **no** `rnr init`. Run the add command for any shipped item. | PASS when the failure names the missing RNR setup step in its message before any file is written. FAIL when the install reports success and `tsc --noEmit` then fails with `Cannot find module '@/components/ui/text'` — the deferred-error case this criterion exists to prevent. |
+| `T-REG-020` | Maintainer can show that no shipped file contains a copied or forked RNR primitive; every RNR primitive is reached through the consumer's own alias | AC-3 | `[build-gate]` | CI job on the PR, over `packages/registry/src/**` and both emitted `public/r/<engine>/` trees. | PASS when no shipped file declares a component whose name collides with an RNR registry item, and every RNR import resolves through the `@/…/components/ui/*` alias rather than a vendored path. FAIL on any inlined copy of an RNR primitive, and on any relative import that reaches outside the item's own files. |
+| `T-REG-021` | Maintainer can run a CI job that installs the entire registry into a clean, freshly initialized Expo application and typechecks it, for both styling engines | AC-4 | `[build-gate]` | CI matrix job, one leg per engine: create an Expo SDK 57 app, `rnr init` for that engine, add all 56 items from the published URLs, then `pnpm exec tsc --noEmit`. | PASS when both legs install all 56 items and typecheck with zero errors. FAIL on any unresolved registry URL, any duplicate-file collision, or any type error — including one attributed to a peer dependency the entry failed to declare. |
+| `T-REG-022` | Developer can find, in one place, the minimum supported `react-native-reusables` version and the `@rn-primitives` versions the created items require, and CI fails when the shipped set stops resolving against them | AC-5 | `[build-gate]` | CI job reading the declared support floor and resolving it against the versions the clean-app install actually produced. | PASS when the declared floor exists in exactly one file and matches what the clean-app install resolved. FAIL when the two disagree, or when the floor is absent — an undeclared floor is a silent break for every consumer on an older RNR. |
+
+### UC-REG-06: Versioned public distribution
+
+| # | Criterion | AC Ref | Type | Setup | Pass/Fail |
+|---|---|---|---|---|---|
+| `T-REG-023` | Developer can install any shipped item from a stable public URL that does not change when the repository's default branch is renamed or moved | AC-1 | `[integration-test]` | Freshly created Expo SDK 57 app. Install one item from the published URL, then re-resolve that same URL after the default branch is renamed in a scratch fork. | PASS when the same URL serves the same item before and after the rename. FAIL when the URL 404s, or when it embeds a mutable branch segment such as `/main/` that a rename would break. |
+| `T-REG-024` | Developer can choose the styling engine at install time and receive the matching item tree, with the two engine trees at parity item for item | AC-2 | `[build-gate]` | CI job comparing the two emitted trees under `public/r/`. | PASS when both engine trees contain exactly the same 56 item names, and the only differences inside any pair are the engine alias segment and the RNR host segment. FAIL on an item present in one tree and absent from the other, and on any engine-specific class or API in the shared source. |
+| `T-REG-025` | Developer can pin a released version, reinstall it later, and receive byte-identical files | AC-3 | `[integration-test]` | Install one item from a pinned released URL into two separate clean apps, at two different times. | PASS when the two installed files are byte-identical. FAIL on any difference, including one only in generated headers or ordering. |
+| `T-REG-026` | Maintainer can publish a release whose registry output is a deterministic rebuild of the source tree, proven by CI diffing a fresh build against the committed tree | AC-4 | `[build-gate]` | CI job on the PR: `pnpm registry:build` into a scratch directory, then diff against the committed `public/r/`. | PASS when the diff is empty for both engines. FAIL on any drift — a committed tree that a fresh build does not reproduce means the published registry no longer matches the source it claims to come from. |
+| `T-REG-027` | Developer can open one install page that lists every shipped item with its required RNR items, its native peer dependencies, and its porting verdict | AC-5 | `[human-gate]` | A human opens the published install page in a browser and picks three items at random: one pure-RNR (`message`), one with a native peer dependency (`web-preview`), one out-of-scope (`canvas`). | PASS when each of the three shows its required RNR items, its native peer dependencies (or none), and its verdict, and the out-of-scope one names its mobile alternative. FAIL when any shipped item is missing from the page, or when the page's item list disagrees with `registry.json`. |
+
+*27 criteria for REG.*
 
 ## VOICE: Voice and Audio
 
@@ -255,13 +275,13 @@ outcome (scroll position, badge text, throttle behavior), never on the model's p
 | Type | Count | What it means |
 |---|---|---|
 | `[e2e-automated]` | 50 | Runs in on-device Storybook against the stream fixture |
-| `[integration-test]` | 30 | Real CLI install into a real clean Expo app |
-| `[human-gate]` | 8 | A human looks, on hardware, in both schemes |
+| `[integration-test]` | 34 | Real CLI install into a real clean Expo app |
+| `[human-gate]` | 9 | A human looks, on hardware, in both schemes |
 | `[api-contract]` | 1 | Type conformance against the real AI SDK |
-| `[build-gate]` | 6 | A CI script fails the build |
-| **Total** | **95** | across 23 use cases |
+| `[build-gate]` | 11 | A CI script fails the build |
+| **Total** | **105** | across 25 use cases |
 
-**AC coverage: 95/95 — every AC has at least one criterion.**
+**AC coverage: 105/105 — every AC has at least one criterion.**
 
 ## The five criteria that actually decide the project
 

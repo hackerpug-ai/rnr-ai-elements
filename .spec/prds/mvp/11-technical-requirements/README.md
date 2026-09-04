@@ -1,7 +1,7 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-01
-prd_version: 1.0.0
+last_validated: 2026-09-04
+prd_version: 2.0.0
 ---
 
 # Technical Requirements — rnr-ai-elements MVP
@@ -19,7 +19,7 @@ prd_version: 1.0.0
 | 07 | [`07-ui-infrastructure.md`](./07-ui-infrastructure.md) | Token strategy, visual parity contract, density, a11y | CONSTITUTION |
 | 08 | [`08-technical-risks.md`](./08-technical-risks.md) | Merged architecture + design risk register | CONSTITUTION |
 | 09 | [`09-capability-chains.md`](./09-capability-chains.md) | Boundary-crossing promises and their proofs | CONSTITUTION |
-| 10 | [`10-component-inventory.md`](./10-component-inventory.md) | The reuse-before-create ledger — 49 verdicts + 26 gap resolutions | CONSTITUTION |
+| 10 | [`10-component-inventory.md`](./10-component-inventory.md) | The reuse-before-create ledger — **as-built reconciliation (56 items)** + 49 verdicts + 26 gap resolutions | CONSTITUTION |
 | 11 | [`11-routing.md`](./11-routing.md) | Library has no routes; Storybook + example-app routes | CONSTITUTION |
 | 12 | [`12-e2e-testing.md`](./12-e2e-testing.md) | E2E harness constitution (spike-gated) | CONSTITUTION |
 
@@ -36,3 +36,4 @@ prd_version: 1.0.0
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-09-01 | Initial technical requirements. Registry-only distribution; Storybook on device as sign-off. |
+| 2.0.0 | 2026-09-04 | `10-component-inventory.md` reconciled against the built registry at `071af93`: as-built section added (56 items, type split, four corrections, measured RNR reuse); `controls` / `toolbar` / `panel` verdicts changed to out-of-scope; `code-block` recorded as `registry:ui`; gap-outcome table added. No other section changed — the architecture, schema, dependency and risk sections were not contradicted by the build. |

@@ -1,7 +1,7 @@
 ---
 stability: FEATURE_SPEC
-last_validated: 2026-09-01
-prd_version: 1.0.0
+last_validated: 2026-09-04
+prd_version: 2.0.0
 functional_group: FOUND
 ---
 
@@ -13,7 +13,7 @@ The RNR token bridge, dark-mode parity, the reuse-first primitive policy, and de
 |----|-------|-------------|
 | `UC-FOUND-01` | RNR theme tokens drive every ported component | Every color, radius, spacing, and type value in every ported component resolves from the host app's RNR theme rather than from a literal, so a single token edit propagates across both libraries. |
 | `UC-FOUND-02` | Dark mode flips both libraries in the same frame | Color scheme is read from the same mechanism the host RNR app already uses, so no AI surface is left behind on an appearance change. |
-| `UC-FOUND-03` | Reuse RNR first, create a primitive only on demand | The 29 primitives RNR already ships are reused directly; new primitives are created only when a shipped component requires one from the documented 26-item gap list. |
+| `UC-FOUND-03` | Reuse RNR first, create a primitive only on demand | RNR primitives are reused directly by registry URL; new primitives are created only when a shipped component requires one from the documented 26-item gap list. As built: 14 distinct RNR items are consumed, and 10 of the 26 gap entries were built (7 composed, 3 created) — the other 16 were cut, substituted, or found unnecessary. |
 | `UC-FOUND-04` | One design system on a mobile device | The binding product promise made observable: on a phone, a reviewer cannot tell which library rendered which surface. |
 
 ---
@@ -51,7 +51,7 @@ The 29 primitives RNR already ships are reused directly; new primitives are crea
 
 - ☐ **AC-1** — Developer can install any shipped component and get RNR's own primitive wherever RNR already ships one, with no duplicated fork of accordion, dialog, popover, or the other reused primitives.
 - ☐ **AC-2** — Maintainer can justify each newly created primitive by naming the shipped component that requires it and the gap-list entry it fills.
-- ☐ **AC-3** — Developer can use a newly created primitive such as scroll-area, item, empty, or spinner with the same prop and styling conventions RNR uses for its own primitives.
+- ☐ **AC-3** — Developer can use a newly created primitive such as `item`, `empty`, `sheet`, or `table` with the same prop and styling conventions RNR uses for its own primitives.
 - ☐ **AC-4** — System exposes no primitive that duplicates an existing RNR component under a different name.
 
 ---

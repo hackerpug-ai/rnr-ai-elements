@@ -1,19 +1,19 @@
 ---
 stability: FEATURE_SPEC
-last_validated: 2026-09-01
-prd_version: 1.0.0
+last_validated: 2026-09-04
+prd_version: 2.0.0
 ---
 
 # Functional Groups
 
 | Group | Prefix | Delivers |
 |-------|--------|----------|
-| Foundation and Theming | `FOUND` | The RNR token bridge, dark-mode parity, the reuse-first primitive policy, and demand-driven creation of the missing shadcn primitives (scroll-area, item, empty, spinner, kbd, field, input-group, button-group) that shipped components actually require. |
-| Core Chat Surface | `CHAT` | The day-one usable AI chat: conversation transcript with streaming stick-to-bottom, message with markdown and code rendering, prompt-input composer with keyboard handling and attachments, suggestions, questions, queue, checkpoint, sources, inline citations, images, shimmer, toolbar, snippet, open-in-chat. |
-| Agent and Tool Surface | `AGENT` | Tool call lifecycle, reasoning and chain-of-thought disclosure, task and plan progress, human-in-the-loop confirmation, agent and persona identity, context budget, artifact container, run controls, schema display. |
+| Foundation and Theming | `FOUND` | The RNR token bridge, dark-mode parity, the reuse-first primitive policy, and demand-driven creation of the missing shadcn primitives that shipped components actually require. As built that is 10 items — composed: `breadcrumb`, `button-group`, `command`, `empty`, `input-group`, `item`, `kbd`; created: `sheet`, `slider`, `table` — plus `code-block` and six shared `registry:lib` logic modules. |
+| Core Chat Surface | `CHAT` | The day-one usable AI chat: conversation transcript with streaming stick-to-bottom, message with markdown and code rendering, prompt-input composer with keyboard handling and attachments, suggestions, questions, queue, checkpoint, sources, inline citations, images, shimmer, snippet, open-in-chat. Message actions ship inside `message`; there is no separate `toolbar` component (react-flow satellite, out of scope). |
+| Agent and Tool Surface | `AGENT` | Tool call lifecycle, reasoning and chain-of-thought disclosure, task and plan progress, human-in-the-loop confirmation, agent and persona identity, context budget, artifact container, the start/pause/stop run control bar (inside `agent`), schema display. |
 | Coding-Agent Surfaces | `CODE` | Developer-artifact display for coding agents: file-tree, terminal, test-results, stack-trace, commit, package-info, environment-variables, and the native webview substitute for web-preview. |
 | Voice and Audio | `VOICE` | Speech capture and live transcription, audio route selection, generated-audio playback, and voice selection. |
-| Registry, Compatibility and Docs | `REG` | RNR CLI installability, registry entries with declared peer dependencies, Expo SDK 57 compatibility across iOS, Android and web, published per-component porting verdicts including documented non-goals, and a live example app demonstrating every state. |
+| Registry, Compatibility and Docs | `REG` | RNR CLI installability, registry entries with declared peer dependencies, Expo SDK 57 compatibility across iOS, Android and web, published per-component porting verdicts including documented non-goals, a live example app demonstrating every state, and the packaging and distribution surface that makes `react-native-reusables` a declared, checkable peer dependency. |
 
 ## Use case summary
 
@@ -24,8 +24,8 @@ prd_version: 1.0.0
 | Agent and Tool Surface | `AGENT` | 5 |
 | Coding-Agent Surfaces | `CODE` | 3 |
 | Voice and Audio | `VOICE` | 2 |
-| Registry, Compatibility and Docs | `REG` | 4 |
-| **Total** | | **23** |
+| Registry, Compatibility and Docs | `REG` | 6 |
+| **Total** | | **25** |
 
 ## Why these groups
 
@@ -51,4 +51,4 @@ This is the only group that requires native permissions and native modules (audi
 
 ### Registry, Compatibility and Docs (`REG`)
 
-Constraints 6 and 7 (distribute exactly like RNR, fully Expo compatible) are product promises about how the library is obtained, not about what it renders, so they need their own criteria. This group also owns the honest public record of what did and did not port, which is the artifact that saves a web-to-mobile porter from building around a component that does not exist.
+Constraints 6 and 7 (distribute exactly like RNR, fully Expo compatible) are product promises about how the library is obtained, not about what it renders, so they need their own criteria. This group also owns the honest public record of what did and did not port, which is the artifact that saves a web-to-mobile porter from building around a component that does not exist. From v2.0.0 it also owns the peer-dependency contract with `react-native-reusables` (`UC-REG-05`) and the versioned distribution surface (`UC-REG-06`) — with every component built and merged, this group is the remaining work.

@@ -1,15 +1,103 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-01
-prd_version: 1.0.0
+last_validated: 2026-09-04
+prd_version: 2.0.0
 ---
 
 # Component Inventory — the reuse-before-create ledger
 
-This is the file that makes constraint 1 auditable. Verified from live repo trees
-(`vercel/ai-elements@main`, `founded-labs/react-native-reusables@main`) on 2026-09-01.
+This is the file that makes constraint 1 auditable. Planning figures verified from live
+repo trees (`vercel/ai-elements@main`, `founded-labs/react-native-reusables@main`) on
+2026-09-01. **As-built figures verified from `packages/registry/registry.json` and
+`public/r/{nativewind,uniwind}/` at commit `071af93` on 2026-09-04.**
 
-## The arithmetic
+## As built — status at v2.0.0
+
+The component work is **done and merged**: 14 build waves, atoms → molecules → organisms,
+every level gate passed on an iOS simulator. What ships is a registry of **56 items**,
+emitted twice (nativewind + uniwind) into `public/r/`.
+
+| | Planned (v1.0.0) | As built | Delta |
+|---|---|---|---|
+| AI Elements shipped | 43 | **40** | −3 — `controls`, `toolbar`, `panel` moved out of scope |
+| AI Elements out of scope | 6 | **9** | +3 — same three |
+| Base primitives created (`registry:ui`) | 12 | **11** | −2 cut, +1 reclassified (below) |
+| Shared logic modules (`registry:lib`) | 0 | **6** | +6 — a category the plan did not anticipate |
+| **Total registry items** | 55 | **56** | |
+| RNR items reused by URL | 29 *(shadcn-side estimate)* | **14** *(measured)* | see "What reuse actually cost" |
+
+Registry item types, exactly as `registry.json` declares them:
+
+| Type | Count | Items |
+|---|---|---|
+| `registry:component` | 39 | `agent` `artifact` `attachments` `audio-player` `chain-of-thought` `checkpoint` `commit` `confirmation` `context` `conversation` `environment-variables` `file-tree` `image` `inline-citation` `message` `mic-selector` `model-selector` `open-in-chat` `package-info` `persona` `plan` `prompt-input` `question` `queue` `reasoning` `schema-display` `shimmer` `snippet` `sources` `speech-input` `stack-trace` `suggestion` `task` `terminal` `test-results` `tool` `transcription` `voice-selector` `web-preview` |
+| `registry:ui` | 11 | `breadcrumb` `button-group` `code-block` `command` `empty` `input-group` `item` `kbd` `sheet` `slider` `table` |
+| `registry:lib` | 6 | `markdown` `mono` `reasoning-lifecycle` `stack-trace-parser` `status` `url` |
+
+### The four corrections the build made to this ledger
+
+1. **`controls`, `toolbar`, `panel` are canvas-family, not standalone components.** The
+   planning read them as a generic media transport, an icon row, and a split pane. The web
+   source says otherwise: `controls` is React Flow's zoom cluster acting on its viewport
+   store, `toolbar` is `@xyflow/react`'s `NodeToolbar` positioned from the owning node's
+   measured DOM rect, and `panel` is an absolutely-positioned View inside React Flow's
+   transform layer. `canvas`/`node`/`edge`/`connection` were already out of scope, so
+   their three satellites cannot function. All three now carry an out-of-scope verdict.
+   **The product job each was standing in for still ships**: run controls live inside
+   `agent` (see below), the message action row lives inside `message`, and the secondary
+   surface is `sheet`.
+2. **`sidebar` and `toaster` were never real gap entries.** Both entered the atom list on a
+   text false positive — "sidebar" matched the word *context* inside "a SidebarProvider
+   context", "toaster" matched *queue* inside "a module-level queue store". No in-scope
+   component declares either as a dependency, and `toaster` had nothing to host once
+   `toast` was cut. Neither was built. With `field`, `navigation-menu`, `spinner` and
+   `toast` (cut earlier on the same consumer test), **six of the 26 gap entries were
+   resolved by not building them**.
+3. **`code-block` is a base primitive, not an AI Element.** It is imported by `tool`,
+   `snippet`, `terminal` and `message`, and it composes no AI-specific behavior, so it
+   ships as `registry:ui`. Its porting verdict below is unchanged; only its shelf moved.
+4. **Six shared logic modules emerged.** No plan section anticipated them, and they are the
+   reason the component sources stay thin: `mono` (the monospace class contract),
+   `markdown` (the injected-renderer seam), `status` (the one tone map every status badge
+   reads), `reasoning-lifecycle` (auto-open/auto-close timing), `url` (host/scheme parsing
+   and the https allow-list), `stack-trace-parser` (frame parsing for Node, Hermes and V8).
+   Each ships as its own `registry:lib` item so a consumer installing one component gets
+   exactly the logic that component needs and nothing else.
+
+### One acceptance criterion changed component
+
+`UC-AGENT-05 AC-4` ("start, pause, or stop an agent run from a thumb-reachable control
+bar") was written expecting the `controls` component. With `controls` out of scope, the
+control bar was built **inside `agent`** — `agent.logic.ts` owns the run state machine
+(`idle` · `running` · `paused` · `error` · `done`) and the legal-action table that keeps a
+finished run from being paused. The AC is met; it is met by a different component than the
+inventory implied, and this line is that record.
+
+### What reuse actually cost
+
+The v1.0.0 figure "29 of 55 shadcn primitives already shipped by RNR" was a *shadcn-side*
+count — how much of the upstream dependency list RNR happened to cover. Measured from the
+other end, the shipped registry declares **14 distinct RNR items** as registry
+dependencies, plus RNR's `lib/utils` (the `cn` helper, installed by `rnr init`):
+
+| RNR item | Referenced by |
+|---|---|
+| `text` | 43 items |
+| `icon` | 36 |
+| `button` | 27 |
+| `badge` | 12 |
+| `collapsible` | 11 |
+| `card` | 5 |
+| `avatar` | 3 |
+| `native-only-animated-view` · `progress` | 2 each |
+| `separator` · `input` · `popover` · `dropdown-menu` · `switch` | 1 each |
+
+Both numbers are true and they answer different questions. 29 is *how much of the gap RNR
+closed*; 14 is *how much of RNR this library actually leans on*. The second is the number
+that matters for the peer-dependency contract, because it is the set a consumer must have
+installed before any of our items will compile.
+
+## The arithmetic (as planned, v1.0.0)
 
 | | Count |
 |---|---|
@@ -17,11 +105,12 @@ This is the file that makes constraint 1 auditable. Verified from live repo tree
 | shadcn/ui primitives they depend on | **55** |
 | — of those, RNR already ships | **29 (53%)** → reuse by registry URL, never rebuild |
 | — gap with no RNR equivalent | **26** → resolved below |
-| Genuinely **new** components written | **6** |
+| Genuinely **new** components written | **6** → *built: 3 (`sheet`, `slider`, `table`)* |
 
-Of 55 primitives, only **6** are built from scratch. Everything else is reused (29),
-composed from what exists (10), substituted with a React Native platform affordance
-(7), or found unnecessary on mobile (3).
+Of 55 primitives, only **6** were planned to be built from scratch. Everything else is
+reused (29), composed from what exists (10), substituted with a React Native platform
+affordance (7), or found unnecessary on mobile (3). **As built the created count is 3**,
+because `toast`, `toaster` and `navigation-menu` were all cut before they were written.
 
 ## The 26-primitive gap, resolved
 
@@ -54,6 +143,24 @@ composed from what exists (10), substituted with a React Native platform afforda
 | `form` | **unnecessary** | — | shadcn's Form is a react-hook-form + zod adapter. Neither is a UI concern and both are the consumer's choice. Every AI Elements surface that looks like a form (`prompt-input`, `environment-variables`, `confirmation`) is a controlled TextInput and needs no resolver. Shipping this would import a state library into a presentation registry. |
 | `input-otp` | **unnecessary** | — | Nothing in the 49 AI Elements components takes a one-time code. It appears in the shadcn dep list because the upstream registry declares a broad common set. RNR's own `verify-email-form` auth block already covers this if a consumer needs it. |
 
+### Gap outcome, as built
+
+Of the 26 gap entries, **10 were built**, 6 were cut, 7 were substituted with a React
+Native affordance, and 3 were unnecessary on mobile.
+
+| Outcome | Count | Entries |
+|---|---|---|
+| **Built — composed** | 7 | `breadcrumb` `button-group` `command` `empty` `input-group` `item` `kbd` |
+| **Built — created** | 3 | `sheet` `slider` `table` |
+| **Cut — no in-scope consumer** | 4 | `field` `navigation-menu` `spinner` `toast` |
+| **Cut — false positive, never a real entry** | 2 | `sidebar` `toaster` |
+| **Substituted** | 7 | `calendar` `carousel` `drawer` `pagination` `resizable` `scroll-area` `sonner` |
+| **Unnecessary** | 3 | `chart` `form` `input-otp` |
+
+`sheet` was correctly identified as the expensive one and it is the one that paid: it backs
+`model-selector`, `mic-selector`, `voice-selector`, `open-in-chat` and `artifact`, and it
+mounts its own named PortalHost so overlays opened inside it layer above it.
+
 The five `create` items that are cheap: `slider`, `table`, `toast`, `navigation-menu` (and
 `toolbar`) exist as `@rn-primitives` packages at 1.5.2 that RNR simply never wrapped. Those
 are styled shells against RNR's own template, not new behavior. **`sheet` is the expensive
@@ -62,7 +169,9 @@ must mount its own **named `PortalHost`** or every overlay opened inside it rend
 
 ## Porting verdicts — all 49 components
 
-22 port-at-parity · 11 port-adapted · 10 native-substitute · 6 out-of-scope
+**As built (v2.0.0):** 21 port-at-parity · 10 port-adapted · 9 native-substitute · 9 out-of-scope
+*(was 22 · 11 · 10 · 6 at v1.0.0; `toolbar`, `controls` and `panel` moved to out-of-scope —
+see "The four corrections" above.)*
 
 | Component | Verdict | Tier | Composition | Reason |
 |---|---|---|---|---|
@@ -73,12 +182,12 @@ must mount its own **named `PortalHost`** or every overlay opened inside it rend
 | `canvas` | out-of-scope | specialist | new-visual | It is a react-flow workspace. There is no react-flow on React Native, and a pan-and-pinch node graph on a phone is a separate product, not a port. Alternative: render the same agent structure as the plan and task lists. |
 | `chain-of-thought` | port-at-parity | agent-surface | new-visual | Collapsible step list built from RNR collapsible, text, and icon; behavior is identical on touch. |
 | `checkpoint` | port-at-parity | agent-surface | pure-rnr | A labelled divider in the transcript composed from RNR separator, badge, and text. |
-| `code-block` | native-substitute | minimum-chat | new-visual | Web highlighting relies on a DOM-emitting highlighter and CSS overflow. Requires a React Native safe tokenizer rendering into Text spans plus a horizontal ScrollView and a clipboard copy action. |
+| `code-block` | native-substitute | minimum-chat | new-visual | *(ships as `registry:ui` — a base primitive four AI Elements import, not an AI Element.)* Web highlighting relies on a DOM-emitting highlighter and CSS overflow. Requires a React Native safe tokenizer rendering into Text spans plus a horizontal ScrollView and a clipboard copy action. |
 | `commit` | port-at-parity | agent-surface | pure-rnr | Card of hash, message, and author with a copy action; composes from RNR card, text, and button. |
 | `confirmation` | port-at-parity | agent-surface | pure-rnr | Composes from RNR card and button. Only change is enforcing platform minimum touch targets, which is a sizing token, not a different component. |
 | `connection` | out-of-scope | specialist | new-visual | Part of the react-flow canvas family; it is an SVG connection line with pointer-drag semantics that has no meaning outside a node editor. |
 | `context` | port-adapted | agent-surface | pure-rnr | Token and cost breakdown is revealed on hover in the web version. On touch it becomes a press-opened popover; the data displayed is unchanged. |
-| `controls` | port-adapted | specialist | new-visual | The button and toggle cluster ports from RNR primitives, but placement must move into thumb reach and targets must meet the platform minimum, which changes layout rather than composition. |
+| `controls` | out-of-scope | specialist | new-visual | **Verdict changed at v2.0.0.** Not a generic transport bar: React Flow's zoom/fit/lock cluster, which acts on the canvas viewport store and has no meaning without it. Alternative: agent run controls ship inside `agent` (start / pause / stop, thumb-reachable, `agent.logic.ts` owns the state machine). |
 | `conversation` | native-substitute | minimum-chat | pure-rnr | The whole value is stick-to-bottom scrolling, which on web comes from an overflow container plus a scroll hook. React Native needs a list with maintainVisibleContentPosition or an inverted list plus keyboard and safe-area handling. Same product surface, entirely different implementation, and the highest-risk item in the initiative. |
 | `edge` | out-of-scope | specialist | new-visual | react-flow canvas family; an SVG edge path with no standalone mobile use. |
 | `environment-variables` | port-at-parity | agent-surface | pure-rnr | Masked key and value rows with a reveal toggle; composes from RNR input, toggle, and button. |
@@ -92,7 +201,7 @@ must mount its own **named `PortalHost`** or every overlay opened inside it rend
 | `node` | out-of-scope | specialist | new-visual | react-flow canvas family; a draggable graph node with no standalone mobile use. |
 | `open-in-chat` | port-adapted | agent-surface | pure-rnr | Same buttons and same targets, but window opening is replaced by the platform link handler, and unavailable targets must be hidden rather than opened into a dead tab. |
 | `package-info` | port-at-parity | agent-surface | pure-rnr | Card of package name, version, and a copyable install command; all RNR primitives. |
-| `panel` | native-substitute | specialist | new-visual | Built on drag-to-resize split panes, which requires a pointer and screen width a phone does not have. Ships as a tabs or bottom-sheet layout that serves the same job of showing a secondary surface beside the transcript. |
+| `panel` | out-of-scope | specialist | new-visual | **Verdict changed at v2.0.0.** Not a generic split pane: an absolutely-positioned View inside React Flow's transform layer, positioned in canvas coordinates. Alternative: `sheet` (bottom/side) for a secondary surface beside the transcript. |
 | `persona` | port-at-parity | specialist | pure-rnr | Avatar, name, and description card composed from RNR primitives. |
 | `plan` | port-at-parity | agent-surface | pure-rnr | Ordered step list with per-step status; composes from RNR collapsible, badge, icon, and text. |
 | `prompt-input` | native-substitute | minimum-chat | pure-rnr | Looks the same but almost nothing underneath survives: keyboard avoidance, auto-growing multiline TextInput, safe-area insets, and an explicit send button replacing enter-to-submit. Second-highest-risk item after conversation. |
@@ -111,7 +220,7 @@ must mount its own **named `PortalHost`** or every overlay opened inside it rend
 | `terminal` | port-adapted | agent-surface | new-visual | Ships as a read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens. An interactive pseudo-terminal is explicitly not part of this. |
 | `test-results` | port-at-parity | agent-surface | new-visual | Pass, fail, and skip counts with expandable per-test rows; composes from RNR badge, collapsible, and text. |
 | `tool` | port-at-parity | agent-surface | new-visual | The central agent component. State header plus input and output disclosure, all from RNR collapsible, badge, and code-block. Must cover every AI SDK tool-part state. |
-| `toolbar` | port-at-parity | specialist | pure-rnr | A row of icon buttons above or below the composer; RNR button and toggle-group with mobile touch-target sizing. |
+| `toolbar` | out-of-scope | specialist | new-visual | **Verdict changed at v2.0.0.** Not a composer button row: `@xyflow/react`'s `NodeToolbar`, positioned from the owning node's measured DOM rect inside a `nodeTypes` component. Alternative: the message action row ships inside `message`; a composer row is `button-group`. |
 | `transcription` | port-at-parity | specialist | new-visual | Display-only live transcript text with an interim and final distinction; capture belongs to speech-input, so this component itself has no browser dependency. |
 | `voice-selector` | port-adapted | specialist | pure-rnr | Voice list ports, but the picker becomes a bottom sheet and the available voice set comes from the native speech synthesis provider rather than the browser. |
 | `web-preview` | native-substitute | agent-surface | new-visual | An iframe with a URL bar and console. Replaced by a native webview with the same URL bar and reload affordance, shipped as an opt-in registry entry that declares react-native-webview as a peer dependency. The console pane does not port and is dropped. |
