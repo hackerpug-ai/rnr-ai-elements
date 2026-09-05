@@ -45,10 +45,10 @@
       "desc": "A short-name registryDependencies entry (`card` instead of an absolute https URL) resolves against the shadcn WEB registry and installs a DOM component into a React Native app. The build must refuse to emit it. Asserts both halves: buildItem throws on a short name, and every one of the 56 shipped entries resolves to a URL beginning with https:// for both engines.",
       "run_cmd": "pnpm exec vitest run tests/build-registry.test.ts -t \"UC-REG-01/edge-a-short-name-registry-dependency\"",
       "test": "tests/build-registry.test.ts",
-      "artifact": "design/goldens/sprint-01/install/edge-short-name.json",
+      "artifact": "design/goldens/sprint-01/registry/edge-short-name.json",
       "surface_policy": ".spec/e2e-policy/surface.json",
       "coldboot_policy": ".spec/e2e-policy/coldboot.json",
-      "red_proof": "design/goldens/sprint-01/install/edge-short-name.RED.log",
+      "red_proof": "design/goldens/sprint-01/registry/edge-short-name.RED.log",
       "manual_physical": false
     },
     {
