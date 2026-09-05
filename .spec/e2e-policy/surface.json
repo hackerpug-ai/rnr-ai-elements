@@ -1,0 +1,21 @@
+{
+  "require_any": [
+    "@react-native-reusables/cli@latest\\s+add\\s+https://",
+    "npx\\s+expo\\s+run:(ios|android)",
+    "npx\\s+expo-doctor",
+    "pnpm\\s+exec\\s+vitest\\s+run\\s+tests/build-registry\\.test\\.ts",
+    "bash\\s+scripts/e2e/install-(core|dirty-app)\\.sh",
+    "maestro\\s+test\\s+\\.maestro/",
+    "~/\\.maestro/bin/maestro\\s+test\\s+\\.maestro/",
+    "pnpm\\s+e2e:smoke:(ios|android)"
+  ],
+  "require_product_target_any": [
+    "raw\\.githubusercontent\\.com/hackerpug-ai/rnr-ai-elements/v0\\.1\\.0/public/r/uniwind/",
+    "reactnativereusables\\.com/r/uniwind/",
+    "apps/example/components/ai/(conversation|message|prompt-input|tool|context)\\.tsx",
+    "apps/example/components/ui/(text|avatar|button|icon|popover)\\.tsx",
+    "apps/example/app/index\\.tsx",
+    "\\.maestro/cold-boot\\.yaml",
+    "design/goldens/mobile-(ios|android)/sprint-01/cold-boot\\.png"
+  ]
+}

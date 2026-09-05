@@ -1,6 +1,6 @@
 # Coverage Matrix — UC x journey x tier
 
-Generated 2026-09-01, extended 2026-09-04 with `UC-REG-05` / `UC-REG-06`, from
+Generated 2026-09-01, extended 2026-09-04, split 2026-09-05 (`mvp-install-arc` extracted from `mvp-full-arc`; see that journey's own note) with `UC-REG-05` / `UC-REG-06`, from
 `.spec/scenarios/`. Verified by
 `brain/tools/flow-coverage/flow_coverage_check.py --prd .spec/scenarios` (exit 0).
 
@@ -32,7 +32,7 @@ Generated 2026-09-01, extended 2026-09-04 with `UC-REG-05` / `UC-REG-06`, from
 | `UC-REG-05` | RNR is a declared, checkable peer dependency | 2 | 2 | `mvp-full-arc` |
 | `UC-REG-06` | Versioned public distribution | 2 | 2 | `mvp-full-arc` |
 
-**Totals:** 50 visible · 64 holdout scenarios across 25 use cases · 7 cross-UC journeys
+**Totals:** 50 visible · 64 holdout scenarios across 25 use cases · 8 cross-UC journeys
 
 ## Journeys
 
@@ -41,7 +41,8 @@ Generated 2026-09-01, extended 2026-09-04 with `UC-REG-05` / `UC-REG-06`, from
 | [`agent-surface`](./journeys/agent-surface.scenario.md) | 1 | 1 | 5 |
 | [`chat-navigation`](./journeys/chat-navigation.scenario.md) | 1 | 1 | 2 |
 | [`coding-agent`](./journeys/coding-agent.scenario.md) | 1 | 1 | 2 |
-| [`mvp-full-arc`](./journeys/mvp-full-arc.scenario.md) | 1 | 1 | 10 |
+| [`mvp-install-arc`](./journeys/mvp-install-arc.scenario.md) | 1 | 0 | 1 |
+| [`mvp-full-arc`](./journeys/mvp-full-arc.scenario.md) | 1 | 1 | 9 |
 | [`port-lookup`](./journeys/port-lookup.scenario.md) | 1 | 1 | 2 |
 | [`theming-passthrough`](./journeys/theming-passthrough.scenario.md) | 1 | 1 | 4 |
 | [`voice`](./journeys/voice.scenario.md) | 1 | 1 | 2 |
