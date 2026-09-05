@@ -122,6 +122,46 @@ const SAFELIST = [
   'inset-0',
   'h-96',
   'h-72',
+
+  // Remediation waves A-C — classes introduced by design/style-parity-remediation.md;
+  // data-map strings the CSS scanner cannot see, plus new-file drop guards. The ANSI
+  // class map (terminal.logic.ts) and the tool status map (tool.logic.ts) are string
+  // constants, the exact case this file exists for; the zinc surface/green-red bar
+  // classes land in JSX but in remapped files, so they are declared here too per the
+  // standing scan-then-declare rule.
+  'bg-zinc-950',
+  'text-zinc-100',
+  'text-zinc-500',
+  'border-zinc-800',
+  'bg-zinc-800',
+  'bg-zinc-700',
+  // The ANSI inverse pair (terminal.logic.ts BG_FORCED_FG) — data-map strings the
+  // scanner cannot see; the 47/107 and SGR-7 spans render white-on-near-black.
+  'bg-zinc-100',
+  'text-zinc-950',
+  'bg-green-500',
+  'bg-red-500',
+  'text-yellow-600',
+  'dark:text-yellow-400',
+  'text-blue-600',
+  'dark:text-blue-400',
+  'text-blue-400',
+  'text-blue-500',
+  'gap-8',
+  'py-3.5',
+  // Wave C (voice-selector): the • bullet's dim tint (text-xs text-border) — its only
+  // in-repo home is this JSX in a remapped file; scan-then-declare.
+  'text-border',
+
+  // Remediation wave B (conversation/transcription/speech-input/file-tree): the same
+  // scan-then-declare rule. text-neutral-400/dark:text-neutral-500 are the interim
+  // dim pair (transcription.logic.ts SEGMENT_STATE_CLASS — data-map strings the
+  // scanner cannot see), replacing the banned /60 modifier form; border-2 is the
+  // speech-input pulse rings' stroke and has NO other in-repo home (cross-file scan
+  // at HEAD). gap-8 and text-blue-500 were already declared for wave A above.
+  'text-neutral-400',
+  'dark:text-neutral-500',
+  'border-2',
 ] as const;
 
 void SAFELIST;

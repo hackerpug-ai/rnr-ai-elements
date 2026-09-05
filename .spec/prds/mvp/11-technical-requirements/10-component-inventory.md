@@ -169,13 +169,16 @@ must mount its own **named `PortalHost`** or every overlay opened inside it rend
 
 ## Porting verdicts — all 49 components
 
-**As built (v2.0.0):** 21 port-at-parity · 10 port-adapted · 9 native-substitute · 9 out-of-scope
+**As built (v2.1.0):** 18 port-at-parity · 13 port-adapted · 9 native-substitute · 9 out-of-scope
 *(was 22 · 11 · 10 · 6 at v1.0.0; `toolbar`, `controls` and `panel` moved to out-of-scope —
-see "The four corrections" above.)*
+see "The four corrections" above. v2.1.0: `agent`, `question` and `confirmation` moved from
+port-at-parity to port-adapted — the style-parity audit (design/style-parity-report.md §4) found
+the shipped ports diverge structurally from the web originals; every §1 unexplained style drift
+was converged or dispositioned in design/style-parity-remediation.md.)*
 
 | Component | Verdict | Tier | Composition | Reason |
 |---|---|---|---|---|
-| `agent` | port-at-parity | agent-surface | pure-rnr | Identity card composed from RNR avatar, card, badge, and text; no browser API and no hover dependency. |
+| `agent` | port-adapted | agent-surface | pure-rnr | **Verdict changed at v2.1.0** (was port-at-parity). Shipped as an identity/RUN card: persona + run badge + Start/Pause/Stop controls; the web's config surfaces (model badge, instructions box, tools accordion, output-schema block) are absent and two run surfaces are new. Deliberate product re-design, now on the record via the style-parity remediation. |
 | `artifact` | port-adapted | agent-surface | pure-rnr | Web renders it as a side panel next to the transcript. A phone has no side; it becomes a full-screen sheet with a return control that preserves transcript scroll position. |
 | `attachments` | native-substitute | agent-surface | pure-rnr | The chip row ports at parity, but file acquisition cannot: drag-and-drop and the file input are replaced by the native image and document pickers, which changes the permission and dependency contract. |
 | `audio-player` | native-substitute | specialist | new-visual | Built on the HTML audio element. Replaced by a native audio module; transport controls and progress bar keep the same product surface. |
@@ -184,7 +187,7 @@ see "The four corrections" above.)*
 | `checkpoint` | port-at-parity | agent-surface | pure-rnr | A labelled divider in the transcript composed from RNR separator, badge, and text. |
 | `code-block` | native-substitute | minimum-chat | new-visual | *(ships as `registry:ui` — a base primitive four AI Elements import, not an AI Element.)* Web highlighting relies on a DOM-emitting highlighter and CSS overflow. Requires a React Native safe tokenizer rendering into Text spans plus a horizontal ScrollView and a clipboard copy action. |
 | `commit` | port-at-parity | agent-surface | pure-rnr | Card of hash, message, and author with a copy action; composes from RNR card, text, and button. |
-| `confirmation` | port-at-parity | agent-surface | pure-rnr | Composes from RNR card and button. Only change is enforcing platform minimum touch targets, which is a sizing token, not a different component. |
+| `confirmation` | port-adapted | agent-surface | pure-rnr | **Verdict changed at v2.1.0** (was port-at-parity). Card (not the web's Alert container) with full-width `h-10` Approve/Deny actions where the web right-aligns `h-8` buttons; platform minimum touch targets enforced. Layout adaptation recorded via the style-parity remediation. |
 | `connection` | out-of-scope | specialist | new-visual | Part of the react-flow canvas family; it is an SVG connection line with pointer-drag semantics that has no meaning outside a node editor. |
 | `context` | port-adapted | agent-surface | pure-rnr | Token and cost breakdown is revealed on hover in the web version. On touch it becomes a press-opened popover; the data displayed is unchanged. |
 | `controls` | out-of-scope | specialist | new-visual | **Verdict changed at v2.0.0.** Not a generic transport bar: React Flow's zoom/fit/lock cluster, which acts on the canvas viewport store and has no meaning without it. Alternative: agent run controls ship inside `agent` (start / pause / stop, thumb-reachable, `agent.logic.ts` owns the state machine). |
@@ -205,7 +208,7 @@ see "The four corrections" above.)*
 | `persona` | port-at-parity | specialist | pure-rnr | Avatar, name, and description card composed from RNR primitives. |
 | `plan` | port-at-parity | agent-surface | pure-rnr | Ordered step list with per-step status; composes from RNR collapsible, badge, icon, and text. |
 | `prompt-input` | native-substitute | minimum-chat | pure-rnr | Looks the same but almost nothing underneath survives: keyboard avoidance, auto-growing multiline TextInput, safe-area insets, and an explicit send button replacing enter-to-submit. Second-highest-risk item after conversation. |
-| `question` | port-at-parity | agent-surface | pure-rnr | A pressable card or pill for a clarifying question; RNR button and card. |
+| `question` | port-adapted | agent-surface | pure-rnr | **Verdict changed at v2.1.0** (was port-at-parity). The web's select-then-submit form (input + submit) is dropped on touch — options tap to answer directly; option variant rests on `secondary`. Recorded via the style-parity remediation. |
 | `queue` | port-at-parity | agent-surface | pure-rnr | A list of pending messages with a remove action; RNR list composition plus the new item primitive. |
 | `reasoning` | port-at-parity | agent-surface | new-visual | Auto-opening and auto-collapsing disclosure with a duration label; RNR collapsible plus the shimmer substitute. |
 | `sandbox` | out-of-scope | agent-surface | new-visual | It fronts a hosted code-execution service and renders its output through a browser surface. A component registry cannot ship the execution half, and the display half is already covered by terminal and web-preview. |

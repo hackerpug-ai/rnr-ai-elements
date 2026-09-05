@@ -27,14 +27,34 @@
 
   /* The status escape-hatch palette slice. Tailwind's default palette provides these
    * in a standard web consumer, but uniwind's RN interop does not carry Tailwind's
-   * default @theme — only the --color-* vars this file declares. Without these three,
-   * `text-green-600` / `dark:text-green-500` / `text-orange-600` (lib/status.ts's
+   * default @theme — only the --color-* vars this file declares. Without the first
+   * three, `text-green-600` / `dark:text-green-500` / `text-orange-600` (lib/status.ts's
    * sanctioned non-token colors) compile to nothing on device. Values are Tailwind
    * v4's own defaults, transcribed so a status success reads exactly as the web
    * library's consumer sees it. */
   --color-green-500: oklch(0.723 0.219 149.579);
   --color-green-600: oklch(0.627 0.194 149.214);
   --color-orange-600: oklch(0.646 0.222 41.116);
+
+  /* Remediation palette (design/style-parity-remediation.md, waves A-C): the fixed
+   * zinc surface (terminal), the two-segment pass/fail bar (test-results), the
+   * approval state hues (tool), the file-tree folder hue, and — wave B — the
+   * transcription interim dim (the web's text-muted-foreground/60 without its
+   * banned /NN modifier: nearest fixed neutral step per scheme). Values transcribed
+   * verbatim from the installed tailwindcss default palette (theme.css). */
+  --color-zinc-500: oklch(0.552 0.016 285.938);
+  --color-zinc-700: oklch(0.37 0.013 285.805);
+  --color-zinc-800: oklch(0.274 0.006 286.033);
+  --color-zinc-950: oklch(0.141 0.005 285.823);
+  --color-zinc-100: oklch(0.967 0.001 286.375);
+  --color-yellow-600: oklch(0.681 0.162 75.834);
+  --color-yellow-400: oklch(0.852 0.199 91.936);
+  --color-blue-400: oklch(0.707 0.165 254.624);
+  --color-blue-500: oklch(0.623 0.214 259.815);
+  --color-blue-600: oklch(0.546 0.245 262.881);
+  --color-red-500: oklch(0.637 0.237 25.331);
+  --color-neutral-400: oklch(0.708 0 0);
+  --color-neutral-500: oklch(0.556 0 0);
 }
 
 @layer theme {

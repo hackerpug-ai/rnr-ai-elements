@@ -52,7 +52,6 @@ describe('toolStatusMeta (the state → badge map)', () => {
     for (const state of all) {
       const meta = toolStatusMeta(state);
       expect(meta.label).toBeTruthy();
-      expect(meta.className).toBeTruthy();
       expect(meta.iconName).toBeTruthy();
     }
   });
@@ -67,6 +66,23 @@ describe('toolStatusMeta (the state → badge map)', () => {
     expect(toolStatusMeta('approval-responded').label).toBe('Responded');
   });
 
+  it('converges per-state hues to the web (remediation row 4): streaming/running inherit the badge', () => {
+    // The web gives Pending/Running NO color — className '' rides the secondary badge.
+    expect(toolStatusMeta('input-streaming').className).toBe('');
+    expect(toolStatusMeta('input-available').className).toBe('');
+    // The web's exact approval pair, with dark twins.
+    expect(toolStatusMeta('approval-requested').className).toBe(
+      'text-yellow-600 dark:text-yellow-400',
+    );
+    expect(toolStatusMeta('approval-responded').className).toBe('text-blue-600 dark:text-blue-400');
+  });
+
+  it('keeps the shared statusColor palette for completion, error, and denial', () => {
+    expect(toolStatusMeta('output-available').className).toBe(statusColor.success);
+    expect(toolStatusMeta('output-error').className).toBe(statusColor.error);
+    expect(toolStatusMeta('output-denied').className).toBe(statusColor.denied);
+  });
+
   it('gives error and success distinct tones AND icons — color is never the sole channel', () => {
     const done = toolStatusMeta('output-available');
     const failed = toolStatusMeta('output-error');
@@ -76,11 +92,16 @@ describe('toolStatusMeta (the state → badge map)', () => {
     expect(done.className).not.toBe(failed.className);
   });
 
-  it('pulses (clock) only for the running state', () => {
+  it('gives streaming the plain circle and running the clock (web parity), nothing else', () => {
+    expect(toolStatusMeta('input-streaming').iconName).toBe('circle');
     expect(toolStatusMeta('input-available').iconName).toBe('clock');
-    for (const state of TOOL_STATUS_KEYS.filter((s) => s !== 'input-available')) {
+    for (const state of TOOL_STATUS_KEYS.filter(
+      (s) => s !== 'input-available' && s !== 'input-streaming',
+    )) {
       expect(toolStatusMeta(state).iconName).not.toBe('clock');
     }
+    // The PULSE rides the running clock only — a tool.tsx component-side behavior
+    // this logic tier cannot observe; recorded here so it is pinned in prose.
   });
 });
 

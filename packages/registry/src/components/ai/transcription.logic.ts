@@ -5,11 +5,15 @@
  *
  * THE PRD VERDICT IS PORT-AT-PARITY: "Display-only live transcript text with an
  * interim and final distinction; capture belongs to speech-input, so this component
- * itself has no browser dependency." The segment type, the three playback states and
- * the state classes are the web original's, byte-for-byte (the KB's documented
- * transcription behavior); the interim distinction is the verdict's own words and
- * ships as a caller-supplied `interimText` display seam — upstream has no interim
- * part, so that addition is declared in the component header, not smuggled in here.
+ * itself has no browser dependency." The segment type and the three playback states
+ * are the web original's, byte-for-byte (the KB's documented transcription behavior).
+ * The state CLASSES are too, with ONE declared convergence: the FUTURE dim — the
+ * web's text-muted-foreground/60 is a banned /NN modifier, so it substitutes the
+ * fixed text-neutral-400 dark:text-neutral-500 pair (rationale on
+ * SEGMENT_STATE_CLASS below). The interim distinction is the verdict's own words
+ * and ships as a caller-supplied `interimText` display seam — upstream has no
+ * interim part, so that addition is declared in the component header, not smuggled
+ * in here.
  */
 
 /** The web original's TranscriptionSegment, field for field. Seconds, not ms. */
@@ -54,16 +58,20 @@ export function segmentState(
 }
 
 /**
- * The web original's state → class map, byte-for-byte (the KB's segment-style record:
- * active gets text-primary, past text-muted-foreground, future
- * text-muted-foreground/60). All three are RNR roles with opacity modifiers — no
- * escape-hatch color, so this map stays here rather than in lib/status.ts, which is
- * reserved for the three sanctioned NON-token colors.
+ * The state → class map. Active and past are the web original's roles verbatim
+ * (text-primary / text-muted-foreground). The FUTURE state converges under remediation
+ * row 6 (design/style-parity-remediation.md): the web writes text-muted-foreground/60,
+ * but /NN color-opacity modifiers are a standing house ban (they never compiled
+ * reliably — the wave-11 finding) and segments are nested Texts that must each carry
+ * an EXPLICIT color. text-neutral-400 / dark:text-neutral-500 is the nearest fixed
+ * step to the web's 60%-dimmed muted-foreground in both schemes (light muted-foreground
+ * ≈ neutral-500, dark ≈ neutral-400; one step dimmer each). A data-map string, hence
+ * safelisted (apps/harness/src/class-safelist.tsx).
  */
 export const SEGMENT_STATE_CLASS: Record<SegmentPlaybackState, string> = {
   active: 'text-primary',
   past: 'text-muted-foreground',
-  future: 'text-muted-foreground/60',
+  future: 'text-neutral-400 dark:text-neutral-500',
 };
 
 /**

@@ -1,0 +1,89 @@
+{
+  "nextId": 8,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Read spec + web anchors + current port sources for rows 5-8",
+      "description": "Read design/style-parity-remediation.md (rows 5-8), web anchors at ~/.cache/agent-scratch/rnr-web-ref/packages/elements/src/{conversation,transcription,speech-input,file-tree}.tsx, and the four port files. Also read safelist + global.css + test-results.tsx (Empty composition reference) + shimmer.tsx (motion idiom).",
+      "status": "in_progress",
+      "activeForm": "Reading spec and sources",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771786,
+      "updatedAt": 1788466777315
+    },
+    {
+      "id": "2",
+      "subject": "Row 5: conversation density gap-8 + EmptyState surface (no download)",
+      "description": "contentContainerClassName gap-3 → gap-8; render port's Empty atom when message list empty, with minimal API extension documented citing remediation row 5. DO NOT build ConversationDownload.",
+      "status": "pending",
+      "activeForm": "Implementing row 5 conversation",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771786,
+      "updatedAt": 1788466771786
+    },
+    {
+      "id": "3",
+      "subject": "Row 6: transcription flowing inline paragraph with explicit per-segment colors",
+      "description": "Convert column layout to one wrapping parent Text with nested per-segment Texts separated by single space; explicit colors per segment (no /NN, no inheritance reliance); keep press/seek per segment; public API unchanged.",
+      "status": "pending",
+      "activeForm": "Implementing row 6 transcription",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771786,
+      "updatedAt": 1788466771786
+    },
+    {
+      "id": "4",
+      "subject": "Row 7: speech-input filled pill record button + Reanimated pulsing rings",
+      "description": "Record button → bg-primary filled circle with text-primary-foreground icon; 2-3 absolutely-positioned rounded-full rings behind pulsing via Reanimated withRepeat + ReduceMotion.System (copy Skeleton/Shimmer idiom); recording state keeps/extends stop treatment; document convergence in comment.",
+      "status": "pending",
+      "activeForm": "Implementing row 7 speech-input",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771787,
+      "updatedAt": 1788466771787
+    },
+    {
+      "id": "5",
+      "subject": "Row 8: file-tree selected row bg-muted + folder glyph text-blue-500",
+      "description": "Add row-level selected fill bg-muted (keep font-medium); folder glyph text-muted-foreground → text-blue-500. Verify --color-blue-500 exists in global.css @theme (don't duplicate); safelist text-blue-500 if needed.",
+      "status": "pending",
+      "activeForm": "Implementing row 8 file-tree",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771787,
+      "updatedAt": 1788466771787
+    },
+    {
+      "id": "6",
+      "subject": "Safelist + global.css Wave B block",
+      "description": "Cross-file scan first; add commented \"Wave B\" block to apps/harness/src/class-safelist.tsx for any new classes; verify --color-blue-500 exists in global.css @theme (take from tailwindcss theme.css if missing).",
+      "status": "pending",
+      "activeForm": "Updating safelist and global.css",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771787,
+      "updatedAt": 1788466771787
+    },
+    {
+      "id": "7",
+      "subject": "Run all verification gates and report",
+      "description": "pnpm exec tsc --noEmit (0); pnpm exec vitest run (all pass, update tests only where pinning old visuals); pnpm exec biome ci . (exit 0); pnpm registry:build && pnpm check:registry; pnpm exec tsx scripts/check-contract.ts (OK); component contract verify-styling-contract.mjs (0 violations). Report per-row changes + gate outputs verbatim + deviations.",
+      "status": "pending",
+      "activeForm": "Running verification gates",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788466771788,
+      "updatedAt": 1788466771788
+    }
+  ]
+}

@@ -51,6 +51,14 @@ import { isExpanded, toggleExpanded } from './file-tree.logic';
  * rotating glyph (commit/task precedent, 250ms open / 200ms close, ReduceMotion.System)
  * over ChevronRight — 0° closed, 90° open.
  *
+ * SELECTION + FOLDER HUE (remediation row 8, design/style-parity-remediation.md): the
+ * selected row now fills `bg-muted` (web file-tree.tsx:175 applies it to folder AND
+ * file rows) — the prior port marked selection only through the name's font-medium,
+ * which is kept as the grayscale-safe second channel, not the primary one. Folder
+ * glyphs converge to the web's `text-blue-500` (web file-tree.tsx:198); file glyphs
+ * stay `text-muted-foreground` (web file-tree.tsx:214), so the hue travels the folder
+ * path only. Both classes are safelisted consumer-side (class-safelist.tsx).
+ *
  * FileTreeActions: the web's version wraps clicks in stopPropagation so a row action
  * never selects the file. React Native's responder system hands the press to the
  * deepest touchable and does not bubble it into sibling pressables — the isolation the
@@ -205,16 +213,21 @@ function FolderToggle({ path, name }: { path: string; name: string }) {
 }
 
 /** THE NAME TARGET — selects, and must never expand. Icon + name are one target,
- *  stretched to the full row height (36pt) + hitSlop 8 = the 44pt floor. */
+ *  stretched to the full row height (36pt) + hitSlop 8 = the 44pt floor. tone routes
+ *  the remediation's folder hue (text-blue-500) through the wrapper — the styling
+ *  contract bans className JSX props on *Icon elements, so the hue decision lives
+ *  inside FileTreeIcon, not at this call site. */
 function NameTarget({
   path,
   name,
   icon,
+  tone,
   className,
 }: {
   path: string;
   name: string;
   icon?: LucideIcon;
+  tone?: 'folder' | 'file';
   className?: string;
 }) {
   const { selectedPath, select } = useFileTree();
@@ -229,19 +242,22 @@ function NameTarget({
       hitSlop={{ top: 4, bottom: 4, left: 2, right: 2 }}
       className={cn('h-auto min-w-0 flex-1 justify-start gap-2', className)}
     >
-      <FileTreeIcon as={icon ?? FileIcon} />
+      <FileTreeIcon as={icon ?? FileIcon} tone={tone} />
       <FileTreeName name={name} selected={selected} />
     </Button>
   );
 }
 
-/** One row: the item atom, indented by depth. Selection renders through the name's
- *  weight (NameTarget); a louder row fill stays the caller's className decision. */
+/** One row: the item atom, indented by depth. Remediation row 8: selection fills the
+ *  row `bg-muted` (web file-tree.tsx:175, folder and file rows alike); the name's
+ *  font-medium rides along as the never-color-only second channel. */
 function TreeRow({
   children,
+  selected = false,
   className,
 }: {
   children: React.ReactNode;
+  selected?: boolean;
   className?: string;
 }) {
   const indent = useIndent();
@@ -253,7 +269,7 @@ function TreeRow({
       // items-stretch lets the two press targets span the full row height — that IS
       // their touch target; the floor is reached with hitSlop, not extra chrome.
       style={[indent]}
-      className={cn('items-stretch gap-1 rounded-none px-3 py-2', className)}
+      className={cn('items-stretch gap-1 rounded-none px-3 py-2', selected && 'bg-muted', className)}
     >
       {children}
     </Item>
@@ -281,9 +297,16 @@ function FileTreeFolder({ path, name, className, children }: FileTreeFolderProps
   return (
     <React.Fragment>
       <View className={className}>
-        <TreeRow>
+        <TreeRow selected={ctx.selectedPath === path}>
           <FolderToggle path={path} name={name} />
-          <NameTarget path={path} name={name} icon={open ? FolderOpenIcon : FolderIcon} />
+          {/* Remediation row 8: the folder glyph is the web's text-blue-500
+              (web file-tree.tsx:198); file glyphs keep text-muted-foreground. */}
+          <NameTarget
+            path={path}
+            name={name}
+            icon={open ? FolderOpenIcon : FolderIcon}
+            tone="folder"
+          />
         </TreeRow>
       </View>
       {open && children ? (
@@ -302,18 +325,38 @@ export type FileTreeFileProps = {
 };
 
 function FileTreeFile({ path, name, icon, className }: FileTreeFileProps) {
+  const { selectedPath } = useFileTree();
+
   return (
     <View className={className}>
-      <TreeRow>
+      <TreeRow selected={selectedPath === path}>
         <NameTarget path={path} name={name} icon={icon} />
       </TreeRow>
     </View>
   );
 }
 
-/** The icon wrapper — every glyph goes through RNR's Icon, never a raw Lucide element. */
-function FileTreeIcon({ as, className }: { as: LucideIcon; className?: string }) {
-  return <Icon as={as} size={14} className={cn('shrink-0 text-muted-foreground', className)} />;
+/** The icon wrapper — every glyph goes through RNR's Icon, never a raw Lucide element.
+ *  Remediation row 8: folder glyphs converge to the web's text-blue-500
+ *  (web file-tree.tsx:198); file glyphs keep text-muted-foreground (web :214). The
+ *  tone prop encodes that distinction inside the wrapper (twMerge resolves the
+ *  override); caller className still wins last for API compatibility. */
+function FileTreeIcon({
+  as,
+  tone = 'file',
+  className,
+}: {
+  as: LucideIcon;
+  tone?: 'folder' | 'file';
+  className?: string;
+}) {
+  return (
+    <Icon
+      as={as}
+      size={14}
+      className={cn('shrink-0 text-muted-foreground', tone === 'folder' && 'text-blue-500', className)}
+    />
+  );
 }
 
 /**

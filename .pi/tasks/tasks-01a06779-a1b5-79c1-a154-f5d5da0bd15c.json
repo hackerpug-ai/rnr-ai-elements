@@ -1,0 +1,89 @@
+{
+  "nextId": 8,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Write lib/stack-trace.ts parser + registry:lib item",
+      "description": "Pure parser (zero RN imports) per data-schema contract: StackFrame {fn?, file?, line?, col?, isInternal, raw}[] + ParsedStackTrace {errorType, errorMessage, frames, raw}. Port upstream verbatim regexes/behavior. Ship as registry:lib item.",
+      "status": "completed",
+      "activeForm": "Writing stack-trace parser",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428206,
+      "updatedAt": 1788443515064
+    },
+    {
+      "id": "2",
+      "subject": "Write schema-display (logic + tsx)",
+      "description": "port-adapted organism: root props (method/path/description/parameters/requestBody/responseBody), Header/Method/Path/Description/Content/Parameters/Parameter/Request/Response/Property (recursive)/Body/Example. Horizontal scroll for the nested tree per verdict, method color compression via logic map, path param highlighting via segment parser.",
+      "status": "completed",
+      "activeForm": "Writing schema-display",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428207,
+      "updatedAt": 1788443777550
+    },
+    {
+      "id": "3",
+      "subject": "Write test-results (logic + tsx)",
+      "description": "port-at-parity organism: TestResults/Header/Summary/Duration/Progress/Content + TestSuite/Name/Stats/Content + Test/Status/Name/Duration + TestError/Message/Stack. RNR Progress per data-schema, status tones via lib/status, formatDuration bytes, empty fallback.",
+      "status": "completed",
+      "activeForm": "Writing test-results",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428207,
+      "updatedAt": 1788443993378
+    },
+    {
+      "id": "4",
+      "subject": "Write stack-trace.tsx organism",
+      "description": "port-at-parity: root (trace, open/defaultOpen/onOpenChange, onFilePathClick), Header, Error/Type/Message, Actions/CopyButton/ExpandButton (passive rotating chevron), Content (bounded host + horizontal scroll), Frames (showInternalFrames dimming, file:line:col press target, No stack frames empty).",
+      "status": "completed",
+      "activeForm": "Writing stack-trace organism",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428207,
+      "updatedAt": 1788443613881
+    },
+    {
+      "id": "5",
+      "subject": "Register items in registry.json + build",
+      "description": "Add stack-trace (lib), stack-trace, schema-display, test-results items with absolute {engine} registry dependency URLs matching ACTUAL imports. Run pnpm registry:build.",
+      "status": "completed",
+      "activeForm": "Registering items",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428207,
+      "updatedAt": 1788444076965
+    },
+    {
+      "id": "6",
+      "subject": "Write tests (3 files) + stories (Data.stories.tsx)",
+      "description": "tests/stack-trace.test.ts (real captured traces per data-schema), schema-display.test.ts (method meta, path segments), test-results.test.ts (duration formats, status meta, progress labels). Data.stories.tsx 'AI Elements/Data' with boards, sandboxes, contract guards.",
+      "status": "completed",
+      "activeForm": "Writing tests and stories",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428208,
+      "updatedAt": 1788444485962
+    },
+    {
+      "id": "7",
+      "subject": "Safelist scan + all gates green",
+      "description": "Cross-file scan for classes whose only home is new files (incl. /NN modifiers); add to class-safelist.tsx. Gates: pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint.",
+      "status": "completed",
+      "activeForm": "Running safelist scan and gates",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788443428208,
+      "updatedAt": 1788445209557
+    }
+  ]
+}

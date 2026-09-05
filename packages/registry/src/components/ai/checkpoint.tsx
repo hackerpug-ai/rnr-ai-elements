@@ -10,8 +10,9 @@ import { Alert, View, type ViewProps } from 'react-native';
  * Checkpoint — a restorable point in the transcript.
  *
  * Reads as a DIVIDER, not a message: a hairline rule through the row with the label
- * centred on it. The web original does this with absolute positioning; on React Native it
- * is [flex-1 rule][content][flex-1 rule], which is simpler and behaves better.
+ * centred on it. The web original lays the label first with a trailing Separator filling
+ * the row; this port centers the label between two rules instead — a deliberate composition
+ * change recorded in the style-parity remediation ledger (report §4).
  *
  * RESTORING IS DESTRUCTIVE. It truncates the transcript — setMessages(slice(0, i + 1)) in
  * the web original — and a mistap loses everything after this point. The web version puts

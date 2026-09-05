@@ -1,0 +1,77 @@
+{
+  "nextId": 7,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Write shared lib modules: status.ts + reasoning-lifecycle.ts",
+      "description": "Create packages/registry/src/lib/status.ts (StatusTone, the ONE auditable statusColor map with the three non-token colors per styling contract) and packages/registry/src/lib/reasoning-lifecycle.ts (pure reducer: idle/streaming lifecycle, auto-open on stream start, auto-close after 1000ms, userTouched wins, defaultOpen never auto-closes, duration tracking). Both Vitest-clean (zero RN imports).",
+      "status": "completed",
+      "activeForm": "Writing shared lib modules",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788382301232,
+      "updatedAt": 1788382392840
+    },
+    {
+      "id": "2",
+      "subject": "Implement tool, reasoning, task, question components",
+      "description": "tool.tsx (+tool.logic.ts), reasoning.tsx, task.tsx (+task.logic.ts), question.tsx under packages/registry/src/components/ai/. Engine-agnostic imports via @/registry/{engine}/ aliases, compose vendored RNR Badge/Collapsible/Button/Text/Icon, chevron rotation via Reanimated gated on ReduceMotion.System, pulsing running-clock gated on useReducedMotion, NativeOnlyAnimatedView for task icon swap, ToolInput tolerant of partial JSON, mono via lib/mono.",
+      "status": "completed",
+      "activeForm": "Writing the four organism components",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788382307938,
+      "updatedAt": 1788382847262
+    },
+    {
+      "id": "3",
+      "subject": "Wire registry.json items + rnr-boundary type declarations",
+      "description": "Add boundary module declarations for ui/badge + ui/collapsible + ui/native-only-animated-view in packages/registry/types/rnr-boundary.d.ts. Add 6 items to packages/registry/registry.json (status, reasoning-lifecycle libs; tool, reasoning, task, question components) with absolute-URL registryDependencies carrying the {engine} placeholder.",
+      "status": "completed",
+      "activeForm": "Wiring registry + boundary types",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788382312194,
+      "updatedAt": 1788382957025
+    },
+    {
+      "id": "4",
+      "subject": "Write Vitest logic-tier tests",
+      "description": "tests/agent-status.test.ts (tool status→label/tone/icon-name coverage of ALL 7 AI SDK states, resolveToolLabel precedence, formatToolInput tolerant of partial JSON, task status map) and tests/reasoning-lifecycle.test.ts (open on stream start, close scheduled 1s after end, userTouched wins, never auto-reopens, defaultOpen exception, duration math, label fn incl. fallback reachability).",
+      "status": "completed",
+      "activeForm": "Writing Vitest logic tests",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788382316486,
+      "updatedAt": 1788383096007
+    },
+    {
+      "id": "5",
+      "subject": "Write Agent.stories.tsx",
+      "description": "apps/harness/src/stories/Agent.stories.tsx, title 'AI Elements/Agent', one story per component with every state/variant visible and realistic AI SDK-shaped fixtures; primitive-prop controls where useful.",
+      "status": "completed",
+      "activeForm": "Writing the Agent story file",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788382322709,
+      "updatedAt": 1788383363047
+    },
+    {
+      "id": "6",
+      "subject": "Gate script + run all gates green",
+      "description": "Write the missing scripts/check-registry-fresh.ts (referenced by package.json but never committed — baseline proof captured: ERR_MODULE_NOT_FOUND on clean tree). Then run pnpm typecheck && pnpm lint && pnpm test && pnpm registry:build && pnpm check:registry + check-contract, leave all green, capture verbatim tails. Commit nothing.",
+      "status": "completed",
+      "activeForm": "Running gates and writing the freshness script",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788382328798,
+      "updatedAt": 1788383557532
+    }
+  ]
+}

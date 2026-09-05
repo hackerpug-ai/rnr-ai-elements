@@ -6,30 +6,40 @@
  * The web original renders its `output` string through `ansi-to-react`, which turns ANSI
  * escape sequences into inline styles with hardcoded hex colors. Both halves are foreign
  * here: React Native has no DOM spans, and the styling contract forbids color literals.
- * So the port owns a small SGR tokenizer instead, and its COLOR MAP compresses onto the
- * house palette exactly the way commit.logic's file-status map does — every hue resolves
- * to an RNR role or to one of the THREE sanctioned escape-hatch colors confined to
- * lib/status.ts. No fourth color exists anywhere in this file.
+ * So the port owns a small SGR tokenizer instead, and its COLOR MAP resolves onto
+ * fixed-palette classes the way the surface itself does (remediation row 2): the terminal
+ * converged to the web's always-dark `bg-zinc-950` surface (terminal.tsx web :250), so
+ * scheme-flipping RNR roles (text-foreground, text-muted-foreground, text-primary) would
+ * render invisible in light mode — dark text on the dark surface. The fixed zinc/blue
+ * Tailwind-default classes are the faithful equivalent of the web's always-dark terminal;
+ * the consumer declares them in `@theme` (the remediation palette slice in the harness
+ * global.css). The sanctioned lib/status.ts escape colors stay for red/green/orange —
+ * green-600/orange-600 read fine on zinc-950 and their dark: twins are already correct.
+ * No color literal exists anywhere in this file.
  *
  * THE COMPRESSION TABLE, DECLARED (color is never the sole channel — WCAG 1.4.1 — the
  * log text itself carries the information):
- *   black   → text-muted-foreground        (the dim pole of the token ramp)
+ *   black   → text-zinc-500               (the dim pole of the fixed ramp)
  *   red     → statusColor.error            (text-destructive)
  *   green   → statusColor.success          (text-green-600 dark:text-green-500)
  *   yellow  → statusColor.denied           (text-orange-600 dark:text-orange-500)
- *   blue    → text-primary                 (the accent role)
- *   magenta → text-primary                 (declared compression — runs out of hues)
- *   cyan    → text-primary                 (declared compression)
- *   white   → text-foreground
+ *   blue    → text-blue-400                (the web's bright ANSI blue, legible on zinc-950)
+ *   magenta → text-blue-400                (declared compression — runs out of hues)
+ *   cyan    → text-blue-400                (declared compression)
+ *   white   → text-zinc-100
  * The BRIGHT half (90–97) resolves to its base color's class plus a `font-medium` weight
- * bump rather than a second hue — every rendered color stays inside the sanctioned set.
- * Extended palettes (38;5;N / 38;2;R;G;B) have no token counterpart at all, so 38/48
+ * bump rather than a second hue — every rendered color stays inside the declared set.
+ * Extended palettes (38;5;N / 38;2;R;G;B) have no class counterpart at all, so 38/48
  * resolve to the DEFAULT foreground and their parameter run is consumed (a stray `5`
  * must never apply as a stray SGR).
  *
- * Backs: 40/100 → bg-muted (neutral); 47/107 → bg-foreground forced with
- * text-background (the inverse look, token-pure); the colored middles (41–46, 101–106)
- * → bg-primary forced with text-primary-foreground. Backgrounds never ship a hue.
+ * Backs: 40/100 → bg-zinc-800 (neutral); 47/107 → bg-zinc-100 forced with
+ * text-zinc-950 (the inverse look); the colored middles (41–46, 101–106) → bg-zinc-700
+ * forced with text-zinc-100. Backgrounds never ship a hue.
+ *
+ * ON THE RECORD: the web's streaming cursor (`ml-0.5 h-4 w-2 bg-zinc-100 animate-pulse`,
+ * terminal.tsx web :217) stays replaced by the port's reduced-motion-gated Shimmer text
+ * — the recorded keep from the original port; this remediation does not change it.
  *
  * Attributes PERSIST ACROSS NEWLINES — a color opened on one line is still open on the
  * next (real terminal semantics, and how streamed logs actually arrive).
@@ -50,17 +60,18 @@ export type AnsiColorName =
 
 /**
  * color name → precomposed text class. The only color table in the port; every entry is
- * an RNR role or a lib/status.ts escape, auditable right here.
+ * an RNR role, a fixed remediation-palette class, or a lib/status.ts escape, auditable
+ * right here. Fixed zinc/blue throughout: the surface is scheme-independent.
  */
 export const ANSI_COLOR_CLASS: Record<AnsiColorName, string> = {
-  black: 'text-muted-foreground',
+  black: 'text-zinc-500',
   red: statusColor.error,
   green: statusColor.success,
   yellow: statusColor.denied,
-  blue: 'text-primary',
-  magenta: 'text-primary',
-  cyan: 'text-primary',
-  white: 'text-foreground',
+  blue: 'text-blue-400',
+  magenta: 'text-blue-400',
+  cyan: 'text-blue-400',
+  white: 'text-zinc-100',
 };
 
 /** SGR 30–37 → name. */
@@ -88,24 +99,25 @@ const BRIGHT_FG_CODES: Record<number, AnsiColorName> = {
 };
 
 /**
- * The three background shapes a token palette can express: the neutral wash, the
+ * The three background shapes a fixed palette can express: the neutral wash, the
  * inverse block, and the accent block. Compressed from the web's 16 — colored
- * backgrounds have no token counterpart, so the whole middle band resolves to accent.
+ * backgrounds have no class counterpart, so the whole middle band resolves to accent.
  */
 export type AnsiBackground = 'neutral' | 'inverse' | 'accent';
 
 /** background shape → precomposed background class. */
 export const ANSI_BG_CLASS: Record<AnsiBackground, string> = {
-  neutral: 'bg-muted',
-  inverse: 'bg-foreground',
-  accent: 'bg-primary',
+  neutral: 'bg-zinc-800',
+  inverse: 'bg-zinc-100',
+  accent: 'bg-zinc-700',
 };
 
-/** The foreground class a background forces, so text stays legible on its own block. */
-const BG_FORCED_FG: Record<AnsiBackground, string | null> = {
+/** The foreground class a background forces, so text stays legible on its own block.
+ *  Exported so the guard test can iterate it alongside the two color maps. */
+export const BG_FORCED_FG: Record<AnsiBackground, string | null> = {
   neutral: null,
-  inverse: 'text-background',
-  accent: 'text-primary-foreground',
+  inverse: 'text-zinc-950',
+  accent: 'text-zinc-100',
 };
 
 /** SGR 40–47 / 100–107 → shape. */
@@ -152,7 +164,7 @@ export function spanClassNames(state: SpanState): string[] {
   if (state.underline) classes.push('underline');
   if (state.bright) classes.push('font-medium');
   if (state.fg) classes.push(ANSI_COLOR_CLASS[state.fg]);
-  else if (state.dim) classes.push('text-muted-foreground');
+  else if (state.dim) classes.push('text-zinc-500');
   if (state.bg) {
     classes.push(ANSI_BG_CLASS[state.bg]);
     const forced = BG_FORCED_FG[state.bg];

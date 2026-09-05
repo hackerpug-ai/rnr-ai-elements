@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback } from '@/registry/{engine}/components/ui/avatar';
-import { Badge } from '@/registry/{engine}/components/ui/badge';
 import { Button } from '@/registry/{engine}/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/registry/{engine}/components/ui/collapsible';
 import { Icon } from '@/registry/{engine}/components/ui/icon';
@@ -39,11 +38,12 @@ import type { CommitFileStatus as CommitFileStatusValue } from './commit.logic';
  * message, and author, and copy the hash with one tap.
  *
  * COMPOSITION: the container is the web's Collapsible with the card look (rounded-lg
- * border bg-card — the porting verdict's "Card of hash, message, and author" as the
- * Card-shaped Collapsible the web actually renders; queue.tsx's QueueSection is the
- * same composition). File rows compose the `item` atom — the house list row. The hash
- * renders as a Badge chip (task-brief contract) with the git-commit mark and the house
- * mono family; `shortSha(hash)` from commit.logic is the expected text.
+ * border bg-background — the web writes `bg-background` on the root, commit.tsx:26;
+ * queue.tsx's QueueSection is the same composition). File rows compose the `item`
+ * atom — the house list row. The hash is the web's bare mono text + inline git-commit
+ * mark (commit.tsx:59-60 — no chip chrome; the web spans inherit the header's
+ * foreground, encoded explicitly for dark mode); `shortSha(hash)` from commit.logic
+ * is the expected text.
  *
  * TOUCH ADAPTATIONS, DECLARED:
  *  - the web's affordance for "this header opens files" is a cursor hover — dead under
@@ -91,7 +91,7 @@ function Commit({ defaultOpen = false, onOpenChange, className, children, ...pro
       <Collapsible
         open={open}
         onOpenChange={handleOpenChange}
-        className={cn('overflow-hidden rounded-lg border border-border bg-card', className)}
+        className={cn('overflow-hidden rounded-lg border border-border bg-background', className)}
         {...props}
       >
         {children}
@@ -141,15 +141,21 @@ function CommitHeader({ className, children, ...props }: ViewProps & { children?
   );
 }
 
-/** The hash chip: the git-commit mark plus the caller's short SHA in the house mono. */
+/**
+ * The hash: the git-commit mark plus the caller's short SHA in the house mono — the
+ * web's bare `font-mono text-xs` span with an inline size-3 icon (commit.tsx:59-60);
+ * the invented Badge chip is gone. The web spans inherit the header's foreground;
+ * RN icons carry no inherited text color, so the mark states `text-foreground`
+ * explicitly and the Text rides the default foreground.
+ */
 function CommitHash({ children, className }: { children: string; className?: string }) {
   return (
-    <Badge variant="outline" className={cn('shrink-0', className)}>
-      <Icon as={GitCommitIcon} size={12} className="text-muted-foreground" />
-      <Text style={monoStyle} className="text-xs text-muted-foreground">
+    <View className={cn('shrink-0 flex-row items-center', className)}>
+      <Icon as={GitCommitIcon} size={12} className="text-foreground" />
+      <Text style={monoStyle} className="ml-1 text-xs">
         {children}
       </Text>
-    </Badge>
+    </View>
   );
 }
 

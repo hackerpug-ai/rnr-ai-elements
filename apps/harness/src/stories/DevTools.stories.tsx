@@ -78,6 +78,10 @@ const TERMINAL_ANSI = [
   '\x1b[33mwarn\x1b[0m storybook:web cannot render colour (known defect)',
   '\x1b[31m✗\x1b[0m device sign-off pending',
   '\x1b[2mlast run 2 minutes ago\x1b[0m',
+  // Remediation row 2 capture-provision: the 47 (white-bg) and 7 (inverse) spans
+  // resolve to the bg-zinc-100 + text-zinc-950 pair — the newly safelisted classes
+  // the on-device capture must prove compile and render.
+  '\x1b[47m SELECTED \x1b[0m  \x1b[7m reverse-video \x1b[0m',
 ].join('\n');
 
 const TERMINAL_LONG = [

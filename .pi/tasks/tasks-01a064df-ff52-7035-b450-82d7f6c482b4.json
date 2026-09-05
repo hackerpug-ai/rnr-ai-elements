@@ -1,0 +1,101 @@
+{
+  "nextId": 9,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Read project law, contracts, PRD verdicts, and Wave 6 conventions",
+      "description": "Read AGENTS.md, styling contract, component contract, PRD verdicts (04-uc-agent.md, 01-scope.md), web originals for Agent/ChainOfThought/Plan/Confirm/Queue, and Wave 6 files (tool, reasoning, task, question, checkpoint, status.ts, stories, registry.json, build script).",
+      "status": "completed",
+      "activeForm": "Reading project law and conventions",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818529,
+      "updatedAt": 1788400152600
+    },
+    {
+      "id": "2",
+      "subject": "Implement agent organism",
+      "description": "packages/registry/src/components/ai/agent.tsx composing persona molecule + run state + actions; status tones from lib/status.ts.",
+      "status": "completed",
+      "activeForm": "Implementing agent organism",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818529,
+      "updatedAt": 1788400258814
+    },
+    {
+      "id": "3",
+      "subject": "Implement chain-of-thought organism",
+      "description": "packages/registry/src/components/ai/chain-of-thought.tsx + logic.ts; multi-step list, status→meta pure function (Vitest), reuse lib/reasoning-lifecycle.ts.",
+      "status": "completed",
+      "activeForm": "Implementing chain-of-thought",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818530,
+      "updatedAt": 1788400437105
+    },
+    {
+      "id": "4",
+      "subject": "Implement plan organism",
+      "description": "packages/registry/src/components/ai/plan.tsx composing task organism primitives without duplicating internals.",
+      "status": "completed",
+      "activeForm": "Implementing plan organism",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818530,
+      "updatedAt": 1788400603218
+    },
+    {
+      "id": "5",
+      "subject": "Implement confirmation organism",
+      "description": "packages/registry/src/components/ai/confirmation.tsx; RNR Button variants, outcome persists + other disables, selection state machine in .logic.ts (Vitest).",
+      "status": "completed",
+      "activeForm": "Implementing confirmation",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818530,
+      "updatedAt": 1788400757488
+    },
+    {
+      "id": "6",
+      "subject": "Implement queue organism",
+      "description": "packages/registry/src/components/ai/queue.tsx; Collapsible + item rows + onRemove callback, caller-owned state.",
+      "status": "completed",
+      "activeForm": "Implementing queue organism",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818531,
+      "updatedAt": 1788401027885
+    },
+    {
+      "id": "7",
+      "subject": "Write Run.stories.tsx + Vitest tests",
+      "description": "New apps/harness/src/stories/Run.stories.tsx with title 'AI Elements/Run', all states/variants, one sandbox per component; tests in tests/ for every pure function, mutation-resistant style.",
+      "status": "completed",
+      "activeForm": "Writing stories and tests",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818531,
+      "updatedAt": 1788401679220
+    },
+    {
+      "id": "8",
+      "subject": "Run gates and report",
+      "description": "pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint — leave green, capture verbatim tails, commit nothing.",
+      "status": "completed",
+      "activeForm": "Running gates",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788398818531,
+      "updatedAt": 1788401679221
+    }
+  ]
+}

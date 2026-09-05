@@ -37,8 +37,8 @@ export const TOOL_STATUS_KEYS = [
 
 /** Lucide icon NAME (kebab-case); the component resolves the component. */
 export type ToolStatusIconName =
-  | 'circle'
   | 'clock'
+  | 'circle'
   | 'circle-check'
   | 'circle-x'
   | 'circle-slash'
@@ -49,7 +49,11 @@ export type ToolStatusMeta = {
   label: string;
   tone: StatusTone;
   iconName: ToolStatusIconName;
-  /** Precomposed text class from the shared statusColor map. */
+  /**
+   * Precomposed text class. '' inherits the Badge's own color — the web gives the
+   * streaming/running states no hue (remediation row 4). Everything else is either a
+   * shared statusColor value or the web's approval hues (yellow/blue, dark twins).
+   */
   className: string;
 };
 
@@ -60,19 +64,29 @@ export type ToolStatusMeta = {
  * approval-requested→Awaiting Approval, approval-responded→Responded,
  * output-denied→Denied.
  *
+ * HUES CONVERGE TO THE WEB (remediation row 4, web tool.tsx:62-72): streaming and
+ * running get NO color ('' — the badge's secondary surface carries them, exactly the
+ * web's uncolored Pending/Running); approval-requested is yellow-600 (dark:yellow-400)
+ * and approval-responded is blue-600 (dark:blue-400), the web's exact approval pair.
+ * output-available/output-error/output-denied keep the shared statusColor values — the
+ * destructive token for error is the recorded keep versus the web's red-600, and
+ * denied's orange-600 already matches the web. The shared lib/status.ts map is
+ * INTENTIONALLY UNTOUCHED: its other consumers keep the recorded 5-tone compression.
+ *
  * Icon + color ride along because color is never the sole channel (WCAG 1.4.1): a
  * completed call and an errored one must tell apart with the badge text hidden. The
- * clock (input-available) is the one icon the component animates — a pulse, gated on
- * reduced motion, per the design lens.
+ * web pairs the plain circle with streaming and the clock with running (web
+ * tool.tsx:61-63); the pulse is the one icon the component animates, and it stays on
+ * input-available only — gated on reduced motion, per the design lens.
  */
 export const TOOL_STATUS_META: Record<ToolStatus, ToolStatusMeta> = {
-  'input-streaming': { label: 'Pending', tone: 'pending', iconName: 'circle', className: statusColor.pending },
-  'input-available': { label: 'Running', tone: 'running', iconName: 'clock', className: statusColor.running },
+  'input-streaming': { label: 'Pending', tone: 'pending', iconName: 'circle', className: '' },
+  'input-available': { label: 'Running', tone: 'running', iconName: 'clock', className: '' },
   'output-available': { label: 'Completed', tone: 'success', iconName: 'circle-check', className: statusColor.success },
   'output-error': { label: 'Error', tone: 'error', iconName: 'circle-x', className: statusColor.error },
   'output-denied': { label: 'Denied', tone: 'denied', iconName: 'circle-slash', className: statusColor.denied },
-  'approval-requested': { label: 'Awaiting Approval', tone: 'running', iconName: 'circle-help', className: statusColor.running },
-  'approval-responded': { label: 'Responded', tone: 'pending', iconName: 'circle-check', className: statusColor.pending },
+  'approval-requested': { label: 'Awaiting Approval', tone: 'running', iconName: 'circle-help', className: 'text-yellow-600 dark:text-yellow-400' },
+  'approval-responded': { label: 'Responded', tone: 'pending', iconName: 'circle-check', className: 'text-blue-600 dark:text-blue-400' },
 };
 
 export function toolStatusMeta(state: ToolStatus): ToolStatusMeta {

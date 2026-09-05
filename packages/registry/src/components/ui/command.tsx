@@ -153,6 +153,12 @@ function Command({
             placeholder={placeholder}
             value={query}
             onChangeText={setQuery}
+            // The web selectors' search row (`h-auto py-3.5` — model-selector.tsx:70,
+            // voice-selector.tsx:141 CommandInput): h-auto drops the input-group
+            // atom's fixed h-10 and py-3.5 replaces its py-2 — both halves of the
+            // override are needed, padding alone in a fixed-height field clips text.
+            // Substrates only, other InputGroupInput consumers keep the atom default.
+            className="h-auto py-3.5"
             // Do NOT autofocus: on mobile that slams the keyboard up over the list the
             // user came to read.
             autoFocus={false}

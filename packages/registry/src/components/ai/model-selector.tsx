@@ -3,7 +3,6 @@ import { Command } from '@/registry/{engine}/components/ui/command';
 import { Icon } from '@/registry/{engine}/components/ui/icon';
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemMedia,
@@ -13,7 +12,7 @@ import { Text } from '@/registry/{engine}/components/ui/text';
 import { cn } from '@/registry/{engine}/lib/utils';
 import { CheckIcon, ChevronsUpDownIcon, CpuIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import {
   resolveModelLabel,
   toCommandItems,
@@ -141,11 +140,16 @@ function ModelSelector({
           <ItemTitle>{item.label}</ItemTitle>
           {item.description ? <ItemDescription>{item.description}</ItemDescription> : null}
         </ItemContent>
+        {/* The web check is CONSUMER-RENDERED TRAILING (model-selector.tsx:302-306):
+            selected rows render a CheckIcon at ml-auto size-4, unselected rows a
+            same-size placeholder div — the reserved 16px slot keeps rows from
+            shifting on selection change. Port: Icon wrapper (never a raw lucide
+            element) vs an equal-size empty View. */}
         {selected ? (
-          <ItemActions>
-            <Icon as={CheckIcon} size={16} className="text-primary" />
-          </ItemActions>
-        ) : null}
+          <Icon as={CheckIcon} size={16} className="ml-auto" />
+        ) : (
+          <View className="ml-auto size-4" />
+        )}
       </Item>
     );
   }

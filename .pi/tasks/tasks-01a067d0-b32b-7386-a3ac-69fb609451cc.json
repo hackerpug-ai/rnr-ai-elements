@@ -1,0 +1,77 @@
+{
+  "nextId": 7,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Write web-preview.logic.ts (URL normalization/allowlist)",
+      "description": "Pure logic module: normalizePreviewUrl with https-default prefixing, localhost/127.0.0.1 http prefixing, known-scheme allowlist gate via lib/url's isSafeOpenUrl. Zero react-native imports.",
+      "status": "completed",
+      "activeForm": "Writing web-preview.logic.ts",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788449415164,
+      "updatedAt": 1788449465080
+    },
+    {
+      "id": "2",
+      "subject": "Write web-preview.tsx organism",
+      "description": "WebPreview/WebPreviewNavigation/WebPreviewNavigationButton/WebPreviewUrl/WebPreviewBody + useWebPreview. RN WebView peer import, sandbox prop map (originWhitelist, javaScriptEnabled, allowFileAccess*, setSupportMultipleWindows), error state (AC-3), loading overlay, reload via context. Console dropped per verdict.",
+      "status": "completed",
+      "activeForm": "Writing web-preview.tsx",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788449415164,
+      "updatedAt": 1788449671642
+    },
+    {
+      "id": "3",
+      "subject": "Boundary declaration + registry.json item",
+      "description": "Add declare module 'react-native-webview' to packages/registry/types/rnr-boundary.d.ts; append web-preview item to packages/registry/registry.json with dependencies: [\"react-native-webview\"] (AC-2 install notice).",
+      "status": "completed",
+      "activeForm": "Adding boundary declaration + registry entry",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788449431539,
+      "updatedAt": 1788449770748
+    },
+    {
+      "id": "4",
+      "subject": "Resolver shims for the webview peer (both harnesses + web storybook)",
+      "description": "Redirect react-native-webview to the harness's own install in apps/harness/metro.config.js; own-first-then-uniwind-harness fallback in apps/harness-nativewind/metro.config.js; vite alias in .storybook-web/main.ts. Harness-only plumbing — a real consumer resolves the peer naturally post-install.",
+      "status": "completed",
+      "activeForm": "Adding Metro/Vite resolver shims",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788449431540,
+      "updatedAt": 1788449825591
+    },
+    {
+      "id": "5",
+      "subject": "Stories + Vitest tests",
+      "description": "apps/harness/src/stories/WebPreview.stories.tsx (title 'AI Elements/Web Preview'; live https://example.com story, failed-load story, sandbox with controls, hook-throw probe); tests/web-preview.test.ts for normalizePreviewUrl.",
+      "status": "completed",
+      "activeForm": "Writing stories and tests",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788449431540,
+      "updatedAt": 1788449997149
+    },
+    {
+      "id": "6",
+      "subject": "Safelist additions + all gates green",
+      "description": "Cross-file scan for new class tokens → safelist additions in class-safelist.tsx; run pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint + check-contract.ts.",
+      "status": "completed",
+      "activeForm": "Running gates and safelisting",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788449431540,
+      "updatedAt": 1788450216292
+    }
+  ]
+}
