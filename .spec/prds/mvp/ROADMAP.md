@@ -29,12 +29,12 @@ What stands between that and a consumer actually installing it is four sprints, 
 
 ## Sprint Sequence
 
-| # | Sprint | Fidelity | Gate | Tasks | Demonstrates | Deps |
-|---|--------|----------|------|-------|--------------|------|
-| 01 | [installed-app-cold-boots-on-both-platforms](#sprint-01) | committed | A stranger runs one RNR CLI command against a tag-pinned URL, cold-boots the example a… | 8 | `UC-REG-01` | — |
-| 02 | [sprint-02-android-web-and-expo-go-parity-for-the-shipped-set](#sprint-02) | provisional | A stranger can walk all 56 shipped registry items through their loading, empty, error … | ~9 | `UC-REG-02`, `UC-REG-04`, `UC-FOUND-02` | 01 |
-| 03 | [sprint-05-published-ledger-and-install-page](#sprint-03) | provisional | A web developer with a shipping AI Elements app opens the published install page, look… | ~5 | `UC-REG-03`, `UC-REG-06` | 01 |
-| 04 | [sprint-06-upstream-rnr-drift-guard](#sprint-04) | provisional | A maintainer installs the full registry into a clean app against RNR's LIVE published … | ~4 | `UC-REG-05` | 01 |
+| # | Sprint | Fidelity | Gate | Tasks | Demonstrates | Dependencies | Status |
+|---|--------|----------|------|-------|--------------|--------------|--------|
+| 01 | [Sprint 01: Installed app cold-boots on both platforms](#sprint-01) | committed | A stranger runs one RNR CLI command against a tag-pinned URL, cold-boots the example a… | 8 | `UC-REG-01` | — | Planned |
+| 02 | [Sprint 02: Android, web and Expo Go parity for the shipped set](#sprint-02) | provisional | A stranger can walk all 56 shipped registry items through their loading, empty, error … | ~9 | `UC-REG-02`, `UC-REG-04`, `UC-FOUND-02` | 01 | Planned |
+| 03 | [Sprint 03: Published ledger and install page](#sprint-03) | provisional | A web developer with a shipping AI Elements app opens the published install page, look… | ~5 | `UC-REG-03`, `UC-REG-06` | 01 | Planned |
+| 04 | [Sprint 04: Upstream RNR drift guard](#sprint-04) | provisional | A maintainer installs the full registry into a clean app against RNR's LIVE published … | ~4 | `UC-REG-05` | 01 | Planned |
 
 **REG-group coverage:** `UC-REG-01` → 01 · `UC-REG-02` → 02 · `UC-REG-03`, `UC-REG-06` → 03 · `UC-REG-05` → 04 · `UC-REG-04` → parked (see Open decisions).
 
@@ -46,7 +46,10 @@ What stands between that and a consumer actually installing it is four sprints, 
 
 <a id="sprint-01"></a>
 
-### Sprint 01: A CLI-installed AI Elements transcript cold-boots and renders on iOS and Android, and the same flow fails when the seed is removed
+### Sprint 01: Installed app cold-boots on both platforms
+
+*A CLI-installed AI Elements transcript cold-boots and renders on iOS and Android, and the same flow fails when the seed is removed*
+
 
 **Sequence:** 1  
 **Status:** Planned  
@@ -120,7 +123,10 @@ What stands between that and a consumer actually installing it is four sprints, 
 
 <a id="sprint-02"></a>
 
-### Sprint 02: Every shipped item, in every state, on Android and web and inside Expo Go
+### Sprint 02: Android, web and Expo Go parity for the shipped set
+
+*Every shipped item, in every state, on Android and web and inside Expo Go*
+
 
 **Sequence:** 2  
 **Status:** Planned  
@@ -161,7 +167,10 @@ What stands between that and a consumer actually installing it is four sprints, 
 
 <a id="sprint-03"></a>
 
-### Sprint 03: One published page answers what ships, what does not, and what it needs
+### Sprint 03: Published ledger and install page
+
+*One published page answers what ships, what does not, and what it needs*
+
 
 **Sequence:** 3  
 **Status:** Planned  
@@ -202,7 +211,10 @@ What stands between that and a consumer actually installing it is four sprints, 
 
 <a id="sprint-04"></a>
 
-### Sprint 04: An upstream RNR change cannot silently break a consumer's install
+### Sprint 04: Upstream RNR drift guard
+
+*An upstream RNR change cannot silently break a consumer's install*
+
 
 **Sequence:** 4  
 **Status:** Planned  
