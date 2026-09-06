@@ -6,10 +6,11 @@
 > Points: 8  
 > Type: INFRA
 > Wave: D  
-> Status: 🔄 in_progress
+> Status: ✅ Completed
 > TDD Mode: `skipped` · RED_GREEN_REQUIRED: no
 > Proposed By: `react-native-reusables-planner`
 > Depends On: TASK-F3
+> Commit: 6c39b7df31b6e6a167cc1a7c7c8be76570523c07
 
 **Sizing rationale.** THE CONDITIONAL IS THE POINT AND IT IS NOT AVERAGED. Two branches, and which one runs is unknowable until TASK-F3 has installed once. BRANCH A — the CLI already rewrites the three-segment `@/registry/{engine}/components/ai|components/ui|lib` shape: this task collapses to pinning the evidence and adding the regression assertion, and is worth 2 points. BRANCH B — it does not: the source alias must change to a shape the CLI does rewrite, and 50 files, the emitter and both harness tsconfigs migrate together, which is 8. Carried at 8 because a sprint sized on the optimistic branch has no slack when the pessimistic one fires, and because BRANCH B is the branch that makes this the sprint's real unknown. Re-size to 2 the moment AC-1's verdict is recorded — do not silently keep 8 if Branch A holds.
 
