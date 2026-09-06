@@ -1,0 +1,17 @@
+ROW 4 — NETWORK DISCRIMINATOR (/Users/justinrich/.cache/agent-scratch/pristine-scratch-app/apps/example, a git-archive HEAD copy of the TASK-F1 scaffold = fixture 'pristine-scratch-app': rnr-initialized uniwind app, PortalHost mounted, 0 tsx under components/{ai,ui})
+
+Mechanism: NO passwordless sudo on this machine, so the /etc/hosts block was replaced by a dead-endpoint proxy block:
+  NODE_USE_ENV_PROXY=1 HTTPS_PROXY=http://127.0.0.1:9 HTTP_PROXY=http://127.0.0.1:9 ALL_PROXY=http://127.0.0.1:9
+  (port 9 = discard, nothing listens; NODE_USE_ENV_PROXY=1 is required for node fetch/undici to honor proxy env — the observer run in green/row2 proves this env shape routes ALL of this CLI's fetches through the proxy)
+
+RESULTS:
+  pre-count  components/{ai,ui}/**/*.tsx : 0
+  blocked run, RNR CLI wrapper exit      : 0  <-- CLI DEFECT: wrapper logs ERROR but exits 0
+  blocked run, inner resolver (shadcn) exit: 1  <-- the process that fetches+writes exits NON-ZERO
+  blocked-run log                        : ECONNREFUSED 127.0.0.1:9 on the FIRST pinned URL fetch
+  post-count components/{ai,ui}/**/*.tsx : 0
+
+POSITIVE CONTROL (same app, network open):
+  exit 0, post-count 17 tsx files -> the app is viable; network access is the only variable
+
+Files appearing under block would have proven local/cached sourcing. None appeared.
