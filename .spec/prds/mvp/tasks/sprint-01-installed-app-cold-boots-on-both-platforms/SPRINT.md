@@ -3,7 +3,7 @@ sprint: 01
 title: Installed app cold-boots on both platforms
 sequence: 1
 timeline: Phase 1
-status: Planned
+status: in_progress
 planned_from_roadmap_sha: fa93d752e04d1603aa7376d72a3b7f9083a60239a866819533eb196d6be93996
 planned_from_source_sha: 500727937570f4ed006939ffc571aa6629ad908b
 source_kind: git-head
@@ -14,11 +14,13 @@ planned_at: 2026-09-05
 
 **Sequence:** 1
 **Timeline:** Phase 1
-**Status:** Planned
+**Status:** in_progress
 
 ---
 
 ## Overview
+
+**Sprint branch:** sprint/sprint-01-installed-app-cold-boots-on-both-platforms — .kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base
 
 A CLI-installed AI Elements transcript cold-boots and renders on iOS and Android, and the same flow fails when the seed is removed
 
