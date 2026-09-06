@@ -1,0 +1,118 @@
+[2m[34mℹ[39m Styling Library: Uniwind[0m
+[15:34:40.632] DEBUG (#16): Add options: {
+  "args": {
+    "components": [
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/conversation.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/message.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/prompt-input.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/tool.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/context.json"
+    ]
+  },
+  "cwd": ".",
+  "yes": false,
+  "overwrite": false,
+  "all": false,
+  "path": ""
+}
+[15:34:40.637] DEBUG (#16): componentJsonConfig: {
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "uniwind",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "global.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+[15:34:40.637] DEBUG (#16): Selected components: https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/conversation.json, https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/message.json, https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/prompt-input.json, https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/tool.json, https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/context.json
+[15:34:40.643] DEBUG (#16): Running command: pnpm dlx shadcn@latest add https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/conversation.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/message.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/prompt-input.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/tool.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/context.json
+- Checking registry.
+✔ Checking registry.
+- Installing dependencies.
+- Installing dependencies.
+✔ Installing dependencies.
+- Updating files.
+✔ Created 22 files:
+  - components/ui/text.tsx
+  - components/ui/icon.tsx
+  - components/ui/avatar.tsx
+  - lib/markdown.ts
+  - components/ui/input.tsx
+  - components/ui/collapsible.tsx
+  - lib/mono.ts
+  - lib/status.ts
+  - components/ui/native-only-animated-view.tsx
+  - components/ui/progress.tsx
+  - components/ui/badge.tsx
+  - components/ui/button.tsx
+  - components/ui/empty.tsx
+  - components/ai/message.tsx
+  - components/ui/popover.tsx
+  - components/ai/tool.tsx
+  - components/ai/tool.logic.ts
+  - components/ui/input-group.tsx
+  - components/ai/conversation.tsx
+  - components/ai/context.tsx
+  - components/ai/context.logic.ts
+  - components/ai/prompt-input.tsx
+[15:34:52.511] DEBUG (#16): Doctor options: {
+  "args": {
+    "components": [
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/conversation.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/message.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/prompt-input.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/tool.json",
+      "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/context.json"
+    ]
+  },
+  "cwd": ".",
+  "yes": false,
+  "overwrite": false,
+  "all": false,
+  "path": "",
+  "summary": true
+}
+[15:34:52.513] DEBUG (#16): [32m✔[39m expo@~57.0.20 is installed
+[15:34:52.513] DEBUG (#16): [32m✔[39m react-native-reanimated@4.5.1 is installed
+[15:34:52.513] DEBUG (#16): [32m✔[39m react-native-safe-area-context@~5.7.0 is installed
+[15:34:52.513] DEBUG (#16): [32m✔[39m tailwindcss-animate@^1.0.7 is installed
+[15:34:52.513] DEBUG (#16): [32m✔[39m class-variance-authority@^0.7.1 is installed
+[15:34:52.513] DEBUG (#16): [32m✔[39m clsx@^2.1.1 is installed
+[15:34:52.513] DEBUG (#16): [32m✔[39m tailwind-merge@^3.6.0 is installed
+[15:34:52.514] DEBUG (#16): [32m✔[39m uniwind@^1.11.0 is installed
+[15:34:52.514] DEBUG (#16): [32m✔[39m tailwindcss@^3.4.14@undefined is installed
+[15:34:52.515] DEBUG (#30): [32m✔[39m Metro Config found
+[15:34:52.516] DEBUG (#31): [32m✔[39m Root Layout found
+[15:34:52.516] DEBUG (#16): [32m✔[39m Metro Config has withUniwindConfig(
+[15:34:52.516] DEBUG (#16): [32m✔[39m Root Layout has .css
+[15:34:52.516] DEBUG (#16): [32m✔[39m Root Layout has <PortalHost
+[15:34:52.517] DEBUG (#16): [32m✔[39m CSS found
+[15:34:52.517] DEBUG (#16): [32m✔[39m CSS has tailwindcss, uniwind
+[15:34:52.517] DEBUG (#16): [32m✔[39m CSS has background, foreground, card, popover, primary, secondary, muted, accent, destructive, border, input, ring, radius
+[15:34:52.521] DEBUG (#16): [32m✔[39m Theme has background, foreground, card, popover, primary, secondary, muted, accent, destructive, border, input, ring, radius
+[15:34:52.522] DEBUG (#16): [32m✔[39m Theme has NAV_THEME
+[15:34:52.522] DEBUG (#16): [32m✔[39m Utils has function cn(
+[15:34:52.523] DEBUG (#33): [32m✔[39m Deprecated @/lib/icons/iconWithClassName.ts not found
+[15:34:52.524] DEBUG (#34): [32m✔[39m Deprecated @/lib/constants.ts not found
+[15:34:52.524] DEBUG (#35): [32m✔[39m Deprecated @/lib/useColorScheme.tsx not found
+[15:34:52.525] DEBUG (#37): [32m✔[39m Deprecated @/components/ui/typography.tsx not found
+[2m[32m✔[39m All checks passed.[0m
+
+
+===== NETWORK OBSERVER LOG (local CONNECT-logging proxy on 127.0.0.1:9318 during the add above; NOT CLI output) =====
+   2 CONNECT api.expo.dev:443
+   1 CONNECT cdp.expo.dev:443
+   1 CONNECT raw.githubusercontent.com:443
+   1 CONNECT reactnativereusables.com:443
+  58 CONNECT registry.npmjs.org:443
+   1 CONNECT ui.shadcn.com:443

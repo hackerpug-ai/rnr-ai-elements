@@ -1,0 +1,14 @@
+ROW 6 — expo run:ios (apps/example, iPhone 17 Pro simulator)
+
+  npx expo run:ios --device 'iPhone 17 Pro' -> exit 0, 'Build Succeeded', installed + opened.
+  grep -c 'Cannot find module'  = 0
+  grep -ci 'unable to resolve'  = 0
+
+BUNDLE-SERVING HAZARD (resolved): two stale 'expo start' Metros from the PRIMARY checkout's apps/harness
+  were squatting ports 8081 and 8082. The dev client re-served the HARNESS bundle from 8081, which red-screens
+  on a null AsyncStorage native module — that red screen was NOT this app. Killed the two stale PIDs (82716,
+  91778; process hygiene, no repo changes), restarted Metro from apps/example on 8081, re-linked the dev client:
+  'iOS Bundled 7158ms expo-router/entry.js (1933 modules)', no resolution errors, app renders its index
+  screen ('AI Elements Example' header) — see ios-boot-screenshot.png.
+  Residual DevTools/inspector websocket ERROR lines in the Metro log are a dev-client debugger nuisance, not
+  bundling or module-resolution failures.

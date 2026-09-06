@@ -1,0 +1,23 @@
+ROW 5 — DIRTY-APP OVERWRITE PROMPT (/Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer — hostile-expo-app fixture)
+
+NOTE: tests/sprint-01/install-dirty-app.test.sh is TASK-F8's deliverable (wave G, outside this task's write scope).
+The hostile app was prepared by hand per the gate recipe: rnr-initialized scaffold + foreign components/ui/button.tsx
+(pill/square variants) + react-native-gesture-handler ^3.2.1 (npm-latest 3.x) + PortalHost REMOVED from app/_layout.tsx.
+
+STEP 13 (decline): prompt appeared BEFORE writes:
+  'The file button.tsx already exists. Would you like to overwrite? › (y/N)' -> answered n
+  CLI output: 'Created 21 files ... Skipped 1 file: - components/ui/button.tsx'
+  cmp button.before components/ui/button.tsx -> exit 0 (byte-identical)
+  --yes was NOT used.
+
+STEP 14: npx expo-doctor -> exit 1, 'react-native-gesture-handler  expected ~2.32.0  found 3.2.1' (Major version mismatches).
+  (also flags unrelated 'edgeToEdgeEnabled' app.json schema field from newer expo-doctor)
+
+STEP 15 (accept): answered y on re-run -> CLI proceeded; button.tsx OVERWRITTEN with the registry source
+  (cmp vs button.before now differs; file head = RNR button imports).
+  RNR CLI doctor in the hostile app: '✖ Root Layout — The PortalHost component is missing' + docs link = the
+  install-time PortalHost prerequisite message (launch-observation of the popover itself is TASK-F8's Maestro flow).
+
+FIXTURE DEVIATION: added .npmrc (legacy-peer-deps=true) to the hostile app — npm strict peer resolution rejects
+  reanimated 4.6.0 (peer worklets 0.12.x) vs pinned worklets 0.10.1 during the CLI's own expo-install step;
+  this is downstream of the prompt decision and orthogonal to every behavior tested here.
