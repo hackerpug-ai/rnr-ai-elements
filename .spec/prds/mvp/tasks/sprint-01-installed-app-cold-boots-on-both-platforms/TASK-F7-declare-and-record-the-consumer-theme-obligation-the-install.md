@@ -6,7 +6,7 @@
 > Points: 3  
 > Type: INFRA
 > Wave: D  
-> Status: ⬜ Pending    
+> Status: 🔄 in_progress
 > TDD Mode: `shared` · RED_GREEN_REQUIRED: no
 > Proposed By: `frontend-designer`
 > Depends On: TASK-F3

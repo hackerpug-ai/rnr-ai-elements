@@ -6,7 +6,7 @@
 > Points: 8  
 > Type: INFRA
 > Wave: D  
-> Status: ⬜ Pending    
+> Status: 🔄 in_progress
 > TDD Mode: `skipped` · RED_GREEN_REQUIRED: no
 > Proposed By: `react-native-reusables-planner`
 > Depends On: TASK-F3
