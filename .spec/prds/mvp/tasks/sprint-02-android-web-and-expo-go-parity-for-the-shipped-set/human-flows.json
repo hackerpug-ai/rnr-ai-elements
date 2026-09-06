@@ -1,0 +1,111 @@
+{
+  "deferred_journeys": [
+    {
+      "covers_ucs": ["UC-CHAT-01", "UC-CHAT-02", "UC-CHAT-03", "UC-FOUND-01", "UC-FOUND-03", "UC-REG-02", "UC-REG-04", "UC-REG-05", "UC-REG-06"],
+      "id": "journeys/mvp-full-arc",
+      "outstanding_ucs": ["UC-CHAT-01", "UC-CHAT-02", "UC-CHAT-03", "UC-FOUND-01", "UC-FOUND-03", "UC-REG-05", "UC-REG-06"]
+    },
+    {
+      "covers_ucs": ["UC-FOUND-01", "UC-FOUND-02", "UC-FOUND-04", "UC-REG-04"],
+      "id": "journeys/theming-passthrough",
+      "outstanding_ucs": ["UC-FOUND-01", "UC-FOUND-04"]
+    }
+  ],
+  "derived_from": {
+    "prior_scope": ["UC-REG-01"],
+    "scenarios": ".spec/scenarios",
+    "scope": ["UC-FOUND-02", "UC-REG-02", "UC-REG-04"]
+  },
+  "flows": [
+    {
+      "id": "UC-REG-02/core-happy-path",
+      "uc_ref": "UC-REG-02",
+      "type": "core",
+      "scope": "task",
+      "desc": "One codebase, three targets: the script installs all 56 items into apps/example from the v0.1.0 tag with peers at Expo 57 pins and a dev-client-free graph, then proves the set runs from that single tree — the Android build and gallery boot, the web export/serve deep-link check, and the registry-meta assertions in one run; the physical-iPhone Expo Go half of this flow is human-observed in the gate steps, and the meta rows the cards render are the shipped declarations, not hand labels.",
+      "gate_steps": [1, 2, 3, 10, 11, 15, 16, 19, 20],
+      "run_cmd": "bash tests/sprint-02/gallery-install.test.sh UC-REG-02/core-happy-path",
+      "test": "tests/sprint-02/gallery-install.test.sh",
+      "artifact": "design/goldens/sprint-02/install/core-happy-path.json",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "red_proof": "design/goldens/sprint-02/install/core-happy-path.RED.log",
+      "manual_physical": false
+    },
+    {
+      "id": "UC-REG-02/edge-no-web-only-construct-anywhere",
+      "uc_ref": "UC-REG-02",
+      "type": "edge",
+      "scope": "task",
+      "desc": "Every shipped source scanned for web-only constructs — DOM elements, iframes, document./window. access, hover-only classes without an active twin, raw lucide JSX — by executing the styling contract's own checks block against packages/registry/src and both emitted public/r trees, with an implanted-violation case proving the checker can fail; the human half is the click-not-hover, keyboard-reachable control check in Chrome.",
+      "gate_steps": [12, 18],
+      "run_cmd": "pnpm exec vitest run tests/sprint-02/web-constructs.test.ts -t \"UC-REG-02/edge-no-web-only-construct-anywhere\"",
+      "test": "tests/sprint-02/web-constructs.test.ts",
+      "artifact": "design/goldens/sprint-02/registry/web-constructs-scan.json",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "red_proof": "design/goldens/sprint-02/registry/web-constructs-scan.json.RED.log",
+      "manual_physical": false
+    },
+    {
+      "id": "UC-REG-04/core-happy-path",
+      "uc_ref": "UC-REG-04",
+      "type": "core",
+      "scope": "task",
+      "desc": "Every one of the 56 shipped items demonstrated in loading, empty, error and populated states with interactive prop controls, on a real product surface (the /gallery route) — one detail screen per item behind a four-segment control, a stranger's bounded manual walk plus a generated Maestro flow that walks all 224 state sections cold against id-only selectors on the Android emulator, with the web leg agreeing over the static export and both engine trees proven to serve the identical set.",
+      "gate_steps": [3, 4, 5, 6, 7, 13, 14, 15, 23],
+      "run_cmd": "bash tests/sprint-02/gallery-walk.test.sh UC-REG-04/core-happy-path",
+      "test": "tests/sprint-02/gallery-walk.test.sh",
+      "artifact": "design/goldens/sprint-02/gallery/walk-matrix.json",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "red_proof": "design/goldens/sprint-02/gallery/walk-matrix.RED.log",
+      "manual_physical": false
+    },
+    {
+      "id": "UC-REG-04/edge-web-story-passes-device-story-fails",
+      "uc_ref": "UC-REG-04",
+      "type": "edge",
+      "scope": "task",
+      "desc": "The PortalHost trap, re-derived onto the gallery: the script strips PortalHost from the root layout under an EXIT trap, and the DEVICE leg must fail on `context-popover-content` while the WEB leg of the same run stays green — a surface that renders in the browser but renders nothing on a phone, caught. If both legs pass during the trap, the gate is not real.",
+      "gate_steps": [6, 22],
+      "run_cmd": "bash tests/sprint-02/gallery-walk.test.sh UC-REG-04/edge-web-story-passes-device-story-fails",
+      "test": "tests/sprint-02/gallery-walk.test.sh",
+      "artifact": "design/goldens/sprint-02/gallery/portal-trap.json",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "red_proof": "design/goldens/sprint-02/gallery/portal-trap.RED.log",
+      "manual_physical": false
+    },
+    {
+      "id": "UC-FOUND-02/core-happy-path",
+      "uc_ref": "UC-FOUND-02",
+      "type": "core",
+      "scope": "task",
+      "desc": "The appearance flip, observed where it has never been observed: adb `cmd uimode night yes/no` around cold gallery runs on Pixel_7_API_34 producing light/dark capture pairs sampled from the labeled scheme strip, the Chrome prefers-color-scheme emulation flip on the served web export, and the Settings flip on the Expo Go physical iPhone — every AI Elements surface and the surrounding chrome flip in the same frame, no stragglers, and the scheme is never held in library-local state.",
+      "gate_steps": [8, 17, 21],
+      "run_cmd": "bash tests/sprint-02/dark-flip.test.sh UC-FOUND-02/core-happy-path",
+      "test": "tests/sprint-02/dark-flip.test.sh",
+      "artifact": "design/goldens/sprint-02/dark/flip-pairs.json",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "red_proof": "design/goldens/sprint-02/dark/flip-pairs.RED.log",
+      "manual_physical": false
+    },
+    {
+      "id": "UC-FOUND-02/edge-runtime-appearance-change-mid-stream",
+      "uc_ref": "UC-FOUND-02",
+      "type": "edge",
+      "scope": "task",
+      "desc": "Toggle the device to dark while a response is actively streaming: the script starts the conversation item's committed-fixture stream replay on the emulator, flips uimode to night mid-token via adb, and asserts every surface flips in the same frame — sampled from the scheme strip and the streaming bubble — while the stream keeps appending with no interruption, restart or dropped scroll pin, then flips back to light mid-stream and asserts the same.",
+      "gate_steps": [9],
+      "run_cmd": "bash tests/sprint-02/dark-flip.test.sh UC-FOUND-02/edge-runtime-appearance-change-mid-stream",
+      "test": "tests/sprint-02/dark-flip.test.sh",
+      "artifact": "design/goldens/sprint-02/dark/midstream-flip.json",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "red_proof": "design/goldens/sprint-02/dark/midstream-flip.RED.log",
+      "manual_physical": false
+    }
+  ]
+}
