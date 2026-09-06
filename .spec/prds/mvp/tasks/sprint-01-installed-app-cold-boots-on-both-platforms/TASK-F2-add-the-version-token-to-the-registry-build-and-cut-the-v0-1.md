@@ -6,7 +6,7 @@
 > Points: 3  
 > Type: FEATURE
 > Wave: B  
-> Status: ⬜ Pending    
+> Status: 🔄 in_progress
 > TDD Mode: `red_first` · RED_GREEN_REQUIRED: yes
 > Proposed By: `react-native-reusables-planner`
 > Depends On: TASK-F1
