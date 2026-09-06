@@ -1,0 +1,69 @@
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F4
+
+ ❯ tests/sprint-01/alias-resolution.test.ts (3 tests | 2 failed) 172ms
+     × THE CONTRACT: zero @/registry/ literals in the installed consumer tree 163ms
+     × TC-5: no consumer-side resolution shim — metro.config.js and tsconfig.json never reference packages/registry 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01/alias-resolution.test.ts > TASK-F4 alias resolution (cycle-1) > THE CONTRACT: zero @/registry/ literals in the installed consumer tree
+AssertionError: expected 'apps/example/components/ui/icon.tsx:3…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ apps/example/components/ui/icon.tsx:36: * import { Icon } from '@/registry/uniwind/registry/components/ui/icon';
+
+ ❯ tests/sprint-01/alias-resolution.test.ts:42:32
+     40|     expect(tsxFiles.length).toBeGreaterThanOrEqual(10);
+     41|
+     42|     expect(grepConsumerTree()).toBe('');
+       |                                ^
+     43|   });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-01/alias-resolution.test.ts > TASK-F4 alias resolution (cycle-1) > TC-5: no consumer-side resolution shim — metro.config.js and tsconfig.json never reference packages/registry
+AssertionError: expected 'const { getDefaultConfig } = require(…' not to contain 'packages/registry'
+
+- Expected
++ Received
+
+- packages/registry
++ const { getDefaultConfig } = require('expo/metro-config');
++ const { withUniwindConfig } = require('uniwind/metro');
++
++ const config = getDefaultConfig(__dirname);
++
++ // withUniwindConfig must be the OUTERMOST engine wrapper and cssEntryFile must be a
++ // relative path string (docs.uniwind.dev/quickstart). This app is a plain consumer:
++ // no watchFolders into packages/registry, no alias rewriting — everything it renders
++ // must exist inside this package's own tree, installed by the RNR CLI.
++ module.exports = withUniwindConfig(config, {
++   cssEntryFile: './global.css',
++   dtsFile: './uniwind-types.d.ts',
++ });
++
+
+ ❯ tests/sprint-01/alias-resolution.test.ts:53:57
+     51|
+     52|   test('TC-5: no consumer-side resolution shim — metro.config.js and t…
+     53|     expect(read('apps/example', 'metro.config.js')).not.toContain('pac…
+       |                                                         ^
+     54|     expect(read('apps/example', 'tsconfig.json')).not.toContain('packa…
+     55|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  16:33:36
+   Duration  590ms (transform 25ms, setup 0ms, import 41ms, tests 172ms, environment 0ms)
+

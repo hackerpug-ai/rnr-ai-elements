@@ -1,0 +1,29 @@
+src/app/index.tsx(12,17): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ScrollViewProps): ScrollView', gave the following error.
+    Type '{ children: Element[]; className: string; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.
+      Property 'className' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.
+  Overload 2 of 2, '(props: ScrollViewProps, context: any): ScrollView', gave the following error.
+    Type '{ children: Element[]; className: string; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.
+      Property 'className' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.
+src/app/index.tsx(14,13): error TS2322: Type '{ children: string; className: string; }' is not assignable to type 'IntrinsicAttributes & TextProps & RefAttributes<typeof Text> & TextVariantProps & { asChild?: boolean | undefined; }'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & TextProps & RefAttributes<typeof Text> & TextVariantProps & { asChild?: boolean | undefined; }'.
+src/app/index.tsx(17,13): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ViewProps): View', gave the following error.
+    Type '{ children: Element[]; className: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+      Property 'className' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+  Overload 2 of 2, '(props: ViewProps, context: any): View', gave the following error.
+    Type '{ children: Element[]; className: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+      Property 'className' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+src/app/index.tsx(23,13): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ViewProps): View', gave the following error.
+    Type '{ children: Element; className: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+      Property 'className' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+  Overload 2 of 2, '(props: ViewProps, context: any): View', gave the following error.
+    Type '{ children: Element; className: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+      Property 'className' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<View> & Readonly<ViewProps>'.
+src/app/index.tsx(24,15): error TS2322: Type '{ children: string; className: string; }' is not assignable to type 'IntrinsicAttributes & TextProps & RefAttributes<typeof Text> & TextVariantProps & { asChild?: boolean | undefined; }'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & TextProps & RefAttributes<typeof Text> & TextVariantProps & { asChild?: boolean | undefined; }'.
+../harness/src/components/ui.nativewind/button.tsx(95,19): error TS2339: Property 'className' does not exist on type 'PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>'.
+../harness/src/components/ui.nativewind/button.tsx(99,9): error TS2322: Type '{ onHoverIn?: ((event: MouseEvent) => void) | null | undefined; onHoverOut?: ((event: MouseEvent) => void) | null | undefined; onPress?: ((event: GestureResponderEvent) => void) | null | undefined; ... 106 more ...; className: string; }' is not assignable to type 'IntrinsicAttributes & PressableProps & RefAttributes<View>'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & PressableProps & RefAttributes<View>'.
+../harness/src/components/ui.nativewind/text.tsx(68,3): error TS2339: Property 'className' does not exist on type 'TextProps & RefAttributes<typeof Text> & TextVariantProps & { asChild?: boolean | undefined; }'.
