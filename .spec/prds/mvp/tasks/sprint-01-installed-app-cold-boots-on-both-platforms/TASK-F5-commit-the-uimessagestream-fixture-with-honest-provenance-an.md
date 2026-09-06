@@ -7,7 +7,7 @@
 > Type: INFRA  
 > Wave: E  
 > Status: ⬜ Pending  
-> Proposed By: `react-native-ui-planner`  
+> Proposed By: `react-native-ui-planner`
 > Depends On: TASK-F4
 
 ## Outcome
@@ -55,7 +55,7 @@ Flow `UC-REG-01/core-happy-path`, owned by **TASK-F8 AC-1 and AC-6**. Delegated 
 - `public/r/**`
 - `apps/harness/**`
 - `apps/example/components/ai/**`
-- `scripts/e2e/**`
+- `tests/sprint-01/**`
 - `.maestro/**`
 
 ## Fixtures

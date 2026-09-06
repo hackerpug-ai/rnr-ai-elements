@@ -4,10 +4,11 @@
 > Sprint: [sprint-01](./SPRINT.md)  
 > Agent: `react-native-reusables-implementer`  
 > Points: 3  
-> Type: FEATURE  
+> Type: FEATURE
 > Wave: B  
-> Status: ⬜ Pending  
-> Proposed By: `react-native-reusables-planner`  
+> Status: ⬜ Pending    
+> TDD Mode: `red_first` · RED_GREEN_REQUIRED: yes
+> Proposed By: `react-native-reusables-planner`
 > Depends On: TASK-F1
 
 ## Outcome
@@ -21,11 +22,27 @@ Two-line change, one tag, no pipeline. Substitute `{version}` from package.json 
 - `pnpm check:tokens` is BROKEN — it points at `scripts/check-tokens.ts`, which does not exist. Do not add it to any verification gate here. `scripts/check-contract.ts` is the working color-literal gate.
 - The `registry` CI job diffs a fresh build against the committed tree. Any change to the emitter means `pnpm registry:build` must be re-run and `public/r/**` re-committed in the same commit, or CI goes red on staleness.
 
+## Supersedes
+
+This task modifies test files that already exist. Declared so a later sprint can tell a deliberate change from a regression.
+
+- `tests/build-registry.test.ts`
+
+sprint-01 adds a nested `describe("UC-REG-01/edge-a-short-name-registry-dependency", ...)` block to tests/build-registry.test.ts holding both halves of the locked edge flow — the short-name refusal (AC-1) and the v0.1.0 tag-pinning scan (AC-2) — because the locked run_cmd selects on that suite name with -t. LEAVES TRUE for later sprints: every registryDependencies string in all 112 emitted files starts with https://, every self-referencing URL names the v0.1.0 tag with 0 occurrences of /main/, and all 14 reactnativereusables.com dependencies carry no version segment. A later sprint that cuts v0.2.0 changes the asserted tag and must list this file under its own supersedes; the same assertion failing without such a declaration is a regression, not a deliberate bump.
+
+## Verification Checklist
+
+| Command | Expect |
+|---|---|
+| `git tag -l --format='%(contents)' v0.1.0` | the annotation names v0.1.0 a PRE-RELEASE snapshot carrying no support promise, because the style-parity remediation is mid-flight when the tag is cut |
+| `pnpm registry:build && git diff --exit-code -- public/r` | exits 0 — the emitter change and the re-emitted public/r/** are in the same commit, which is what keeps the `registry` CI job from going red on staleness |
+
 ## Acceptance Criteria
 
-### AC-1 — PRIMARY: A `registryDependencies` entry given as a bare short name is refused b
-
-A `registryDependencies` entry given as a bare short name is refused by the build, and every one of the 56 emitted entries in both engine trees resolves to an absolute `https://` URL.
+### AC-1 — PRIMARY: A `registryDependencies` entry given as a bare short name is refused by the build, and every one of the 56 emitted entries in both engine trees resolves to an absolute `https://` URL.
+**GIVEN** the 56-item registry source and both engine output trees  
+**WHEN** `pnpm registry:build` runs and `buildItem` is called with a `registryDependencies` entry of `["card"]`  
+**THEN** the build refuses the short name and every registryDependencies string across all 112 emitted files starts with `https://`
 
 - FLOW_REF: `UC-REG-01/edge-a-short-name-registry-dependency`
 - TEST_TIER: `integration`
@@ -33,8 +50,6 @@ A `registryDependencies` entry given as a bare short name is refused by the buil
 - VERIFY: `pnpm exec vitest run tests/build-registry.test.ts -t "UC-REG-01/edge-a-short-name-registry-dependency"`
 - VERIFICATION_SERVICE: the real 56-item registry emitted by `pnpm registry:build` into `public/r/nativewind/` and `public/r/uniwind/`
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
-- RED_PROOF: `design/goldens/sprint-01/registry/edge-short-name.RED.log`
-- RED provenance: MUTATION RED, because the guard already exists in the tree at build-registry.ts:79. Revert that `if (!resolved.startsWith('https://')) throw` block, run the verify command, capture the failing output to the RED log, restore the block. A RED log that was never watched failing is exactly what this field exists to prevent.
 
 <details><summary>Scenario <code>SC-F2-1</code></summary>
 
@@ -79,20 +94,20 @@ A `registryDependencies` entry given as a bare short name is refused by the buil
   }
 }
 ```
+
 </details>
 
-### AC-2: Every self-referencing registry URL in both emitted engine trees names
+### AC-2: Every self-referencing registry URL in both emitted engine trees names the `v0.1.0` tag, and none carries the mutable `/main/` segment — so the command in gate step 2 resolves the same bytes tomorrow as today.
+**GIVEN** the 56-item registry source and a `version` of `0.1.0` in package.json  
+**WHEN** `pnpm registry:build` emits both engine trees and the locked flow command scans every emitted file  
+**THEN** every self-referencing URL names `v0.1.0`, `/main/` occurs 0 times, and no version segment is injected into any reactnativereusables.com URL
 
-Every self-referencing registry URL in both emitted engine trees names the `v0.1.0` tag, and none carries the mutable `/main/` segment — so the command in gate step 2 resolves the same bytes tomorrow as today.
-
-- FLOW_REF: `—`
+- FLOW_REF: `UC-REG-01/edge-a-short-name-registry-dependency`
 - TEST_TIER: `integration`
-- TEST_FILE: `tests/build-registry.test.ts`  ·  TEST_FUNCTION: `pins every self-referencing URL to the v0.1.0 tag with no mutable branch segment`
-- VERIFY: `pnpm exec vitest run tests/build-registry.test.ts -t "pins every self-referencing URL to the v0.1.0 tag with no mutable branch segment"`
+- TEST_FILE: `tests/build-registry.test.ts`  ·  TEST_FUNCTION: `UC-REG-01/edge-a-short-name-registry-dependency`
+- VERIFY: `pnpm exec vitest run tests/build-registry.test.ts -t "UC-REG-01/edge-a-short-name-registry-dependency"`
 - VERIFICATION_SERVICE: the real 56-item registry emitted by `pnpm registry:build` into `public/r/nativewind/` and `public/r/uniwind/`
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
-- RED_PROOF: `design/goldens/sprint-01/registry/url-pinning.RED.log`
-- RED provenance: NATURAL RED — the same improvement F3 and F4 got. Written before the `{version}` substitution lands, the test fails because all 112 emitted files still carry `/main/`. Capture that run. F2 now has one natural RED (AC-2) and one unavoidable mutation RED (AC-1, whose guard already exists at build-registry.ts:79).
 
 <details><summary>Scenario <code>SC-F2-2</code></summary>
 
@@ -127,7 +142,7 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
   "negative_control": {
     "would_fail_if": [
       "the `{version}` substitution is removed from the emitter, leaving `/main/` in every URL",
-      "the version token is applied to RNR's host as well, freezing the peer dependency",
+      "the version token is applied to RNR's host as well, freezing a dependency we consume at a package-manifest range rather than own \u2014 which pins every consumer to one RNR snapshot",
       "the emitted tree is stale and the test scans it unchanged rather than rebuilding first",
       "the scan is pointed at a stub registry object instead of the real emitted files"
     ]
@@ -139,19 +154,19 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
   }
 }
 ```
-</details>
 
+</details>
 
 ## Test Criteria
 
-| ID | Maps to | Assertion |
-|---|---|---|
-| TC-1 | AC-1 | `pnpm registry:build` emits 112 files; every registryDependencies string in every one starts with `https://`. |
-| TC-2 | AC-1 | `buildItem({registryDependencies:['card']}, 'uniwind', readFile)` throws with a message containing `is not an absolute URL`. |
-| TC-3 | AC-1 | `resolveEngine` substitutes `{version}` and `{engine}` in one pass; a URL carrying both tokens emits with neither remaining. |
-| TC-4 | AC-2 | Every self-referencing URL across all 112 emitted files matches `raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/`. |
-| TC-5 | AC-2 | The substring `/main/public/r/` occurs 0 times across `public/r/**`, and 0 unsubstituted `{version}`/`{engine}` tokens remain. |
-| TC-6 | AC-2 | All 14 distinct `reactnativereusables.com` dependencies are emitted with no version segment inserted. |
+| ID | Statement | Maps to | Verify |
+|---|---|---|---|
+| TC-1 |  | AC-1 | `—` |
+| TC-2 |  | AC-1 | `—` |
+| TC-3 |  | AC-1 | `—` |
+| TC-4 |  | AC-2 | `—` |
+| TC-5 |  | AC-2 | `—` |
+| TC-6 |  | AC-2 | `—` |
 
 ## Guardrails
 
@@ -178,6 +193,9 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
 ## Fixtures
 
 - **`built-registry-both-engines`** (cli) — The real emitted registry: 56 items fanned into public/r/nativewind/ and public/r/uniwind/ by pnpm registry:build from the committed source tree.
+  - 56 registry.json items
+  - 112 emitted item JSON files
+  - 2 per-engine index files
 
 <!-- REQUIREMENT-CONTRACT v1 -->
 <!--
@@ -206,14 +224,21 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
     {
       "type": "acceptance_criterion",
       "id": "AC-1",
+      "num": 1,
+      "name": "A `registryDependencies` entry given as a bare short name is refused by the build, and every one of the 56 emitted entries in both engine trees resolves to an absolute `https://` URL.",
       "primary": true,
+      "given": "the 56-item registry source and both engine output trees",
+      "when": "`pnpm registry:build` runs and `buildItem` is called with a `registryDependencies` entry of `[\"card\"]`",
+      "then": "the build refuses the short name and every registryDependencies string across all 112 emitted files starts with `https://`",
       "flow_ref": "UC-REG-01/edge-a-short-name-registry-dependency",
       "test_file": "tests/build-registry.test.ts",
       "test_function": "UC-REG-01/edge-a-short-name-registry-dependency",
       "verify": "pnpm exec vitest run tests/build-registry.test.ts -t \"UC-REG-01/edge-a-short-name-registry-dependency\"",
       "test_tier": "integration",
       "verification_service": "the real 56-item registry emitted by `pnpm registry:build` into `public/r/nativewind/` and `public/r/uniwind/`",
+      "unit_test_justified": false,
       "surface_policy": ".spec/e2e-policy/surface.json",
+      "red_proof": "design/goldens/sprint-01/registry/edge-short-name.RED.log",
       "scenario": {
         "id": "SC-F2-1",
         "primary": true,
@@ -257,14 +282,21 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
     {
       "type": "acceptance_criterion",
       "id": "AC-2",
+      "num": 2,
+      "name": "Every self-referencing registry URL in both emitted engine trees names the `v0.1.0` tag, and none carries the mutable `/main/` segment \u2014 so the command in gate step 2 resolves the same bytes tomorrow as today.",
       "primary": false,
-      "flow_ref": null,
+      "given": "the 56-item registry source and a `version` of `0.1.0` in package.json",
+      "when": "`pnpm registry:build` emits both engine trees and the locked flow command scans every emitted file",
+      "then": "every self-referencing URL names `v0.1.0`, `/main/` occurs 0 times, and no version segment is injected into any reactnativereusables.com URL",
+      "flow_ref": "UC-REG-01/edge-a-short-name-registry-dependency",
       "test_file": "tests/build-registry.test.ts",
-      "test_function": "pins every self-referencing URL to the v0.1.0 tag with no mutable branch segment",
-      "verify": "pnpm exec vitest run tests/build-registry.test.ts -t \"pins every self-referencing URL to the v0.1.0 tag with no mutable branch segment\"",
+      "test_function": "UC-REG-01/edge-a-short-name-registry-dependency",
+      "verify": "pnpm exec vitest run tests/build-registry.test.ts -t \"UC-REG-01/edge-a-short-name-registry-dependency\"",
       "test_tier": "integration",
       "verification_service": "the real 56-item registry emitted by `pnpm registry:build` into `public/r/nativewind/` and `public/r/uniwind/`",
+      "unit_test_justified": false,
       "surface_policy": ".spec/e2e-policy/surface.json",
+      "red_proof": "design/goldens/sprint-01/registry/url-pinning.RED.log",
       "scenario": {
         "id": "SC-F2-2",
         "primary": false,
@@ -295,7 +327,7 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
         "negative_control": {
           "would_fail_if": [
             "the `{version}` substitution is removed from the emitter, leaving `/main/` in every URL",
-            "the version token is applied to RNR's host as well, freezing the peer dependency",
+            "the version token is applied to RNR's host as well, freezing a dependency we consume at a package-manifest range rather than own \u2014 which pins every consumer to one RNR snapshot",
             "the emitted tree is stale and the test scans it unchanged rather than rebuilding first",
             "the scan is pointed at a stub registry object instead of the real emitted files"
           ]
@@ -310,28 +342,43 @@ Every self-referencing registry URL in both emitted engine trees names the `v0.1
     {
       "type": "test_case",
       "id": "TC-1",
-      "maps_to_ac": "AC-1"
+      "maps_to_ac": "AC-1",
+      "assertion": "`pnpm registry:build` emits 112 files; every registryDependencies string in every one starts with `https://`."
     },
     {
       "type": "test_case",
       "id": "TC-2",
-      "maps_to_ac": "AC-1"
+      "maps_to_ac": "AC-1",
+      "assertion": "`buildItem({registryDependencies:['card']}, 'uniwind', readFile)` throws with a message containing `is not an absolute URL`."
     },
     {
       "type": "test_case",
       "id": "TC-3",
-      "maps_to_ac": "AC-1"
+      "maps_to_ac": "AC-1",
+      "assertion": "`resolveEngine` substitutes `{version}` and `{engine}` in one pass; a URL carrying both tokens emits with neither remaining."
     },
     {
       "type": "test_case",
       "id": "TC-4",
-      "maps_to_ac": "AC-2"
+      "maps_to_ac": "AC-2",
+      "assertion": "Every self-referencing URL across all 112 emitted files matches `raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/`."
     },
     {
       "type": "test_case",
       "id": "TC-5",
-      "maps_to_ac": "AC-2"
+      "maps_to_ac": "AC-2",
+      "assertion": "The substring `/main/public/r/` occurs 0 times across `public/r/**`, and 0 unsubstituted `{version}`/`{engine}` tokens remain."
+    },
+    {
+      "type": "test_case",
+      "id": "TC-6",
+      "maps_to_ac": "AC-2",
+      "assertion": "All 14 distinct `reactnativereusables.com` dependencies are emitted with no version segment inserted."
     }
-  ]
+  ],
+  "supersedes": [
+    "tests/build-registry.test.ts"
+  ],
+  "supersedes_note": "sprint-01 adds a nested `describe(\"UC-REG-01/edge-a-short-name-registry-dependency\", ...)` block to tests/build-registry.test.ts holding both halves of the locked edge flow \u2014 the short-name refusal (AC-1) and the v0.1.0 tag-pinning scan (AC-2) \u2014 because the locked run_cmd selects on that suite name with -t. LEAVES TRUE for later sprints: every registryDependencies string in all 112 emitted files starts with https://, every self-referencing URL names the v0.1.0 tag with 0 occurrences of /main/, and all 14 reactnativereusables.com dependencies carry no version segment. A later sprint that cuts v0.2.0 changes the asserted tag and must list this file under its own supersedes; the same assertion failing without such a declaration is a regression, not a deliberate bump."
 }
 -->

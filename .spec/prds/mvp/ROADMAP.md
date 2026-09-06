@@ -80,7 +80,7 @@ What stands between that and a consumer actually installing it is four sprints, 
 10. Run `mv apps/example/fixtures/transcript.json.bak apps/example/fixtures/transcript.json` to restore the seed, then boot the Pixel_7_API_34 emulator and run `npx expo run:android` from `apps/example` — expect the Android emulator launches the same app, the header again reads `AI Elements Example`, and the badge is again GREEN.   `exercises: TASK-F1, TASK-F4, TASK-F7`
 11. With the emulator still running, run `pnpm e2e:smoke:android` from the repository root — expect maestro prints `Flow Passed` and writes `design/goldens/mobile-android/sprint-01/cold-boot.png`. This file is the first Android capture ever produced by this repository.   `exercises: TASK-F8`
 12. Force-quit the app from the Android launcher, leave Metro running, and run `pnpm e2e:smoke:android` a second time — expect `Flow Passed` again, proving the assertion runs against a cold app launch rather than a warm reload.   `exercises: TASK-F8`
-13. Run `bash scripts/e2e/install-dirty-app.sh --prepare` to create a hostile Expo app in `$TMPDIR` carrying its own `components/ui/button.tsx`, npm-latest `react-native-gesture-handler`, and no PortalHost — then re-run the step 2 add command in that app WITHOUT `--yes` — expect the CLI to pause on a prompt naming `components/ui/button.tsx` as a file it would overwrite, before any file is written.   `exercises: TASK-F3`
+13. Run `bash tests/sprint-01/install-dirty-app.test.sh --prepare` to create a hostile Expo app in `$TMPDIR` carrying its own `components/ui/button.tsx`, npm-latest `react-native-gesture-handler`, and no PortalHost — then re-run the step 2 add command in that app WITHOUT `--yes` — expect the CLI to pause on a prompt naming `components/ui/button.tsx` as a file it would overwrite, before any file is written.   `exercises: TASK-F3`
 14. Answer that prompt with `n`, then run `npx expo-doctor` in the hostile app — expect a non-zero exit and output naming `react-native-gesture-handler` and the Expo SDK 57 expected version `~2.32.0`.   `exercises: TASK-F3`
 15. Answer the add prompt with `y` on a re-run, launch the hostile app, and open the context surface — expect either a rendered popover OR an install-time message naming `PortalHost` as a prerequisite. A surface that renders NOTHING with no error is a FAIL: that is the landmine ledger's worst silent failure and the reason this step exists.   `exercises: TASK-F3`
 
@@ -97,9 +97,9 @@ What stands between that and a consumer actually installing it is four sprints, 
 | TASK-F5 | Commit the UIMessageStream fixture with honest provenance and render / from it with zero network calls | `react-native-ui-implementer` | 3 | E | ⬜ Pending |
 | TASK-F6 | Define and apply the testID contract the e2e flows select on | `react-native-ui-implementer` | 2 | F | ⬜ Pending |
 | TASK-F7 | Declare and record the consumer @theme obligation the installed items silently require | `frontend-designer` | 3 | D | ⬜ Pending |
-| TASK-F8 | Stand up Maestro with a cold-boot flow on both platforms and a negative control watched failing | `react-native-ui-implementer` | 8 | G | ⬜ Pending |
+| TASK-F8 | Stand up Maestro with a cold-boot flow on both platforms and a negative control watched failing | `react-native-ui-implementer` | 13 | G | ⬜ Pending |
 
-**Waves:** A(1) → B(1) → C(1) → D(2) → E(1) → F(1) → G(1) — 7 waves over 8 tasks · 38 pts
+**Waves:** A(1) → B(1) → C(1) → D(2) → E(1) → F(1) → G(1) — 7 waves over 8 tasks · 43 pts
 
 > Orchestrator edits, mechanical and disclosed: `TASK-F2` given `depends_on: [TASK-F1]` to serialize a wave-A write collision on `package.json`; each step's expected value joined inline from the author's parallel array; three steps' leading verb `Read` → `Look at` (banned first word). No action or expected value changed.
 

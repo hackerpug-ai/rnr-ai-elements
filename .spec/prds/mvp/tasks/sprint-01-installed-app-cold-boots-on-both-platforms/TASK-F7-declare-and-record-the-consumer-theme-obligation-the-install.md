@@ -4,14 +4,14 @@
 > Sprint: [sprint-01](./SPRINT.md)  
 > Agent: `frontend-designer`  
 > Points: 3  
-> Type: FEATURE  
+> Type: INFRA
 > Wave: D  
-> Status: ⬜ Pending  
-> Proposed By: `frontend-designer`  
+> Status: ⬜ Pending    
+> TDD Mode: `shared` · RED_GREEN_REQUIRED: no
+> Proposed By: `frontend-designer`
 > Depends On: TASK-F3
 
 ## Outcome
-
 
 
 ## Critical Constraints
@@ -23,87 +23,43 @@
 - UNIT_TEST_JUSTIFIED (AC-2 only): see the field on that AC.
 - SEQUENCING: this task's edit lands in wave D; the device consequence is observed by TASK-F8 AC-6 in wave G. AC-1 is deliberately independent of that timing so this task can be verified when it is done rather than waiting on the flow.
 
+## Verification Checklist
+
+| Command | Expect |
+|---|---|
+| `test -f apps/example/lib/status.ts && test -d apps/example/components/ai && echo INSTALLED-TREE` | prints `INSTALLED-TREE`. This gates every row below it: the derivation must read the tree the real RNR CLI wrote in gate step 2, never `packages/registry/src`, or it silently re-measures the monorepo. |
+| `bash -c "grep -rhoE '(dark:)?(text\|bg\|border)-(zinc\|slate\|gray\|green\|orange\|yellow\|blue\|red)-[0-9]{2,3}' apps/example/components apps/example/lib \| sed -E 's/^dark://; s/^(text\|bg\|border)-/--color-/' \| sort -u \| wc -l"` | at least `8`, expected exactly the 8 written by `lib/status.ts` and `tool.logic.ts` (green-500, green-600, orange-500, orange-600, yellow-400, yellow-600, blue-400, blue-600). `0` is the empty-tree signature and makes the next row meaningless. |
+| `bash -c "comm -23 <(grep -rhoE '(dark:)?(text\|bg\|border)-(zinc\|slate\|gray\|green\|orange\|yellow\|blue\|red)-[0-9]{2,3}' apps/example/components apps/example/lib \| sed -E 's/^dark://; s/^(text\|bg\|border)-/--color-/' \| sort -u) <(grep -oE -- '--color-(zinc\|slate\|gray\|green\|orange\|yellow\|blue\|red)-[0-9]+' apps/example/global.css \| sort -u)"` | 0 lines. Each line printed here is a class that compiles to nothing and renders colorless with no error. Run today against the harness this prints `--color-orange-500` — the live defect. |
+| `bash -c "comm -13 <(grep -rhoE '(dark:)?(text\|bg\|border)-(zinc\|slate\|gray\|green\|orange\|yellow\|blue\|red)-[0-9]{2,3}' apps/example/components apps/example/lib \| sed -E 's/^dark://; s/^(text\|bg\|border)-/--color-/' \| sort -u) <(grep -oE -- '--color-(zinc\|slate\|gray\|green\|orange\|yellow\|blue\|red)-[0-9]+' apps/example/global.css \| sort -u)"` | 0 lines. Nothing declared beyond what the installed tree references; over-declaring the harness's full set hides which item requires what and makes sprint-02's per-item table underivable. |
+| `grep -n -- '--color-orange-500' apps/example/global.css` | exactly 1 line, carrying an inline comment naming `lib/status.ts` denied-in-dark as its requirer. This is the entry a human transcribing the 3-class comment at `apps/harness/src/global.css:28-34` has missed since the harness was written. |
+| `find apps/example -iname '*safelist*' \| wc -l` | `0`. A safelist gives every class a second home and makes the derivation meaningless. If the badge only goes green with one, that IS the finding — escalate to a registry change, which is write-prohibited here. |
+| `node -e "const fs=require('fs'),p=require.resolve('tailwindcss/theme.css',{paths:['apps/example']});const F=/(--color-(?:zinc\|slate\|gray\|green\|orange\|yellow\|blue\|red)-\d+):\s*([^;]+);/g;const N=s=>s.replace(/([\d.]+)%/g,(_,d)=>(+d/100).toFixed(6)).replace(/\d*\.\d+/g,m=>(+m).toFixed(6)).replace(/\s+/g,' ').trim();const pick=t=>Object.fromEntries([...t.matchAll(F)].map(([,k,v])=>[k,N(v)]));const mine=pick(fs.readFileSync('apps/example/global.css','utf8')),tw=pick(fs.readFileSync(p,'utf8'));const bad=Object.entries(mine).filter(([k,v])=>tw[k]!==v);console.log(Object.keys(mine).length+' declared; '+(bad.length?JSON.stringify(bad):'0 invented values'))"` | `8 declared; 0 invented values`. Every value is compared against the installed tailwindcss `theme.css` after normalising its percentage lightness (`72.3%`) to the fraction form (`0.723`); a hand-picked hex or a mistyped digit prints as a drift pair. Verified today against `apps/harness/src/global.css`: `14 declared; 0 invented values`. |
+| `grep -c -- '--color-orange-500' apps/harness/src/global.css; grep -c 'dark:text-orange-500' packages/registry/src/lib/status.ts` | prints `0` then `2`. ESCALATION 1, reproduced: the registry writes the class, our own harness never declared it, so a denied tool status has rendered colorless in dark mode. Paste both numbers into the record. |
+| `grep -c class-safelist public/r/uniwind/file-tree.json public/r/uniwind/transcription.json` | `1` for each file. ESCALATION 2, reproduced: both shipped items carry a comment pointing consumers at `class-safelist.tsx`, a path that will not exist in their tree. |
+| `node -e "const r=require('./packages/registry/registry.json');console.log(r.items.length, r.items.filter(i=>i.cssVars&&Object.keys(i.cssVars).length).length)"` | prints `56 0`. ESCALATION 3, reproduced: not one shipped item declares `cssVars`, and the RNR CLI merges no theme block, so the obligation reaches the consumer as nothing at all. Record the number; do NOT record a preferred fix — that is sprint-03's call. |
+| `sed -n '/OBLIGATION-DERIVATION-SPRINT-01-START/,/OBLIGATION-DERIVATION-SPRINT-01-END/p' design/style-parity-remediation.md` | contains the verbatim stdout of rows 2, 3, 4 and 6, pasted and not retyped, in a block distinct from OBLIGATION-TABLE-SPRINT-01 so AC-2's diff still isolates the table. |
+| `pnpm typecheck && pnpm lint` | both exit 0 |
+
+## Behavior Proven By
+
+Flow `UC-REG-01/core-happy-path`, owned by **TASK-F8/AC-1**. Delegated assertions:
+
+- gate step 7: the `tool-badge-completed` glyph reads `Completed` and is GREEN on a booted device — the on-device consequence of the palette slice this task writes (TASK-F8 AC-1, measured by TASK-F8 AC-6 at chroma > 0.05, hue in [120,180], sampled from the glyph sub-bounds and persisted to `design/goldens/sprint-01/install/core-happy-path.json`)
+- the watched-failing negative control for this task's substance: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path --mutate-theme green-600` exits 1 naming the measured chroma below 0.05 and the literal token `--color-green-600` (TASK-F8 AC-6, case 2). A grey / colorless check mark with `Flow Passed` printed is the documented silent failure this task exists to prevent, and TASK-F8 owns the RED log at `design/goldens/sprint-01/install/core-happy-path.RED.log`
+- the app cold-boots and renders the transcript on iOS and Android with the palette slice compiled by the consumer's own Uniwind/Tailwind v4 build, not by the monorepo's (gate steps 4, 10)
+
 ## Acceptance Criteria
 
-### AC-1 — PRIMARY: every palette class the installed tree references is declared in the consumer's own theme
-
-**GIVEN** the `apps/example` tree exactly as the real RNR CLI wrote it in gate step 2, including the installed `lib/status.ts` and `tool.logic.ts`  
-**WHEN** the referenced-class set is derived mechanically from the installed sources and subtracted from the declared set in the consumer's theme  
-**THEN** the difference is empty, at least 8 distinct palette classes were actually found, and `find apps/example -iname '*safelist*'` returns 0 files
-
-- FLOW_REF: `—`
-- TEST_TIER: `integration`
-- TEST_FILE: `—`  ·  TEST_FUNCTION: `—`
-- VERIFY: `comm -23 <(grep -rhoE '(dark:)?(text|bg|border)-(zinc|slate|gray|green|orange|yellow|blue|red)-[0-9]{2,3}' apps/example/components apps/example/lib | sed -E 's/^dark://; s/^(text|bg|border)-/--color-/' | sort -u) <(grep -oE -- '--color-[a-z]+-[0-9]+' apps/example/global.css | sort -u)`
-- VERIFICATION_SERVICE: the real `apps/example` consumer tree written by `npx @react-native-reusables/cli@latest add` against the v0.1.0 tag — a real artifact from a real resolver, not a synthetic input
-- SURFACE_POLICY: `—`
-
-<details><summary>Scenario <code>SC-F7-1</code></summary>
-
-```json
-{
-  "id": "SC-F7-1",
-  "primary": true,
-  "tier": "visible",
-  "test_tier": "integration",
-  "verification_service": "the real `apps/example` consumer tree written by the RNR CLI from the v0.1.0 tag",
-  "negative_control": {
-    "would_fail_if": [
-      "`--color-orange-500` were left undeclared while `lib/status.ts` still writes `dark:text-orange-500` \u2014 this is not hypothetical, it is the live defect this check was built to catch, and it survived in `apps/harness` because a human transcribed three classes from a comment that names four",
-      "the obligation were transcribed by hand from a comment instead of derived from the installed source \u2014 the exact failure mode that produced the orange-500 gap in the first place",
-      "a `class-safelist.tsx` were copied into `apps/example` to force classes to compile, which would make the derivation meaningless by giving every class a second home",
-      "the derivation were run against `packages/registry/src` instead of the installed consumer tree, which would silently re-measure the monorepo rather than the consumer",
-      "the class-name regex were narrowed to the colors already known to be declared, which would make the check tautological"
-    ]
-  },
-  "evidence": {
-    "artifact_type": "stdout",
-    "required_capture": true,
-    "path": "design/style-parity-remediation.md"
-  },
-  "cases": [
-    {
-      "start_ref": "installed-consumer-tree",
-      "action": {
-        "actor": "designer",
-        "steps": [
-          "run the referenced-class derivation over `apps/example/components` and `apps/example/lib` and count the distinct results",
-          "run `comm -23` of the referenced set against the `--color-*` entries declared in `apps/example/global.css`",
-          "run `find apps/example -iname '*safelist*' | wc -l`",
-          "paste all three outputs verbatim into the obligation section of `design/style-parity-remediation.md`"
-        ]
-      },
-      "end_state": {
-        "must_observe": [
-          "at least `8` distinct palette classes found in the installed tree \u2014 the non-empty anchor, expected to be exactly the 8 written by `lib/status.ts` and `tool.logic.ts`: green-500, green-600, orange-500, orange-600, yellow-400, yellow-600, blue-400, blue-600",
-          "`0` lines of `comm -23` output \u2014 every referenced class has a matching declaration",
-          "`0` files matching `*safelist*` under `apps/example`",
-          "`--color-orange-500` present among the declared entries, with an inline comment naming `lib/status.ts` denied-in-dark as its requirer"
-        ],
-        "must_not_observe": [
-          "`0` palette classes found \u2014 the empty-tree signature, which makes an empty `comm` result meaningless and is exactly what this check would print against a scaffold with nothing installed",
-          "any line of `comm -23` output, each of which is a class that renders colorless with no error",
-          "any file matching `*safelist*` under `apps/example`",
-          "a declared set larger than the referenced set by the 17 entries only the other 51 items need \u2014 over-declaring hides which item requires what and makes sprint-02's per-item table underivable"
-        ]
-      }
-    }
-  ]
-}
-```
-</details>
-
 ### AC-2: the record matches what the app declares and carries the three escalations
-
-**GIVEN** the declared slice written under AC-1  
+**GIVEN** the declared palette slice this task wrote into `apps/example/global.css`  
 **WHEN** the table's entry set is diffed against the theme file's entry set  
 **THEN** the diff is empty and the three escalation subsections are present with their reproducing commands
 
 - FLOW_REF: `—`
-- TEST_TIER: `unit` — *Pure textual consistency between two files this task owns, zero I/O beyond reading them, asserting no product behavior. All product behavior for this task is asserted at integration tier by AC-1 over the real installed tree and at e2e tier by TASK-F8 AC-6 on real devices. A hand-typed obligation list drifting from what the app declares is the specific failure this catches, and it needs no runtime.*
-- TEST_FILE: `—`  ·  TEST_FUNCTION: `—`
-- VERIFY: `diff <(grep -oE -- '--color-[a-z]+-[0-9]+' apps/example/global.css | sort -u) <(sed -n '/OBLIGATION-TABLE-SPRINT-01-START/,/OBLIGATION-TABLE-SPRINT-01-END/p' design/style-parity-remediation.md | grep -oE -- '--color-[a-z]+-[0-9]+' | sort -u)`
-- VERIFICATION_SERVICE: —
+- TEST_TIER: `unit`
+- TEST_FILE: `tests/sprint-01/theme-obligation.test.ts`  ·  TEST_FUNCTION: `AC-2 the obligation table matches the consumer theme`
+- VERIFY: `pnpm exec vitest run tests/sprint-01/theme-obligation.test.ts -t "AC-2 the obligation table matches the consumer theme"`
+- VERIFICATION_SERVICE: the two files this task owns, read from disk
 - SURFACE_POLICY: `—`
 
 <details><summary>Scenario <code>SC-F7-2</code></summary>
@@ -118,8 +74,14 @@
   "negative_control": {
     "would_fail_if": [
       "a var were added to `apps/example/global.css` without a matching table row, or a row survived its var's removal \u2014 the diff goes non-empty and the command exits 1",
-      "the table were hand-typed from the harness's 26 rather than derived from AC-1's output, which is the transcription failure that produced the orange-500 gap",
-      "a preferred distribution fix were written into the record as settled \u2014 registry `cssVars` versus an install prerequisite versus converting the escape colors to RNR roles is sprint-03's decision and this task is bound not to pre-empt it"
+      "the table were hand-typed from the harness's 26 declaration lines rather than derived from this task's Verification Checklist derivation over the installed `apps/example` tree, which is the transcription failure that produced the orange-500 gap",
+      "a preferred distribution fix were written into the record as settled \u2014 registry `cssVars` versus an install prerequisite versus converting the escape colors to RNR roles is sprint-03's decision and this task is bound not to pre-empt it",
+      "either side of the diff were widened back to `--color-[a-z]+-[0-9]+`, which matches RNR's own `--color-chart-1` \u2026 `--color-chart-5` role tokens and would make the diff non-empty on a correct implementation \u2014 a check that is always red proves as little as one that is always green",
+      "the diff were run with `apps/example/global.css` absent or with the palette slice not yet appended: both sides come back empty and a bare `diff` exits 0 on nothing-versus-nothing. The `>= 8` non-empty anchor in the command closes that hole and exits 1 instead",
+      "the consumer `@theme` block were absent or empty in `apps/example/global.css` \u2014 every palette class compiles to nothing on device and the declared side of the diff comes back empty; the `>= 8` anchor exits 1 instead of passing on nothing-versus-nothing",
+      "the command were pointed at `apps/harness/src/global.css` instead of the consumer's own theme file \u2014 it would read the monorepo's 26 declarations, never touch the installed tree, and pass forever while the consumer ships colorless",
+      "the OBLIGATION-TABLE-SPRINT-01 markers were removed or misspelled so `sed -n` selected nothing \u2014 the table side goes empty and the diff exits 1 rather than silently comparing against a static blank",
+      "the test read a fixture copy of either file instead of the two real paths on disk \u2014 it would assert against a snapshot of the answer and pass while the consumer's own theme drifted"
     ]
   },
   "evidence": {
@@ -133,15 +95,15 @@
       "action": {
         "actor": "designer",
         "steps": [
-          "run the diff of the declared entries against the OBLIGATION-TABLE-SPRINT-01 block",
+          "run `pnpm exec vitest run tests/sprint-01/theme-obligation.test.ts -t \"AC-2 the obligation table matches the consumer theme\"`, which reads both files from disk and compares the declared palette entries in `apps/example/global.css` against the OBLIGATION-TABLE-SPRINT-01 block, both sides narrowed to the palette families so RNR's own role tokens (`--color-chart-1` \u2026 `--color-chart-5`, written by TASK-F1) are not demanded as rows, and both sides required to be non-empty (`>= 8` declared entries)",
           "read the three escalation subsections and confirm each carries a command a reviewer can re-run"
         ]
       },
       "end_state": {
         "must_observe": [
-          "an empty diff and exit code `0`",
+          "an empty diff and exit code `0`, reached only after the declared set clears the `>= 8` non-empty anchor \u2014 a run against a missing or unappended theme file exits 1 rather than passing on two empty sets",
           "`8` table rows, each naming both the item (`tool`) and the module (`lib/status.ts` or `tool.logic.ts`) that requires it",
-          "a FULL-SET subsection recording all `26` entries as sprint-02's inheritance, marked as NOT declared in this app",
+          "a FULL-SET subsection recording all `26` declaration lines of `apps/harness/src/global.css` as sprint-02's inheritance \u2014 `21` distinct names, with `--color-chart-1` through `--color-chart-5` declared twice (once in the light block, once in dark) \u2014 marked as NOT declared in this app",
           "an escalation naming `apps/harness/src/global.css:28-34` \u2014 the comment enumerates three classes while `packages/registry/src/lib/status.ts:30` writes four, so `--color-orange-500` was never transcribed and a denied tool status has rendered colorless in dark mode in our own harness",
           "an escalation carrying the literal command `grep -c class-safelist public/r/uniwind/file-tree.json public/r/uniwind/transcription.json` and its output `1` for each, showing the harness-path instruction ships into consumer trees"
         ],
@@ -156,22 +118,21 @@
   ]
 }
 ```
-</details>
 
+</details>
 
 ## Test Criteria
 
-| ID | Maps to | Assertion |
-|---|---|---|
-| TC-1 | AC-1 | No palette class in the installed tree is undeclared |
-| TC-2 | AC-1 | No scanner-forcing file exists in the consumer |
-| TC-3 | AC-2 | The record matches what the app declares |
+| ID | Statement | Maps to | Verify |
+|---|---|---|---|
+| TC-3 |  | AC-2 | `—` |
 
 ## Guardrails
 
 **WRITE-ALLOWED**
 - `apps/example/global.css`
 - `design/style-parity-remediation.md`
+- `tests/sprint-01/theme-obligation.test.ts`
 
 **WRITE-PROHIBITED**
 - `packages/registry/**`
@@ -197,11 +158,11 @@
 {
   "version": "1",
   "task_id": "TASK-F7",
-  "task_type": "FEATURE",
-  "tdd_mode": "red_first",
+  "task_type": "INFRA",
+  "tdd_mode": "shared",
   "verification_policy": {
-    "requires_tests": true,
-    "requires_red_evidence": true,
+    "requires_tests": false,
+    "requires_red_evidence": false,
     "requires_seeded_evidence": true
   },
   "fixtures": {
@@ -220,73 +181,13 @@
   },
   "requirements": [
     {
-      "id": "AC-1",
-      "type": "acceptance_criterion",
-      "primary": true,
-      "flow_ref": null,
-      "test_file": null,
-      "test_function": null,
-      "verify": "comm -23 <(grep -rhoE '(dark:)?(text|bg|border)-(zinc|slate|gray|green|orange|yellow|blue|red)-[0-9]{2,3}' apps/example/components apps/example/lib | sed -E 's/^dark://; s/^(text|bg|border)-/--color-/' | sort -u) <(grep -oE -- '--color-[a-z]+-[0-9]+' apps/example/global.css | sort -u)",
-      "test_tier": "integration",
-      "verification_service": "the real `apps/example` consumer tree written by `npx @react-native-reusables/cli@latest add` against the v0.1.0 tag \u2014 a real artifact from a real resolver, not a synthetic input",
-      "scenario": {
-        "id": "SC-F7-1",
-        "primary": true,
-        "tier": "visible",
-        "test_tier": "integration",
-        "verification_service": "the real `apps/example` consumer tree written by the RNR CLI from the v0.1.0 tag",
-        "negative_control": {
-          "would_fail_if": [
-            "`--color-orange-500` were left undeclared while `lib/status.ts` still writes `dark:text-orange-500` \u2014 this is not hypothetical, it is the live defect this check was built to catch, and it survived in `apps/harness` because a human transcribed three classes from a comment that names four",
-            "the obligation were transcribed by hand from a comment instead of derived from the installed source \u2014 the exact failure mode that produced the orange-500 gap in the first place",
-            "a `class-safelist.tsx` were copied into `apps/example` to force classes to compile, which would make the derivation meaningless by giving every class a second home",
-            "the derivation were run against `packages/registry/src` instead of the installed consumer tree, which would silently re-measure the monorepo rather than the consumer",
-            "the class-name regex were narrowed to the colors already known to be declared, which would make the check tautological"
-          ]
-        },
-        "evidence": {
-          "artifact_type": "stdout",
-          "required_capture": true,
-          "path": "design/style-parity-remediation.md"
-        },
-        "cases": [
-          {
-            "start_ref": "installed-consumer-tree",
-            "action": {
-              "actor": "designer",
-              "steps": [
-                "run the referenced-class derivation over `apps/example/components` and `apps/example/lib` and count the distinct results",
-                "run `comm -23` of the referenced set against the `--color-*` entries declared in `apps/example/global.css`",
-                "run `find apps/example -iname '*safelist*' | wc -l`",
-                "paste all three outputs verbatim into the obligation section of `design/style-parity-remediation.md`"
-              ]
-            },
-            "end_state": {
-              "must_observe": [
-                "at least `8` distinct palette classes found in the installed tree \u2014 the non-empty anchor, expected to be exactly the 8 written by `lib/status.ts` and `tool.logic.ts`: green-500, green-600, orange-500, orange-600, yellow-400, yellow-600, blue-400, blue-600",
-                "`0` lines of `comm -23` output \u2014 every referenced class has a matching declaration",
-                "`0` files matching `*safelist*` under `apps/example`",
-                "`--color-orange-500` present among the declared entries, with an inline comment naming `lib/status.ts` denied-in-dark as its requirer"
-              ],
-              "must_not_observe": [
-                "`0` palette classes found \u2014 the empty-tree signature, which makes an empty `comm` result meaningless and is exactly what this check would print against a scaffold with nothing installed",
-                "any line of `comm -23` output, each of which is a class that renders colorless with no error",
-                "any file matching `*safelist*` under `apps/example`",
-                "a declared set larger than the referenced set by the 17 entries only the other 51 items need \u2014 over-declaring hides which item requires what and makes sprint-02's per-item table underivable"
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
       "id": "AC-2",
       "type": "acceptance_criterion",
       "primary": false,
       "flow_ref": null,
-      "test_file": null,
-      "test_function": null,
-      "verify": "diff <(grep -oE -- '--color-[a-z]+-[0-9]+' apps/example/global.css | sort -u) <(sed -n '/OBLIGATION-TABLE-SPRINT-01-START/,/OBLIGATION-TABLE-SPRINT-01-END/p' design/style-parity-remediation.md | grep -oE -- '--color-[a-z]+-[0-9]+' | sort -u)",
+      "test_file": "tests/sprint-01/theme-obligation.test.ts",
+      "test_function": "AC-2 the obligation table matches the consumer theme",
+      "verify": "pnpm exec vitest run tests/sprint-01/theme-obligation.test.ts -t \"AC-2 the obligation table matches the consumer theme\"",
       "test_tier": "unit",
       "scenario": {
         "id": "SC-F7-2",
@@ -297,8 +198,14 @@
         "negative_control": {
           "would_fail_if": [
             "a var were added to `apps/example/global.css` without a matching table row, or a row survived its var's removal \u2014 the diff goes non-empty and the command exits 1",
-            "the table were hand-typed from the harness's 26 rather than derived from AC-1's output, which is the transcription failure that produced the orange-500 gap",
-            "a preferred distribution fix were written into the record as settled \u2014 registry `cssVars` versus an install prerequisite versus converting the escape colors to RNR roles is sprint-03's decision and this task is bound not to pre-empt it"
+            "the table were hand-typed from the harness's 26 declaration lines rather than derived from this task's Verification Checklist derivation over the installed `apps/example` tree, which is the transcription failure that produced the orange-500 gap",
+            "a preferred distribution fix were written into the record as settled \u2014 registry `cssVars` versus an install prerequisite versus converting the escape colors to RNR roles is sprint-03's decision and this task is bound not to pre-empt it",
+            "either side of the diff were widened back to `--color-[a-z]+-[0-9]+`, which matches RNR's own `--color-chart-1` \u2026 `--color-chart-5` role tokens and would make the diff non-empty on a correct implementation \u2014 a check that is always red proves as little as one that is always green",
+            "the diff were run with `apps/example/global.css` absent or with the palette slice not yet appended: both sides come back empty and a bare `diff` exits 0 on nothing-versus-nothing. The `>= 8` non-empty anchor in the command closes that hole and exits 1 instead",
+            "the consumer `@theme` block were absent or empty in `apps/example/global.css` \u2014 every palette class compiles to nothing on device and the declared side of the diff comes back empty; the `>= 8` anchor exits 1 instead of passing on nothing-versus-nothing",
+            "the command were pointed at `apps/harness/src/global.css` instead of the consumer's own theme file \u2014 it would read the monorepo's 26 declarations, never touch the installed tree, and pass forever while the consumer ships colorless",
+            "the OBLIGATION-TABLE-SPRINT-01 markers were removed or misspelled so `sed -n` selected nothing \u2014 the table side goes empty and the diff exits 1 rather than silently comparing against a static blank",
+            "the test read a fixture copy of either file instead of the two real paths on disk \u2014 it would assert against a snapshot of the answer and pass while the consumer's own theme drifted"
           ]
         },
         "evidence": {
@@ -312,15 +219,15 @@
             "action": {
               "actor": "designer",
               "steps": [
-                "run the diff of the declared entries against the OBLIGATION-TABLE-SPRINT-01 block",
+                "run `pnpm exec vitest run tests/sprint-01/theme-obligation.test.ts -t \"AC-2 the obligation table matches the consumer theme\"`, which reads both files from disk and compares the declared palette entries in `apps/example/global.css` against the OBLIGATION-TABLE-SPRINT-01 block, both sides narrowed to the palette families so RNR's own role tokens (`--color-chart-1` \u2026 `--color-chart-5`, written by TASK-F1) are not demanded as rows, and both sides required to be non-empty (`>= 8` declared entries)",
                 "read the three escalation subsections and confirm each carries a command a reviewer can re-run"
               ]
             },
             "end_state": {
               "must_observe": [
-                "an empty diff and exit code `0`",
+                "an empty diff and exit code `0`, reached only after the declared set clears the `>= 8` non-empty anchor \u2014 a run against a missing or unappended theme file exits 1 rather than passing on two empty sets",
                 "`8` table rows, each naming both the item (`tool`) and the module (`lib/status.ts` or `tool.logic.ts`) that requires it",
-                "a FULL-SET subsection recording all `26` entries as sprint-02's inheritance, marked as NOT declared in this app",
+                "a FULL-SET subsection recording all `26` declaration lines of `apps/harness/src/global.css` as sprint-02's inheritance \u2014 `21` distinct names, with `--color-chart-1` through `--color-chart-5` declared twice (once in the light block, once in dark) \u2014 marked as NOT declared in this app",
                 "an escalation naming `apps/harness/src/global.css:28-34` \u2014 the comment enumerates three classes while `packages/registry/src/lib/status.ts:30` writes four, so `--color-orange-500` was never transcribed and a denied tool status has rendered colorless in dark mode in our own harness",
                 "an escalation carrying the literal command `grep -c class-safelist public/r/uniwind/file-tree.json public/r/uniwind/transcription.json` and its output `1` for each, showing the harness-path instruction ships into consumer trees"
               ],
@@ -333,7 +240,21 @@
             }
           }
         ]
-      }
+      },
+      "verification_service": "the two files this task owns, read from disk",
+      "unit_test_justified": "Pure textual consistency between two files this task owns, zero I/O beyond reading them, asserting no product behavior. All product behavior for this task is asserted on real devices by TASK-F8 AC-1 and AC-6 under the locked flow `UC-REG-01/core-happy-path`; the derivation over the real installed tree runs as this task's Verification Checklist. A hand-typed obligation list drifting from what the app declares is the specific failure this catches, and it needs no runtime.",
+      "surface_policy": null,
+      "num": 2,
+      "name": "the record matches what the app declares and carries the three escalations",
+      "given": "the declared palette slice this task wrote into `apps/example/global.css`",
+      "when": "the table's entry set is diffed against the theme file's entry set",
+      "then": "the diff is empty and the three escalation subsections are present with their reproducing commands"
+    },
+    {
+      "id": "TC-3",
+      "type": "test_case",
+      "text": "The record matches what the app declares",
+      "maps_to_ac": "AC-2"
     }
   ]
 }

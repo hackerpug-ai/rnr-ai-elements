@@ -3,11 +3,12 @@
 > Task ID: TASK-F8  
 > Sprint: [sprint-01](./SPRINT.md)  
 > Agent: `react-native-ui-implementer`  
-> Points: 13  
-> Type: FEATURE  
+> Points: 13
+> Type: FEATURE
 > Wave: G  
-> Status: ⬜ Pending  
-> Proposed By: `react-native-ui-planner`  
+> Status: ⬜ Pending    
+> TDD Mode: `red_first` · RED_GREEN_REQUIRED: yes
+> Proposed By: `react-native-ui-planner`
 > Depends On: TASK-F6
 
 **Sizing rationale.** The badge assertion is not a line in an existing script — it is pixel sampling from a capture, an sRGB→linear→LMS→OKLab→OKLCH conversion, a second invocation mode that mutates the consumer theme and reverts under a trap, and a schema addition to the artifact. That is 2-3 points on top of an 8 that was already the sprint's heaviest task and already owned three of four locked `test` paths plus both journey proofs. I am not absorbing it silently at 8. If 13 is unacceptable, the honest cut is the one I flagged last round: split the Android leg (steps 10-12, AC-4, `design/goldens/mobile-android/**`) into its own task depending on F8, leaving F8 at 8. I do not recommend splitting the badge work out — it reads a capture only AC-1 produces.
@@ -18,7 +19,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
 
 ## Critical Constraints
 
-- `set -euo pipefail` in every script under scripts/e2e/, and no `|| true` anywhere. A wrapper that always exits 0 turns the locked flow into exactly the theatre the negative control exists to forbid, and it would pass this gate while proving nothing.
+- `set -euo pipefail` in every script under tests/sprint-01/, and no `|| true` anywhere. A wrapper that always exits 0 turns the locked flow into exactly the theatre the negative control exists to forbid, and it would pass this gate while proving nothing.
 - The negative-control stage is INVERTED: Maestro must FAIL there, and a Maestro PASS must make the script exit non-zero. Getting this backwards is the single highest-stakes error in the task because it produces a green gate over a dead assertion.
 - `clearState: true` under launchApp, and ZERO retries. Per the flake policy a flaky flow is fixed or deleted within the sprint, never retried into green; retries mask precisely the timing bugs this product is made of.
 - The RED log must be CAPTURED from a real failing run of the same locked command, via a deliberate mutation that is then reverted. A hand-written RED log is manufactured evidence and is the cardinal sin this field exists to prevent.
@@ -27,20 +28,33 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
 - Sample the glyph, not the pill. `tool-badge-completed` is a rounded pill whose background is `bg-secondary`; averaging the whole element's bounds dilutes the check mark's chroma toward the surface and can pass a colorless glyph. Sample inside the glyph's own sub-bounds and record the sample rectangle in the artifact so the number is auditable.
 - The cold-boot flow MUST include `tapOn: id: context-trigger` followed by `assertVisible: id: context-popover-content`. TASK-F1 is now INFRA and delegates its PortalHost behavioral proof here; if this pair is dropped, a missing PortalHost renders the overlay as nothing with no error and NOTHING in the sprint catches it.
 
+## Verification Checklist
+
+| Command | Expect |
+|---|---|
+| `ls -d tests/sprint-01 && ls tests/sprint-01` | the lane directory exists and holds install-core.test.sh and install-dirty-app.test.sh; `ls scripts/e2e 2>/dev/null` prints nothing, because no sprint-01 e2e entrypoint is left outside the lane |
+| `grep -c 'set -euo pipefail' tests/sprint-01/install-core.test.sh tests/sprint-01/install-dirty-app.test.sh && grep -rn -- '\|\| true' tests/sprint-01/` | each script reports 1; the `\|\| true` grep exits 1 with no matches. A wrapper that always exits 0 turns the locked flow into theatre |
+| `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` | exit 0, 2 `Flow Passed` lines, 4 png across design/goldens/mobile-ios/sprint-01/ and design/goldens/mobile-android/sprint-01/, and badge_glyph_oklch written into design/goldens/sprint-01/install/core-happy-path.json (AC-1, AC-4, AC-6) |
+| `bash tests/sprint-01/install-core.test.sh journeys/mvp-install-arc` | exit 0 having written design/goldens/sprint-01/install/mvp-install-arc.json. This is the locked run_cmd of the journey this task is owner_task_id of; the same script, the journey's step set minus step 9; and design/goldens/sprint-01/install/mvp-install-arc.RED.log is non-empty and captured from a real failing run of this same command. Same gap class as the dirty-app log: it is a locked red_proof of an F8-owned journey that no row previously obliged anyone to produce |
+| `bash tests/sprint-01/install-dirty-app.test.sh journeys/mvp-full-arc--edge-install-into-a-dirty-app` | exit 0 having written design/goldens/sprint-01/install/dirty-app.json, with the overwrite prompt, the expo-doctor pin failure and the PortalHost prerequisite each asserted against the hostile $TMPDIR app. THIS ROW IS WHAT MAKES THE SCRIPT A CONDITION OF DONE: the locked journey and SPRINT.md gate step 13 both invoke it and TASK-F8 is its declared owner_task_id, but before this row no AC obliged anyone to produce it |
+| `test -s design/goldens/sprint-01/install/dirty-app.RED.log && head -n 1 design/goldens/sprint-01/install/dirty-app.RED.log && tail -n 3 design/goldens/sprint-01/install/dirty-app.RED.log` | a non-empty log captured from a real failing run of the dirty-app command above (the hostile app absent, or the overwrite prompt not yet implemented), ending in a non-zero exit. Hand-writing this log is the manufactured-evidence failure the red_proof field exists to prevent |
+| `git diff --name-only` | every path is inside guardrails.write_allowed; zero paths under packages/registry/**, public/r/**, apps/example/app/** or apps/example/components/ai/** |
+
 ## Acceptance Criteria
 
 ### AC-1 — PRIMARY: the composed script proves the whole arc on both platforms
-
 **GIVEN** apps/example installed from the v0.1.0 tag and both a simulator and an emulator booted  
-**WHEN** `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` runs at the repository root  
+**WHEN** `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` runs at the repository root  
 **THEN** it exits 0 having asserted the seeded transcript and the themed badge on iOS and Android
 
+- TDD_STATE: `red`
 - FLOW_REF: `UC-REG-01/core-happy-path`
 - TEST_TIER: `e2e`
-- TEST_FILE: `scripts/e2e/install-core.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
-- VERIFY: `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path`
+- TEST_FILE: `tests/sprint-01/install-core.test.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
+- VERIFY: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path`
 - VERIFICATION_SERVICE: apps/example on iPhone 17 Pro simulator + Pixel_7_API_34 emulator, items installed by the real RNR CLI from the v0.1.0 tag
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
+- COLDBOOT_POLICY: `.spec/e2e-policy/coldboot.json`
 
 <details><summary>Scenario <code>SC-F8-1</code></summary>
 
@@ -68,7 +82,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
       "action": {
         "actor": "developer",
         "steps": [
-          "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` at the repository root",
+          "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` at the repository root",
           "read the final line and the exit code",
           "list design/goldens/mobile-ios/sprint-01/ and design/goldens/mobile-android/sprint-01/"
         ]
@@ -89,20 +103,22 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
   ]
 }
 ```
+
 </details>
 
 ### AC-2: the negative control is watched failing, and a passing negative control fails the run
-
 **GIVEN** the same booted app with the fixture moved aside  
 **WHEN** the script's negative-control stage runs the identical Maestro flow  
 **THEN** Maestro fails with the named assertion and the script treats a PASS there as its own failure
 
+- TDD_STATE: `red`
 - FLOW_REF: `UC-REG-01/core-happy-path`
 - TEST_TIER: `e2e`
-- TEST_FILE: `scripts/e2e/install-core.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
-- VERIFY: `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path`
+- TEST_FILE: `tests/sprint-01/install-core.test.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
+- VERIFY: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path`
 - VERIFICATION_SERVICE: apps/example on iPhone 17 Pro simulator + Pixel_7_API_34 emulator, items installed by the real RNR CLI from the v0.1.0 tag
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
+- COLDBOOT_POLICY: `.spec/e2e-policy/coldboot.json`
 
 <details><summary>Scenario <code>SC-F8-2</code></summary>
 
@@ -130,7 +146,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
       "action": {
         "actor": "developer",
         "steps": [
-          "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` with the fixture already moved to transcript.json.bak",
+          "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` with the fixture already moved to transcript.json.bak",
           "read the negative-control stage output and the script's exit code"
         ]
       },
@@ -150,20 +166,22 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
   ]
 }
 ```
+
 </details>
 
 ### AC-3: the assertion runs against a cold launch, not a warm resume
-
 **GIVEN** .maestro/cold-boot.yaml carrying `clearState: true` under launchApp  
 **WHEN** the app is force-quit from the launcher and the flow is run a second time  
 **THEN** the second run passes from a cleared install rather than a resumed process
 
+- TDD_STATE: `red`
 - FLOW_REF: `UC-REG-01/core-happy-path`
 - TEST_TIER: `e2e`
-- TEST_FILE: `scripts/e2e/install-core.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
-- VERIFY: `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path`
+- TEST_FILE: `tests/sprint-01/install-core.test.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
+- VERIFY: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path`
 - VERIFICATION_SERVICE: apps/example on iPhone 17 Pro simulator + Pixel_7_API_34 emulator, items installed by the real RNR CLI from the v0.1.0 tag
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
+- COLDBOOT_POLICY: `.spec/e2e-policy/coldboot.json`
 
 <details><summary>Scenario <code>SC-F8-3</code></summary>
 
@@ -212,20 +230,22 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
   ]
 }
 ```
+
 </details>
 
 ### AC-4: Android is verified as its own platform, not assumed from iOS
-
 **GIVEN** the Pixel_7_API_34 emulator with edge-to-edge default Android 14+ insets  
 **WHEN** the flow runs on Android and the composer is inspected  
 **THEN** the send button clears the system navigation bar and an Android golden is written
 
+- TDD_STATE: `red`
 - FLOW_REF: `UC-REG-01/core-happy-path`
 - TEST_TIER: `e2e`
-- TEST_FILE: `scripts/e2e/install-core.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
-- VERIFY: `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path`
+- TEST_FILE: `tests/sprint-01/install-core.test.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
+- VERIFY: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path`
 - VERIFICATION_SERVICE: apps/example on iPhone 17 Pro simulator + Pixel_7_API_34 emulator, items installed by the real RNR CLI from the v0.1.0 tag
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
+- COLDBOOT_POLICY: `.spec/e2e-policy/coldboot.json`
 
 <details><summary>Scenario <code>SC-F8-4</code></summary>
 
@@ -274,20 +294,22 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
   ]
 }
 ```
+
 </details>
 
 ### AC-5: the RED proof is the locked test watched failing
-
 **GIVEN** a deliberate mutation of the assertion the flow depends on  
 **WHEN** the mutated flow is run and its output captured to the locked red_proof path  
 **THEN** the log records a real failure of the same command the gate runs, then the mutation is reverted
 
+- TDD_STATE: `red`
 - FLOW_REF: `UC-REG-01/core-happy-path`
 - TEST_TIER: `e2e`
-- TEST_FILE: `scripts/e2e/install-core.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
-- VERIFY: `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path`
+- TEST_FILE: `tests/sprint-01/install-core.test.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
+- VERIFY: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path`
 - VERIFICATION_SERVICE: apps/example on iPhone 17 Pro simulator + Pixel_7_API_34 emulator, items installed by the real RNR CLI from the v0.1.0 tag
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
+- COLDBOOT_POLICY: `.spec/e2e-policy/coldboot.json`
 
 <details><summary>Scenario <code>SC-F8-5</code></summary>
 
@@ -316,7 +338,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         "actor": "developer",
         "steps": [
           "change the `transcript-message-0` assertVisible in .maestro/cold-boot.yaml to an id that no element carries",
-          "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` and redirect stdout and stderr to design/goldens/sprint-01/install/core-happy-path.RED.log",
+          "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` and redirect stdout and stderr to design/goldens/sprint-01/install/core-happy-path.RED.log",
           "revert the mutation and re-run the same command"
         ]
       },
@@ -336,20 +358,22 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
   ]
 }
 ```
+
 </details>
 
 ### AC-6: the tool badge glyph is green by measurement, not by human glance
-
 **GIVEN** the iOS golden capture written by AC-1 and the `tool-badge-completed` element bounds Maestro reports  
-**WHEN** install-core.sh samples the check glyph pixels and converts them to OKLCH  
+**WHEN** install-core.test.sh samples the check glyph pixels and converts them to OKLCH  
 **THEN** chroma exceeds 0.05 and hue falls in [120,180], and both numbers are written into the artifact
 
+- TDD_STATE: `red`
 - FLOW_REF: `UC-REG-01/core-happy-path`
 - TEST_TIER: `e2e`
-- TEST_FILE: `scripts/e2e/install-core.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
-- VERIFY: `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path`
+- TEST_FILE: `tests/sprint-01/install-core.test.sh`  ·  TEST_FUNCTION: `UC-REG-01/core-happy-path`
+- VERIFY: `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path`
 - VERIFICATION_SERVICE: apps/example on iPhone 17 Pro simulator + Pixel_7_API_34 emulator, items installed by the real RNR CLI from the v0.1.0 tag
 - SURFACE_POLICY: `.spec/e2e-policy/surface.json`
+- COLDBOOT_POLICY: `.spec/e2e-policy/coldboot.json`
 
 <details><summary>Scenario <code>SC-F8-6</code></summary>
 
@@ -377,7 +401,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
       "action": {
         "actor": "developer",
         "steps": [
-          "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` at the repository root",
+          "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` at the repository root",
           "read badge_glyph_oklch in design/goldens/sprint-01/install/core-happy-path.json"
         ]
       },
@@ -399,7 +423,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
       "action": {
         "actor": "developer",
         "steps": [
-          "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path --mutate-theme green-600`",
+          "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path --mutate-theme green-600`",
           "read the failure line and the exit code"
         ]
       },
@@ -419,19 +443,19 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
   ]
 }
 ```
-</details>
 
+</details>
 
 ## Test Criteria
 
-| ID | Maps to | Assertion |
-|---|---|---|
-| TC-1 | AC-1 | it exits 0 having asserted the seeded transcript and the themed badge on iOS and Android |
-| TC-2 | AC-2 | Maestro fails with the named assertion and the script treats a PASS there as its own failure |
-| TC-3 | AC-3 | the second run passes from a cleared install rather than a resumed process |
-| TC-4 | AC-4 | the send button clears the system navigation bar and an Android golden is written |
-| TC-5 | AC-5 | the log records a real failure of the same command the gate runs, then the mutation is reverted |
-| TC-6 | AC-6 | chroma exceeds 0.05 and hue falls in [120,180], and both numbers are written into the artifact |
+| ID | Statement | Maps to | Verify |
+|---|---|---|---|
+| TC-1 |  | AC-1 | `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` |
+| TC-2 |  | AC-2 | `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` |
+| TC-3 |  | AC-3 | `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` |
+| TC-4 |  | AC-4 | `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` |
+| TC-5 |  | AC-5 | `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` |
+| TC-6 |  | AC-6 | `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` |
 
 ## Guardrails
 
@@ -443,7 +467,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
 - `design/goldens/mobile-ios/sprint-01/**`
 - `AGENTS.md`
 - `.spec/e2e-policy/**`
-- `scripts/e2e/**`
+- `tests/sprint-01/**`
+- `tests/sprint-01/install-core.test.sh`
+- `tests/sprint-01/install-dirty-app.test.sh`
 - `design/goldens/sprint-01/install/**`
 - `apps/example/global.css`
 
@@ -458,9 +484,17 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
 ## Fixtures
 
 - **`rendered_home_route`** (ui_flow) — apps/example / route mounted on a booted simulator from the committed fixture with no network call
+  - 3 transcript rows mounted
+  - header text `AI Elements Example`
 - **`seed_removed`** (cli) — the same booted app after `mv apps/example/fixtures/transcript.json apps/example/fixtures/transcript.json.bak`
+  - fixtures/transcript.json absent from disk
+  - fixtures/transcript.json.bak present
 - **`android_emulator`** (cli) — Pixel_7_API_34 emulator booted with apps/example installed by `npx expo run:android`
+  - adb reports 1 attached emulator-5554
+  - app package ai.hackerpug.rnrexample installed
 - **`theme_slice_deleted`** (cli) — apps/example/global.css with the `--color-green-600` declaration removed and Metro cache cleared
+  - global.css declares 10 --color-* palette entries instead of 11
+  - --color-green-600 absent
 
 ## Notes
 
@@ -548,7 +582,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
             "action": {
               "actor": "developer",
               "steps": [
-                "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` at the repository root",
+                "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` at the repository root",
                 "read the final line and the exit code",
                 "list design/goldens/mobile-ios/sprint-01/ and design/goldens/mobile-android/sprint-01/"
               ]
@@ -569,9 +603,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         ]
       },
       "primary": true,
-      "test_file": "scripts/e2e/install-core.sh",
+      "test_file": "tests/sprint-01/install-core.test.sh",
       "test_function": "UC-REG-01/core-happy-path",
-      "verify": "bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path"
+      "verify": "bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path"
     },
     {
       "id": "AC-2",
@@ -604,7 +638,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
             "action": {
               "actor": "developer",
               "steps": [
-                "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` with the fixture already moved to transcript.json.bak",
+                "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` with the fixture already moved to transcript.json.bak",
                 "read the negative-control stage output and the script's exit code"
               ]
             },
@@ -624,9 +658,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         ]
       },
       "primary": false,
-      "test_file": "scripts/e2e/install-core.sh",
+      "test_file": "tests/sprint-01/install-core.test.sh",
       "test_function": "UC-REG-01/core-happy-path",
-      "verify": "bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path"
+      "verify": "bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path"
     },
     {
       "id": "AC-3",
@@ -680,9 +714,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         ]
       },
       "primary": false,
-      "test_file": "scripts/e2e/install-core.sh",
+      "test_file": "tests/sprint-01/install-core.test.sh",
       "test_function": "UC-REG-01/core-happy-path",
-      "verify": "bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path"
+      "verify": "bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path"
     },
     {
       "id": "AC-4",
@@ -736,9 +770,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         ]
       },
       "primary": false,
-      "test_file": "scripts/e2e/install-core.sh",
+      "test_file": "tests/sprint-01/install-core.test.sh",
       "test_function": "UC-REG-01/core-happy-path",
-      "verify": "bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path"
+      "verify": "bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path"
     },
     {
       "id": "AC-5",
@@ -772,7 +806,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
               "actor": "developer",
               "steps": [
                 "change the `transcript-message-0` assertVisible in .maestro/cold-boot.yaml to an id that no element carries",
-                "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` and redirect stdout and stderr to design/goldens/sprint-01/install/core-happy-path.RED.log",
+                "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` and redirect stdout and stderr to design/goldens/sprint-01/install/core-happy-path.RED.log",
                 "revert the mutation and re-run the same command"
               ]
             },
@@ -792,9 +826,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         ]
       },
       "primary": false,
-      "test_file": "scripts/e2e/install-core.sh",
+      "test_file": "tests/sprint-01/install-core.test.sh",
       "test_function": "UC-REG-01/core-happy-path",
-      "verify": "bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path"
+      "verify": "bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path"
     },
     {
       "id": "TC-1",
@@ -857,7 +891,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
             "action": {
               "actor": "developer",
               "steps": [
-                "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path` at the repository root",
+                "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path` at the repository root",
                 "read badge_glyph_oklch in design/goldens/sprint-01/install/core-happy-path.json"
               ]
             },
@@ -879,7 +913,7 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
             "action": {
               "actor": "developer",
               "steps": [
-                "run `bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path --mutate-theme green-600`",
+                "run `bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path --mutate-theme green-600`",
                 "read the failure line and the exit code"
               ]
             },
@@ -899,9 +933,9 @@ One composed script installs, boots and asserts on iOS and Android, exits non-ze
         ]
       },
       "primary": false,
-      "test_file": "scripts/e2e/install-core.sh",
+      "test_file": "tests/sprint-01/install-core.test.sh",
       "test_function": "UC-REG-01/core-happy-path",
-      "verify": "bash scripts/e2e/install-core.sh UC-REG-01/core-happy-path"
+      "verify": "bash tests/sprint-01/install-core.test.sh UC-REG-01/core-happy-path"
     },
     {
       "id": "TC-6",

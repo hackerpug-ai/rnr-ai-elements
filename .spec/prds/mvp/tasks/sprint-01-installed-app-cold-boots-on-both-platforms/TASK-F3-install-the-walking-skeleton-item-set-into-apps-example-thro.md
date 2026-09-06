@@ -4,10 +4,11 @@
 > Sprint: [sprint-01](./SPRINT.md)  
 > Agent: `react-native-reusables-implementer`  
 > Points: 3  
-> Type: FEATURE  
+> Type: INFRA
 > Wave: C  
-> Status: ⬜ Pending  
-> Proposed By: `react-native-reusables-planner`  
+> Status: ⬜ Pending    
+> TDD Mode: `skipped` · RED_GREEN_REQUIRED: no
+> Proposed By: `react-native-reusables-planner`
 > Depends On: TASK-F1, TASK-F2
 
 ## Outcome
@@ -21,142 +22,33 @@ Five items in one command, then boot. The whole value of this task is that the r
 - The `--yes` flag is FORBIDDEN on the gate-step-13 run. That run exists to demonstrate the overwrite prompt (UC-REG-01 AC-3), and `--yes` suppresses the only thing it is proving. The coldboot policy carries a `forbidden_seed_patterns` entry for exactly this.
 - Use `$TMPDIR` for the hostile app in steps 13-15, never a hardcoded `/tmp`, per the repo's scratch-artifacts standard.
 
-## Acceptance Criteria
+## Verification Checklist
 
-### AC-1: One RNR CLI command against the pinned v0.1.0 URL lands five AI Elemen
+| Command | Expect |
+|---|---|
+| `cd apps/example && npx @react-native-reusables/cli@latest add https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/conversation.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/message.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/prompt-input.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/tool.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/context.json 2>&1 \| tee "$TMPDIR/f3-install.log"` | runs against fixture `rnr-initialized-example-app`. exit 0, and one `Created` line for each of components/ai/{conversation,message,prompt-input,tool,context}.tsx AND for each of components/ui/{text,avatar,button,icon,popover}.tsx — five ours, five RNR's, from one command |
+| `grep -c 'raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0' "$TMPDIR/f3-install.log"; grep -c 'reactnativereusables.com' "$TMPDIR/f3-install.log"; grep -cE '404\|Cannot find module' "$TMPDIR/f3-install.log"` | both host counts are >= 1 and the error count is exactly 0 — ours resolve from the pinned tag, RNR's primitives resolve from RNR, and nothing 404s |
+| `ls apps/example/components/ui/popover.tsx && git ls-files packages/registry/src \| grep -c 'ui/popover.tsx'` | the file exists in the consumer and the repo-side count is 0 — THE FAKEABILITY FLOOR: popover.tsx exists nowhere in this repository, so no `cp` can have produced it |
+| `cd "$TMPDIR/pristine-scratch-app" && find . -path ./node_modules -prune -o -name '*.tsx' -print \| grep -cE 'components/(ai\|ui)/' && (echo '127.0.0.1 reactnativereusables.com'; echo '127.0.0.1 raw.githubusercontent.com') \| sudo tee -a /etc/hosts >/dev/null && trap 'sudo sed -i "" "/127.0.0.1 reactnativereusables.com/d;/127.0.0.1 raw.githubusercontent.com/d" /etc/hosts' EXIT && npx @react-native-reusables/cli@latest add <the identical five URLs>; echo "exit=$?"; find . -path ./node_modules -prune -o -name '*.tsx' -print \| grep -cE 'components/(ai\|ui)/'` | runs against fixture `pristine-scratch-app`, NOT apps/example. THE NETWORK DISCRIMINATOR: pre-count is 0, exit is NON-ZERO, post-count is still 0. A success here would mean the files came from somewhere other than the network and nothing about this install was real. The /etc/hosts trap must fire on success, failure and SIGINT. |
+| `bash tests/sprint-01/install-dirty-app.test.sh --prepare && cp "$TMPDIR/rnr-dirty/consumer/components/ui/button.tsx" "$TMPDIR/button.before" && cd "$TMPDIR/rnr-dirty/consumer" && printf 'n\n' \| npx @react-native-reusables/cli@latest add <the identical five URLs> 2>&1 \| tee "$TMPDIR/f3-dirty.log"; cmp "$TMPDIR/button.before" components/ui/button.tsx` | runs against fixture `hostile-expo-app`. the log names components/ui/button.tsx as a file it WOULD overwrite, the prompt appears BEFORE any write, and `cmp` exits 0 — the declined file is byte-identical. `--yes` is forbidden on this run; it suppresses the only thing being proven. |
+| `cd "$TMPDIR/rnr-dirty/consumer" && npx expo-doctor; echo "exit=$?"` | non-zero exit naming `react-native-gesture-handler` and the expected `~2.32.0` — the major-version drift is caught by doctor rather than surfacing later as a native crash |
+| `cd apps/example && npx expo run:ios` | the app builds and opens with no `Cannot find module` in the Metro output |
 
-One RNR CLI command against the pinned v0.1.0 URL lands five AI Elements items and the RNR primitives they declare into a pristine app, and the identical command with the registry hosts unreachable writes nothing.
+## Behavior Proven By
 
-- FLOW_REF: `—`
-- TEST_TIER: `integration`
-- TEST_FILE: `tests/install-evidence.test.ts`  ·  TEST_FUNCTION: `installs five items and their RNR primitives from the pinned URL`
-- VERIFY: `pnpm exec vitest run tests/install-evidence.test.ts -t "installs five items and their RNR primitives from the pinned URL"`
-- VERIFICATION_SERVICE: the real @react-native-reusables/cli resolving live against raw.githubusercontent.com v0.1.0 and reactnativereusables.com, into a pristine Expo app under $TMPDIR
-- SURFACE_POLICY: `.spec/e2e-policy/surface.json`
-- RED_PROOF: `design/goldens/sprint-01/install/install-evidence.RED.log`
-- RED provenance: NATURAL RED, no mutation needed. The test is written before TASK-F3's install work lands and fails on the missing scratch-app fixture and the absent `Created` lines. Capture that run. This is strictly better than the mutation RED it replaces — the failure is the real absence, not a manufactured one.
+Flow `UC-REG-01/core-happy-path`, owned by **TASK-F8/AC-1**. Delegated assertions:
 
-<details><summary>Scenario <code>SC-F3-1</code></summary>
+- the locked script's install stage runs the real RNR CLI against the v0.1.0 tag; a 404, an unresolved transitive registryDependency or a missing primitive fails the script before any device is touched (gate steps 1-3)
+- the app built from exactly those installed files cold-boots on iOS and on Android with no red screen (gate steps 4, 10) — a stubbed or empty installed component cannot render the transcript
+- the seeded transcript, the header and the green tool badge assert on both platforms, which is only possible if components/ai/{conversation,message,tool}.tsx are the real installed sources
+- tapping `context-trigger` paints `context-popover-content`, which requires the RNR `popover` primitive that only the context.json install can have pulled
 
-```json
-{
-  "id": "SC-F3-1",
-  "primary": false,
-  "test_tier": "integration",
-  "topology": "single-node",
-  "start_ref": "pristine-scratch-app",
-  "action": {
-    "actor": "developer",
-    "steps": [
-      "confirm the scratch app holds 0 .tsx files under `components/ai` and `components/ui`, and capture that count",
-      "shell out to the real `npx @react-native-reusables/cli@latest add` with all five pinned v0.1.0 URLs, capturing the process stdout and exit code",
-      "NETWORK DISCRIMINATOR: into a second pristine scratch directory, run the identical command with `reactnativereusables.com` and `raw.githubusercontent.com` resolved to `127.0.0.1`, and record its exit code and file count"
-    ]
-  },
-  "end_state": {
-    "must_observe": [
-      "the captured pre-state count is exactly `0` .tsx files under `components/ai` and `components/ui`",
-      "the captured stdout contains a `Created` line for each of `components/ai/conversation.tsx`, `components/ai/message.tsx`, `components/ai/prompt-input.tsx`, `components/ai/tool.tsx`, `components/ai/context.tsx`",
-      "the captured stdout contains a `Created` line for each of `components/ui/text.tsx`, `components/ui/avatar.tsx`, `components/ui/button.tsx`, `components/ui/icon.tsx`, `components/ui/popover.tsx`",
-      "the captured stdout names the host `reactnativereusables.com` on the lines resolving the RNR items and `raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0` on the lines resolving ours",
-      "the CLI process exit code is `0`",
-      "THE DISCRIMINATOR: with the registry hosts resolved to `127.0.0.1`, the identical command exits non-zero and leaves `0` .tsx files"
-    ],
-    "must_not_observe": [
-      "any `404` from raw.githubusercontent.com, which is what an unresolvable tag or transitive dependency returns",
-      "`Cannot find module` anywhere in the captured output",
-      "a `Created` list that omits the RNR primitives entirely, or a run that writes `0` files and still exits `0`",
-      "the host-blocked run succeeding \u2014 a success there means the files came from somewhere other than the network and nothing about this install was real"
-    ]
-  },
-  "negative_control": {
-    "would_fail_if": [
-      "the component files are hand-placed by copying `apps/harness/src/components/ui/` or `packages/registry/src/` into the tree \u2014 the host-blocked run would then still produce files and exit `0`, which is the assertion that catches it",
-      "the registry hosts are unreachable and the primary run is allowed to fall back to a local or cached copy instead of failing",
-      "the captured stdout is replaced by a static hand-written string rather than the real process output",
-      "the installed components are stubs that export empty views",
-      "the pre-state count is skipped, letting a tree that was already populated report success unchanged"
-    ]
-  },
-  "evidence": {
-    "artifact_type": "stdout",
-    "required_capture": true,
-    "path": "design/goldens/sprint-01/install/core-happy-path.json"
-  }
-}
-```
-</details>
+Flow `journeys/mvp-full-arc--edge-install-into-a-dirty-app`, owned by **sprint gate steps 13-15 (JOURNEY scope — by rule no task AC may own it)**. Delegated assertions:
 
-### AC-2: Re-running the install against an app that already holds a conflicting
-
-Re-running the install against an app that already holds a conflicting `components/ui/button.tsx` shows what would be overwritten before writing anything, and a pin-drifted dependency fails `expo-doctor` rather than surfacing later as a native crash.
-
-- FLOW_REF: `—`
-- TEST_TIER: `integration`
-- TEST_FILE: `tests/install-evidence.test.ts`  ·  TEST_FUNCTION: `shows the overwrite before writing and fails expo-doctor on a drifted pin`
-- VERIFY: `pnpm exec vitest run tests/install-evidence.test.ts -t "shows the overwrite before writing and fails expo-doctor on a drifted pin"`
-- VERIFICATION_SERVICE: a deliberately hostile Expo SDK 57 app under $TMPDIR with a conflicting button and npm-latest react-native-gesture-handler, driven through the real CLI and the real expo-doctor
-- SURFACE_POLICY: `.spec/e2e-policy/surface.json`
-- RED_PROOF: `design/goldens/sprint-01/install/dirty-app-process.RED.log`
-- RED provenance: NATURAL RED: written before the hostile-app fixture builder exists, the test fails on a missing `$TMPDIR` app. Capture that run.
-
-<details><summary>Scenario <code>SC-F3-2</code></summary>
-
-```json
-{
-  "id": "SC-F3-2",
-  "primary": false,
-  "test_tier": "integration",
-  "topology": "single-node",
-  "start_ref": "hostile-expo-app",
-  "action": {
-    "actor": "developer",
-    "steps": [
-      "run the gate step 2 add command inside the hostile app WITHOUT `--yes`, with stdin piped to answer `n`, capturing stdout",
-      "record the mtime and byte size of `components/ui/button.tsx` before and after that run",
-      "run `npx expo-doctor` in the hostile app and capture its exit code and output"
-    ]
-  },
-  "end_state": {
-    "must_observe": [
-      "the captured stdout contains a prompt naming `components/ui/button.tsx` as a file it would overwrite",
-      "`components/ui/button.tsx` is byte-for-byte unchanged after the declined run \u2014 same size, same mtime, `0` bytes differ",
-      "`expo-doctor` exits non-zero with output naming `react-native-gesture-handler` and the expected version `~2.32.0`"
-    ],
-    "must_not_observe": [
-      "the add reporting success having silently replaced `components/ui/button.tsx` with `0` warnings",
-      "`expo-doctor` exiting `0` with the major-version drift unreported",
-      "a prompt that appears only after the file has already been written"
-    ]
-  },
-  "negative_control": {
-    "would_fail_if": [
-      "the overwrite prompt is suppressed by `--yes`, making the preview a no-op",
-      "the expo-doctor assertion is omitted from the test",
-      "the hostile app's conflicting button is deleted during setup so nothing can collide",
-      "the gesture-handler pin is left at Expo's own version, so the drift is absent and the check passes vacuously"
-    ]
-  },
-  "evidence": {
-    "artifact_type": "stdout",
-    "required_capture": true,
-    "path": "design/goldens/sprint-01/install/dirty-app-process.json"
-  }
-}
-```
-</details>
-
-
-## Test Criteria
-
-| ID | Maps to | Assertion |
-|---|---|---|
-| TC-1 | AC-1 | The single add command prints a `Created` line for all five `components/ai/*.tsx` targets. |
-| TC-2 | AC-1 | `components/ui/popover.tsx`, `text.tsx`, `avatar.tsx`, `button.tsx`, `icon.tsx` exist in the consumer tree after the run and are absent from `packages/registry/src/**` before it. |
-| TC-3 | AC-1 | `npx expo run:ios` completes and the app opens with no `Cannot find module` in Metro output. |
-| TC-4 | AC-2 | Add without `--yes` into the hostile app pauses naming `components/ui/button.tsx` before writing. |
-| TC-5 | AC-2 | `npx expo-doctor` in the hostile app exits non-zero naming `react-native-gesture-handler` and `~2.32.0`. |
-| TC-6 | AC-2 | The context surface either draws a popover panel or reports `PortalHost` as a prerequisite; a silent empty render fails. |
+- the CLI shows what it would overwrite BEFORE writing into an app that already has its own components/ui/button.tsx (gate step 13)
+- expo-doctor fails the gesture-handler pin mismatch rather than letting it surface as a native crash (gate step 14)
+- the portalling item states PortalHost as an install prerequisite instead of rendering nothing (gate step 15)
+- NOTE: `tests/sprint-01/install-dirty-app.test.sh`, this journey's locked `test`, is owned by TASK-F8 — it was unowned when this task was written; TASK-F8 now carries two verification-checklist rows making the script and its RED log conditions of done
 
 ## Guardrails
 
@@ -164,7 +56,7 @@ Re-running the install against an app that already holds a conflicting `componen
 - `apps/example/**`
 - `packages/registry/registry.json`
 - `public/r/**`
-- `tests/install-evidence.test.ts`
+- `tests/sprint-01/install-evidence.test.ts`
 
 **WRITE-PROHIBITED**
 - `packages/registry/src/components/**`
@@ -181,29 +73,48 @@ Re-running the install against an app that already holds a conflicting `componen
 
 ## Fixtures
 
-- **`rnr-initialized-example-app`** (cli) — apps/example as TASK-F1 leaves it: Expo SDK 57 + expo-router, rnr init run for the uniwind engine, its own components.json and tsconfig alias pointing at its own tree, PortalHost mounted at the root, and zero files under components/ai.
+- **`rnr-initialized-example-app`** (cli) — apps/example as TASK-F1 leaves it: Expo SDK 57 + expo-router, rnr init run for the uniwind engine, its own components.json and tsconfig alias pointing at its own tree, PortalHost mounted at the root, and zero files under components/ai. THIS is the real install target for checklist row 1.
+  - apps/example/components.json written by rnr init
+  - apps/example/app/_layout.tsx with PortalHost
+  - 0 .tsx files under apps/example/components/ai
+- **`pristine-scratch-app`** (cli) — NEWLY DECLARED — a throwaway Expo SDK 57 app at $TMPDIR/pristine-scratch-app created by `npx create-expo-app` followed by `npx @react-native-reusables/cli@latest init`, used ONLY as the network discriminator's second run (checklist row 4). It is deliberately NOT apps/example: the discriminator must be able to fail and leave a dirty tree without touching the real consumer.
+  - $TMPDIR/pristine-scratch-app/components.json written by rnr init
+  - 0 .tsx files under components/ai and components/ui
+  - package.json pinning react-native 0.86.3 via expo install
 - **`hostile-expo-app`** (cli) — A fresh Expo SDK 57 app under $TMPDIR deliberately dirtied: its own components/ui/button.tsx with different variants, react-native-gesture-handler at npm-latest 3.x (a major ahead of Expo 57's ~2.32.0), and no PortalHost in its root layout.
+  - $TMPDIR/rnr-dirty/consumer/components/ui/button.tsx
+  - package.json pinning gesture-handler 3.x
+  - app/_layout.tsx without PortalHost
 
 <!-- REQUIREMENT-CONTRACT v1 -->
 <!--
 {
   "version": "1",
   "task_id": "TASK-F3",
-  "task_type": "FEATURE",
-  "tdd_mode": "red_first",
+  "task_type": "INFRA",
+  "tdd_mode": "skipped",
   "verification_policy": {
-    "requires_tests": true,
-    "requires_red_evidence": true,
-    "requires_seeded_evidence": true
+    "requires_tests": false,
+    "requires_red_evidence": false,
+    "requires_seeded_evidence": false
   },
   "fixtures": {
     "rnr-initialized-example-app": {
-      "description": "apps/example as TASK-F1 leaves it: Expo SDK 57 + expo-router, rnr init run for the uniwind engine, its own components.json and tsconfig alias pointing at its own tree, PortalHost mounted at the root, and zero files under components/ai.",
+      "description": "apps/example as TASK-F1 leaves it: Expo SDK 57 + expo-router, rnr init run for the uniwind engine, its own components.json and tsconfig alias pointing at its own tree, PortalHost mounted at the root, and zero files under components/ai. THIS is the real install target for checklist row 1.",
       "seed_method": "cli",
       "records": [
-        "apps/example/components.json",
+        "apps/example/components.json written by rnr init",
         "apps/example/app/_layout.tsx with PortalHost",
-        "components/ai/ empty"
+        "0 .tsx files under apps/example/components/ai"
+      ]
+    },
+    "pristine-scratch-app": {
+      "description": "NEWLY DECLARED \u2014 a throwaway Expo SDK 57 app at $TMPDIR/pristine-scratch-app created by `npx create-expo-app` followed by `npx @react-native-reusables/cli@latest init`, used ONLY as the network discriminator's second run (checklist row 4). It is deliberately NOT apps/example: the discriminator must be able to fail and leave a dirty tree without touching the real consumer.",
+      "seed_method": "cli",
+      "records": [
+        "$TMPDIR/pristine-scratch-app/components.json written by rnr init",
+        "0 .tsx files under components/ai and components/ui",
+        "package.json pinning react-native 0.86.3 via expo install"
       ]
     },
     "hostile-expo-app": {
@@ -216,146 +127,6 @@ Re-running the install against an app that already holds a conflicting `componen
       ]
     }
   },
-  "requirements": [
-    {
-      "type": "acceptance_criterion",
-      "id": "AC-1",
-      "primary": false,
-      "flow_ref": null,
-      "test_file": "tests/install-evidence.test.ts",
-      "test_function": "installs five items and their RNR primitives from the pinned URL",
-      "verify": "pnpm exec vitest run tests/install-evidence.test.ts -t \"installs five items and their RNR primitives from the pinned URL\"",
-      "test_tier": "integration",
-      "verification_service": "the real @react-native-reusables/cli resolving live against raw.githubusercontent.com v0.1.0 and reactnativereusables.com, into a pristine Expo app under $TMPDIR",
-      "surface_policy": ".spec/e2e-policy/surface.json",
-      "scenario": {
-        "id": "SC-F3-1",
-        "primary": false,
-        "test_tier": "integration",
-        "topology": "single-node",
-        "start_ref": "pristine-scratch-app",
-        "action": {
-          "actor": "developer",
-          "steps": [
-            "confirm the scratch app holds 0 .tsx files under `components/ai` and `components/ui`, and capture that count",
-            "shell out to the real `npx @react-native-reusables/cli@latest add` with all five pinned v0.1.0 URLs, capturing the process stdout and exit code",
-            "NETWORK DISCRIMINATOR: into a second pristine scratch directory, run the identical command with `reactnativereusables.com` and `raw.githubusercontent.com` resolved to `127.0.0.1`, and record its exit code and file count"
-          ]
-        },
-        "end_state": {
-          "must_observe": [
-            "the captured pre-state count is exactly `0` .tsx files under `components/ai` and `components/ui`",
-            "the captured stdout contains a `Created` line for each of `components/ai/conversation.tsx`, `components/ai/message.tsx`, `components/ai/prompt-input.tsx`, `components/ai/tool.tsx`, `components/ai/context.tsx`",
-            "the captured stdout contains a `Created` line for each of `components/ui/text.tsx`, `components/ui/avatar.tsx`, `components/ui/button.tsx`, `components/ui/icon.tsx`, `components/ui/popover.tsx`",
-            "the captured stdout names the host `reactnativereusables.com` on the lines resolving the RNR items and `raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0` on the lines resolving ours",
-            "the CLI process exit code is `0`",
-            "THE DISCRIMINATOR: with the registry hosts resolved to `127.0.0.1`, the identical command exits non-zero and leaves `0` .tsx files"
-          ],
-          "must_not_observe": [
-            "any `404` from raw.githubusercontent.com, which is what an unresolvable tag or transitive dependency returns",
-            "`Cannot find module` anywhere in the captured output",
-            "a `Created` list that omits the RNR primitives entirely, or a run that writes `0` files and still exits `0`",
-            "the host-blocked run succeeding \u2014 a success there means the files came from somewhere other than the network and nothing about this install was real"
-          ]
-        },
-        "negative_control": {
-          "would_fail_if": [
-            "the component files are hand-placed by copying `apps/harness/src/components/ui/` or `packages/registry/src/` into the tree \u2014 the host-blocked run would then still produce files and exit `0`, which is the assertion that catches it",
-            "the registry hosts are unreachable and the primary run is allowed to fall back to a local or cached copy instead of failing",
-            "the captured stdout is replaced by a static hand-written string rather than the real process output",
-            "the installed components are stubs that export empty views",
-            "the pre-state count is skipped, letting a tree that was already populated report success unchanged"
-          ]
-        },
-        "evidence": {
-          "artifact_type": "stdout",
-          "required_capture": true,
-          "path": "design/goldens/sprint-01/install/core-happy-path.json"
-        }
-      }
-    },
-    {
-      "type": "acceptance_criterion",
-      "id": "AC-2",
-      "primary": false,
-      "flow_ref": null,
-      "test_file": "tests/install-evidence.test.ts",
-      "test_function": "shows the overwrite before writing and fails expo-doctor on a drifted pin",
-      "verify": "pnpm exec vitest run tests/install-evidence.test.ts -t \"shows the overwrite before writing and fails expo-doctor on a drifted pin\"",
-      "test_tier": "integration",
-      "verification_service": "a deliberately hostile Expo SDK 57 app under $TMPDIR with a conflicting button and npm-latest react-native-gesture-handler, driven through the real CLI and the real expo-doctor",
-      "surface_policy": ".spec/e2e-policy/surface.json",
-      "scenario": {
-        "id": "SC-F3-2",
-        "primary": false,
-        "test_tier": "integration",
-        "topology": "single-node",
-        "start_ref": "hostile-expo-app",
-        "action": {
-          "actor": "developer",
-          "steps": [
-            "run the gate step 2 add command inside the hostile app WITHOUT `--yes`, with stdin piped to answer `n`, capturing stdout",
-            "record the mtime and byte size of `components/ui/button.tsx` before and after that run",
-            "run `npx expo-doctor` in the hostile app and capture its exit code and output"
-          ]
-        },
-        "end_state": {
-          "must_observe": [
-            "the captured stdout contains a prompt naming `components/ui/button.tsx` as a file it would overwrite",
-            "`components/ui/button.tsx` is byte-for-byte unchanged after the declined run \u2014 same size, same mtime, `0` bytes differ",
-            "`expo-doctor` exits non-zero with output naming `react-native-gesture-handler` and the expected version `~2.32.0`"
-          ],
-          "must_not_observe": [
-            "the add reporting success having silently replaced `components/ui/button.tsx` with `0` warnings",
-            "`expo-doctor` exiting `0` with the major-version drift unreported",
-            "a prompt that appears only after the file has already been written"
-          ]
-        },
-        "negative_control": {
-          "would_fail_if": [
-            "the overwrite prompt is suppressed by `--yes`, making the preview a no-op",
-            "the expo-doctor assertion is omitted from the test",
-            "the hostile app's conflicting button is deleted during setup so nothing can collide",
-            "the gesture-handler pin is left at Expo's own version, so the drift is absent and the check passes vacuously"
-          ]
-        },
-        "evidence": {
-          "artifact_type": "stdout",
-          "required_capture": true,
-          "path": "design/goldens/sprint-01/install/dirty-app-process.json"
-        }
-      }
-    },
-    {
-      "type": "test_case",
-      "id": "TC-1",
-      "maps_to_ac": "AC-1"
-    },
-    {
-      "type": "test_case",
-      "id": "TC-2",
-      "maps_to_ac": "AC-1"
-    },
-    {
-      "type": "test_case",
-      "id": "TC-3",
-      "maps_to_ac": "AC-1"
-    },
-    {
-      "type": "test_case",
-      "id": "TC-4",
-      "maps_to_ac": "AC-2"
-    },
-    {
-      "type": "test_case",
-      "id": "TC-5",
-      "maps_to_ac": "AC-2"
-    },
-    {
-      "type": "test_case",
-      "id": "TC-6",
-      "maps_to_ac": "AC-2"
-    }
-  ]
+  "requirements": []
 }
 -->

@@ -7,7 +7,7 @@
 > Type: INFRA  
 > Wave: F  
 > Status: ⬜ Pending  
-> Proposed By: `react-native-ui-planner`  
+> Proposed By: `react-native-ui-planner`
 > Depends On: TASK-F5
 
 ## Outcome
@@ -50,7 +50,7 @@ Flow `UC-REG-01/core-happy-path`, owned by **TASK-F8 AC-1**. Delegated assertion
 - `apps/example/components/ai/**`
 - `packages/registry/**`
 - `public/r/**`
-- `scripts/e2e/**`
+- `tests/sprint-01/**`
 - `.maestro/**`
 - `.spec/e2e-policy/**`
 
