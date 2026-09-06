@@ -1,0 +1,27 @@
+{
+  "suite": "UC-REG-01/edge-a-short-name-registry-dependency",
+  "command": "pnpm exec vitest run tests/build-registry.test.ts -t \"UC-REG-01/edge-a-short-name-registry-dependency\"",
+  "result": "GREEN \u2014 6 passed, 0 failed, exit 0",
+  "ac": "AC-2",
+  "self_urls_matching_v0.1.0": 128,
+  "count_/main/public/r/": 0,
+  "count_unsubstituted_{version}_{engine}": 0,
+  "distinct_rnr_dependency_names": 14,
+  "rnr_names": [
+    "avatar.json",
+    "badge.json",
+    "button.json",
+    "card.json",
+    "collapsible.json",
+    "dropdown-menu.json",
+    "icon.json",
+    "input.json",
+    "native-only-animated-view.json",
+    "popover.json",
+    "progress.json",
+    "separator.json",
+    "switch.json",
+    "text.json"
+  ],
+  "vitest_stdout": "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:\n  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead\nSet `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.\n\n RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F2\n\n\n Test Files  1 passed (1)\n      Tests  6 passed | 7 skipped (13)\n   Start at  15:22:56\n   Duration  636ms (transform 15ms, setup 0ms, import 22ms, tests 526ms, environment 0ms)\n\n"
+}
