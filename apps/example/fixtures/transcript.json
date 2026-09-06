@@ -1,0 +1,46 @@
+{
+  "messages": [
+    {
+      "id": "msg-001",
+      "role": "user",
+      "parts": [
+        {
+          "type": "text",
+          "text": "Search the RNR registry for the conversation item and install it into this app."
+        }
+      ]
+    },
+    {
+      "id": "msg-002",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "tool-searchRegistry",
+          "toolName": "searchRegistry",
+          "toolCallId": "call-001",
+          "state": "output-available",
+          "input": {
+            "query": "conversation",
+            "limit": 3
+          },
+          "output": {
+            "total": 1,
+            "results": [
+              {
+                "name": "conversation",
+                "description": "The transcript scroller: inverted virtualized list, stick-to-bottom, empty state.",
+                "type": "registry:component",
+                "installed": true
+              }
+            ]
+          }
+        },
+        {
+          "type": "text",
+          "state": "done",
+          "text": "Registry item installed."
+        }
+      ]
+    }
+  ]
+}
