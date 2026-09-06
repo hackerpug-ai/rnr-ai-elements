@@ -1,0 +1,36 @@
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F4
+
+ ❯ tests/sprint-01/alias-resolution.test.ts (3 tests | 1 failed) 104ms
+     × THE CONTRACT: zero @/registry/ literals in the installed consumer tree 98ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01/alias-resolution.test.ts > TASK-F4 alias resolution (cycle-1) > THE CONTRACT: zero @/registry/ literals in the installed consumer tree
+AssertionError: expected 'apps/example/components/ui/icon.tsx:3…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ apps/example/components/ui/icon.tsx:36: * import { Icon } from '@/registry/uniwind/registry/components/ui/icon';
+
+ ❯ tests/sprint-01/alias-resolution.test.ts:42:32
+     40|     expect(tsxFiles.length).toBeGreaterThanOrEqual(10);
+     41|
+     42|     expect(grepConsumerTree()).toBe('');
+       |                                ^
+     43|   });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  16:34:24
+   Duration  631ms (transform 41ms, setup 0ms, import 183ms, tests 104ms, environment 0ms)
+

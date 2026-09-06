@@ -1,0 +1,24 @@
+app/_layout.tsx(21,29): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<"light" | "dark", NativeTheme>'.
+  No index signature with a parameter of type 'string' was found on type 'Record<"light" | "dark", NativeTheme>'.
+components/ai/conversation.tsx(131,7): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: FlatListProps<T>): FlatList<T>', gave the following error.
+    Type '{ style?: StyleProp<ViewStyle>; id?: string | undefined; hitSlop?: number | Insets | null | undefined; needsOffscreenAlphaCompositing?: boolean | undefined; ... 185 more ...; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<FlatList<T>> & Readonly<FlatListProps<T>>'.
+      Property 'contentContainerClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<FlatList<T>> & Readonly<FlatListProps<T>>'. Did you mean 'contentContainerStyle'?
+  Overload 2 of 2, '(props: FlatListProps<T>, context: any): FlatList<T>', gave the following error.
+    Type '{ style?: StyleProp<ViewStyle>; id?: string | undefined; hitSlop?: number | Insets | null | undefined; needsOffscreenAlphaCompositing?: boolean | undefined; ... 185 more ...; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<FlatList<T>> & Readonly<FlatListProps<T>>'.
+      Property 'contentContainerClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<FlatList<T>> & Readonly<FlatListProps<T>>'. Did you mean 'contentContainerStyle'?
+components/ai/tool.tsx(250,9): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ScrollViewProps): ScrollView', gave the following error.
+    Type '{ children: Element; horizontal: true; showsHorizontalScrollIndicator: false; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.
+      Property 'contentContainerClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'. Did you mean 'contentContainerStyle'?
+  Overload 2 of 2, '(props: ScrollViewProps, context: any): ScrollView', gave the following error.
+    Type '{ children: Element; horizontal: true; showsHorizontalScrollIndicator: false; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.
+      Property 'contentContainerClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'. Did you mean 'contentContainerStyle'?
+components/ui/input-group.tsx(54,7): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextInputProps): TextInput', gave the following error.
+    Type '{ allowFontScaling?: boolean | undefined; autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined; autoComplete?: "name" | "off" | "2fa-app-otp" | "additional-name" | ... 65 more ... | undefined; ... 156 more ...; onBlur: (e: BlurEvent) => void; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<TextInput> & Readonly<TextInputProps>'.
+      Property 'placeholderClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<TextInput> & Readonly<TextInputProps>'.
+  Overload 2 of 2, '(props: TextInputProps, context: any): TextInput', gave the following error.
+    Type '{ allowFontScaling?: boolean | undefined; autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined; autoComplete?: "name" | "off" | "2fa-app-otp" | "additional-name" | ... 65 more ... | undefined; ... 156 more ...; onBlur: (e: BlurEvent) => void; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<TextInput> & Readonly<TextInputProps>'.
+      Property 'placeholderClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<TextInput> & Readonly<TextInputProps>'.
+components/ui/input.tsx(6,3): error TS2339: Property 'placeholderClassName' does not exist on type 'TextInputProps & RefAttributes<TextInput>'.

@@ -1,0 +1,10 @@
+src/stories/Audio.stories.tsx(157,5): error TS2353: Object literal may only specify known properties, and 'playing' does not exist in type 'Partial<{ title: string; }>'.
+src/stories/Audio.stories.tsx(162,5): error TS2353: Object literal may only specify known properties, and 'playing' does not exist in type 'Partial<ArgTypes$2<{ title: string; }>>'.
+src/stories/Audio.stories.tsx(166,3): error TS2322: Type '(args: { playing: boolean; positionSeconds: number; muted: boolean; }) => JSX.Element' is not assignable to type 'ArgsStoryFn<ReactRenderer, { title: string; }>'.
+  Types of parameters 'args' and 'args' are incompatible.
+    Type '{ title: string; }' is missing the following properties from type '{ playing: boolean; positionSeconds: number; muted: boolean; }': playing, positionSeconds, muted
+src/stories/Audio.stories.tsx(275,5): error TS2353: Object literal may only specify known properties, and 'currentTime' does not exist in type 'Partial<{ title: string; }>'.
+src/stories/Audio.stories.tsx(278,5): error TS2353: Object literal may only specify known properties, and 'currentTime' does not exist in type 'Partial<ArgTypes$2<{ title: string; }>>'.
+src/stories/Audio.stories.tsx(280,3): error TS2322: Type '(args: { currentTime: number; }) => JSX.Element' is not assignable to type 'ArgsStoryFn<ReactRenderer, { title: string; }>'.
+  Types of parameters 'args' and 'args' are incompatible.
+    Property 'currentTime' is missing in type '{ title: string; }' but required in type '{ currentTime: number; }'.
