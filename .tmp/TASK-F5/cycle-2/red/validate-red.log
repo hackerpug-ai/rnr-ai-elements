@@ -1,0 +1,1391 @@
+INVALID fixture (.tmp/TASK-F5/cycle-2/red/malformed-transcript.json): Type validation failed: Value: [{"id":"msg-001","role":"human","parts":[{"type":"text","text":"hi"}]},{"id":"msg-002","role":"assistant","parts":[{"type":"tool-searchRegistry","toolName":"searchRegistry","toolCallId":"call-001","state":"completed","input":{"q":"x"},"output":{"ok":true}},{"type":"prose","text":"done"}]}].
+Error message: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "system",
+      "user",
+      "assistant"
+    ],
+    "path": [
+      0,
+      "role"
+    ],
+    "message": "Invalid option: expected one of \"system\"|\"user\"|\"assistant\""
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "text"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"text\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "text"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "streaming",
+            "done"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid option: expected one of \"streaming\"|\"done\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "reasoning"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"reasoning\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "text"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "streaming",
+            "done"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid option: expected one of \"streaming\"|\"done\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "custom"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"custom\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "kind"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "source-url"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"source-url\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "sourceId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "url"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "source-document"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"source-document\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "sourceId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "mediaType"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "title"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "file"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"file\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "mediaType"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "url"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "reasoning-file"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"reasoning-file\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "mediaType"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "url"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "step-start"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"step-start\""
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "data-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"data-\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-streaming"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-streaming\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-available\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-requested"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-requested\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-responded"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-responded\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-available\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-error"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-error\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "errorText"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-denied"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-denied\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-streaming"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-streaming\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-available\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-requested"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-requested\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-responded"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-responded\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-available\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-error"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-error\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "errorText"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-denied"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-denied\""
+        },
+        {
+          "expected": "never",
+          "code": "invalid_type",
+          "path": [
+            "output"
+          ],
+          "message": "Invalid input: expected never, received object"
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      1,
+      "parts",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "text"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"text\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "reasoning"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"reasoning\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "custom"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"custom\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "kind"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "source-url"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"source-url\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "sourceId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "url"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "source-document"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"source-document\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "sourceId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "mediaType"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "title"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "file"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"file\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "mediaType"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "url"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "reasoning-file"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"reasoning-file\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "mediaType"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "url"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "step-start"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"step-start\""
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "data-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"data-\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-streaming"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-streaming\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-available\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-requested"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-requested\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-responded"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-responded\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-available\""
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-error"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-error\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "errorText"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "code": "invalid_value",
+          "values": [
+            "dynamic-tool"
+          ],
+          "path": [
+            "type"
+          ],
+          "message": "Invalid input: expected \"dynamic-tool\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolName"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-denied"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-denied\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-streaming"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-streaming\""
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "input-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"input-available\""
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-requested"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-requested\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "approval-responded"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"approval-responded\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-available"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-available\""
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-error"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-error\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "errorText"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        }
+      ],
+      [
+        {
+          "origin": "string",
+          "code": "invalid_format",
+          "format": "starts_with",
+          "prefix": "tool-",
+          "path": [
+            "type"
+          ],
+          "message": "Invalid string: must start with \"tool-\""
+        },
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [
+            "toolCallId"
+          ],
+          "message": "Invalid input: expected string, received undefined"
+        },
+        {
+          "code": "invalid_value",
+          "values": [
+            "output-denied"
+          ],
+          "path": [
+            "state"
+          ],
+          "message": "Invalid input: expected \"output-denied\""
+        },
+        {
+          "expected": "object",
+          "code": "invalid_type",
+          "path": [
+            "approval"
+          ],
+          "message": "Invalid input: expected object, received undefined"
+        }
+      ]
+    ],
+    "path": [
+      1,
+      "parts",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+exit=1

@@ -22,13 +22,15 @@ import {
 
 import transcript from '../fixtures/transcript.json';
 
-// The committed fixture is consumed as the real ai@7.0.89 UIMessage type — this is the
-// boundary where `pnpm exec tsc --noEmit -p apps/example` checks every use below (part
-// narrowing, the 7-state ToolStatus union, Message roles) against the SDK's types.
-// resolveJsonModule widens the JSON's string literals (role/type/state become `string`),
-// so the import itself cannot be assigned directly; the field values are additionally
-// pinned by the task's node -e checks and the F8 on-device flow. Static data: no fetch,
-// no timer, no provider on this route (the cold-boot gate runs offline).
+// The fixture is consumed as the real ai@7.0.89 UIMessage type. resolveJsonModule widens
+// the JSON's string literals (role/type/state become `string`), so this cast is required
+// and tsc never inspects the fixture's shape — that proof is
+// `node apps/example/fixtures/validate.mjs`, which validates the messages against the
+// SDK's own uiMessagesSchema (roles, part discriminants, tool-state union). With the
+// cast, tsc still checks every use below (part narrowing, isToolUIPart/getToolName
+// guards) against the SDK's types. The values themselves are pinned by the task's node
+// -e checks and the F8 on-device flow. Static data: no fetch, no timer, no provider on
+// this route (the cold-boot gate runs offline).
 const messages = transcript.messages as UIMessage[];
 
 /** Tool part output → what ToolOutput renders. Strings pass through; anything
