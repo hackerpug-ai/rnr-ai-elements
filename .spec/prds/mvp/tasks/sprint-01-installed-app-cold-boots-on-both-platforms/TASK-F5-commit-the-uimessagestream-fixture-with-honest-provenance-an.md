@@ -6,7 +6,7 @@
 > Points: 3  
 > Type: INFRA  
 > Wave: E  
-> Status: ⬜ Pending  
+> Status: 🔄 in_progress
 > Proposed By: `react-native-ui-planner`
 > Depends On: TASK-F4
 
