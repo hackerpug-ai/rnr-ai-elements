@@ -6,7 +6,7 @@
 > Points: 8  
 > Type: INFRA  
 > Wave: A  
-> Status: ⬜ Pending  
+> Status: 🔄 in_progress
 > Proposed By: `react-native-ui-planner`
 > Depends On: none
 
