@@ -1,0 +1,96 @@
+# TASK-F4 BEFORE baseline — captured 2026-09-06T22:30:58Z @ 142a1153ad0a69d02d27292288b5ce81606a918b
+## Upstream packages/registry/src scan
+$ grep -ro "@/registry/" packages/registry/src/ | wc -l
+     252
+$ grep -rlo "@/registry/" packages/registry/src/ | wc -l
+      62
+$ find packages/registry/src -type f | wc -l
+      82
+
+## Upstream per-shape occurrence counts
+   1 packages/registry/src/components/ai/agent.logic.ts
+   6 packages/registry/src/components/ai/agent.tsx
+   5 packages/registry/src/components/ai/artifact.tsx
+   6 packages/registry/src/components/ai/attachments.tsx
+   6 packages/registry/src/components/ai/audio-player.tsx
+   1 packages/registry/src/components/ai/chain-of-thought.logic.ts
+   7 packages/registry/src/components/ai/chain-of-thought.tsx
+   4 packages/registry/src/components/ai/checkpoint.tsx
+   1 packages/registry/src/components/ai/commit.logic.ts
+   9 packages/registry/src/components/ai/commit.tsx
+   1 packages/registry/src/components/ai/confirmation.logic.ts
+   5 packages/registry/src/components/ai/confirmation.tsx
+   7 packages/registry/src/components/ai/context.tsx
+   4 packages/registry/src/components/ai/conversation.tsx
+   8 packages/registry/src/components/ai/environment-variables.tsx
+   6 packages/registry/src/components/ai/file-tree.tsx
+   1 packages/registry/src/components/ai/image.tsx
+   1 packages/registry/src/components/ai/inline-citation.logic.ts
+   2 packages/registry/src/components/ai/inline-citation.tsx
+   4 packages/registry/src/components/ai/message.tsx
+   6 packages/registry/src/components/ai/mic-selector.tsx
+   6 packages/registry/src/components/ai/model-selector.tsx
+   6 packages/registry/src/components/ai/open-in-chat.tsx
+   1 packages/registry/src/components/ai/package-info.logic.ts
+   6 packages/registry/src/components/ai/package-info.tsx
+   3 packages/registry/src/components/ai/persona.tsx
+   8 packages/registry/src/components/ai/plan.tsx
+   4 packages/registry/src/components/ai/prompt-input.tsx
+   5 packages/registry/src/components/ai/question.tsx
+   8 packages/registry/src/components/ai/queue.tsx
+   6 packages/registry/src/components/ai/reasoning.tsx
+   1 packages/registry/src/components/ai/schema-display.logic.ts
+   7 packages/registry/src/components/ai/schema-display.tsx
+   2 packages/registry/src/components/ai/shimmer.tsx
+   5 packages/registry/src/components/ai/snippet.tsx
+   6 packages/registry/src/components/ai/sources.tsx
+   3 packages/registry/src/components/ai/speech-input.tsx
+   7 packages/registry/src/components/ai/stack-trace.tsx
+   3 packages/registry/src/components/ai/suggestion.tsx
+   1 packages/registry/src/components/ai/task.logic.ts
+   6 packages/registry/src/components/ai/task.tsx
+   1 packages/registry/src/components/ai/terminal.logic.ts
+   6 packages/registry/src/components/ai/terminal.tsx
+   1 packages/registry/src/components/ai/test-results.logic.ts
+   8 packages/registry/src/components/ai/test-results.tsx
+   1 packages/registry/src/components/ai/tool.logic.ts
+   6 packages/registry/src/components/ai/tool.tsx
+   2 packages/registry/src/components/ai/transcription.tsx
+   6 packages/registry/src/components/ai/voice-selector.tsx
+   1 packages/registry/src/components/ai/web-preview.logic.ts
+   6 packages/registry/src/components/ai/web-preview.tsx
+   3 packages/registry/src/components/ui/breadcrumb.tsx
+   1 packages/registry/src/components/ui/button-group.tsx
+   5 packages/registry/src/components/ui/code-block.tsx
+   7 packages/registry/src/components/ui/command.tsx
+   3 packages/registry/src/components/ui/empty.tsx
+   2 packages/registry/src/components/ui/input-group.tsx
+   2 packages/registry/src/components/ui/item.tsx
+   2 packages/registry/src/components/ui/kbd.tsx
+   1 packages/registry/src/components/ui/sheet.tsx
+   1 packages/registry/src/components/ui/slider.tsx
+   2 packages/registry/src/components/ui/table.tsx
+
+## Consumer tree (apps/example) per-shape counts after F3 install
+$ grep -rc "@/registry/" apps/example/components/ apps/example/lib/ | grep -v ":0$"
+apps/example/components/ui/icon.tsx:1
+components/ui occurrences:
+       1
+components/ai occurrences:
+       0
+lib occurrences:
+       0
+$ find apps/example/components -name "*.tsx" | wc -l
+      17
+
+## The sole survivor, with context (icon.tsx line 26)
+36: * import { Icon } from '@/registry/uniwind/registry/components/ui/icon';
+
+## Proof it is a JSDoc comment, not an import — all import specifiers in installed icon.tsx:
+1:import { TextClassContext } from '@/components/ui/text';
+2:import { cn } from '@/lib/utils';
+3:import type { LucideIcon, LucideProps } from 'lucide-react-native';
+4:import * as React from 'react';
+5:import { withUniwind } from 'uniwind';
+35: * import { ArrowRight } from 'lucide-react-native';
+36: * import { Icon } from '@/registry/uniwind/registry/components/ui/icon';
