@@ -6,9 +6,10 @@
 > Points: 8  
 > Type: INFRA  
 > Wave: A  
-> Status: 🔄 in_progress
+> Status: ✅ Completed
 > Proposed By: `react-native-ui-planner`
 > Depends On: none
+> Commit: ed8dbda0ec9eaae7c153cc41d2d1dc77239ae83a
 
 ## Outcome
 
