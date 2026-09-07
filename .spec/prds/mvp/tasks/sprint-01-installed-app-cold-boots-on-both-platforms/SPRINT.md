@@ -14,13 +14,15 @@ planned_at: 2026-09-05
 
 **Sequence:** 1
 **Timeline:** Phase 1
-**Status:** in_progress
+**Status:** in_progress — human gate FAILED (machine-verified) 2026-09-07; awaiting GATE-FIX
 
 ---
 
 ## Overview
 
 **Sprint branch:** sprint/sprint-01-installed-app-cold-boots-on-both-platforms — .kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base
+
+**Gate verdict (2026-09-07, machine-verified):** FAIL — 0/15 passed (1 executed). Product function proven on-device (iOS light+dark green badge, Android in arc run) but the sprint's verification assets fail the run_flow machine contract: surface_ok=false on all three flow test sources (PRODUCT_TARGET_MISSING / SURFACE_DRIVER_MISSING), red_proof_ok=false on all four flows (RED logs not run_flow --expect red captures), edge flow artifact_fresh impossible (vitest run_cmd writes no artifact), plus one intermittent Android-light context-popover failure from a Metro-watcher HMR race. See .spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms/GATE-RESULTS.md. goal-state: goal:blocked.
 
 A CLI-installed AI Elements transcript cold-boots and renders on iOS and Android, and the same flow fails when the seed is removed
 
