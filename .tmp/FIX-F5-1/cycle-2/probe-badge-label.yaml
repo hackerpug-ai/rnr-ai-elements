@@ -1,0 +1,9 @@
+appId: ai.hackerpug.rnrexample
+name: probe-badge-label
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- assertVisible:
+    id: "tool-badge-completed"
+- assertVisible: "Status: Completed"
