@@ -36,8 +36,6 @@ import {
 } from '@/components/ai/tool';
 import { Icon } from '@/components/ui/icon';
 import { E2E_IDS } from '@/e2e-ids';
-import { THEME } from '@/lib/theme';
-import { useUniwind } from 'uniwind';
 
 import transcript from '../fixtures/transcript.json';
 
@@ -109,7 +107,6 @@ function MessageView({
 
 export default function Index() {
   const insets = useSafeAreaInsets();
-  const { theme } = useUniwind();
   // Sent messages append locally — the sprint-01 route is fixture-driven and stays
   // zero-network (the cold-boot gate runs offline), so send renders the message in
   // the transcript instead of calling a backend.
@@ -130,17 +127,8 @@ export default function Index() {
     ]);
   }
 
-  // Uniwind does NOT interop react-native-safe-area-context's SafeAreaView, so
-  // className is silently dropped on it — layout AND background must arrive as a
-  // real style. THEME is the JS twin of global.css's --color-background (same RNR
-  // token source as lib/theme.ts, which _layout.tsx already consumes this way);
-  // nothing here is hardcoded. Without flex:1 the column auto-sizes and the
-  // inverted-FlatList Conversation collapses to zero height on device (FIX-F5-1).
   return (
-    <SafeAreaView
-      edges={['top']}
-      style={{ flex: 1, backgroundColor: THEME[theme ?? 'light'].background }}
-    >
+    <SafeAreaView className="flex-1 bg-background" edges={['top']}>
       <View
         className="border-b border-border px-4 pb-3 pt-2"
         testID={E2E_IDS['app-header']}
