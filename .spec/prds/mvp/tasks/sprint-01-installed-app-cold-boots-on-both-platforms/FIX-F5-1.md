@@ -5,9 +5,10 @@
 > Points: 1
 > Type: FIX
 > Wave: G-fix (follow-up to TASK-F8, cycle 1)
-> Status: ⬜ Pending
+> Status: ✅ Completed
 > Proposed By: kb-run-sprint driver (judgment table row: fix belongs to an earlier task's code)
 > Depends On: none
+> Commit: e013330376ed8d5acd7a5c2a45f9d8f6fde9997d
 ## Outcome
 The / route in apps/example renders its transcript on a real device. Discovered by TASK-F8 (cycle 1): `apps/example/app/index.tsx` wraps the screen in
 `<SafeAreaView className="flex-1 bg-background" edges={['top']}>` (react-native-safe-area-context). Uniwind does NOT interop that component, so the
