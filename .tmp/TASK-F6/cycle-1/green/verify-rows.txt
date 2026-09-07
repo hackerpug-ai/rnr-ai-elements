@@ -1,0 +1,37 @@
+### ROW: node require e2e-ids (expect 6)
+6
+### ROW: frozen assign (expect throw, non-zero exit)
+/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F6/apps/example/e2e-ids.ts:29
+    throw new TypeError(
+    ^
+
+TypeError: E2E_IDS is frozen — e2e ids are a contract; change the caller, not the map
+    at Object.set (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F6/apps/example/e2e-ids.ts:29:11)
+    at [eval]:1:65
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.14.0
+exit: 1
+### ROW: MISSING loop (expect nothing)
+### ROW: testID in components/ai (expect 0 every file)
+apps/example/components/ai/tool.tsx:0
+apps/example/components/ai/tool.logic.ts:0
+apps/example/components/ai/prompt-input.tsx:0
+apps/example/components/ai/context.logic.ts:0
+apps/example/components/ai/conversation.tsx:0
+apps/example/components/ai/context.tsx:0
+apps/example/components/ai/message.tsx:0
+### ROW: git diff components/ai (expect 0 lines)
+       0
+### ROW: git diff app (expect >=1)
+       1
+### ROW: surface.json drift loop (locked file, see red note)
+DRIFT app-header
+DRIFT transcript-message-0
+DRIFT tool-badge-completed
