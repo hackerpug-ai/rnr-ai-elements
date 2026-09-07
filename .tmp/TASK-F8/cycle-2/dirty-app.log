@@ -1,0 +1,19 @@
+== prepare: hostile Expo app at /Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer ==
+removing previous hostile app (each run starts hostile-fresh)
+npx create-expo-app@latest consumer (SDK 57 template, npm world)
+dirt 1: npm-latest react-native-gesture-handler (a major ahead of Expo 57's ~2.32.0)
+dirt 2: the app's OWN components/ui/button.tsx (different variants than RNR's)
+fixture plumbing: a minimal uniwind-engine components.json so the REAL CLI can run (the prompt cannot fire without one)
+dirt 3 (fixture property): the root layout mounts NO PortalHost
+hostile app ready (1 components/(ai|ui) files, gesture-handler 3.x, no PortalHost)
+== gate step 13: the CLI names what it would overwrite BEFORE writing ==
+declined file is byte-identical: the prompt paused before any write to it
+overwrite prompt asserted (button.tsx overwrite prompt fired; declined file untouched; tree 1 -> 17 files)
+== gate step 13b: answering y installs through the same real CLI ==
+accepted add asserted (context + popover + progress installed; hostile button overwritten)
+== gate step 14: expo-doctor fails the pin mismatch instead of a native crash ==
+expo-doctor asserted (exit 1, names react-native-gesture-handler and ~2.32.0)
+== gate step 15: the portalling surface states its PortalHost prerequisite ==
+PREREQUISITE MESSAGE: PortalHost is a prerequisite: components/ai/context.tsx portals through @rn-primitives/portal (components/ui/popover.tsx → PopoverPrimitive.Portal); this app's root layout mounts NO PortalHost, and the primitive renders portal children only under a mounted host — without one the context surface renders NOTHING with no error. Mount <PortalHost /> from @rn-primitives/portal at the app root. The behavioral positive (popover renders through the root PortalHost) is proven by install-core.test.sh: tapOn context-trigger → assertVisible context-popover-content.
+artifact written: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install/dirty-app.json
+install-dirty-app.test.sh: journeys/mvp-full-arc--edge-install-into-a-dirty-app PASSED (artifact: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install/dirty-app.json)

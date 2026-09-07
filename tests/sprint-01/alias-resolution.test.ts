@@ -12,7 +12,7 @@
  * or tsconfig path into the registry would make every boot pass while leaving every
  * real consumer broken.
  */
-import { execSync } from 'node:child_process';
+import { execSync, spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
@@ -21,11 +21,21 @@ const ROOT = join(__dirname, '..', '..');
 
 const read = (...p: string[]) => readFileSync(join(ROOT, ...p), 'utf8');
 
-const grepConsumerTree = () =>
-  execSync(`grep -rn '@/registry/' apps/example/components/ apps/example/lib/ || true`, {
-    cwd: ROOT,
-    encoding: 'utf8',
-  }).trim();
+const grepConsumerTree = () => {
+  // spawnSync, not execSync: grep exits 1 when the scan finds NOTHING — which is
+  // exactly the pass condition here — and execSync would treat that as a thrown
+  // error. No shell success-wrapper is involved: the empty-stdout assertion below
+  // is the whole proof.
+  const r = spawnSync(
+    'grep',
+    ['-rn', '@/registry/', 'apps/example/components/', 'apps/example/lib/'],
+    { cwd: ROOT, encoding: 'utf8' },
+  );
+  if (r.status !== 0 && r.status !== 1) {
+    throw new Error(`grep scan failed (status ${r.status}): ${r.stderr}`);
+  }
+  return (r.stdout ?? '').trim();
+};
 
 describe('TASK-F4 alias resolution (cycle-1)', () => {
   test('THE CONTRACT: zero @/registry/ literals in the installed consumer tree', () => {

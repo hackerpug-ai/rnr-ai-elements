@@ -1,0 +1,44 @@
+{
+  "flow": "journeys/mvp-full-arc--edge-install-into-a-dirty-app",
+  "run_cmd": "bash tests/sprint-01/install-dirty-app.test.sh journeys/mvp-full-arc--edge-install-into-a-dirty-app",
+  "script": "tests/sprint-01/install-dirty-app.test.sh",
+  "captured_at": "2026-09-07T07:43:19.781Z",
+  "hostile_app": {
+    "root": "/Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer",
+    "created_from": "npx create-expo-app@latest (Expo SDK 57 template, npm world)",
+    "dirt": {
+      "own_button": "src/components/ui/button.tsx with fancy/plain variants (not the RNR button)",
+      "gesture_handler": "react-native-gesture-handler@^3.2.1 (npm latest, a major ahead of the Expo 57 ~2.32.0 pin)",
+      "portal_host_in_layout": false
+    }
+  },
+  "assertions": {
+    "overwrite_prompt": {
+      "gate_step": 13,
+      "prompt_named_file": "components/ui/button.tsx (the CLI prompts the basename: The file button.tsx already exists. Would you like to overwrite?)",
+      "log_mentions": 1,
+      "declined_file_byte_identical": true,
+      "component_files_before_prompt": 1,
+      "cli_log": "declined run log captured by the lane; raw logs under .tmp/TASK-F8/runs/"
+    },
+    "accepted_add": {
+      "gate_step": "13b (answer y on the re-run)",
+      "component_files_after": 17,
+      "hostile_button_overwritten": true,
+      "popover_installed": true
+    },
+    "expo_doctor": {
+      "gate_step": 14,
+      "exit_code": "exit 1",
+      "named_react_native_gesture_handler": true,
+      "expected_version_named": "~2.32.0"
+    },
+    "portal_host_prerequisite": {
+      "gate_step": 15,
+      "portalling_chain": "components/ai/context.tsx -> components/ui/popover.tsx (PopoverPrimitive.Portal) -> @rn-primitives/portal",
+      "app_has_portal_host": false,
+      "message": "PortalHost is a prerequisite: components/ai/context.tsx portals through @rn-primitives/portal (components/ui/popover.tsx → PopoverPrimitive.Portal); this app's root layout mounts NO PortalHost, and the primitive renders portal children only under a mounted host — without one the context surface renders NOTHING with no error. Mount <PortalHost /> from @rn-primitives/portal at the app root. The behavioral positive (popover renders through the root PortalHost) is proven by install-core.test.sh: tapOn context-trigger → assertVisible context-popover-content.",
+      "behavioral_positive_proof": "install-core.test.sh cold-boot flow: tapOn context-trigger -> assertVisible context-popover-content on the clean app (PortalHost mounted at apps/example/app/_layout.tsx)"
+    }
+  }
+}
