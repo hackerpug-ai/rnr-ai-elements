@@ -6,7 +6,7 @@
 > Points: 13
 > Type: FEATURE
 > Wave: G  
-> Status: ⬜ Pending    
+> Status: 🔄 in_progress
 > TDD Mode: `red_first` · RED_GREEN_REQUIRED: yes
 > Proposed By: `react-native-ui-planner`
 > Depends On: TASK-F6

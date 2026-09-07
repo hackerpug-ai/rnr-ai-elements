@@ -1,0 +1,17 @@
+# FIX-F8-1 visual-evidence capture aid — NOT the locked cold-boot flow.
+# Boot + open + tap the context chip + screenshot while the popover is open.
+appId: ai.hackerpug.rnrexample
+name: capture-popover-open
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- tapOn:
+    point: "69%, 56%"
+- assertVisible:
+    id: "transcript-message-0"
+- tapOn:
+    id: "context-trigger"
+- assertVisible:
+    id: "context-popover-content"
+- takeScreenshot: ${SCREENSHOT_PATH}

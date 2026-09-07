@@ -133,11 +133,24 @@ type ContextContentProps = React.ComponentProps<typeof PopoverContent> & {
  * The press-opened breakdown. PopoverContent props flow through — insets, align,
  * sideOffset, portalHost — because the safe-area ritual belongs to the caller's
  * screen, not to this file.
+ *
+ * THE PORTAL RE-PROVIDE (the @rn-primitives/popover Portal precedent): the portal
+ * transport stores this subtree's ELEMENTS in a zustand store and PortalHost —
+ * mounted at the root layout, an ANCESTOR of the screen rendering <Context> —
+ * renders them there, so React context resolves against the host's fiber and
+ * ContextContext.Provider inside <Context> never reaches the portalled children
+ * (the header/body/footer call useContextValue() and would throw
+ * "Context components must be used within Context" on-device). So the value is
+ * read OUTSIDE the portal — here, where composition still sits under Context's
+ * provider — and re-provided INSIDE the boundary, exactly as the popover
+ * primitive re-provides its own RootContext around the portalled children.
  */
 function ContextContent({ className, children, ...props }: ContextContentProps) {
+  const contextValue = useContextValue();
+
   return (
     <PopoverContent className={cn('w-60 gap-0 p-0', className)} {...props}>
-      {children}
+      <ContextContext.Provider value={contextValue}>{children}</ContextContext.Provider>
     </PopoverContent>
   );
 }

@@ -1,0 +1,35 @@
+# FIX-F8-1 iOS probe — the locked flow's context pair, reachable on iOS.
+#
+# The locked cold-boot flow (TASK-F8's .maestro/cold-boot.yaml, unedited copy at
+# ../cold-boot.yaml) deterministically stops on iOS at its bare-text step
+# assertVisible: "Completed" — FIX-F5-1 cycle-2 blocker B2: the tool badge's
+# accessibilityLabel container absorbs the text node on iOS, so no standalone
+# "Completed" element exists for Maestro to match (VERIFIED twice there, twice here).
+# That stop precedes the context pair, so the context ids cannot be exercised on iOS
+# through the locked file. This probe keeps the locked flow's boot semantics
+# (clearState launch, openLink, springboard tap, canary-first assertion order) and
+# the ids-based assertions, dropping ONLY the bare-text steps (B2-blocked "Completed";
+# the two earlier bare-text asserts are kept and resolve on iOS per FIX-F5-1's runs).
+# It exists to prove context-trigger / context-popover-content on the iOS simulator;
+# the locked flow itself stays untouched and unweakened.
+appId: ai.hackerpug.rnrexample
+name: context-portal-ios-probe
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- tapOn:
+    point: "69%, 56%"
+- assertVisible:
+    id: "transcript-message-0"
+- assertVisible: "AI Elements Example"
+- assertVisible: "Registry item installed."
+- assertVisible:
+    id: "app-header"
+- assertVisible:
+    id: "tool-badge-completed"
+- tapOn:
+    id: "context-trigger"
+- assertVisible:
+    id: "context-popover-content"
+- takeScreenshot: ${SCREENSHOT_PATH}
