@@ -4,13 +4,24 @@
  * the Android system navigation bar, from the golden capture + device facts.
  *
  * Method (recorded so the number is auditable):
- *   1. the send button is the dark cluster (bg-primary, near-black in light mode)
- *      in the composer's bottom-right region; its lowest dark pixel row is the
- *      button's bottom edge. The search window excludes the bottom-centre gesture
- *      pill (x < 55% of width) so the system's own hint cannot count as the button.
- *   2. the navigation bar top = capture_height - navbar_height_px (passed in from
- *      `adb settings get global navigation_bar_height`, with a 48dp fallback the
- *      caller resolves and labels).
+ *   1. the send button is the cluster DARKER THAN THE COMPOSER SURFACE in the
+ *      composer's bottom-right region, and its lowest qualifying pixel row is the
+ *      button's bottom edge. On the seeded screen the composer input is empty, so
+ *      the button ships DISABLED (bg-muted grey, ~L*0.64 — cycle-2/img/
+ *      android-light-bottomright.png), not bg-primary black; the detector must
+ *      find the button as it actually renders, so the threshold is
+ *      surface-relative (lum < 0.75 against a >= 0.9 surface), not near-black.
+ *   2. the navigation bar top = capture_height - navbar_height_px. The caller
+ *      resolves the bar height from the system's own navigationBars InsetsSource
+ *      frame (`dumpsys window displays`, authoritative for gesture nav's 24dp
+ *      bar), falling back to `adb settings get global navigation_bar_height`
+ *      (3-button nav) and then to a 24dp gesture-nav default; the source is
+ *      recorded in the caller's log line so the number is auditable. The search window ends AT the navbar top: the
+ *      system gesture pill lives INSIDE the navbar's y-band (and is centred on x,
+ *      which the x >= 57% window also mostly excludes), so scanning only above
+ *      the line excludes the pill while keeping the measurement honest — a send
+ *      button that overlaps the navbar has its lowest pixels at or past the line
+ *      and reports a gap of <= 0, which fails the >= 1dp gate.
  *   3. gap_px = navbar_top - button_bottom; gap_dp = gap_px / (density / 160).
  *
  * Usage: node android-clearance.mjs <capture.png> <navbar_height_px> <density>
@@ -66,11 +77,14 @@ function pixel(x, y) {
   return [buf[o + 2] / 255, buf[o + 1] / 255, buf[o] / 255];
 }
 
-// search window: bottom-right of the screen, above the gesture pill's x band
-const x0 = Math.trunc(width * 0.55);
+// search window: bottom-right of the screen, above the navbar line (which also
+// excludes the gesture pill — it lives inside the navbar's y-band) and right of
+// the pill's centred x-band
+const navbarTop = height - navbarPx;
+const x0 = Math.trunc(width * 0.57);
 const x1 = Math.trunc(width * 0.98);
 const y0 = Math.trunc(height * 0.7);
-const y1 = Math.trunc(height * 0.99);
+const y1 = navbarTop;
 
 let buttonBottom = -1;
 let buttonTop = -1;
@@ -81,7 +95,11 @@ for (let y = y0; y < y1; y += 1) {
   for (let x = x0; x < x1; x += 1) {
     const [r, g, b] = pixel(x, y);
     const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    if (lum < 0.35) {
+    // surface-relative darkness: the composer surface and page background sit at
+    // lum >= 0.9; the disabled send button's body sits near 0.64; higher clusters
+    // (badge text/chevron) are darker still but strictly ABOVE the button, so only
+    // the button can set the lowest row this loop records
+    if (lum < 0.75) {
       darkPixels += 1;
       if (y > buttonBottom) buttonBottom = y;
       if (buttonTop === -1 || y < buttonTop) buttonTop = y;
@@ -93,11 +111,12 @@ for (let y = y0; y < y1; y += 1) {
 rmSync(work, { recursive: true, force: true });
 
 if (darkPixels === 0 || buttonBottom < 0) {
-  console.error('no dark send-button pixels found in the composer region');
+  console.error(
+    'no send-button pixels (lum < 0.75) found in the composer region above the navbar line',
+  );
   process.exit(1);
 }
 
-const navbarTop = height - navbarPx;
 const gapPx = navbarTop - buttonBottom;
 const gapDp = Number((gapPx / (density / 160)).toFixed(2));
 

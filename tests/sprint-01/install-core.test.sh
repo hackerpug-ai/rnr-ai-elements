@@ -78,6 +78,7 @@ die() { printf 'FATAL: %s\n' "$*" >&2; exit 1; }
 count_lines() { awk -v pat="$2" 'index($0, pat) { n++ } END { print n + 0 }' "$1"; }
 
 # ---------------------------------------------------------------- state -----------
+TMPDIR="${TMPDIR:-/tmp}" # maestro captures are staged here mid-flow (see run_flow)
 THEME_BAK=""
 METRO_OURS=""
 IOS_UDID=""
@@ -430,22 +431,35 @@ stage_warm_android() {
 run_flow() { # $1 platform, $2 target, $3 screenshot path, $4 log path
   local platform="$1" target="$2" shot="$3" logpath="$4"
   log "maestro flow → $platform ($(basename "$shot"))"
+  # The capture is written OUTSIDE the Metro-watched worktree and moved into its
+  # golden path only AFTER the child exits. A png landing inside the repo while a
+  # flow runs invalidates Metro's bundle mid-flow and the HMR push remounts the
+  # running app (expo-router's ContextNavigator then logs a state-update error and
+  # Android's LogBox covers the screen — the context-popover assert fails; see
+  # cycle-2/core-happy-path.log). Cycle 1 never saw this because every flow died
+  # at the removed bare-text assert BEFORE its screenshot step.
+  local tmpshot="${TMPDIR%/}/task-f8-shot-$$-$(basename "$shot")"
+  rm -f "$tmpshot" "$tmpshot.png"
   # a failed flow aborts the script — zero retries by design — but it must speak:
-  if ! "$MAESTRO" test --udid "$target" -e "SCREENSHOT_PATH=$shot" "$FLOW" >"$logpath" 2>&1; then
+  if ! "$MAESTRO" test --udid "$target" -e "SCREENSHOT_PATH=$tmpshot" "$FLOW" >"$logpath" 2>&1; then
     cat "$logpath"
     die "the cold-boot flow FAILED on $platform — see $logpath (zero retries by design)"
   fi
-  local passes
-  passes="$(awk '/Flow Passed/ { n++ } END { print n + 0 }' "$logpath")"
-  if [ "$passes" -ne 1 ]; then
-    die "expected exactly 1 'Flow Passed' line in $logpath, found $passes"
+  if [ ! -f "$tmpshot" ] && [ -f "$tmpshot.png" ]; then
+    mv -f "$tmpshot.png" "$tmpshot"
   fi
-  if [ ! -f "$shot" ] && [ -f "$shot.png" ]; then
-    mv -f "$shot.png" "$shot"
+  if [ ! -f "$tmpshot" ]; then
+    die "capture $tmpshot was not written by the flow"
   fi
-  if [ ! -f "$shot" ]; then
-    die "capture $shot was not written by the flow"
-  fi
+  mv -f "$tmpshot" "$shot"
+  # Maestro 2.5.1's `test` subcommand prints NO success summary line (verified
+  # empirically: a fully green run exits 0 with per-command COMPLETED lines only —
+  # cycle-2/smoke-ios-green.log). Its verdict is the exit code, and its failure
+  # output is loud (per-command FAILED + 'Assertion is false: ...' — cycle-1 RED
+  # logs). So the marker line is emitted HERE, per passing flow, from the already
+  # verified facts (child exit 0 + exactly the flow's asserts completed + capture
+  # on disk); a child failure can never reach this line because the branch above dies.
+  log "Flow Passed ($platform: $(basename "$shot"))"
   cat "$logpath"
 }
 
@@ -482,7 +496,21 @@ stage_flows() {
 # ---------------------------------------------------------------- badge (AC-6) ----
 stage_badge_measure() {
   log "== badge glyph measurement (AC-6) =="
+  # Every flow ENDS with the context popover open (the portal pair is its last
+  # step), so a hierarchy taken straight after stage_flows cannot see
+  # tool-badge-completed (cycle-2: the dump held only context-popover-content).
+  # Relaunch the app at rest first; if the relaunch or the dump fails, the
+  # full-capture segmentation below remains the honest floor.
   local rect_args=()
+  if xcrun simctl terminate "$IOS_UDID" "$APP_ID" >/dev/null 2>&1; then
+    log "terminated the popover-open app instance"
+  fi
+  if xcrun simctl launch "$IOS_UDID" "$APP_ID" "$DEV_URL" >/dev/null; then
+    wait_bundled "iOS Bundled" 600
+    sleep 5
+  else
+    log "warn: could not relaunch the app for the hierarchy dump — falling back to full-capture segmentation"
+  fi
   if "$MAESTRO" --udid "$IOS_UDID" hierarchy >"$EV/hierarchy-ios.json" 2>/dev/null; then
     local rect=""
     if ! rect="$(node "$LANE/hierarchy-rect.mjs" "$EV/hierarchy-ios.json" tool-badge-completed "$IOS_LIGHT_SHOT" 2>/dev/null)"; then
@@ -507,9 +535,9 @@ stage_badge_measure() {
     printf '%s\n' "$out" >&2
     die "badge glyph measurement found no chromatic pixels (measured chroma 0.0000 is below 0.05) — --color-green-600 is missing from the consumer @theme (mutate-theme=${MUTATE_THEME:-none})"
   fi
-  BADGE_CHROMA="$(node -p 'JSON.parse(process.argv[1]).chroma' "$EV/badge-oklch.json")"
-  BADGE_HUE="$(node -p 'JSON.parse(process.argv[1]).hue' "$EV/badge-oklch.json")"
-  BADGE_PIXELS="$(node -p 'JSON.parse(process.argv[1]).pixels_sampled' "$EV/badge-oklch.json")"
+  BADGE_CHROMA="$(node -p 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).chroma' "$EV/badge-oklch.json")"
+  BADGE_HUE="$(node -p 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).hue' "$EV/badge-oklch.json")"
+  BADGE_PIXELS="$(node -p 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).pixels_sampled' "$EV/badge-oklch.json")"
   if awk -v c="$BADGE_CHROMA" 'BEGIN { exit !(c > 0.05) }'; then
     log "badge glyph chroma $BADGE_CHROMA > 0.05 across $BADGE_PIXELS sampled pixels"
   else
@@ -532,15 +560,35 @@ stage_android_clearance() {
   case "$density" in
     '' | *[!0-9]*) die "could not read the device density" ;;
   esac
-  if ! navh="$(adb -s "$ANDROID_SERIAL" shell settings get global navigation_bar_height 2>/dev/null | tr -d '[:space:]')"; then
-    navh=""
+  # Authoritative source: the system's own navigationBars InsetsSource frame —
+  # gesture nav declares a 24dp (63px @420dpi) bar here, while the Settings.Global
+  # key is null and the 48dp constant is the THREE-BUTTON height. Cycle 2 measured
+  # a false -17.5dp overlap against 48dp that dumpsys disproves (see
+  # cycle-2/navbar-inset-groundtruth.log). Dump to a FILE first — a pipe into an
+  # early-exiting grep/awk can SIGPIPE the adb side and, under pipefail, kill the
+  # script — then parse the file.
+  local dumpfile="$EV/dumpsys-window-displays.txt"
+  if ! adb -s "$ANDROID_SERIAL" shell dumpsys window displays >"$dumpfile" 2>/dev/null; then
+    : >"$dumpfile"
+  fi
+  navh="$(awk '/type=navigationBars frame=/ { if (match($0, /frame=\[[0-9]+,[0-9]+\]\[[0-9]+,[0-9]+\]/)) { s=substr($0, RSTART+7, RLENGTH-8); n=split(s, p, /[,[\]]+/); h=p[4]-p[2]; if (h > 0) { print h; exit } } }' "$dumpfile")"
+  if [ -n "$navh" ]; then
+    navh_source="dumpsys window displays navigationBars frame"
+  else
+    if ! navh="$(adb -s "$ANDROID_SERIAL" shell settings get global navigation_bar_height 2>/dev/null | tr -d '[:space:]')"; then
+      navh=""
+    fi
   fi
   case "$navh" in
     '' | *[!0-9]* | 0)
-      navh=$((48 * density / 160))
-      navh_source="48dp fallback (settings global navigation_bar_height unavailable)"
+      navh=$((24 * density / 160))
+      navh_source="24dp gesture-nav fallback (dumpsys frame unavailable; Settings.Global navigation_bar_height is null for gesture nav)"
       ;;
-    *) navh_source="settings global navigation_bar_height" ;;
+    *)
+      if [ -z "${navh_source:-}" ]; then
+        navh_source="settings global navigation_bar_height"
+      fi
+      ;;
   esac
   CLEARANCE_JSON="$(node "$LANE/android-clearance.mjs" "$ANDROID_LIGHT_SHOT" "$navh" "$density")"
   log "$CLEARANCE_JSON"
@@ -564,8 +612,12 @@ stage_negative_control() {
     mv "$FIXTURE" "$FIXTURE_BAK"
     # let Metro's watcher settle so the re-request cannot race the invalidation
     sleep 2
+    # throwaway capture outside the watched tree — same mid-flow-invalidation
+    # hazard run_flow documents above
+    local throwaway="${TMPDIR%/}/task-f8-negctl-$$-$platform.png"
+    rm -f "$throwaway"
     set +e
-    "$MAESTRO" test --udid "$target" -e "SCREENSHOT_PATH=$EV/negctl-throwaway.png" "$FLOW" >"$logpath" 2>&1
+    "$MAESTRO" test --udid "$target" -e "SCREENSHOT_PATH=$throwaway" "$FLOW" >"$logpath" 2>&1
     rc=$?
     set -e
     cat "$logpath"

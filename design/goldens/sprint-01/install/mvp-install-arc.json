@@ -1,0 +1,91 @@
+{
+  "flow": "journeys/mvp-install-arc",
+  "run_cmd": "bash tests/sprint-01/install-core.test.sh journeys/mvp-install-arc",
+  "script": "tests/sprint-01/install-core.test.sh",
+  "flow_file": ".maestro/cold-boot.yaml",
+  "captured_at": "2026-09-07T07:42:31.500Z",
+  "install": "already-installed (committed F3 install re-verified: 10/10 files, 0 '@/registry/' literals, PortalHost present)",
+  "platforms": {
+    "ios": {
+      "device": "iPhone 17 Pro",
+      "udid": "9677B8E8-CD67-4561-89DF-17BFD99309CC",
+      "app_id": "ai.hackerpug.rnrexample",
+      "flow_runs": [
+        "light",
+        "dark"
+      ],
+      "flows_passed": 2,
+      "captures": [
+        "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-ios/sprint-01/cold-boot.png",
+        "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-ios/sprint-01/cold-boot-dark.png"
+      ]
+    },
+    "android": {
+      "device": "",
+      "serial": "emulator-5556",
+      "app_id": "ai.hackerpug.rnrexample",
+      "flow_runs": [
+        "light",
+        "dark (after am force-stop; Metro left running)"
+      ],
+      "flows_passed": 2,
+      "cold_boots": {
+        "count": 2,
+        "force_quit_before_run": 1,
+        "retries": 0,
+        "clearState": true
+      },
+      "captures": [
+        "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01/cold-boot.png",
+        "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01/cold-boot-dark.png"
+      ]
+    }
+  },
+  "badge_glyph_oklch": {
+    "sample": "glyph",
+    "note": "pixels are segmented by chroma inside the green hue band — the pill background (bg-secondary) is achromatic and never qualifies; the sample rectangle is recorded so the number is auditable",
+    "capture": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-ios/sprint-01/cold-boot.png",
+    "search_rect": {
+      "x": 171,
+      "y": 1920,
+      "width": 984,
+      "height": 138
+    },
+    "sample_rect": {
+      "x": 783,
+      "y": 1973,
+      "width": 239,
+      "height": 36
+    },
+    "pixels_sampled": 2278,
+    "mean_srgb": [
+      35,
+      177,
+      88
+    ],
+    "chroma": 0.1647,
+    "hue": 149.56
+  },
+  "android_send_button_clearance": {
+    "capture": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01/cold-boot.png",
+    "capture_dimensions": {
+      "width": 1080,
+      "height": 2400
+    },
+    "send_button_rect": {
+      "x": 720,
+      "y": 1885,
+      "width": 284,
+      "height": 439
+    },
+    "navbar_height_px": 63,
+    "navbar_top_px": 2337,
+    "gap_px": 14,
+    "gap_dp": 5.33,
+    "density": 420
+  },
+  "negative_control": {
+    "ran": false,
+    "reason": "journeys/mvp-install-arc excludes gate step 9 — the negative control is an engine self-check, not a leg of the developer journey"
+  }
+}

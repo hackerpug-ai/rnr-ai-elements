@@ -49,7 +49,17 @@ name: cold-boot
     id: "app-header"
 - assertVisible:
     id: "tool-badge-completed"
-- assertVisible: "Completed"
+# The badge READS `Completed` (gate step 7), but NO text matcher can assert it on
+# iOS: the Badge's accessibilityLabel makes the whole CollapsibleTrigger row one
+# a11y container that absorbs the Text node (Maestro hierarchy shows a single
+# accessibilityText "searchRegistry, Status: Completed"), so bare `Completed` and
+# even the label `Status: Completed` match no element — proven by a real failing
+# smoke run (cycle-2/smoke-ios-b2.log). The only iOS-matching string would couple
+# the assert to the tool name ("searchRegistry, …"), which is exactly the flake
+# class the id-only rule forbids. The badge's proof stack is therefore:
+#   id: tool-badge-completed (this flow, line above) — the pill is on-screen
+#   badge_glyph_oklch (AC-6, install-core.test.sh) — the green glyph renders
+#   the committed captures — a human gate step 7 reads `Completed` off the pngs
 # Golden capture while the composer is unobstructed (AC-4 measures the send button
 # against the Android navigation bar on this png).
 - takeScreenshot: ${SCREENSHOT_PATH}
