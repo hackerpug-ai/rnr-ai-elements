@@ -1,0 +1,26 @@
+Networking has been disabled
+Starting project at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example
+React Compiler enabled
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+Logs for your project will appear below.
+iOS Bundling failed 1082ms node_modules/.pnpm/expo-router@57.0.19_dea1b00d79bfa5a0c1c404d7cc2744f2/node_modules/expo-router/entry.js (1933 modules)
+Unable to resolve "../fixtures/transcript.json" from "apps/example/app/index.tsx"
+[0m [90m 38 |[39m [36mimport[39m { [33mE2E_IDS[39m } [36mfrom[39m [32m'@/e2e-ids'[39m[33m;[39m
+ [90m 39 |[39m
+[31m[1m>[22m[39m[90m 40 |[39m [36mimport[39m transcript [36mfrom[39m [32m'../fixtures/transcript.json'[39m[33m;[39m
+ [90m    |[39m                         [31m[1m^[22m[39m
+ [90m 41 |[39m
+ [90m 42 |[39m [90m// The fixture is consumed as the real ai@7.0.89 UIMessage type. resolveJsonModule widens[39m
+ [90m 43 |[39m [90m// the JSON's string literals (role/type/state become `string`), so this cast is required[39m[0m
+
+Import stack:
+
+ apps/example/app/index.tsx
+ | import "../fixtures/transcript.json"
+
+ apps/example/app (require.context)
+

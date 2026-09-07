@@ -1,0 +1,10 @@
+# throwaway probe: openLink + coordinate tap + env screenshot path
+appId: ai.hackerpug.rnrexample
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- tapOn:
+    point: "69%, 56%"
+- assertVisible: "AI Elements Example"
+- takeScreenshot: ${SCREENSHOT_PATH}

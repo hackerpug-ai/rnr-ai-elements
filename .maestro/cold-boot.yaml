@@ -1,0 +1,62 @@
+# TASK-F8 cold-boot flow — the sprint's single locked on-screen assertion set.
+#
+# Every `id:` here is a key of apps/example/e2e-ids.ts (TASK-F6's frozen map) and is
+# applied under apps/example/app/ — the flow and the map must agree character for
+# character (surface policy: .spec/e2e-policy/surface.json).
+#
+# Cold boot: launchApp carries clearState: true (forbidden to weaken:
+# .spec/e2e-policy/coldboot.json) and the flow configures ZERO retries — per the
+# sprint flake policy a flaky flow is fixed or deleted, never retried into green.
+#
+# The app is an Expo dev client build, so a cleared launch lands on the dev-launcher
+# home screen; openLink below routes it at this repo's Metro (localhost:8081 — the
+# emulator reaches the same port through `adb reverse`, which the runner script sets).
+# Routing through Metro is load-bearing, not incidental: AC-2's negative control moves
+# fixtures/transcript.json aside and requires Metro to RE-RESOLVE the import and fail
+# on device. A bundle baked into a release build would pass with the seed absent.
+#
+# ASSERTION ORDER is deliberate: the seed canary (transcript-message-0) is the FIRST
+# assertion, because the negative control's required failure line names THIS id. With
+# the fixture gone, Metro cannot resolve the route's import and the dev client shows
+# its error screen instead of the app — an assertion on the header text would fail
+# there FIRST and the named line would never be printed. Asserting the canary first
+# makes both outcomes speak: the positive run proves the seeded transcript mounted,
+# the negative run fails with exactly
+#   Assertion is false: id: transcript-message-0 is visible
+#
+# Screenshot destination arrives as an env var (-e SCREENSHOT_PATH=...) so one flow
+# file serves light and dark captures on both platforms without mutation.
+appId: ai.hackerpug.rnrexample
+name: cold-boot
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+# iOS routes external opens of a custom scheme through a springboard confirmation
+# ("Open in “AI Elements Example”?"). It only appears when a stale dialog or unusual
+# simulator state is present, and Maestro cannot see springboard alerts to dismiss
+# them — this coordinate tap lands on the dialog's Open button when one is up and on
+# empty transcript space (harmless) when one is not.
+- tapOn:
+    point: "69%, 56%"
+# Seed canary FIRST (see the note above — negative-control failure semantics).
+- assertVisible:
+    id: "transcript-message-0"
+# Seeded transcript assertions (sprint gate steps 5-7).
+- assertVisible: "AI Elements Example"
+- assertVisible: "Registry item installed."
+- assertVisible:
+    id: "app-header"
+- assertVisible:
+    id: "tool-badge-completed"
+- assertVisible: "Completed"
+# Golden capture while the composer is unobstructed (AC-4 measures the send button
+# against the Android navigation bar on this png).
+- takeScreenshot: ${SCREENSHOT_PATH}
+# PortalHost behavioral proof (TASK-F1 delegates here — constraint 8): without the
+# root PortalHost mounted, this popover renders NOTHING with no error, and only this
+# pair on this screen can catch it.
+- tapOn:
+    id: "context-trigger"
+- assertVisible:
+    id: "context-popover-content"
