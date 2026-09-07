@@ -6,10 +6,11 @@
 > Points: 13
 > Type: FEATURE
 > Wave: G  
-> Status: 🔄 in_progress
+> Status: ✅ Completed
 > TDD Mode: `red_first` · RED_GREEN_REQUIRED: yes
 > Proposed By: `react-native-ui-planner`
 > Depends On: TASK-F6
+> Commit: eb643a5a4da88d807443f5a7ca8bec0989ddd3f9
 
 **Sizing rationale.** The badge assertion is not a line in an existing script — it is pixel sampling from a capture, an sRGB→linear→LMS→OKLab→OKLCH conversion, a second invocation mode that mutates the consumer theme and reverts under a trap, and a schema addition to the artifact. That is 2-3 points on top of an 8 that was already the sprint's heaviest task and already owned three of four locked `test` paths plus both journey proofs. I am not absorbing it silently at 8. If 13 is unacceptable, the honest cut is the one I flagged last round: split the Android leg (steps 10-12, AC-4, `design/goldens/mobile-android/**`) into its own task depending on F8, leaving F8 at 8. I do not recommend splitting the badge work out — it reads a capture only AC-1 produces.
 
