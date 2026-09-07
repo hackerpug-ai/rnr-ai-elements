@@ -1,0 +1,219 @@
+{
+ "sprint": "sprint-01-installed-app-cold-boots-on-both-platforms",
+ "sprint_identity": {
+  "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms",
+  "sprint_slug": "sprint-01-installed-app-cold-boots-on-both-platforms"
+ },
+ "project_root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base",
+ "planned_at": "2026-09-07T08:15:59Z",
+ "planned_steps": 15,
+ "steps": [
+  {
+   "n": 1,
+   "text": "1. Run `pnpm install` from the repository root \u2014 expect exits printing `Done in` and a duration, and the resolution includes a workspace package named `example`.   `exercises: TASK-F1`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 1 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 2,
+   "text": "2. Run `cd apps/example && npx @react-native-reusables/cli@latest add https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/conversation.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/message.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/prompt-input.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/tool.json https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.1.0/public/r/uniwind/context.json` \u2014 expect the CLI prints a `Created` line for each of the four items AND for RNR's own `text`, `avatar`, `button` and `icon` pulled from reactnativereusables.com in the same command. Any `404` or `Cannot find module` is a FAIL \u2014 it means the v0.1.0 tag or a transitive registryDependency does not resolve Also expect a `Created` line for `components/ui/popover.tsx`.   `exercises: TASK-F2, TASK-F3`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 2 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "UC-REG-01/edge-a-short-name-registry-dependency",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 3,
+   "text": "3. Look at the final line the CLI printed \u2014 expect the final line names `components/ai/tool.tsx`, proving the file was WRITTEN into the consumer tree rather than imported from `packages/registry`.   `exercises: TASK-F3`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 3 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 4,
+   "text": "4. Run `npx expo run:ios` from `apps/example` \u2014 expect the app builds and launches with no red error screen. Specifically: NO `Unable to resolve module '@/registry/uniwind/components/ui/text'` or any sibling of it. This is the alias assertion \u2014 254 such imports have never survived an install, and this step is the first time anyone finds out.   `exercises: TASK-F4`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 4 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 5,
+   "text": "5. Look at the text in the app header on the screen that opens \u2014 expect the header reads `AI Elements Example`.   `exercises: TASK-F1, TASK-F5`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 5 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 6,
+   "text": "6. Look at the second bubble in the transcript \u2014 expect the bubble reads `Registry item installed.`   `exercises: TASK-F5`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 6 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 7,
+   "text": "7. Look at the tool card below that bubble and read its badge \u2014 expect the badge is a rounded pill reading `Completed` with a GREEN check glyph. A grey, black or colorless check is a FAIL: the consumer's `@theme` never carried `--color-green-600` and the class compiled to nothing, silently.   `exercises: TASK-F7`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 7 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 8,
+   "text": "8. With the simulator still running, run `pnpm e2e:smoke:ios` from the repository root \u2014 expect maestro prints `Flow Passed` and `design/goldens/mobile-ios/sprint-01/cold-boot.png` exists.   `exercises: TASK-F6, TASK-F8`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 8 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 9,
+   "text": "9. Run `mv apps/example/fixtures/transcript.json apps/example/fixtures/transcript.json.bak`, then run `pnpm e2e:smoke:ios` again \u2014 expect NEGATIVE CONTROL. Maestro must FAIL, printing `Assertion is false: id: transcript-message-0 is visible`. A pass here means the flow asserts nothing and the whole gate is theatre \u2014 this is the step that answers 'would this pass with a disconnected backend?' with a demonstrated no.   `exercises: TASK-F6, TASK-F8`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 9 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path"
+    ]
+   }
+  },
+  {
+   "n": 10,
+   "text": "10. Run `mv apps/example/fixtures/transcript.json.bak apps/example/fixtures/transcript.json` to restore the seed, then boot the Pixel_7_API_34 emulator and run `npx expo run:android` from `apps/example` \u2014 expect the Android emulator launches the same app, the header again reads `AI Elements Example`, and the badge is again GREEN.   `exercises: TASK-F1, TASK-F4, TASK-F7`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 10 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 11,
+   "text": "11. With the emulator still running, run `pnpm e2e:smoke:android` from the repository root \u2014 expect maestro prints `Flow Passed` and writes `design/goldens/mobile-android/sprint-01/cold-boot.png`. This file is the first Android capture ever produced by this repository.   `exercises: TASK-F8`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 11 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 12,
+   "text": "12. Force-quit the app from the Android launcher, leave Metro running, and run `pnpm e2e:smoke:android` a second time \u2014 expect `Flow Passed` again, proving the assertion runs against a cold app launch rather than a warm reload.   `exercises: TASK-F8`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 12 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "UC-REG-01/core-happy-path",
+     "journeys/mvp-install-arc"
+    ]
+   }
+  },
+  {
+   "n": 13,
+   "text": "13. Run `bash tests/sprint-01/install-dirty-app.test.sh --prepare` to create a hostile Expo app in `$TMPDIR` carrying its own `components/ui/button.tsx`, npm-latest `react-native-gesture-handler`, and no PortalHost \u2014 then re-run the step 2 add command in that app WITHOUT `--yes` \u2014 expect the CLI to pause on a prompt naming `components/ui/button.tsx` as a file it would overwrite, before any file is written.   `exercises: TASK-F3`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 13 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "journeys/mvp-full-arc--edge-install-into-a-dirty-app"
+    ]
+   }
+  },
+  {
+   "n": 14,
+   "text": "14. Answer that prompt with `n`, then run `npx expo-doctor` in the hostile app \u2014 expect a non-zero exit and output naming `react-native-gesture-handler` and the Expo SDK 57 expected version `~2.32.0`.   `exercises: TASK-F3`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 14 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "journeys/mvp-full-arc--edge-install-into-a-dirty-app"
+    ]
+   }
+  },
+  {
+   "n": 15,
+   "text": "15. Answer the add prompt with `y` on a re-run, launch the hostile app, and open the context surface \u2014 expect either a rendered popover OR an install-time message naming `PortalHost` as a prerequisite. A surface that renders NOTHING with no error is a FAIL: that is the landmine ledger's worst silent failure and the reason this step exists.   `exercises: TASK-F3`",
+   "type": "terminal",
+   "method": "locked-flow",
+   "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/_base/.spec/prds/mvp/tasks/sprint-01-installed-app-cold-boots-on-both-platforms --step 15 --timeout 3000",
+   "assertion": {
+    "kind": "flow_evidence",
+    "flow_ids": [
+     "journeys/mvp-full-arc--edge-install-into-a-dirty-app"
+    ]
+   }
+  }
+ ]
+}
