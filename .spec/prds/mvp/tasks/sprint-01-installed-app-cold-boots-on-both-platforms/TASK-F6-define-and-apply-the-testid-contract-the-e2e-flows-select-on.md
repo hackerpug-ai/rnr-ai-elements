@@ -98,3 +98,25 @@ Flow `UC-REG-01/core-happy-path`, owned by **TASK-F8 AC-1**. Delegated assertion
   "requirements": []
 }
 -->
+
+---
+
+## Amendments
+
+### AMEND-1 (cycle 1, driver-amended 2026-09-06): surface.json DRIFT row premise is false
+
+**Original criterion (Verification Checklist, last row):**
+`for id in app-header transcript-message-0 tool-badge-completed; do grep -q "$id" .spec/e2e-policy/surface.json || echo "DRIFT $id"; done` — expect nothing printed.
+
+**Probe evidence (reviewer cycle 1, re-run independently):**
+`.spec/e2e-policy/surface.json` contains NO id literals. It is a 21-line file of two arrays:
+`require_any[]` (command regexes: `@react-native-reusables/cli@latest add https://`, `npx expo run:(ios|android)`, `npx expo-doctor`, vitest/build-registry, `bash scripts/e2e/install-(core|dirty-app).sh`, `maestro test .maestro/`, `pnpm e2e:smoke:(ios|android)`) and
+`require_product_target_any[]` (path/URL regexes: raw.githubusercontent v0.1.0, reactnativereusables.com, `apps/example/components/(ai|ui)/...\.tsx`, `apps/example/app/index\.tsx`, `.maestro/cold-boot\.yaml`, `design/goldens/mobile-(ios|android)/sprint-01/cold-boot\.png`).
+`grep -c` of the three ids against the file returns 0. The file is single-commit (5007279 "plan(sprint-01): lock the functional flows the sprint gate requires"), byte-identical on the sprint branch and at that commit, and WRITE-PROHIBITED under this task's Guardrails (`.spec/e2e-policy/**`). The original Critical Constraints sentence "The ids `app-header`, `transcript-message-0`, `tool-badge-completed`, `context-trigger`, `composer-send` are referenced by regex inside .spec/e2e-policy/surface.json, which is LOCKED" is factually false and is corrected by this amendment.
+
+**Replacement real criterion:** The id-drift guard the row intended is machine-held by three things that DO exist and are NOT editable in this task's scope:
+1. the frozen throwing `E2E_IDS` map in `apps/example/e2e-ids.ts` (rename/mutation = throw or compile error),
+2. the Maestro flow TASK-F8 builds (`.maestro/cold-boot.yaml`) asserting the exact strings `transcript-message-0`, `context-trigger`, `context-popover-content`, `tool-badge-completed`, `composer-send`, `app-header` verbatim, and
+3. surface.json's own `require_product_target_any` entry `apps/example/app/index\.tsx` matching the file the ids are applied in.
+
+The DRIFT checklist row is replaced by: the 6 ids exist verbatim in the frozen map AND each id string appears in the task/SPRINT flow text that TASK-F8 asserts (a rename in the map without a matching flow edit is caught at F8's review/landing). The ids remain as authored; no surface.json edit is made or needed.
