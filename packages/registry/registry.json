@@ -339,6 +339,9 @@
         "https://reactnativereusables.com/r/{engine}/text.json",
         "https://reactnativereusables.com/r/{engine}/separator.json"
       ],
+      "dependencies": [
+        "class-variance-authority"
+      ],
       "files": [
         {
           "path": "packages/registry/src/components/ui/item.tsx",
@@ -384,6 +387,7 @@
       "dependencies": [
         "@rn-primitives/dialog",
         "@rn-primitives/portal",
+        "class-variance-authority",
         "react-native-reanimated",
         "react-native-screens"
       ]
@@ -956,6 +960,9 @@
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/command.json",
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/item.json"
       ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
       "files": [
         {
           "path": "packages/registry/src/components/ai/voice-selector.tsx",
@@ -1029,8 +1036,7 @@
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/status.json"
       ],
       "dependencies": [
-        "expo-clipboard",
-        "react-native-reanimated"
+        "expo-clipboard"
       ],
       "files": [
         {
