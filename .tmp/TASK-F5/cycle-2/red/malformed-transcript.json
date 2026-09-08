@@ -1,0 +1,20 @@
+{
+  "messages": [
+    { "id": "msg-001", "role": "human", "parts": [{ "type": "text", "text": "hi" }] },
+    {
+      "id": "msg-002",
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "tool-searchRegistry",
+          "toolName": "searchRegistry",
+          "toolCallId": "call-001",
+          "state": "completed",
+          "input": { "q": "x" },
+          "output": { "ok": true }
+        },
+        { "type": "prose", "text": "done" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+00:08:36.491 [ INFO] maestro.cli.report.TestDebugReporter.logSystemInfo: Debug output path: /Users/justinrich/.maestro/tests/2026-09-07_000836
+00:08:36.492 [ INFO] MAESTRO.logSystemInfo: ---- System Info ----
+00:08:36.493 [ INFO] MAESTRO.logSystemInfo: Maestro Version: 2.5.1
+00:08:36.493 [ INFO] MAESTRO.logSystemInfo: CI: Undefined
+00:08:36.493 [ INFO] MAESTRO.logSystemInfo: OS Name: Mac OS X
+00:08:36.493 [ INFO] MAESTRO.logSystemInfo: OS Version: 26.4.1
+00:08:36.493 [ INFO] MAESTRO.logSystemInfo: Architecture: aarch64
+00:08:36.494 [ INFO] MAESTRO.logSystemInfo: Java Version: 21
+00:08:36.545 [ INFO] MAESTRO.logSystemInfo: Xcode Version: 26.6
+00:08:36.549 [ INFO] MAESTRO.logSystemInfo: Flutter Version: Undefined
+00:08:36.553 [ INFO] MAESTRO.logSystemInfo: Flutter Channel: Undefined
+00:08:36.553 [ INFO] MAESTRO.logSystemInfo: ---------------------
+00:08:36.618 [DEBUG] io.micrometer.common.util.internal.logging.InternalLoggerFactory.newDefaultFactory: Using SLF4J as the default logging framework
+00:08:38.657 [ INFO] maestro.cli.command.TestCommand.runShardSuite: [shard 1] Selected device emulator-5556 using port 7001 with execution plan ExecutionPlan(flowsToRun=[/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/FIX-F8-1/.tmp/FIX-F8-1/cycle-1/cold-boot.yaml], sequence=FlowSequence(flows=[], continueOnFailure=true), workspaceConfig=WorkspaceConfig(flows=null, includeTags=null, excludeTags=null, executionOrder=null, baselineBranch=null, notifications=null, disableRetries=false, platform=PlatformConfiguration(android=AndroidConfiguration(disableAnimations=false), ios=IOSConfiguration(disableAnimations=false, snapshotKeyHonorModalViews=null)), testOutputDir=null))
+00:08:53.462 [ INFO] maestro.cli.runner.TestRunner.runSingle$lambda$0: Running flow cold-boot.yaml...
+00:08:53.483 [ INFO] maestro.Maestro.cachedDeviceInfo_delegate$lambda$0: Getting device info
+00:08:53.589 [ INFO] maestro.Maestro.cachedDeviceInfo_delegate$lambda$0: Got device info: DeviceInfo(platform=ANDROID, widthPixels=1080, heightPixels=2400, widthGrid=1080, heightGrid=2400)
+00:08:53.626 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Define variables RUNNING
+00:08:53.629 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Define variables metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(defineVariablesCommand=DefineVariablesCommand(env={MAESTRO_FILENAME=cold-boot, MAESTRO_DEVICE_UDID=emulator-5556, MAESTRO_SHARD_ID=1, MAESTRO_SHARD_INDEX=0}, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:08:53.629 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Define variables COMPLETED
+00:08:53.629 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Apply configuration RUNNING
+00:08:53.630 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Apply configuration metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(applyConfigurationCommand=ApplyConfigurationCommand(config=MaestroConfig(appId=ai.hackerpug.rnrexample, name=cold-boot, tags=[], ext={}, onFlowStart=null, onFlowComplete=null, properties={}), label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:08:53.630 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Apply configuration COMPLETED
+00:08:53.630 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Launch app "ai.hackerpug.rnrexample" with clear state RUNNING
+00:08:53.631 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Launch app "ai.hackerpug.rnrexample" with clear state metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(launchAppCommand=LaunchAppCommand(appId=ai.hackerpug.rnrexample, clearState=true, clearKeychain=null, stopApp=null, permissions=null, launchArguments=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:08:53.632 [ INFO] maestro.Maestro.clearAppState$lambda$5: Clearing app state ai.hackerpug.rnrexample
+00:08:55.966 [DEBUG] maestro.Maestro.setPermissionInternal: Failed to set permission android.permission.READ_EXTERNAL_STORAGE for app ai.hackerpug.rnrexample: pm grant ai.hackerpug.rnrexample android.permission.READ_EXTERNAL_STORAGE: 
+Exception occurred while executing 'grant':
+java.lang.SecurityException: Package ai.hackerpug.rnrexample has not requested permission android.permission.READ_EXTERNAL_STORAGE
+	at com.android.server.pm.permission.PermissionManagerServiceImpl.grantRuntimePermissionInternal(PermissionManagerServiceImpl.java:1423)
+	at com.android.server.pm.permission.PermissionManagerServiceImpl.grantRuntimePermission(PermissionManagerServiceImpl.java:1337)
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermission(PermissionManagerService.java:551)
+	at android.permission.PermissionManager.grantRuntimePermission(PermissionManager.java:609)
+	at com.android.server.pm.PackageManagerShellCommand.runGrantRevokePermission(PackageManagerShellCommand.java:2672)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:291)
+	at com.android.modules.utils.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:97)
+	at android.os.ShellCommand.exec(ShellCommand.java:38)
+	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onShellCommand(PackageManagerService.java:6350)
+	at android.os.Binder.shellCommand(Binder.java:1068)
+	at android.os.Binder.onTransact(Binder.java:888)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4352)
+	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6334)
+	at android.os.Binder.execTransactInternal(Binder.java:1344)
+	at android.os.Binder.execTransact(Binder.java:1275)
+
+00:08:55.991 [DEBUG] maestro.Maestro.setPermissionInternal: Failed to set permission android.permission.WRITE_EXTERNAL_STORAGE for app ai.hackerpug.rnrexample: pm grant ai.hackerpug.rnrexample android.permission.WRITE_EXTERNAL_STORAGE: 
+Exception occurred while executing 'grant':
+java.lang.SecurityException: Package ai.hackerpug.rnrexample has not requested permission android.permission.WRITE_EXTERNAL_STORAGE
+	at com.android.server.pm.permission.PermissionManagerServiceImpl.grantRuntimePermissionInternal(PermissionManagerServiceImpl.java:1423)
+	at com.android.server.pm.permission.PermissionManagerServiceImpl.grantRuntimePermission(PermissionManagerServiceImpl.java:1337)
+	at com.android.server.pm.permission.PermissionManagerService.grantRuntimePermission(PermissionManagerService.java:551)
+	at android.permission.PermissionManager.grantRuntimePermission(PermissionManager.java:609)
+	at com.android.server.pm.PackageManagerShellCommand.runGrantRevokePermission(PackageManagerShellCommand.java:2672)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:291)
+	at com.android.modules.utils.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:97)
+	at android.os.ShellCommand.exec(ShellCommand.java:38)
+	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onShellCommand(PackageManagerService.java:6350)
+	at android.os.Binder.shellCommand(Binder.java:1068)
+	at android.os.Binder.onTransact(Binder.java:888)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4352)
+	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6334)
+	at android.os.Binder.execTransactInternal(Binder.java:1344)
+	at android.os.Binder.execTransact(Binder.java:1275)
+
+00:08:56.016 [ INFO] maestro.Maestro.launchApp$lambda$2: Launching app ai.hackerpug.rnrexample
+00:08:56.019 [ INFO] maestro.Maestro.launchApp$lambda$2: Stopping ai.hackerpug.rnrexample app during launch
+00:08:56.066 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Launch app "ai.hackerpug.rnrexample" with clear state COMPLETED
+00:08:56.072 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081 RUNNING
+00:08:56.073 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081 metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(openLinkCommand=OpenLinkCommand(link=ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081, autoVerify=false, browser=false, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:08:56.077 [ INFO] maestro.Maestro.openLink: Opening link ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081 for app: ai.hackerpug.rnrexample with autoVerify config as false
+00:08:56.294 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081 COMPLETED
+00:08:56.298 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Tap on point (69%, 56%) RUNNING
+00:08:56.299 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Tap on point (69%, 56%) metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(tapOnPointV2Command=TapOnPointV2Command(point=69%, 56%, retryIfNoChange=false, longPress=false, repeat=null, waitToSettleTimeoutMs=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:08:56.309 [ INFO] maestro.Maestro.hierarchyBasedTap-ogj28Uc: Tapping at (745, 1344) using hierarchy based logic for wait
+00:08:56.658 [ INFO] maestro.Maestro.hierarchyBasedTap-ogj28Uc: Something has changed in the UI judging by view hierarchy. Proceed.
+00:08:56.664 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Tap on point (69%, 56%) COMPLETED
+00:08:56.669 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that id: transcript-message-0 is visible RUNNING
+00:08:56.680 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that id: transcript-message-0 is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=null, idRegex=transcript-message-0, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:02.491 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Assert that id: transcript-message-0 is visible COMPLETED
+00:09:02.497 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that "AI Elements Example" is visible RUNNING
+00:09:02.498 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that "AI Elements Example" is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=AI Elements Example, idRegex=null, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:02.616 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Assert that "AI Elements Example" is visible COMPLETED
+00:09:02.619 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that "Registry item installed." is visible RUNNING
+00:09:02.622 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that "Registry item installed." is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=Registry item installed., idRegex=null, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:02.740 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Assert that "Registry item installed." is visible COMPLETED
+00:09:02.744 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that id: app-header is visible RUNNING
+00:09:02.748 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that id: app-header is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=null, idRegex=app-header, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:02.860 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Assert that id: app-header is visible COMPLETED
+00:09:02.868 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that id: tool-badge-completed is visible RUNNING
+00:09:02.869 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that id: tool-badge-completed is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=null, idRegex=tool-badge-completed, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:02.987 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Assert that id: tool-badge-completed is visible COMPLETED
+00:09:02.990 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that "Completed" is visible RUNNING
+00:09:02.990 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that "Completed" is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=Completed, idRegex=null, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:03.105 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Assert that "Completed" is visible COMPLETED
+00:09:03.108 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Take screenshot ${SCREENSHOT_PATH} RUNNING
+00:09:03.848 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Take screenshot ${SCREENSHOT_PATH} metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(takeScreenshotCommand=TakeScreenshotCommand(path=undefined, cropOn=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:03.858 [ INFO] maestro.Maestro.takeScreenshot: Taking screenshot
+00:09:03.863 [TRACE] maestro.utils.ScreenshotUtils.takeScreenshot: Taking screenshot to output sink
+00:09:03.999 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Take screenshot ${SCREENSHOT_PATH} COMPLETED
+00:09:04.003 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Tap on id: context-trigger RUNNING
+00:09:04.004 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Tap on id: context-trigger metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(tapOnElementCommand=TapOnElementCommand(selector=ElementSelector(textRegex=null, idRegex=context-trigger, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), retryIfNoChange=false, waitUntilVisible=false, longPress=false, repeat=null, waitToSettleTimeoutMs=null, relativePoint=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:04.088 [ INFO] maestro.Maestro.tap-HgV9Ck0: Tapping on element:  UiElement(treeNode=TreeNode(attributes={text=, accessibilityText=Model context usage, hintText=, ignoreBoundsFiltering=false, resource-id=context-trigger, clickable=true, bounds=[42,2133][95,2186], enabled=true, focused=false, checked=false, scrollable=false, selected=false, class=android.widget.Button, important-for-accessibility=true, error=}, children=[TreeNode(attributes={text=, accessibilityText=, hintText=, ignoreBoundsFiltering=false, resource-id=, clickable=false, bounds=[42,2133][95,2186], enabled=true, focused=false, checked=false, scrollable=false, selected=false, class=com.horcrux.svg.SvgView, important-for-accessibility=false, error=}, children=[TreeNode(attributes={text=, accessibilityText=, hintText=, ignoreBoundsFiltering=false, resource-id=, clickable=false, bounds=[42,2137][91,2186], enabled=true, focused=false, checked=false, scrollable=false, selected=false, class=com.horcrux.svg.GroupView, important-for-accessibility=false, error=}, children=[TreeNode(attributes={text=, accessibilityText=, hintText=, ignoreBoundsFiltering=false, resource-id=, clickable=false, bounds=[42,2139][89,2186], enabled=true, focused=false, checked=false, scrollable=false, selected=false, class=com.horcrux.svg.PathView, important-for-accessibility=false, error=}, children=[], clickable=false, enabled=true, focused=false, checked=false, selected=false), TreeNode(attributes={text=, accessibilityText=, hintText=, ignoreBoundsFiltering=false, resource-id=, clickable=false, bounds=[68,2137][91,2160], enabled=true, focused=false, checked=false, scrollable=false, selected=false, class=com.horcrux.svg.PathView, important-for-accessibility=false, error=}, children=[], clickable=false, enabled=true, focused=false, checked=false, selected=false)], clickable=false, enabled=true, focused=false, checked=false, selected=false)], clickable=false, enabled=true, focused=false, checked=false, selected=false)], clickable=true, enabled=true, focused=false, checked=false, selected=false), bounds=Bounds(x=42, y=2133, width=53, height=53))
+00:09:05.193 [ INFO] maestro.Maestro.tap-HgV9Ck0: Refreshed element
+00:09:05.196 [ INFO] maestro.Maestro.hierarchyBasedTap-ogj28Uc: Tapping at (68, 2159) using hierarchy based logic for wait
+00:09:06.895 [ INFO] maestro.Maestro.hierarchyBasedTap-ogj28Uc: Something has changed in the UI judging by view hierarchy. Proceed.
+00:09:06.895 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$2: Tap on id: context-trigger COMPLETED
+00:09:06.895 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$0: Assert that id: context-popover-content is visible RUNNING
+00:09:06.895 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$11: Assert that id: context-popover-content is visible metadata CommandMetadata(numberOfRuns=null, evaluatedCommand=MaestroCommand(assertConditionCommand=AssertConditionCommand(condition=Condition(platform=null, visible=ElementSelector(textRegex=null, idRegex=context-popover-content, size=null, below=null, above=null, leftOf=null, rightOf=null, containsChild=null, containsDescendants=null, traits=null, index=null, enabled=null, optional=false, selected=null, checked=null, focused=null, childOf=null, css=null), notVisible=null, scriptCondition=null, label=null), timeout=null, label=null, optional=false)), logMessages=[], insight=Insight(message=, level=NONE), aiReasoning=null, labeledCommand=null)
+00:09:24.111 [ERROR] maestro.orchestra.Orchestra.executeCommands: [Command execution] CommandFailed: Assertion is false: id: context-popover-content is visible
+00:09:24.113 [ INFO] maestro.Maestro.takeScreenshot: Taking screenshot
+00:09:24.114 [TRACE] maestro.utils.ScreenshotUtils.takeScreenshot: Taking screenshot to output sink
+00:09:24.205 [ INFO] maestro.cli.runner.MaestroCommandRunner.runCommands$lambda$4: Assert that id: context-popover-content is visible FAILED
+00:09:24.415 [ INFO] maestro.cli.report.TestDebugReporter.deleteOldFiles: Performing purge of logs older than 14 days from /Users/justinrich/.maestro/tests
+00:09:24.701 [ERROR] maestro.cli.session.MaestroSessionManager.newSession$lambda$0: Failed to record heartbeat
+java.lang.InterruptedException: sleep interrupted
+	at java.base/java.lang.Thread.sleep0(Native Method)
+	at java.base/java.lang.Thread.sleep(Thread.java:509)
+	at maestro.cli.session.MaestroSessionManager.newSession$lambda$0(MaestroSessionManager.kt:95)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)

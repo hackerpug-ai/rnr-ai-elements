@@ -1,0 +1,37 @@
+=== GREEN evidence TASK-F5 cycle-2 — 2026-09-06T23:42:30Z ===
+--- pnpm typecheck (expect 0) ---
+exit=0
+--- pnpm lint (expect 0) ---
+exit=0
+--- checklist rows ---
+[1] messages.length:
+2
+exit=0
+[2] assistant text:
+Registry item installed.
+exit=0
+[3] tool part:
+output-available searchRegistry
+exit=0
+[4] scoped shape proof: node apps/example/fixtures/validate.mjs
+VALID: 2 message(s) in /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F5/apps/example/fixtures/transcript.json satisfy ai@7.0.89's uiMessagesSchema
+exit=0
+[5] apps/example tsc error files (expect exactly the 5 pre-existing F3/F4 files, 0 in TASK-F5 files):
+   1 apps/example/app/_layout.tsx
+   1 apps/example/components/ai/conversation.tsx
+   1 apps/example/components/ai/tool.tsx
+   1 apps/example/components/ui/input-group.tsx
+   1 apps/example/components/ui/input.tsx
+[6] PROVENANCE strings:
+- **origin**: hand-assembled
+- **sdk**: ai@7.0.89
+- **created**: 2026-09-06T23:25:23Z
+shape is checked against the real `ai@7.0.89` schema by
+[7] fetch/timer count on app/index.tsx (expect 0):
+0
+[8] git diff --name-only -- apps/example/components/ai/ | wc -l (expect 0):
+       0
+
+--- cast-drop experiment (why the UIMessage[] cast stays) ---
+tsc without cast -> apps/example/app/index.tsx(32,7): error TS2322: Type '({ id: string; role: string; ... })[]' is not assignable to type 'UIMessage<...>[]' (role: string vs role union)
+tsc with cast -> 0 errors in app/index.tsx

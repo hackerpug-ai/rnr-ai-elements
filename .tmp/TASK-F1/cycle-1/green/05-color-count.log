@@ -1,0 +1,22 @@
+=== grep -c -- --color- apps/example/global.css (expect 63 == RNR theme count) ===
+63
+exit=0
+RNR harness theme count: 63
+5,10c5,13
+<  * Values below are RNR's own, transcribed VERBATIM from
+<  * founded-labs/react-native-reusables apps/showcase/global.css (the same block the
+<  * Storybook harness carries) so that this app renders exactly what a real RNR app
+<  * renders. Only the SYNTAX differs: RNR publishes the Tailwind v3 shape (:root /
+<  * .dark:root, bare HSL triplets); this is the Tailwind v4 + Uniwind shape per
+<  * docs.uniwind.dev/migration-from-nativewind. The colors are identical.
+---
+>  * Values below are RNR's own, transcribed verbatim from
+>  * founded-labs/react-native-reusables apps/showcase/global.css so that Storybook
+>  * renders exactly what a real RNR app renders. Only the SYNTAX differs: RNR publishes
+>  * the Tailwind v3 shape (:root / .dark:root, bare HSL triplets); this is the Tailwind v4
+>  * + Uniwind shape per docs.uniwind.dev/migration-from-nativewind. The colors are identical.
+>  *
+>  * The palette-flip proof (PRD UC-FOUND-01) swaps this file for a loud alternate palette
+>  * and requires every surface to move. It only proves something because this starting
+>  * point is RNR's real theme.
+DIFF NONZERO

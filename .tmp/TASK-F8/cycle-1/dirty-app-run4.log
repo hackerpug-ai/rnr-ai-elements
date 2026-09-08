@@ -1,0 +1,13 @@
+== prepare: hostile Expo app at /Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer ==
+removing previous hostile app (each run starts hostile-fresh)
+npx create-expo-app@latest consumer (SDK 57 template, npm world)
+dirt 1: npm-latest react-native-gesture-handler (a major ahead of Expo 57's ~2.32.0)
+dirt 2: the app's OWN components/ui/button.tsx (different variants than RNR's)
+fixture plumbing: a minimal uniwind-engine components.json so the REAL CLI can run (the prompt cannot fire without one)
+dirt 3 (fixture property): the root layout mounts NO PortalHost
+hostile app ready (1 component file, gesture-handler 3.x, no PortalHost)
+== gate step 13: the CLI names what it would overwrite BEFORE writing ==
+declined file is byte-identical: the prompt paused before any write to it
+overwrite prompt asserted (named components/ui/button.tsx; declined file untouched)
+== gate step 13b: answering y installs through the same real CLI ==
+FATAL: accepted add did not create components/ai/context.tsx (wrapper exit untrusted) — see /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.tmp/TASK-F8/runs/dirty-app-20260906-212132/dirty-add-accepted.log

@@ -1,0 +1,13 @@
+== preflight ==
+maestro 2.5.1 (pinned by .maestro/config.yaml)
+iOS target: iPhone 17 Pro (9677B8E8-CD67-4561-89DF-17BFD99309CC)
+Android target: unknown (emulator-5556)
+== install (gate steps 1-3) ==
+node_modules present — pnpm install skipped (idempotent re-run)
+already-installed (committed F3 install re-verified: 10/10 files, 0 '@/registry/' literals, PortalHost present)
+== metro (port 8081, serving this worktree) ==
+killing squatter(s) on 8081: 76787 
+Metro serving
+== build/install iOS (gate step 4) ==
+running npx expo run:ios (the long pole on a fresh checkout)
+FATAL: iOS app not installed after expo run:ios — see /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.tmp/TASK-F8/runs/20260906-210313/build-ios.log

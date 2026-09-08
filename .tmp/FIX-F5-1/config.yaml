@@ -1,0 +1,8 @@
+# Maestro workspace config — TASK-F8.
+#
+# RUNNER PIN (task note): the flows are locked to Maestro 2.5.1. This file records the
+# pin; the TEETH live in tests/sprint-01/install-core.test.sh's preflight, which runs
+# `maestro --version` and fails the run on any other version. An unpinned runner is a
+# silent flake source — selector semantics and failure output are versioned behavior
+# this sprint's negative control depends on.
+maestro-version: "2.5.1"
