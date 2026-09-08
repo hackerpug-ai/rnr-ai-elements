@@ -311,7 +311,19 @@
         "react-native-safe-area-context",
         "expo-document-picker",
         "expo-image-picker"
-      ]
+      ],
+      "meta": {
+        "permissions": {
+          "ios": [
+            "NSPhotoLibraryUsageDescription",
+            "NSCameraUsageDescription"
+          ],
+          "android": [
+            "READ_MEDIA_IMAGES",
+            "CAMERA"
+          ]
+        }
+      }
     },
     {
       "name": "empty",
