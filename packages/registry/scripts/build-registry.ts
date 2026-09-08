@@ -40,6 +40,18 @@ export interface RegistryItem {
   description?: string;
   dependencies?: string[];
   registryDependencies?: string[];
+  /**
+   * Native permissions the item's dependencies imply, keyed by platform with the
+   * literal manifest keys a consumer must declare (iOS Info.plist keys, Android
+   * manifest permissions). Informational: the item still works without them until
+   * the user exercises the gated feature, at which point the OS refuses.
+   */
+  meta?: {
+    permissions?: {
+      ios?: string[];
+      android?: string[];
+    };
+  };
   files: RegistryFile[];
 }
 export interface Registry {
