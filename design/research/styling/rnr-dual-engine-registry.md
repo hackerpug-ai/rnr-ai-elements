@@ -257,6 +257,48 @@ AI surfaces must read as distinct from ordinary app chrome. That distinctness co
       "glob": ["packages/registry/src/**/*.tsx"],
       "regex": "className=\"[^\"]*\\b(h-11|h-12|min-h-\\[44px\\])\\b",
       "rationale": "RNR's mobile control is h-10. A taller chat control is the visible tell that a second library drew it; reach 44pt with hitSlop, which changes no pixel."
+    },
+    {
+      "id": "web-only-iframe",
+      "mode": "content",
+      "glob": ["packages/registry/src/**/*.{ts,tsx}"],
+      "regex": "^(?! *//)(?! *\\*)(?! */\\*).*<iframe[\\s>]",
+      "rationale": "An <iframe> renders nothing on React Native. Web-only embeds must go through the WebView-backed item where the dependency is declared, not raw markup."
+    },
+    {
+      "id": "web-only-dangerous-html",
+      "mode": "content",
+      "glob": ["packages/registry/src/**/*.{ts,tsx}"],
+      "regex": "^(?! *//)(?! *\\*)(?! */\\*).*dangerouslySetInnerHTML\\s*=",
+      "rationale": "No DOM exists to set inner HTML into. The port's replacements are data-driven renders (see schema-display's parsePathSegments)."
+    },
+    {
+      "id": "web-only-dom-element",
+      "mode": "content",
+      "glob": ["packages/registry/src/**/*.{ts,tsx}"],
+      "regex": "^(?! *//)(?! *\\*)(?! */\\*).*<(div|span|ul|ol|li|p|button|img|label|nav|section|header|footer|a|table|td|tr|form|input|h[1-6])\\b[ />]",
+      "rationale": "DOM host components do not exist on React Native — use View/Text/Pressable. The comment guard exists because prose documenting the WEB original legitimately names these tags."
+    },
+    {
+      "id": "web-only-dom-global",
+      "mode": "content",
+      "glob": ["packages/registry/src/**/*.{ts,tsx}"],
+      "regex": "^(?! *//)(?! *\\*)(?! */\\*).*\\b(document|window)\\s*\\.\\s*[A-Za-z_$]",
+      "rationale": "document/window are undefined in React Native runtimes and crash at first touch. Platform-specific access must go through Platform guards or caller callbacks. The member-access suffix avoids flagging prose like 'the uploading window.'"
+    },
+    {
+      "id": "web-only-hover-outside-web-guard",
+      "mode": "content",
+      "glob": ["packages/registry/src/**/*.{ts,tsx}"],
+      "regex": "^(?! *//)(?! *\\*)(?! */\\*)(?!.*web:).*\\bhover:",
+      "rationale": "hover: is dead under a thumb. The sanctioned form is Platform.select({ web: '... hover:...' }) — any hover: on a line that does not carry the web: guard is an unguarded web-only affordance."
+    },
+    {
+      "id": "web-only-dom-event-handler",
+      "mode": "content",
+      "glob": ["packages/registry/src/**/*.{ts,tsx}"],
+      "regex": "^(?! *//)(?! *\\*)(?! */\\*).*\\bonClick\\s*=|\\bonChange\\s*=|\\bonMouse(Enter|Leave|Over|Move)\\s*=|\\bonInput\\s*=|\\bonDoubleClick\\s*=|\\bonSubmit\\s*=|\\bonKey(Down|Up)\\s*=",
+      "rationale": "DOM-only event props never fire on React Native. Deliberately EXCLUDES onFocus/onBlur/onError/onLoad — those names are shared with RN's TextInput/WebView/Image and are sanctioned there; only the DOM-only shapes are forbidden."
     }
   ],
   "mustInclude": [

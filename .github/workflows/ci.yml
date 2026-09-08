@@ -70,6 +70,8 @@ jobs:
         run: pnpm exec biome ci .
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm check:tokens
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm check:contract
 
   test:
     name: test
