@@ -1,7 +1,7 @@
 import { Text, TextClassContext } from '@/registry/{engine}/components/ui/text';
 import { cn } from '@/registry/{engine}/lib/utils';
 import * as React from 'react';
-import { Platform, TextInput, View, type TextInputProps, type ViewProps } from 'react-native';
+import { Platform, TextInput, View, useColorScheme, type TextInputProps, type ViewProps } from 'react-native';
 
 /**
  * InputGroup — leading/trailing addons around a TextInput.
@@ -44,6 +44,7 @@ function InputGroup({ className, ...props }: ViewProps) {
 /** The text field. Reports focus up so the wrapper can draw the ring. */
 function InputGroupInput({ className, onFocus, onBlur, ...props }: TextInputProps) {
   const { setFocused } = useInputGroup();
+  const scheme = useColorScheme();
   return (
     <TextInput
       className={cn(
@@ -51,7 +52,17 @@ function InputGroupInput({ className, onFocus, onBlur, ...props }: TextInputProp
         Platform.select({ web: 'outline-none' }),
         className,
       )}
-      placeholderClassName="text-muted-foreground"
+      // PLACEHOLDER COLOR CANNOT BE A CLASS HERE. `placeholderClassName` is a
+      // Nativewind-only prop; uniwind 1.11.0 has no such prop anywhere (its own
+      // TextInput component uses `placeholderTextColorClassName`, and a raw
+      // react-native TextInput accepts neither) — so under the uniwind engine the
+      // prop was inert and placeholders fell to the platform default. This registry
+      // is engine-agnostic and cannot import uniwind's TextInput, so the color goes
+      // through the one hook both engines and all three platforms honor: the plain
+      // RN prop, carrying the exact --color-muted-foreground theme values (light
+      // hsl(0 0% 45.1%) = #737373, dark hsl(0 0% 63.9%) = #a3a3a3). If the theme
+      // tokens change, these two literals change with them.
+      placeholderTextColor={scheme === 'dark' ? 'hsl(0 0% 63.9%)' : 'hsl(0 0% 45.1%)'}
       onFocus={(e) => {
         setFocused(true);
         onFocus?.(e);

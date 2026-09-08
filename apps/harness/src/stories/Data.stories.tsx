@@ -421,10 +421,11 @@ export const TestResultsBoard: Story = {
                 <Test name="fails closed when the provider is down" status="failed" duration={3021} />
                 <TestError>
                   <TestErrorMessage>AssertionError: expected 503 to be 401</TestErrorMessage>
+                  {/* The stack starts at the first `at` frame — the message line lives
+                      only in the headline above, or it would read twice. */}
                   <TestErrorStack>
                     {
-                      'AssertionError: expected 503 to be 401\n'
-                      + '    at expect (/Users/justin/Projects/agent/test/auth.test.ts:88:28)\n'
+                      '    at expect (/Users/justin/Projects/agent/test/auth.test.ts:88:28)\n'
                       + '    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)'
                     }
                   </TestErrorStack>

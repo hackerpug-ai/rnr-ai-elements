@@ -291,7 +291,7 @@
       "name": "prompt-input",
       "type": "registry:component",
       "title": "Prompt Input",
-      "description": "The composer. Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT INTACT. Auto-grows to a cap, then scrolls.",
+      "description": "The composer at web parity: provider/controller context, attachment chips over the native pickers, the + tools menu (bottom sheet — camera/photos/files rows through the picker seam, checkmarked consumer toggles), the model chip composed in-row, and the never-dead primary slot (voice → send → stop morph; PromptInputSubmit stays exported for direct use). Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT AND ATTACHMENTS INTACT. expo-image-picker + expo-document-picker are opt-in install-time dependencies (the ambient boundary keeps typecheck green without them).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",

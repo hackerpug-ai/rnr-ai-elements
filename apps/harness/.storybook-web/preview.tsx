@@ -3,6 +3,8 @@ import '../src/global.css';
 import type { Preview } from '@storybook/react';
 import { useEffect } from 'react';
 import { View } from 'react-native';
+import { PortalHost } from '@rn-primitives/portal';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ENGINE, setTheme } from './theme-bridge';
 
@@ -65,9 +67,14 @@ const preview: Preview = {
       useEffect(() => setTheme(theme), [theme]);
 
       return (
-        <View className="flex-1 bg-background p-4" style={{ minHeight: 240 }}>
-          <Story />
-        </View>
+        <SafeAreaProvider>
+          <View className="flex-1 bg-background p-4" style={{ minHeight: 240 }}>
+            <Story />
+            {/* Same root portal host as the device preview — without it every
+                portal-based overlay (sheet/popover/dropdown) renders nowhere. */}
+            <PortalHost />
+          </View>
+        </SafeAreaProvider>
       );
     },
   ],

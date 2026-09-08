@@ -93,6 +93,10 @@ type WebPreviewContextValue = {
   setUrl: (url: string) => void;
   /** The verdict's reload affordance: the webview's reload command (no-op unmounted). */
   reload: () => void;
+  /** History back — the webview's goBack (no-op unmounted, same law). */
+  goBack: () => void;
+  /** History forward — the webview's goForward (no-op unmounted, same law). */
+  goForward: () => void;
   /** The body registers its webview instance here so reload reaches it. */
   attachWebview: (instance: WebView | null) => void;
 };
@@ -137,9 +141,18 @@ function WebPreview({ defaultUrl = '', onUrlChange, className, children, ...prop
     webviewRef.current?.reload();
   }, []);
 
+  const goBack = React.useCallback(() => {
+    // No webview mounted → a no-op, never a pretend navigation.
+    webviewRef.current?.goBack();
+  }, []);
+
+  const goForward = React.useCallback(() => {
+    webviewRef.current?.goForward();
+  }, []);
+
   const contextValue = React.useMemo<WebPreviewContextValue>(
-    () => ({ url, setUrl: handleUrlChange, reload, attachWebview }),
-    [url, handleUrlChange, reload, attachWebview],
+    () => ({ url, setUrl: handleUrlChange, reload, goBack, goForward, attachWebview }),
+    [url, handleUrlChange, reload, goBack, goForward, attachWebview],
   );
 
   return (

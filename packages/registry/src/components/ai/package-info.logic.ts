@@ -54,15 +54,33 @@ export function packageChangeTypeMeta(changeType: PackageChangeType): PackageCha
 }
 
 /**
- * The version transition line: "1.2.3 → 2.0.0" (upgrade), "1.2.3" (installed),
- * "2.0.0" (announced), or null when neither arrives yet — null means render nothing,
- * never "undefined → undefined".
+ * The version transition as SEGMENTS: "1.2.3 → 2.0.0" splits so the card can
+ * emphasize the upgrade target (new version bold/dark — the web's treatment) while
+ * the old version stays muted. "1.2.3" (installed) / "2.0.0" (announced) render as
+ * a single segment; null when neither arrives yet — null means render nothing, never
+ * "undefined → undefined" mid-stream.
  */
-export function formatVersionTransition(currentVersion?: string, newVersion?: string): string | null {
+export type VersionTransition =
+  | { kind: 'both'; current: string; next: string }
+  | { kind: 'single'; value: string }
+  | null;
+
+export function versionTransitionSegments(currentVersion?: string, newVersion?: string): VersionTransition {
   const current = currentVersion?.trim();
   const next = newVersion?.trim();
-  if (current && next) return `${current} → ${next}`;
-  return current || next || null;
+  if (current && next) return { kind: 'both', current, next };
+  const value = current || next;
+  return value ? { kind: 'single', value } : null;
+}
+
+/**
+ * The flat string form of the same transition, for plain-text callers (a11y labels,
+ * log lines). Pure join of the segments — one source of truth, never a second parse.
+ */
+export function formatVersionTransition(currentVersion?: string, newVersion?: string): string | null {
+  const segments = versionTransitionSegments(currentVersion, newVersion);
+  if (!segments) return null;
+  return segments.kind === 'both' ? `${segments.current} → ${segments.next}` : segments.value;
 }
 
 /** AC-3's copyable line. `version` pins the install; absent means latest. */

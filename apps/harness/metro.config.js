@@ -17,17 +17,18 @@ const fsExists = (p) => { try { return fs.statSync(p).isFile(); } catch { return
 config.watchFolders = [...(config.watchFolders ?? []), REGISTRY_SRC];
 
 config.resolver.resolveRequest = (context, moduleName, platform) => {
-  // web-preview imports react-native-webview as a PEER: the registry package takes no
-  // dependency on it (its typecheck reads the ambient boundary declaration), so the
-  // module does not resolve from packages/registry the way reanimated and friends do.
-  // A real consumer resolves it from their own node_modules after the CLI installs it;
-  // this harness IS that consumer (apps/harness/package.json carries the Expo-pinned
-  // 13.16.1), so the peer lookup is pointed here. No other native module needs this —
-  // if a second one ever appears, generalize this into a peer-map.
-  if (moduleName === 'react-native-webview' || moduleName.startsWith('react-native-webview/')) {
+  // web-preview (react-native-webview) and prompt-input (expo-image-picker,
+  // expo-document-picker) import their native modules as PEERS: the registry package
+  // takes no dependency on them (its typecheck reads the ambient boundary
+  // declarations), so the modules do not resolve from packages/registry the way
+  // reanimated and friends do. A real consumer resolves them from their own
+  // node_modules after the CLI installs them; this harness IS that consumer (the Expo
+  // -pinned installs live in this package.json), so peer lookups are pointed here.
+  const peerMatch = moduleName.match(/^(react-native-webview|expo-image-picker|expo-document-picker)(\/.*)?$/);
+  if (peerMatch) {
     return context.resolveRequest(
       context,
-      path.join(__dirname, 'node_modules', 'react-native-webview'),
+      path.join(__dirname, 'node_modules', peerMatch[1]),
       platform,
     );
   }

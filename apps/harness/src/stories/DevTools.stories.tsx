@@ -464,38 +464,58 @@ export const PackageInfoSandbox = {
 
 /**
  * Every hook throws outside its root, byte-verbatim (the upstream trap contract). The
- * probes catch synchronously the way the Audio stories' probe does and print the
- * trapped messages.
+ * probe catches synchronously the way the Audio stories' probe does, then prints the
+ * trapped messages FROM THE SAME COMPONENT — messages computed in a child render
+ * would land after the parent's JSX was already evaluated and never display.
+ *
+ * Straight-line try/catch per root hook — NO hook-calling arrows in a loop array.
+ * That shape made react-refresh emit the _s signature vars after their call sites
+ * (var-hoisted to undefined) and the web storybook crashed with "_s4 is not a
+ * function"; Metro never runs refresh, so only the web storybook saw it.
  */
+function ContractGuardProbe() {
+  const trapped: string[] = [];
+
+  try {
+    useTerminal();
+    trapped.push('useTerminal: NOT THROWN — the trap failed');
+  } catch (error) {
+    trapped.push(`useTerminal: ${(error as Error).message}`);
+  }
+  try {
+    useFileTree();
+    trapped.push('useFileTree: NOT THROWN — the trap failed');
+  } catch (error) {
+    trapped.push(`useFileTree: ${(error as Error).message}`);
+  }
+  try {
+    useEnvVars();
+    trapped.push('useEnvVars: NOT THROWN — the trap failed');
+  } catch (error) {
+    trapped.push(`useEnvVars: ${(error as Error).message}`);
+  }
+  try {
+    useVariable();
+    trapped.push('useVariable: NOT THROWN — the trap failed');
+  } catch (error) {
+    trapped.push(`useVariable: ${(error as Error).message}`);
+  }
+  try {
+    usePackageInfo();
+    trapped.push('usePackageInfo: NOT THROWN — the trap failed');
+  } catch (error) {
+    trapped.push(`usePackageInfo: ${(error as Error).message}`);
+  }
+
+  return (
+    <View className="gap-2">
+      <Text variant="muted" selectable>
+        {trapped.join('\n')}
+      </Text>
+    </View>
+  );
+}
+
 export const ContractGuards: Story = {
-  render: () => {
-    const trapped: string[] = [];
-
-    function Probe(): null {
-      for (const probe of [
-        () => useTerminal(),
-        () => useFileTree(),
-        () => useEnvVars(),
-        () => useVariable(),
-        () => usePackageInfo(),
-      ]) {
-        try {
-          probe();
-          trapped.push('NOT THROWN — the trap failed');
-        } catch (error) {
-          trapped.push((error as Error).message);
-        }
-      }
-      return null;
-    }
-
-    return (
-      <View className="gap-2">
-        <Probe />
-        <Text variant="muted" selectable>
-          {trapped.join('\n')}
-        </Text>
-      </View>
-    );
-  },
+  render: () => <ContractGuardProbe />,
 };

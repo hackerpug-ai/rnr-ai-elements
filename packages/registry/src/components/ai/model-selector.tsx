@@ -182,9 +182,11 @@ type ModelSelectorTriggerProps = {
   /** Overrides the default outline button (web: children on the trigger). */
   children?: React.ReactNode;
   className?: string;
+  /** Button size passthrough — the composer's in-row chip renders size="sm". */
+  size?: 'default' | 'sm' | 'lg';
 };
 
-function ModelSelectorTrigger({ children, className }: ModelSelectorTriggerProps) {
+function ModelSelectorTrigger({ children, className, size }: ModelSelectorTriggerProps) {
   const { models, value, setOpen, open } = useModelSelectorContext();
   const label = resolveModelLabel(models, value);
 
@@ -192,6 +194,7 @@ function ModelSelectorTrigger({ children, className }: ModelSelectorTriggerProps
     children ?? (
       <Button
         variant="outline"
+        size={size}
         onPress={() => setOpen(!open)}
         accessibilityLabel={`Select model, current: ${label}`}
         accessibilityState={{ expanded: open }}

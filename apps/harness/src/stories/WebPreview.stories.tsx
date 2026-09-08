@@ -11,7 +11,7 @@ import {
   WebPreviewUrl,
 } from '@/components/ai/web-preview';
 import { Icon } from '@/components/ui/icon';
-import { RotateCwIcon } from 'lucide-react-native';
+import { ArrowLeftIcon, ArrowRightIcon, RotateCwIcon } from 'lucide-react-native';
 import { Text } from '@/components/ui/text';
 
 /**
@@ -51,6 +51,26 @@ function ReloadButton() {
   );
 }
 
+/** History back — the webview's goBack, the same no-op-unmounted law as reload. */
+function BackButton() {
+  const { goBack } = useWebPreview();
+  return (
+    <WebPreviewNavigationButton label="Back" onPress={goBack}>
+      <Icon as={ArrowLeftIcon} size={16} className="text-muted-foreground" />
+    </WebPreviewNavigationButton>
+  );
+}
+
+/** History forward — the webview's goForward. */
+function ForwardButton() {
+  const { goForward } = useWebPreview();
+  return (
+    <WebPreviewNavigationButton label="Forward" onPress={goForward}>
+      <Icon as={ArrowRightIcon} size={16} className="text-muted-foreground" />
+    </WebPreviewNavigationButton>
+  );
+}
+
 /** The caller's `loading` node — shown as an overlay while the webview reports loading. */
 function LoadingNote() {
   return (
@@ -75,6 +95,8 @@ export const WebPreviewBoard: Story = {
           <View className="h-96">
             <WebPreview defaultUrl="https://example.com" onUrlChange={setCommitted}>
               <WebPreviewNavigation>
+                <BackButton />
+                <ForwardButton />
                 <ReloadButton />
                 <WebPreviewUrl onRefuse={setRefused} />
               </WebPreviewNavigation>
@@ -87,6 +109,8 @@ export const WebPreviewBoard: Story = {
           <View className="h-72">
             <WebPreview defaultUrl="https://rnr-ai-elements.invalid">
               <WebPreviewNavigation>
+                <BackButton />
+                <ForwardButton />
                 <ReloadButton />
                 <WebPreviewUrl />
               </WebPreviewNavigation>
@@ -131,6 +155,8 @@ export const WebPreviewSandbox = {
         <View className="h-80">
           <WebPreview key={args.initialUrl} defaultUrl={args.initialUrl} onUrlChange={setCommitted}>
             <WebPreviewNavigation>
+              <BackButton />
+              <ForwardButton />
               <ReloadButton />
               <WebPreviewUrl onRefuse={() => {}} />
             </WebPreviewNavigation>
