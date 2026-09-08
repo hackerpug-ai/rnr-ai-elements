@@ -27,7 +27,8 @@ const TOKEN_EXCEPTIONS: { file: string; tokens: string[]; reason: string }[] = [
   {
     file: 'packages/registry/src/components/ai/file-tree.tsx',
     tokens: ['text-blue-500'],
-    reason: 'folder-glyph hue pinned to the web original (web file-tree.tsx:198); safelisted consumer-side',
+    reason:
+      'folder-glyph hue pinned to the web original (web file-tree.tsx:198); safelisted consumer-side',
   },
   {
     file: 'packages/registry/src/components/ai/terminal.tsx',
@@ -37,11 +38,21 @@ const TOKEN_EXCEPTIONS: { file: string; tokens: string[]; reason: string }[] = [
   {
     file: 'packages/registry/src/components/ai/terminal.logic.ts',
     tokens: [
-      'bg-zinc-100', 'bg-zinc-700', 'bg-zinc-800', 'bg-zinc-950',
-      'text-zinc-100', 'text-zinc-500', 'text-zinc-950',
-      'text-blue-400', 'text-green-500', 'text-green-600', 'text-orange-500', 'text-orange-600',
+      'bg-zinc-100',
+      'bg-zinc-700',
+      'bg-zinc-800',
+      'bg-zinc-950',
+      'text-zinc-100',
+      'text-zinc-500',
+      'text-zinc-950',
+      'text-blue-400',
+      'text-green-500',
+      'text-green-600',
+      'text-orange-500',
+      'text-orange-600',
     ],
-    reason: 'ANSI-to-class palette for the scheme-independent terminal surface — the colors ARE the data (web parity)',
+    reason:
+      'ANSI-to-class palette for the scheme-independent terminal surface — the colors ARE the data (web parity)',
   },
   {
     file: 'packages/registry/src/components/ai/tool.logic.ts',
@@ -103,7 +114,9 @@ export function findRawColorTokens(line: string): string[] {
 
 function main(): void {
   const root = process.cwd();
-  const registry = JSON.parse(readFileSync(join(root, 'packages/registry/registry.json'), 'utf8')) as {
+  const registry = JSON.parse(
+    readFileSync(join(root, 'packages/registry/registry.json'), 'utf8'),
+  ) as {
     items: { files: { path: string }[] }[];
   };
 

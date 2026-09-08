@@ -12,15 +12,18 @@ describe('findRawColorTokens', () => {
   });
 
   it('catches color literals including alpha forms, normalized', () => {
-    expect(findRawColorTokens("placeholderTextColor={scheme === 'dark' ? 'hsl(0 0% 63.9%)' : '#737373'}")).toEqual([
-      'hsl(',
-      '#737373',
-    ]);
+    expect(
+      findRawColorTokens(
+        "placeholderTextColor={scheme === 'dark' ? 'hsl(0 0% 63.9%)' : '#737373'}",
+      ),
+    ).toEqual(['hsl(', '#737373']);
     expect(findRawColorTokens('const shadow = "rgba(0,0,0,0.5)"')).toEqual(['rgb(']);
   });
 
   it('passes semantic theme classes untouched', () => {
-    expect(findRawColorTokens('className="bg-primary text-muted-foreground dark:bg-background"')).toEqual([]);
+    expect(
+      findRawColorTokens('className="bg-primary text-muted-foreground dark:bg-background"'),
+    ).toEqual([]);
   });
 
   it('normalizes hex case so exceptions match either form', () => {
