@@ -107,9 +107,10 @@ describe('UC-REG-01/edge-a-short-name-registry-dependency', () => {
 
   const itemFiles = () => emitted.filter(({ file }) => !file.endsWith('registry.json'));
 
-  it('keeps package.json, the v0.1.0 tag and the emitted URLs on one version', () => {
-    // AC-2 GIVEN. A later sprint cutting v0.2.0 supersedes this file to change it.
-    expect(PKG_VERSION, 'package.json version').toBe('0.1.0');
+  it('keeps package.json, the release tag and the emitted URLs on one version', () => {
+    // AC-2 GIVEN. Version-agnostic since v0.2.0: the emitted URLs below must pin
+    // whatever package.json carries, so a release bump needs no test edit.
+    expect(PKG_VERSION, 'package.json version').toMatch(/^\d+\.\d+\.\d+$/);
   });
 
   it('emits 112 item files whose every registryDependencies entry is an absolute https:// URL (TC-1)', () => {
@@ -152,7 +153,9 @@ describe('UC-REG-01/edge-a-short-name-registry-dependency', () => {
           }
           selfUrls++;
           expect(dep, `${file}: self URL not tag-pinned`).toMatch(
-            /^https:\/\/raw\.githubusercontent\.com\/hackerpug-ai\/rnr-ai-elements\/v0\.1\.0\/public\/r\/(nativewind|uniwind)\/[\w.-]+\.json$/,
+            new RegExp(
+              `^https:\\/\\/raw\\.githubusercontent\\.com\\/hackerpug-ai\\/rnr-ai-elements\\/v${PKG_VERSION.replace(/\./g, '\\.')}\\/public\\/r\\/(nativewind|uniwind)\\/[\\w.-]+\\.json$`,
+            ),
           );
         }
       }
