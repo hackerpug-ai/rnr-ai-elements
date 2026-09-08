@@ -79,6 +79,9 @@
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json"
       ],
+      "dependencies": [
+        "react-native-reanimated"
+      ],
       "files": [
         {
           "path": "packages/registry/src/components/ai/speech-input.tsx",
@@ -305,7 +308,9 @@
         }
       ],
       "dependencies": [
-        "react-native-safe-area-context"
+        "react-native-safe-area-context",
+        "expo-document-picker",
+        "expo-image-picker"
       ]
     },
     {

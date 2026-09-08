@@ -68,6 +68,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm exec biome ci .
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm check:tokens
 
   test:
     name: test
