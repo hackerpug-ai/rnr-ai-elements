@@ -1,0 +1,65 @@
+{
+  "nextId": 6,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Write lib/url.ts + five component sources (sources, inline-citation, artifact, snippet, commit) with logic files",
+      "description": "Create packages/registry/src/lib/url.ts (hostnameOf, isSafeOpenUrl) and the five Wave 8 components under packages/registry/src/components/ai/: sources.tsx+sources.logic.ts, inline-citation.tsx+inline-citation.logic.ts, artifact.tsx, snippet.tsx, commit.tsx+commit.logic.ts. Engine-agnostic, {engine} aliases, house conventions from queue/task/tool.",
+      "status": "completed",
+      "activeForm": "Writing Wave 8 component sources",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788415073578,
+      "updatedAt": 1788415821893
+    },
+    {
+      "id": "2",
+      "subject": "Register the six new items in registry.json",
+      "description": "Add url (registry:lib) + sources/inline-citation/artifact/snippet/commit (registry:component) items to packages/registry/registry.json with full-URL registryDependencies, deps arrays, and file paths (component + .logic.ts pairs).",
+      "status": "completed",
+      "activeForm": "Registering items in registry.json",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788415090753,
+      "updatedAt": 1788415945926
+    },
+    {
+      "id": "3",
+      "subject": "Write Content.stories.tsx harness stories",
+      "description": "apps/harness/src/stories/Content.stories.tsx, title 'AI Elements/Content': static state stories + one sandbox per component with controls on primitive props, realistic fixtures, following Run.stories.tsx conventions.",
+      "status": "completed",
+      "activeForm": "Writing Content.stories.tsx",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788415090754,
+      "updatedAt": 1788416193781
+    },
+    {
+      "id": "4",
+      "subject": "Write Vitest logic tests for all pure exports",
+      "description": "tests/url.test.ts, tests/sources.test.ts, tests/inline-citation.test.ts, tests/commit.test.ts — exact labels, exhaustive keys, no-throw formatters, injected time. Biome-clean (single quotes, semis, 100 cols).",
+      "status": "completed",
+      "activeForm": "Writing Vitest logic tests",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788415090754,
+      "updatedAt": 1788416334982
+    },
+    {
+      "id": "5",
+      "subject": "Run all five gates green, leave working tree dirty",
+      "description": "Run pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint; fix until green; leave everything in working tree, commit nothing.",
+      "status": "completed",
+      "activeForm": "Running gates and verifying",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788415090754,
+      "updatedAt": 1788416618458
+    }
+  ]
+}

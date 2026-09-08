@@ -1,0 +1,65 @@
+{
+  "nextId": 6,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Write audio-player.logic.ts + transcription.logic.ts (pure) and their Vitest suites",
+      "description": "audio-player.logic.ts: formatPlaybackTime, seekTarget (media-chrome clamp), playbackProgress (slider 0..1 contract), clampVolume. transcription.logic.ts: TranscriptionSegmentData type, filterRenderableSegments (KB whitespace trap), segmentState (inclusive active range), SEGMENT_STATE_CLASS map (KB byte-parity classes), formatSegmentTime. Tests in tests/audio-player.test.ts and tests/transcription.test.ts with KB-anchored cases.",
+      "status": "completed",
+      "activeForm": "Writing pure logic + Vitest suites",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788434405006,
+      "updatedAt": 1788434550180
+    },
+    {
+      "id": "2",
+      "subject": "Write audio-player.tsx — caller-supplied playback seam (no audio dependency)",
+      "description": "Context + parts per upstream KB part set: AudioPlayer root (default 3-row composition), ControlBar (ButtonGroup), PlayButton, SeekBackward/ForwardButton (seekOffsetMs=10000, seekTarget clamp), TimeDisplay, DurationDisplay, TimeRange (Slider atom, number[]/100 conversion), MuteButton, VolumeRange. All unwired controls DISABLE (never pretend). AudioPlayerElement dropped on the record (the verdict's native-substitution).",
+      "status": "completed",
+      "activeForm": "Writing audio-player.tsx",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788434405007,
+      "updatedAt": 1788434629964
+    },
+    {
+      "id": "3",
+      "subject": "Write transcription.tsx — port-at-parity segments + interim seam",
+      "description": "Transcription root (segments/currentTime/onSeek, render-prop children or default), TranscriptionSegment (Text onPress pressable, state classes, seek no-op without onSeek per KB), useTranscription throw byte-trap, interimText prop (PRD verdict's interim/final distinction; declared divergence — no upstream part).",
+      "status": "completed",
+      "activeForm": "Writing transcription.tsx",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788434405007,
+      "updatedAt": 1788434767946
+    },
+    {
+      "id": "4",
+      "subject": "Register both items: boundary d.ts (slider/button-group), registry.json, build, stories, safelist",
+      "description": "Add @/registry/{engine}/components/ui/slider + button-group ambient declarations to packages/registry/types/rnr-boundary.d.ts; add audio-player + transcription items to registry.json (absolute URLs only); pnpm registry:build; apps/harness/src/stories/Audio.stories.tsx (title 'AI Elements/Audio', caller-owned ticker engine); scan new class tokens and extend apps/harness/src/class-safelist.tsx.",
+      "status": "completed",
+      "activeForm": "Registering items, stories, safelist",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788434405007,
+      "updatedAt": 1788435150538
+    },
+    {
+      "id": "5",
+      "subject": "Run the gates verbatim and report",
+      "description": "pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint — all green; leave changes in the working tree, commit nothing. Compose the report: files, per-component decisions with PRD/KB evidence, divergences, test names, gate tails, safelist additions.",
+      "status": "completed",
+      "activeForm": "Running gates and reporting",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788434405007,
+      "updatedAt": 1788435253621
+    }
+  ]
+}

@@ -7,8 +7,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from '@/registry/{engine}/components/ui/table';
 import { monoStyle } from '@/registry/{engine}/lib/mono';
@@ -39,10 +37,13 @@ import { formatEnvLine, maskedValue } from './environment-variables.logic';
  * REAL value either way (environment-variables.logic documents why).
  *
  * COMPOSITION: the build plan names `table` as the backing primitive for this surface,
- * so the content is ONE Table — KEY/VALUE header, one row per variable, groups as
- * label rows inside the same body. Columns have fixed sizes and the table scrolls
- * horizontally when keys overflow (the table atom's own contract). Keys and values
- * ride the house mono family (lib/mono).
+ * so the content is ONE Table — headerless (the web content is a bare divide-y div and
+ * its rows put the name left, value right — environment-variables.tsx:137,227; the
+ * port's added KEY/VALUE header rows are gone, remediation row 12), one row per
+ * variable, groups as label rows inside the same body. Rows carry the table atom's own
+ * border-b, the divide-y equivalent, and the table scrolls horizontally when keys
+ * overflow (the table atom's own contract). Keys and values ride the house mono
+ * family (lib/mono).
  *
  * ON THE VERDICT'S WORD "input": the upstream part set contains no editable field —
  * these are display rows, not a form — so no input ships. Masking/reveal is display
@@ -158,20 +159,13 @@ function EnvironmentVariablesToggle({ className }: { className?: string }) {
 }
 
 /**
- * The table scaffold: KEY/VALUE header, one body, groups and rows composed inside.
- * Fixed column sizes + the table's own horizontal scroll handle overflowing keys.
+ * The table scaffold, headerless per the web (environment-variables.tsx:137): one
+ * body, groups and rows composed inside. The table atom's row border-b stands in for
+ * the web's divide-y.
  */
 function EnvironmentVariablesContent({ className, children }: { className?: string; children?: React.ReactNode }) {
   return (
     <Table scrollable className={className}>
-      <TableHeader>
-        <TableHead className="w-40 shrink-0">
-          <Text className="text-xs font-medium text-muted-foreground">Key</Text>
-        </TableHead>
-        <TableHead className="w-64 shrink-0">
-          <Text className="text-xs font-medium text-muted-foreground">Value</Text>
-        </TableHead>
-      </TableHeader>
       <TableBody>{children}</TableBody>
     </Table>
   );

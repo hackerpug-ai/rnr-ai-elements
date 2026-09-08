@@ -13,18 +13,29 @@ import { cn } from '@/registry/{engine}/lib/utils';
 import {
   AudioLinesIcon,
   ChevronsUpDownIcon,
+  CircleSmallIcon,
   LoaderCircleIcon,
+  MarsStrokeIcon,
   NonBinaryIcon,
   PauseIcon,
   PlayIcon,
   TransgenderIcon,
-  UserIcon,
+  VenusAndMarsIcon,
   VenusIcon,
   MarsIcon,
   type LucideIcon,
 } from 'lucide-react-native';
 import * as React from 'react';
 import { View, type ViewProps } from 'react-native';
+import Animated, {
+  cancelAnimation,
+  Easing,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 import {
   resolveVoiceGender,
   voiceAccentFlag,
@@ -79,12 +90,16 @@ import type { CommandItem } from '../ui/command.logic';
  *   </VoiceSelector>
  */
 
+// The web's full mark set (voice-selector.tsx:205-229), at the web's size-4 (16px);
+// omitted or unknown input falls to the default mark rather than throwing.
 const genderIcons: Record<string, LucideIcon> = {
   male: MarsIcon,
   female: VenusIcon,
   transgender: TransgenderIcon,
+  androgyne: MarsStrokeIcon,
   'non-binary': NonBinaryIcon,
-  unknown: UserIcon,
+  intersex: VenusAndMarsIcon,
+  unknown: CircleSmallIcon,
 };
 
 type VoiceSelectorContextValue = {
@@ -315,13 +330,13 @@ function VoiceSelectorAttributes({ voice, className }: VoiceSelectorAttributesPr
   const hasAny = Boolean(voice.gender || flag || age);
   if (!hasAny) return null;
 
-  const trailing = [flag, age].filter((part): part is string => Boolean(part)).join(' · ');
+  const trailing = [flag, age].filter((part): part is string => Boolean(part)).join(' • ');
 
   return (
     <View className={cn('flex-row items-center gap-1', className)}>
       <VoiceSelectorGender value={voice.gender} />
       {trailing ? (
-        <Text numberOfLines={1} className="text-xs text-muted-foreground">
+        <Text numberOfLines={1} className="text-xs text-muted-foreground tabular-nums">
           {trailing}
         </Text>
       ) : null}
@@ -330,14 +345,15 @@ function VoiceSelectorAttributes({ voice, className }: VoiceSelectorAttributesPr
 }
 
 type VoiceSelectorGenderProps = {
-  /** 'male' | 'female' | 'transgender' | 'non-binary' — anything else renders the default mark. */
+  /** One of VOICE_GENDERS — anything else renders the default mark. */
   value?: string;
   className?: string;
 };
 
 /**
- * The gender mark. Omitted or unknown → the default UserIcon (upstream: omit renders
- * the default icon; unknown values fall back rather than throwing).
+ * The gender mark — the web's full set (male/female/transgender/androgyne/non-binary/
+ * intersex) at size-4/16px, default CircleSmallIcon for omitted or unknown values
+ * (voice-selector.tsx:205-229).
  */
 function VoiceSelectorGender({ value, className }: VoiceSelectorGenderProps) {
   const gender = resolveVoiceGender(value);
@@ -345,7 +361,7 @@ function VoiceSelectorGender({ value, className }: VoiceSelectorGenderProps) {
     <View accessible accessibilityLabel={`Voice gender: ${gender}`}>
       <Icon
         as={genderIcons[gender]}
-        size={12}
+        size={16}
         className={cn('shrink-0 text-muted-foreground', className)}
       />
     </View>
@@ -377,19 +393,23 @@ type VoiceSelectorAgeProps = {
   className?: string;
 };
 
-/** The free-text age band ("40-50") — the web part. */
+/** The free-text age band ("40-50") — the web part, `tabular-nums` on (:423). */
 function VoiceSelectorAge({ children, className }: VoiceSelectorAgeProps) {
   if (!children) return null;
-  return <Text className={cn('text-xs text-muted-foreground', className)}>{children}</Text>;
+  return <Text className={cn('text-xs text-muted-foreground tabular-nums', className)}>{children}</Text>;
 }
 
 type VoiceSelectorBulletProps = ViewProps;
 
-/** The attributes separator, for consumers composing their own attribute line. */
+/**
+ * The attributes separator — the web's `•` span (aria-hidden, text-border;
+ * voice-selector.tsx:461-472). RNR Text has no cascade, so the web's inherited
+ * text-xs is stated explicitly.
+ */
 function VoiceSelectorBullet({ className, ...props }: VoiceSelectorBulletProps) {
   return (
-    <Text className={cn('text-xs text-muted-foreground', className)} {...props}>
-      ·
+    <Text aria-hidden className={cn('text-xs text-border', className)} {...props}>
+      •
     </Text>
   );
 }
@@ -403,18 +423,51 @@ type VoiceSelectorPreviewProps = {
 };
 
 /**
+ * The loading mark, spinning: the web's <Spinner> (voice-selector.tsx:505) as a
+ * Reanimated rotate — the PulseRing idiom (speech-input.tsx): withRepeat -1,
+ * ReduceMotion.System, cancelAnimation cleanup. Under the OS reduce-motion setting
+ * the animation resolves to its end value — the mark sits still instead of spinning.
+ */
+function SpinningLoaderIcon({ className }: { className?: string }) {
+  const rotation = useSharedValue(0);
+
+  React.useEffect(() => {
+    rotation.value = withRepeat(
+      withTiming(360, { duration: 1000, easing: Easing.linear, reduceMotion: ReduceMotion.System }),
+      -1,
+      false,
+    );
+    return () => cancelAnimation(rotation);
+  }, [rotation]);
+
+  const style = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
+
+  return (
+    <Animated.View style={style}>
+      <Icon as={LoaderCircleIcon} size={12} className={className} />
+    </Animated.View>
+  );
+}
+
+/**
  * THE TWO-TARGET LAW'S PLAY HALF. Lives in the row's action slot — a nested pressable
  * wins the touch over the row, so pressing this NEVER selects the voice. Three
  * states: play, playing (pause mark), loading (disabled) — and disabled-when-unwired
  * (no onPlay), because a control that pretends to play is the lie (speech-input).
+ *
+ * Converged to the web control (voice-selector.tsx:511-518): variant outline, 12px
+ * mark. KEPT on the record: the 40pt hit target (the web button is size-6/24px —
+ * under the touch floor) and disabled-when-unwired. The mark inherits the outline
+ * button's text class, as the web's bare icons inherit — no explicit color.
  */
 function VoiceSelectorPreview({ playing, loading, onPlay, className }: VoiceSelectorPreviewProps) {
   const label = loading ? 'Loading preview' : playing ? 'Pause preview' : 'Play preview';
-  const icon = loading ? LoaderCircleIcon : playing ? PauseIcon : PlayIcon;
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       disabled={loading || !onPlay}
       onPress={onPlay}
@@ -425,7 +478,7 @@ function VoiceSelectorPreview({ playing, loading, onPlay, className }: VoiceSele
       hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
       className={cn('shrink-0', className)}
     >
-      <Icon as={icon} size={16} className="text-muted-foreground" />
+      {loading ? <SpinningLoaderIcon /> : <Icon as={playing ? PauseIcon : PlayIcon} size={12} />}
     </Button>
   );
 }

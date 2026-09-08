@@ -57,12 +57,14 @@ describe('voiceAccentFlag (THE CASE-SENSITIVE LOOKUP — the KB trap)', () => {
 });
 
 describe('resolveVoiceGender (fallback, never throw)', () => {
-  it('resolves the four documented genders', () => {
+  it("resolves the web's six documented genders (voice-selector.tsx:205-229)", () => {
     expect(resolveVoiceGender('male')).toBe('male');
     expect(resolveVoiceGender('female')).toBe('female');
     expect(resolveVoiceGender('transgender')).toBe('transgender');
+    expect(resolveVoiceGender('androgyne')).toBe('androgyne');
     expect(resolveVoiceGender('non-binary')).toBe('non-binary');
-    expect(VOICE_GENDERS).toHaveLength(4);
+    expect(resolveVoiceGender('intersex')).toBe('intersex');
+    expect(VOICE_GENDERS).toHaveLength(6);
   });
 
   it('is case-insensitive — "Male" resolves rather than silently icon-less', () => {

@@ -386,7 +386,7 @@ function AttachmentRemove({ label = 'Remove', className }: AttachmentRemoveProps
       hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
       className={cn(
         'rounded-full',
-        variant === 'grid' && 'absolute right-1 top-1 bg-background/80',
+        variant === 'grid' && 'absolute right-2 top-2 bg-background/80',
         className,
       )}
     >

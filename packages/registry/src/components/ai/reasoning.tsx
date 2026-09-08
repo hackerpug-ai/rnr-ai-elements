@@ -1,4 +1,3 @@
-import { Badge } from '@/registry/{engine}/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/registry/{engine}/components/ui/collapsible';
 import { Icon } from '@/registry/{engine}/components/ui/icon';
 import { Text } from '@/registry/{engine}/components/ui/text';
@@ -48,6 +47,12 @@ import Animated, {
  * logic the tests own. `onOpenChange` still reports every open change (including the
  * automatic ones) for consumers that want to mirror state; `defaultOpen` covers the
  * stay-open case.
+ *
+ * MOTION, RECORDED (remediation row 10 KEEP): the web's content enters/exits with
+ * `animate-in/out` slide-fade utility classes (reasoning.tsx:214); RNR Collapsible's
+ * native layout animation stands in for it — no animation code here on purpose. The
+ * trigger label is the web's bare `text-sm text-muted-foreground` inline text
+ * (reasoning.tsx:179), not a badge.
  */
 
 type ReasoningContextValue = {
@@ -162,9 +167,9 @@ function ReasoningTrigger({ className }: { className?: string }) {
         size={14}
         className={cn(streaming ? 'text-foreground' : 'text-muted-foreground')}
       />
-      <Badge variant="secondary" accessibilityLiveRegion="polite">
-        <Text className="text-xs">{reasoningLabel({ streaming, durationSeconds })}</Text>
-      </Badge>
+      <Text accessibilityLiveRegion="polite" className="text-sm text-muted-foreground">
+        {reasoningLabel({ streaming, durationSeconds })}
+      </Text>
       <View className="flex-1" />
       <Chevron open={open} />
     </CollapsibleTrigger>

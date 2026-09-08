@@ -1,0 +1,113 @@
+{
+  "nextId": 10,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Verify baseline gates are green before changes",
+      "description": "Run pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint on the clean tree to prove the baseline (pre-existing claims require proof per AGENTS.md).",
+      "status": "completed",
+      "activeForm": "Verifying baseline gates",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075870,
+      "updatedAt": 1788429134353
+    },
+    {
+      "id": "2",
+      "subject": "Verify lucide icon names + RNR dialog Title className support",
+      "description": "Check installed lucide-react-native@0.545 exports (ChevronsUpDown, Check, Cpu, Mic, Headphones, Bluetooth, AudioLines, Play, Pause, LoaderCircle, Mars, Venus, Transgender, Nonbinary, User icons) and whether RNR's vendored dialog.tsx passes className to DialogPrimitive.Title.",
+      "status": "completed",
+      "activeForm": "Verifying icon and primitive APIs",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075871,
+      "updatedAt": 1788429256200
+    },
+    {
+      "id": "3",
+      "subject": "Extend command atom: grouping + renderItem + title (command.logic.ts)",
+      "description": "Add ui/command.logic.ts (CommandItem type, filterCommandItems, buildCommandRows — zero imports), extend ui/command.tsx with group field, renderItem override, optional title (SheetTitle). Backward compatible. Update rnr-boundary.d.ts with command declaration + SheetTitle className.",
+      "status": "completed",
+      "activeForm": "Extending the command atom",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075871,
+      "updatedAt": 1788429410160
+    },
+    {
+      "id": "4",
+      "subject": "Build model-selector (logic + component + registry entry)",
+      "description": "model-selector.logic.ts (modelSelectorLogoUrl, toCommandItems, resolveModelLabel) + model-selector.tsx composing Command: bottom sheet with search, provider grouping, selected check, logo substitution per open-in-chat precedent. Registry entry with full dependency graph.",
+      "status": "completed",
+      "activeForm": "Building model-selector",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075871,
+      "updatedAt": 1788430000144
+    },
+    {
+      "id": "5",
+      "subject": "Build mic-selector (logic + component + registry entry)",
+      "description": "Route picker per PRD verdict (native-substitute): caller-supplied routes (built-in/wired/bluetooth/other), kind→icon map, mic-selector.logic.ts (MIC_ROUTE_KINDS, orderMicRoutes, findMicRoute), useAudioDevices NOT ported (getUserMedia). Registry entry.",
+      "status": "completed",
+      "activeForm": "Building mic-selector",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075872,
+      "updatedAt": 1788430000144
+    },
+    {
+      "id": "6",
+      "subject": "Build voice-selector (logic + component + registry entry)",
+      "description": "voice-selector.logic.ts (30-key case-sensitive accent map, gender fallback, preview state) + voice-selector.tsx: two-target law (preview plays, never selects), preview states play/playing/loading, exported useVoiceSelector with byte-verbatim throw, data-driven rows with attributes row. Registry entry.",
+      "status": "completed",
+      "activeForm": "Building voice-selector",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075872,
+      "updatedAt": 1788430000145
+    },
+    {
+      "id": "7",
+      "subject": "Write Vitest tests for all logic files",
+      "description": "tests/command.test.ts (filter + grouping rows), tests/model-selector.test.ts, tests/mic-selector.test.ts, tests/voice-selector.test.ts (accent case-sensitivity trap pinned, 30-key count, gender fallback, preview states).",
+      "status": "completed",
+      "activeForm": "Writing logic tests",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075872,
+      "updatedAt": 1788430121772
+    },
+    {
+      "id": "8",
+      "subject": "Write Selectors.stories.tsx + extend class-safelist",
+      "description": "apps/harness/src/stories/Selectors.stories.tsx title 'AI Elements/Selectors': board + sandbox per component, static row-anatomy coverage of traps (uppercase accent, unknown gender), bounded hosts. Extend class-safelist.tsx with new-file classes; belt-and-braces inline sizes where size-critical.",
+      "status": "completed",
+      "activeForm": "Writing stories and safelist",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075872,
+      "updatedAt": 1788430391309
+    },
+    {
+      "id": "9",
+      "subject": "Run all gates, update registry build outputs + manifest, report",
+      "description": "pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint — leave green. Update design/manifest.json wave_10 block (registry_items 45, organisms 24/34, device sign-off pending note). Capture verbatim gate tails + safelist entries for the report. Commit nothing.",
+      "status": "completed",
+      "activeForm": "Running gates and reporting",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788429075873,
+      "updatedAt": 1788430648711
+    }
+  ]
+}

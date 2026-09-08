@@ -12,8 +12,13 @@ import { View, type ViewProps } from 'react-native';
  * this wrong is documented as the single most common port error, so it is preserved
  * verbatim rather than "improved".
  *
- * User messages get a contained bubble on `bg-primary` and reverse the row; assistant
- * messages render full-width and unbubbled — the web original's layout, unchanged.
+ * User messages get a contained bubble and reverse the row; assistant messages render
+ * full-width and unbubbled. STYLE-PARITY REMEDIATION (design/style-parity-remediation.md
+ * row 1): the bubble's values converge to the pinned web original — `bg-secondary` on
+ * `text-foreground`, `rounded-lg`, `px-4 py-3` — replacing the port's invented
+ * `bg-primary`/`text-primary-foreground`/`rounded-xl`/`px-3 py-2` family. The
+ * MessageAvatar and the flex-row items-end/reverse orientation are a RECORDED MOBILE
+ * ADDITION, kept per remediation row 1: the pinned web Message has no avatar.
  *
  * MARKDOWN IS INJECTED, NOT BUNDLED. `MessageResponse` takes `renderMarkdown` and defaults
  * to plain RNR Text. That ~3-line seam is load-bearing: the native markdown renderer
@@ -66,17 +71,18 @@ type MessageContentProps = ViewProps & { variant?: 'contained' | 'flat' };
 
 function MessageContent({ className, variant, ...props }: MessageContentProps) {
   const { from } = useMessage();
-  // The web default: user is contained, assistant is flat and full-width.
+  // The web default: user is contained, assistant is flat and full-width. Remediation
+  // row 1: the user bubble converges to bg-secondary, so its text runs on
+  // text-foreground like every other branch — the provider value no longer forks on
+  // role.
   const contained = variant ? variant === 'contained' : from === 'user';
   return (
-    <TextClassContext.Provider
-      value={contained && from === 'user' ? 'text-primary-foreground' : 'text-foreground'}
-    >
+    <TextClassContext.Provider value="text-foreground">
       <View
         className={cn(
           'max-w-[85%] gap-2',
-          contained && 'rounded-xl px-3 py-2',
-          contained && from === 'user' && 'bg-primary',
+          contained && 'rounded-lg px-4 py-3',
+          contained && from === 'user' && 'bg-secondary',
           contained && from !== 'user' && 'bg-muted',
           !contained && 'max-w-full flex-1',
           className,

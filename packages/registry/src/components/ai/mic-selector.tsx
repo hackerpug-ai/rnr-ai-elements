@@ -7,7 +7,7 @@ import { cn } from '@/registry/{engine}/lib/utils';
 import {
   AudioLinesIcon,
   BluetoothIcon,
-  ChevronDownIcon,
+  ChevronsUpDownIcon,
   HeadphonesIcon,
   MicIcon,
   type LucideIcon,
@@ -214,7 +214,9 @@ function MicSelectorTrigger({ children, className }: MicSelectorTriggerProps) {
         <Text numberOfLines={1} className="flex-1 text-left">
           {label}
         </Text>
-        <Icon as={ChevronDownIcon} size={16} className="shrink-0 text-muted-foreground" />
+        {/* The web trigger's up-down mark (mic-selector.tsx:18,241), aligned with the
+            model/voice triggers' affordance. */}
+        <Icon as={ChevronsUpDownIcon} size={16} className="shrink-0 text-muted-foreground" />
       </Button>
     )
   );

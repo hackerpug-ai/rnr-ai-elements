@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   ANSI_BG_CLASS,
   ANSI_COLOR_CLASS,
+  BG_FORCED_FG,
   parseAnsiLines,
   spanClassNames,
   stripAnsi,
@@ -13,36 +14,55 @@ import { statusColor } from '../packages/registry/src/lib/status.ts';
  * agent-status.test.ts's header for why rendering itself cannot live in this tier).
  *
  * The tokenizer is the port of ansi-to-react: escapes must never reach rendered text,
- * the color map must stay inside the house palette (RNR roles + the three sanctioned
- * status colors), attributes must survive newlines the way real logs stream in, and a
- * truncated escape from a mid-chunk stream must degrade to text instead of crashing.
+ * the color map must resolve onto the FIXED remediation palette (zinc/blue classes on
+ * the always-dark bg-zinc-950 surface — scheme-flipping roles would render invisible
+ * in light mode) plus the sanctioned status colors for red/green/orange, attributes
+ * must survive newlines the way real logs stream in, and a truncated escape from a
+ * mid-chunk stream must degrade to text instead of crashing.
  */
 
 const texts = (lines: string[][]) => lines;
 
 describe('ANSI_COLOR_CLASS (the compression table)', () => {
-  it('every color resolves to an RNR role or one of the three sanctioned status colors', () => {
-    expect(ANSI_COLOR_CLASS.black).toBe('text-muted-foreground');
+  it('every color resolves to a fixed remediation-palette class or a sanctioned status color', () => {
+    expect(ANSI_COLOR_CLASS.black).toBe('text-zinc-500');
     expect(ANSI_COLOR_CLASS.red).toBe(statusColor.error);
     expect(ANSI_COLOR_CLASS.green).toBe(statusColor.success);
     expect(ANSI_COLOR_CLASS.yellow).toBe(statusColor.denied);
-    expect(ANSI_COLOR_CLASS.blue).toBe('text-primary');
-    expect(ANSI_COLOR_CLASS.magenta).toBe('text-primary'); // declared compression
-    expect(ANSI_COLOR_CLASS.cyan).toBe('text-primary'); // declared compression
-    expect(ANSI_COLOR_CLASS.white).toBe('text-foreground');
+    expect(ANSI_COLOR_CLASS.blue).toBe('text-blue-400');
+    expect(ANSI_COLOR_CLASS.magenta).toBe('text-blue-400'); // declared compression
+    expect(ANSI_COLOR_CLASS.cyan).toBe('text-blue-400'); // declared compression
+    expect(ANSI_COLOR_CLASS.white).toBe('text-zinc-100');
   });
 
-  it('no entry invents a fourth color outside the sanctioned set', () => {
+  it('no entry invents a color outside the fixed palette + sanctioned set', () => {
     const allowed = new Set([
-      'text-muted-foreground',
+      'text-zinc-500',
+      'text-zinc-100',
+      'text-blue-400',
       statusColor.error,
       statusColor.success,
       statusColor.denied,
-      'text-primary',
-      'text-foreground',
     ]);
     for (const cls of Object.values(ANSI_COLOR_CLASS)) {
       expect(allowed.has(cls)).toBe(true);
+    }
+  });
+
+  it('no entry in any of the three color maps is a scheme-flipping token — the surface is always dark', () => {
+    // ANSI_COLOR_CLASS, ANSI_BG_CLASS, and BG_FORCED_FG all render on the fixed
+    // bg-zinc-950 surface, so none may carry a token that flips with colorScheme.
+    // The sanctioned status escapes (text-destructive, green/orange) match no banned
+    // stem and stay legal. BG_FORCED_FG.neutral is null — nothing to ban.
+    const maps: string[][] = [
+      Object.values(ANSI_COLOR_CLASS),
+      Object.values(ANSI_BG_CLASS),
+      Object.values(BG_FORCED_FG).filter((cls): cls is string => cls !== null),
+    ];
+    for (const map of maps) {
+      for (const cls of map) {
+        expect(cls).not.toMatch(/foreground|primary|muted/);
+      }
     }
   });
 });
@@ -71,10 +91,7 @@ describe('parseAnsiLines (the SGR tokenizer)', () => {
     const base = parseAnsiLines('\x1b[31mhot')[0][0].classNames;
     const bright = parseAnsiLines('\x1b[91mhot')[0][0].classNames;
     expect(bright).toEqual(['font-medium', ...base]);
-    expect(parseAnsiLines('\x1b[97mw')[0][0].classNames).toEqual([
-      'font-medium',
-      'text-foreground',
-    ]);
+    expect(parseAnsiLines('\x1b[97mw')[0][0].classNames).toEqual(['font-medium', 'text-zinc-100']);
   });
 
   it('bold, italic, and underline each map to their decoration class', () => {
@@ -90,10 +107,10 @@ describe('parseAnsiLines (the SGR tokenizer)', () => {
     expect(parseAnsiLines('\x1b[1mb\x1b[21mplain')[0][1].classNames).toEqual([]);
   });
 
-  it('dim renders the muted pole when no explicit color is set, and yields to one that is', () => {
-    expect(parseAnsiLines('\x1b[2mfaint')[0][0].classNames).toEqual(['text-muted-foreground']);
-    expect(parseAnsiLines('\x1b[2;34mfaint blue')[0][0].classNames).toEqual(['text-primary']);
-    expect(parseAnsiLines('\x1b[2;34m\x1b[22mf')[0][0].classNames).toEqual(['text-primary']);
+  it('dim renders the zinc-500 pole when no explicit color is set, and yields to one that is', () => {
+    expect(parseAnsiLines('\x1b[2mfaint')[0][0].classNames).toEqual(['text-zinc-500']);
+    expect(parseAnsiLines('\x1b[2;34mfaint blue')[0][0].classNames).toEqual(['text-blue-400']);
+    expect(parseAnsiLines('\x1b[2;34m\x1b[22mf')[0][0].classNames).toEqual(['text-blue-400']);
   });
 
   it('39 returns the default foreground, 49 the default background', () => {
@@ -108,33 +125,30 @@ describe('parseAnsiLines (the SGR tokenizer)', () => {
       'italic',
       'underline',
       statusColor.success,
-      'bg-primary',
-      'text-primary-foreground',
+      'bg-zinc-700',
+      'text-zinc-100',
     ]);
     expect(lines[0][1].classNames).toEqual([]);
   });
 
   it('colored backgrounds force their legible foreground pair; neutral keeps the current fg', () => {
-    // 41 red-bg → accent block (declared compression), forced primary-foreground text.
+    // 41 red-bg → accent block (declared compression), forced zinc-100 text.
     expect(parseAnsiLines('\x1b[41m x ')[0][0].classNames).toEqual([
-      'bg-primary',
-      'text-primary-foreground',
+      'bg-zinc-700',
+      'text-zinc-100',
     ]);
-    // 47 white-bg → the inverse look, token-pure.
+    // 47 white-bg → the inverse look on the fixed ramp.
     expect(parseAnsiLines('\x1b[47m x ')[0][0].classNames).toEqual([
-      'bg-foreground',
-      'text-background',
+      'bg-zinc-100',
+      'text-zinc-950',
     ]);
     // 40 black-bg → the neutral wash, foreground untouched.
-    expect(parseAnsiLines('\x1b[40mplain on muted')[0][0].classNames).toEqual(['bg-muted']);
+    expect(parseAnsiLines('\x1b[40mplain on zinc')[0][0].classNames).toEqual(['bg-zinc-800']);
     // The bright band backgrounds behave like their base (100 ≡ 40, 107 ≡ 47).
-    expect(parseAnsiLines('\x1b[107mx')[0][0].classNames).toEqual([
-      'bg-foreground',
-      'text-background',
-    ]);
-    expect(ANSI_BG_CLASS.neutral).toBe('bg-muted');
-    expect(ANSI_BG_CLASS.inverse).toBe('bg-foreground');
-    expect(ANSI_BG_CLASS.accent).toBe('bg-primary');
+    expect(parseAnsiLines('\x1b[107mx')[0][0].classNames).toEqual(['bg-zinc-100', 'text-zinc-950']);
+    expect(ANSI_BG_CLASS.neutral).toBe('bg-zinc-800');
+    expect(ANSI_BG_CLASS.inverse).toBe('bg-zinc-100');
+    expect(ANSI_BG_CLASS.accent).toBe('bg-zinc-700');
   });
 
   it('extended colors (256 / truecolor) resolve to default and never leak their parameters as SGRs', () => {
@@ -222,14 +236,14 @@ describe('spanClassNames (the resolver, pinned directly)', () => {
       fg: 'white',
       bg: 'inverse',
     });
-    // text-foreground (fg) precedes the bg pair; a conflict would resolve to the bg's
+    // text-zinc-100 (fg) precedes the bg pair; a conflict would resolve to the bg's
     // forced foreground, which is the legible one.
     expect(classes).toEqual([
       'font-bold',
       'font-medium',
-      'text-foreground',
-      'bg-foreground',
-      'text-background',
+      'text-zinc-100',
+      'bg-zinc-100',
+      'text-zinc-950',
     ]);
   });
 });

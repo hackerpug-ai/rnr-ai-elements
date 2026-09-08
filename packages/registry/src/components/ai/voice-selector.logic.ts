@@ -80,7 +80,14 @@ export function voiceAccentFlag(accent: string | undefined): string | undefined 
   return (VOICE_ACCENTS as Record<string, string | undefined>)[accent];
 }
 
-export const VOICE_GENDERS = ['male', 'female', 'transgender', 'non-binary'] as const;
+export const VOICE_GENDERS = [
+  'male',
+  'female',
+  'transgender',
+  'androgyne',
+  'non-binary',
+  'intersex',
+] as const;
 
 export type VoiceGender = (typeof VOICE_GENDERS)[number] | 'unknown';
 

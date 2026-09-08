@@ -78,7 +78,7 @@ describe('segmentState (the three playback states, inclusive active range)', () 
   });
 });
 
-describe('SEGMENT_STATE_CLASS (the web original\u2019s classes, byte-for-byte)', () => {
+describe('SEGMENT_STATE_CLASS (the state → class map)', () => {
   it('active is text-primary', () => {
     expect(SEGMENT_STATE_CLASS.active).toBe('text-primary');
   });
@@ -87,8 +87,11 @@ describe('SEGMENT_STATE_CLASS (the web original\u2019s classes, byte-for-byte)',
     expect(SEGMENT_STATE_CLASS.past).toBe('text-muted-foreground');
   });
 
-  it('future is text-muted-foreground/60', () => {
-    expect(SEGMENT_STATE_CLASS.future).toBe('text-muted-foreground/60');
+  it('future is the explicit dim pair — the web’s /60 converged per remediation row 6', () => {
+    // The web writes text-muted-foreground/60; /NN modifiers are banned (never
+    // compiled reliably — wave-11 finding) and nested spans need explicit colors,
+    // so the dim is the fixed neutral step per scheme.
+    expect(SEGMENT_STATE_CLASS.future).toBe('text-neutral-400 dark:text-neutral-500');
   });
 
   it('carries exactly the three upstream states', () => {

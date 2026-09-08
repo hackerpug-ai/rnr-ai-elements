@@ -110,9 +110,11 @@ const STATUS_ICONS: Record<ToolStatusIconName, LucideIcon> = {
 };
 
 /**
- * The status icon. For the running state it pulses on RNR Skeleton's signature
- * (1→0.5, 1000ms, reversed repeat) — and stands perfectly still when the OS asks for
- * reduced motion, which changes nothing visually when the setting is off.
+ * The status icon. Streaming carries the web's plain circle; Running carries the
+ * clock, and it is the one icon that pulses (remediation row 4, web tool.tsx:61-63).
+ * For the running state it pulses on RNR Skeleton's signature (1→0.5, 1000ms,
+ * reversed repeat) — and stands perfectly still when the OS asks for reduced motion,
+ * which changes nothing visually when the setting is off.
  */
 function ToolStatusIcon({ state }: { state: ToolStatus }) {
   const meta = toolStatusMeta(state);
@@ -191,13 +193,15 @@ function ToolHeader({ type, state, title, toolName, className }: ToolHeaderProps
         {toolDisplayName(type, title, toolName)}
       </Text>
       <Badge
-        variant="outline"
+        variant="secondary"
         // Color is never the sole channel — the label and icon carry status for a
         // screen reader, and the badge is a legitimate live region: it changes at human
         // pace (a few times per tool call), unlike streaming text.
         accessibilityLabel={`Status: ${meta.label}`}
         accessibilityLiveRegion="polite"
-        className="gap-1"
+        // Remediation row 4: the badge family converges to the web's — secondary
+        // variant, rounded-full, gap-1.5 (web tool.tsx:74).
+        className="gap-1.5 rounded-full"
       >
         <ToolStatusIcon state={state} />
         <Text className={cn('text-xs', meta.className)}>{meta.label}</Text>

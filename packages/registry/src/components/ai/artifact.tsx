@@ -38,7 +38,7 @@ function Artifact({ className, children, ...props }: ArtifactProps) {
     // Composed Card per the porting verdict, overridden to the web container's shape:
     // no default padding/gap (the header owns its own), clipped corners, background on
     // `background` exactly as the web writes it.
-    <Card className={cn('gap-0 overflow-hidden rounded-lg py-0', className)} {...props}>
+    <Card className={cn('gap-0 overflow-hidden rounded-lg bg-background py-0', className)} {...props}>
       {children}
     </Card>
   );

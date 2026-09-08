@@ -1,0 +1,53 @@
+{
+  "nextId": 5,
+  "tasks": [
+    {
+      "id": "1",
+      "subject": "Diagnose avatar-fallback balloon bug (Collapsible + Agent coexistence)",
+      "description": "Read persona/agent/chain-of-thought/queue/avatar sources, then use the device capture loop to bisect the exact mechanism causing Avatar fallback to balloon to fill space when Collapsible coexists with Agent.",
+      "status": "completed",
+      "activeForm": "Diagnosing avatar balloon bug",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788408364255,
+      "updatedAt": 1788411173356
+    },
+    {
+      "id": "2",
+      "subject": "Fix the bug in our registry components",
+      "description": "Apply fix in packages/registry components (persona/agent/chain-of-thought/queue) or harness wiring — never vendored RNR files. Must hold for both engines conceptually.",
+      "status": "completed",
+      "activeForm": "Fixing the bug",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788408364255,
+      "updatedAt": 1788412398837
+    },
+    {
+      "id": "3",
+      "subject": "Fix minor items: strike-through + invisible step rail",
+      "description": "(a) QueueItemContent completed strike-through not rendering (line-through mapping); (b) chain-of-thought step rail w-px flex-1 bg-border invisible on device.",
+      "status": "completed",
+      "activeForm": "Fixing minor items",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788408364255,
+      "updatedAt": 1788412398841
+    },
+    {
+      "id": "4",
+      "subject": "Run gates + final proof capture + cleanup",
+      "description": "pnpm typecheck && pnpm test && pnpm registry:build && pnpm check:registry && pnpm lint green; capture Run Turn + Agent Run States + Collapsible-coexistence proof; remove ALL Bisect stories; restore initialSelection to Run Turn. Commit nothing.",
+      "status": "completed",
+      "activeForm": "Running gates and capturing proof",
+      "metadata": {},
+      "blocks": [],
+      "blockedBy": [],
+      "createdAt": 1788408364256,
+      "updatedAt": 1788413464380
+    }
+  ]
+}

@@ -3,7 +3,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/registry/
 import { Empty, EmptyIcon, EmptyTitle } from '@/registry/{engine}/components/ui/empty';
 import { Icon } from '@/registry/{engine}/components/ui/icon';
 import { Item } from '@/registry/{engine}/components/ui/item';
-import { Progress } from '@/registry/{engine}/components/ui/progress';
 import { Text } from '@/registry/{engine}/components/ui/text';
 import { monoStyle } from '@/registry/{engine}/lib/mono';
 import { cn } from '@/registry/{engine}/lib/utils';
@@ -54,12 +53,14 @@ import {
  * status + name + duration), TestStatus, TestName, TestDuration ("42ms" — upstream
  * never seconds a per-test duration), TestError, TestErrorMessage, TestErrorStack.
  *
- * THE DATA-SCHEMA SUBSTITUTION: the web's hand-rolled two-segment green/red bar is a
- * chart-shaped div with inline percent widths; the contract binds this surface to
- * "Progress bar via RNR Progress, no chart" — so TestResultsProgress composes RNR's
- * Progress (pass fraction, token indicator) and keeps BOTH text labels byte-for-byte;
- * the failed share is carried by the numbers and the failed badge, which is where the
- * web carried it too (color was never the sole channel).
+ * THE PASS/FAIL BAR (remediation row 3): the original port substituted RNR's Progress
+ * for the web's two-segment bar (the PRD's "Progress bar via RNR Progress, no chart"
+ * binding); the approved remediation reverses that substitution — TestResultsProgress
+ * now renders the web's exact bar structure: an `h-2 overflow-hidden rounded-full
+ * bg-muted` container with `bg-green-500` / `bg-red-500` percentage-width segments
+ * (web test-results.tsx:179-185), and BOTH text labels stay byte-for-byte. Color is
+ * still never the sole channel: the numbers and the failed badge carry the failed
+ * share too, exactly as the web carried it.
  *
  * DECLARED ADAPTATIONS, on the record:
  *  - the web's `divide-y` wrappers become explicit border-b classes on rows (RN has
@@ -154,22 +155,38 @@ function SummaryBadge({ status, count }: { status: TestStatusType; count: number
   );
 }
 
-/** The run's wall-clock time, from context. No duration renders nothing. */
+/** The run's wall-clock time, from context. No duration renders nothing. The web
+ *  renders it as plain `text-sm` sans (web test-results.tsx:75) — the port's mono-xs
+ *  treatment was an invention the remediation drops (row 3). */
 function TestResultsDuration({ children, className }: { children?: string; className?: string }) {
   const { summary } = useTestResults();
 
   if (!summary?.duration) return null;
 
   return (
-    <Text style={monoStyle} className={cn('shrink-0 text-xs text-muted-foreground', className)}>
+    <Text className={cn('shrink-0 text-sm text-muted-foreground', className)}>
       {children ?? formatDuration(summary.duration)}
     </Text>
   );
 }
 
 /**
- * RNR Progress over the pass fraction + the two text labels, upstream bytes
- * ("8/10 tests passed" / "80%"). No summary renders nothing.
+ * The failed share, computed exactly like the shared passedPercent helper — same
+ * whole-number percent shape, same divide-by-zero clamp (total 0 → 0, never NaN).
+ * Local to this file: the bar is the only consumer.
+ */
+function failedPercent(summary: Pick<TestSummary, 'failed' | 'total'>): number {
+  if (summary.total <= 0) return 0;
+  return (summary.failed / summary.total) * 100;
+}
+
+/**
+ * The web's two-segment pass/fail bar (remediation row 3) + the two text labels,
+ * upstream bytes ("8/10 tests passed" / "80%"). One flex-row container, web-exact
+ * (web test-results.tsx:179): the row layout stretches the segment children to the
+ * container's full height — nested heightless wrappers collapse to 0 under Yoga.
+ * Explicit percentage widths — no flex-1 splitting, so a 0% segment is truly
+ * invisible. Exposed as a progressbar. No summary renders nothing.
  */
 function TestResultsProgress({ className, children, ...props }: ViewProps & { children?: React.ReactNode }) {
   const { summary } = useTestResults();
@@ -180,7 +197,15 @@ function TestResultsProgress({ className, children, ...props }: ViewProps & { ch
     <View className={cn('gap-2', className)} {...props}>
       {children ?? (
         <>
-          <Progress value={passedPercent(summary)} accessibilityLabel={progressLabel(summary)} />
+          <View
+            className="h-2 flex-row overflow-hidden rounded-full bg-muted"
+            accessibilityRole="progressbar"
+            accessibilityLabel={progressLabel(summary)}
+            accessibilityValue={{ min: 0, max: 100, now: passedPercent(summary) }}
+          >
+            <View className="bg-green-500" style={{ width: `${passedPercent(summary)}%` }} />
+            <View className="bg-red-500" style={{ width: `${failedPercent(summary)}%` }} />
+          </View>
           <View className="flex-row items-center justify-between">
             <Text className="text-xs text-muted-foreground">{progressLabel(summary)}</Text>
             <Text style={monoStyle} className="text-xs text-muted-foreground">

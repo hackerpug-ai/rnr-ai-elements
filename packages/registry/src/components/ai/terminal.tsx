@@ -25,11 +25,28 @@ import { parseAnsiLines, stripAnsi } from './terminal.logic';
  * TerminalStatus), TerminalActions (TerminalClearButton + TerminalCopyButton), and
  * TerminalContent. The web renders `output` through ansi-to-react with hardcoded hex;
  * the ANSI half is replaced by the pure SGR tokenizer in terminal.logic.ts (Vitest-
- * owned) whose color map compresses onto the house palette — RNR roles plus the three
- * sanctioned status colors, no fourth color anywhere. The DOM half is replaced by
+ * owned) whose color map resolves onto fixed-palette classes — the RNR roles PLUS the
+ * Tailwind-default hues the web original uses, which the consumer declares in `@theme`
+ * (the remediation palette slice in the harness global.css). The DOM half is replaced by
  * nested axis-scrolled ScrollViews: the vertical outer is a bounded host (max-h-64 by
  * default, caller-overridable) and the horizontal inner carries the unwrapped line
  * tails — different axes, so the two do not fight (code-block precedent).
+ *
+ * THE SURFACE IS SCHEME-INDEPENDENT (remediation row 2): the port's `bg-muted`
+ * rounded-md card converged to the web's always-dark `rounded-lg border-zinc-800
+ * bg-zinc-950 text-zinc-100` surface (web terminal.tsx:250). Every text class in this
+ * file is therefore a FIXED zinc value — a scheme-flipping token (text-foreground,
+ * text-muted-foreground) would render dark-on-dark in light mode, because the surface
+ * no longer flips with colorScheme.
+ *
+ * The line Text's `text-zinc-100` does NOT cascade to its spans: React Native
+ * nested-Text color inheritance is unreliable under an inline mono style, and the
+ * standing rule (wave 13) is that NO segment relies on inheritance. So every span
+ * Text in TerminalContent carries its own `text-zinc-100` default — without it a
+ * plain (non-ANSI) span fell back to the scheme default text color: near-black on
+ * this near-black surface, invisible until on-device capture zoom proved it. ANSI
+ * span classes still win — cn places span.classNames last, so twMerge keeps them
+ * (including the inverse pair's text-zinc-950).
  *
  * BEHAVIOR PRESERVED FROM THE WEB ORIGINAL:
  *  - autoScroll sticks to the bottom on every content change while on; off never moves
@@ -100,7 +117,7 @@ function Terminal({
   return (
     <TerminalContext.Provider value={contextValue}>
       <View
-        className={cn('overflow-hidden rounded-md border border-border bg-muted', className)}
+        className={cn('overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950', className)}
         {...props}
       >
         {children}
@@ -112,29 +129,31 @@ function Terminal({
 function TerminalHeader({ className, ...props }: ViewProps) {
   return (
     <View
-      className={cn('flex-row items-center gap-2 border-b border-border px-3 py-2', className)}
+      className={cn('flex-row items-center gap-2 border-b border-zinc-800 px-3 py-2', className)}
       {...props}
     />
   );
 }
 
-/** The log's name. House mono, like the code-block filename it sits beside. */
+/** The log's name. House mono, like the code-block filename it sits beside. Fixed
+ *  zinc-100: the surface is always dark (remediation row 2). */
 function TerminalTitle({ className, ...props }: React.ComponentProps<typeof Text>) {
   return (
     <Text
       numberOfLines={1}
       style={monoStyle}
-      className={cn('min-w-0 flex-1 text-xs font-medium text-foreground', className)}
+      className={cn('min-w-0 flex-1 text-xs font-medium text-zinc-100', className)}
       {...props}
     />
   );
 }
 
-/** Free status slot ("exit 0", "pid 4121") — muted so the title leads. Publishes the
- *  muted-xs pair so its Text children style without per-call classes. */
+/** Free status slot ("exit 0", "pid 4121") — zinc-500 so the title leads. Publishes
+ *  the fixed zinc-xs pair so its Text children style without per-call classes; the
+ *  surface never flips with colorScheme, so neither may its text. */
 function TerminalStatus({ className, children, ...props }: ViewProps & { children?: React.ReactNode }) {
   return (
-    <TextClassContext.Provider value="text-xs text-muted-foreground">
+    <TextClassContext.Provider value="text-xs text-zinc-500">
       <View className={cn('shrink-0 flex-row items-center', className)} {...props}>
         {children}
       </View>
@@ -168,7 +187,7 @@ function TerminalClearButton({ className }: TerminalClearButtonProps) {
       hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
       className={className}
     >
-      <Icon as={Trash2Icon} size={14} className="text-muted-foreground" />
+      <Icon as={Trash2Icon} size={14} className="text-zinc-500" />
     </Button>
   );
 }
@@ -210,7 +229,7 @@ function TerminalCopyButton({ timeout = 2000, onCopy, onError, className }: Term
       hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
       className={className}
     >
-      <Icon as={copied ? CheckIcon : CopyIcon} size={14} className="text-muted-foreground" />
+      <Icon as={copied ? CheckIcon : CopyIcon} size={14} className="text-zinc-500" />
     </Button>
   );
 }
@@ -252,10 +271,22 @@ function TerminalContent({ className }: { className?: string }) {
               key={`line-${lineIndex}`}
               selectable
               style={monoStyle}
-              className="text-xs leading-5 text-foreground"
+              className="text-xs leading-5 text-zinc-100"
             >
+              {/* Every span carries its own text-zinc-100 — see the header: RN
+                  nested-Text color inheritance is unreliable under an inline mono
+                  style (wave 13's standing rule: no segment relies on
+                  inheritance), and a span without an ANSI class otherwise falls
+                  back to the scheme default (near-black on this near-black
+                  surface; proven by device-capture zoom). cn puts
+                  span.classNames last, so ANSI classes — including the inverse
+                  pair's text-zinc-950 — still override via twMerge. */}
               {spans.map((span, spanIndex) => (
-                <Text key={`span-${lineIndex}-${spanIndex}`} style={monoStyle} className={cn(span.classNames)}>
+                <Text
+                  key={`span-${lineIndex}-${spanIndex}`}
+                  style={monoStyle}
+                  className={cn('text-zinc-100', span.classNames)}
+                >
                   {span.text}
                 </Text>
               ))}
@@ -268,10 +299,12 @@ function TerminalContent({ className }: { className?: string }) {
   );
 }
 
-/** The streaming pulse — the house shimmer at log scale, gated on reduced motion. */
+/** The streaming pulse — the house shimmer at log scale, gated on reduced motion.
+ *  Fixed zinc-500: the surface is always dark (remediation row 2), so the caller
+ *  class overrides Shimmer's scheme-flipping text-muted-foreground default. */
 function ShimmerLine() {
   return (
-    <Shimmer className="text-xs" style={monoStyle}>
+    <Shimmer className="text-xs text-zinc-500" style={monoStyle}>
       Running…
     </Shimmer>
   );

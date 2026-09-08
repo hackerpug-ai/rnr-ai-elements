@@ -1,93 +1,47 @@
----
-title: rnr-ai-elements MVP
-version: 1.1.0
-scope_posture: full
-pr_sequencing: false
-base_branches: []
----
+# MVP Plan
 
-# rnr-ai-elements — MVP PRD
+The single plan page for remaining work. The 59-file planning binder this replaced is in git history: `git log -- .spec/prds/mvp/`. Sprint runner state copies live under `.kb-run-sprint/`.
 
-A React Native Reusables port of Vercel's AI Elements: universal AI chat and agent UI,
-distributed as a copy-paste registry, inheriting the consumer's RNR theme with zero wiring.
+## Done
 
-## PRD Metadata
+- [x] Components: 56/56 registry items shipped — 39 component / 11 ui / 6 lib (component inventory verified 2026-09-04).
 
-| Field | Value |
-|-------|-------|
-| Version | 1.1.0 |
-| Scope Posture | Full feature (default) |
-| PR Sequencing | Disabled |
-| Base Branches | None (lands on trunk) |
-| Created | 2026-09-01 |
-| Last Updated | 2026-09-01 |
+## Sprint 01 — Installed app cold-boots on both platforms (committed; remainder)
 
-## Document Index
+- [ ] Pass the 15-step human testing gate. Only 1 of 15 steps has ever been executed; 0 passed.
+- [ ] Integrate the 10 landed task commits sitting on the declined branch `sprint/sprint-01-installed-app-cold-boots-on-both-platforms`.
+  - Integration also closes: 254 unrewritten `@/registry` imports across 50 of 56 emitted items, and 26 `--color-*` theme entries undeclared outside `apps/harness/src/global.css`.
 
-| File | Section | Stability |
-|------|---------|-----------|
-| [`00-overview.md`](./00-overview.md) | Product description, problem, solution | PRODUCT_CONTEXT |
-| [`01-scope.md`](./01-scope.md) | In scope / out of scope / deferred | FEATURE_SPEC |
-| [`02-roles.md`](./02-roles.md) | User roles | PRODUCT_CONTEXT |
-| [`03-functional-groups.md`](./03-functional-groups.md) | Groups + use case summary | FEATURE_SPEC |
-| [`04-uc-agent.md`](./04-uc-agent.md) | Use Cases: Agent and Tool Surface (`AGENT`) — 5 UCs | FEATURE_SPEC |
-| [`05-uc-chat.md`](./05-uc-chat.md) | Use Cases: Core Chat Surface (`CHAT`) — 5 UCs | FEATURE_SPEC |
-| [`06-uc-code.md`](./06-uc-code.md) | Use Cases: Coding-Agent Surfaces (`CODE`) — 3 UCs | FEATURE_SPEC |
-| [`07-uc-found.md`](./07-uc-found.md) | Use Cases: Foundation and Theming (`FOUND`) — 4 UCs | FEATURE_SPEC |
-| [`08-uc-reg.md`](./08-uc-reg.md) | Use Cases: Registry, Compatibility and Docs (`REG`) — 4 UCs | FEATURE_SPEC |
-| [`09-uc-voice.md`](./09-uc-voice.md) | Use Cases: Voice and Audio (`VOICE`) — 2 UCs | FEATURE_SPEC |
-| [`10-team-contributions.md`](./10-team-contributions.md) | The four specialist lenses and what each found | — |
-| [`11-technical-requirements/`](./11-technical-requirements/README.md) | Technical specifications (12 sections) | CONSTITUTION |
-| [`12-e2e-testing-criteria.md`](./12-e2e-testing-criteria.md) | 95 per-UC criteria; sprint gates draw `[human-gate]` rows from here | TEST_SPEC |
+## Sprint 02 — Android, web and Expo Go parity for the shipped set (committed; 13 tasks, none started)
 
-## Quick Stats
+- [ ] P1 — All 56 items install into apps/example via the real RNR CLI from the v0.1.0 tag, peers at Expo 57's pin, Expo Go-clean graph.
+- [ ] P2 — Manifest-driven /gallery route: index + per-item four-state matrix screens with interactive prop controls, one codebase for iOS/Android/web.
+- [ ] P3 — Android second pass over the shipped set: gesture-bar insets, predictive back, keyboard avoidance, press/ripple states, first Android dark flip.
+- [ ] P4 — Web leg: static `expo export -p web`, react-native-web parity for the full set, hover twins with active twins, first web dark flip.
+- [ ] P5 — Full 56-item set loads inside Expo Go on a physical iPhone with no dev client; evidence captured.
+- [ ] P6 — `meta.nativePeerDependencies` and `meta.permissions` declared on every item that needs them, mined from actual imports, emitted into public/r.
+- [ ] P7 — Seeded four-state literals authored — the strings a stranger literally reads in every matrix cell.
+- [ ] P8 — Dark-flip observability built: scheme strip in the gallery chrome and the mid-stream flip surface.
+- [ ] P9 — CI test: declared peers and permissions match each source's actual imports, both directions, both engines.
+- [ ] P10 — Engine parity: both trees serve the same 56 names, only the engine token differs, meta identical.
+- [ ] P11 — Stranger-runnable web-only-construct scan executes the styling contract, with the missing DOM/iframe/hover checks added.
+- [ ] P12 — Expo Go / dev-client status emitted from registry meta so the gallery walk shows it, never silently skips it.
+- [ ] P13 — Automated sprint-02 lane: Android gallery walk (56 × 4 states), dark-flip driver, web export smoke, every negative control watched failing.
 
-| Metric | Value |
-|--------|-------|
-| Functional groups | 6 |
-| Use cases | 23 |
-| Acceptance criteria | 95 |
-| Test criteria | 95 (100% AC coverage) |
-| AI Elements components to port | 49 |
-| shadcn primitives depended on | 55 |
-| — reused from RNR | 29 (53%) |
-| — gap resolved without creating | 20 (compose 10 · substitute 7 · unnecessary 3) |
-| — genuinely new components | **6** |
-| Porting verdicts | 22 parity · 11 adapted · 10 substitute · 6 out-of-scope |
+## Provisional, unscheduled
 
-## The three promises this PRD exists to keep
+- Sprint 03 — Published ledger and install page.
+- Sprint 04 — Upstream RNR drift guard.
 
-1. **Reuse before create.** 29 of 55 primitives come from RNR by registry URL. Of the
-   26-item gap, only **6** are genuinely new components. Every created primitive names the
-   gap entry and the shipped component that requires it.
-2. **One design system on a phone.** The library declares **zero** tokens — no theme file,
-   no `@theme` block, no color literal. Proven by swapping the consumer's palette and
-   screenshotting six pairs; every pixel must move.
-3. **Distributes exactly like RNR.** Copy-paste registry, RNR CLI, files the consumer owns.
-   No npm package — `react-native-reusables` is not on npm, and a packaged library would
-   have to vendor its own RNR copies, which breaks promises 1 and 2.
+## Live defects not covered by landed work
 
-## Decisions on the record
+- `check:tokens` is declared in package.json but `scripts/check-tokens.ts` does not exist — the check silently never runs, and CI invokes neither it nor `check:registry`.
+- Undeclared native imports: speech-input imports react-native-reanimated; prompt-input imports expo-document-picker + expo-image-picker.
 
-| Decision | Value | Why |
-|---|---|---|
-| Distribution | Registry only | RNR's own model; an npm package cannot reach the consumer's `@/components/ui` alias |
-| Styling engine | **Both**, at parity, as RNR does | The two trees differ in one file (`icon.tsx`, RNR's); our source is engine-agnostic |
-| Dev + sign-off surface | Storybook, both runtimes | Device build is the gate; web build is iteration and gallery |
-| Test runner | Vitest for logic; device tier for render | Uniwind compiles classes in Metro — Vitest cannot assert a style at all |
-| Merge gate | Solo (CI green, self-merge) | Set by `/init-project`; main is ruleset-protected |
+## Deferred decisions
 
-## Version History
-
-| Version | Date | Changes | Trigger |
-|---------|------|---------|---------|
-| 1.0.0 | 2026-09-01 | Initial PRD | New initiative |
-| 1.1.0 | 2026-09-02 | Dual-engine deferral trigger fired — registry now emits nativewind AND uniwind. Pin corrections verified against sources: react-native 0.86.3 (not 0.87.1), RNR CLI 1.0.0 (not 0.7.1), typescript ~6.0.3 in the harness (Expo 57's pin). | Scaffold findings |
-
-## Next Steps
-
-- `/kb-sprint-plan` — build the sprint roadmap. Every sprint's human testing gate draws
-  `[human-gate]` criteria from [`12-e2e-testing-criteria.md`](./12-e2e-testing-criteria.md).
-- Before any component work: run the **proven-reference-flow spike** in
-  [`11-technical-requirements/12-e2e-testing.md`](./11-technical-requirements/12-e2e-testing.md).
-- Correct the RN pin in `AGENTS.md` to Expo 57's `0.86.3` (see `06-external-dependencies.md`).
+- Sprint-01 disposition: integrate the 10 declined-branch commits (above) or re-decide.
+- Phantom `check:tokens`: implement `scripts/check-tokens.ts` or drop the package.json entry.
+- Undeclared native imports: declare via registry meta or vendor the dependency.
+- Ten parked specialist proposals in `.tmp/kb-sprint-plan/mvp/proposals/` — unscheduled.
+- `.kb-run-sprint/` runner state: keep as archive or delete.
