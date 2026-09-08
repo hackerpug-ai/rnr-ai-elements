@@ -19,15 +19,16 @@ const config = getDefaultConfig(projectRoot);
 // substitution the registry build script makes when fanning one source into two variants.
 config.watchFolders = [sharedSrc, workspaceRoot];
 config.resolver.resolveRequest = (context, moduleName, platform) => {
-  // web-preview's react-native-webview PEER. This package deliberately does NOT
-  // install the webview — the uniwind harness's Expo-pinned 13.16.1 is the ONE store
-  // instance, and this redirect resolves to that same pnpm store entry (a second
-  // install would double-register the RNCWebView native module, the dual-tree
-  // failure the prior art paid for). Own node_modules first, so a future local
-  // install simply wins.
-  if (moduleName === 'react-native-webview' || moduleName.startsWith('react-native-webview/')) {
-    const own = path.join(projectRoot, 'node_modules', 'react-native-webview');
-    const shared = path.join(projectRoot, '../harness/node_modules/react-native-webview');
+  // The native-module PEERS (react-native-webview for web-preview; expo-image-picker
+  // + expo-document-picker for prompt-input). This package deliberately does NOT have
+  // to own the store instances — own node_modules first (this package installs the
+  // Expo-pinned pickers itself), then the uniwind harness's store entry. A second
+  // install of the SAME native module would double-register it, the dual-tree
+  // failure the prior art paid for.
+  const peerMatch = moduleName.match(/^(react-native-webview|expo-image-picker|expo-document-picker)(\/.*)?$/);
+  if (peerMatch) {
+    const own = path.join(projectRoot, 'node_modules', peerMatch[1]);
+    const shared = path.join(projectRoot, '../harness/node_modules', peerMatch[1]);
     return context.resolveRequest(context, fs.existsSync(own) ? own : shared, platform);
   }
   if (moduleName === '@/components/ui' || moduleName.startsWith('@/components/ui/')) {

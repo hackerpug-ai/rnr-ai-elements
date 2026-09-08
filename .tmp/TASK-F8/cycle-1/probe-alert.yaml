@@ -1,0 +1,11 @@
+# throwaway probe (not part of the sprint lane): can Maestro see + dismiss the
+# springboard "Open in" alert with exact text?
+appId: ai.hackerpug.rnrexample
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- assertVisible: "Open in “AI Elements Example”?"
+- tapOn: "Open"
+- assertVisible: "AI Elements Example"
+- assertVisible: "Registry item installed."

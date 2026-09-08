@@ -1,0 +1,94 @@
+== preflight ==
+maestro 2.5.1 (pinned by .maestro/config.yaml)
+iOS target: iPhone 17 Pro (9677B8E8-CD67-4561-89DF-17BFD99309CC)
+Android target: unknown (emulator-5556)
+== install (gate steps 1-3) ==
+node_modules present — pnpm install skipped (idempotent re-run)
+already-installed (committed F3 install re-verified: 10/10 files, 0 '@/registry/' literals, PortalHost present)
+== metro (port 8081, serving this worktree) ==
+Metro serving
+== build/install iOS (gate step 4) ==
+ai.hackerpug.rnrexample already installed on 9677B8E8-CD67-4561-89DF-17BFD99309CC — native build skipped (the cold boot is exercised by the flow's clearState launch)
+== warm iOS bundle ==
+terminated previous iOS instance
+iOS bundle warm
+== build/install Android (gate step 10) ==
+ai.hackerpug.rnrexample already installed on emulator-5556 — native build skipped (the cold boot is exercised by the flow's clearState launch)
+== warm Android bundle ==
+Android bundle warm
+== cold-boot flows (gate steps 8, 11, 12) ==
+-- iOS light --
+maestro flow → ios (cold-boot.png)
+Flow Passed (ios: cold-boot.png)
+Running on iPhone 17 Pro - iOS 26.3 - 9677B8E8-CD67-4561-89DF-17BFD99309CC
+ > Flow cold-boot
+Launch app "ai.hackerpug.rnrexample" with clear state... COMPLETED
+Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081... COMPLETED
+Tap on point (69%, 56%)... COMPLETED
+Assert that id: transcript-message-0 is visible... COMPLETED
+Assert that "AI Elements Example" is visible... COMPLETED
+Assert that "Registry item installed." is visible... COMPLETED
+Assert that id: app-header is visible... COMPLETED
+Assert that id: tool-badge-completed is visible... COMPLETED
+Take screenshot ${SCREENSHOT_PATH}... COMPLETED
+Tap on id: context-trigger... COMPLETED
+Assert that id: context-popover-content is visible... COMPLETED
+-- iOS dark (capture-only; the gate asserts light) --
+maestro flow → ios (cold-boot-dark.png)
+Flow Passed (ios: cold-boot-dark.png)
+Running on iPhone 17 Pro - iOS 26.3 - 9677B8E8-CD67-4561-89DF-17BFD99309CC
+ > Flow cold-boot
+Launch app "ai.hackerpug.rnrexample" with clear state... COMPLETED
+Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081... COMPLETED
+Tap on point (69%, 56%)... COMPLETED
+Assert that id: transcript-message-0 is visible... COMPLETED
+Assert that "AI Elements Example" is visible... COMPLETED
+Assert that "Registry item installed." is visible... COMPLETED
+Assert that id: app-header is visible... COMPLETED
+Assert that id: tool-badge-completed is visible... COMPLETED
+Take screenshot ${SCREENSHOT_PATH}... COMPLETED
+Tap on id: context-trigger... COMPLETED
+Assert that id: context-popover-content is visible... COMPLETED
+-- Android light --
+maestro flow → android (cold-boot.png)
+Flow Passed (android: cold-boot.png)
+Running on Pixel_7_API_34
+ > Flow cold-boot
+Launch app "ai.hackerpug.rnrexample" with clear state... COMPLETED
+Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081... COMPLETED
+Tap on point (69%, 56%)... COMPLETED
+Assert that id: transcript-message-0 is visible... COMPLETED
+Assert that "AI Elements Example" is visible... COMPLETED
+Assert that "Registry item installed." is visible... COMPLETED
+Assert that id: app-header is visible... COMPLETED
+Assert that id: tool-badge-completed is visible... COMPLETED
+Take screenshot ${SCREENSHOT_PATH}... COMPLETED
+Tap on id: context-trigger... COMPLETED
+Assert that id: context-popover-content is visible... COMPLETED
+-- Android dark, after force-quit (gate step 12: cold launch #2, Metro left running) --
+maestro flow → android (cold-boot-dark.png)
+Flow Passed (android: cold-boot-dark.png)
+Running on Pixel_7_API_34
+ > Flow cold-boot
+Launch app "ai.hackerpug.rnrexample" with clear state... COMPLETED
+Open ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081... COMPLETED
+Tap on point (69%, 56%)... COMPLETED
+Assert that id: transcript-message-0 is visible... COMPLETED
+Assert that "AI Elements Example" is visible... COMPLETED
+Assert that "Registry item installed." is visible... COMPLETED
+Assert that id: app-header is visible... COMPLETED
+Assert that id: tool-badge-completed is visible... COMPLETED
+Take screenshot ${SCREENSHOT_PATH}... COMPLETED
+Tap on id: context-trigger... COMPLETED
+Assert that id: context-popover-content is visible... COMPLETED
+4 'Flow Passed' (iOS light/dark, Android light/dark), 0 retries, clearState: true on every launch
+== Android send-button / navigation-bar clearance (AC-4) ==
+{"capture":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01/cold-boot.png","capture_dimensions":{"width":1080,"height":2400},"send_button_rect":{"x":720,"y":1885,"width":284,"height":439},"navbar_height_px":63,"navbar_top_px":2337,"gap_px":14,"gap_dp":5.33,"density":420}
+send button clears the navigation bar by 5.33dp (>= 1dp) [nav bar height: 63 px via 24dp gesture-nav fallback (dumpsys frame unavailable; Settings.Global navigation_bar_height is null for gesture nav)]
+== badge glyph measurement (AC-6) ==
+terminated the popover-open app instance
+element bounds scaled to capture px: 171,1920,984,138
+badge glyph chroma 0.1647 > 0.05 across 2278 sampled pixels
+badge glyph hue 149.56 inside [120,180]
+artifact written: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install/mvp-install-arc.json
+install-core.test.sh: journeys/mvp-install-arc PASSED (artifact: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install/mvp-install-arc.json)

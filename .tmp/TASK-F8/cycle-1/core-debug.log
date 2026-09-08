@@ -1,0 +1,167 @@
++ set -euo pipefail
++++ dirname tests/sprint-01/install-core.test.sh
+++ cd tests/sprint-01/../..
+++ pwd
++ REPO_ROOT=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8
++ APP_DIR=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example
++ FLOW=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.maestro/cold-boot.yaml
++ EV_BASE=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.tmp/TASK-F8
++ EV=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.tmp/TASK-F8/runs/core-debug
++ GOLDENS=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens
++ GOLDEN_INSTALL=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install
++ LANE=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/tests/sprint-01
++ APP_ID=ai.hackerpug.rnrexample
++ APP_SCHEME=ai-elements-example
++ METRO_PORT=8081
++ DEV_URL='ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081'
++ MAESTRO_PIN=2.5.1
++ FIXTURE=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/fixtures/transcript.json
++ FIXTURE_BAK=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/fixtures/transcript.json.bak
++ MAESTRO=/Users/justinrich/.maestro/bin/maestro
++ REQUIRED_FILES=(components/ai/conversation.tsx components/ai/message.tsx components/ai/prompt-input.tsx components/ai/tool.tsx components/ai/context.tsx components/ui/text.tsx components/ui/avatar.tsx components/ui/button.tsx components/ui/icon.tsx components/ui/popover.tsx)
++ IOS_LIGHT_SHOT=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-ios/sprint-01/cold-boot.png
++ IOS_DARK_SHOT=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-ios/sprint-01/cold-boot-dark.png
++ ANDROID_LIGHT_SHOT=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01/cold-boot.png
++ ANDROID_DARK_SHOT=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01/cold-boot-dark.png
++ THEME_BAK=
++ METRO_OURS=
++ IOS_UDID=
++ IOS_NAME=
++ ANDROID_SERIAL=
++ ANDROID_MODEL=
++ INSTALL_MODE=
++ BADGE_CHROMA=
++ BADGE_HUE=
++ BADGE_PIXELS=
++ CLEARANCE_JSON=
++ trap cleanup EXIT
++ MODE=
++ MUTATE_THEME=
++ SMOKE_PLATFORM=
++ ARGS=("$@")
++ i=0
++ '[' 0 -lt 1 ']'
++ case "${ARGS[$i]}" in
++ MODE=core
++ i=1
++ '[' 1 -lt 1 ']'
++ '[' -n '' ']'
++ '[' -z core ']'
++ stage_preflight
++ log '== preflight =='
++ printf '%s\n' '== preflight =='
+== preflight ==
++ local tool
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v node
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v pnpm
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v xcrun
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v adb
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v sips
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v curl
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v lsof
++ for tool in node pnpm xcrun adb sips curl lsof awk
++ command -v awk
++ find_maestro
++ '[' -x /Users/justinrich/.maestro/bin/maestro ']'
++ MAESTRO=/Users/justinrich/.maestro/bin/maestro
++ check_maestro_pin
++ local v
+++ /Users/justinrich/.maestro/bin/maestro --version
+++ tr -d '[:space:]'
++ v=2.5.1
++ '[' 2.5.1 '!=' 2.5.1 ']'
++ log 'maestro 2.5.1 (pinned by .maestro/config.yaml)'
++ printf '%s\n' 'maestro 2.5.1 (pinned by .maestro/config.yaml)'
+maestro 2.5.1 (pinned by .maestro/config.yaml)
++ pick_ios_device
++ '[' -n '' ']'
+++ xcrun simctl list devices
+++ awk '-F[()]' '/Booted/ && /iPhone/ { print $2; exit }'
++ IOS_UDID=9677B8E8-CD67-4561-89DF-17BFD99309CC
++ '[' -z 9677B8E8-CD67-4561-89DF-17BFD99309CC ']'
++ xcrun simctl bootstatus 9677B8E8-CD67-4561-89DF-17BFD99309CC -b
+++ xcrun simctl list devices
+++ awk '-F(' -v u=9677B8E8-CD67-4561-89DF-17BFD99309CC 'index($0, u) { s=$1; sub(/^ +/, "", s); sub(/ +$/, "", s); print s; exit }'
++ IOS_NAME='iPhone 17 Pro'
++ log 'iOS target: iPhone 17 Pro (9677B8E8-CD67-4561-89DF-17BFD99309CC)'
++ printf '%s\n' 'iOS target: iPhone 17 Pro (9677B8E8-CD67-4561-89DF-17BFD99309CC)'
+iOS target: iPhone 17 Pro (9677B8E8-CD67-4561-89DF-17BFD99309CC)
++ pick_android_device
++ '[' -n '' ']'
+++ adb devices
+++ awk '/\tdevice\r?$/ && /emulator/ { print $1; exit }'
++ ANDROID_SERIAL=emulator-5556
++ '[' -z emulator-5556 ']'
++ local i=0
++ :
+++ adb -s emulator-5556 shell getprop sys.boot_completed
+++ tr -d '[:space:]'
++ '[' 1 = 1 ']'
++ break
+++ adb -s emulator-5556 shell getprop ro.kernel.qemu.avd_name
+++ tr -d '[:space:]'
++ ANDROID_MODEL=
++ log 'Android target: unknown (emulator-5556)'
++ printf '%s\n' 'Android target: unknown (emulator-5556)'
+Android target: unknown (emulator-5556)
++ grep -q 'clearState: true' /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.maestro/cold-boot.yaml
++ grep -q 'id: "context-trigger"' /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.maestro/cold-boot.yaml
++ grep -q 'id: "context-popover-content"' /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.maestro/cold-boot.yaml
++ grep -q 'id: "transcript-message-0"' /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.maestro/cold-boot.yaml
++ mkdir -p /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/.tmp/TASK-F8/runs/core-debug /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-ios/sprint-01 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/mobile-android/sprint-01
++ '[' -n '' ']'
++ '[' core = core ']'
++ ARTIFACT=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/design/goldens/sprint-01/install/core-happy-path.json
++ FLOW_ID=UC-REG-01/core-happy-path
++ stage_install
++ log '== install (gate steps 1-3) =='
++ printf '%s\n' '== install (gate steps 1-3) =='
+== install (gate steps 1-3) ==
++ '[' '!' -d /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/node_modules ']'
++ '[' '!' -d /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/node_modules ']'
++ log 'node_modules present — pnpm install skipped (idempotent re-run)'
++ printf '%s\n' 'node_modules present — pnpm install skipped (idempotent re-run)'
+node_modules present — pnpm install skipped (idempotent re-run)
++ install_files_present
++ local f
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ai/conversation.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ai/message.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ai/prompt-input.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ai/tool.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ai/context.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ui/text.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ui/avatar.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ui/button.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ui/icon.tsx ']'
++ for f in "${REQUIRED_FILES[@]}"
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components/ui/popover.tsx ']'
++ local bad
+++ grep -R @/registry/ /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/components
+++ wc -l
+++ tr -d ' '
++ bad=0
++ cleanup
++ restore_fixture
++ '[' -f /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-installed-app-cold-boots-on-both-platforms/TASK-F8/apps/example/fixtures/transcript.json.bak ']'
++ '[' -n '' ']'
++ '[' -n 9677B8E8-CD67-4561-89DF-17BFD99309CC ']'
++ xcrun simctl ui 9677B8E8-CD67-4561-89DF-17BFD99309CC appearance light
++ '[' -n emulator-5556 ']'
++ adb -s emulator-5556 shell cmd uimode night no
++ '[' -n '' ']'

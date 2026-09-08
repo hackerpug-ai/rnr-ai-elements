@@ -7,9 +7,31 @@ import { Empty, EmptyDescription, EmptyIcon, EmptyTitle } from '@/components/ui/
 import { Text } from '@/components/ui/text';
 import { Conversation, ConversationScrollButton } from '@/components/ai/conversation';
 import { Message, MessageAvatar, MessageContent, MessageResponse } from '@/components/ai/message';
-import { PromptInput } from '@/components/ai/prompt-input';
+import {
+  type ChatStatus,
+  type PickerKind,
+  type PromptInputMessage,
+  PromptInput,
+  PromptInputAttachments,
+  PromptInputBody,
+  PromptInputFooter,
+  PromptInputHeader,
+  PromptInputPrimary,
+  PromptInputTextarea,
+  PromptInputTools,
+  PromptInputToolsMenu,
+  PromptInputToolsMenuItem,
+  PromptInputToolsMenuTrigger,
+  usePromptInputAttachments,
+} from '@/components/ai/prompt-input';
+import {
+  ModelSelector,
+  ModelSelectorTrigger,
+  type ModelSelectorModel,
+} from '@/components/ai/model-selector';
+import { SpeechInput } from '@/components/ai/speech-input';
 import { Suggestion, Suggestions } from '@/components/ai/suggestion';
-import { MessageSquareIcon } from 'lucide-react-native';
+import { CameraIcon, FolderOpenIcon, GlobeIcon, ImageIcon, MessageSquareIcon } from 'lucide-react-native';
 
 /**
  * The minimum chat — conversation + message + prompt-input + code-block composed into the
@@ -61,10 +83,93 @@ function Row({ item }: { item: Msg }) {
   );
 }
 
+const COMPOSER_MODELS: ModelSelectorModel[] = [
+  { id: 'claude-opus-4', name: 'Claude Opus 4', provider: 'Anthropic' },
+  { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI' },
+  { id: 'gemini-pro', name: 'Gemini 2.5 Pro', provider: 'Google' },
+];
+
+/**
+ * The composed composer — header attachment display, footer tools row, status submit.
+ * onSubmit receives the whole PromptInputMessage, so attachments ride along; the
+ * appended text names them, which keeps the message contract visible on device.
+ *
+ * The EVOLVED default pose: `+` is the one rest entry point (web-search checkmark +
+ * Camera/Photos/Files through the picker seam), the model chip sits in-row, and the
+ * primary slot morphs voice circle → send → stop. Voice is SpeechInput with no
+ * engine wired: disabled, never fake-listening. Toggle state (web search) is
+ * consumer-owned — this story owns it the way a chat route would.
+ */
+function ChatComposer({
+  onSubmit,
+  status = 'ready',
+  onStop,
+}: {
+  onSubmit: (message: PromptInputMessage) => void | Promise<void>;
+  status?: ChatStatus;
+  onStop?: () => void;
+}) {
+  return (
+    <PromptInput onSubmit={onSubmit} status={status} onStop={onStop}>
+      <PromptInputHeader>
+        <PromptInputAttachments />
+      </PromptInputHeader>
+      <ChatComposerField />
+    </PromptInput>
+  );
+}
+
+/** Inside the PromptInput tree so the menu rows reach the picker seam. */
+function ChatComposerField() {
+  const { openPicker } = usePromptInputAttachments();
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const [webSearch, setWebSearch] = useState(false);
+  const [model, setModel] = useState<string | undefined>(COMPOSER_MODELS[0].id);
+  return (
+    <PromptInputBody>
+      <PromptInputTextarea />
+      <PromptInputFooter>
+        <PromptInputTools>
+          <PromptInputToolsMenuTrigger onPress={() => setToolsOpen(true)} expanded={toolsOpen} />
+          <ModelSelector models={COMPOSER_MODELS} value={model} onValueChange={setModel}>
+            <ModelSelectorTrigger size="sm" className="rounded-full" />
+          </ModelSelector>
+        </PromptInputTools>
+        <PromptInputPrimary renderVoice={() => <SpeechInput className="p-0" />} />
+        <PromptInputToolsMenu open={toolsOpen} onOpenChange={setToolsOpen}>
+          <PromptInputToolsMenuItem
+            icon={GlobeIcon}
+            label="Web search"
+            selected={webSearch}
+            onPress={() => setWebSearch((v) => !v)}
+          />
+          <PromptInputToolsMenuItem
+            icon={CameraIcon}
+            label="Camera"
+            onPress={() => openPicker('camera' satisfies PickerKind)}
+          />
+          <PromptInputToolsMenuItem
+            icon={ImageIcon}
+            label="Photos"
+            onPress={() => openPicker('media')}
+          />
+          <PromptInputToolsMenuItem
+            icon={FolderOpenIcon}
+            label="Files"
+            onPress={() => openPicker('file')}
+          />
+        </PromptInputToolsMenu>
+      </PromptInputFooter>
+    </PromptInputBody>
+  );
+}
+
 export const Populated: Story = {
   render: () => {
     const [messages, setMessages] = useState<Msg[]>(SEED);
-    const send = useCallback((text: string) => {
+    const send = useCallback((message: PromptInputMessage) => {
+      const names = message.files.map((f) => f.filename);
+      const text = names.length > 0 ? `${message.text}\n[${names.join(', ')}]` : message.text;
       setMessages((m) => [...m, { id: String(Date.now()), role: 'user', text }]);
     }, []);
     return (
@@ -76,7 +181,7 @@ export const Populated: Story = {
         >
           <ConversationScrollButton />
         </Conversation>
-        <PromptInput onSubmit={send} />
+        <ChatComposer onSubmit={send} />
       </View>
     );
   },
@@ -86,8 +191,11 @@ export const Populated: Story = {
 export const FirstRun: Story = {
   render: () => {
     const [messages, setMessages] = useState<Msg[]>([]);
-    const send = useCallback((text: string) => {
-      setMessages((m) => [...m, { id: String(Date.now()), role: 'user', text }]);
+    const send = useCallback((message: PromptInputMessage) => {
+      setMessages((m) => [
+        ...m,
+        { id: String(Date.now()), role: 'user', text: message.text },
+      ]);
     }, []);
     return (
       <View className="flex-1 -m-4">
@@ -109,17 +217,21 @@ export const FirstRun: Story = {
         <View className="px-4">
           <Suggestions>
             {['Summarise this thread', 'Explain the error', 'Write a test'].map((s) => (
-              <Suggestion key={s} suggestion={s} onPress={send} />
+              <Suggestion key={s} suggestion={s} onPress={(text) => send({ text, files: [] })} />
             ))}
           </Suggestions>
         </View>
-        <PromptInput onSubmit={send} />
+        <ChatComposer onSubmit={send} />
       </View>
     );
   },
 };
 
-/** A rejected onSubmit must LEAVE THE TEXT INTACT — the rule that protects the user. */
+/**
+ * A rejected onSubmit must LEAVE EVERYTHING INTACT — text and attachments — the rule
+ * that protects the user. (The composer board's SubmitFailureKeepsAttachments pose
+ * shows the same contract with chips seeded; here it runs bare, as the minimum chat.)
+ */
 export const SubmitFailureKeepsText: Story = {
   render: () => (
     <View className="flex-1 justify-end -m-4">
@@ -128,7 +240,11 @@ export const SubmitFailureKeepsText: Story = {
           Type something and send. The handler rejects, so your text stays in the field.
         </Text>
       </View>
-      <PromptInput onSubmit={async () => { throw new Error('network'); }} />
+      <ChatComposer
+        onSubmit={async () => {
+          throw new Error('network');
+        }}
+      />
     </View>
   ),
 };
@@ -172,7 +288,7 @@ export const MarkdownSeam: Story = {
 export const Streaming: Story = {
   render: () => (
     <View className="flex-1 justify-end -m-4">
-      <PromptInput status="streaming" onSubmit={() => {}} onStop={() => {}} />
+      <ChatComposer status="streaming" onStop={() => {}} onSubmit={() => {}} />
     </View>
   ),
 };

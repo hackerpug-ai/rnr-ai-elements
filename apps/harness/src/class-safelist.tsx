@@ -162,6 +162,23 @@ const SAFELIST = [
   'text-neutral-400',
   'dark:text-neutral-500',
   'border-2',
+
+  // Prompt-input refactor (the composer at web parity): the only tokens in the wave
+  // absent from every older file (cross-file scan at HEAD). size-11 is the 44pt icon
+  // control (attach/globe/mic + the submit — the design spec's floor, overriding
+  // Button's h-10 w-10 icon size via twMerge); max-w-24 bounds the chip filename's
+  // truncation. Both live ONLY in prompt-input.tsx — new-file classes can drop from
+  // the compiled style map, so their first in-repo home is declared here.
+  'size-11',
+  'max-w-24',
+
+  // Composer evolution (+ menu / primary morph): NO additions. Cross-file scan of
+  // every class the new parts and stories introduce found an older device-verified
+  // home for each — rounded-t-xl (sheet's cva, wave 2), rounded-full (speech-input /
+  // slider), size-8 (commit/queue + the attachment chip), size-4 (model-selector's
+  // reserved check slot), p-0 (context.tsx), and the SheetTitle trio text-base /
+  // font-semibold / text-foreground (command's own title). gap-1, ml-auto,
+  // size-11, items-center/justify-center, rounded-md, bg-muted all predate the wave.
 ] as const;
 
 void SAFELIST;

@@ -1,0 +1,35 @@
+== prepare: hostile Expo app at /Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer ==
+removing previous hostile app (each run starts hostile-fresh)
+npx create-expo-app@latest consumer (SDK 57 template, npm world)
+dirt 1: npm-latest react-native-gesture-handler (a major ahead of Expo 57's ~2.32.0)
+dirt 2: the app's OWN components/ui/button.tsx (different variants than RNR's)
+fixture plumbing: a minimal uniwind-engine components.json so the REAL CLI can run (the prompt cannot fire without one)
+dirt 3 (fixture property): the root layout mounts NO PortalHost
+hostile app ready (1 components/(ai|ui) files, gesture-handler 3.x, no PortalHost)
+== gate step 13: the CLI names what it would overwrite BEFORE writing ==
+declined file is byte-identical: the prompt paused before any write to it
+overwrite prompt asserted (button.tsx overwrite prompt fired; declined file untouched; tree 1 -> 17 files)
+== gate step 13b: answering y installs through the same real CLI ==
+accepted add asserted (context + popover + progress installed; hostile button overwritten)
+== gate step 14: expo-doctor fails the pin mismatch instead of a native crash ==
+expo-doctor asserted (exit 1, names react-native-gesture-handler and ~2.32.0)
+== gate step 15: the portalling surface states its PortalHost prerequisite ==
+PREREQUISITE MESSAGE: PortalHost is a prerequisite: components/ai/context.tsx portals through @rn-primitives/portal (components/ui/popover.tsx → PopoverPrimitive.Portal); this app's root layout mounts NO PortalHost, and the primitive renders portal children only under a mounted host — without one the context surface renders NOTHING with no error. Mount <PortalHost /> from @rn-primitives/portal at the app root. The behavioral positive (popover renders through the root PortalHost) is proven by install-core.test.sh: tapOn context-trigger → assertVisible context-popover-content.
+node:internal/errors:542
+      throw error;
+      ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string or an instance of Buffer or URL. Received undefined
+    at Object.writeFileSync (node:fs:2410:14)
+    at [eval]:47:8
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v24.14.0

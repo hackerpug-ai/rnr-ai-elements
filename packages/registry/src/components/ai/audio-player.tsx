@@ -229,44 +229,50 @@ type AudioPlayerSeekButtonProps = {
   className?: string;
 };
 
-/** Seek back by seekOffsetMs — media-chrome's clamp, computed from reported state. */
+/** Seek back by seekOffsetMs — media-chrome's clamp, computed from reported state.
+ * The magnitude rides beside the icon (the web's −10/+10) so the offset is visible,
+ * not just spoken in the a11y label. */
 function AudioPlayerSeekBackwardButton({ seekOffsetMs = 10_000, className }: AudioPlayerSeekButtonProps) {
   const { positionMs, durationMs, seek } = useAudioPlayer();
   const label = `Back ${Math.round(seekOffsetMs / 1000)} seconds`;
+  const seconds = Math.round(seekOffsetMs / 1000);
 
   return (
     <Button
       variant="ghost"
-      size="icon"
+      // Not size="icon" — the magnitude label widens the pill past a square.
       disabled={!seek}
       onPress={seek ? () => seek(seekTarget(positionMs, -seekOffsetMs, durationMs)) : undefined}
       accessibilityLabel={label}
       accessibilityState={{ disabled: !seek }}
       hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-      className={cn(className)}
+      className={cn('h-10 px-3', className)}
     >
       <Icon as={RotateCcwIcon} size={18} className="text-muted-foreground" />
+      <Text className="text-sm font-medium tabular-nums text-muted-foreground">{seconds}</Text>
     </Button>
   );
 }
 
-/** Seek forward by seekOffsetMs — clamps to the duration when one is known. */
+/** Seek forward by seekOffsetMs — clamps to the duration when one is known. The
+ * magnitude rides beside the icon, mirroring SeekBackward. */
 function AudioPlayerSeekForwardButton({ seekOffsetMs = 10_000, className }: AudioPlayerSeekButtonProps) {
   const { positionMs, durationMs, seek } = useAudioPlayer();
   const label = `Forward ${Math.round(seekOffsetMs / 1000)} seconds`;
+  const seconds = Math.round(seekOffsetMs / 1000);
 
   return (
     <Button
       variant="ghost"
-      size="icon"
       disabled={!seek}
       onPress={seek ? () => seek(seekTarget(positionMs, seekOffsetMs, durationMs)) : undefined}
       accessibilityLabel={label}
       accessibilityState={{ disabled: !seek }}
       hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
-      className={cn(className)}
+      className={cn('h-10 px-3', className)}
     >
       <Icon as={RotateCwIcon} size={18} className="text-muted-foreground" />
+      <Text className="text-sm font-medium tabular-nums text-muted-foreground">{seconds}</Text>
     </Button>
   );
 }

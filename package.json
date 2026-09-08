@@ -1,5 +1,6 @@
 {
   "name": "rnr-ai-elements",
+  "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.32.1",
   "engines": {
@@ -12,6 +13,8 @@
     "storybook:device": "pnpm --filter harness storybook:device",
     "storybook:web": "pnpm --filter harness storybook:web",
     "registry:build": "tsx packages/registry/scripts/build-registry.ts",
+    "e2e:smoke:ios": "bash tests/sprint-01/install-core.test.sh --smoke ios",
+    "e2e:smoke:android": "bash tests/sprint-01/install-core.test.sh --smoke android",
     "check:tokens": "tsx scripts/check-tokens.ts",
     "check:registry": "tsx scripts/check-registry-fresh.ts"
   },

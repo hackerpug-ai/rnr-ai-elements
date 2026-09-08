@@ -5,6 +5,7 @@ import {
   PACKAGE_CHANGE_TYPE_KEYS,
   PACKAGE_CHANGE_TYPE_META,
   packageChangeTypeMeta,
+  versionTransitionSegments,
 } from '../packages/registry/src/components/ai/package-info.logic.ts';
 import { statusColor } from '../packages/registry/src/lib/status.ts';
 
@@ -40,6 +41,40 @@ describe('PACKAGE_CHANGE_TYPE_META (the compressed color map, exhaustive)', () =
     expect(packageChangeTypeMeta('patch').className).toBe(statusColor.success);
     expect(packageChangeTypeMeta('added').className).toBe(statusColor.running);
     expect(packageChangeTypeMeta('removed').className).toBe(statusColor.pending);
+  });
+});
+
+describe('versionTransitionSegments (the emphasized upgrade line)', () => {
+  it('both versions split into current + next — the new version is emphasizable', () => {
+    expect(versionTransitionSegments('1.2.3', '2.0.0')).toEqual({
+      kind: 'both',
+      current: '1.2.3',
+      next: '2.0.0',
+    });
+  });
+
+  it('only current renders as a single segment (the installed card)', () => {
+    expect(versionTransitionSegments('1.2.3')).toEqual({ kind: 'single', value: '1.2.3' });
+  });
+
+  it('only new renders as a single segment (the announced card)', () => {
+    expect(versionTransitionSegments(undefined, '2.0.0')).toEqual({
+      kind: 'single',
+      value: '2.0.0',
+    });
+  });
+
+  it('neither renders null — never "undefined → undefined" mid-stream', () => {
+    expect(versionTransitionSegments()).toBe(null);
+    expect(versionTransitionSegments('', '   ')).toBe(null);
+  });
+
+  it('whitespace around streamed versions is trimmed per segment', () => {
+    expect(versionTransitionSegments(' 1.2.3 ', ' 2.0.0 ')).toEqual({
+      kind: 'both',
+      current: '1.2.3',
+      next: '2.0.0',
+    });
   });
 });
 

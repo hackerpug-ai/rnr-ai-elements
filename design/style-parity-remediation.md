@@ -102,3 +102,140 @@ defects found ON DEVICE and fixed in-wave: the wave-13 nested-Text inheritance r
 default) and the brief's own icon error (input-streaming converged to the web's circle, not clock).
 Reviewer minors recorded, not fixed: `ToolStatusMeta.tone` field is vestigial for approval states;
 bar a11y restored via accessibilityRole/value (fixed with B1); pre-existing biome info baseline.
+---
+
+## Sprint-01 installed-app consumer @theme obligation (TASK-F7)
+
+**Finding.** The walking-skeleton install (TASK-F3, real RNR CLI from the pinned v0.1.0
+tag) writes nine `(dark:)text|bg|border-<palette>-<step>` classes from
+`apps/example/lib/status.ts`, `apps/example/components/ai/tool.logic.ts` and
+`apps/example/components/ui/icon.tsx`. Uniwind's RN interop carries no Tailwind default
+`@theme`, so each class compiles to nothing — renders colorless, no error — unless the
+consuming app's `apps/example/global.css` declares the matching `--color-*` var. That
+obligation is **silent**: the registry ships no `cssVars` (see ESCALATION 3), so nothing
+in the install flow declares these colors for the consumer. This section records the
+derivation, the declared slice, the harness full set the app is NOT inheriting, and the
+three escalations for sprint-03's distribution decision. **No fix is chosen here.**
+
+### OBLIGATION-DERIVATION-SPRINT-01-START
+
+Derivation (checklist rows 2/3/4/6 run against the installed tree — `apps/example/components`
++ `apps/example/lib`, never `packages/registry/src`). Verbatim stdout:
+
+Row 2 — derived set (sorted unique `--color-*` names written by the installed tree) and count:
+
+```text
+--color-blue-400
+--color-blue-600
+--color-green-500
+--color-green-600
+--color-orange-500
+--color-orange-600
+--color-red-500
+--color-yellow-400
+--color-yellow-600
+9
+```
+
+Row 3 — `comm -23` (derived but missing from `apps/example/global.css`); empty = 0 lines:
+
+```text
+```
+
+Row 4 — `comm -13` (declared in `apps/example/global.css` but not referenced by the
+installed tree); empty = 0 lines:
+
+```text
+```
+
+Row 6 — safelist files under `apps/example`; `0` = no safelist crutch:
+
+```text
+0
+```
+
+### OBLIGATION-DERIVATION-SPRINT-01-END
+
+### OBLIGATION-TABLE-SPRINT-01-START
+
+The declared slice in `apps/example/global.css` `@theme` — 9 entries, one row per class,
+each naming the item and the module that writes it. Every value is transcribed verbatim
+from the installed `tailwindcss` package's `theme.css` (verified: `9 declared; 0 invented
+values`).
+
+| `--color-*` | item | module writing the class | tone / note |
+|---|---|---|---|
+| `--color-green-500` | tool | `lib/status.ts` | success, dark twin (`dark:text-green-500`) |
+| `--color-green-600` | tool | `lib/status.ts` | success |
+| `--color-orange-500` | tool | `lib/status.ts` | denied, dark twin (`dark:text-orange-500`) — the entry a 3-class comment at `apps/harness/src/global.css:28-34` missed while `lib/status.ts` writes four classes |
+| `--color-orange-600` | tool | `lib/status.ts` | denied |
+| `--color-yellow-400` | tool | `components/ai/tool.logic.ts` | approval-requested, dark twin |
+| `--color-yellow-600` | tool | `components/ai/tool.logic.ts` | approval-requested |
+| `--color-blue-400` | tool | `components/ai/tool.logic.ts` | approval-responded, dark twin |
+| `--color-blue-600` | tool | `components/ai/tool.logic.ts` | approval-responded |
+| `--color-red-500` | icon (RNR primitive) | `components/ui/icon.tsx` | the installed icon item's JSDoc `@example` literal `text-red-500` (a class the mechanical derivation rows count, so the slice declares it) |
+
+### OBLIGATION-TABLE-SPRINT-01-END
+
+**FULL-SET — the harness's full declaration set, marked NOT declared in this app.**
+`apps/harness/src/global.css` today declares 62 `--color-*` lines / 39 distinct names:
+16 entries in its `@theme` escape/remediation palette slice (`--color-green-500`,
+`--color-green-600`, `--color-orange-600`, `--color-zinc-500`, `--color-zinc-700`,
+`--color-zinc-800`, `--color-zinc-950`, `--color-zinc-100`, `--color-yellow-600`,
+`--color-yellow-400`, `--color-blue-400`, `--color-blue-500`, `--color-blue-600`,
+`--color-red-500`, `--color-neutral-400`, `--color-neutral-500`) plus 23 role tokens in its
+`@layer theme` block declared twice each — once in the light block, once in the dark block
+(`--color-background` … `--color-ring`, with `--color-chart-1` through `--color-chart-5`
+among the twice-declared names). That full set is sprint-02's inheritance for the per-item
+table; the palette slice + the double-declared chart role tokens alone account for
+`26` declaration lines / `21` distinct names (the 16 `@theme` palette entries declared
+once, plus `--color-chart-1` … `--color-chart-5` declared twice). **NOT declared in this
+app's `@theme` slice:** apps/example declares only the 9 rows of
+OBLIGATION-TABLE-SPRINT-01; the harness's `@theme` extras (`--color-zinc-100/500/700/800/950`,
+`--color-blue-500`, `--color-neutral-400/500`) are not transcribed into the consumer
+`@theme` — over-declaring would hide which installed item requires what. (RNR's role
+tokens, including the chart-1..5 pair, do live in this app's `@layer theme` block as
+F1's verbatim RNR theme — untouched; they are obligations of that theme block, not of
+the palette slice this record tracks.)
+
+### ESCALATION 1 — our own harness never declared orange-500 (a denied status renders colorless in dark mode)
+
+The comment at `apps/harness/src/global.css:28-34` enumerates three escape classes
+(`text-green-600` / `dark:text-green-500` / `text-orange-600`) while
+`packages/registry/src/lib/status.ts` writes four — `success: 'text-green-600
+dark:text-green-500'` and `denied: 'text-orange-600 dark:text-orange-500'` — so
+`--color-orange-500` was never transcribed and a denied tool status renders colorless in
+dark mode in our own harness. Reproduce:
+
+```bash
+grep -c -- '--color-orange-500' apps/harness/src/global.css; grep -c 'dark:text-orange-500' packages/registry/src/lib/status.ts
+```
+
+prints `0` then `2` (0 = never declared in the harness css; 2 = the registry's `status.ts`
+writes `dark:text-orange-500` — once in its doc comment, once in the `denied` map).
+
+### ESCALATION 2 — shipped items point consumers at a `class-safelist.tsx` that will not exist in their tree
+
+Both shipped items carry a comment instructing consumers to safelist classes in a harness
+path (`class-safelist.tsx`) that a consumer install never creates. Reproduce:
+
+```bash
+grep -c class-safelist public/r/uniwind/file-tree.json public/r/uniwind/transcription.json
+```
+
+prints `1` for each file.
+
+### ESCALATION 3 — not one shipped item declares `cssVars`, so the obligation reaches the consumer as nothing at all
+
+The RNR CLI merges no theme block, and no registry item declares a `cssVars` payload, so
+the palette requirement recorded above arrives at the consumer as nothing. Reproduce:
+
+```bash
+node -e "const r=require('./packages/registry/registry.json');console.log(r.items.length, r.items.filter(i=>i.cssVars&&Object.keys(i.cssVars).length).length)"
+```
+
+prints `56 0` (56 items, 0 with a non-empty `cssVars`).
+
+**Distribution decision — NOT made here.** Whether the fix is registry `cssVars`, a
+documented install prerequisite, or converting the escape colors back to RNR roles is
+sprint-03's call, and it needs the flip evidence this task deliberately does not pre-empt.

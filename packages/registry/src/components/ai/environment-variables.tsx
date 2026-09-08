@@ -141,20 +141,24 @@ function EnvironmentVariablesTitle({ children, className }: { children?: string;
   );
 }
 
-/** The upstream Toggle, as the KB documents it: a Switch bound to the reveal-all state. */
+/** The upstream Toggle, as the KB documents it: a Switch bound to the reveal-all
+ * state, with the web's leading eye glyph — EyeOff while values are hidden (the state
+ * the switch resolves), Eye once revealed. One affordance, never a silent switch. */
 function EnvironmentVariablesToggle({ className }: { className?: string }) {
   const { showValues, setShowValues } = useEnvVars();
 
   return (
-    <Switch
-      checked={showValues}
-      onCheckedChange={setShowValues}
-      accessibilityLabel={showValues ? 'Hide values' : 'Reveal values'}
-      // RNR's Switch is ~18×32pt; hitSlop brings the target to the 44pt floor with no
-      // pixel change.
-      hitSlop={{ top: 13, bottom: 13, left: 6, right: 6 }}
-      className={className}
-    />
+    <View className={cn('flex-row items-center gap-2', className)}>
+      <Icon as={showValues ? EyeIcon : EyeOffIcon} size={16} className="text-muted-foreground" />
+      <Switch
+        checked={showValues}
+        onCheckedChange={setShowValues}
+        accessibilityLabel={showValues ? 'Hide values' : 'Reveal values'}
+        // RNR's Switch is ~18×32pt; hitSlop brings the target to the 44pt floor with no
+        // pixel change.
+        hitSlop={{ top: 13, bottom: 13, left: 6, right: 6 }}
+      />
+    </View>
   );
 }
 
@@ -254,11 +258,13 @@ function EnvironmentVariableValue({ className }: { className?: string }) {
   );
 }
 
-/** The upstream badge — outline chip reading "required" beside the key. */
+/** The upstream badge — the web's filled muted chip reading "Required" beside the key.
+ * Filled (secondary), not outline: the chip is a state marker, and the web paints it
+ * solid gray against the row. */
 function EnvironmentVariableRequired({ className }: { className?: string }) {
   return (
-    <Badge variant="outline" className={cn('shrink-0', className)}>
-      <Text>required</Text>
+    <Badge variant="secondary" className={cn('shrink-0', className)}>
+      <Text>Required</Text>
     </Badge>
   );
 }

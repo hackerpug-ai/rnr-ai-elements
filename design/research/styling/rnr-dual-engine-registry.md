@@ -198,6 +198,7 @@ AI surfaces must read as distinct from ordinary app chrome. That distinctness co
       "id": "hardcoded-color-literals",
       "mode": "content",
       "glob": ["packages/registry/src/**/*.{tsx,ts}"],
+      "exclude": ["packages/registry/src/components/ui/input-group.tsx"],
       "regex": "#[0-9a-fA-F]{8}\\b|#[0-9a-fA-F]{6}\\b|#[0-9a-fA-F]{3}\\b|\\brgba?\\(|\\bhsla?\\(|\\boklch\\(",
       "rationale": "A hardcoded color never re-themes and fails with no error. This is the exact defect in the prior art's DARK_MARKDOWN_STYLE constant."
     },
@@ -265,6 +266,12 @@ AI surfaces must read as distinct from ordinary app chrome. That distinctness co
       "exclude": ["**/index.{ts,tsx}", "**/*.stories.*", "**/*.test.*", "**/*.spec.*"],
       "regex": "className=",
       "description": "Every registry component styles through className utilities."
+    },
+    {
+      "id": "input-group-placeholder-parity",
+      "glob": ["packages/registry/src/components/ui/input-group.tsx"],
+      "regex": "placeholderTextColor=\\{scheme === 'dark' \\? 'hsl\\(0 0% 63\\.9%\\)' : 'hsl\\(0 0% 45\\.1%\\)'\\}",
+      "description": "Compensating check for the hard-coded-color exemption above: input-group's placeholderTextColor is the one sanctioned literal pair (uniwind has no placeholderClassName prop; a raw react-native TextInput accepts neither it nor uniwind's placeholderTextColorClassName, so the color cannot be a class). The literals must be byte-exact the muted-foreground theme parity values (light hsl(0 0% 45.1%) = #737373, dark hsl(0 0% 63.9%) = #a3a3a3) and nothing else — if this line changes shape or value, the gate fails and forces a re-review of the parity."
     },
     {
       "id": "cn-from-consumer-utils",

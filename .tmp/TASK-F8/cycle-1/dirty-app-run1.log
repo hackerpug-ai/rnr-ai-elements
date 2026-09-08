@@ -1,0 +1,9 @@
+== prepare: hostile Expo app at /Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer ==
+removing previous hostile app (each run starts hostile-fresh)
+npx create-expo-app@latest consumer (SDK 57 template, npm world)
+dirt 1: npm-latest react-native-gesture-handler (a major ahead of Expo 57's ~2.32.0)
+dirt 2: the app's OWN components/ui/button.tsx (different variants than RNR's)
+fixture plumbing: a minimal uniwind-engine components.json so the REAL CLI can run (the prompt cannot fire without one)
+dirt 3 (fixture property): the root layout mounts NO PortalHost
+grep: /Users/justinrich/.cache/agent-scratch/rnr-dirty/consumer/app/_layout.tsx: No such file or directory
+FATAL: hostile app should carry exactly 1 components/(ai|ui) file before install, found 2

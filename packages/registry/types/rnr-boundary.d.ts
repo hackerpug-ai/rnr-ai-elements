@@ -411,16 +411,70 @@ declare module '@/registry/{engine}/components/ui/dropdown-menu' {
   >;
 }
 
-// ---- The one native-module PEER: react-native-webview, for the opt-in web-preview
-// item. DIFFERENT FROM THE BLOCKS ABOVE — those alias modules that exist only after
-// the RNR CLI's install-time rewrite; this one is a real npm package that this package
-// DELIBERATELY DOES NOT DECLARE (no dep, no peer in package.json — pnpm's
-// auto-install-peers would materialize its real types and collide with this ambient
-// declaration, and the "builds without it" guarantee would rot). Typecheck reads THIS;
-// the consumer's real types take over after install (the surface below mirrors the
-// real package's shape for exactly the members web-preview.tsx touches, so the
-// emitted source typechecks against both). If react-native-webview EVER resolves in
-// this package, this block must be deleted, not augmented.
+// ---- The native-module PEERS for the opt-in items. SAME CONTRACT AS THE WEBVIEW
+// BLOCK BELOW — there are now three: react-native-webview (web-preview), and
+// expo-image-picker + expo-document-picker (prompt-input's attachment path). Each is a
+// real npm package this package DELIBERATELY DOES NOT DECLARE (no dep, no peer in
+// package.json — pnpm's auto-install-peers would materialize the real types and
+// collide with these ambient declarations, and the "builds without it" guarantee
+// would rot). Typecheck reads THESE; the consumer's real types take over after
+// install (each surface below mirrors the real package's shape for exactly the members
+// our source touches, so the emitted source typechecks against both). If any of these
+// packages EVER resolves in this package, its block must be deleted, not augmented.
+declare module 'expo-image-picker' {
+  export interface ImagePickerAsset {
+    uri: string;
+    fileName: string | null;
+    mimeType: string | null;
+    fileSize: number | null;
+  }
+  export interface ImagePickerResult {
+    canceled: boolean;
+    assets: ImagePickerAsset[];
+  }
+  export interface ImageLibraryOptions {
+    /** MediaType[] in the real package — a string union; the narrow shape we pass. */
+    mediaTypes?: readonly string[];
+    allowsMultipleSelection?: boolean;
+    selectionLimit?: number;
+    quality?: number;
+  }
+  // The camera shares the library's option family minus multi-select (a shot is
+  // single-shot by nature); only the members we pass are restated.
+  export interface CameraOptions {
+    mediaTypes?: readonly string[];
+    quality?: number;
+  }
+  // The real PermissionResponse: granted is the only member the denial-as-canceled
+  // branch reads; the rest mirrors the package so consumer call sites stay honest.
+  export interface CameraPermissionResponse {
+    granted: boolean;
+    canAskAgain: boolean;
+    expires: string;
+  }
+  export function launchImageLibraryAsync(options: ImageLibraryOptions): Promise<ImagePickerResult>;
+  export function launchCameraAsync(options?: CameraOptions): Promise<ImagePickerResult>;
+  export function requestCameraPermissionsAsync(): Promise<CameraPermissionResponse>;
+}
+
+declare module 'expo-document-picker' {
+  export interface DocumentAsset {
+    uri: string;
+    name: string;
+    size: number | null;
+    mimeType: string | null;
+  }
+  export interface DocumentResult {
+    canceled: boolean;
+    assets: DocumentAsset[];
+  }
+  export interface DocumentPickerOptions {
+    multiple?: boolean;
+    type?: string | string[];
+  }
+  export function getDocumentAsync(options?: DocumentPickerOptions): Promise<DocumentResult>;
+}
+
 declare module 'react-native-webview' {
   import type * as React from 'react';
   import type { ViewProps } from 'react-native';

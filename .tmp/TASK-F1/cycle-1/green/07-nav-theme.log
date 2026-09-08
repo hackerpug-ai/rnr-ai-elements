@@ -1,0 +1,8 @@
+=== cat apps/example/lib/nav-theme.ts ===
+/**
+ * NAV_THEME lives in ./theme.ts (the file name the RNR CLI's `doctor` probes as the
+ * consumer's nav-theme module); this module re-exports it under the name this app's
+ * layouts import. Same token source as global.css — nothing template-default.
+ */
+export { NAV_THEME } from './theme';
+exit=0

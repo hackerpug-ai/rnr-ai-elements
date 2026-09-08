@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+@import 'uniwind';
+
+/*
+ * CONSUMER THEME — this file belongs to apps/example, the real consumer app, exactly
+ * like any app that installs our components.
+ *
+ * The registry itself ships NO theme. That is not our invention: RNR's own registry
+ * items carry no `cssVars` and no `theme.ts` (verified against
+ * reactnativereusables.com/r/uniwind/*.json). Tokens live in the consuming app.
+ *
+ * Values below are RNR's own, transcribed VERBATIM from
+ * founded-labs/react-native-reusables apps/showcase/global.css (the same block the
+ * Storybook harness carries) so that this app renders exactly what a real RNR app
+ * renders. Only the SYNTAX differs: RNR publishes the Tailwind v3 shape (:root /
+ * .dark:root, bare HSL triplets); this is the Tailwind v4 + Uniwind shape per
+ * docs.uniwind.dev/migration-from-nativewind. The colors are identical.
+ */
+
+@theme {
+  --font-sans: 'Spline Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --radius: 0.625rem;
+
+  /* CONSUMER @theme OBLIGATION — the palette slice the INSTALLED walking-skeleton
+   * items silently require (recorded at design/style-parity-remediation.md,
+   * OBLIGATION-DERIVATION-SPRINT-01). Derived mechanically over the installed tree
+   * (apps/example/components + apps/example/lib), never transcribed from a comment:
+   * every (dark:)text|bg|border-<palette>-<step> class those files write, mapped to
+   * --color-<palette>-<step>. Uniwind's RN interop does not carry Tailwind's default
+   * @theme — only the vars this file declares — so each class below compiles to
+   * nothing (renders colorless, no error) if its var is missing. The orange-500
+   * entry (declared below) was the one a human transcribing the 3-class comment at
+   * apps/harness/src/global.css:28-34 missed while lib/status.ts:30 writes four
+   * classes; a denied tool status rendered colorless in dark mode in our own
+   * harness. Values are Tailwind v4's own, transcribed VERBATIM from the installed
+   * tailwindcss package's theme.css (no hand-invented hex). */
+  --color-green-500: oklch(0.723 0.219 149.579); /* tool, lib/status.ts success dark twin */
+  --color-green-600: oklch(0.627 0.194 149.214); /* tool, lib/status.ts success */
+  --color-orange-500: oklch(0.705 0.213 47.604); /* tool, lib/status.ts denied-in-dark */
+  --color-orange-600: oklch(0.646 0.222 41.116); /* tool, lib/status.ts denied */
+  --color-yellow-400: oklch(0.852 0.199 91.936); /* tool, tool.logic.ts approval-requested dark twin */
+  --color-yellow-600: oklch(0.681 0.162 75.834); /* tool, tool.logic.ts approval-requested */
+  --color-blue-400: oklch(0.707 0.165 254.624); /* tool, tool.logic.ts approval-responded dark twin */
+  --color-blue-600: oklch(0.546 0.245 262.881); /* tool, tool.logic.ts approval-responded */
+  --color-red-500: oklch(0.637 0.237 25.331); /* icon (RNR primitive), icon.tsx JSDoc example */
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-background: hsl(0 0% 100%);
+      --color-foreground: hsl(0 0% 3.9%);
+      --color-card: hsl(0 0% 100%);
+      --color-card-foreground: hsl(0 0% 3.9%);
+      --color-popover: hsl(0 0% 100%);
+      --color-popover-foreground: hsl(0 0% 3.9%);
+      --color-primary: hsl(0 0% 9%);
+      --color-primary-foreground: hsl(0 0% 98%);
+      --color-secondary: hsl(0 0% 96.1%);
+      --color-secondary-foreground: hsl(0 0% 9%);
+      --color-muted: hsl(0 0% 96.1%);
+      --color-muted-foreground: hsl(0 0% 45.1%);
+      --color-accent: hsl(0 0% 96.1%);
+      --color-accent-foreground: hsl(0 0% 9%);
+      --color-destructive: hsl(0 84.2% 60.2%);
+      --color-border: hsl(0 0% 89.8%);
+      --color-input: hsl(0 0% 89.8%);
+      --color-ring: hsl(0 0% 63%);
+      --color-chart-1: hsl(12 76% 61%);
+      --color-chart-2: hsl(173 58% 39%);
+      --color-chart-3: hsl(197 37% 24%);
+      --color-chart-4: hsl(43 74% 66%);
+      --color-chart-5: hsl(27 87% 67%);
+    }
+
+    @variant dark {
+      --color-background: hsl(0 0% 3.9%);
+      --color-foreground: hsl(0 0% 98%);
+      --color-card: hsl(0 0% 3.9%);
+      --color-card-foreground: hsl(0 0% 98%);
+      --color-popover: hsl(0 0% 3.9%);
+      --color-popover-foreground: hsl(0 0% 98%);
+      --color-primary: hsl(0 0% 98%);
+      --color-primary-foreground: hsl(0 0% 9%);
+      --color-secondary: hsl(0 0% 14.9%);
+      --color-secondary-foreground: hsl(0 0% 98%);
+      --color-muted: hsl(0 0% 14.9%);
+      --color-muted-foreground: hsl(0 0% 63.9%);
+      --color-accent: hsl(0 0% 14.9%);
+      --color-accent-foreground: hsl(0 0% 98%);
+      --color-destructive: hsl(0 70.9% 59.4%);
+      --color-border: hsl(0 0% 14.9%);
+      --color-input: hsl(0 0% 14.9%);
+      --color-ring: hsl(300 0% 45%);
+      --color-chart-1: hsl(220 70% 50%);
+      --color-chart-2: hsl(160 60% 45%);
+      --color-chart-3: hsl(30 80% 55%);
+      --color-chart-4: hsl(280 65% 60%);
+      --color-chart-5: hsl(340 75% 55%);
+    }
+  }
+}

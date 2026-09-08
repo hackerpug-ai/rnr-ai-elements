@@ -20,10 +20,11 @@ import { cn } from '@/registry/{engine}/lib/utils';
 import * as React from 'react';
 import { View, type ViewProps } from 'react-native';
 import {
-  formatVersionTransition,
   installCommand,
   packageChangeTypeMeta,
+  versionTransitionSegments,
   type PackageChangeType,
+  type VersionTransition,
 } from './package-info.logic';
 
 /**
@@ -56,8 +57,8 @@ import {
 
 type PackageInfoContextValue = {
   name: string;
-  /** "1.2.3 → 2.0.0" / "1.2.3" / null — the transition display, precomputed. */
-  versionLabel: string | null;
+  /** Segmented transition — the upgrade target emphasized over the installed version. */
+  versionTransition: VersionTransition;
   changeType?: PackageChangeType;
   /** The copyable line the install part renders. */
   installCommandText: string;
@@ -97,7 +98,7 @@ function PackageInfo({
   const contextValue = React.useMemo<PackageInfoContextValue>(
     () => ({
       name,
-      versionLabel: formatVersionTransition(currentVersion, newVersion),
+      versionTransition: versionTransitionSegments(currentVersion, newVersion),
       changeType,
       // The NEW version pins the install when present (an upgrade card pins its
       // target); otherwise latest — currentVersion describes, it does not pin.
@@ -142,16 +143,42 @@ function PackageInfoName({ children, className }: { children?: string; className
 }
 
 /**
- * The transition line, from context. Null context (no versions yet) renders NOTHING —
- * never "undefined → undefined" mid-stream.
+ * The transition line, from context. The upgrade case (current → next) renders as
+ * two spans so the NEW version — what the card is announcing — is emphasized over
+ * the installed one; single-version cards render plainly. Null context (no versions
+ * yet) renders NOTHING — never "undefined → undefined" mid-stream. `children`
+ * overrides with a plain string, as upstream allows.
  */
 function PackageInfoVersion({ children, className }: { children?: string; className?: string }) {
-  const { versionLabel } = usePackageInfo();
-  if (children === undefined && versionLabel === null) return null;
+  const { versionTransition } = usePackageInfo();
+  if (children !== undefined) {
+    return (
+      <Text style={monoStyle} className={cn('text-xs text-muted-foreground', className)}>
+        {children}
+      </Text>
+    );
+  }
+  if (versionTransition === null) return null;
+
+  if (versionTransition.kind === 'both') {
+    return (
+      <View className={cn('flex-row items-baseline', className)}>
+        <Text numberOfLines={1} style={monoStyle} className="text-xs text-muted-foreground">
+          {versionTransition.current}
+        </Text>
+        <Text style={monoStyle} className="px-0.5 text-xs text-muted-foreground">
+          →
+        </Text>
+        <Text numberOfLines={1} style={monoStyle} className="max-w-28 text-xs font-semibold text-foreground">
+          {versionTransition.next}
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <Text numberOfLines={1} style={monoStyle} className={cn('text-xs text-muted-foreground', className)}>
-      {children ?? versionLabel}
+      {versionTransition.value}
     </Text>
   );
 }

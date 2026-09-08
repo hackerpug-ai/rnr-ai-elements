@@ -1,0 +1,14 @@
+# FIX-F5-1 throwaway probe (not part of the sprint lane): does the context
+# popover open + render at all? Isolates the context-popover-content assertion
+# from the rest of the cold-boot flow.
+appId: ai.hackerpug.rnrexample
+---
+- launchApp:
+    clearState: true
+- openLink: "ai-elements-example://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+- tapOn:
+    point: "69%, 56%"
+- tapOn:
+    id: "context-trigger"
+- assertVisible:
+    id: "context-popover-content"
