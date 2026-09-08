@@ -21,18 +21,17 @@ const registry = JSON.parse(
 describe('registry item files are self-resolving', () => {
   for (const item of registry.items) {
     it(`${item.name}: every relative import resolves within its own file set`, () => {
-      const listedNames = new Set(item.files.map((f) => basename(f['path'])));
+      const listedNames = new Set(item.files.map((f) => basename(f.path)));
       const missing: string[] = [];
       for (const f of item.files) {
         const source = readFileSync(join(process.cwd(), f.path), 'utf8');
-        const re = /from '(\.[^']+)'/g;
-        let m: RegExpExecArray | null;
-        while ((m = re.exec(source)) !== null) {
+        const specs = [...source.matchAll(/from '(\.[^']+)'/g)].map((hit) => hit[1]);
+        for (const spec of specs) {
           // Compare on the FINAL path segment: the consumer tree flattens every
           // item's files into one directory, so ../ui/command.logic must find
           // command.logic.ts wherever the manifest lists it.
-          const rel = m[1]
-            .replace(/\.\.?\//, '')
+          const rel = spec
+            .replace(/^\.\.?\//, '')
             .split('/')
             .pop() as string;
           const candidates = new Set([
@@ -43,7 +42,7 @@ describe('registry item files are self-resolving', () => {
             join(rel, 'index.ts'),
           ]);
           if (![...candidates].some((c) => listedNames.has(c))) {
-            missing.push(`${basename(f.path)} → ${m[1]}`);
+            missing.push(`${basename(f.path)} → ${spec}`);
           }
         }
       }
