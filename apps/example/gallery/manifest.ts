@@ -4,342 +4,585 @@ export type GalleryItem = {
   kind: 'component' | 'ui' | 'lib';
   title: string;
   description: string;
+  dependencies: string[];
+  permissions: { ios?: string[]; android?: string[] };
+  /** True when every declared dependency ships in Expo Go or is pure JS. */
+  expoGo: boolean;
 };
 export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "name": "agent",
     "kind": "component",
     "title": "Agent",
-    "description": "The identity/run surface: the persona molecule in the header plus a run-state badge and the thumb-reachable Start/Pause/Stop control bar the web config card never had. The run is the caller's — controlled status, reported verbs, dead bar when no handler is wired. The web card's instructions/tools/output body is deferred to its own surfaces."
+    "description": "The identity/run surface: the persona molecule in the header plus a run-state badge and the thumb-reachable Start/Pause/Stop control bar the web config card never had. The run is the caller's — controlled status, reported verbs, dead bar when no handler is wired. The web card's instructions/tools/output body is deferred to its own surfaces.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "artifact",
     "kind": "component",
     "title": "Artifact",
-    "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship — neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped — hover surfaces are dead under a thumb; label becomes the accessibility label."
+    "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship — neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped — hover surfaces are dead under a thumb; label becomes the accessibility label.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "attachments",
     "kind": "component",
     "title": "Attachments",
-    "description": "The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants, with list rows composed on the item primitive. File acquisition does NOT port — the PRD verdict replaces drag-and-drop and the file input with the caller's native pickers and their permission contracts. Remove is always visible (the web's hover-reveal is dead on touch) and DISABLES rather than disappears without onRemove; per-file upload state ('uploading' | 'done' | 'error') is the display seam for the caller-owned lifecycle. The hover preview card and the <video> thumbnail do not ship — hover is unreachable under a thumb and a media dependency for one tile is out of contract."
+    "description": "The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants, with list rows composed on the item primitive. File acquisition does NOT port — the PRD verdict replaces drag-and-drop and the file input with the caller's native pickers and their permission contracts. Remove is always visible (the web's hover-reveal is dead on touch) and DISABLES rather than disappears without onRemove; per-file upload state ('uploading' | 'done' | 'error') is the display seam for the caller-owned lifecycle. The hover preview card and the <video> thumbnail do not ship — hover is unreachable under a thumb and a media dependency for one tile is out of contract.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "audio-player",
     "kind": "component",
     "title": "Audio Player",
-    "description": "Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4). Native-substitute per the PRD verdict — the HTML audio element is replaced by the CALLER'S audio module (expo-audio, a native player, an <audio> element on web): state-in/callbacks-out, no audio dependency in the registry, Expo Go-clean. Upstream part set at parity: play/pause, ±seek buttons (seekOffset 10 → seekOffsetMs 10000, clamped), time/duration displays, scrubber and volume over the slider atom, ButtonGroup control bar. AudioPlayerElement dropped on the record (it IS the substitution). Unwired seams disable their controls — never pretend; AC-3 (playback survives transcript scrolling) holds by construction: nothing here plays."
+    "description": "Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4). Native-substitute per the PRD verdict — the HTML audio element is replaced by the CALLER'S audio module (expo-audio, a native player, an <audio> element on web): state-in/callbacks-out, no audio dependency in the registry, Expo Go-clean. Upstream part set at parity: play/pause, ±seek buttons (seekOffset 10 → seekOffsetMs 10000, clamped), time/duration displays, scrubber and volume over the slider atom, ButtonGroup control bar. AudioPlayerElement dropped on the record (it IS the substitution). Unwired seams disable their controls — never pretend; AC-3 (playback survives transcript scrolling) holds by construction: nothing here plays.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "chain-of-thought",
     "kind": "component",
     "title": "Chain of Thought",
-    "description": "The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with per-step status joined by a rail; the disclosure reuses the reasoning lifecycle (auto-open on stream, auto-close after, user toggle stands it down) rather than forking it. The collapsed badge counts steps from data — the collapsed content is unmounted, so the count must not live in the tree."
+    "description": "The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with per-step status joined by a rail; the disclosure reuses the reasoning lifecycle (auto-open on stream, auto-close after, user toggle stands it down) rather than forking it. The collapsed badge counts steps from data — the collapsed content is unmounted, so the count must not live in the tree.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "checkpoint",
     "kind": "component",
     "title": "Checkpoint",
-    "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first — the web puts it behind a hover tooltip, which does not exist on touch."
+    "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first — the web puts it behind a hover tooltip, which does not exist on touch.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "commit",
     "kind": "component",
     "title": "Commit",
-    "description": "A commit reference row with its changed files behind a disclosure: hash chip, message, author, relative timestamp, and per-file +/- counts (UC-CODE-01 AC-2: copy the hash with one tap). File rows compose the item primitive; additions/deletions carry the web's green/red on the house status map and show nothing at zero. The web's four-hue file-status palette compresses onto the three permitted escapes with the A/M/D/R letters carrying the difference; the timestamp is hand-rolled over the same day math so Hermes Intl variance and the Vitest tier are both served; the touch affordance the web left to cursor-hover is the house rotating chevron."
+    "description": "A commit reference row with its changed files behind a disclosure: hash chip, message, author, relative timestamp, and per-file +/- counts (UC-CODE-01 AC-2: copy the hash with one tap). File rows compose the item primitive; additions/deletions carry the web's green/red on the house status map and show nothing at zero. The web's four-hue file-status palette compresses onto the three permitted escapes with the A/M/D/R letters carrying the difference; the timestamp is hand-rolled over the same day math so Hermes Intl variance and the Vitest tier are both served; the touch affordance the web left to cursor-hover is the house rotating chevron.",
+    "dependencies": [
+      "react-native-reanimated",
+      "expo-clipboard"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "confirmation",
     "kind": "component",
     "title": "Confirmation",
-    "description": "Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING without an approval or while arguments are still streaming — the web contract, made total in a Vitest-owned phase machine. Once answered the pair stays: the chosen side resolves with a check, the other disables, and the outcome persists in the transcript (question.tsx's persistence, replacing the web's swap-to-Accepted/Rejected rows)."
+    "description": "Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING without an approval or while arguments are still streaming — the web contract, made total in a Vitest-owned phase machine. Once answered the pair stays: the chosen side resolves with a check, the other disables, and the outcome persists in the transcript (question.tsx's persistence, replacing the web's swap-to-Accepted/Rejected rows).",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "context",
     "kind": "component",
     "title": "Context",
-    "description": "The context-window budget chip and its press-opened breakdown (the PRD verdict turns the web's hover card into a popover; the data displayed is unchanged). Composes RNR popover and progress; ContextContent passes insets through to the anchored content, the consumer's per-screen ritual. Cost is INJECTED, not computed — the web prices with tokenlens, a dependency this registry does not take, so rows and footer take caller-formatted costText and an unsupplied cost renders the web's own unknown-marker instead of a lying $0.00. The SVG progress ring is a themed PieChartIcon: a raw Svg cannot receive className without engine-specific cssInterop, which the styling contract forbids in registry source. Zero-token usage rows render nothing, upstream trap parity."
+    "description": "The context-window budget chip and its press-opened breakdown (the PRD verdict turns the web's hover card into a popover; the data displayed is unchanged). Composes RNR popover and progress; ContextContent passes insets through to the anchored content, the consumer's per-screen ritual. Cost is INJECTED, not computed — the web prices with tokenlens, a dependency this registry does not take, so rows and footer take caller-formatted costText and an unsupplied cost renders the web's own unknown-marker instead of a lying $0.00. The SVG progress ring is a themed PieChartIcon: a raw Svg cannot receive className without engine-specific cssInterop, which the styling contract forbids in registry source. Zero-token usage rows render nothing, upstream trap parity.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "conversation",
     "kind": "component",
     "title": "Conversation",
-    "description": "Virtualized transcript. Inverted FlatList with maintainVisibleContentPosition, so stick-to-bottom is free and releases the moment the user scrolls up. Keyboard avoidance and safe-area insets, which the web original has nothing to copy for."
+    "description": "Virtualized transcript. Inverted FlatList with maintainVisibleContentPosition, so stick-to-bottom is free and releases the moment the user scrolls up. Keyboard avoidance and safe-area insets, which the web original has nothing to copy for.",
+    "dependencies": [
+      "react-native-safe-area-context"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "environment-variables",
     "kind": "component",
     "title": "Environment Variables",
-    "description": "Masked key/value rows for the agent's environment (UC-CODE-01 AC-4: masked by default, reveal a single value on demand). Port-at-parity per the PRD verdict. Upstream part set at parity (Header/Title/Toggle/Content/Variable/Name/Value/Required/CopyButton/Group; showValues/defaultShowValues=false/onShowValuesChange) — the Toggle is RNR's vendored Switch, matching the KB's documented composition. ONE declared addition: upstream's reveal is global-only, so each row also carries a per-value eye toggle to satisfy AC-4's single-value wording; the clipboard always receives the REAL value (the mask is a display guard, documented in the logic). The copy emits the KB's documented export KEY=\"value\" line with quotes escaped. Composed on the table atom per the build plan: one KEY/VALUE table, fixed column sizes, horizontal scroll for overflowing keys, groups as label rows, mono keys via lib/mono. No input ships — the upstream part set has no editable field; editing the environment is the caller's app."
+    "description": "Masked key/value rows for the agent's environment (UC-CODE-01 AC-4: masked by default, reveal a single value on demand). Port-at-parity per the PRD verdict. Upstream part set at parity (Header/Title/Toggle/Content/Variable/Name/Value/Required/CopyButton/Group; showValues/defaultShowValues=false/onShowValuesChange) — the Toggle is RNR's vendored Switch, matching the KB's documented composition. ONE declared addition: upstream's reveal is global-only, so each row also carries a per-value eye toggle to satisfy AC-4's single-value wording; the clipboard always receives the REAL value (the mask is a display guard, documented in the logic). The copy emits the KB's documented export KEY=\"value\" line with quotes escaped. Composed on the table atom per the build plan: one KEY/VALUE table, fixed column sizes, horizontal scroll for overflowing keys, groups as label rows, mono keys via lib/mono. No input ships — the upstream part set has no editable field; editing the environment is the caller's app.",
+    "dependencies": [
+      "expo-clipboard"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "file-tree",
     "kind": "component",
     "title": "File Tree",
-    "description": "The agent workspace browser (UC-CODE-01 AC-1: expand and collapse directories on a phone-width screen). Port-adapted per the PRD verdict, which offers horizontal scroll OR drill-in; the port takes the horizontal-scroll branch — the whole tree sits in axis-scrolled ScrollViews so depth pushes right instead of crushing names. Upstream part set at parity and the caller-supplied tree arrives as COMPOSED JSX (FileTreeFolder/FileTreeFile parts), not a data prop: expanded/defaultExpanded/onExpandedChange (Set<string>), selectedPath/onSelect. The inventory's composition law is binding and touch-shaped: the CHEVRON expands/collapses, the NAME selects, one tap never does both — two targets per row, both at the 44pt floor via hitSlop. Rows compose the item atom; an empty tree falls back to the empty atom; folder state is a copy-on-write toggle in file-tree.logic (Vitest-owned, mutation-proof)."
+    "description": "The agent workspace browser (UC-CODE-01 AC-1: expand and collapse directories on a phone-width screen). Port-adapted per the PRD verdict, which offers horizontal scroll OR drill-in; the port takes the horizontal-scroll branch — the whole tree sits in axis-scrolled ScrollViews so depth pushes right instead of crushing names. Upstream part set at parity and the caller-supplied tree arrives as COMPOSED JSX (FileTreeFolder/FileTreeFile parts), not a data prop: expanded/defaultExpanded/onExpandedChange (Set<string>), selectedPath/onSelect. The inventory's composition law is binding and touch-shaped: the CHEVRON expands/collapses, the NAME selects, one tap never does both — two targets per row, both at the 44pt floor via hitSlop. Rows compose the item atom; an empty tree falls back to the empty atom; folder state is a copy-on-write toggle in file-tree.logic (Vitest-owned, mutation-proof).",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "image",
     "kind": "component",
     "title": "Image",
-    "description": "A model-generated image. Takes the AI SDK result object and builds the data URI internally, preserving the web prop shape. alt becomes accessibilityLabel."
+    "description": "A model-generated image. Takes the AI SDK result object and builds the data URI internally, preserving the web prop shape. alt becomes accessibilityLabel.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "inline-citation",
     "kind": "component",
     "title": "Inline Citation",
-    "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface — a popover or sheet hosting this registry's Sources — is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source)."
+    "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface — a popover or sheet hosting this registry's Sources — is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source).",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "message",
     "kind": "component",
     "title": "Message",
-    "description": "One turn. The prop is `from`, not `role`. Markdown is INJECTED via renderMarkdown and defaults to plain Text, which keeps the core Expo Go-clean."
+    "description": "One turn. The prop is `from`, not `role`. Markdown is INJECTED via renderMarkdown and defaults to plain Text, which keeps the core Expo Go-clean.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "mic-selector",
     "kind": "component",
     "title": "Mic Selector",
-    "description": "The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio routes, not an enumerable input device list, so the route list is CALLER-SUPPLIED — the web's useAudioDevices (getUserMedia) does not port, and an empty list renders an honest empty state the consumer can point at permission denial. Composed on the command atom with the route-kind marks (built-in, wired, bluetooth, other); routes order built-in first, caller order preserved within a kind."
+    "description": "The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio routes, not an enumerable input device list, so the route list is CALLER-SUPPLIED — the web's useAudioDevices (getUserMedia) does not port, and an empty list renders an honest empty state the consumer can point at permission denial. Composed on the command atom with the route-kind marks (built-in, wired, bluetooth, other); routes order built-in first, caller order preserved within a kind.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "model-selector",
     "kind": "component",
     "title": "Model Selector",
-    "description": "The searchable model picker, composed on the command atom. Port-adapted per the PRD verdict: a dropdown on web becomes a bottom sheet with search, sized for one-handed use — same selection contract (value is the model id your route receives), different presentation. Provider grouping survives as section headings; the provider doubles as a filter keyword. ModelSelectorShortcut (⌘ hints) is dropped — there is no ⌘ on a phone — and the remote models.dev SVG logo is a declared substitution (themed mark, consumer-supplied raster source; modelSelectorLogoUrl keeps the URL derivation as data)."
+    "description": "The searchable model picker, composed on the command atom. Port-adapted per the PRD verdict: a dropdown on web becomes a bottom sheet with search, sized for one-handed use — same selection contract (value is the model id your route receives), different presentation. Provider grouping survives as section headings; the provider doubles as a filter keyword. ModelSelectorShortcut (⌘ hints) is dropped — there is no ⌘ on a phone — and the remote models.dev SVG logo is a declared substitution (themed mark, consumer-supplied raster source; modelSelectorLogoUrl keeps the URL derivation as data).",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "open-in-chat",
     "kind": "component",
     "title": "Open In Chat",
-    "description": "The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same six targets and the same menu as the web, with the anchor's target=_blank replaced by the platform link handler behind lib/url's http/https allowlist. The URL templates are the contract and are reproduced byte-what-upstream-produces (hints=search on ChatGPT included). A caller-supplied onOpen replaces the hop; a refused or failed open surfaces through onOpenError, never silently. Unavailable targets are hidden by composition — the consumer mounts only the rows that exist for their users. Brand SVGs are web assets: rows ship themed lucide marks in the same slot, titles carry the identity."
+    "description": "The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same six targets and the same menu as the web, with the anchor's target=_blank replaced by the platform link handler behind lib/url's http/https allowlist. The URL templates are the contract and are reproduced byte-what-upstream-produces (hints=search on ChatGPT included). A caller-supplied onOpen replaces the hop; a refused or failed open surfaces through onOpenError, never silently. Unavailable targets are hidden by composition — the consumer mounts only the rows that exist for their users. Brand SVGs are web assets: rows ship themed lucide marks in the same slot, titles carry the identity.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "package-info",
     "kind": "component",
     "title": "Package Info",
-    "description": "Card of package name, version, and a copyable install command (UC-CODE-01 AC-3) — port-at-parity per the PRD verdict, all RNR primitives. Upstream part set at parity (Header/Name/Version/Description/Content/Dependencies/Dependency/ChangeType; name/currentVersion/newVersion/changeType): the version line is the KB's version transition display (current → next, null renders nothing), and the web's five change-type hues compress onto the house status vocabulary with the badge WORD carrying the kind. ONE declared addition: upstream ships no install-command part but AC-3 is binding, so PackageInfoInstall composes the existing Snippet organism inside the card — the new version pins the install when present, otherwise latest. Dependencies render as ONE table (package/version) per the build plan, fixed column sizes, horizontal scroll, mono identifiers via lib/mono."
+    "description": "Card of package name, version, and a copyable install command (UC-CODE-01 AC-3) — port-at-parity per the PRD verdict, all RNR primitives. Upstream part set at parity (Header/Name/Version/Description/Content/Dependencies/Dependency/ChangeType; name/currentVersion/newVersion/changeType): the version line is the KB's version transition display (current → next, null renders nothing), and the web's five change-type hues compress onto the house status vocabulary with the badge WORD carrying the kind. ONE declared addition: upstream ships no install-command part but AC-3 is binding, so PackageInfoInstall composes the existing Snippet organism inside the card — the new version pins the install when present, otherwise latest. Dependencies render as ONE table (package/version) per the build plan, fixed column sizes, horizontal scroll, mono identifiers via lib/mono.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "persona",
     "kind": "component",
     "title": "Persona",
-    "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation — the animated avatar is not ported, so no consumer inherits a native animation runtime."
+    "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation — the animated avatar is not ported, so no consumer inherits a native animation runtime.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "plan",
     "kind": "component",
     "title": "Plan",
-    "description": "The agent's plan: a card + collapsible shell whose steps are the TASK organism's own rows — composed by the consumer, never a fork of task's internals. Title and description shimmer while streaming, at web parity, on the Shimmer organism's house pulse; the footer badge keeps the remaining count glanceable even collapsed. defaultOpen stays true — a plan is the overview the user asked for, unlike task's phone-density collapse."
+    "description": "The agent's plan: a card + collapsible shell whose steps are the TASK organism's own rows — composed by the consumer, never a fork of task's internals. Title and description shimmer while streaming, at web parity, on the Shimmer organism's house pulse; the footer badge keeps the remaining count glanceable even collapsed. defaultOpen stays true — a plan is the overview the user asked for, unlike task's phone-density collapse.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "prompt-input",
     "kind": "component",
     "title": "Prompt Input",
-    "description": "The composer at web parity: provider/controller context, attachment chips over the native pickers, the + tools menu (bottom sheet — camera/photos/files rows through the picker seam, checkmarked consumer toggles), the model chip composed in-row, and the never-dead primary slot (voice → send → stop morph; PromptInputSubmit stays exported for direct use). Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT AND ATTACHMENTS INTACT. expo-image-picker + expo-document-picker are opt-in install-time dependencies (the ambient boundary keeps typecheck green without them)."
+    "description": "The composer at web parity: provider/controller context, attachment chips over the native pickers, the + tools menu (bottom sheet — camera/photos/files rows through the picker seam, checkmarked consumer toggles), the model chip composed in-row, and the never-dead primary slot (voice → send → stop morph; PromptInputSubmit stays exported for direct use). Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT AND ATTACHMENTS INTACT. expo-image-picker + expo-document-picker are opt-in install-time dependencies (the ambient boundary keeps typecheck green without them).",
+    "dependencies": [
+      "react-native-safe-area-context",
+      "expo-document-picker",
+      "expo-image-picker"
+    ],
+    "permissions": {
+      "ios": [
+        "NSPhotoLibraryUsageDescription",
+        "NSCameraUsageDescription"
+      ],
+      "android": [
+        "READ_MEDIA_IMAGES",
+        "CAMERA"
+      ]
+    },
+    "expoGo": true
   },
   {
     "name": "question",
     "kind": "component",
     "title": "Question",
-    "description": "The agent asks, the user answers with one tap — the PRD's touch verdict, where a tap IS the submission and the choice persists in the transcript afterward. The web original's select-then-submit and free-text modes are dropped with it."
+    "description": "The agent asks, the user answers with one tap — the PRD's touch verdict, where a tap IS the submission and the choice persists in the transcript afterward. The web original's select-then-submit and free-text modes are dropped with it.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "queue",
     "kind": "component",
     "title": "Queue",
-    "description": "The queued-actions list: a collapsible section with the count on the trigger and a remove action per row. The component NEVER owns the queue — caller state, onRemove callback, and the pure remove/enqueue/count helpers in queue.logic. Rows compose the item primitive; actions are always visible (the web's hover-reveal is dead on touch) and the list scrolls under a max-h cap."
+    "description": "The queued-actions list: a collapsible section with the count on the trigger and a remove action per row. The component NEVER owns the queue — caller state, onRemove callback, and the pure remove/enqueue/count helpers in queue.logic. Rows compose the item primitive; actions are always visible (the web's hover-reveal is dead on touch) and the list scrolls under a max-h cap.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "reasoning",
     "kind": "component",
     "title": "Reasoning",
-    "description": "The collapsible thinking trace. Auto-opens while streaming, auto-closes one second after the answer begins, never overrides the user, and shows the frozen duration on the collapsed header. Markdown is injected via renderMarkdown and defaults to plain Text, keeping the core Expo Go-clean."
+    "description": "The collapsible thinking trace. Auto-opens while streaming, auto-closes one second after the answer begins, never overrides the user, and shows the frozen duration on the collapsed header. Markdown is injected via renderMarkdown and defaults to plain Text, keeping the core Expo Go-clean.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "schema-display",
     "kind": "component",
     "title": "Schema Display",
-    "description": "A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's parameter schema in a nested view that remains legible at phone width) — port-adapted per the PRD verdict: the upstream collapse structure (Parameters/Request/Response default open, property nodes open while depth < 2) ports byte-for-byte and the port ADDS the verdict's horizontal scroll — every section body sits in a horizontal ScrollView with the wave-12 column wrapper, so deep chains push right instead of crushing key widths. Upstream part set at parity (Header/Method/Path/Description/Content/Parameters/Parameter/Request/Response/Property-recursive/Body/Example). The web's five method washes compress onto the house status vocabulary with the mono verb as the badge word; path {param} highlighting becomes parsePathSegments data painted with the accent role — replacing the web's dangerouslySetInnerHTML; the Example composes the CodeBlock organism."
+    "description": "A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's parameter schema in a nested view that remains legible at phone width) — port-adapted per the PRD verdict: the upstream collapse structure (Parameters/Request/Response default open, property nodes open while depth < 2) ports byte-for-byte and the port ADDS the verdict's horizontal scroll — every section body sits in a horizontal ScrollView with the wave-12 column wrapper, so deep chains push right instead of crushing key widths. Upstream part set at parity (Header/Method/Path/Description/Content/Parameters/Parameter/Request/Response/Property-recursive/Body/Example). The web's five method washes compress onto the house status vocabulary with the mono verb as the badge word; path {param} highlighting becomes parsePathSegments data painted with the accent role — replacing the web's dangerouslySetInnerHTML; the Example composes the CodeBlock organism.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "shimmer",
     "kind": "component",
     "title": "Shimmer",
-    "description": "The still-generating signal, applied to text. React Native has no background-clip:text, so this reuses RNR Skeleton's exact pulse (1000ms, opacity 1->0.5) rather than inventing a tempo. Gated on reduced motion."
+    "description": "The still-generating signal, applied to text. React Native has no background-clip:text, so this reuses RNR Skeleton's exact pulse (1000ms, opacity 1->0.5) rather than inventing a tempo. Gated on reduced motion.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "snippet",
     "kind": "component",
     "title": "Snippet",
-    "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own — there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship — neither exists upstream. Monospace rides lib/mono."
+    "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own — there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship — neither exists upstream. Monospace rides lib/mono.",
+    "dependencies": [
+      "expo-clipboard"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "sources",
     "kind": "component",
     "title": "Sources",
-    "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive — title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table — there is no SourcesTable upstream."
+    "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive — title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table — there is no SourcesTable upstream.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "speech-input",
     "kind": "component",
     "title": "Speech Input",
-    "description": "Push-to-talk. Ships the web original's caller-supplied-transcriber contract as the ONLY contract, so no speech dependency lands in anyone's install graph. Disabled when no engine is wired; only final transcripts fire."
+    "description": "Push-to-talk. Ships the web original's caller-supplied-transcriber contract as the ONLY contract, so no speech dependency lands in anyone's install graph. Disabled when no engine is wired; only final transcripts fire.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "stack-trace",
     "kind": "component",
     "title": "Stack Trace",
-    "description": "The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: every frame's file and line legible at phone width; the raw trace copies with one tap) — port-at-parity per the PRD verdict, mono frame list with expandable frames and horizontal scroll. Upstream part set at parity (Header/Error/ErrorType/ErrorMessage/Actions/CopyButton/ExpandButton/Content/Frames; trace/open/defaultOpen=false/onOpenChange/onFilePathClick): copy hands over the RAW trace, internal frames dim to text-muted-foreground/50 and vanish under showInternalFrames=false (the upstream trap), and the expand button is verified against source to be a PASSIVE rotating chevron — the header is the only toggle. Frames scroll RIGHT in a bounded host (max-h-64, the house form of the web's 400px inline bound); without onFilePathClick the file:line:col renders unpressable — disabled, never pretend."
+    "description": "The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: every frame's file and line legible at phone width; the raw trace copies with one tap) — port-at-parity per the PRD verdict, mono frame list with expandable frames and horizontal scroll. Upstream part set at parity (Header/Error/ErrorType/ErrorMessage/Actions/CopyButton/ExpandButton/Content/Frames; trace/open/defaultOpen=false/onOpenChange/onFilePathClick): copy hands over the RAW trace, internal frames dim to text-muted-foreground/50 and vanish under showInternalFrames=false (the upstream trap), and the expand button is verified against source to be a PASSIVE rotating chevron — the header is the only toggle. Frames scroll RIGHT in a bounded host (max-h-64, the house form of the web's 400px inline bound); without onFilePathClick the file:line:col renders unpressable — disabled, never pretend.",
+    "dependencies": [
+      "expo-clipboard",
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "suggestion",
     "kind": "component",
     "title": "Suggestion",
-    "description": "Starter prompts and follow-up chips a user taps instead of typing. Horizontal scrolling row; onPress receives the suggestion string."
+    "description": "Starter prompts and follow-up chips a user taps instead of typing. Horizontal scrolling row; onPress receives the suggestion string.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "task",
     "kind": "component",
     "title": "Task",
-    "description": "What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by default on a phone — status stays glanceable on the trigger row — the one divergence from the web original, which opens by default."
+    "description": "What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by default on a phone — status stays glanceable on the trigger row — the one divergence from the web original, which opens by default.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "terminal",
     "kind": "component",
     "title": "Terminal",
-    "description": "Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4). Port-adapted per the PRD verdict — an interactive pseudo-terminal is explicitly NOT part of this: the caller hands a string, the component renders it. Upstream part set at parity (Header/Title/Status/Actions/ClearButton/CopyButton/Content; output/isStreaming/autoScroll/onClear). ansi-to-react is replaced by a pure SGR tokenizer (terminal.logic.ts, Vitest-owned) whose 16-color map compresses onto the house palette — RNR roles plus the three sanctioned status colors; bright is a weight bump, 256/truecolor resolves to default, non-SGR escapes strip, attributes persist across newlines. Copy hands over stripAnsi(output) — escape codes are useless on a clipboard. autoScroll sticks to the bottom while on; the clear button ENABLES only when onClear is wired; isStreaming shows the reduced-motion-gated shimmer pulse."
+    "description": "Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4). Port-adapted per the PRD verdict — an interactive pseudo-terminal is explicitly NOT part of this: the caller hands a string, the component renders it. Upstream part set at parity (Header/Title/Status/Actions/ClearButton/CopyButton/Content; output/isStreaming/autoScroll/onClear). ansi-to-react is replaced by a pure SGR tokenizer (terminal.logic.ts, Vitest-owned) whose 16-color map compresses onto the house palette — RNR roles plus the three sanctioned status colors; bright is a weight bump, 256/truecolor resolves to default, non-SGR escapes strip, attributes persist across newlines. Copy hands over stripAnsi(output) — escape codes are useless on a clipboard. autoScroll sticks to the bottom while on; the clear button ENABLES only when onClear is wired; isStreaming shows the reduced-motion-gated shimmer pulse.",
+    "dependencies": [
+      "expo-clipboard"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "test-results",
     "kind": "component",
     "title": "Test Results",
-    "description": "A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/failed/skipped counts and a failing test that expands to its message) — port-at-parity per the PRD verdict, composed from RNR badge, collapsible, and text. Upstream part set at parity (Header/Summary/Duration/Progress/Content + TestSuite/Name/Stats/Content + Test/Status/Name/Duration + TestError/Message/Stack): the passed badge always renders, failed/skipped only when non-zero, suites default COLLAPSED per the KB, per-test durations are ALWAYS milliseconds (upstream never seconds them — two formats, not one smart function), and the status hues compress onto lib/status with distinct icons and count words so color is never the sole channel. TestResultsProgress composes RNR Progress over the pass fraction per the data-schema contract (\"no chart\"), keeping both text labels byte-for-byte; rows compose the item atom; an empty content falls back to the empty atom."
+    "description": "A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/failed/skipped counts and a failing test that expands to its message) — port-at-parity per the PRD verdict, composed from RNR badge, collapsible, and text. Upstream part set at parity (Header/Summary/Duration/Progress/Content + TestSuite/Name/Stats/Content + Test/Status/Name/Duration + TestError/Message/Stack): the passed badge always renders, failed/skipped only when non-zero, suites default COLLAPSED per the KB, per-test durations are ALWAYS milliseconds (upstream never seconds them — two formats, not one smart function), and the status hues compress onto lib/status with distinct icons and count words so color is never the sole channel. TestResultsProgress composes RNR Progress over the pass fraction per the data-schema contract (\"no chart\"), keeping both text labels byte-for-byte; rows compose the item atom; an empty content falls back to the empty atom.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "tool",
     "kind": "component",
     "title": "Tool",
-    "description": "The tool-call card: status badge and disclosure for arguments and result. Covers every AI SDK tool-part state with no unmapped case; input renders while arguments are still streaming and never throws on partial JSON; both output and errorText undefined renders empty, exactly as the web original."
+    "description": "The tool-call card: status badge and disclosure for arguments and result. Covers every AI SDK tool-part state with no unmapped case; input renders while arguments are still streaming and never throws on partial JSON; both output and errorText undefined renders empty, exactly as the web original.",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "transcription",
     "kind": "component",
     "title": "Transcription",
-    "description": "The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD verdict — display-only; capture belongs to speech-input, so no browser dependency and nothing to substitute. Segments colorized by playback position (active text-primary, past text-muted-foreground, future text-muted-foreground/60 — upstream byte-classes), press-to-seek to the segment start ONLY when onSeek is wired (otherwise a no-op — onSeek is not invented), empty/whitespace segments never render (upstream byte-trap), render-prop children preserved for custom segment rendering, and the hook throw outside the root at byte parity. The verdict's interim/final distinction ships as a caller-supplied interimText display seam (declared addition — upstream has no interim part). Speaker labels, events, and search/highlight not shipped: the upstream part set carries none."
+    "description": "The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD verdict — display-only; capture belongs to speech-input, so no browser dependency and nothing to substitute. Segments colorized by playback position (active text-primary, past text-muted-foreground, future text-muted-foreground/60 — upstream byte-classes), press-to-seek to the segment start ONLY when onSeek is wired (otherwise a no-op — onSeek is not invented), empty/whitespace segments never render (upstream byte-trap), render-prop children preserved for custom segment rendering, and the hook throw outside the root at byte parity. The verdict's interim/final distinction ships as a caller-supplied interimText display seam (declared addition — upstream has no interim part). Speaker labels, events, and search/highlight not shipped: the upstream part set carries none.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "voice-selector",
     "kind": "component",
     "title": "Voice Selector",
-    "description": "The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from the caller's native speech synthesis provider — no audio dependency in the registry, preview playback is a caller callback reported back through previewingId/previewLoadingId. The PRD composition law is structural: the preview button lives in the row's action slot, so pressing it PLAYS and NEVER selects; three states (play, playing, loading-disabled), disabled-when-unwired. Upstream traps at byte parity: useVoiceSelector throws outside the root, the accent lookup is CASE-SENSITIVE ('AMERICAN' renders no flag), unknown genders fall back, explicit empty state. Shortcut and dialog parts dropped (no ⌘ on a phone; the sheet is the presentation)."
+    "description": "The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from the caller's native speech synthesis provider — no audio dependency in the registry, preview playback is a caller callback reported back through previewingId/previewLoadingId. The PRD composition law is structural: the preview button lives in the row's action slot, so pressing it PLAYS and NEVER selects; three states (play, playing, loading-disabled), disabled-when-unwired. Upstream traps at byte parity: useVoiceSelector throws outside the root, the accent lookup is CASE-SENSITIVE ('AMERICAN' renders no flag), unknown genders fall back, explicit empty state. Shortcut and dialog parts dropped (no ⌘ on a phone; the sheet is the presentation).",
+    "dependencies": [
+      "react-native-reanimated"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "web-preview",
     "kind": "component",
     "title": "Web Preview",
-    "description": "A live page rendered inside the app (UC-CODE-03), native-substitute per the PRD verdict: the iframe is replaced by a native webview with the same URL bar and reload affordance. OPT-IN — the one item in the library that names a native module: react-native-webview is recorded here as an install-time dependency (AC-2's notice) and imported as a PEER in the source, while the registry package itself takes no dependency on it (types come from the ambient boundary declaration), so everything else installs and builds without it (AC-4). The console pane does not port and is dropped, per the verdict. The iframe sandbox has NO webview equivalent, so the lockdown is a fixed prop set at the render layer: originWhitelist http/https only, javaScriptEnabled pinned (the upstream sandbox's allow-scripts grant), file access and file-to-file universal access off, multiple windows off — and every commit is normalized then allowlisted BEFORE the webview sees it (web-preview.logic, Vitest-owned; scheme-less drafts gain https, loopback hosts gain http, javascript:/data:/file: are refused through onRefuse, never silently), with the body re-normalizing at render so the guard is not downgradable. AC-3: onError/onRenderProcessGone render an explicit failure panel — icon, title, failing host, Retry wired to the context reload — never a blank white view; HTTP error pages are content, exactly as the web iframe renders them. Upstream parts at parity (WebPreview/WebPreviewNavigation/WebPreviewNavigationButton/WebPreviewUrl/WebPreviewBody + the useWebPreview throw): the NavigationButton's tooltip becomes the accessibility label, the loading node overlays while the webview reports loading, Enter commits the URL bar (never per-keystroke), and the reload command rides the context because the web's consumer-wired iframe ref has no RN counterpart."
+    "description": "A live page rendered inside the app (UC-CODE-03), native-substitute per the PRD verdict: the iframe is replaced by a native webview with the same URL bar and reload affordance. OPT-IN — the one item in the library that names a native module: react-native-webview is recorded here as an install-time dependency (AC-2's notice) and imported as a PEER in the source, while the registry package itself takes no dependency on it (types come from the ambient boundary declaration), so everything else installs and builds without it (AC-4). The console pane does not port and is dropped, per the verdict. The iframe sandbox has NO webview equivalent, so the lockdown is a fixed prop set at the render layer: originWhitelist http/https only, javaScriptEnabled pinned (the upstream sandbox's allow-scripts grant), file access and file-to-file universal access off, multiple windows off — and every commit is normalized then allowlisted BEFORE the webview sees it (web-preview.logic, Vitest-owned; scheme-less drafts gain https, loopback hosts gain http, javascript:/data:/file: are refused through onRefuse, never silently), with the body re-normalizing at render so the guard is not downgradable. AC-3: onError/onRenderProcessGone render an explicit failure panel — icon, title, failing host, Retry wired to the context reload — never a blank white view; HTTP error pages are content, exactly as the web iframe renders them. Upstream parts at parity (WebPreview/WebPreviewNavigation/WebPreviewNavigationButton/WebPreviewUrl/WebPreviewBody + the useWebPreview throw): the NavigationButton's tooltip becomes the accessibility label, the loading node overlays while the webview reports loading, Enter commits the URL bar (never per-keystroke), and the reload command rides the context because the web's consumer-wired iframe ref has no RN counterpart.",
+    "dependencies": [
+      "react-native-webview"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "breadcrumb",
     "kind": "ui",
     "title": "Breadcrumb",
-    "description": "Path trail for file-tree and web-preview headers. A horizontal ScrollView, not the web's wrap-and-ellipsis: a phone bar overflows before it wraps."
+    "description": "Path trail for file-tree and web-preview headers. A horizontal ScrollView, not the web's wrap-and-ellipsis: a phone bar overflows before it wraps.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "button-group",
     "kind": "ui",
     "title": "Button Group",
-    "description": "Segmented row. React Native has no :first-child and Tailwind descendant selectors compile to nothing, so corner rounding is published through context."
+    "description": "Segmented row. React Native has no :first-child and Tailwind descendant selectors compile to nothing, so corner rounding is published through context.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "code-block",
     "kind": "ui",
     "title": "Code Block",
-    "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP — chrome is 100% RNR."
+    "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP — chrome is 100% RNR.",
+    "dependencies": [
+      "expo-clipboard"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "command",
     "kind": "ui",
     "title": "Command",
-    "description": "The searchable picker. cmdk is DOM/keyboard-first with no mobile analogue, so on a phone the palette IS a bottom sheet with a filter and a virtualized list."
+    "description": "The searchable picker. cmdk is DOM/keyboard-first with no mobile analogue, so on a phone the palette IS a bottom sheet with a filter and a virtualized list.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "empty",
     "kind": "ui",
     "title": "Empty",
-    "description": "Icon, title, description and an optional action slot. The fallback surface for conversation, file-tree, sources, attachments and test-results."
+    "description": "Icon, title, description and an optional action slot. The fallback surface for conversation, file-tree, sources, attachments and test-results.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "input-group",
     "kind": "ui",
     "title": "Input Group",
-    "description": "Leading and trailing addons around a TextInput, with its own focus ring (React Native has no :focus-within). Backs prompt-input and every filter field."
+    "description": "Leading and trailing addons around a TextInput, with its own focus ring (React Native has no :focus-within). Backs prompt-input and every filter field.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "item",
     "kind": "ui",
     "title": "Item",
-    "description": "Generic media / content / actions row. Sources, file-tree, attachments, model-selector, queue, plan and task all render lists of these."
+    "description": "Generic media / content / actions row. Sources, file-tree, attachments, model-selector, queue, plan and task all render lists of these.",
+    "dependencies": [
+      "class-variance-authority"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "kbd",
     "kind": "ui",
     "title": "Kbd",
-    "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always — correct, not a compromise."
+    "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always — correct, not a compromise.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "sheet",
     "kind": "ui",
     "title": "Sheet",
-    "description": "Bottom/top/left/right sheet built on @rn-primitives/dialog and styled from RNR's dialog. Mounts its OWN named PortalHost so nested overlays layer above it instead of behind. Backs drawer, command, sidebar, panel, open-in-chat and model-selector."
+    "description": "Bottom/top/left/right sheet built on @rn-primitives/dialog and styled from RNR's dialog. Mounts its OWN named PortalHost so nested overlays layer above it instead of behind. Backs drawer, command, sidebar, panel, open-in-chat and model-selector.",
+    "dependencies": [
+      "@rn-primitives/dialog",
+      "@rn-primitives/portal",
+      "class-variance-authority",
+      "react-native-reanimated",
+      "react-native-screens"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "slider",
     "kind": "ui",
     "title": "Slider",
-    "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb — the web size is a mouse target."
+    "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb — the web size is a mouse target.",
+    "dependencies": [
+      "@rn-primitives/slider"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "table",
     "kind": "ui",
     "title": "Table",
-    "description": "Styled shell over @rn-primitives/table, which RNR does not wrap. Horizontally scrollable by default; a phone-width table with 3+ columns must scroll rather than shrink."
+    "description": "Styled shell over @rn-primitives/table, which RNR does not wrap. Horizontally scrollable by default; a phone-width table with 3+ columns must scroll rather than shrink.",
+    "dependencies": [
+      "@rn-primitives/table"
+    ],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "markdown",
     "kind": "lib",
     "title": "Markdown repair",
-    "description": "Closes unterminated emphasis and code runs in a streaming chunk. Without it every streamed message flashes literal markdown syntax mid-token."
+    "description": "Closes unterminated emphasis and code runs in a streaming chunk. Without it every streamed message flashes literal markdown syntax mid-token.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "mono",
     "kind": "lib",
     "title": "Mono font",
-    "description": "One monospace family for every mono surface. Delete once font-mono is proven to resolve under the styling engine."
+    "description": "One monospace family for every mono surface. Delete once font-mono is proven to resolve under the styling engine.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "reasoning-lifecycle",
     "kind": "lib",
     "title": "Reasoning lifecycle",
-    "description": "The reasoning disclosure's state machine as a pure, time-injected reducer: auto-open on stream start, auto-close 1000ms after it ends, defaultOpen pinned open, and any user interaction standing the automation down for good."
+    "description": "The reasoning disclosure's state machine as a pure, time-injected reducer: auto-open on stream start, auto-close 1000ms after it ends, defaultOpen pinned open, and any user interaction standing the automation down for good.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "stack-trace-parser",
     "kind": "lib",
     "title": "Stack trace parser",
-    "description": "The pure V8/Node stack-trace parser (UC-CODE-02 AC-3) — registry:lib per the data-schema contract, which binds StackFrame/ParsedStackTrace here with real Vitest coverage against real captured traces. Splits the `Type: message` header, parses `at fn (file:line:col)` and `at file:line:col` frames, keeps unparseable lines as raw frames so a foreign trace never loses one, and FLAGS internal frames (node:, node_modules, internal/) — hiding is the renderer's decision, never the parser's."
+    "description": "The pure V8/Node stack-trace parser (UC-CODE-02 AC-3) — registry:lib per the data-schema contract, which binds StackFrame/ParsedStackTrace here with real Vitest coverage against real captured traces. Splits the `Type: message` header, parses `at fn (file:line:col)` and `at file:line:col` frames, keeps unparseable lines as raw frames so a foreign trace never loses one, and FLAGS internal frames (node:, node_modules, internal/) — hiding is the renderer's decision, never the parser's.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "status",
     "kind": "lib",
     "title": "Agent status vocabulary",
-    "description": "The ONE status-tone map for every agent surface. Confines the styling contract's three permitted non-token colors (text-destructive, green-600, orange-600) to a single auditable file; pending and running resolve through RNR tokens only."
+    "description": "The ONE status-tone map for every agent surface. Confines the styling contract's three permitted non-token colors (text-destructive, green-600, orange-600) to a single auditable file; pending and running resolve through RNR tokens only.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   },
   {
     "name": "url",
     "kind": "lib",
     "title": "URL helpers",
-    "description": "The one place a source URL becomes display parts and an open decision: no-throw hostname extraction (the web's bare new URL() throws take transcripts down; this falls back) and the http/https scheme allowlist guarding the Linking.openURL hop that replaces the web anchor's target=_blank. Backs sources and inline-citation."
+    "description": "The one place a source URL becomes display parts and an open decision: no-throw hostname extraction (the web's bare new URL() throws take transcripts down; this falls back) and the http/https scheme allowlist guarding the Linking.openURL hop that replaces the web anchor's target=_blank. Backs sources and inline-citation.",
+    "dependencies": [],
+    "permissions": {},
+    "expoGo": true
   }
 ];

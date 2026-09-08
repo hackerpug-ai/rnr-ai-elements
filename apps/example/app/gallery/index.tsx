@@ -7,6 +7,7 @@ import * as React from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { ExpoGoChip, SchemeStrip } from '../../gallery/chrome';
 import { GALLERY_ITEMS, type GalleryItem } from '../../gallery/manifest';
 
 const KIND_LABEL: Record<GalleryItem['kind'], string> = {
@@ -26,6 +27,7 @@ function GalleryRow({ item }: { item: GalleryItem }) {
         <Text className="mt-0.5 text-xs text-muted-foreground" numberOfLines={2}>
           {item.description}
         </Text>
+        {!item.expoGo ? <ExpoGoChip expoGo={false} /> : null}
       </Pressable>
     </Link>
   );
@@ -41,6 +43,7 @@ export default function GalleryIndex() {
     <SafeAreaView className="flex-1 bg-background" edges={['top']}>
       <Stack.Screen options={{ title: 'Gallery' }} />
       <View className="gap-3 px-4 pb-4">
+        <SchemeStrip />
         <TextInput
           testID="gallery-filter"
           value={query}

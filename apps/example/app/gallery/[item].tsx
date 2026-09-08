@@ -9,6 +9,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CELL_STATES, CELLS, type CellOverrides } from '../../gallery/cells';
+import { ExpoGoChip, SchemeStrip } from '../../gallery/chrome';
 import { CONTROLS } from '../../gallery/controls';
 import { GALLERY_ITEMS } from '../../gallery/manifest';
 
@@ -42,6 +43,15 @@ export default function GalleryItemScreen() {
     <SafeAreaView className="flex-1 bg-background" edges={['top']}>
       <Stack.Screen options={{ title: item.title }} />
       <ScrollView contentContainerClassName="gap-4 px-4 pb-8">
+        <SchemeStrip />
+        <View className="flex-row flex-wrap items-center gap-2">
+          <ExpoGoChip expoGo={item.expoGo} />
+          {item.permissions.ios && item.permissions.ios.length > 0 ? (
+            <Text className="text-[10px] text-muted-foreground">
+              permissions: {item.permissions.ios.join(', ')}
+            </Text>
+          ) : null}
+        </View>
         <Text className="text-xs text-muted-foreground" numberOfLines={4}>
           {item.description}
         </Text>

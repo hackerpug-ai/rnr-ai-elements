@@ -11,8 +11,33 @@ function main(): void {
   const registry = JSON.parse(
     readFileSync(join(root, 'packages/registry/registry.json'), 'utf8'),
   ) as {
-    items: { name: string; type: string; title?: string; description?: string }[];
+    items: {
+      name: string;
+      type: string;
+      title?: string;
+      description?: string;
+      dependencies?: string[];
+      meta?: { permissions?: { ios?: string[]; android?: string[] } };
+    }[];
   };
+
+  /**
+   * Native modules Expo Go ships (SDK 57 bundled set). Everything else an item
+   * declares is JS-only, so any dependency outside this list that isn't pure
+   * JS means the item needs a dev client — surfaced, never silently skipped.
+   */
+  const EXPO_GO_NATIVE = new Set([
+    'react-native-reanimated',
+    'react-native-worklets',
+    'react-native-gesture-handler',
+    'react-native-screens',
+    'react-native-safe-area-context',
+    'react-native-webview',
+  ]);
+  const isJsOnly = (dep: string) =>
+    dep.startsWith('expo-') ||
+    dep.startsWith('@rn-primitives/') ||
+    dep === 'class-variance-authority';
 
   const kindOrder = { component: 0, ui: 1, lib: 2 } as const;
   type Kind = keyof typeof kindOrder;
@@ -22,6 +47,9 @@ function main(): void {
       kind: i.type.replace('registry:', '') as Kind,
       title: i.title ?? i.name,
       description: i.description ?? '',
+      dependencies: i.dependencies ?? [],
+      permissions: i.meta?.permissions ?? {},
+      expoGo: (i.dependencies ?? []).every((d) => EXPO_GO_NATIVE.has(d) || isJsOnly(d)),
     }))
     .filter((i) => i.kind in kindOrder)
     .sort((a, b) => kindOrder[a.kind] - kindOrder[b.kind] || a.name.localeCompare(b.name));
@@ -32,6 +60,10 @@ export type GalleryItem = {
   kind: 'component' | 'ui' | 'lib';
   title: string;
   description: string;
+  dependencies: string[];
+  permissions: { ios?: string[]; android?: string[] };
+  /** True when every declared dependency ships in Expo Go or is pure JS. */
+  expoGo: boolean;
 };
 export const GALLERY_ITEMS: GalleryItem[] = ${JSON.stringify(items, null, 2)};
 `;
