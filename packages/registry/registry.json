@@ -26,7 +26,7 @@
       "name": "checkpoint",
       "type": "registry:component",
       "title": "Checkpoint",
-      "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first — the web puts it behind a hover tooltip, which does not exist on touch.",
+      "description": "A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms first \u2014 the web puts it behind a hover tooltip, which does not exist on touch.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json",
         "https://reactnativereusables.com/r/{engine}/icon.json"
@@ -57,7 +57,7 @@
       "name": "persona",
       "type": "registry:component",
       "title": "Persona",
-      "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation — the animated avatar is not ported, so no consumer inherits a native animation runtime.",
+      "description": "Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation \u2014 the animated avatar is not ported, so no consumer inherits a native animation runtime.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/avatar.json",
         "https://reactnativereusables.com/r/{engine}/text.json"
@@ -94,7 +94,7 @@
       "name": "kbd",
       "type": "registry:ui",
       "title": "Kbd",
-      "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always — correct, not a compromise.",
+      "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always \u2014 correct, not a compromise.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json"
       ],
@@ -143,7 +143,7 @@
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb — the web size is a mouse target.",
+      "description": "Styled shell over @rn-primitives/slider, which RNR does not wrap. Geometry from RNR's Progress. The thumb hit area is far larger than the thumb \u2014 the web size is a mouse target.",
       "registryDependencies": [],
       "dependencies": [
         "@rn-primitives/slider"
@@ -233,7 +233,7 @@
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code Block",
-      "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP — chrome is 100% RNR.",
+      "description": "Fenced code with optional filename header, line numbers and copy. Long lines scroll and never wrap; copy flips for 2000ms and reports failure. Unhighlighted MVP \u2014 chrome is 100% RNR.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -294,7 +294,7 @@
       "name": "prompt-input",
       "type": "registry:component",
       "title": "Prompt Input",
-      "description": "The composer at web parity: provider/controller context, attachment chips over the native pickers, the + tools menu (bottom sheet — camera/photos/files rows through the picker seam, checkmarked consumer toggles), the model chip composed in-row, and the never-dead primary slot (voice → send → stop morph; PromptInputSubmit stays exported for direct use). Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT AND ATTACHMENTS INTACT. expo-image-picker + expo-document-picker are opt-in install-time dependencies (the ambient boundary keeps typecheck green without them).",
+      "description": "The composer at web parity: provider/controller context, attachment chips over the native pickers, the + tools menu (bottom sheet \u2014 camera/photos/files rows through the picker seam, checkmarked consumer toggles), the model chip composed in-row, and the never-dead primary slot (voice \u2192 send \u2192 stop morph; PromptInputSubmit stays exported for direct use). Explicit send button is the ONLY submit path on a soft keyboard. A rejected onSubmit LEAVES THE TEXT AND ATTACHMENTS INTACT. expo-image-picker + expo-document-picker are opt-in install-time dependencies (the ambient boundary keeps typecheck green without them).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -305,6 +305,16 @@
           "path": "packages/registry/src/components/ai/prompt-input.tsx",
           "type": "registry:component",
           "target": "components/ai/prompt-input.tsx"
+        },
+        {
+          "path": "packages/registry/src/components/ai/prompt-input.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/prompt-input.logic.ts"
+        },
+        {
+          "path": "packages/registry/src/components/ai/attachments.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/attachments.logic.ts"
         }
       ],
       "dependencies": [
@@ -506,7 +516,7 @@
       "name": "task",
       "type": "registry:component",
       "title": "Task",
-      "description": "What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by default on a phone — status stays glanceable on the trigger row — the one divergence from the web original, which opens by default.",
+      "description": "What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by default on a phone \u2014 status stays glanceable on the trigger row \u2014 the one divergence from the web original, which opens by default.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
@@ -535,7 +545,7 @@
       "name": "question",
       "type": "registry:component",
       "title": "Question",
-      "description": "The agent asks, the user answers with one tap — the PRD's touch verdict, where a tap IS the submission and the choice persists in the transcript afterward. The web original's select-then-submit and free-text modes are dropped with it.",
+      "description": "The agent asks, the user answers with one tap \u2014 the PRD's touch verdict, where a tap IS the submission and the choice persists in the transcript afterward. The web original's select-then-submit and free-text modes are dropped with it.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/card.json",
@@ -554,7 +564,7 @@
       "name": "agent",
       "type": "registry:component",
       "title": "Agent",
-      "description": "The identity/run surface: the persona molecule in the header plus a run-state badge and the thumb-reachable Start/Pause/Stop control bar the web config card never had. The run is the caller's — controlled status, reported verbs, dead bar when no handler is wired. The web card's instructions/tools/output body is deferred to its own surfaces.",
+      "description": "The identity/run surface: the persona molecule in the header plus a run-state badge and the thumb-reachable Start/Pause/Stop control bar the web config card never had. The run is the caller's \u2014 controlled status, reported verbs, dead bar when no handler is wired. The web card's instructions/tools/output body is deferred to its own surfaces.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/button.json",
@@ -577,6 +587,11 @@
           "path": "packages/registry/src/components/ai/agent.logic.ts",
           "type": "registry:component",
           "target": "components/ai/agent.logic.ts"
+        },
+        {
+          "path": "packages/registry/src/components/ai/persona.tsx",
+          "type": "registry:component",
+          "target": "components/ai/persona.tsx"
         }
       ]
     },
@@ -584,7 +599,7 @@
       "name": "chain-of-thought",
       "type": "registry:component",
       "title": "Chain of Thought",
-      "description": "The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with per-step status joined by a rail; the disclosure reuses the reasoning lifecycle (auto-open on stream, auto-close after, user toggle stands it down) rather than forking it. The collapsed badge counts steps from data — the collapsed content is unmounted, so the count must not live in the tree.",
+      "description": "The multi-step reasoning list \u2014 distinct from reasoning, which stays the single collapsible trace. Ordered steps with per-step status joined by a rail; the disclosure reuses the reasoning lifecycle (auto-open on stream, auto-close after, user toggle stands it down) rather than forking it. The collapsed badge counts steps from data \u2014 the collapsed content is unmounted, so the count must not live in the tree.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
@@ -614,7 +629,7 @@
       "name": "plan",
       "type": "registry:component",
       "title": "Plan",
-      "description": "The agent's plan: a card + collapsible shell whose steps are the TASK organism's own rows — composed by the consumer, never a fork of task's internals. Title and description shimmer while streaming, at web parity, on the Shimmer organism's house pulse; the footer badge keeps the remaining count glanceable even collapsed. defaultOpen stays true — a plan is the overview the user asked for, unlike task's phone-density collapse.",
+      "description": "The agent's plan: a card + collapsible shell whose steps are the TASK organism's own rows \u2014 composed by the consumer, never a fork of task's internals. Title and description shimmer while streaming, at web parity, on the Shimmer organism's house pulse; the footer badge keeps the remaining count glanceable even collapsed. defaultOpen stays true \u2014 a plan is the overview the user asked for, unlike task's phone-density collapse.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/button.json",
@@ -639,6 +654,11 @@
           "path": "packages/registry/src/components/ai/plan.logic.ts",
           "type": "registry:component",
           "target": "components/ai/plan.logic.ts"
+        },
+        {
+          "path": "packages/registry/src/components/ai/task.logic.ts",
+          "type": "registry:component",
+          "target": "components/ai/task.logic.ts"
         }
       ]
     },
@@ -646,7 +666,7 @@
       "name": "confirmation",
       "type": "registry:component",
       "title": "Confirmation",
-      "description": "Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING without an approval or while arguments are still streaming — the web contract, made total in a Vitest-owned phase machine. Once answered the pair stays: the chosen side resolves with a check, the other disables, and the outcome persists in the transcript (question.tsx's persistence, replacing the web's swap-to-Accepted/Rejected rows).",
+      "description": "Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING without an approval or while arguments are still streaming \u2014 the web contract, made total in a Vitest-owned phase machine. Once answered the pair stays: the chosen side resolves with a check, the other disables, and the outcome persists in the transcript (question.tsx's persistence, replacing the web's swap-to-Accepted/Rejected rows).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/card.json",
@@ -671,7 +691,7 @@
       "name": "queue",
       "type": "registry:component",
       "title": "Queue",
-      "description": "The queued-actions list: a collapsible section with the count on the trigger and a remove action per row. The component NEVER owns the queue — caller state, onRemove callback, and the pure remove/enqueue/count helpers in queue.logic. Rows compose the item primitive; actions are always visible (the web's hover-reveal is dead on touch) and the list scrolls under a max-h cap.",
+      "description": "The queued-actions list: a collapsible section with the count on the trigger and a remove action per row. The component NEVER owns the queue \u2014 caller state, onRemove callback, and the pure remove/enqueue/count helpers in queue.logic. Rows compose the item primitive; actions are always visible (the web's hover-reveal is dead on touch) and the list scrolls under a max-h cap.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/button.json",
@@ -715,7 +735,7 @@
       "name": "sources",
       "type": "registry:component",
       "title": "Sources",
-      "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive — title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table — there is no SourcesTable upstream.",
+      "description": "The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose rows compose the item primitive \u2014 title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table \u2014 there is no SourcesTable upstream.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -743,7 +763,7 @@
       "name": "inline-citation",
       "type": "registry:component",
       "title": "Inline Citation",
-      "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface — a popover or sheet hosting this registry's Sources — is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source).",
+      "description": "The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the web nests spans. The web's hover card is dead on touch: the chip is pressable and reports onSelect (a callback, never navigation); the detail surface \u2014 a popover or sheet hosting this registry's Sources \u2014 is the caller's composition. The card/carousel parts are dropped with the hover card. Chip label is the web's verbatim hostname +N, computed no-throw (the web's bare new URL throws on a malformed first source).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json",
         "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/url.json"
@@ -765,7 +785,7 @@
       "name": "artifact",
       "type": "registry:component",
       "title": "Artifact",
-      "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship — neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped — hover surfaces are dead under a thumb; label becomes the accessibility label.",
+      "description": "The container for a generated deliverable, with the web original's header chrome: title, description, actions, close, scrollable content. No ArtifactTrigger and no versioning ship \u2014 neither exists upstream or in the PRD verdict. The PRD's full-screen sheet is the HOST's presentation (the web presents the same container as a side panel): the consumer mounts it inside this registry's Sheet and wires Close to the dismissal. The web action's optional tooltip is dropped \u2014 hover surfaces are dead under a thumb; label becomes the accessibility label.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/card.json",
@@ -784,7 +804,7 @@
       "name": "snippet",
       "type": "registry:component",
       "title": "Snippet",
-      "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own — there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship — neither exists upstream. Monospace rides lib/mono.",
+      "description": "The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes its own \u2014 there was never a CodeBlock in the web Snippet's tree to reuse. Code lives in one context; the input reads it readOnly and selectable; copy flips for 2000ms and reports failure. No SnippetHeader/SnippetTabs ship \u2014 neither exists upstream. Monospace rides lib/mono.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -838,7 +858,7 @@
       "name": "attachments",
       "type": "registry:component",
       "title": "Attachments",
-      "description": "The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants, with list rows composed on the item primitive. File acquisition does NOT port — the PRD verdict replaces drag-and-drop and the file input with the caller's native pickers and their permission contracts. Remove is always visible (the web's hover-reveal is dead on touch) and DISABLES rather than disappears without onRemove; per-file upload state ('uploading' | 'done' | 'error') is the display seam for the caller-owned lifecycle. The hover preview card and the <video> thumbnail do not ship — hover is unreachable under a thumb and a media dependency for one tile is out of contract.",
+      "description": "The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants, with list rows composed on the item primitive. File acquisition does NOT port \u2014 the PRD verdict replaces drag-and-drop and the file input with the caller's native pickers and their permission contracts. Remove is always visible (the web's hover-reveal is dead on touch) and DISABLES rather than disappears without onRemove; per-file upload state ('uploading' | 'done' | 'error') is the display seam for the caller-owned lifecycle. The hover preview card and the <video> thumbnail do not ship \u2014 hover is unreachable under a thumb and a media dependency for one tile is out of contract.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -863,7 +883,7 @@
       "name": "context",
       "type": "registry:component",
       "title": "Context",
-      "description": "The context-window budget chip and its press-opened breakdown (the PRD verdict turns the web's hover card into a popover; the data displayed is unchanged). Composes RNR popover and progress; ContextContent passes insets through to the anchored content, the consumer's per-screen ritual. Cost is INJECTED, not computed — the web prices with tokenlens, a dependency this registry does not take, so rows and footer take caller-formatted costText and an unsupplied cost renders the web's own unknown-marker instead of a lying $0.00. The SVG progress ring is a themed PieChartIcon: a raw Svg cannot receive className without engine-specific cssInterop, which the styling contract forbids in registry source. Zero-token usage rows render nothing, upstream trap parity.",
+      "description": "The context-window budget chip and its press-opened breakdown (the PRD verdict turns the web's hover card into a popover; the data displayed is unchanged). Composes RNR popover and progress; ContextContent passes insets through to the anchored content, the consumer's per-screen ritual. Cost is INJECTED, not computed \u2014 the web prices with tokenlens, a dependency this registry does not take, so rows and footer take caller-formatted costText and an unsupplied cost renders the web's own unknown-marker instead of a lying $0.00. The SVG progress ring is a themed PieChartIcon: a raw Svg cannot receive className without engine-specific cssInterop, which the styling contract forbids in registry source. Zero-token usage rows render nothing, upstream trap parity.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -889,7 +909,7 @@
       "name": "open-in-chat",
       "type": "registry:component",
       "title": "Open In Chat",
-      "description": "The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same six targets and the same menu as the web, with the anchor's target=_blank replaced by the platform link handler behind lib/url's http/https allowlist. The URL templates are the contract and are reproduced byte-what-upstream-produces (hints=search on ChatGPT included). A caller-supplied onOpen replaces the hop; a refused or failed open surfaces through onOpenError, never silently. Unavailable targets are hidden by composition — the consumer mounts only the rows that exist for their users. Brand SVGs are web assets: rows ship themed lucide marks in the same slot, titles carry the identity.",
+      "description": "The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same six targets and the same menu as the web, with the anchor's target=_blank replaced by the platform link handler behind lib/url's http/https allowlist. The URL templates are the contract and are reproduced byte-what-upstream-produces (hints=search on ChatGPT included). A caller-supplied onOpen replaces the hop; a refused or failed open surfaces through onOpenError, never silently. Unavailable targets are hidden by composition \u2014 the consumer mounts only the rows that exist for their users. Brand SVGs are web assets: rows ship themed lucide marks in the same slot, titles carry the identity.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/dropdown-menu.json",
         "https://reactnativereusables.com/r/{engine}/button.json",
@@ -914,7 +934,7 @@
       "name": "model-selector",
       "type": "registry:component",
       "title": "Model Selector",
-      "description": "The searchable model picker, composed on the command atom. Port-adapted per the PRD verdict: a dropdown on web becomes a bottom sheet with search, sized for one-handed use — same selection contract (value is the model id your route receives), different presentation. Provider grouping survives as section headings; the provider doubles as a filter keyword. ModelSelectorShortcut (⌘ hints) is dropped — there is no ⌘ on a phone — and the remote models.dev SVG logo is a declared substitution (themed mark, consumer-supplied raster source; modelSelectorLogoUrl keeps the URL derivation as data).",
+      "description": "The searchable model picker, composed on the command atom. Port-adapted per the PRD verdict: a dropdown on web becomes a bottom sheet with search, sized for one-handed use \u2014 same selection contract (value is the model id your route receives), different presentation. Provider grouping survives as section headings; the provider doubles as a filter keyword. ModelSelectorShortcut (\u2318 hints) is dropped \u2014 there is no \u2318 on a phone \u2014 and the remote models.dev SVG logo is a declared substitution (themed mark, consumer-supplied raster source; modelSelectorLogoUrl keeps the URL derivation as data).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -932,6 +952,11 @@
           "path": "packages/registry/src/components/ai/model-selector.logic.ts",
           "type": "registry:component",
           "target": "components/ai/model-selector.logic.ts"
+        },
+        {
+          "path": "packages/registry/src/components/ui/command.logic.ts",
+          "type": "registry:component",
+          "target": "components/ui/command.logic.ts"
         }
       ]
     },
@@ -939,7 +964,7 @@
       "name": "mic-selector",
       "type": "registry:component",
       "title": "Mic Selector",
-      "description": "The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio routes, not an enumerable input device list, so the route list is CALLER-SUPPLIED — the web's useAudioDevices (getUserMedia) does not port, and an empty list renders an honest empty state the consumer can point at permission denial. Composed on the command atom with the route-kind marks (built-in, wired, bluetooth, other); routes order built-in first, caller order preserved within a kind.",
+      "description": "The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio routes, not an enumerable input device list, so the route list is CALLER-SUPPLIED \u2014 the web's useAudioDevices (getUserMedia) does not port, and an empty list renders an honest empty state the consumer can point at permission denial. Composed on the command atom with the route-kind marks (built-in, wired, bluetooth, other); routes order built-in first, caller order preserved within a kind.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -957,6 +982,11 @@
           "path": "packages/registry/src/components/ai/mic-selector.logic.ts",
           "type": "registry:component",
           "target": "components/ai/mic-selector.logic.ts"
+        },
+        {
+          "path": "packages/registry/src/components/ui/command.logic.ts",
+          "type": "registry:component",
+          "target": "components/ui/command.logic.ts"
         }
       ]
     },
@@ -964,7 +994,7 @@
       "name": "voice-selector",
       "type": "registry:component",
       "title": "Voice Selector",
-      "description": "The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from the caller's native speech synthesis provider — no audio dependency in the registry, preview playback is a caller callback reported back through previewingId/previewLoadingId. The PRD composition law is structural: the preview button lives in the row's action slot, so pressing it PLAYS and NEVER selects; three states (play, playing, loading-disabled), disabled-when-unwired. Upstream traps at byte parity: useVoiceSelector throws outside the root, the accent lookup is CASE-SENSITIVE ('AMERICAN' renders no flag), unknown genders fall back, explicit empty state. Shortcut and dialog parts dropped (no ⌘ on a phone; the sheet is the presentation).",
+      "description": "The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from the caller's native speech synthesis provider \u2014 no audio dependency in the registry, preview playback is a caller callback reported back through previewingId/previewLoadingId. The PRD composition law is structural: the preview button lives in the row's action slot, so pressing it PLAYS and NEVER selects; three states (play, playing, loading-disabled), disabled-when-unwired. Upstream traps at byte parity: useVoiceSelector throws outside the root, the accent lookup is CASE-SENSITIVE ('AMERICAN' renders no flag), unknown genders fall back, explicit empty state. Shortcut and dialog parts dropped (no \u2318 on a phone; the sheet is the presentation).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -985,6 +1015,11 @@
           "path": "packages/registry/src/components/ai/voice-selector.logic.ts",
           "type": "registry:component",
           "target": "components/ai/voice-selector.logic.ts"
+        },
+        {
+          "path": "packages/registry/src/components/ui/command.logic.ts",
+          "type": "registry:component",
+          "target": "components/ui/command.logic.ts"
         }
       ]
     },
@@ -992,7 +1027,7 @@
       "name": "audio-player",
       "type": "registry:component",
       "title": "Audio Player",
-      "description": "Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4). Native-substitute per the PRD verdict — the HTML audio element is replaced by the CALLER'S audio module (expo-audio, a native player, an <audio> element on web): state-in/callbacks-out, no audio dependency in the registry, Expo Go-clean. Upstream part set at parity: play/pause, ±seek buttons (seekOffset 10 → seekOffsetMs 10000, clamped), time/duration displays, scrubber and volume over the slider atom, ButtonGroup control bar. AudioPlayerElement dropped on the record (it IS the substitution). Unwired seams disable their controls — never pretend; AC-3 (playback survives transcript scrolling) holds by construction: nothing here plays.",
+      "description": "Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4). Native-substitute per the PRD verdict \u2014 the HTML audio element is replaced by the CALLER'S audio module (expo-audio, a native player, an <audio> element on web): state-in/callbacks-out, no audio dependency in the registry, Expo Go-clean. Upstream part set at parity: play/pause, \u00b1seek buttons (seekOffset 10 \u2192 seekOffsetMs 10000, clamped), time/duration displays, scrubber and volume over the slider atom, ButtonGroup control bar. AudioPlayerElement dropped on the record (it IS the substitution). Unwired seams disable their controls \u2014 never pretend; AC-3 (playback survives transcript scrolling) holds by construction: nothing here plays.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -1017,7 +1052,7 @@
       "name": "transcription",
       "type": "registry:component",
       "title": "Transcription",
-      "description": "The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD verdict — display-only; capture belongs to speech-input, so no browser dependency and nothing to substitute. Segments colorized by playback position (active text-primary, past text-muted-foreground, future text-muted-foreground/60 — upstream byte-classes), press-to-seek to the segment start ONLY when onSeek is wired (otherwise a no-op — onSeek is not invented), empty/whitespace segments never render (upstream byte-trap), render-prop children preserved for custom segment rendering, and the hook throw outside the root at byte parity. The verdict's interim/final distinction ships as a caller-supplied interimText display seam (declared addition — upstream has no interim part). Speaker labels, events, and search/highlight not shipped: the upstream part set carries none.",
+      "description": "The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD verdict \u2014 display-only; capture belongs to speech-input, so no browser dependency and nothing to substitute. Segments colorized by playback position (active text-primary, past text-muted-foreground, future text-muted-foreground/60 \u2014 upstream byte-classes), press-to-seek to the segment start ONLY when onSeek is wired (otherwise a no-op \u2014 onSeek is not invented), empty/whitespace segments never render (upstream byte-trap), render-prop children preserved for custom segment rendering, and the hook throw outside the root at byte parity. The verdict's interim/final distinction ships as a caller-supplied interimText display seam (declared addition \u2014 upstream has no interim part). Speaker labels, events, and search/highlight not shipped: the upstream part set carries none.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/text.json"
       ],
@@ -1038,7 +1073,7 @@
       "name": "terminal",
       "type": "registry:component",
       "title": "Terminal",
-      "description": "Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4). Port-adapted per the PRD verdict — an interactive pseudo-terminal is explicitly NOT part of this: the caller hands a string, the component renders it. Upstream part set at parity (Header/Title/Status/Actions/ClearButton/CopyButton/Content; output/isStreaming/autoScroll/onClear). ansi-to-react is replaced by a pure SGR tokenizer (terminal.logic.ts, Vitest-owned) whose 16-color map compresses onto the house palette — RNR roles plus the three sanctioned status colors; bright is a weight bump, 256/truecolor resolves to default, non-SGR escapes strip, attributes persist across newlines. Copy hands over stripAnsi(output) — escape codes are useless on a clipboard. autoScroll sticks to the bottom while on; the clear button ENABLES only when onClear is wired; isStreaming shows the reduced-motion-gated shimmer pulse.",
+      "description": "Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4). Port-adapted per the PRD verdict \u2014 an interactive pseudo-terminal is explicitly NOT part of this: the caller hands a string, the component renders it. Upstream part set at parity (Header/Title/Status/Actions/ClearButton/CopyButton/Content; output/isStreaming/autoScroll/onClear). ansi-to-react is replaced by a pure SGR tokenizer (terminal.logic.ts, Vitest-owned) whose 16-color map compresses onto the house palette \u2014 RNR roles plus the three sanctioned status colors; bright is a weight bump, 256/truecolor resolves to default, non-SGR escapes strip, attributes persist across newlines. Copy hands over stripAnsi(output) \u2014 escape codes are useless on a clipboard. autoScroll sticks to the bottom while on; the clear button ENABLES only when onClear is wired; isStreaming shows the reduced-motion-gated shimmer pulse.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -1067,7 +1102,7 @@
       "name": "file-tree",
       "type": "registry:component",
       "title": "File Tree",
-      "description": "The agent workspace browser (UC-CODE-01 AC-1: expand and collapse directories on a phone-width screen). Port-adapted per the PRD verdict, which offers horizontal scroll OR drill-in; the port takes the horizontal-scroll branch — the whole tree sits in axis-scrolled ScrollViews so depth pushes right instead of crushing names. Upstream part set at parity and the caller-supplied tree arrives as COMPOSED JSX (FileTreeFolder/FileTreeFile parts), not a data prop: expanded/defaultExpanded/onExpandedChange (Set<string>), selectedPath/onSelect. The inventory's composition law is binding and touch-shaped: the CHEVRON expands/collapses, the NAME selects, one tap never does both — two targets per row, both at the 44pt floor via hitSlop. Rows compose the item atom; an empty tree falls back to the empty atom; folder state is a copy-on-write toggle in file-tree.logic (Vitest-owned, mutation-proof).",
+      "description": "The agent workspace browser (UC-CODE-01 AC-1: expand and collapse directories on a phone-width screen). Port-adapted per the PRD verdict, which offers horizontal scroll OR drill-in; the port takes the horizontal-scroll branch \u2014 the whole tree sits in axis-scrolled ScrollViews so depth pushes right instead of crushing names. Upstream part set at parity and the caller-supplied tree arrives as COMPOSED JSX (FileTreeFolder/FileTreeFile parts), not a data prop: expanded/defaultExpanded/onExpandedChange (Set<string>), selectedPath/onSelect. The inventory's composition law is binding and touch-shaped: the CHEVRON expands/collapses, the NAME selects, one tap never does both \u2014 two targets per row, both at the 44pt floor via hitSlop. Rows compose the item atom; an empty tree falls back to the empty atom; folder state is a copy-on-write toggle in file-tree.logic (Vitest-owned, mutation-proof).",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/icon.json",
         "https://reactnativereusables.com/r/{engine}/text.json",
@@ -1095,7 +1130,7 @@
       "name": "environment-variables",
       "type": "registry:component",
       "title": "Environment Variables",
-      "description": "Masked key/value rows for the agent's environment (UC-CODE-01 AC-4: masked by default, reveal a single value on demand). Port-at-parity per the PRD verdict. Upstream part set at parity (Header/Title/Toggle/Content/Variable/Name/Value/Required/CopyButton/Group; showValues/defaultShowValues=false/onShowValuesChange) — the Toggle is RNR's vendored Switch, matching the KB's documented composition. ONE declared addition: upstream's reveal is global-only, so each row also carries a per-value eye toggle to satisfy AC-4's single-value wording; the clipboard always receives the REAL value (the mask is a display guard, documented in the logic). The copy emits the KB's documented export KEY=\"value\" line with quotes escaped. Composed on the table atom per the build plan: one KEY/VALUE table, fixed column sizes, horizontal scroll for overflowing keys, groups as label rows, mono keys via lib/mono. No input ships — the upstream part set has no editable field; editing the environment is the caller's app.",
+      "description": "Masked key/value rows for the agent's environment (UC-CODE-01 AC-4: masked by default, reveal a single value on demand). Port-at-parity per the PRD verdict. Upstream part set at parity (Header/Title/Toggle/Content/Variable/Name/Value/Required/CopyButton/Group; showValues/defaultShowValues=false/onShowValuesChange) \u2014 the Toggle is RNR's vendored Switch, matching the KB's documented composition. ONE declared addition: upstream's reveal is global-only, so each row also carries a per-value eye toggle to satisfy AC-4's single-value wording; the clipboard always receives the REAL value (the mask is a display guard, documented in the logic). The copy emits the KB's documented export KEY=\"value\" line with quotes escaped. Composed on the table atom per the build plan: one KEY/VALUE table, fixed column sizes, horizontal scroll for overflowing keys, groups as label rows, mono keys via lib/mono. No input ships \u2014 the upstream part set has no editable field; editing the environment is the caller's app.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
@@ -1125,7 +1160,7 @@
       "name": "package-info",
       "type": "registry:component",
       "title": "Package Info",
-      "description": "Card of package name, version, and a copyable install command (UC-CODE-01 AC-3) — port-at-parity per the PRD verdict, all RNR primitives. Upstream part set at parity (Header/Name/Version/Description/Content/Dependencies/Dependency/ChangeType; name/currentVersion/newVersion/changeType): the version line is the KB's version transition display (current → next, null renders nothing), and the web's five change-type hues compress onto the house status vocabulary with the badge WORD carrying the kind. ONE declared addition: upstream ships no install-command part but AC-3 is binding, so PackageInfoInstall composes the existing Snippet organism inside the card — the new version pins the install when present, otherwise latest. Dependencies render as ONE table (package/version) per the build plan, fixed column sizes, horizontal scroll, mono identifiers via lib/mono.",
+      "description": "Card of package name, version, and a copyable install command (UC-CODE-01 AC-3) \u2014 port-at-parity per the PRD verdict, all RNR primitives. Upstream part set at parity (Header/Name/Version/Description/Content/Dependencies/Dependency/ChangeType; name/currentVersion/newVersion/changeType): the version line is the KB's version transition display (current \u2192 next, null renders nothing), and the web's five change-type hues compress onto the house status vocabulary with the badge WORD carrying the kind. ONE declared addition: upstream ships no install-command part but AC-3 is binding, so PackageInfoInstall composes the existing Snippet organism inside the card \u2014 the new version pins the install when present, otherwise latest. Dependencies render as ONE table (package/version) per the build plan, fixed column sizes, horizontal scroll, mono identifiers via lib/mono.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/text.json",
@@ -1151,7 +1186,7 @@
       "name": "stack-trace-parser",
       "type": "registry:lib",
       "title": "Stack trace parser",
-      "description": "The pure V8/Node stack-trace parser (UC-CODE-02 AC-3) — registry:lib per the data-schema contract, which binds StackFrame/ParsedStackTrace here with real Vitest coverage against real captured traces. Splits the `Type: message` header, parses `at fn (file:line:col)` and `at file:line:col` frames, keeps unparseable lines as raw frames so a foreign trace never loses one, and FLAGS internal frames (node:, node_modules, internal/) — hiding is the renderer's decision, never the parser's.",
+      "description": "The pure V8/Node stack-trace parser (UC-CODE-02 AC-3) \u2014 registry:lib per the data-schema contract, which binds StackFrame/ParsedStackTrace here with real Vitest coverage against real captured traces. Splits the `Type: message` header, parses `at fn (file:line:col)` and `at file:line:col` frames, keeps unparseable lines as raw frames so a foreign trace never loses one, and FLAGS internal frames (node:, node_modules, internal/) \u2014 hiding is the renderer's decision, never the parser's.",
       "registryDependencies": [],
       "files": [
         {
@@ -1165,7 +1200,7 @@
       "name": "stack-trace",
       "type": "registry:component",
       "title": "Stack Trace",
-      "description": "The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: every frame's file and line legible at phone width; the raw trace copies with one tap) — port-at-parity per the PRD verdict, mono frame list with expandable frames and horizontal scroll. Upstream part set at parity (Header/Error/ErrorType/ErrorMessage/Actions/CopyButton/ExpandButton/Content/Frames; trace/open/defaultOpen=false/onOpenChange/onFilePathClick): copy hands over the RAW trace, internal frames dim to text-muted-foreground/50 and vanish under showInternalFrames=false (the upstream trap), and the expand button is verified against source to be a PASSIVE rotating chevron — the header is the only toggle. Frames scroll RIGHT in a bounded host (max-h-64, the house form of the web's 400px inline bound); without onFilePathClick the file:line:col renders unpressable — disabled, never pretend.",
+      "description": "The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: every frame's file and line legible at phone width; the raw trace copies with one tap) \u2014 port-at-parity per the PRD verdict, mono frame list with expandable frames and horizontal scroll. Upstream part set at parity (Header/Error/ErrorType/ErrorMessage/Actions/CopyButton/ExpandButton/Content/Frames; trace/open/defaultOpen=false/onOpenChange/onFilePathClick): copy hands over the RAW trace, internal frames dim to text-muted-foreground/50 and vanish under showInternalFrames=false (the upstream trap), and the expand button is verified against source to be a PASSIVE rotating chevron \u2014 the header is the only toggle. Frames scroll RIGHT in a bounded host (max-h-64, the house form of the web's 400px inline bound); without onFilePathClick the file:line:col renders unpressable \u2014 disabled, never pretend.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
@@ -1190,7 +1225,7 @@
       "name": "schema-display",
       "type": "registry:component",
       "title": "Schema Display",
-      "description": "A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's parameter schema in a nested view that remains legible at phone width) — port-adapted per the PRD verdict: the upstream collapse structure (Parameters/Request/Response default open, property nodes open while depth < 2) ports byte-for-byte and the port ADDS the verdict's horizontal scroll — every section body sits in a horizontal ScrollView with the wave-12 column wrapper, so deep chains push right instead of crushing key widths. Upstream part set at parity (Header/Method/Path/Description/Content/Parameters/Parameter/Request/Response/Property-recursive/Body/Example). The web's five method washes compress onto the house status vocabulary with the mono verb as the badge word; path {param} highlighting becomes parsePathSegments data painted with the accent role — replacing the web's dangerouslySetInnerHTML; the Example composes the CodeBlock organism.",
+      "description": "A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's parameter schema in a nested view that remains legible at phone width) \u2014 port-adapted per the PRD verdict: the upstream collapse structure (Parameters/Request/Response default open, property nodes open while depth < 2) ports byte-for-byte and the port ADDS the verdict's horizontal scroll \u2014 every section body sits in a horizontal ScrollView with the wave-12 column wrapper, so deep chains push right instead of crushing key widths. Upstream part set at parity (Header/Method/Path/Description/Content/Parameters/Parameter/Request/Response/Property-recursive/Body/Example). The web's five method washes compress onto the house status vocabulary with the mono verb as the badge word; path {param} highlighting becomes parsePathSegments data painted with the accent role \u2014 replacing the web's dangerouslySetInnerHTML; the Example composes the CodeBlock organism.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
@@ -1220,7 +1255,7 @@
       "name": "test-results",
       "type": "registry:component",
       "title": "Test Results",
-      "description": "A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/failed/skipped counts and a failing test that expands to its message) — port-at-parity per the PRD verdict, composed from RNR badge, collapsible, and text. Upstream part set at parity (Header/Summary/Duration/Progress/Content + TestSuite/Name/Stats/Content + Test/Status/Name/Duration + TestError/Message/Stack): the passed badge always renders, failed/skipped only when non-zero, suites default COLLAPSED per the KB, per-test durations are ALWAYS milliseconds (upstream never seconds them — two formats, not one smart function), and the status hues compress onto lib/status with distinct icons and count words so color is never the sole channel. TestResultsProgress composes RNR Progress over the pass fraction per the data-schema contract (\"no chart\"), keeping both text labels byte-for-byte; rows compose the item atom; an empty content falls back to the empty atom.",
+      "description": "A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/failed/skipped counts and a failing test that expands to its message) \u2014 port-at-parity per the PRD verdict, composed from RNR badge, collapsible, and text. Upstream part set at parity (Header/Summary/Duration/Progress/Content + TestSuite/Name/Stats/Content + Test/Status/Name/Duration + TestError/Message/Stack): the passed badge always renders, failed/skipped only when non-zero, suites default COLLAPSED per the KB, per-test durations are ALWAYS milliseconds (upstream never seconds them \u2014 two formats, not one smart function), and the status hues compress onto lib/status with distinct icons and count words so color is never the sole channel. TestResultsProgress composes RNR Progress over the pass fraction per the data-schema contract (\"no chart\"), keeping both text labels byte-for-byte; rows compose the item atom; an empty content falls back to the empty atom.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/badge.json",
         "https://reactnativereusables.com/r/{engine}/collapsible.json",
@@ -1252,7 +1287,7 @@
       "name": "web-preview",
       "type": "registry:component",
       "title": "Web Preview",
-      "description": "A live page rendered inside the app (UC-CODE-03), native-substitute per the PRD verdict: the iframe is replaced by a native webview with the same URL bar and reload affordance. OPT-IN — the one item in the library that names a native module: react-native-webview is recorded here as an install-time dependency (AC-2's notice) and imported as a PEER in the source, while the registry package itself takes no dependency on it (types come from the ambient boundary declaration), so everything else installs and builds without it (AC-4). The console pane does not port and is dropped, per the verdict. The iframe sandbox has NO webview equivalent, so the lockdown is a fixed prop set at the render layer: originWhitelist http/https only, javaScriptEnabled pinned (the upstream sandbox's allow-scripts grant), file access and file-to-file universal access off, multiple windows off — and every commit is normalized then allowlisted BEFORE the webview sees it (web-preview.logic, Vitest-owned; scheme-less drafts gain https, loopback hosts gain http, javascript:/data:/file: are refused through onRefuse, never silently), with the body re-normalizing at render so the guard is not downgradable. AC-3: onError/onRenderProcessGone render an explicit failure panel — icon, title, failing host, Retry wired to the context reload — never a blank white view; HTTP error pages are content, exactly as the web iframe renders them. Upstream parts at parity (WebPreview/WebPreviewNavigation/WebPreviewNavigationButton/WebPreviewUrl/WebPreviewBody + the useWebPreview throw): the NavigationButton's tooltip becomes the accessibility label, the loading node overlays while the webview reports loading, Enter commits the URL bar (never per-keystroke), and the reload command rides the context because the web's consumer-wired iframe ref has no RN counterpart.",
+      "description": "A live page rendered inside the app (UC-CODE-03), native-substitute per the PRD verdict: the iframe is replaced by a native webview with the same URL bar and reload affordance. OPT-IN \u2014 the one item in the library that names a native module: react-native-webview is recorded here as an install-time dependency (AC-2's notice) and imported as a PEER in the source, while the registry package itself takes no dependency on it (types come from the ambient boundary declaration), so everything else installs and builds without it (AC-4). The console pane does not port and is dropped, per the verdict. The iframe sandbox has NO webview equivalent, so the lockdown is a fixed prop set at the render layer: originWhitelist http/https only, javaScriptEnabled pinned (the upstream sandbox's allow-scripts grant), file access and file-to-file universal access off, multiple windows off \u2014 and every commit is normalized then allowlisted BEFORE the webview sees it (web-preview.logic, Vitest-owned; scheme-less drafts gain https, loopback hosts gain http, javascript:/data:/file: are refused through onRefuse, never silently), with the body re-normalizing at render so the guard is not downgradable. AC-3: onError/onRenderProcessGone render an explicit failure panel \u2014 icon, title, failing host, Retry wired to the context reload \u2014 never a blank white view; HTTP error pages are content, exactly as the web iframe renders them. Upstream parts at parity (WebPreview/WebPreviewNavigation/WebPreviewNavigationButton/WebPreviewUrl/WebPreviewBody + the useWebPreview throw): the NavigationButton's tooltip becomes the accessibility label, the loading node overlays while the webview reports loading, Enter commits the URL bar (never per-keystroke), and the reload command rides the context because the web's consumer-wired iframe ref has no RN counterpart.",
       "registryDependencies": [
         "https://reactnativereusables.com/r/{engine}/button.json",
         "https://reactnativereusables.com/r/{engine}/icon.json",
