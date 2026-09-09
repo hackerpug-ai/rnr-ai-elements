@@ -1,9 +1,9 @@
 ---
 roadmap: 1
 project: Docs Site (Astro on Cloudflare)
-generated: 2026-09-09T12:00:00-06:00
+generated: 2026-09-09T16:30:00-06:00
 prd: .spec/prds/docs-site/README.md
-sprint_count: 11
+sprint_count: 13
 commit_horizon: 1
 pr_sequencing: false
 ---
@@ -12,11 +12,11 @@ pr_sequencing: false
 
 ## Overview
 
-**Sprints:** 11  (1 committed · 10 provisional)
+**Sprints:** 13  (1 committed · 12 provisional)
 **Total Tasks:** 12  (committed sprints only; provisional sprints carry a size band)
 **Current Sprint:** none yet — run `/kb-sprint-tasks-plan` to expand sprint 01
 
-All 24 in-scope use cases are demonstrated by exactly the gate of the sprint that ships them. Every sprint below was authored by the dispatched specialist set (astro-planner, cloudflare-workers-planner, techwriting-planner, react-native-reusables-planner, frontend-designer) through fusion and convergence rounds staged verbatim at `.tmp/kb-sprint-plan/docs-site/`.
+All 28 in-scope use cases are demonstrated by exactly the gate of the sprint that ships them. Sprints 01–11 were authored by the dispatched specialist set (astro-planner, cloudflare-workers-planner, techwriting-planner, react-native-reusables-planner, frontend-designer) through fusion and convergence rounds staged verbatim at `.tmp/kb-sprint-plan/docs-site/`; sprints 12–13 were added by the v2.0.0 delta replan (flue-planner + ghactions-planner + techwriting-planner, staged at `.tmp/kb-sprint-plan/docs-site-delta/`).
 
 ## Sprint Sequence
 
@@ -33,6 +33,8 @@ All 24 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 | 9 | — | [Sprint 09: live-gallery-qr-phone](#sprint-09-live-gallery-qr-phone) | Phone with Expo Go scans a live QR → gallery opens in 30s (T-GEND-018) | — | Sprint 07, Sprint 04 | Planned |
 | 10 | — | [Sprint 10: agent-trust](#sprint-10-agent-trust) | curl llms-full.txt: not-npm + ≥112 absolute-URL commands, zero short-name forms (T-EXT-001/002) | — | Sprint 07, Sprint 06 | Planned |
 | 11 | — | [Sprint 11: universal-access-recovery](#sprint-11-universal-access-recovery) | Print /components/message to PDF: code + props table legible, chrome hidden (T-SHELL-017) | — | Sprint 04, Sprint 05, Sprint 06 | Planned |
+| 12 | — | [Sprint 12: docs-sync-drift-detection](#sprint-12-docs-sync-drift-detection) | Merge a fixture change → read the page-by-page impact plan in the run summary, no raw logs (T-AUTO-014) | — | Sprint 05, Sprint 06 | Planned |
+| 13 | — | [Sprint 13: docs-sync-agent-pr](#sprint-13-docs-sync-agent-pr) | Agent's docs-only draft PR with marker bump merges via standard review; marker advances to analyzed HEAD | — | Sprint 12, Sprint 10 | Planned |
 
 ---
 
@@ -102,7 +104,7 @@ All 24 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 - 00-overview.md, 01-scope.md (incl. v1.2.0 derivation rules), 03-functional-groups.md
 - 05-uc-gend.md UC-GEND-07 (+ first-cut UC-GEND-03 pages: title/description/chips/install/source)
 - 07-uc-deliv.md UC-DELIV-01 AC-1..4 (AC-5 completes at Sprint 05); UC-DELIV-03 local same-origin serving as spike-fixture evidence (live-domain ACs demonstrated at Sprint 07)
-- 10-technical-requirements/01, 02, 03, 04, 06, 07 (island 1/5, ledger/component-detail wireframes, null-imagery), 08 (R7), 09, 10, 11 (§1–§7)
+- 11-technical-requirements/01, 02, 03, 04, 06, 07 (island 1/5, ledger/component-detail wireframes, null-imagery), 08 (R7), 09, 10, 11 (§1–§7)
 - 11-e2e-testing-criteria.md T-DELIV-001..004, T-GEND-009/010/013/016/021/024/027..031
 
 #### Capability Coverage
@@ -254,7 +256,7 @@ All 24 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 #### Dependencies
 
-- Blocks: Sprint 06, Sprint 11
+- Blocks: Sprint 06, Sprint 11, Sprint 12
 - Dependent on: Sprint 01, Sprint 02
 
 #### PRD Coverage
@@ -294,7 +296,7 @@ All 24 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 #### Dependencies
 
-- Blocks: Sprint 10, Sprint 11
+- Blocks: Sprint 10, Sprint 11, Sprint 12
 - Dependent on: Sprint 05
 
 #### PRD Coverage
@@ -450,7 +452,7 @@ All 24 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 #### Dependencies
 
-- Blocks: —
+- Blocks: Sprint 13
 - Dependent on: Sprint 07, Sprint 06
 
 #### PRD Coverage
@@ -501,3 +503,83 @@ All 24 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 #### Capability Coverage
 
 - CAP-DOCS-01: consumes the artifact-driven surfaces (ledger, reference pages) for the no-JS/print hardening sweep
+
+---
+
+### Sprint 12: docs-sync-drift-detection
+
+**Sequence:** 12
+**Timeline:** Phase 4
+**Status:** Planned
+**Fidelity:** provisional
+**Proposed by:** ghactions-planner + flue-planner + techwriting-planner (v2.0.0 delta replan; convergence rulings staged at `.tmp/kb-sprint-plan/docs-site-delta/`)
+**Milestone:** —
+
+#### Human Testing Gate
+
+**Gate:** A maintainer merges a fixture behavior change to main and reads, in the docs-sync run's summary page in the GitHub Actions UI, every impacted documentation page named with a one-line reason — no raw logs opened.
+**Entrypoint:** The docs-sync workflow run in the GitHub Actions UI on github.com/hackerpug-ai/rnr-ai-elements, seeded by merging a fixture behavior change to main through a normal PR (with the sync marker file read via git to verify the analyzed range).
+**Before:** Merging anything to main today triggers no docs-sync — .github/workflows/docs-sync.yml does not exist, no such run appears in the Actions tab, no sync marker file exists in the repo, and no surface anywhere names which documentation pages a change impacts.
+**Demonstrates:** UC-AUTO-01 (subset AC-1/2/3/5 — AC-4/AC-6 complete at Sprint 13), UC-AUTO-02 (subset AC-1/AC-3 — AC-2 completes at Sprint 13), UC-AUTO-03 (all four ACs)
+
+**Sizing (provisional):** ~8 items · ~18–30 pts — docs-sync.yml workflow (push-to-main-only trigger, fixed non-cancelling concurrency group, job-scoped write permissions via the ephemeral GITHUB_TOKEN only); SyncMarker read/validate with baseline fallback and loud unreachable-SHA failure naming the re-baseline command; range (marker..HEAD] computed at run start; payload caps (file-count + diff truncation, workflow-input configurable for the over-cap drill); OpenRouterClient pinned to deepseek/deepseek-v4-flash (timeout, single retry, visible auth/rate-limit failure); untrusted JSON impact-plan parse; $GITHUB_STEP_SUMMARY renderer with per-page reasons; no-impact close-out as run summary + step annotation (GitHub has no run-comment API). Owners: ghactions-implementer (workflow, concurrency, permissions, marker mechanics, summary surfaces) + flue-implementer (client, caps, parsing). Purely additive to CI — no needs edges to or from the guarded jobs or the deploy chain (a provider outage stalls docs sync, never deploys).
+
+> Test steps and the task table are authored when this sprint becomes next
+> (`/kb-sprint-tasks-plan`), against the codebase as it is then. See
+> [`~/Projects/brain/docs/COMMIT-HORIZON.md`](~/Projects/brain/docs/COMMIT-HORIZON.md).
+
+#### Dependencies
+
+- Blocks: Sprint 13
+- Dependent on: Sprint 05, Sprint 06
+
+#### PRD Coverage
+
+- 09-uc-auto.md UC-AUTO-01/02/03
+- 01-scope.md v2.0.0 bullets (workflow, sync marker, OpenRouter analysis); 02-roles.md Docs Sync Agent analyst half
+- TR-01 posture 8; TR-02 DocsSyncWorkflow + SyncMarker + OpenRouterClient; TR-06 docs-automation dependencies; TR-08 R16/R17; TR-09 CAP-AUTO-01 hops 1–3
+- 12-e2e-testing-criteria.md T-AUTO-001/002/003/006/008/010/011/012/013/014 (human-gate T-AUTO-014 is this sprint's gate)
+
+#### Capability Coverage
+
+- CAP-AUTO-01: owns hops 1–3 (marker range → capped payload → pinned-model impact plan rendered on the run surface)
+
+---
+
+### Sprint 13: docs-sync-agent-pr
+
+**Sequence:** 13
+**Timeline:** Phase 4
+**Status:** Planned
+**Fidelity:** provisional
+**Proposed by:** ghactions-planner + flue-planner + techwriting-planner (v2.0.0 delta replan; convergence rulings staged at `.tmp/kb-sprint-plan/docs-site-delta/`)
+**Milestone:** —
+
+#### Human Testing Gate
+
+**Gate:** A maintainer merges an impactful fixture change to main, then finds the agent's draft PR open in the GitHub UI — documentation files only, the marker bump alongside the edits, per-page impact reasons in the PR body — and after merging it through the normal review flow reads the marker on main (via git) advanced to the analyzed HEAD.
+**Entrypoint:** The agent-opened draft PR in github.com/hackerpug-ai/rnr-ai-elements (GitHub UI, gh CLI acceptable for reading) and the maintainer's review/merge action on it, with the sync marker read via git after the merge.
+**Before:** The docs-sync run names impacted pages in its summary but opens no PR — no agent-authored PR exists in the repo, generated prose lands nowhere, the marker never advances past its baseline, and no drift check guards the borrowed persona against its source.
+**Demonstrates:** UC-AUTO-04 (all five ACs), UC-AUTO-01 (completing AC-3's PR-body half, AC-4, AC-6), UC-AUTO-02 (completing AC-2: marker co-committed with the docs it describes)
+
+**Sizing (provisional):** ~8 items · ~14–32 pts — vendored techwriting persona (core system prompt + graph block, pinned to source sha 3327c171 / kb_version 1.0.0) with the T-AUTO-015 drift check as a CI-checkable hash-pin gate (repo-internal consistency; live-source freshness is a documented re-vendor procedure, honestly not CI-checkable); writer persona applying 12-content-standards.md over the impact plan; docs-only PR path allowlist enforced structurally (prose paths + registry.json description-field-only — parsed JSON delta confined to description keys, else T-AUTO-017 fails; changelog/release-notes/generated pages excluded; marker/workflow/source paths never model-written); draft-PR mechanics (docs/sync-* branch, gh pr create --draft, per-page rationale in the PR body); deterministic marker bump appended to the same PR by workflow code (co-committed, fast-forward-only); unchanged-pages-out discipline; techwriting-reviewer standing conformance review (T-AUTO-016); CONTRIBUTING appendix (agent-PR review flow, marker semantics, re-baseline command). Owners: flue-implementer (personas, vendoring, generation) + ghactions-implementer (PR mechanics, allowlist enforcement, marker bump, drift-check wiring) + techwriting-reviewer (review lane). Agent PRs inherit the docs-PR gates (build, snippet gate, link check, content standards) for free via pull_request-triggered required checks — R14 satisfied by construction.
+
+> Test steps and the task table are authored when this sprint becomes next
+> (`/kb-sprint-tasks-plan`), against the codebase as it is then. See
+> [`~/Projects/brain/docs/COMMIT-HORIZON.md`](~/Projects/brain/docs/COMMIT-HORIZON.md).
+
+#### Dependencies
+
+- Blocks: —
+- Dependent on: Sprint 12, Sprint 10
+
+#### PRD Coverage
+
+- 09-uc-auto.md UC-AUTO-04 + UC-AUTO-01 AC-3/4/6 + UC-AUTO-02 AC-2
+- 01-scope.md v2.0.0 generation bullet; 02-roles.md writer half + Maintainer review clause
+- TR-01 posture 8; TR-02 Flue docs-sync agent; TR-06 Flue verified sources; TR-08 R14/R15/R17; TR-09 CAP-AUTO-01 hops 4–5; TR-12 content standards (registry-description currency rule)
+- 12-e2e-testing-criteria.md T-AUTO-004/005/007/009/015/016/017/018/019 (human-gate T-AUTO-016 is this sprint's gate)
+
+#### Capability Coverage
+
+- CAP-AUTO-01: owns hops 4–5 (techwriting-persona writer → docs-only draft PR with the co-committed marker advance) — the chain's real-service proof lands here
