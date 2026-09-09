@@ -1,7 +1,7 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-08
-prd_version: 1.0.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 ---
 
 # Technical Risks
@@ -21,3 +21,7 @@ prd_version: 1.0.0
 | R11 | View transitions vs island lifecycle (module scripts run once) | Islands init on `astro:page-load` with window guard; documented MPA escape hatch (remove ClientRouter — nothing depends on it) | astro implementer |
 | R12 | Workers-vs-Pages platform choice drift | Verified 2026-09 against current docs: Pages feature-frozen, Workers Static Assets at parity + gradual deploys; static requests free/unlimited — $0 posture | cloudflare implementer |
 | R13 | Repo currently has NO README/LICENSE — external trust gap until this ships | In scope (UC-EXT-02); README + LICENSE are early deliverables, not launch-day | implementer |
+| R14 | Agent-authored docs subtly wrong (hallucinated API claims, stale defaults) | PR-gated human review on every agent PR; the docs-PR gates already in scope (build green, snippet gate, content-standards conformance) apply to agent PRs equally; techwriting-reviewer is the standing review lane | flue-implementer + techwriting-reviewer |
+| R15 | Prompt injection through analyzed repo content steering the agent | Model output is untrusted prose: never executed, docs-only PR path allowlist enforced structurally, no secrets in payloads, marker and workflow files excluded from agent-written paths | flue-implementer |
+| R16 | OpenRouter cost / rate limits / outage stalls docs sync | Payload caps (diff truncation, file-count limits), timeout + single retry, visible failure with a retry-friendly message, budget monitoring on the OpenRouter key | flue-implementer |
+| R17 | Marker races — two merges land before a docs PR merges, or history rewrite makes the SHA unreachable | Concurrency group serializes runs; range computed at run start from the marker; marker advances monotonically (fast-forward only); unreachable SHA fails loudly naming the re-baseline command | flue-implementer |

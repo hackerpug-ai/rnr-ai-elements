@@ -1,7 +1,7 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-08
-prd_version: 1.0.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 ---
 
 # External Dependencies
@@ -23,3 +23,8 @@ prd_version: 1.0.0
 - Cloudflare Workers Static Assets + Custom Domains — apex rnraielements.com attached with auto DNS + cert; zone Redirect Rule for www→apex.
 
 **Upstream (read-only references, not dependencies of the site)** — reactnativereusables.com registry items (absolute-URL registryDependencies), elements.ai-sdk.dev (porting reference).
+
+**Docs automation (v2.0.0)** — https://openrouter.ai/docs · https://flue.dev · https://docs.github.com/actions
+- `OpenRouter API` — change-impact analysis via `deepseek-v4-flash` (exact model slug verified at implementation against the live model list); chat-completions contract with a JSON impact-plan response, timeout + single retry; authenticated by the `OPENROUTER_API_TOKEN` GitHub secret (scoped key, expiry fails the run loudly).
+- `Flue` — the docs-sync agent runtime; the agent definition borrows the techwriting-implementer core system prompt including its knowledge graph (local Rosetta KB is the graph source of record).
+- `GitHub Actions` — merge-to-main trigger, concurrency group (runs serialize), draft-PR creation via the standard `gh`/API surface; agent output lands through PRs only.

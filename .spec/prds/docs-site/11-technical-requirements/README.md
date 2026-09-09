@@ -33,3 +33,4 @@ prd_version: 1.2.1
 |---------|------|---------|
 | 1.0.0 | 2026-09-08 | Initial TR folder |
 | 1.2.1 | 2026-09-08 | 07-ui-infrastructure: component/UI plan added — 15 userflows (all 24 UCs), 11 page types, 8 wireframes with region→component bindings, 4 NEW components (Button, SectionHeader, IndexList, Callout), five-island budget restated | frontend-designer ui-wireframes phase (human-requested lens) |
+| 2.0.0 | 2026-09-09 | Docs automation added: posture #8 (agent proposes, humans dispose); 4 components (DocsSyncWorkflow, Flue docs-sync agent, SyncMarker, OpenRouterClient); OpenRouter/Flue/Actions dependencies; risks R14–R17; capability chain CAP-AUTO-01 | `/kb-prd-plan --update` (human instruction: Flue docs-sync agent in GitHub Actions, deepseek-v4-flash on OpenRouter, techwriting prompt + graph) |

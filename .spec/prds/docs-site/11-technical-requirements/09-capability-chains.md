@@ -1,7 +1,7 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-08
-prd_version: 1.0.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 ---
 
 # Capability Chains
@@ -13,5 +13,6 @@ prd_version: 1.0.0
 | CAP-DEP-01 | Gated deploy + rollback | Merge to main | quality jobs green → `wrangler deploy` (assets-only, scoped token) → apex + headers live; recovery: `wrangler rollback` restores the full old asset set incl. `/r/` | red job deploying; preview promoting; rollback stranding new JSONs; expired token silently skipping | docs-preview-curl + docs-production-verify lanes; FLOW-DELIV-02/04 drills | cloudflare implementer |
 | CAP-INST-01 | Consumer install by absolute URL | Visitor/agent copies a command | CLI fetches `https://rnraielements.com/r/{engine}/{item}.json` (contract: 200 application/json, max-age=300, no redirect) → resolves RNR registryDependencies → writes files into the consumer app at `@/components/*` | short-name/relative form installs the web item; HTML 404 body fed to CLI; wrong engine tree | PR #28 proved the mechanism from a git tag; the post-deploy real-CLI lane re-proves it against the live domain, both engines, scratch Expo app + `tsc --noEmit` | cloudflare + rnr implementers |
 | CAP-LLMS-01 | Machine-readable doc generation | Same build as the site | collections + registry data → llms.txt / llms-full.txt / robots.txt (byte-consistent with ledger copy commands; no Disallow touches `/r/` or `/llms*`) | llms command diverges from UI copy; stale after version bump; robots blocks the registry | FLOW-EXT-01..06 + docs-production-verify presence checks | astro implementer |
+| CAP-AUTO-01 | Docs drift detection → agent PR | Merge to main | DocsSyncWorkflow reads SyncMarker (range = marker..HEAD, baseline fallback on first run) → capped diff context → deepseek-v4-flash via OpenRouterClient (contract: chat completion, JSON impact plan naming pages + reasons, timeout, single retry) → Flue writer persona (borrowed techwriting prompt + graph, 12-content-standards) → docs-only draft PR incl. marker bump | marker drift after history rewrite; provider outage mid-run; prompt injection via analyzed content; oversized diff blowing context; agent touching non-doc paths | integration lane on fixture merges (T-AUTO-002/005/011/017); PR-gated human review on every agent PR; prompt-drift build check (T-AUTO-015) | flue-implementer + techwriting-reviewer |
 
-Credential/trust notes: the only credential in the system is `CLOUDFLARE_API_TOKEN` (scoped, GitHub-secret stored; expiry fails the deploy loudly — FLOW-DELIV-02). Persistence/network chains carry retry/idempotency semantics via cache tiers (max-age=300 window) and digest comparison rather than client retries.
+Credential/trust notes: the deploy credential is `CLOUDFLARE_API_TOKEN` (scoped, GitHub-secret stored; expiry fails the deploy loudly — FLOW-DELIV-02); the automation credential is `OPENROUTER_API_TOKEN` (scoped OpenRouter key, GitHub-secret stored; expiry/quota fails the docs-sync run loudly — CAP-AUTO-01; never included in analysis payloads). Persistence/network chains carry retry/idempotency semantics via cache tiers (max-age=300 window) and digest comparison rather than client retries.

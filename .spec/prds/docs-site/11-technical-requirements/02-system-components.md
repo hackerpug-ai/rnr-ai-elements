@@ -1,7 +1,7 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-08
-prd_version: 1.0.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 ---
 
 # System Components
@@ -20,4 +20,8 @@ prd_version: 1.0.0
 | TokenTable | Theming-page table of semantic oklch tokens with live swatches sampled from the site's own CSS custom properties. |
 | QRCode (build-time) | `qrcode` lib at build → inline SVG deep-linking the item's published gallery screen; zero runtime cost. |
 | llms.txt endpoints | `src/pages/llms.txt.ts`, `llms-full.txt.ts`, `robots.txt.ts` generated from collections + registry data: literal absolute-URL commands, engine-detection rules, Expo Go caveats, not-npm statement. |
+| DocsSyncWorkflow (v2.0.0) | GitHub Actions workflow on merge to main: reads the sync marker, computes the analysis range, caps the payload, runs the analysis + generation, opens the draft PR or posts the no-impact close-out; concurrency group serializes overlapping runs. |
+| Flue docs-sync agent (v2.0.0) | Two personas in one agent run: the analyst (sends capped diff context to deepseek-v4-flash on OpenRouter, parses the JSON impact plan) and the writer (borrows the techwriting-implementer core system prompt including its knowledge graph, applies 12-content-standards.md, emits docs-only edits). |
+| SyncMarker (v2.0.0) | A repo-committed file holding the last-documented commit SHA. Advanced only inside merged documentation PRs; documented baseline fallback for first run; unreachable SHA fails the run loudly naming the recovery command. |
+| OpenRouterClient (v2.0.0) | Thin adapter over the OpenRouter chat-completions API: model pinned to deepseek-v4-flash, timeout, single retry on transient errors, visible failure on auth/rate-limit errors. |
 | Imagery pipeline (phased) | Playwright capture of the harness web gallery's four-state matrix + dark strip into `src/assets/generated/{item}/` — its own future sprint. Until then imagery is null and the preview panel is omitted (never a placeholder); once live, the prebuild fails on missing imagery. |

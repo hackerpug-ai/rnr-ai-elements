@@ -28,3 +28,6 @@ All findings staged verbatim at `.tmp/kb-prd-plan/docs-site/proposals/` (the dif
 
 ## Delivery record
 Every dispatched lens DELIVERED and staged. One delivery failure (synthesis notification truncated) recovered by delivery-only re-ask. See `.tmp/kb-prd-plan/docs-site/_ledger.json`.
+
+## v2.0.0 update (2026-09-09)
+- Applied via `/kb-prd-plan --update` (human instruction; update mode, no team dispatch by design): AUTO functional group, UC-AUTO-01..04, T-AUTO-001..019 criteria, TR additions (posture #8, DocsSyncWorkflow/Flue agent/SyncMarker/OpenRouterClient, OpenRouter+Flue+Actions deps, R14–R17, CAP-AUTO-01), file renumbering. Owner lens for the coming sprint work: `flue-implementer` + `techwriting-reviewer` (specialists added to AGENTS.md 2026-09-09).

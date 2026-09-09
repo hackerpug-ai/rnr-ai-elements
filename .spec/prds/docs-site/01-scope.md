@@ -1,7 +1,7 @@
 ---
 stability: FEATURE_SPEC
-last_validated: 2026-09-08
-prd_version: 1.0.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 scope_posture: full
 ---
 
@@ -31,6 +31,10 @@ Full feature (default — kb-prd-plan never asks for sizing).
 - Delivery: Cloudflare Workers static assets at the rnraielements.com apex — zone-level www 301, security + tiered-cache headers, deploy gated behind registry/typecheck/lint/test, non-promoting PR previews, instant rollback; registry JSON served from the same deploy at `/r/{engine}/{item}.json`.
 - GitHub-facing trust surface (README, LICENSE, CONTRIBUTING, release notes) and machine-readable agent docs: `llms.txt`, `llms-full.txt`, `robots.txt` generated from the same collections + registry data.
 - Content standards for every authored page: Google developer-doc style baseline (active voice, short sentences, second person), a locked glossary (registry item, family, engine, engine tree, verdict, peer, dev client — one canonical term each), per-page-type content templates (guide opening pattern, getting-started scope/non-scope, generated-page description pattern), and generated alt text for phase-2 imagery. Authored code snippets are extracted from or typechecked against real files (no hand-typed code in markdown), and a link check runs over dist/. [v1.1.0 TW-05/06/09/11]
+- Flue docs-sync agent running in GitHub Actions: on merge to main it analyzes every commit since the last-documented SHA, determines which documentation needs updating or writing, and opens a draft PR with the proposed updates — it NEVER pushes directly to main (the repo is PR-gated; agent output is reviewed like any human PR). [v2.0.0]
+- Last-documented-SHA sync marker: a repo-committed index of the commit documentation was last updated against, advanced only inside merged documentation PRs, with a documented baseline fallback for first run and a loud failure naming the recovery command when the marker becomes unreachable. [v2.0.0]
+- Change-impact analysis via deepseek-v4-flash on OpenRouter (exact model slug verified at implementation), authenticated by the OPENROUTER_API_TOKEN GitHub secret, with the analysis payload capped (diff truncation / file-count limits) and provider errors failing the run visibly — never a silent skip. [v2.0.0]
+- Content generation by an agent that borrows the core system prompt of the repo's techwriting-implementer agent, including its knowledge graph, held to 12-content-standards.md and emitting docs-only diffs (unchanged pages stay out of the PR). [v2.0.0]
 
 ## Out of Scope
 
@@ -44,3 +48,6 @@ Full feature (default — kb-prd-plan never asks for sizing).
 - Additional tutorials or multi-version docs — one quickstart; no versioned-docs requirement exists.
 - Analytics or telemetry on the docs site.
 - CSP hash-tightening and gradual deployment rollouts — operational hardening beyond launch scope.
+- Autonomous merging or direct-to-main writes by the docs-sync agent — agent output lands exclusively through PRs with human review `[DEFERRED: governance]`
+- Model fine-tuning, self-hosted inference, or non-OpenRouter providers for the analysis model `[DEFERRED: separate initiative]`
+- Rewriting GENERATED pages (registry-derived reference pages, ledger, llms.txt) by the agent — drift there is a fail-closed build-gate failure, not an agent task; the agent targets authored surfaces only `[DEFERRED: build-gate ownership]`

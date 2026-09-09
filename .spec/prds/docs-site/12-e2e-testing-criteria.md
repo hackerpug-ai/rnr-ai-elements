@@ -1,15 +1,15 @@
 ---
 stability: TEST_SPEC
-last_validated: 2026-09-08
-prd_version: 1.2.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 ---
 
 # E2E / Human Testing Criteria — Docs Site (Astro on Cloudflare)
 
-Version 1.1.0 · 2026-09-08 · **111 criteria across 24 use cases / 101 ACs — every AC covered.**
+Version 2.0.0 · 2026-09-09 · **128 criteria across 28 use cases — every AC covered.**
 Types: [human-gate] criteria are what sprint human gates draw from; [e2e-automated] run via `pnpm e2e:docs`;
 [api-contract] via curl lanes (docs-preview-curl on PRs, docs-production-verify post-deploy); [build-gate] are CI
-fixture drills; [integration-test] is the real-CLI round-trip against the live domain. Harness: 10-technical-requirements/11-e2e-testing.md.
+fixture drills; [integration-test] is the real-CLI round-trip against the live domain. Harness: 11-technical-requirements/11-e2e-testing.md.
 
 ## DOCS: Documentation Content
 
@@ -221,6 +221,47 @@ fixture drills; [integration-test] is the real-CLI round-trip against the live d
 | T-DELIV-015 | Vanity redirects | AC-2 | [api-contract] | Live domain via curl | GET /docs returns 301 Location /docs/introduction then 200; GET /install returns 301 Location /docs/installation then 200 |
 | T-DELIV-016 | Rollback unblocked | AC-3 | [build-gate] | Repo wrangler config and runbook | Wrangler config declares 0 bindings (no KV/DO/R2/D1/queues); rollback documented as exactly one command |
 
+## AUTO: Documentation Automation
+
+### UC-AUTO-01: Detect documentation drift on merge to main
+
+| # | Criterion | AC Ref | Type | Setup | Pass/Fail |
+|---|-----------|--------|------|-------|-----------|
+| T-AUTO-001 | Workflow triggers on merge to main | AC-1 | [build-gate] | Repo workflow yaml + fixture merge | Push event fires the docs-sync job; the run appears within 60s of the merge |
+| T-AUTO-002 | Analysis range from the marker | AC-2 | [integration-test] | Repo with marker at SHA_m; merge two commits after it | The analysis log lists exactly the commits in (SHA_m, HEAD] |
+| T-AUTO-003 | Baseline fallback on missing marker | AC-2 | [integration-test] | Fresh setup with the marker absent | The analysis uses the documented default baseline and logs which baseline was used |
+| T-AUTO-004 | Impacted pages named with reasons | AC-3 | [integration-test] | Fixture commit changing a component's behavior and registry description | The PR body lists the component's reference page plus relevant guides, each with a one-line reason |
+| T-AUTO-005 | Draft PR, never a direct push | AC-4 | [integration-test] | Fixture merge with documentation impact | A draft PR exists on a docs/* branch; main carries no new commits authored by the agent |
+| T-AUTO-006 | No-impact close-out | AC-5 | [integration-test] | Fixture merge touching only CI config | The run concludes with a no-impact comment and opens no PR |
+| T-AUTO-007 | Marker advances only on docs-PR merge | AC-6 | [build-gate] | Marker file + a merged documentation PR | The marker inside the merged PR equals the analyzed HEAD; the marker is untouched by non-docs merges |
+
+### UC-AUTO-02: Index the last-documented commit SHA
+
+| # | Criterion | AC Ref | Type | Setup | Pass/Fail |
+|---|-----------|--------|------|-------|-----------|
+| T-AUTO-008 | Marker readable in the repository | AC-1 | [build-gate] | Repo at HEAD | The marker file exists and contains a 40-char hex SHA reachable from main |
+| T-AUTO-009 | Marker co-committed with the docs it describes | AC-2 | [integration-test] | Contents of an agent-opened documentation PR | The PR diff includes the marker update alongside the doc edits in one reviewable commit set |
+| T-AUTO-010 | Unreachable SHA fails loudly | AC-3 | [integration-test] | Marker set to a SHA not reachable from main | The workflow fails naming the marker path and the re-baseline recovery command |
+
+### UC-AUTO-03: Analyze change impact with deepseek-v4-flash via OpenRouter
+
+| # | Criterion | AC Ref | Type | Setup | Pass/Fail |
+|---|-----------|--------|------|-------|-----------|
+| T-AUTO-011 | Analysis runs on the pinned model | AC-1 | [integration-test] | Workflow with OPENROUTER_API_TOKEN secret and a fixture diff | The request/response log shows model id deepseek-v4-flash and the response parses to an impact plan |
+| T-AUTO-012 | Payload capped | AC-2 | [integration-test] | Fixture merge exceeding the file-count cap | The payload respects the documented caps; the analysis completes or names the cap that stopped it |
+| T-AUTO-013 | Provider errors fail visibly | AC-3 | [integration-test] | Invalid-token fixture | The run fails with the provider error surfaced; no silent skip and no partial PR |
+| T-AUTO-014 | Impact rationale readable without logs | AC-4 | [human-gate] | Open the run and PR in the GitHub UI | A maintainer can read the per-page impact reasons in the PR body or run summary without opening raw logs |
+
+### UC-AUTO-04: Write doc updates with the techwriting persona
+
+| # | Criterion | AC Ref | Type | Setup | Pass/Fail |
+|---|-----------|--------|------|-------|-----------|
+| T-AUTO-015 | Prompt + graph borrowed, drift-checked | AC-1 | [build-gate] | Repo source of the workflow/agent vs the techwriting-implementer agent definition | The agent definition embeds the borrowed core system prompt incl. graph; a check fails on drift from the source |
+| T-AUTO-016 | Generated prose meets content standards | AC-2 | [human-gate] | Read the generated PR | Generated prose passes voice/terminology/template review per 12-content-standards.md |
+| T-AUTO-017 | Docs-only diff | AC-3 | [integration-test] | Diff of an agent PR | Zero non-documentation paths appear in the PR diff (path allowlist enforced) |
+| T-AUTO-018 | PR is reviewable like a human PR | AC-4 | [integration-test] | The agent PR in the GitHub UI/API | The PR is a normal draft PR: commentable, editable, and mergeable through the standard review flow |
+| T-AUTO-019 | Unchanged pages stay out of the diff | AC-5 | [integration-test] | PR diff on a narrowly scoped fixture | Only impacted documentation files appear in the diff |
+
 ## EXT: GitHub-Facing and Agent Docs
 
 ### UC-EXT-01: Fetch machine-readable agent docs
@@ -257,11 +298,11 @@ fixture drills; [integration-test] is the real-CLI round-trip against the live d
 | Type | Count |
 |------|-------|
 | [e2e-automated] | 78 |
-| [build-gate] | 14 |
+| [build-gate] | 18 |
 | [api-contract] | 10 |
-| [human-gate] | 6 |
-| [integration-test] | 2 |
-| **Total** | **110** |
+| [human-gate] | 8 |
+| [integration-test] | 14 |
+| **Total** | **128** |
 
 ## Maintenance
 

@@ -1,7 +1,7 @@
 ---
 stability: CONSTITUTION
-last_validated: 2026-09-08
-prd_version: 1.0.0
+last_validated: 2026-09-09
+prd_version: 2.0.0
 ---
 
 # Architecture Posture
@@ -13,3 +13,4 @@ prd_version: 1.0.0
 5. **No client state in URLs.** Engine tab, filters, dialogs, theme are DOM/localStorage state; routes differ by content, never by such state. Shared URLs must not pin anyone to the wrong engine tree.
 6. **Deploy is gated and reversible.** The wrangler deploy job needs registry/typecheck/lint/test green; previews are non-promoting version uploads; the Worker stays bindings-free so `wrangler rollback` is always one command.
 7. **Trust boundaries.** The site is read-only static content for anonymous visitors and agents; the only writes in the whole system are repo commits through the PR-gated CI chain. CSP allows `'unsafe-inline'` script/style solely because Astro islands and the pre-paint theme script require it — the site has zero user input.
+8. **The docs-sync agent proposes; humans dispose (v2.0.0).** The Flue agent's output lands exclusively through draft PRs — it never pushes to main and never merges its own PRs. Model output is treated as untrusted prose: it is never executed, secrets are never included in analysis payloads, and the docs-only diff constraint is enforced structurally (the PR path allowlist), not by trusting the model.
