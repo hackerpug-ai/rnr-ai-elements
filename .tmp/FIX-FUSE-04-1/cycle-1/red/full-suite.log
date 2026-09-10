@@ -1,0 +1,66 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-04-1
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-modules.test.ts (4 tests | 2 failed) 15621ms
+     × yields 56 non-empty snippets, each a byte-substring of its declaring batch file 19ms
+     × produces 56 non-empty notes, identical across two runs, with verbatim class names 20ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/enrichment-modules.test.ts > extracts verbatim usage snippets > yields 56 non-empty snippets, each a byte-substring of its declaring batch file
+AssertionError: expected [ 'agent', 'artifact', …(53) ] to deeply equal [ 'agent', 'artifact', …(54) ]
+
+- Expected
++ Received
+
+@@ -35,11 +35,10 @@
+    "queue",
+    "reasoning",
+    "reasoning-lifecycle",
+    "schema-display",
+    "sheet",
+-   "shimmer",
+    "slider",
+    "snippet",
+    "sources",
+    "speech-input",
+    "stack-trace",
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-modules.test.ts:188:59
+    186|     const items = loadItems();
+    187|     expect(Object.keys(snippets)).toHaveLength(56);
+    188|     expect([...new Set(items.map((i) => i.name))].sort()).toEqual(
+       |                                                           ^
+    189|       [...new Set(Object.keys(snippets))].sort(),
+    190|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/enrichment-modules.test.ts > derives deterministic theming notes > produces 56 non-empty notes, identical across two runs, with verbatim class names
+AssertionError: expected [ 'checkpoint', 'image', …(53) ] to have a length of 56 but got 55
+
+- Expected
++ Received
+
+- 56
++ 55
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-modules.test.ts:227:31
+    225|     const run1 = buildThemingNotes(items);
+    226|     const run2 = buildThemingNotes(items);
+    227|     expect(Object.keys(run1)).toHaveLength(56);
+       |                               ^
+    228|
+    229|     const tokenless: string[] = [];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 46 passed (47)
+      Tests  2 failed | 637 passed (639)
+   Start at  10:56:14
+   Duration  41.27s (transform 2.47s, setup 0ms, import 4.04s, tests 83.43s, environment 4ms)
+
