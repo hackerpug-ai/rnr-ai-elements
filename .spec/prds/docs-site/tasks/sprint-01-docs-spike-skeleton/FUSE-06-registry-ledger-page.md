@@ -463,3 +463,13 @@ REVIEW (domain reviewer) — verdict APPROVED requires every AC/TC satisfied wit
  ]
 }
 -->
+
+--------------------------------------------------------------------------------
+AMENDMENT (orchestrator, 2026-09-10 — dependency discovered mid-run)
+--------------------------------------------------------------------------------
+
+AC-1 Case 2 (GET all 56 row hrefs expecting 200) requires FUSE-07's /components
+routes (39 x /components/{item} + /components index anchors), which are not in this
+task's writeAllowed and were not listed in Depends on. Resolution: FUSE-06's branch
+syncs with main (orchestrator-authorized) after FUSE-07 lands, and the final Gate 1
+run happens on the synced tree. Recorded by kb-run-sprint.
