@@ -3,7 +3,7 @@ TASK: FUSE-06 - Generated /registry ledger page with per-row copy
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     in_progress
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer

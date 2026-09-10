@@ -3,7 +3,7 @@ TASK: FUSE-07 - Lean /components index + minimal /components/[item] x39 with ins
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     in_progress
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
