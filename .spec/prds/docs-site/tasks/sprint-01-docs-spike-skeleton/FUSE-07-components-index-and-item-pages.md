@@ -3,7 +3,8 @@ TASK: FUSE-07 - Lean /components index + minimal /components/[item] x39 with ins
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     5cb0cdfff5077725bdb621036ac840859619356d
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
