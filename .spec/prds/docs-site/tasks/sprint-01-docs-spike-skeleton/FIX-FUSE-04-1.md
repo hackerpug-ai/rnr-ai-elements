@@ -3,7 +3,8 @@ TASK: FIX-FUSE-04-1 - Serialize vitest file parallelism so the registry drill ca
 ================================================================================
 
 TASK_TYPE:  FIX
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     f5a8894f57b168177b0e409a6e90a7d2a19513df
 PRIORITY:   P0
 POINTS:     1
 AGENT:      implementer=ai-tooling-implementer | reviewer=ai-tooling-reviewer
@@ -61,9 +62,9 @@ accepted cost.
 DONE WHEN
 --------------------------------------------------------------------------------
 
-- [ ] AC-1: plain `pnpm vitest run` exits 0 on the fixed tree (RED without, GREEN with)
-- [ ] pnpm typecheck clean; biome ci clean on touched paths (vitest.config.ts)
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1: plain `pnpm vitest run` exits 0 on the fixed tree (RED without, GREEN with)
+- [x] pnpm typecheck clean; biome ci clean on touched paths (vitest.config.ts)
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed
 
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA
