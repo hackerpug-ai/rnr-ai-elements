@@ -1,0 +1,41 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts (1 test | 1 failed) 5ms
+     × FUSE-09-island-budget: exactly one customElements.define (rnr-copy-button), zero framework imports 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/island-budget.test.ts > FUSE-09 island budget > FUSE-09-island-budget: exactly one customElements.define (rnr-copy-button), zero framework imports
+AssertionError: expected [] to deeply equal [ { file: StringContaining{…}, …(1) } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "file": StringContaining "copy-button.ts",
+-     "tag": "rnr-copy-button",
+-   },
+- ]
++ []
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:57:25
+     55|     }
+     56|
+     57|     expect(defineSites).toEqual([{ file: expect.stringContaining('copy…
+       |                         ^
+     58|     expect(frameworkImports).toEqual([]);
+     59|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  10:25:12
+   Duration  94ms (transform 10ms, setup 0ms, import 15ms, tests 5ms, environment 0ms)
+
