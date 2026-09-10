@@ -20,5 +20,11 @@ export default defineConfig({
     // an inert string and no style can be asserted at all.
     include: ['tests/**/*.test.ts'],
     exclude: ['**/node_modules/**', 'apps/**'],
+    // The count drill (scripts/docs-data/drill-item-count.ts) mutates the real
+    // packages/registry/registry.json for ~13s and byte-restores it. With parallel
+    // test files, registry readers (enrichment-modules) see the mutated 55-item
+    // registry mid-drill and fail their 56-item assertions — deterministically.
+    // Serializing test files makes the mutation invisible to every other file.
+    fileParallelism: false,
   },
 });
