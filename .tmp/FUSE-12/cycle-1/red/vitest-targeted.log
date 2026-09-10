@@ -1,0 +1,46 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-12
+
+ ❯ tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts (3 tests | 2 failed | 1 skipped) 15281ms
+     × FLOW-DELIV-01-ci-chain-order AC-1 ordered chain runs green and ships 112 dist JSONs 15267ms
+     × FLOW-DELIV-01-ci-chain-order AC-2 ci.yml docs-e2e wiring and root chain order are parse-provable 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts > FLOW-DELIV-01 FUSE-12 lane > FLOW-DELIV-01-ci-chain-order AC-1 ordered chain runs green and ships 112 dist JSONs
+AssertionError: apps/docs/dist/r must ship exactly 112 registry JSONs: expected '114' to be '112' // Object.is equality
+
+Expected: "112"
+Received: "114"
+
+ ❯ tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts:241:94
+    239|         'dist JSON count',
+    240|       );
+    241|       expect(counted.stdout.trim(), 'apps/docs/dist/r must ship exactl…
+       |                                                                                              ^
+    242|         '112',
+    243|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts > FLOW-DELIV-01 FUSE-12 lane > FLOW-DELIV-01-ci-chain-order AC-2 ci.yml docs-e2e wiring and root chain order are parse-provable
+AssertionError: ci.yml declares no docs-e2e job: expected undefined to be defined
+ ❯ tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts:268:52
+    266|
+    267|     const job = workflow.jobs['docs-e2e'];
+    268|     expect(job, 'ci.yml declares no docs-e2e job').toBeDefined();
+       |                                                    ^
+    269|     expect(job?.needs, 'docs-e2e must be ordered after all four requir…
+    270|       expect.arrayContaining(['typecheck', 'lint', 'test', 'registry']…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 skipped (3)
+   Start at  11:45:06
+   Duration  15.49s (transform 26ms, setup 0ms, import 87ms, tests 15.28s, environment 0ms)
+

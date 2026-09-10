@@ -3,7 +3,7 @@ name: ci
 # Derived from brain template ts-pnpm-vitest-eslint.yml (brain-template-version: 2.0.0),
 # with eslint swapped for biome per project toolchain.
 #
-# Every job is guarded on package.json existing. These four jobs are REQUIRED checks
+# Every job is guarded on package.json existing. These five jobs are REQUIRED checks
 # on main; without the guard they could never pass before the app is scaffolded and
 # main would be unmergeable from day one. The guard disappears on its own the moment
 # package.json lands.
@@ -130,3 +130,35 @@ jobs:
           else
             echo "::notice::no registry:build script yet — skipping"
           fi
+
+  # Docs e2e (FUSE-12): the ordered build chain lives ONLY in the root `e2e:docs`
+  # script (owned by FUSE-10) — this job invokes it verbatim so CI runs exactly what
+  # the human gate runs locally. needs: orders it after registry so docs never build
+  # over stale public/r JSON.
+  docs-e2e:
+    name: docs-e2e
+    needs: [typecheck, lint, test, registry]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: guard
+        run: |
+          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to e2e"; fi
+      - if: steps.guard.outputs.ready == 'true'
+        uses: pnpm/action-setup@v4
+      - if: steps.guard.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm e2e:docs
+      - if: always() && steps.guard.outputs.ready == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-playwright-report
+          path: apps/docs/playwright-report/
+          retention-days: 7
