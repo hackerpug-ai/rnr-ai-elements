@@ -1,0 +1,27 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-10
+
+ ❯ tests/sprint-01-docs-spike-skeleton/runner-config.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/runner-config.test.ts [ tests/sprint-01-docs-spike-skeleton/runner-config.test.ts ]
+Error: Cannot find module '../../playwright.config' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-10/tests/sprint-01-docs-spike-skeleton/runner-config.test.ts
+ ❯ tests/sprint-01-docs-spike-skeleton/runner-config.test.ts:1:1
+      1| import config from '../../playwright.config';
+       | ^
+      2| import { expect, it } from 'vitest';
+      3|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  10:32:13
+   Duration  198ms (transform 20ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+exit=1
