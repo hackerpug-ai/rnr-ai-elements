@@ -1,0 +1,109 @@
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test --grep FLOW-DELIV-03-112-file-completeness
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:28:50 [types] Generated 77ms
+13:28:50 [build] output: "static"
+13:28:50 [build] mode: "static"
+13:28:50 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/apps/docs/dist/
+13:28:50 [build] Collecting build info...
+13:28:50 [build] ✓ Completed in 91ms.
+13:28:50 [build] Building static entrypoints...
+13:28:50 [vite] ✓ built in 183ms
+13:28:50 [vite] ✓ built in 26ms
+13:28:50 [build] Rearranging server assets...
+
+ generating static routes 
+13:28:50   ├─ /components/shimmer/index.html (+6ms) 
+13:28:50   ├─ /components/checkpoint/index.html (+1ms) 
+13:28:50   ├─ /components/image/index.html (+1ms) 
+13:28:50   ├─ /components/persona/index.html (+1ms) 
+13:28:50   ├─ /components/speech-input/index.html (+1ms) 
+13:28:50   ├─ /components/conversation/index.html (+1ms) 
+13:28:50   ├─ /components/message/index.html (+1ms) 
+13:28:50   ├─ /components/prompt-input/index.html (+1ms) 
+13:28:50   ├─ /components/suggestion/index.html (+1ms) 
+13:28:50   ├─ /components/tool/index.html (+1ms) 
+13:28:50   ├─ /components/reasoning/index.html (+1ms) 
+13:28:50   ├─ /components/task/index.html (+1ms) 
+13:28:50   ├─ /components/question/index.html (+1ms) 
+13:28:50   ├─ /components/agent/index.html (+1ms) 
+13:28:50   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:28:50   ├─ /components/plan/index.html (+1ms) 
+13:28:50   ├─ /components/confirmation/index.html (+1ms) 
+13:28:50   ├─ /components/queue/index.html (+1ms) 
+13:28:50   ├─ /components/sources/index.html (+1ms) 
+13:28:50   ├─ /components/inline-citation/index.html (+1ms) 
+13:28:50   ├─ /components/artifact/index.html (+1ms) 
+13:28:50   ├─ /components/snippet/index.html (+0ms) 
+13:28:50   ├─ /components/commit/index.html (+1ms) 
+13:28:50   ├─ /components/attachments/index.html (+1ms) 
+13:28:50   ├─ /components/context/index.html (+1ms) 
+13:28:50   ├─ /components/open-in-chat/index.html (+1ms) 
+13:28:50   ├─ /components/model-selector/index.html (+1ms) 
+13:28:50   ├─ /components/mic-selector/index.html (+1ms) 
+13:28:50   ├─ /components/voice-selector/index.html (+1ms) 
+13:28:50   ├─ /components/audio-player/index.html (+1ms) 
+13:28:50   ├─ /components/transcription/index.html (+1ms) 
+13:28:50   ├─ /components/terminal/index.html (+1ms) 
+13:28:50   ├─ /components/file-tree/index.html (+1ms) 
+13:28:50   ├─ /components/environment-variables/index.html (+1ms) 
+13:28:50   ├─ /components/package-info/index.html (+1ms) 
+13:28:50   ├─ /components/stack-trace/index.html (+1ms) 
+13:28:50   ├─ /components/schema-display/index.html (+1ms) 
+13:28:50   ├─ /components/test-results/index.html (+1ms) 
+13:28:50   ├─ /components/web-preview/index.html (+1ms) 
+13:28:50   ├─ /components/index.html (+2ms) 
+13:28:50   ├─ /islands/copy-button/index.html (+1ms) 
+13:28:50   ├─ /registry/index.html (+3ms) 
+13:28:50   ├─ /index.html (+1ms) 
+13:28:50 ✓ Completed in 54ms.
+
+13:28:50 [build] ✓ Completed in 285ms.
+13:28:50 [build] 43 page(s) built in 388ms
+13:28:50 [build] Complete!
+
+Running 6 tests using 3 workers
+
+[1/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+[3/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+[4/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+
+
+
+
+[6/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+  2 skipped
+  4 passed (11.4s)

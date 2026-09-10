@@ -5,6 +5,7 @@ import { existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'no
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { test } from '@playwright/test';
+import { PREVIEW_URL } from '../harness/docs-preview';
 
 /**
  * FLOW-DELIV-03-112-file-completeness — FUSE-02 lane check over the real
@@ -187,4 +188,57 @@ test('FLOW-DELIV-03-112-file-completeness', async () => {
     'filesystem-mutating lane check runs once, on chromium-desktop',
   );
   await FLOW_DELIV_03_112_file_completeness();
+});
+
+/**
+ * FUSE-11 AC-1 / TC-1 — the SERVING half of FLOW-DELIV-03-112-file-completeness:
+ * every one of the 56 x 2 registry JSONs must be reachable SAME-ORIGIN on the
+ * built site served by `astro preview` (FUSE-10 runner), as 200 application/json.
+ *
+ * Enumeration comes from the canonical registry source (root public/r, regenerated
+ * by registry:build) — never a hardcoded list, so a preview missing part of the
+ * public/r fan-out fails here with the exact missing URLs. The requests are issued
+ * through Playwright's request context and every response's status and
+ * content-type is collected; the count assertion proves all 112 were fetched.
+ *
+ * Zero-JS observables only (pure HTTP), so this test stays UNGUARDED and the
+ * chromium-nojs project proves the sweep rather than skipping it.
+ */
+test('FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json', async ({
+  request,
+}) => {
+  const canonicalNames = (engine: string): string[] =>
+    readdirSync(join(ROOT, 'public/r', engine))
+      .filter((file) => file.endsWith('.json') && file !== 'registry.json')
+      .map((file) => file.replace(/\.json$/, ''))
+      .sort();
+  const names = canonicalNames('nativewind');
+  // The canonical source must be exactly the 56 items, mirrored across engines.
+  assert.equal(names.length, 56, `canonical registry source holds ${names.length} items`);
+  assert.deepEqual(canonicalNames('uniwind'), names, 'engines diverge in the canonical source');
+
+  const responses: { url: string; status: number; contentType: string }[] = [];
+  for (const engine of ['nativewind', 'uniwind']) {
+    for (const name of names) {
+      const url = `${PREVIEW_URL}/r/${engine}/${name}.json`;
+      const response = await request.get(url);
+      responses.push({
+        url,
+        status: response.status(),
+        contentType: response.headers()['content-type'] ?? '',
+      });
+    }
+  }
+
+  assert.equal(responses.length, 112, 'exactly 112 same-origin requests must be issued');
+  assert.deepEqual(
+    responses.filter((response) => response.status !== 200),
+    [],
+    'every registry JSON must serve 200',
+  );
+  assert.deepEqual(
+    responses.filter((response) => !response.contentType.includes('application/json')),
+    [],
+    'every registry JSON must serve content-type application/json',
+  );
 });

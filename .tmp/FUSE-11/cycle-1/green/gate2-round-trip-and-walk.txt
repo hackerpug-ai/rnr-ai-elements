@@ -1,0 +1,104 @@
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test --grep FLOW-DELIV-03-live-registry-round-trip
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:29:15 [types] Generated 32ms
+13:29:15 [build] output: "static"
+13:29:15 [build] mode: "static"
+13:29:15 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/apps/docs/dist/
+13:29:15 [build] Collecting build info...
+13:29:15 [build] ✓ Completed in 41ms.
+13:29:15 [build] Building static entrypoints...
+13:29:15 [vite] ✓ built in 89ms
+13:29:15 [vite] ✓ built in 22ms
+13:29:15 [build] Rearranging server assets...
+
+ generating static routes 
+13:29:15   ├─ /components/shimmer/index.html (+5ms) 
+13:29:15   ├─ /components/checkpoint/index.html (+1ms) 
+13:29:15   ├─ /components/image/index.html (+1ms) 
+13:29:15   ├─ /components/persona/index.html (+1ms) 
+13:29:15   ├─ /components/speech-input/index.html (+1ms) 
+13:29:15   ├─ /components/conversation/index.html (+1ms) 
+13:29:15   ├─ /components/message/index.html (+1ms) 
+13:29:15   ├─ /components/prompt-input/index.html (+1ms) 
+13:29:15   ├─ /components/suggestion/index.html (+1ms) 
+13:29:15   ├─ /components/tool/index.html (+1ms) 
+13:29:15   ├─ /components/reasoning/index.html (+1ms) 
+13:29:15   ├─ /components/task/index.html (+1ms) 
+13:29:15   ├─ /components/question/index.html (+1ms) 
+13:29:15   ├─ /components/agent/index.html (+1ms) 
+13:29:15   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:29:15   ├─ /components/plan/index.html (+1ms) 
+13:29:15   ├─ /components/confirmation/index.html (+1ms) 
+13:29:15   ├─ /components/queue/index.html (+1ms) 
+13:29:15   ├─ /components/sources/index.html (+1ms) 
+13:29:15   ├─ /components/inline-citation/index.html (+1ms) 
+13:29:15   ├─ /components/artifact/index.html (+1ms) 
+13:29:15   ├─ /components/snippet/index.html (+1ms) 
+13:29:15   ├─ /components/commit/index.html (+1ms) 
+13:29:15   ├─ /components/attachments/index.html (+1ms) 
+13:29:15   ├─ /components/context/index.html (+1ms) 
+13:29:15   ├─ /components/open-in-chat/index.html (+1ms) 
+13:29:15   ├─ /components/model-selector/index.html (+1ms) 
+13:29:15   ├─ /components/mic-selector/index.html (+1ms) 
+13:29:15   ├─ /components/voice-selector/index.html (+1ms) 
+13:29:15   ├─ /components/audio-player/index.html (+1ms) 
+13:29:15   ├─ /components/transcription/index.html (+1ms) 
+13:29:15   ├─ /components/terminal/index.html (+1ms) 
+13:29:15   ├─ /components/file-tree/index.html (+1ms) 
+13:29:15   ├─ /components/environment-variables/index.html (+1ms) 
+13:29:15   ├─ /components/package-info/index.html (+1ms) 
+13:29:15   ├─ /components/stack-trace/index.html (+1ms) 
+13:29:15   ├─ /components/schema-display/index.html (+1ms) 
+13:29:15   ├─ /components/test-results/index.html (+1ms) 
+13:29:15   ├─ /components/web-preview/index.html (+1ms) 
+13:29:15   ├─ /components/index.html (+1ms) 
+13:29:15   ├─ /islands/copy-button/index.html (+1ms) 
+13:29:15   ├─ /registry/index.html (+2ms) 
+13:29:15   ├─ /index.html (+1ms) 
+13:29:15 ✓ Completed in 56ms.
+
+13:29:15 [build] ✓ Completed in 187ms.
+13:29:15 [build] 43 page(s) built in 242ms
+13:29:15 [build] Complete!
+
+Running 6 tests using 6 workers
+
+[1/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[3/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[4/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[6/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+  1 skipped
+  5 passed (1.7s)
