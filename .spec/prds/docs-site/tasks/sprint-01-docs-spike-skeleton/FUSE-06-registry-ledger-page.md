@@ -3,7 +3,8 @@ TASK: FUSE-06 - Generated /registry ledger page with per-row copy
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     3a373403e0e7970c46add066086bddd09493ff43
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
@@ -41,11 +42,16 @@ Opening /registry on the built site shows exactly 56 rows split 39/11/6 name-for
 DONE WHEN
 --------------------------------------------------------------------------------
 
-- [ ] AC-1 [PRIMARY]: Ledger renders exactly 56 generated rows, both base URLs, the note, verdicts, and 200 links
-- [ ] AC-2 [PRIMARY]: Per-row copy places the full absolute-URL command on the clipboard (sprint-01 subset)
-- [ ] every AC verify command passes (see ACCEPTANCE CRITERIA)
-- [ ] pnpm typecheck clean; ./node_modules/.bin/biome ci clean on touched paths
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1 [PRIMARY]: Ledger renders exactly 56 generated rows, both base URLs, the note, verdicts, and 200 links
+  PARTIAL (review c1 2026-09-10): greped Gate 1 exit 0 (10 pass/2 nojs skips, reviewer-rerun); dist verified 56 rows 39/11/6, 56 links 200, note/bases/DOM-order. BLOCKED by lane regression below.
+- [x] AC-2 [PRIMARY]: Per-row copy places the full absolute-URL command on the clipboard (sprint-01 subset)
+  PARTIAL (review c1 2026-09-10): greped Gate 2 exit 0 (2 pass/1 nojs skip, reviewer-rerun); dist has 58 copy buttons, 56 distinct absolute-URL commands. BLOCKED by lane regression below.
+- [x] every AC verify command passes (see ACCEPTANCE CRITERIA)
+  PARTIAL (review c1 2026-09-10): the two greped VERIFY commands pass, BUT the full lane `pnpm e2e:docs` (FUSE-12's CI lane) exits 1 deterministically (2/2 repro on branch; main green at 4fd63e5). ledger.spec.ts:54 reads src/data/registry-items.json at module scope; deliv-03-112 spec rmSyncs src/data (and public/r) mid-run before prebuild regen, so mobile/nojs workers ENOENT at import (2 failed + 8 did-not-run). In-scope fix: bounded existence-retry read in ledger.spec.ts (keeps the AC's "import registry-items.json" letter). Systemic fix (out of FUSE-06 scope): isolate deliv-03's destructive cases; component-page.spec.ts:69 on main has the same latent module-scope-read hazard.
+- [x] pnpm typecheck clean; ./node_modules/.bin/biome ci clean on touched paths
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed
+
+REVIEW C2 (2026-09-10, astro-reviewer): APPROVED. Lane blocker resolved at 3a37340 — ledger.spec.ts readGeneratedDataset retries ENOENT-only on a 60s bounded deadline then rethrows (same pattern as component-page.spec.ts's 15s helper; 60s justified because registry-items.json returns only after deliv-03's final prebuild leg, measured ~20-30s window). Reviewer reran the REAL full lane once: exit 0, 37 passed / 8 skipped / 0 failed, no did-not-run; dist re-verified (56 rows, 39 /components links, 58 copy buttons, 56 distinct absolute-URL commands, note present). Cycle-2 RED evidence authentic (exact cycle-1 ENOENT signature). Residual, non-blocking: a CI prebuild slower than 60s would rethrow — fail-closed, acceptable.
 
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA (TDD Beads — ordered happy-path first)
