@@ -19,8 +19,19 @@ const ROOT = process.cwd();
 
 type Item = { name: string; type: string; files: { path: string }[] };
 
+/**
+ * CANONICAL semantic-class regex — token alternation longest-first so
+ * compounds (muted-foreground) never capture truncated at their prefix
+ * (muted). Must match theming-note.ts's TOKEN_CLASS ordering.
+ */
 const SEMANTIC_CLASS =
-  /\b(?:bg|text|border|ring|fill|stroke|from|to|via|divide|outline|decoration|caret|accent)-(?:background|foreground|card|card-foreground|popover|popover-foreground|primary|primary-foreground|secondary|secondary-foreground|muted|muted-foreground|accent|accent-foreground|destructive|destructive-foreground|border|input|ring)\b/g;
+  /\b(?:bg|text|border|ring|fill|stroke|from|to|via|divide|outline|decoration|caret|accent)-(?:card-foreground|popover-foreground|primary-foreground|secondary-foreground|muted-foreground|accent-foreground|destructive-foreground|background|foreground|card|popover|primary|secondary|muted|accent|destructive|border|input|ring)\b/g;
+
+/** Truncation oracle: the named class must appear NOT followed by another token character. */
+function appearsWhole(source: string, cls: string): boolean {
+  const escaped = cls.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
+  return new RegExp(`${escaped}(?![\\w-])`).test(source);
+}
 
 const BROKEN_FIXTURE = [
   'type BrokenCardProps = {',
@@ -80,22 +91,32 @@ describe('enrichment gates', () => {
       ),
     ).toBe(true);
 
-    // AC-3 case 1: 56 non-empty deterministic notes; shimmer's classes verbatim.
+    // AC-3 case 1: 56 non-empty deterministic notes; every named class appears
+    // WHOLE in the item's real source (truncation guard); shimmer pinned.
     const notesRun1 = buildThemingNotes(all);
     const notesRun2 = buildThemingNotes(all);
     expect(Object.keys(notesRun1)).toHaveLength(56);
     for (const item of all) {
       expect(notesRun1[item.name].length > 0, `${item.name} note empty`).toBe(true);
       expect(notesRun1[item.name]).toBe(notesRun2[item.name]);
+      const combined = item.files.map((f) => readFileSync(join(ROOT, f.path), 'utf8')).join('\n');
+      const named = [...notesRun1[item.name].matchAll(SEMANTIC_CLASS)].map((m) => m[0]);
+      for (const cls of named) {
+        expect(
+          appearsWhole(combined, cls),
+          `${item.name}: note names "${cls}" which is absent/truncated in source`,
+        ).toBe(true);
+      }
     }
     const shimmerSource = readFileSync(
       join(ROOT, 'packages/registry/src/components/ai/shimmer.tsx'),
       'utf8',
     );
     const shimmerClasses = [...notesRun1.shimmer.matchAll(SEMANTIC_CLASS)].map((m) => m[0]);
-    expect(shimmerClasses.length).toBeGreaterThan(0);
+    expect(shimmerClasses).toContain('text-muted-foreground');
+    expect(notesRun1.shimmer).toBe('Themed via text-muted-foreground.');
     for (const cls of shimmerClasses) {
-      expect(shimmerSource.includes(cls), `shimmer note names absent class ${cls}`).toBe(true);
+      expect(appearsWhole(shimmerSource, cls), `shimmer note names absent class ${cls}`).toBe(true);
     }
 
     // AC-1 case 2: the broken-type fixture drill, as a real module subprocess.

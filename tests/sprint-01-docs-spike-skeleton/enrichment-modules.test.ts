@@ -36,12 +36,28 @@ function loadItems(): Item[] {
   ).items;
 }
 
-/** Semantic theme-token class shape — mirrors check-tokens.ts's semantic set. */
+/**
+ * Semantic theme-token class shape — mirrors check-tokens.ts's semantic set.
+ * CANONICAL ORDER, longest token first: regex alternation is first-match, so a
+ * compound token (muted-foreground) must precede its prefix (muted) or every
+ * compound captures truncated. This ordering is the contract theming-note.ts
+ * must reproduce.
+ */
 const SEMANTIC_CLASS =
-  /\b(?:bg|text|border|ring|fill|stroke|from|to|via|divide|outline|decoration|caret|accent)-(?:background|foreground|card|card-foreground|popover|popover-foreground|primary|primary-foreground|secondary|secondary-foreground|muted|muted-foreground|accent|accent-foreground|destructive|destructive-foreground|border|input|ring)\b/g;
+  /\b(?:bg|text|border|ring|fill|stroke|from|to|via|divide|outline|decoration|caret|accent)-(?:card-foreground|popover-foreground|primary-foreground|secondary-foreground|muted-foreground|accent-foreground|destructive-foreground|background|foreground|card|popover|primary|secondary|muted|accent|destructive|border|input|ring)\b/g;
 
 function namedClasses(note: string): string[] {
   return [...note.matchAll(SEMANTIC_CLASS)].map((m) => m[0]);
+}
+
+/**
+ * Non-circular truncation oracle: `includes` alone passes for a truncated
+ * name ('text-muted' is a substring of 'text-muted-foreground'), so the named
+ * class must appear in the source NOT followed by another token character.
+ */
+function appearsWhole(source: string, cls: string): boolean {
+  const escaped = cls.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
+  return new RegExp(`${escaped}(?![\\w-])`).test(source);
 }
 
 /**
@@ -216,13 +232,23 @@ describe('derives deterministic theming notes', () => {
       expect(typeof note1 === 'string' && note1.length > 0, `${item.name} note empty`).toBe(true);
       expect(note1).toBe(run2[item.name]);
       // Independent token scan over the item's real sources.
-      let hasToken = false;
-      for (const f of item.files) {
-        const source = readFileSync(join(ROOT, f.path), 'utf8');
-        if (SEMANTIC_CLASS.test(source)) hasToken = true;
-        SEMANTIC_CLASS.lastIndex = 0;
+      const combined = item.files.map((f) => readFileSync(join(ROOT, f.path), 'utf8')).join('\n');
+      const sourceClasses = namedClasses(combined);
+      if (sourceClasses.length === 0) tokenless.push(item.name);
+      // Non-circular audit, EVERY item: each class the note names must appear
+      // in the source WHOLE (not truncated, not a substring of a longer
+      // utility), and the note must not drop a class the source carries.
+      const noteClasses = namedClasses(note1);
+      for (const cls of noteClasses) {
+        expect(
+          appearsWhole(combined, cls),
+          `${item.name}: note names "${cls}" which is absent/truncated in source`,
+        ).toBe(true);
       }
-      if (!hasToken) tokenless.push(item.name);
+      expect(
+        [...new Set(sourceClasses)].sort(),
+        `${item.name}: note classes differ from source classes`,
+      ).toEqual([...new Set(noteClasses)].sort());
     }
     expect(
       tokenless.length,
@@ -231,15 +257,17 @@ describe('derives deterministic theming notes', () => {
     // Every tokenless item gets the SAME defined default note.
     expect(new Set(tokenless.map((n) => run1[n])).size).toBe(1);
 
-    // Pinned: shimmer's note names only classes verbatim in shimmer.tsx.
+    // Pinned: shimmer's note names text-muted-foreground WHOLE — the compound
+    // truncation regression guard (cycle 2).
     const shimmerSource = readFileSync(
       join(ROOT, 'packages/registry/src/components/ai/shimmer.tsx'),
       'utf8',
     );
     const shimmerClasses = namedClasses(run1.shimmer);
-    expect(shimmerClasses.length).toBeGreaterThan(0);
+    expect(shimmerClasses).toContain('text-muted-foreground');
+    expect(run1.shimmer).toBe('Themed via text-muted-foreground.');
     for (const cls of shimmerClasses) {
-      expect(shimmerSource.includes(cls), `shimmer note names absent class ${cls}`).toBe(true);
+      expect(appearsWhole(shimmerSource, cls), `shimmer note names absent class ${cls}`).toBe(true);
     }
   });
 });
