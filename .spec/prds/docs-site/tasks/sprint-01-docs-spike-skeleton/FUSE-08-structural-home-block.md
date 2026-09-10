@@ -3,7 +3,8 @@ TASK: FUSE-08 - Structural home block (explicitly NOT the designed hero)
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     7532d41addf6746085ecbdc153099f62ffe4073f
 PRIORITY:   P0
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
