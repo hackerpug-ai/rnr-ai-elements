@@ -1,0 +1,7 @@
+$ rm apps/docs/src/data/gallery-manifest.json
+$ pnpm -w run registry:build && pnpm -w run gallery:manifest
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+chain-exit=0
+baseline (pre-untrack working tree = HEAD): ba76423f73dd1a170b314d18e5c0bf468b20f566f27cb4163eda07a33c3b3e5a  apps/docs/src/data/gallery-manifest.json
+regenerated:                                              ba76423f73dd1a170b314d18e5c0bf468b20f566f27cb4163eda07a33c3b3e5a  apps/docs/src/data/gallery-manifest.json
+VERDICT: byte-identical
