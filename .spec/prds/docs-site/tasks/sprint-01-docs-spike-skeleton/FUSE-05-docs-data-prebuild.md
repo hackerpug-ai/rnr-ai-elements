@@ -3,7 +3,8 @@ TASK: FUSE-05 - DocsDataPrebuild: full enrichment into registry-items.json + fam
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     c4a1250fc52e8287ce9a5cea2442b6dda32e4114
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
