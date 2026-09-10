@@ -1,0 +1,21 @@
+error: pathspec 'apps/docs/src/data/families.json' did not match any file(s) known to git
+FLOW-DELIV-03-112-file-completeness: FAIL
+Error: Command failed: git checkout -- apps/docs/src/data/families.json
+error: pathspec 'apps/docs/src/data/families.json' did not match any file(s) known to git
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at FLOW_DELIV_03_112_file_completeness (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-05/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:93:3) {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    <Buffer >,
+    <Buffer 65 72 72 6f 72 3a 20 70 61 74 68 73 70 65 63 20 27 61 70 70 73 2f 64 6f 63 73 2f 73 72 63 2f 64 61 74 61 2f 66 61 6d 69 6c 69 65 73 2e 6a 73 6f 6e 27 ... 40 more bytes>
+  ],
+  pid: 84037,
+  stdout: <Buffer >,
+  stderr: <Buffer 65 72 72 6f 72 3a 20 70 61 74 68 73 70 65 63 20 27 61 70 70 73 2f 64 6f 63 73 2f 73 72 63 2f 64 61 74 61 2f 66 61 6d 69 6c 69 65 73 2e 6a 73 6f 6e 27 ... 40 more bytes>
+}

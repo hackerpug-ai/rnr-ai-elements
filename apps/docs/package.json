@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prebuild": "tsx ../../scripts/docs-data/prebuild.ts",
     "build": "pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build",
     "preview": "astro preview"
   },
