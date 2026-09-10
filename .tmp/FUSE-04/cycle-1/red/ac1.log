@@ -1,0 +1,28 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-04
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts [ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts ]
+Error: Cannot find module '../../scripts/docs-data/gates' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-04/tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts:6:1
+      4| import { join } from 'node:path';
+      5| import { describe, expect, it } from 'vitest';
+      6| import {
+       | ^
+      7|   EXPECTED_ITEM_COUNT,
+      8|   GateError,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  10:34:38
+   Duration  216ms (transform 32ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
