@@ -11,6 +11,12 @@ export default defineConfig({
   testMatch: '**/*.spec.ts',
   // Flake policy: run once; failures are real. Never --retries on the CLI either.
   retries: 0,
+  // Serialize the lane (FIX-FUSE-06-1): deliv-03's contracted destructive cases rmSync
+  // apps/docs/src/data + public/r mid-run and regenerate them; parallel workers import
+  // those artifacts at module scope and ENOENT against the removal window (FUSE-06
+  // cycle-1: 2 failed / 8 did-not-run). One worker makes the lane deterministic; the
+  // wall-time cost is seconds-scale.
+  workers: 1,
   reporter: [
     ['junit', { outputFile: 'apps/docs/playwright-report/junit.xml' }],
     ['html', { outputFolder: 'apps/docs/playwright-report/html', open: 'never' }],

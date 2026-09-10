@@ -1,0 +1,133 @@
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1
+> pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:02:11 [types] Generated 73ms
+13:02:11 [build] output: "static"
+13:02:11 [build] mode: "static"
+13:02:11 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-06-1/apps/docs/dist/
+13:02:11 [build] Collecting build info...
+13:02:11 [build] ✓ Completed in 79ms.
+13:02:11 [build] Building static entrypoints...
+13:02:11 [vite] ✓ built in 371ms
+13:02:11 [vite] ✓ built in 27ms
+13:02:11 [build] Rearranging server assets...
+
+ generating static routes 
+13:02:11   ├─ /components/shimmer/index.html (+5ms) 
+13:02:11   ├─ /components/checkpoint/index.html (+1ms) 
+13:02:11   ├─ /components/image/index.html (+1ms) 
+13:02:11   ├─ /components/persona/index.html (+1ms) 
+13:02:11   ├─ /components/speech-input/index.html (+1ms) 
+13:02:11   ├─ /components/conversation/index.html (+1ms) 
+13:02:11   ├─ /components/message/index.html (+1ms) 
+13:02:11   ├─ /components/prompt-input/index.html (+1ms) 
+13:02:11   ├─ /components/suggestion/index.html (+1ms) 
+13:02:11   ├─ /components/tool/index.html (+1ms) 
+13:02:11   ├─ /components/reasoning/index.html (+0ms) 
+13:02:11   ├─ /components/task/index.html (+1ms) 
+13:02:11   ├─ /components/question/index.html (+0ms) 
+13:02:11   ├─ /components/agent/index.html (+1ms) 
+13:02:11   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:02:11   ├─ /components/plan/index.html (+15ms) 
+13:02:11   ├─ /components/confirmation/index.html (+1ms) 
+13:02:11   ├─ /components/queue/index.html (+1ms) 
+13:02:11   ├─ /components/sources/index.html (+1ms) 
+13:02:11   ├─ /components/inline-citation/index.html (+1ms) 
+13:02:11   ├─ /components/artifact/index.html (+0ms) 
+13:02:11   ├─ /components/snippet/index.html (+0ms) 
+13:02:11   ├─ /components/commit/index.html (+1ms) 
+13:02:11   ├─ /components/attachments/index.html (+1ms) 
+13:02:11   ├─ /components/context/index.html (+0ms) 
+13:02:11   ├─ /components/open-in-chat/index.html (+0ms) 
+13:02:11   ├─ /components/model-selector/index.html (+1ms) 
+13:02:11   ├─ /components/mic-selector/index.html (+0ms) 
+13:02:11   ├─ /components/voice-selector/index.html (+0ms) 
+13:02:11   ├─ /components/audio-player/index.html (+0ms) 
+13:02:11   ├─ /components/transcription/index.html (+0ms) 
+13:02:11   ├─ /components/terminal/index.html (+1ms) 
+13:02:11   ├─ /components/file-tree/index.html (+1ms) 
+13:02:11   ├─ /components/environment-variables/index.html (+0ms) 
+13:02:11   ├─ /components/package-info/index.html (+0ms) 
+13:02:11   ├─ /components/stack-trace/index.html (+1ms) 
+13:02:11   ├─ /components/schema-display/index.html (+1ms) 
+13:02:11   ├─ /components/test-results/index.html (+1ms) 
+13:02:11   ├─ /components/web-preview/index.html (+1ms) 
+13:02:11   ├─ /components/index.html (+1ms) 
+13:02:11   ├─ /islands/copy-button/index.html (+1ms) 
+13:02:11   ├─ /index.html (+0ms) 
+13:02:11 ✓ Completed in 57ms.
+
+13:02:11 [build] ✓ Completed in 476ms.
+13:02:11 [build] 42 page(s) built in 556ms
+13:02:11 [build] Complete!
+
+Running 30 tests using 9 workers
+
+[1/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[2/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+[3/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+[4/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[5/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:37:1 › FLOW-GEND-02-hero-install-command-copy
+[6/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:37:1 › FLOW-GEND-02-hero-install-command-copy
+[7/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[8/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[9/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[10/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+
+
+[11/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[12/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[13/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:70:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[14/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:70:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[15/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[16/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[17/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[18/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[19/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[20/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[21/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+[22/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:37:1 › FLOW-GEND-02-hero-install-command-copy
+[23/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[24/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:70:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[25/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[26/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[27/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[28/30] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[29/30] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[30/30] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+
+
+  5 skipped
+  25 passed (14.5s)
+exit=0
