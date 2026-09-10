@@ -1,0 +1,155 @@
+{
+  "sprint": "sprint-01-docs-spike-skeleton",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton",
+    "sprint_slug": "sprint-01-docs-spike-skeleton"
+  },
+  "planned_at": "2026-09-10T19:50:00Z",
+  "planned_steps": 10,
+  "steps": [
+    {
+      "n": 1,
+      "text": "Run `git clone https://github.com/hackerpug-ai/rnr-ai-elements.git /tmp/rnr-spike && cd /tmp/rnr-spike && pnpm install --frozen-lockfile` \u2014 exits 0 and lists the `@rnr-ai-elements/docs` workspace package.",
+      "exercises": "FUSE-01",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 1",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DELIV-01-ci-chain-order"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "text": "In /tmp/rnr-spike run `pnpm e2e:docs` \u2014 exits 0 in one run with `retries: 0`; the log shows the ordered chain (`registry:build`, `gallery:manifest`, the docs prebuild reporting 56 items and props resolved for 39/39 component items, astro build) and the spike flow (open site \u2192 ledger \u2192 component page \u2192 copy command via its button \u2192 fetch URL as JSON) passing.",
+      "exercises": "FUSE-02,FUSE-03,FUSE-05,FUSE-10,FUSE-11",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 2",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DELIV-01-ci-chain-order"
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "text": "Run `ls /tmp/rnr-spike/apps/docs/public/r/nativewind | wc -l` \u2014 prints 57 (56 item JSONs plus the per-engine registry.json index).",
+      "exercises": "FUSE-05",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 3",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DELIV-01-ci-chain-order",
+          "FLOW-DELIV-03-112-file-completeness"
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "text": "Run `git -C /tmp/rnr-spike check-ignore apps/docs/public/r/nativewind/conversation.json && echo IGNORED` \u2014 prints IGNORED: the served registry copy is gitignored, generated-only.",
+      "exercises": "FUSE-05",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 4",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DELIV-01-ci-chain-order"
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "text": "Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, open http://localhost:4321/registry \u2014 the table renders exactly 56 rows split 39/11/6, a note matching 'generated at build' mentioning public/r, both engine base URLs, and a copy button on every row's install command.",
+      "exercises": "FUSE-06,FUSE-09",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 5",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-40-ledger-56-rows-and-base-urls",
+          "FLOW-GEND-41-ledger-filter-and-row-copy"
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "text": "Open http://localhost:4321/components/conversation \u2014 h1 'Conversation', one-line description, chips for version/category/engines/Expo Go verdict, the install block FIRST containing `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json` plus the labeled uniwind variant with a copy button, and full untruncated source in a Code view with no height limit.",
+      "exercises": "FUSE-07,FUSE-09",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 6",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-14-reference-page-anatomy",
+          "FLOW-GEND-15-family-pager-stays-in-family"
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "text": "Click the copy button on the conversation install block \u2014 the button shows a visible success state and pasting anywhere yields the exact displayed command.",
+      "exercises": "FUSE-09",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 7",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-41-ledger-filter-and-row-copy"
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "text": "Open http://localhost:4321/ \u2014 the home block shows 'NOT an npm package', counters 0.2.1 and 56 items split 39/11/6, one install command as selectable text, links to /registry and /components.",
+      "exercises": "FUSE-08",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 8",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract",
+          "FLOW-GEND-02-hero-install-command-copy"
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "text": "Copy the JSON URL out of the conversation install block and run `curl -s http://localhost:4321/r/nativewind/conversation.json` \u2014 JSON whose `name` is `conversation`, `files` non-empty, `registryDependencies` present, served from the same origin as the docs.",
+      "exercises": "FUSE-05,FUSE-07",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 9",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DELIV-03-live-registry-round-trip"
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "text": "In /tmp/rnr-spike run `jq 'del(.items[] | select(.name == \"shimmer\"))' packages/registry/registry.json > /tmp/reg.json && mv /tmp/reg.json packages/registry/registry.json && pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` \u2014 exits non-zero naming `shimmer` and observed 55 versus 56; then `git -C /tmp/rnr-spike checkout -- . && pnpm --filter @rnr-ai-elements/docs build` exits 0.",
+      "exercises": "FUSE-04,FUSE-05",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 10",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DELIV-01-fail-closed-item-count"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+cd /Users/justinrich/Projects/rnr-ai-elements && ( python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 4 ) > /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton/.gate-evidence/2026-09-10T19:47:27Z/step4.raw 2>&1
+EC=$?
+tee -a /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton/.gate-evidence/2026-09-10T19:47:27Z/step4.log < /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton/.gate-evidence/2026-09-10T19:47:27Z/step4.raw
+echo "@@GATE-EXIT=$EC@@" >> /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton/.gate-evidence/2026-09-10T19:47:27Z/step4.log
+printf "%s" "$EC" > /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton/.gate-evidence/2026-09-10T19:47:27Z/step4.exit
+rm -f /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton/.gate-evidence/2026-09-10T19:47:27Z/step4.raw

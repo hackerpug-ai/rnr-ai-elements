@@ -32,16 +32,16 @@ Walking skeleton for the docs site: a visitor can walk the whole find-and-instal
 
 <!-- TESTING-GATE-START -->
 
-- [ ] 1. Run `git clone https://github.com/hackerpug-ai/rnr-ai-elements.git /tmp/rnr-spike && cd /tmp/rnr-spike && pnpm install --frozen-lockfile` — exits 0 and lists the `@rnr-ai-elements/docs` workspace package.   `exercises: FUSE-01`
-- [ ] 2. In /tmp/rnr-spike run `pnpm e2e:docs` — exits 0 in one run with `retries: 0`; the log shows the ordered chain (`registry:build`, `gallery:manifest`, the docs prebuild reporting 56 items and props resolved for 39/39 component items, astro build) and the spike flow (open site → ledger → component page → copy command via its button → fetch URL as JSON) passing.   `exercises: FUSE-02, FUSE-03, FUSE-05, FUSE-10, FUSE-11`
-- [ ] 3. Run `ls /tmp/rnr-spike/apps/docs/public/r/nativewind | wc -l` — prints 57 (56 item JSONs plus the per-engine registry.json index).   `exercises: FUSE-05`
-- [ ] 4. Run `git -C /tmp/rnr-spike check-ignore apps/docs/public/r/nativewind/conversation.json && echo IGNORED` — prints IGNORED: the served registry copy is gitignored, generated-only.   `exercises: FUSE-05`
-- [ ] 5. Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, open http://localhost:4321/registry — the table renders exactly 56 rows split 39/11/6, a note matching 'generated at build' mentioning public/r, both engine base URLs, and a copy button on every row's install command.   `exercises: FUSE-06, FUSE-09`
-- [ ] 6. Open http://localhost:4321/components/conversation — h1 'Conversation', one-line description, chips for version/category/engines/Expo Go verdict, the install block FIRST containing `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json` plus the labeled uniwind variant with a copy button, and full untruncated source in a Code view with no height limit.   `exercises: FUSE-07, FUSE-09`
-- [ ] 7. Click the copy button on the conversation install block — the button shows a visible success state and pasting anywhere yields the exact displayed command.   `exercises: FUSE-09`
-- [ ] 8. Open http://localhost:4321/ — the home block shows 'NOT an npm package', counters 0.2.1 and 56 items split 39/11/6, one install command as selectable text, links to /registry and /components.   `exercises: FUSE-08`
-- [ ] 9. Copy the JSON URL out of the conversation install block and run `curl -s http://localhost:4321/r/nativewind/conversation.json` — JSON whose `name` is `conversation`, `files` non-empty, `registryDependencies` present, served from the same origin as the docs.   `exercises: FUSE-05, FUSE-07`
-- [ ] 10. In /tmp/rnr-spike run `jq 'del(.items[] | select(.name == "shimmer"))' packages/registry/registry.json > /tmp/reg.json && mv /tmp/reg.json packages/registry/registry.json && pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` — exits non-zero naming `shimmer` and observed 55 versus 56; then `git -C /tmp/rnr-spike checkout -- . && pnpm --filter @rnr-ai-elements/docs build` exits 0.   `exercises: FUSE-04, FUSE-05`
+- [x] 1. Run `git clone https://github.com/hackerpug-ai/rnr-ai-elements.git /tmp/rnr-spike && cd /tmp/rnr-spike && pnpm install --frozen-lockfile` — exits 0 and lists the `@rnr-ai-elements/docs` workspace package.   `exercises: FUSE-01`
+- [x] 2. In /tmp/rnr-spike run `pnpm e2e:docs` — exits 0 in one run with `retries: 0`; the log shows the ordered chain (`registry:build`, `gallery:manifest`, the docs prebuild reporting 56 items and props resolved for 39/39 component items, astro build) and the spike flow (open site → ledger → component page → copy command via its button → fetch URL as JSON) passing.   `exercises: FUSE-02, FUSE-03, FUSE-05, FUSE-10, FUSE-11`
+- [x] 3. Run `ls /tmp/rnr-spike/apps/docs/public/r/nativewind | wc -l` — prints 57 (56 item JSONs plus the per-engine registry.json index).   `exercises: FUSE-05`
+- [x] 4. Run `git -C /tmp/rnr-spike check-ignore apps/docs/public/r/nativewind/conversation.json && echo IGNORED` — prints IGNORED: the served registry copy is gitignored, generated-only.   `exercises: FUSE-05`
+- [x] 5. Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, open http://localhost:4321/registry — the table renders exactly 56 rows split 39/11/6, a note matching 'generated at build' mentioning public/r, both engine base URLs, and a copy button on every row's install command.   `exercises: FUSE-06, FUSE-09`
+- [x] 6. Open http://localhost:4321/components/conversation — h1 'Conversation', one-line description, chips for version/category/engines/Expo Go verdict, the install block FIRST containing `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json` plus the labeled uniwind variant with a copy button, and full untruncated source in a Code view with no height limit.   `exercises: FUSE-07, FUSE-09`
+- [x] 7. Click the copy button on the conversation install block — the button shows a visible success state and pasting anywhere yields the exact displayed command.   `exercises: FUSE-09`
+- [x] 8. Open http://localhost:4321/ — the home block shows 'NOT an npm package', counters 0.2.1 and 56 items split 39/11/6, one install command as selectable text, links to /registry and /components.   `exercises: FUSE-08`
+- [x] 9. Copy the JSON URL out of the conversation install block and run `curl -s http://localhost:4321/r/nativewind/conversation.json` — JSON whose `name` is `conversation`, `files` non-empty, `registryDependencies` present, served from the same origin as the docs.   `exercises: FUSE-05, FUSE-07`
+- [x] 10. In /tmp/rnr-spike run `jq 'del(.items[] | select(.name == "shimmer"))' packages/registry/registry.json > /tmp/reg.json && mv /tmp/reg.json packages/registry/registry.json && pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` — exits non-zero naming `shimmer` and observed 55 versus 56; then `git -C /tmp/rnr-spike checkout -- . && pnpm --filter @rnr-ai-elements/docs build` exits 0.   `exercises: FUSE-04, FUSE-05`
 
 <!-- TESTING-GATE-END -->
 
@@ -51,18 +51,18 @@ Walking skeleton for the docs site: a visitor can walk the whole find-and-instal
 
 | ID | Title | Agent | Points | Wave | Status |
 |----|-------|-------|--------|------|--------|
-| FUSE-01 | Scaffold apps/docs static Astro 7 package with the build chain pre-wired | astro-implementer | 3 | A | ⬜ Pending |
-| FUSE-02 | Dual-emit the docs verdict dataset from build-gallery-manifest.ts | react-native-reusables-implementer | 2 | A | ⬜ Pending |
-| FUSE-03 | Enrichment modules: ts-morph props, usage snippet, theming note (data only, no UI) | react-native-reusables-implementer | 5 | A | ⬜ Pending |
-| FUSE-04 | Fail-closed gate module (incl. props-resolved) + fixture-drill script | react-native-reusables-implementer | 3 | B | ⬜ Pending |
-| FUSE-05 | DocsDataPrebuild: full enrichment into registry-items.json + families map + public/r copy | react-native-reusables-implementer | 5 | C | ⬜ Pending |
-| FUSE-06 | Generated /registry ledger page with per-row copy | astro-implementer | 3 | D | ⬜ Pending |
-| FUSE-07 | Lean /components index + minimal /components/[item] x39 with install block first | astro-implementer | 5 | D | ⬜ Pending |
-| FUSE-08 | Structural home block (explicitly NOT the designed hero) | astro-implementer | 2 | D | ⬜ Pending |
-| FUSE-09 | CopyButton island (1/5) with zero-JS selectable-text fallback | astro-implementer | 2 | B | ⬜ Pending |
-| FUSE-10 | pnpm e2e:docs turnkey runner over astro preview | astro-implementer | 5 | B | ⬜ Pending |
-| FUSE-11 | Spike flow spec: ledger → component page → command → fetched JSON | astro-implementer | 3 | E | ⬜ Pending |
-| FUSE-12 | CI docs-e2e lane in ci.yml | astro-implementer | 2 | C | ⬜ Pending |
+| FUSE-01 | Scaffold apps/docs static Astro 7 package with the build chain pre-wired | astro-implementer | 3 | A | ✅ Completed |
+| FUSE-02 | Dual-emit the docs verdict dataset from build-gallery-manifest.ts | react-native-reusables-implementer | 2 | A | ✅ Completed |
+| FUSE-03 | Enrichment modules: ts-morph props, usage snippet, theming note (data only, no UI) | react-native-reusables-implementer | 5 | A | ✅ Completed |
+| FUSE-04 | Fail-closed gate module (incl. props-resolved) + fixture-drill script | react-native-reusables-implementer | 3 | B | ✅ Completed |
+| FUSE-05 | DocsDataPrebuild: full enrichment into registry-items.json + families map + public/r copy | react-native-reusables-implementer | 5 | C | ✅ Completed |
+| FUSE-06 | Generated /registry ledger page with per-row copy | astro-implementer | 3 | D | ✅ Completed |
+| FUSE-07 | Lean /components index + minimal /components/[item] x39 with install block first | astro-implementer | 5 | D | ✅ Completed |
+| FUSE-08 | Structural home block (explicitly NOT the designed hero) | astro-implementer | 2 | D | ✅ Completed |
+| FUSE-09 | CopyButton island (1/5) with zero-JS selectable-text fallback | astro-implementer | 2 | B | ✅ Completed |
+| FUSE-10 | pnpm e2e:docs turnkey runner over astro preview | astro-implementer | 5 | B | ✅ Completed |
+| FUSE-11 | Spike flow spec: ledger → component page → command → fetched JSON | astro-implementer | 3 | E | ✅ Completed |
+| FUSE-12 | CI docs-e2e lane in ci.yml | astro-implementer | 2 | C | ✅ Completed |
 
 **Waves:** A(3) → B(3) → C(2) → D(3) → E(1) — 5 waves over 12 tasks
 
