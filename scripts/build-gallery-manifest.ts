@@ -1,9 +1,11 @@
 /**
- * Emits apps/example/gallery/manifest.ts from the registry manifest — the gallery's
- * item list is DERIVED, never hand-edited, so it can never drift from what the
- * registry actually ships.
+ * Emits apps/example/gallery/manifest.ts and apps/docs/src/data/gallery-manifest.json
+ * from the registry manifest — the item list (and its Expo Go verdict) is DERIVED in
+ * exactly one place, never hand-edited, so neither target can drift from what the
+ * registry actually ships. FUSE-05's docs prebuild consumes the JSON verbatim and
+ * must never recompute expoGo.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 function main(): void {
@@ -68,8 +70,30 @@ export type GalleryItem = {
 export const GALLERY_ITEMS: GalleryItem[] = ${JSON.stringify(items, null, 2)};
 `;
   writeFileSync(join(root, 'apps/example/gallery/manifest.ts'), out);
+
+  // Docs dataset: the SAME derived items (same single verdict computation),
+  // serialized as JSON. Field-for-field the GalleryItem shape; the one
+  // serialization difference is permissions — absent permissions are null in
+  // the JSON dataset (the docs boundary contract's "no permissions" encoding)
+  // while the .ts emit keeps {} because its committed bytes are frozen.
+  const docsItems = items.map((i) => ({
+    name: i.name,
+    kind: i.kind,
+    title: i.title,
+    description: i.description,
+    dependencies: i.dependencies,
+    permissions: Object.keys(i.permissions).length > 0 ? i.permissions : null,
+    expoGo: i.expoGo,
+  }));
+  // Wave-A parallel with the apps/docs scaffold (FUSE-01): the directory may
+  // not exist yet, and FUSE-02's own rerun-after-delete depends on this too.
+  mkdirSync(join(root, 'apps/docs/src/data'), { recursive: true });
+  writeFileSync(
+    join(root, 'apps/docs/src/data/gallery-manifest.json'),
+    `${JSON.stringify(docsItems, null, 2)}\n`,
+  );
   console.log(
-    `gallery manifest — ${items.length} item(s) (${Object.values(kindOrder).length} kinds) -> apps/example/gallery/manifest.ts`,
+    `gallery manifest — ${items.length} item(s) (${Object.values(kindOrder).length} kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json`,
   );
 }
 
