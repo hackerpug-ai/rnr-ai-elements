@@ -3,7 +3,8 @@ TASK: FUSE-02 - Dual-emit the docs verdict dataset from build-gallery-manifest.t
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     Completed (landed)
+COMMIT:     d9af0f97a758d7e2cff5485e6a6a4c2eea724e15
 PRIORITY:   P0
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
