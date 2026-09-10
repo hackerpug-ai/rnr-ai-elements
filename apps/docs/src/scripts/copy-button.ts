@@ -23,6 +23,8 @@ class RnrCopyButton extends HTMLElement {
     const command = this.querySelector('code');
     if (!trigger || !command || trigger.dataset.copyBound === 'true') return;
     trigger.dataset.copyBound = 'true';
+    // Remember the server-rendered label so the idle reset can restore it.
+    trigger.dataset.copyLabel = (trigger.textContent ?? 'Copy').trim();
     trigger.addEventListener('click', () => {
       void this.copy(trigger as HTMLButtonElement, command);
     });
@@ -45,7 +47,8 @@ class RnrCopyButton extends HTMLElement {
 
   private setState(trigger: HTMLButtonElement, state: string, label: string): void {
     trigger.dataset.state = state;
-    if (label) trigger.textContent = label;
+    // Empty label means "back to the original server-rendered text".
+    trigger.textContent = label || trigger.dataset.copyLabel || 'Copy';
     const status = this.querySelector('.copy-button__status');
     if (status) status.textContent = label;
   }
