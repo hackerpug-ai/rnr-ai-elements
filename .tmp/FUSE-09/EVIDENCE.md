@@ -29,17 +29,23 @@ Task: FUSE-09 CopyButton island (1/5) with zero-JS selectable-text fallback.
 - `ac1-driver.out` — AC-1 driver FAIL before the island existed (no
   `rnr-copy-button code` element; route absent from the FUSE-01 dist).
 - `runner-hang-repo-testdir.out` (0 bytes — hung) vs
-  `runner-works-same-spec-in-tmp.out` — the `playwright test` RUNNER
-  deadlocks discovering test files anywhere inside this repo; the identical
-  spec lists instantly when the testDir is outside the repo. Reproduced
-  minimal (trivial spec, JS config), unaffected by `env -i`, removing
-  NODE_OPTIONS, disabling the Bash sandbox, `--workers=1`, or `--list` mode.
-  The main process sits idle in its event loop with no children; root cause
-  is not identified — this is an environment/repo interaction for FUSE-10 to
-  avoid (its config must keep the crawl scoped and be checked against this
-  hang on a real checkout).
+  `runner-works-same-spec-in-tmp.out` — with @playwright/test **1.52.0**, the
+  `playwright test` runner deadlocked discovering test files anywhere inside
+  this repo; the identical spec listed instantly when the testDir was outside
+  the repo. Reproduced minimal (trivial spec, JS config), unaffected by
+  `env -i`, removing NODE_OPTIONS, disabling the Bash sandbox, `--workers=1`,
+  or `--list` mode.
 
-## Why `ac1-driver.mjs` instead of a `playwright test` run
+  **CORRECTION (post-review, 2026-09-10)**: the hang is version-specific, not
+  a repo property. Upgrading the same runner install to **1.63.0** and re-running
+  the exact same in-repo repro completes instantly
+  (`post-review/fuse09-v163.out`), and the landed FUSE-10 config on main lists
+  6 tests in-repo in seconds (`post-review/fuse10-list-main.out`, via
+  `pnpm exec playwright test --list` after `pnpm install` on the main
+  checkout). The landed FUSE-10 runner is unaffected; this cycle's AC-1
+  behavioral evidence below was captured on 1.52 through the library API and
+  remains valid for the behavior it asserts (real Chromium, real clipboard,
+  real preview server).
 
 Because of the runner deadlock above, AC-1's assertions were executed through
 the Playwright LIBRARY API (same real Chromium, same permissions, same
