@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-03
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts [ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts ]
+Error: Cannot find module '../../scripts/docs-data/theming-note' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-03/tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts:7:1
+      5| import { describe, expect, it } from 'vitest';
+      6|
+      7| import { buildThemingNotes } from '../../scripts/docs-data/theming-not…
+       | ^
+      8| import { extractProps } from '../../scripts/docs-data/props';
+      9| import { extractUsageSnippets } from '../../scripts/docs-data/usage-sn…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  09:57:18
+   Duration  117ms (transform 15ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+gates_test_exit=1
