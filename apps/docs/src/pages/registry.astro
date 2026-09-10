@@ -1,0 +1,152 @@
+---
+import CopyButton from '../components/islands/CopyButton.astro';
+import Layout from '../layouts/spike.astro';
+import items from '../data/registry-items.json';
+
+/**
+ * FUSE-06 — the generated /registry ledger. Every row derives from the FUSE-05
+ * artifact at build time; there is no hand-editable ledger source under
+ * apps/docs src (T-GEND-031), and per-row commands come from the same dataset
+ * the component pages use — never a second source.
+ *
+ * Sprint-01 subset: the full unfiltered table plus both engine base URLs and
+ * the generated-at-build note, all zero-JS (the LedgerFilter island — tabs,
+ * engine toggle, text filter — lands in Sprint 05 and supersedes this spec).
+ *
+ * Docs-page links: component rows get /components/{item}; ui/lib rows anchor
+ * their family section on the /components index, so every link resolves
+ * without one page per non-component item.
+ */
+type LedgerItem = {
+  name: string;
+  type: string;
+  engines: string[];
+  expoGo: boolean;
+  family: string;
+};
+
+const ledger = items as LedgerItem[];
+
+const NATIVEWIND_BASE = 'https://rnraielements.com/r/nativewind';
+const UNIWIND_BASE = 'https://rnraielements.com/r/uniwind';
+const installCommand = (name: string): string =>
+  `npx @react-native-reusables/cli@latest add ${NATIVEWIND_BASE}/${name}.json`;
+const docsHref = (item: LedgerItem): string =>
+  item.type === 'registry:component' ? `/components/${item.name}` : `/components#${item.family}`;
+const verdictLabel = (expoGo: boolean): string => (expoGo ? 'Expo Go' : 'Dev client');
+---
+
+<Layout title="Registry ledger — RNR AI Elements">
+  <main class="ledger">
+    <h1>Registry ledger — all {ledger.length} items</h1>
+    <p class="ledger__note">
+      Generated at build from public/r/*.json — this ledger cannot drift from the
+      shipped artifact.
+    </p>
+
+    <section class="ledger__bulk-add" aria-labelledby="bulk-add-heading">
+      <h2 id="bulk-add-heading">Add every item at once</h2>
+      <p>
+        The CLI accepts an engine base URL: passing one installs that engine's
+        full item set. Copy either base URL:
+      </p>
+      <ul class="ledger__bases">
+        <li>
+          <a href={NATIVEWIND_BASE}>{NATIVEWIND_BASE}</a>
+          <CopyButton command={NATIVEWIND_BASE} label="Copy the nativewind base URL" />
+        </li>
+        <li>
+          <a href={UNIWIND_BASE}>{UNIWIND_BASE}</a>
+          <CopyButton command={UNIWIND_BASE} label="Copy the uniwind base URL" />
+        </li>
+      </ul>
+    </section>
+
+    <div class="ledger__table-scroll">
+      <table class="ledger__table">
+        <thead>
+          <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Category</th>
+            <th scope="col">Engines</th>
+            <th scope="col">Expo Go</th>
+            <th scope="col">Install (nativewind)</th>
+            <th scope="col">Docs</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+          ledger.map((item) => (
+            <tr>
+              <th scope="row">{item.name}</th>
+              <td class="ledger-type">{item.type}</td>
+              <td class="ledger-engines">
+                {item.engines.map((engine) => (
+                  <span class="ledger-engine">{engine}</span>
+                ))}
+              </td>
+              <td class="ledger-verdict">{verdictLabel(item.expoGo)}</td>
+              <td class="ledger-install">
+                <CopyButton
+                  command={installCommand(item.name)}
+                  label={`Copy the install command for ${item.name}`}
+                />
+              </td>
+              <td class="ledger-docs">
+                <a href={docsHref(item)}>Docs</a>
+              </td>
+            </tr>
+          ))
+        }
+        </tbody>
+      </table>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .ledger {
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .ledger__note {
+    font-weight: 700;
+  }
+  .ledger__bases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .ledger__bases li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ledger__table-scroll {
+    overflow-x: auto;
+  }
+  .ledger__table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.875rem;
+  }
+  .ledger__table th,
+  .ledger__table td {
+    border-bottom: 1px solid currentColor;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .ledger-engines {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .ledger-engine {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+  }
+</style>
