@@ -1,0 +1,49 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FIX-FUSE-01-1
+
+ ❯ tests/sprint-01-docs-spike-skeleton/biome-apps-docs-coverage.test.ts (1 test | 1 failed) 102ms
+     × biome ci apps/docs checks the real docs files and fails on a broken file 101ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/biome-apps-docs-coverage.test.ts > FIX-FUSE-01-1-biome-coverage > biome ci apps/docs checks the real docs files and fails on a broken file
+AssertionError: biome ci apps/docs exited 1:
+[0m[34mChecked 0 files in 4[0m[0m[2m[34mms[0m[0m[34m.[0m[0m[34m No fixes applied.[0m
+[0mci[0m[0m [0m[0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m[0m
+
+[0m[0m  [0m[0m[1m[31m✖[0m[0m [0m[0m[31mNo files were processed in the specified paths.[0m[0m
+[0m[0m  [0m[0m
+[0m[0m  [0m[0m[1m[34mℹ[0m[0m [0m[0m[34mCheck your biome.json or biome.jsonc to ensure the paths are not ignored by the configuration.[0m[0m
+[0m[0m  [0m[0m
+[0m[0m  [0m[0m[1m[34mℹ[0m[0m [0m[0m[34mThese paths were provided but ignored:[0m[0m
+[0m[0m  [0m[0m
+[0m[0m  [0m[0m- [0m[0mapps/docs[0m[0m
+[0m[0m  [0m[0m
+[0m
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/sprint-01-docs-spike-skeleton/biome-apps-docs-coverage.test.ts:46:89
+     44|     // The gate must exit 0 AND check more than just itself — pre-fix …
+     45|     // 0 files ("No files were processed in the specified paths").
+     46|     expect(clean.status, `biome ci apps/docs exited ${clean.status}:\n…
+       |                                                                                         ^
+     47|     const fileCount = checkedFiles(clean.output);
+     48|     expect(fileCount).toBeGreaterThan(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  10:19:20
+   Duration  210ms (transform 19ms, setup 0ms, import 27ms, tests 102ms, environment 0ms)
+

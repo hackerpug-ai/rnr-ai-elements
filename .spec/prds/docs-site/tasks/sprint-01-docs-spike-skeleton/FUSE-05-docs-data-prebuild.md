@@ -3,7 +3,7 @@ TASK: FUSE-05 - DocsDataPrebuild: full enrichment into registry-items.json + fam
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     in_progress
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer

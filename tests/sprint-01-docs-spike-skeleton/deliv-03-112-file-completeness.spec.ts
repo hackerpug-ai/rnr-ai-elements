@@ -3,19 +3,19 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { test } from '@playwright/test';
 
 /**
  * FLOW-DELIV-03-112-file-completeness — FUSE-02 lane check over the real
  * build chain: real pnpm child process, real filesystem, real
- * packages/registry/registry.json. Run directly:
+ * packages/registry/registry.json. Runs through the FUSE-10 playwright lane
+ * (`pnpm e2e:docs --grep FLOW-DELIV-03-112-file-completeness`), and can also
+ * be run directly without a browser:
  *
  *   pnpm exec tsx tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts
  *
- * The contracted runner command is `pnpm playwright test <this file> --grep
- * FLOW-DELIV-03-112-file-completeness`; @playwright/test is not yet a
- * dependency (it arrives with the FUSE-10 e2e runner). When it lands, wrap
- * FLOW_DELIV_03_112_file_completeness in a playwright `test()` of the same
- * name — the body below is runner-agnostic by design.
+ * The body below is runner-agnostic by design; the playwright `test()` wrapper
+ * of the same name delegates to it.
  */
 const ROOT = process.cwd();
 const MANIFEST_TS = join(ROOT, 'apps/example/gallery/manifest.ts');
@@ -33,6 +33,7 @@ function runManifestScript(): void {
   execFileSync('pnpm', ['gallery:manifest'], { cwd: ROOT, stdio: 'pipe' });
 }
 
+// biome-ignore lint/suspicious/noExportsInTest: FUSE-02 contract keeps this exported for direct tsx runs
 export async function FLOW_DELIV_03_112_file_completeness(): Promise<void> {
   // AC-1 case: single run, both emits, verdict consistency.
   runManifestScript();
@@ -96,3 +97,13 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       process.exitCode = 1;
     });
 }
+
+test('FLOW-DELIV-03-112-file-completeness', async () => {
+  // The body deletes and regenerates shared repo paths (apps/docs/src/data), so it
+  // must run once, not once per project worker racing itself.
+  test.skip(
+    test.info().project.name !== 'chromium-desktop',
+    'filesystem-mutating lane check runs once, on chromium-desktop',
+  );
+  await FLOW_DELIV_03_112_file_completeness();
+});

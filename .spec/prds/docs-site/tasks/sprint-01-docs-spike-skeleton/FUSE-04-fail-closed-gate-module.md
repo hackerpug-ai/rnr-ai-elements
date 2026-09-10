@@ -3,7 +3,8 @@ TASK: FUSE-04 - Fail-closed gate module (incl. props-resolved) + fixture-drill s
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     Completed (landed)
+COMMIT:     d69cbf0a54563e7f3527f1fc59df7025fb003678
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer

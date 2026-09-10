@@ -3,7 +3,7 @@ TASK: FUSE-09 - CopyButton island (1/5) with zero-JS selectable-text fallback
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     in_progress
 PRIORITY:   P0
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
