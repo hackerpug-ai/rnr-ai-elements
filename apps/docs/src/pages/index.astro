@@ -1,10 +1,102 @@
 ---
+import pkg from '../../../../package.json';
+import CopyButton from '../components/islands/CopyButton.astro';
 import Layout from '../layouts/spike.astro';
+import items from '../data/registry-items.json';
+
+/**
+ * FUSE-08 — the structural home block on /. States what the library is and is
+ * not, carries build-computed counters (root package.json version +
+ * registry-items.json type counts — the same single sources the ledger and
+ * component pages use, so a fixture edit moves the rendered numbers), one
+ * copyable nativewind install command, and CTAs to the two real routes.
+ *
+ * Structural only: the token stylesheet, theme toggle, and one-screen design
+ * contract are Sprint 02's designed hero, which supersedes this block (its
+ * task lists home.spec.ts under its supersedes).
+ */
+type HomeItem = { type: string };
+
+const registry = items as HomeItem[];
+const total = registry.length;
+const componentCount = registry.filter((item) => item.type === 'registry:component').length;
+const uiCount = registry.filter((item) => item.type === 'registry:ui').length;
+const libCount = registry.filter((item) => item.type === 'registry:lib').length;
+
+// Sprint-01 subset: one nativewind-form command; engine tabs land with
+// TabGroup in Sprint 02/03.
+const NATIVEWIND_BASE = 'https://rnraielements.com/r/nativewind';
+const installCommand = `npx @react-native-reusables/cli@latest add ${NATIVEWIND_BASE}/conversation.json`;
 ---
 
 <Layout title="RNR AI Elements — Docs">
-  <main>
-    <h1>RNR AI Elements docs</h1>
-    <p>Spike skeleton. The registry ledger, component pages, and designed shell land in later sprints.</p>
+  <main class="hero">
+    <h1 id="hero-heading">Universal AI chat and agent UI components for React Native</h1>
+    <p class="hero__statement">
+      A <strong>copy-paste registry</strong> of chat and agent UI building blocks.
+      This is <strong>NOT an npm package</strong> — you add the source to your
+      project with the CLI and own every line.
+    </p>
+
+    <dl class="hero__counters">
+      <div class="hero__counter">
+        <dt>Version</dt>
+        <dd><data data-counter="version" value={pkg.version}>{pkg.version}</data></dd>
+      </div>
+      <div class="hero__counter">
+        <dt>Items</dt>
+        <dd><data data-counter="total" value={String(total)}>{total}</data></dd>
+      </div>
+      <div class="hero__counter">
+        <dt>Components</dt>
+        <dd><data data-counter="components" value={String(componentCount)}>{componentCount}</data></dd>
+      </div>
+      <div class="hero__counter">
+        <dt>UI primitives</dt>
+        <dd><data data-counter="ui" value={String(uiCount)}>{uiCount}</data></dd>
+      </div>
+      <div class="hero__counter">
+        <dt>Libs</dt>
+        <dd><data data-counter="libs" value={String(libCount)}>{libCount}</data></dd>
+      </div>
+    </dl>
+
+    <div class="hero__install">
+      <CopyButton
+        command={installCommand}
+        label="Copy the nativewind install command for conversation"
+      />
+    </div>
+
+    <nav class="hero__ctas" aria-label="Primary">
+      <a href="/registry">Get started</a>
+      <a href="/components">Browse components</a>
+    </nav>
   </main>
 </Layout>
+
+<style>
+  .hero {
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .hero__counters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 0;
+  }
+  .hero__counter dd {
+    margin: 0;
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .hero__install {
+    margin-block: 1rem;
+  }
+  .hero__ctas {
+    display: flex;
+    gap: 1rem;
+  }
+</style>
