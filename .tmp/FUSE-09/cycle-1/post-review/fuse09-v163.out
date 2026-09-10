@@ -1,0 +1,233 @@
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at biome-apps-docs-coverage.test.ts:50
+
+  48 | }
+  49 |
+> 50 | describe('FIX-FUSE-01-1-biome-coverage', () => {
+     | ^
+  51 |   it('biome ci apps/docs checks the real docs files and fails on a broken file', () => {
+  52 |     const clean = runBiomeCi();
+  53 |
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/biome-apps-docs-coverage.test.ts:50:1
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at ci-chain-order.test.ts:59
+
+  57 | }
+  58 |
+> 59 | describe('FLOW-DELIV-01', () => {
+     | ^
+  60 |   // Two full runner invocations (unfiltered + grep) — each rebuilds the fixture and
+  61 |   // drives Chromium, so this test needs a generous timeout.
+  62 |   it('FLOW-DELIV-01-ci-chain-order', { timeout: 900_000 }, () => {
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts:59:1
+
+Error: Playwright Test did not expect test() to be called here.
+Most common reasons include:
+- You are calling test() in a configuration file.
+- You are calling test() in a file that is imported by the configuration file.
+- You have two different versions of @playwright/test. This usually happens
+  when one of the dependencies in your package.json depends on @playwright/test.
+- You are calling test() from an async test.describe() block. Only sync ones are supported.
+
+   at copy-button.spec.ts:30
+
+  28 | const TRIGGER = 'rnr-copy-button button';
+  29 |
+> 30 | test('FUSE-09 TC-1 copy places the exact command on the clipboard', async ({ browser }) => {
+     | ^
+  31 |   const context = await browser.newContext();
+  32 |   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  33 |   const page = await context.newPage();
+    at _TestTypeImpl._currentSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2224:13)
+    at _TestTypeImpl._createTest (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2238:24)
+    at test (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:1154:12)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:30:1
+
+Error: Playwright Test did not expect test() to be called here.
+Most common reasons include:
+- You are calling test() in a configuration file.
+- You are calling test() in a file that is imported by the configuration file.
+- You have two different versions of @playwright/test. This usually happens
+  when one of the dependencies in your package.json depends on @playwright/test.
+- You are calling test() from an async test.describe() block. Only sync ones are supported.
+
+   at deliv-03-112-file-completeness.spec.ts:101
+
+   99 | }
+  100 |
+> 101 | test('FLOW-DELIV-03-112-file-completeness', async () => {
+      | ^
+  102 |   // The body deletes and regenerates shared repo paths (apps/docs/src/data), so it
+  103 |   // must run once, not once per project worker racing itself.
+  104 |   test.skip(
+    at _TestTypeImpl._currentSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2224:13)
+    at _TestTypeImpl._createTest (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2238:24)
+    at test (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:1154:12)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:101:1
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at enrichment-gates.test.ts:58
+
+  56 | ].join('\n');
+  57 |
+> 58 | describe('enrichment gates', () => {
+     | ^
+  59 |   it('FLOW-DELIV-01-fail-closed-item-count', { timeout: 300_000 }, () => {
+  60 |     const items = JSON.parse(
+  61 |       readFileSync(join(ROOT, 'packages/registry/registry.json'), 'utf8'),
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts:58:1
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at enrichment-modules.test.ts:104
+
+  102 | }
+  103 |
+> 104 | describe('extracts props for 39 components', () => {
+      | ^
+  105 |   // Real ts-morph over the real registry sources takes seconds, not ms.
+  106 |   it('returns full-text arrays for all 39 components and null for the 17 ui/lib items', {
+  107 |     timeout: 180_000,
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/enrichment-modules.test.ts:104:1
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at gallery-manifest-dual-emit.test.ts:36
+
+  34 | }
+  35 |
+> 36 | describe('gallery manifest dual emit (FUSE-02)', () => {
+     | ^
+  37 |   it('dual-emits the docs verdict dataset', async () => {
+  38 |     runManifestScript();
+  39 |     expect(existsSync(MANIFEST_TS)).toBe(true);
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/gallery-manifest-dual-emit.test.ts:36:1
+
+Error: Playwright Test did not expect test() to be called here.
+Most common reasons include:
+- You are calling test() in a configuration file.
+- You are calling test() in a file that is imported by the configuration file.
+- You have two different versions of @playwright/test. This usually happens
+  when one of the dependencies in your package.json depends on @playwright/test.
+- You are calling test() from an async test.describe() block. Only sync ones are supported.
+
+   at home.spec.ts:34
+
+  32 | const TRIGGER = 'rnr-copy-button button';
+  33 |
+> 34 | test('FLOW-GEND-02-hero-install-command-copy', async ({ browser }, testInfo) => {
+     | ^
+  35 |   // CASE 1 — one click puts the exact displayed command on the clipboard.
+  36 |   const jsContext = await browser.newContext();
+  37 |   await jsContext.grantPermissions(['clipboard-read', 'clipboard-write']);
+    at _TestTypeImpl._currentSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2224:13)
+    at _TestTypeImpl._createTest (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2238:24)
+    at test (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:1154:12)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/home.spec.ts:34:1
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at island-budget.test.ts:37
+
+  35 |   /(?:^|\n)\s*(?:import|export)\s[^;]*?from\s*['"](react|react-dom|svelte|vue|preact|solid-js)(?:\/[\w.-]+)*['"]|(?:^|\n)\s*import\s*\(\s*['"](react|react-dom|svelte|vue|preact|solid-js)(?:\/[\w.-]+)*['"]\s*\)/g;
+  36 |
+> 37 | describe('FUSE-09 island budget', () => {
+     | ^
+  38 |   it('FUSE-09-island-budget: exactly one customElements.define (rnr-copy-button), zero framework imports', () => {
+  39 |     const files = collectSourceFiles(SRC_ROOT);
+  40 |     expect(files.length).toBeGreaterThan(0);
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:37:1
+
+Error: Vitest failed to find the current suite. One of the following is possible:
+- "vitest" is imported directly without running "vitest" command
+- "vitest" is imported inside "globalSetup" (to fix this, use "setupFiles" instead, because "globalSetup" runs in a different context)
+- "vitest" is imported inside Vite / Vitest config file
+- Otherwise, it might be a Vitest bug. Please report it to https://github.com/vitest-dev/vitest/issues
+
+
+   at runner-config.test.ts:6
+
+  4 | // UNIT_TEST_JUSTIFIED: pure config-object assertions — importing the config and
+  5 | // checking fields involves no runtime service.
+> 6 | it('FUSE-10-config-contract', () => {
+    | ^
+  7 |   // The Playwright lane is this sprint's directory and the *.spec.ts extension only —
+  8 |   // the sibling vitest files (*.test.ts) belong to vitest's `tests/**/*.test.ts` include.
+  9 |   expect(config.testDir).toBe('tests/sprint-01-docs-spike-skeleton');
+    at assert (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1631:9)
+    at getCurrentSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1666:2)
+    at Object.<anonymous> (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1563:2)
+    at it (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/runner-config.test.ts:6:1
+
+Error: Playwright Test did not expect test() to be called here.
+Most common reasons include:
+- You are calling test() in a configuration file.
+- You are calling test() in a file that is imported by the configuration file.
+- You have two different versions of @playwright/test. This usually happens
+  when one of the dependencies in your package.json depends on @playwright/test.
+- You are calling test() from an async test.describe() block. Only sync ones are supported.
+
+   at runner.spec.ts:6
+
+  4 | // TC-1/TC-2 canary: the turnkey runner serves the BUILT dist through astro preview
+  5 | // and the site answers on the preview origin with real HTML.
+> 6 | test('FUSE-10-runner-turnkey', async ({ page }) => {
+    | ^
+  7 |   const response = await navigateLocalhost(page, '/');
+  8 |   expect(response?.status(), 'GET http://localhost:4321/ must return 200').toBe(200);
+  9 |   const title = await page.title();
+    at _TestTypeImpl._currentSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2224:13)
+    at _TestTypeImpl._createTest (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:2238:24)
+    at test (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/playwright@1.63.0/node_modules/playwright/lib/common/index.js:1154:12)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1
+
+TypeError: Cannot read properties of undefined (reading 'config')
+
+   at scaffold.build.test.ts:70
+
+  68 | }
+  69 |
+> 70 | describe('FUSE-01', () => {
+     | ^
+  71 |   it('FUSE-01-scaffold-build', { timeout: 300_000 }, () => {
+  72 |     const build = runDocsBuild();
+  73 |     const evidence = `--- stdout ---\n${build.stdout}\n--- stderr ---\n${build.stderr}`;
+    at initSuite (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1848:23)
+    at createSuiteCollector (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1709:2)
+    at Object.suiteFn (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1951:10)
+    at describe (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:599:14)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts:70:1
+
+Error: No tests found
+Listing tests:
+Total: 0 tests in 0 files
