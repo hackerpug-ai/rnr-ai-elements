@@ -3,7 +3,8 @@ TASK: FIX-FUSE-05-1 - Untrack the generated docs gallery-manifest JSON
 ================================================================================
 
 TASK_TYPE:  FIX
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     6f5b796f8751a1f83a53a862f44d91af6cb16011
 PRIORITY:   P0
 POINTS:     1
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
