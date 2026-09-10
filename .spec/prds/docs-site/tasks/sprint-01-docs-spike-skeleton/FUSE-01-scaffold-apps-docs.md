@@ -3,7 +3,8 @@ TASK: FUSE-01 - Scaffold apps/docs static Astro 7 package with the build chain p
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     Completed (landed)
+COMMIT:     f61a2f26d2d299f7a45fa6da5a90274f0949b0ee
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
