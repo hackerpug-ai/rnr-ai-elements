@@ -12,6 +12,10 @@ it('FUSE-10-config-contract', () => {
   // Flake policy: run once, failures are real.
   expect(config.retries).toBe(0);
 
+  // FIX-FUSE-06-1: the lane is serialized — deliv-03's destructive cases rmSync the
+  // generated data artifacts mid-run, so any parallel worker ENOENTs them at import.
+  expect(config.workers).toBe(1);
+
   // TR-11: Playwright over astro preview serving built dist — never astro dev.
   // The config type allows a webServer array; this config authors a single object.
   const webServer = Array.isArray(config.webServer) ? config.webServer[0] : config.webServer;

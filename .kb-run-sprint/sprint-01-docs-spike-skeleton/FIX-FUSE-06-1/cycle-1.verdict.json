@@ -1,0 +1,15 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "MUST-config-only", "satisfied": true, "evidence": "playwright.config.ts:19 'workers: 1'; product diff = config + conditional test file + .tmp evidence only; no spec touched."},
+    {"id": "MUST-red-first", "satisfied": true, "evidence": "RED.md quote verified verbatim vs FUSE-06 cycle-1.verdict.json; unfixed log:94 'Running 30 tests using 9 workers'; deliv-03 rmSync lines 88/91/123 verified live."},
+    {"id": "MUST-green-twice", "satisfied": true, "evidence": "My runs 1+2: exit=0, 'Running 30 tests using 1 worker', 25 passed / 5 skipped, 0 failed."},
+    {"id": "NEVER-spec-weakened", "satisfied": true, "evidence": "No spec in diff; skips = 5 in unfixed and both fixed logs — unchanged baseline."},
+    {"id": "NEVER-retries-webserver", "satisfied": true, "evidence": "playwright.config.ts:13 retries: 0; webServer lines 29-33 (strictPreviewCommand, PREVIEW_URL) unmodified."},
+    {"id": "typecheck-biome", "satisfied": true, "evidence": "pnpm typecheck exit=0; biome ci on both touched paths exit=0 (my runs)."},
+    {"id": "scope-writeAllowed", "satisfied": true, "evidence": "git diff --name-only: playwright.config.ts, runner-config.test.ts, 4 files under .tmp/FIX-FUSE-06-1/ — all in writeAllowed."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Minimal, correct fix: workers: 1 serializes the lane at the config level, eliminating the file-parallel rmSync-vs-module-scope-import race. RED follows the task-sanctioned quote path, verified verbatim against the captured FUSE-06 cycle-1 verdict, supplemented with live hazard lines (deliv-03 rmSync 88/91/123, component-page 15s bridge) and an unfixed-config log proving 9 parallel workers. GREEN verified independently: full pnpm e2e:docs exit 0 twice on my machine, 1 worker each, 25 passed / 5 established skips, wall time still seconds-scale (30-34s vs 14.5s). retries: 0 and the webServer contract untouched; no spec weakened. Both flagged assumptions accepted: the additive workers assertion binds the real config import and locks the serialized value per AC-1's own clause; live RED repro was genuinely impossible without writing a spec outside writeAllowed."
+}
