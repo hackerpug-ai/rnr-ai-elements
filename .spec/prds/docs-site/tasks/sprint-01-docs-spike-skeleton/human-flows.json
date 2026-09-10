@@ -1,0 +1,299 @@
+{
+  "deferred_journeys": [
+    {
+      "covers_ucs": [
+        "UC-DELIV-03",
+        "UC-EXT-01"
+      ],
+      "id": "journeys/docs-agent-arc--edge-robots-blocks-registry-json",
+      "outstanding_ucs": [
+        "UC-EXT-01"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DELIV-03",
+        "UC-EXT-01",
+        "UC-GEND-04"
+      ],
+      "id": "journeys/docs-agent-arc",
+      "outstanding_ucs": [
+        "UC-EXT-01",
+        "UC-GEND-04"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DELIV-01",
+        "UC-DOCS-05",
+        "UC-EXT-02",
+        "UC-EXT-03",
+        "UC-GEND-07"
+      ],
+      "id": "journeys/docs-contributor-arc",
+      "outstanding_ucs": [
+        "UC-DOCS-05",
+        "UC-EXT-02",
+        "UC-EXT-03"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DELIV-03",
+        "UC-DELIV-04"
+      ],
+      "id": "journeys/docs-delivery-arc--edge-rollback-leaves-stale-registry",
+      "outstanding_ucs": [
+        "UC-DELIV-04"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DELIV-01",
+        "UC-DELIV-02",
+        "UC-DELIV-03"
+      ],
+      "id": "journeys/docs-delivery-arc",
+      "outstanding_ucs": [
+        "UC-DELIV-02"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DOCS-06",
+        "UC-GEND-01",
+        "UC-GEND-02",
+        "UC-GEND-03",
+        "UC-GEND-05",
+        "UC-GEND-06"
+      ],
+      "id": "journeys/docs-evaluator-arc",
+      "outstanding_ucs": [
+        "UC-DOCS-06",
+        "UC-GEND-02",
+        "UC-GEND-05",
+        "UC-GEND-06"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DOCS-01",
+        "UC-DOCS-02",
+        "UC-DOCS-04",
+        "UC-GEND-04",
+        "UC-GEND-07",
+        "UC-SHELL-03"
+      ],
+      "id": "journeys/docs-integrator-arc",
+      "outstanding_ucs": [
+        "UC-DOCS-01",
+        "UC-DOCS-02",
+        "UC-DOCS-04",
+        "UC-GEND-04",
+        "UC-SHELL-03"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DOCS-01",
+        "UC-DOCS-03",
+        "UC-GEND-03",
+        "UC-SHELL-01"
+      ],
+      "id": "journeys/docs-themer-arc",
+      "outstanding_ucs": [
+        "UC-DOCS-01",
+        "UC-DOCS-03",
+        "UC-SHELL-01"
+      ]
+    }
+  ],
+  "derived_from": {
+    "prior_scope": [],
+    "scenarios": "/Users/justinrich/Projects/rnr-ai-elements/.spec/scenarios",
+    "scope": [
+      "UC-DELIV-01",
+      "UC-DELIV-03",
+      "UC-GEND-01",
+      "UC-GEND-03",
+      "UC-GEND-07"
+    ]
+  },
+  "flows": [
+    {
+      "artifact": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-01-ci-chain-order.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "id": "FLOW-DELIV-01-ci-chain-order",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-01-ci-chain-order-red.txt",
+      "run_cmd": "pnpm vitest run tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts -t FLOW-DELIV-01-ci-chain-order",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts",
+      "type": "core",
+      "uc_ref": "UC-DELIV-01"
+    },
+    {
+      "artifact": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-01-fail-closed-item-count.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        10
+      ],
+      "id": "FLOW-DELIV-01-fail-closed-item-count",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-01-fail-closed-item-count-red.txt",
+      "run_cmd": "pnpm vitest run tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts -t FLOW-DELIV-01-fail-closed-item-count",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts",
+      "type": "edge",
+      "uc_ref": "UC-DELIV-01"
+    },
+    {
+      "artifact": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-03-112-file-completeness.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        3
+      ],
+      "id": "FLOW-DELIV-03-112-file-completeness",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-03-112-file-completeness-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts --grep FLOW-DELIV-03-112-file-completeness",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-DELIV-03"
+    },
+    {
+      "artifact": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-03-live-registry-round-trip.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        9
+      ],
+      "id": "FLOW-DELIV-03-live-registry-round-trip",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-DELIV-03-live-registry-round-trip-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts --grep FLOW-DELIV-03-live-registry-round-trip",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-DELIV-03"
+    },
+    {
+      "artifact": "apps/docs/playwright-report/ (HTML report + home screenshot under test-results/)",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        8
+      ],
+      "id": "FLOW-GEND-01-home-hero-evaluation-contract",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-GEND-01-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-01-home-hero-evaluation-contract",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/home.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-GEND-01"
+    },
+    {
+      "artifact": "apps/docs/playwright-report/ (HTML report + hero-copy screenshot under test-results/)",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        8
+      ],
+      "id": "FLOW-GEND-02-hero-install-command-copy",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-GEND-02-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-02-hero-install-command-copy",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/home.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-GEND-01"
+    },
+    {
+      "artifact": "apps/docs/playwright-report/ (HTML report + conversation-page screenshot under test-results/)",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        6
+      ],
+      "id": "FLOW-GEND-14-reference-page-anatomy",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-GEND-14-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-14-reference-page-anatomy",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/component-page.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-GEND-03"
+    },
+    {
+      "artifact": "apps/docs/playwright-report/ (HTML report + pager walk trace under test-results/)",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        6
+      ],
+      "id": "FLOW-GEND-15-family-pager-stays-in-family",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-GEND-15-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/component-page.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-GEND-03"
+    },
+    {
+      "artifact": "apps/docs/playwright-report/ (HTML report + ledger screenshot under test-results/)",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        5
+      ],
+      "id": "FLOW-GEND-40-ledger-56-rows-and-base-urls",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-GEND-40-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/ledger.spec.ts --grep FLOW-GEND-40-ledger-56-rows-and-base-urls",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-GEND-07"
+    },
+    {
+      "artifact": "apps/docs/playwright-report/ (HTML report + row-copy screenshot under test-results/)",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "desc": null,
+      "gate_steps": [
+        5,
+        7
+      ],
+      "id": "FLOW-GEND-41-ledger-filter-and-row-copy",
+      "manual_physical": false,
+      "red_proof": ".tmp/sprint-01-docs-spike-skeleton/e2e-evidence/FLOW-GEND-41-red.txt",
+      "run_cmd": "pnpm playwright test tests/sprint-01-docs-spike-skeleton/ledger.spec.ts --grep FLOW-GEND-41-ledger-filter-and-row-copy",
+      "scope": "task",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "test": "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts",
+      "type": "core",
+      "uc_ref": "UC-GEND-07"
+    }
+  ],
+  "sprint_id": "sprint-01-docs-spike-skeleton"
+}
