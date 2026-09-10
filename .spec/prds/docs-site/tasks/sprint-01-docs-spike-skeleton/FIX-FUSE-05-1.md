@@ -3,7 +3,7 @@ TASK: FIX-FUSE-05-1 - Untrack the generated docs gallery-manifest JSON
 ================================================================================
 
 TASK_TYPE:  FIX
-STATUS:     Backlog (written by kb-run-sprint orchestrator, 2026-09-10 — ruling from FUSE-05 cycle-1 review)
+STATUS:     in_progress
 PRIORITY:   P0
 POINTS:     1
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
