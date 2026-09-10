@@ -161,7 +161,7 @@ test('FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages
     // Bare /placeholder/ would false-positive on real shipped source — the
     // TextInput `placeholder` prop appears verbatim in 8 components' code.
     expect(await page.locator('[data-preview-panel]').count(), item.name).toBe(0);
-    const mainText = (await page.locator('main').innerText()) ?? '';
+    const mainText = (await page.locator('main.component-page').innerText()) ?? '';
     expect(mainText, `${item.name} placeholder stand-in`).not.toMatch(
       /coming soon|lorem ipsum|placeholder\s+(box|panel|image|preview)|preview\s+placeholder/i,
     );
