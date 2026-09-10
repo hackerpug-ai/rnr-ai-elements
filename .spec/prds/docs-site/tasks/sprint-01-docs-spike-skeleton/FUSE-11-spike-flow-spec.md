@@ -3,7 +3,8 @@ TASK: FUSE-11 - Spike flow spec: ledger → component page → command → fetch
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     69ffc05d374345527207121e4f711cc838977eb4
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
