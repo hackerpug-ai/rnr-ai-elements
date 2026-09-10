@@ -1,0 +1,183 @@
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06
+> pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:00:01 [types] Generated 57ms
+13:00:01 [build] output: "static"
+13:00:01 [build] mode: "static"
+13:00:01 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/apps/docs/dist/
+13:00:01 [build] Collecting build info...
+13:00:01 [build] ✓ Completed in 69ms.
+13:00:01 [build] Building static entrypoints...
+13:00:02 [vite] ✓ built in 207ms
+13:00:02 [vite] ✓ built in 43ms
+13:00:02 [build] Rearranging server assets...
+
+ generating static routes 
+13:00:02   ├─ /components/shimmer/index.html (+8ms) 
+13:00:02   ├─ /components/checkpoint/index.html (+2ms) 
+13:00:02   ├─ /components/image/index.html (+2ms) 
+13:00:02   ├─ /components/persona/index.html (+1ms) 
+13:00:02   ├─ /components/speech-input/index.html (+1ms) 
+13:00:02   ├─ /components/conversation/index.html (+1ms) 
+13:00:02   ├─ /components/message/index.html (+1ms) 
+13:00:02   ├─ /components/prompt-input/index.html (+1ms) 
+13:00:02   ├─ /components/suggestion/index.html (+1ms) 
+13:00:02   ├─ /components/tool/index.html (+1ms) 
+13:00:02   ├─ /components/reasoning/index.html (+1ms) 
+13:00:02   ├─ /components/task/index.html (+1ms) 
+13:00:02   ├─ /components/question/index.html (+1ms) 
+13:00:02   ├─ /components/agent/index.html (+1ms) 
+13:00:02   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:00:02   ├─ /components/plan/index.html (+1ms) 
+13:00:02   ├─ /components/confirmation/index.html (+1ms) 
+13:00:02   ├─ /components/queue/index.html (+1ms) 
+13:00:02   ├─ /components/sources/index.html (+1ms) 
+13:00:02   ├─ /components/inline-citation/index.html (+1ms) 
+13:00:02   ├─ /components/artifact/index.html (+1ms) 
+13:00:02   ├─ /components/snippet/index.html (+1ms) 
+13:00:02   ├─ /components/commit/index.html (+1ms) 
+13:00:02   ├─ /components/attachments/index.html (+1ms) 
+13:00:02   ├─ /components/context/index.html (+1ms) 
+13:00:02   ├─ /components/open-in-chat/index.html (+1ms) 
+13:00:02   ├─ /components/model-selector/index.html (+1ms) 
+13:00:02   ├─ /components/mic-selector/index.html (+1ms) 
+13:00:02   ├─ /components/voice-selector/index.html (+1ms) 
+13:00:02   ├─ /components/audio-player/index.html (+1ms) 
+13:00:02   ├─ /components/transcription/index.html (+1ms) 
+13:00:02   ├─ /components/terminal/index.html (+1ms) 
+13:00:02   ├─ /components/file-tree/index.html (+1ms) 
+13:00:02   ├─ /components/environment-variables/index.html (+1ms) 
+13:00:02   ├─ /components/package-info/index.html (+1ms) 
+13:00:02   ├─ /components/stack-trace/index.html (+1ms) 
+13:00:02   ├─ /components/schema-display/index.html (+1ms) 
+13:00:02   ├─ /components/test-results/index.html (+1ms) 
+13:00:02   ├─ /components/web-preview/index.html (+1ms) 
+13:00:02   ├─ /components/index.html (+2ms) 
+13:00:02   ├─ /islands/copy-button/index.html (+1ms) 
+13:00:02   ├─ /registry/index.html (+3ms) 
+13:00:02   ├─ /index.html (+1ms) 
+13:00:02 ✓ Completed in 76ms.
+
+13:00:02 [build] ✓ Completed in 357ms.
+13:00:02 [build] 43 page(s) built in 460ms
+13:00:02 [build] Complete!
+
+Running 45 tests using 9 workers
+
+[1/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+[2/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[3/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[4/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[5/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[6/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+[7/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:37:1 › FLOW-GEND-02-hero-install-command-copy
+[8/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[9/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[10/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:37:1 › FLOW-GEND-02-hero-install-command-copy
+[chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+
+
+[11/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[12/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[13/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:70:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[14/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:70:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[15/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:161:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[16/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[17/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[18/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:181:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[19/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+  1) [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table 
+
+    Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/apps/docs/src/data/registry-items.json'
+
+      48 | function readGeneratedDataset(): LedgerItem[] {
+      49 |   return JSON.parse(
+    > 50 |     readFileSync(join(process.cwd(), 'apps/docs/src/data/registry-items.json'), 'utf8'),
+         |     ^
+      51 |   ) as LedgerItem[];
+      52 | }
+      53 |
+        at readGeneratedDataset (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:50:5)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:54:15
+
+
+[20/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:161:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[21/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:181:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[22/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:230:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[23/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:259:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[24/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[25/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[26/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:182:1 › FLOW-DELIV-03-112-file-completeness
+[27/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+  2) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table 
+
+    Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/apps/docs/src/data/registry-items.json'
+
+      48 | function readGeneratedDataset(): LedgerItem[] {
+      49 |   return JSON.parse(
+    > 50 |     readFileSync(join(process.cwd(), 'apps/docs/src/data/registry-items.json'), 'utf8'),
+         |     ^
+      51 |   ) as LedgerItem[];
+      52 | }
+      53 |
+        at readGeneratedDataset (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:50:5)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-06/tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:54:15
+
+
+[28/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:161:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[29/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:181:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[30/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:230:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[31/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:259:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[32/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:37:1 › FLOW-GEND-02-hero-install-command-copy
+[33/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:230:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[34/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[35/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[36/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:70:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[37/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[38/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:259:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[39/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[40/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[41/45] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[42/45] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+
+
+[43/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[44/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[45/45] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+  2 failed
+    [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table 
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:93:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table 
+  5 skipped
+  8 did not run
+  30 passed (18.4s)
+ ELIFECYCLE  Command failed with exit code 1.
