@@ -3,7 +3,8 @@ TASK: FIX-FUSE-01-1 - Give the biome lint gate real coverage of apps/docs
 ================================================================================
 
 TASK_TYPE:  FIX
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     9f73b77bbd9087af8a2752f1403a1078cffec03d
 PRIORITY:   P1
 POINTS:     1
 AGENT:      implementer=ai-tooling-implementer | reviewer=ai-tooling-reviewer
@@ -55,10 +56,10 @@ sprint's existing tests stay green.
 DONE WHEN
 --------------------------------------------------------------------------------
 
-- [ ] AC-1: biome ci apps/docs checks real files and exits 0; broken-file negative control exits 1
-- [ ] every AC verify command passes
-- [ ] pnpm typecheck clean; sprint tests stay green
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1: biome ci apps/docs checks real files and exits 0; broken-file negative control exits 1
+- [x] every AC verify command passes
+- [x] pnpm typecheck clean; sprint tests stay green
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed
 
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA
