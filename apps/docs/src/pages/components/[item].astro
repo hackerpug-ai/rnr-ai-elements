@@ -1,0 +1,153 @@
+---
+/**
+ * FUSE-07 — generated component reference page, sprint-01 lean subset.
+ * getStaticPaths fans one page per registry:component entry in the FUSE-05
+ * dataset (39 pages, slug = item name) — never hand-written per page.
+ * Anatomy: header + chip row, the install block as FIRST content section
+ * (both engines labeled, absolute-URL commands, each with a CopyButton),
+ * then the full untruncated nativewind source, then the within-family pager.
+ * No preview panel this sprint (T-GEND-021): omitted, never a placeholder.
+ */
+import { readFileSync } from 'node:fs';
+import CopyButton from '../../components/islands/CopyButton.astro';
+import Layout from '../../layouts/spike.astro';
+import families from '../../data/families.json';
+import items from '../../data/registry-items.json';
+
+interface Props {
+  item: (typeof items)[number];
+}
+
+export async function getStaticPaths() {
+  return items
+    .filter((entry) => entry.type === 'registry:component')
+    .map((entry) => ({ params: { item: entry.name }, props: { item: entry } }));
+}
+
+const { item } = Astro.props;
+
+/** Sprint-01 renders the nativewind form as the default/only active form. */
+const DEFAULT_ENGINE = 'nativewind';
+
+// The release version the chip carries, read at build time so a version bump
+// lands without hand edits. The ordered build chain runs astro from apps/docs,
+// so the path resolves there; a wrong cwd fails the build rather than
+// rendering a stale chip.
+const { version } = JSON.parse(readFileSync('../../package.json', 'utf8')) as { version: string };
+
+const family = families.find((entry) => entry.itemNames.includes(item.name));
+if (!family) {
+  throw new Error(`[components/${item.name}] has no family in families.json`);
+}
+const memberIndex = family.itemNames.indexOf(item.name);
+const prevName = family.itemNames[(memberIndex - 1 + family.itemNames.length) % family.itemNames.length];
+const nextName = family.itemNames[(memberIndex + 1) % family.itemNames.length];
+
+const commandFor = (engine: string): string =>
+  `npx @react-native-reusables/cli@latest add ${new URL(`r/${engine}/${item.name}.json`, Astro.site)}`;
+
+const sourceFiles = item.sourceFiles.map((file) => ({
+  filename: file.filename,
+  // The same {engine} substitution the registry fan-out applies (Vite's build
+  // resolver cannot import the helper across the package root, so the one-line
+  // form lives here); the spec's byte-compare against the served
+  // /r/{engine}/{item}.json fails the build if the two ever drift.
+  text: file.text.split('{engine}').join(DEFAULT_ENGINE),
+}));
+---
+
+<Layout title={`${item.title} — RNR AI Elements`}>
+  <main class="component-page">
+    <header class="page-header">
+      <p class="breadcrumb">
+        <a href="/components">Components</a> <span aria-hidden="true">/</span> {family.title}
+      </p>
+      <h1>{item.title}</h1>
+      <p class="item-description">{item.description}</p>
+      <ul class="chips" aria-label="Status">
+        <li data-chip="version">v{version}</li>
+        <li data-chip="category">{item.type.replace('registry:', '')}</li>
+        {item.engines.map((engine) => <li data-chip="engine">{engine}</li>)}
+        <li data-chip="expo">{item.expoGo ? 'Expo Go' : 'Dev client'}</li>
+      </ul>
+    </header>
+
+    <section data-section="install" aria-labelledby="install-heading">
+      <h2 id="install-heading">Install</h2>
+      {
+        item.engines.map((engine) => (
+          <div class="install-row">
+            <span class="engine-label">{engine}</span>
+            <CopyButton
+              command={commandFor(engine)}
+              label={`Copy the ${engine} install command for ${item.title}`}
+            />
+          </div>
+        ))
+      }
+    </section>
+
+    <section data-section="source" aria-labelledby="source-heading">
+      <h2 id="source-heading">Source</h2>
+      {
+        sourceFiles.map((file) => (
+          <figure class="source-file">
+            <figcaption>{file.filename}</figcaption>
+            <pre><code>{file.text}</code></pre>
+          </figure>
+        ))
+      }
+    </section>
+
+    <nav class="pager" aria-label="Family pager">
+      <a rel="prev" href={`/components/${prevName}`}>← {prevName}</a>
+      <a rel="next" href={`/components/${nextName}`}>{nextName} →</a>
+    </nav>
+  </main>
+</Layout>
+
+<style>
+  .page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .breadcrumb {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .chips li {
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.125rem 0.625rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .install-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-block: 0.5rem;
+  }
+  .engine-label {
+    min-width: 6.5rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 700;
+  }
+  .source-file pre {
+    overflow-x: auto;
+    margin: 0;
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block: 2rem;
+  }
+</style>

@@ -1,0 +1,16 @@
+FUSE-07 cycle-1 GREEN verification (2026-09-10)
+
+- pnpm playwright test .../component-page.spec.ts (3 projects: desktop, mobile, nojs)
+  -> exit 0; see run.log (previously 9 failed at RED, see ../red/run.log)
+- gate greps: see gate-*.log (each exit 0)
+- pnpm e2e:docs (full turnkey chain, all specs): exit 0 — 25 passed, 5 skipped
+- pnpm test (vitest full suite): exit 0 — 645 passed (incl. ci-chain-order)
+- pnpm typecheck: exit 0
+- biome ci apps/docs/src/pages/components tests/.../component-page.spec.ts: exit 0
+- dist: apps/docs/dist/components holds 39 item dirs + index.html
+- screenshots: .tmp/FUSE-07/evidence/*.png (9: 3 tests x 3 projects)
+
+Environment note: an out-of-repo process transiently removes generated data
+artifacts (and briefly even committed files) from the worktree during full-chain
+runs (observed 3x, watchdog log in ../watchdog.log). The spec fixture loader
+bridges a 15s ENOENT window; product assertions stay byte-strict.

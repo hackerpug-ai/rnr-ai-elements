@@ -1,0 +1,59 @@
+---
+/**
+ * FUSE-07 — lean /components index, sprint-01.
+ * One anchored section per families.json family (family order), covering all
+ * 56 registry names exactly once: registry:component names link their
+ * /components/{item} page, ui/lib names render as anchor rows (no detail
+ * pages this sprint). Generated from the committed families map + the FUSE-05
+ * dataset — never a hand-written link list.
+ */
+import Layout from '../../layouts/spike.astro';
+import families from '../../data/families.json';
+import items from '../../data/registry-items.json';
+
+const ordered = [...families].sort((a, b) => a.order - b.order);
+const componentNames = new Set(
+  items.filter((entry) => entry.type === 'registry:component').map((entry) => entry.name),
+);
+---
+
+<Layout title="Components — RNR AI Elements">
+  <main class="components-index">
+    <header class="page-header">
+      <h1>Components</h1>
+    </header>
+    {
+      ordered.map((family) => (
+        <section id={family.id} aria-labelledby={`${family.id}-heading`}>
+          <h2 id={`${family.id}-heading`}>{family.title}</h2>
+          <ul>
+            {family.itemNames.map((name) => (
+              <li>
+                {componentNames.has(name) ? (
+                  <a href={`/components/${name}`}>{name}</a>
+                ) : (
+                  <span>{name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  .components-index section {
+    margin-block: 2rem;
+  }
+  .components-index h2 {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .components-index ul {
+    padding: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 2rem;
+  }
+</style>
