@@ -57,9 +57,12 @@ test('spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /reg
   const home = await navigateLocalhost(page, '/');
   expect(home?.status(), 'GET / must return 200').toBe(200);
 
-  // 2. The ledger of exactly 56 items.
-  const ledger = await navigateLocalhost(page, '/registry');
-  expect(ledger?.status(), 'GET /registry must return 200').toBe(200);
+  // 2. Follow the home CTA to the ledger of exactly 56 items — the AC-3 step
+  // is "open / and follow the link to /registry", so the click on the real
+  // anchor is the observable, not a direct goto.
+  await page.getByRole('link', { name: 'Get started' }).click();
+  await page.waitForURL('**/registry');
+  expect(page.url(), 'CTA click must land on /registry').toBe(`${PREVIEW_URL}/registry`);
   expect(await page.locator(LEDGER_ROWS).count(), 'ledger row count').toBe(56);
 
   // 3. The component page with its install block.
