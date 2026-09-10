@@ -3,7 +3,8 @@ TASK: FUSE-10 - pnpm e2e:docs turnkey runner over astro preview
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     4c40529ba546c5c2c0df78cbbe80e8ce9830954c
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
