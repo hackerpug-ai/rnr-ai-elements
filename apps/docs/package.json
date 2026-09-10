@@ -1,0 +1,13 @@
+{
+  "name": "@rnr-ai-elements/docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^7.0.0"
+  }
+}
