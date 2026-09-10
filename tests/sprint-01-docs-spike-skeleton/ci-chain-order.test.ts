@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
+import { mkdirSync, rmSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -36,10 +36,14 @@ function acquireBuildLock(): void {
   }
 }
 
-function runDocsBuild(): { status: number | null; stdout: string; stderr: string } {
+function runE2eDocs(extraArgs: string[] = []): {
+  status: number | null;
+  stdout: string;
+  stderr: string;
+} {
   acquireBuildLock();
   try {
-    const result = spawnSync('pnpm', ['--filter', '@rnr-ai-elements/docs', 'build'], {
+    const result = spawnSync('pnpm', ['e2e:docs', ...extraArgs], {
       cwd: repoRoot,
       encoding: 'utf8',
       env: process.env,
@@ -52,60 +56,81 @@ function runDocsBuild(): { status: number | null; stdout: string; stderr: string
   }
 }
 
-function countHtmlFiles(dir: string): number {
-  let count = 0;
-  const stack = [dir];
-  while (stack.length > 0) {
-    const current = stack.pop() as string;
-    for (const entry of readdirSync(current, { withFileTypes: true })) {
-      const full = join(current, entry.name);
-      if (entry.isDirectory()) stack.push(full);
-      else if (entry.name.endsWith('.html')) count += 1;
-    }
-  }
-  return count;
-}
-
 describe('FLOW-DELIV-01', () => {
-  it('FLOW-DELIV-01-ci-chain-order', { timeout: 300_000 }, () => {
-    const build = runDocsBuild();
-    const evidence = `--- stdout ---\n${build.stdout}\n--- stderr ---\n${build.stderr}`;
+  // Two full runner invocations (unfiltered + grep) — each rebuilds the fixture and
+  // drives Chromium, so this test needs a generous timeout.
+  it('FLOW-DELIV-01-ci-chain-order', { timeout: 900_000 }, () => {
+    // CASE 1: one command, ordered chain, real preview over built dist, green canary.
+    const full = runE2eDocs();
+    const log = full.stdout + full.stderr;
+    const evidence = `--- stdout ---\n${full.stdout}\n--- stderr ---\n${full.stderr}`;
 
-    expect(build.status, `docs build exited ${build.status}\n${evidence}`).toBe(0);
-    expect(
-      build.stdout + build.stderr,
-      'the product surface is built dist — astro dev must never run',
-    ).not.toContain('astro dev');
+    expect(full.status, `pnpm e2e:docs exited ${full.status}\n${evidence}`).toBe(0);
+    expect(log, 'astro dev must never run — the product surface is built dist').not.toContain(
+      'astro dev',
+    );
 
     // Step-completion markers emitted by the real scripts. Deliberately distinct from
-    // pnpm's echoed script header, which prints all three step names on one line
-    // before any of them has run.
-    const registryDone = build.stdout.indexOf('registry built');
-    const galleryDone = build.stdout.indexOf('gallery manifest');
-    const astroDone = build.stdout.indexOf('Complete!');
+    // pnpm's echoed script header, which prints all step names on one line before any
+    // of them has run.
+    const registryDone = log.indexOf('registry built');
+    const galleryDone = log.indexOf('gallery manifest');
+    const astroDone = log.indexOf('Complete!');
+    const playwrightDone = log.indexOf('FUSE-10-runner-turnkey');
     expect(
       registryDone,
-      'registry:build produced no completion output\n' + evidence,
+      `registry:build produced no completion output\n${evidence}`,
     ).toBeGreaterThan(-1);
     expect(
       galleryDone,
-      'gallery:manifest produced no completion output\n' + evidence,
+      `gallery:manifest produced no completion output\n${evidence}`,
     ).toBeGreaterThan(-1);
-    expect(astroDone, 'astro build produced no completion output\n' + evidence).toBeGreaterThan(-1);
+    expect(astroDone, `astro build produced no completion output\n${evidence}`).toBeGreaterThan(-1);
+    expect(
+      playwrightDone,
+      `Playwright never reported the canary test name\n${evidence}`,
+    ).toBeGreaterThan(-1);
     expect(registryDone, 'registry:build must complete before gallery:manifest').toBeLessThan(
       galleryDone,
     );
     expect(galleryDone, 'gallery:manifest must complete before the astro build step').toBeLessThan(
       astroDone,
     );
+    expect(astroDone, 'the docs build must complete before Playwright').toBeLessThan(
+      playwrightDone,
+    );
 
-    const distIndex = join(repoRoot, 'apps/docs/dist/index.html');
-    const indexStat = statSync(distIndex);
-    expect(indexStat.isFile(), `${distIndex} is not a real file`).toBe(true);
-    expect(indexStat.size, 'apps/docs/dist/index.html is empty').toBeGreaterThan(0);
+    // Green canary, zero failures, zero retries (flake policy).
+    const passed = log.match(/(\d+) passed/);
+    expect(passed, `no Playwright pass summary in the log\n${evidence}`).not.toBeNull();
     expect(
-      countHtmlFiles(join(repoRoot, 'apps/docs/dist')),
-      'no HTML files under apps/docs/dist',
-    ).toBeGreaterThan(0);
+      Number(passed?.[1]),
+      'the canary must pass in all three projects',
+    ).toBeGreaterThanOrEqual(3);
+    expect(log, 'a Playwright test failed').not.toMatch(/\b\d+ failed\b/);
+    expect(log, 'the flake policy forbids retries').not.toMatch(/\bretried\b/);
+
+    // dist/ must be a real built surface, not an empty folder.
+    const distIndex = statSync(join(repoRoot, 'apps/docs/dist/index.html'));
+    expect(distIndex.isFile(), 'apps/docs/dist/index.html is not a real file').toBe(true);
+    expect(distIndex.size, 'apps/docs/dist/index.html is empty').toBeGreaterThan(0);
+
+    // CASE 2: pnpm forwards --grep to Playwright end to end.
+    const matched = runE2eDocs(['--grep', 'FUSE-10-runner-turnkey']);
+    const matchedLog = matched.stdout + matched.stderr;
+    const matchedEvidence = `--- stdout ---\n${matched.stdout}\n--- stderr ---\n${matched.stderr}`;
+
+    expect(matched.status, `grep run exited ${matched.status}\n${matchedEvidence}`).toBe(0);
+    expect(matchedLog).toContain('FUSE-10-runner-turnkey');
+    const matchedPassed = matchedLog.match(/(\d+) passed/);
+    expect(
+      matchedPassed,
+      `no Playwright pass summary in the grep run\n${matchedEvidence}`,
+    ).not.toBeNull();
+    // Exactly one test definition matched the token, run across the three projects.
+    expect(Number(matchedPassed?.[1]), 'the grep must match only the turnkey test').toBe(3);
+    expect(matchedLog, 'the grep run must not execute the rest of the lane').not.toContain(
+      'FLOW-DELIV-03-112-file-completeness',
+    );
   });
 });

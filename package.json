@@ -13,6 +13,7 @@
     "storybook:device": "pnpm --filter harness storybook:device",
     "storybook:web": "pnpm --filter harness storybook:web",
     "registry:build": "tsx packages/registry/scripts/build-registry.ts",
+    "e2e:docs": "pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test",
     "e2e:smoke:ios": "bash tests/sprint-01/install-core.test.sh --smoke ios",
     "e2e:smoke:android": "bash tests/sprint-01/install-core.test.sh --smoke android",
     "check:tokens": "tsx scripts/check-tokens.ts",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.11",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^24.13.3",
     "ts-morph": "^28.0.0",
     "tsx": "^4.20.6",
