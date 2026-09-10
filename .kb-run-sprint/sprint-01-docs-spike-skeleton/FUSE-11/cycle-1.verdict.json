@@ -1,0 +1,67 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Sweep enumerates 56 names via readdirSync(root public/r) per engine, mirrors engines, issues exactly 112 request-context GETs, asserts all 200 application/json (deliv-03-112-file-completeness.spec.ts:207-244). `pnpm e2e:docs --grep FLOW-DELIV-03-112-file-completeness` exit 0, 4 passed."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Asserts 200, content-type, .name=conversation, .type=registry:component, non-empty files/registryDependencies, sha256(served body)==sha256(generated file bytes) (deliv-03-live-registry-round-trip.spec.ts:49-82). ENOENT-bounded retry bridges FUSE-02's mid-run regen only. Grep exit 0."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": false,
+      "evidence": "Contract action step 1: 'follow the link to /registry'. Walk gotos /registry directly (spike-flow.spec.ts:61). Merged tree has the link (index.astro:72 'Get started'); no spec clicks it — home.spec.ts:188-193 asserts href only. All other AC-3 observables pass.",
+      "fix": "After the home 200 assertion (spike-flow.spec.ts:58), click the home /registry link (e.g. page.getByRole('link', { name: 'Get started' }).click() + waitForURL '**/registry') instead of navigateLocalhost(page, '/registry'), then assert the 56 rows.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Canonical-source enumeration, 112 count asserted, zero 404/text/html filters; RED shows 3x404 failures post-dist-r-removal (.tmp/FUSE-11/cycle-1/red/verify-TC-1-sweep.txt)."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Identity/type/structure assertions verified live in round-trip spec; TC tag in title resolves (`--grep \"TC-1|TC-2|TC-3|TC-4\"` exit 0, 15 passed)."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "sha256 byte-compare of real response body vs real disk bytes; RED evidence shows pre-GREEN 404 failure."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": false,
+      "evidence": "Real click, data-state=copied, 'Copied' label, real navigator.clipboard.readText under granted permissions, regex match, clipboard==displayed command, origin-rewritten same-origin fetch 200 JSON name=conversation — all pass; but same missing follow-the-home-link step as AC-3.",
+      "fix": "Same home-CTA click as AC-3 in the walk's first transition.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "DONE_WHEN_verify_commands",
+      "satisfied": true,
+      "evidence": "All flow-id greps + spike-walk grep exit 0; full `pnpm e2e:docs` exit 0, 53 passed, 0 failed, 0 flaky."
+    },
+    {
+      "id": "DONE_WHEN_typecheck_biome",
+      "satisfied": true,
+      "evidence": "pnpm typecheck exit 0; ./node_modules/.bin/biome ci tests/sprint-01-docs-spike-skeleton/ exit 0 (3 infos, no errors)."
+    },
+    {
+      "id": "DONE_WHEN_scope",
+      "satisfied": true,
+      "evidence": "Task commit = 3 writeAllowed spec files, pure additions (numstat 54/82/104, 0 deletions — FUSE-02 test untouched) + .tmp/FUSE-11 cycle evidence, matching the approved FUSE-09/FUSE-10 convention."
+    },
+    {
+      "id": "RED_evidence",
+      "satisfied": true,
+      "evidence": ".tmp/FUSE-11/cycle-1/red/ shows all three flows failing with real 404s after dist/r removal — matches the AC negative controls."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Strong, stub-free implementation: canonical-source 112-GET sweep, real sha256 byte round-trip, genuinely real clipboard walk (granted permissions, navigator.clipboard.readText, clipboard==displayed cross-check). Typecheck, biome, every contracted grep, and full e2e:docs pass with 0 failures; RED evidence is real. One contract deviation blocks: AC-3's action step says 'follow the link to /registry', but the walk navigates directly — valid only on the stale pre-FUSE-08 base. The merged tree ships the 'Get started' -> /registry CTA (index.astro:72) and no test anywhere clicks it. Assumptions 1, 2, 4 accepted: flow-id grep runs both specs (verified), FUSE-02 test is a pure append, TC tags resolve via project-level grep."
+}
