@@ -3,7 +3,8 @@ TASK: FUSE-12 - CI docs-e2e lane in ci.yml
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     404f65b5f4a23a202ee84736d5ffb3b4ad4ebbb9
 PRIORITY:   P0
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer

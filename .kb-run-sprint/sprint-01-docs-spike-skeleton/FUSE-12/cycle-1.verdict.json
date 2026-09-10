@@ -1,0 +1,63 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Real spawnSync chain, exit 0/stage, fail-stop asserted between stages; '56 items' + 'props resolved for 39/39' logs asserted; count pins 114 = 57/engine (test lines 203-264). My own verify run: 3/3, exit 0."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Parses real .github/workflows/ci.yml + package.json from disk (locked yaml@2.9.0); asserts on: triggers, needs [typecheck,lint,test,registry], run === 'pnpm e2e:docs', upload-artifact@v4 path, exact &&-segment list (test lines 270-328)."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "runStep spawns real pnpm children, asserts exit 0 per stage with both prebuild logs; no mocks/vi anywhere in file."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Real `sh -c \"find apps/docs/dist/r -name '*.json' | wc -l\"` -> 114; per-engine decomposition: exactly 56 item JSONs + registry.json index (57/engine)."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "AC-2 test covers all four wiring claims against the real file; docs-e2e job at ci.yml:138-164, run step ci.yml:158."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "e2e:docs splits on && into the exact 5-segment list, registry:build -> gallery:manifest -> docs build -> playwright install -> playwright test (package.json:16)."
+    },
+    {
+      "id": "CONTRACT-DELTA-112-vs-114",
+      "satisfied": true,
+      "evidence": "RULING: amend to 114 accepted. SPRINT.md:37 and ROADMAP.md:62 contract 57/engine = '56 item JSONs plus the per-engine registry.json index'; dist/r mirrors public/r (verified on disk: 57/engine, real shadcn-format registry.json). RED log captured literal-112 failing against real output ('114' != '112') — observed, not assumed. Task's 112 counted items only; matching it would require deleting the index the RNR CLI resolves against, breaking the sprint's own gate. Test pins the stronger 57 = 56+index decomposition."
+    },
+    {
+      "id": "RED-EVIDENCE",
+      "satisfied": true,
+      "evidence": ".tmp/FUSE-12/cycle-1/red/vitest-targeted.log: AC-1 failed on real 114-vs-112, AC-2 failed 'ci.yml declares no docs-e2e job' — both pre-change, stated reasons."
+    },
+    {
+      "id": "FUSE-10-TEST-UNCHANGED",
+      "satisfied": true,
+      "evidence": "git diff 456011b..404f65b: two hunks only — fs import line gains 2 named imports + yaml import; rest pure append (194+/1-). FUSE-10 assertions byte-identical."
+    },
+    {
+      "id": "CI-CORRECTNESS",
+      "satisfied": true,
+      "evidence": "needs targets 4 existing jobs; setup mirrors file conventions (guard, pnpm/action-setup@v4, env.NODE_VERSION, frozen-lockfile); always()-guarded upload matches test-job pattern; actionlint exit 0; no untrusted input in run blocks."
+    },
+    {
+      "id": "SCOPE",
+      "satisfied": true,
+      "evidence": "diff = ci.yml + test file + .tmp evidence (sprint-wide convention, cf. FUSE-04/05/10). No writeProhibited path touched; package.json/playwright.config.ts untouched."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Genuine RED->GREEN with real child processes and real disk parses; I reproduced everything myself: contracted verify 3/3 exit 0 (64.8s), typecheck clean, biome clean, actionlint clean, Gate 3 grep both hits. The 112-vs-114 delta is a planning arithmetic slip (items-only) contradicted by the sprint's own gate (57/engine incl. registry.json index, SPRINT.md:37); the implementer's amend is proven by RED output and on-disk reality, and the test pins a stronger decomposition. Deep yaml@2.9.0 store import is the only in-scope option (root package.json write-prohibited), lockfile-deterministic, fails loudly; consider hoisting yaml to a direct devDependency in a later task. No stubs, no weakened tests, FUSE-10's test byte-unchanged."
+}
