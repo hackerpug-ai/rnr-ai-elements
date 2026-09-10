@@ -3,7 +3,8 @@ TASK: FUSE-09 - CopyButton island (1/5) with zero-JS selectable-text fallback
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     in_progress
+STATUS:     Completed (landed)
+COMMIT:     bcb4cb74b448c88eefa3a95c17b03a3ac010749f
 PRIORITY:   P0
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
@@ -39,11 +40,11 @@ On the built site, clicking copy yields clipboard content identical to the displ
 DONE WHEN
 --------------------------------------------------------------------------------
 
-- [ ] AC-1: Copy places the exact command on the clipboard with a visible success state
-- [ ] AC-2: Island budget accounting: exactly one custom element, zero frameworks
-- [ ] every AC verify command passes (see ACCEPTANCE CRITERIA)
-- [ ] pnpm typecheck clean; ./node_modules/.bin/biome ci clean on touched paths
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1: Copy places the exact command on the clipboard with a visible success state  (cycle 2: per-test nojs guard added; click tests pass in chromium-desktop/mobile, zero-JS fallback now proven by unguarded tests running in chromium-nojs itself; reviewer lane run exit 0)
+- [x] AC-2: Island budget accounting: exactly one custom element, zero frameworks
+- [x] every AC verify command passes (see ACCEPTANCE CRITERIA)  (cycle 2: reviewer-run `timeout 600 pnpm e2e:docs` + `pnpm exec playwright test` EXITCODE=0 — 16 passed / 5 skipped / 0 failed; skips = 3 guarded nojs + 2 pre-existing deliv)
+- [x] pnpm typecheck clean; ./node_modules/.bin/biome ci clean on touched paths
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed  (product/test files only; .tmp evidence follows main convention per FUSE-05/FIX-F5-1)
 
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA (TDD Beads — ordered happy-path first)
