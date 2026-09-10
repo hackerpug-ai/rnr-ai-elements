@@ -3,7 +3,8 @@ TASK: FIX-FUSE-07-1 - Remove the generic-root success oracle from component-page
 ================================================================================
 
 TASK_TYPE:  FIX
-STATUS:     Backlog (written by kb-run-sprint orchestrator, 2026-09-10 — finding from the sprint-01 human gate)
+STATUS:     Completed (landed)
+COMMIT:     ba5b516a1796761ede8a9b3229fbec261ab2e0e1 (written by kb-run-sprint orchestrator, 2026-09-10 — finding from the sprint-01 human gate)
 PRIORITY:   P0
 POINTS:     1
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
