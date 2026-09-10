@@ -1,0 +1,1756 @@
+
+Running 3 tests using 3 workers
+
+[1/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[2/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[3/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+  1) [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json 
+
+    AssertionError: every registry JSON must serve 200
+    + actual - expected
+
+    + [
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/agent.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/artifact.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/attachments.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/audio-player.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/breadcrumb.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/button-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/chain-of-thought.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/checkpoint.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/code-block.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/command.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/commit.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/confirmation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/context.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/conversation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/empty.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/environment-variables.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/file-tree.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/image.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/inline-citation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/input-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/item.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/kbd.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/markdown.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/message.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/mic-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/model-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/mono.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/open-in-chat.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/package-info.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/persona.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/plan.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/prompt-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/question.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/queue.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/reasoning.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/reasoning-lifecycle.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/schema-display.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/sheet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/shimmer.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/slider.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/snippet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/sources.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/speech-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/stack-trace.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/stack-trace-parser.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/status.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/suggestion.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/table.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/task.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/terminal.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/test-results.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/tool.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/transcription.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/url.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/voice-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/web-preview.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/agent.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/artifact.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/attachments.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/audio-player.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/breadcrumb.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/button-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/chain-of-thought.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/checkpoint.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/code-block.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/command.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/commit.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/confirmation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/context.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/conversation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/empty.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/environment-variables.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/file-tree.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/image.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/inline-citation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/input-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/item.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/kbd.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/markdown.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/message.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/mic-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/model-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/mono.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/open-in-chat.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/package-info.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/persona.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/plan.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/prompt-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/question.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/queue.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/reasoning.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/reasoning-lifecycle.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/schema-display.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/sheet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/shimmer.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/slider.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/snippet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/sources.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/speech-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/stack-trace.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/stack-trace-parser.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/status.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/suggestion.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/table.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/task.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/terminal.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/test-results.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/tool.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/transcription.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/url.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/voice-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/web-preview.json'
+    +   }
+    + ]
+    - []
+
+
+      232 |
+      233 |   assert.equal(responses.length, 112, 'exactly 112 same-origin requests must be issued');
+    > 234 |   assert.deepEqual(
+          |          ^
+      235 |     responses.filter((response) => response.status !== 200),
+      236 |     [],
+      237 |     'every registry JSON must serve 200',
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:234:10
+
+    Error Context: test-results/deliv-03-112-file-complete-01c4d--serve-200-application-json-chromium-mobile/error-context.md
+
+
+  2) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json 
+
+    AssertionError: every registry JSON must serve 200
+    + actual - expected
+
+    + [
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/agent.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/artifact.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/attachments.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/audio-player.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/breadcrumb.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/button-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/chain-of-thought.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/checkpoint.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/code-block.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/command.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/commit.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/confirmation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/context.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/conversation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/empty.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/environment-variables.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/file-tree.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/image.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/inline-citation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/input-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/item.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/kbd.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/markdown.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/message.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/mic-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/model-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/mono.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/open-in-chat.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/package-info.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/persona.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/plan.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/prompt-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/question.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/queue.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/reasoning.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/reasoning-lifecycle.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/schema-display.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/sheet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/shimmer.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/slider.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/snippet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/sources.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/speech-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/stack-trace.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/stack-trace-parser.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/status.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/suggestion.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/table.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/task.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/terminal.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/test-results.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/tool.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/transcription.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/url.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/voice-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/web-preview.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/agent.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/artifact.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/attachments.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/audio-player.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/breadcrumb.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/button-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/chain-of-thought.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/checkpoint.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/code-block.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/command.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/commit.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/confirmation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/context.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/conversation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/empty.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/environment-variables.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/file-tree.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/image.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/inline-citation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/input-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/item.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/kbd.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/markdown.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/message.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/mic-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/model-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/mono.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/open-in-chat.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/package-info.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/persona.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/plan.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/prompt-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/question.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/queue.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/reasoning.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/reasoning-lifecycle.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/schema-display.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/sheet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/shimmer.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/slider.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/snippet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/sources.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/speech-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/stack-trace.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/stack-trace-parser.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/status.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/suggestion.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/table.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/task.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/terminal.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/test-results.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/tool.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/transcription.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/url.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/voice-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/web-preview.json'
+    +   }
+    + ]
+    - []
+
+
+      232 |
+      233 |   assert.equal(responses.length, 112, 'exactly 112 same-origin requests must be issued');
+    > 234 |   assert.deepEqual(
+          |          ^
+      235 |     responses.filter((response) => response.status !== 200),
+      236 |     [],
+      237 |     'every registry JSON must serve 200',
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:234:10
+
+    Error Context: test-results/deliv-03-112-file-complete-01c4d--serve-200-application-json-chromium-nojs/error-context.md
+
+
+  3) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json 
+
+    AssertionError: every registry JSON must serve 200
+    + actual - expected
+
+    + [
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/agent.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/artifact.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/attachments.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/audio-player.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/breadcrumb.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/button-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/chain-of-thought.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/checkpoint.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/code-block.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/command.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/commit.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/confirmation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/context.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/conversation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/empty.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/environment-variables.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/file-tree.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/image.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/inline-citation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/input-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/item.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/kbd.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/markdown.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/message.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/mic-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/model-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/mono.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/open-in-chat.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/package-info.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/persona.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/plan.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/prompt-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/question.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/queue.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/reasoning.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/reasoning-lifecycle.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/schema-display.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/sheet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/shimmer.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/slider.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/snippet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/sources.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/speech-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/stack-trace.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/stack-trace-parser.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/status.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/suggestion.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/table.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/task.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/terminal.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/test-results.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/tool.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/transcription.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/url.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/voice-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/nativewind/web-preview.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/agent.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/artifact.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/attachments.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/audio-player.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/breadcrumb.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/button-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/chain-of-thought.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/checkpoint.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/code-block.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/command.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/commit.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/confirmation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/context.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/conversation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/empty.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/environment-variables.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/file-tree.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/image.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/inline-citation.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/input-group.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/item.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/kbd.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/markdown.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/message.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/mic-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/model-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/mono.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/open-in-chat.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/package-info.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/persona.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/plan.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/prompt-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/question.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/queue.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/reasoning.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/reasoning-lifecycle.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/schema-display.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/sheet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/shimmer.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/slider.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/snippet.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/sources.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/speech-input.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/stack-trace.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/stack-trace-parser.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/status.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/suggestion.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/table.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/task.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/terminal.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/test-results.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/tool.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/transcription.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/url.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/voice-selector.json'
+    +   },
+    +   {
+    +     contentType: '',
+    +     status: 404,
+    +     url: 'http://localhost:4321/r/uniwind/web-preview.json'
+    +   }
+    + ]
+    - []
+
+
+      232 |
+      233 |   assert.equal(responses.length, 112, 'exactly 112 same-origin requests must be issued');
+    > 234 |   assert.deepEqual(
+          |          ^
+      235 |     responses.filter((response) => response.status !== 200),
+      236 |     [],
+      237 |     'every registry JSON must serve 200',
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:234:10
+
+    Error Context: test-results/deliv-03-112-file-complete-01c4d--serve-200-application-json-chromium-desktop/error-context.md
+
+
+  3 failed
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json 
+    [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json 
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json 
