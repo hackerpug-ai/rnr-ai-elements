@@ -1,0 +1,15 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Remains satisfied from cycle 1 (see cycle-1.verdict.json); props.ts byte-identical to that state; assertions re-passed in the 5/5 run and the full 630/630 suite on commit 318195773617f8f81c22c27c343f4cb6e1369215."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Remains satisfied from cycle 1 (see cycle-1.verdict.json); usage-snippet.ts byte-identical to that state; assertions re-passed in the 5/5 run and the full 630/630 suite."},
+    {"id": "AC-3", "satisfied": true, "evidence": "Direct module run: deriveThemingNote(shimmer) === 'Themed via text-muted-foreground.' exactly. TOKEN_CLASS reordered longest-first at scripts/docs-data/theming-note.ts:29-30 with the invariant documented. My own independent check (structurally different regex, own boundary lookahead) over 5 compound-token items beyond shimmer — speech-input, inline-citation, voice-selector, file-tree, web-preview: every named class (incl. text-primary-foreground, text-secondary-foreground, text-border) appears WHOLE in the item's real source. Oracle de-circularized: appearsWhole ('(?![\\w-])' lookahead) checks the SOURCE not the note, and enrichment-modules.test.ts:248-256 asserts set-equality of note classes vs source-extracted classes — prefix-first ordering in the module would now fail on set mismatch. RED log .tmp/FUSE-03/cycle-2/red/ shows the new oracle failing against the old output ('text-muted' absent/truncated), exit 1; GREEN exit 0."},
+    {"id": "TC-1", "satisfied": true, "evidence": "Remains satisfied from cycle 1; re-passed in the full-suite run on 3181957."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Remains satisfied from cycle 1; re-passed in the full-suite run on 3181957."},
+    {"id": "TC-3", "satisfied": true, "evidence": "Remains satisfied from cycle 1; re-passed in the full-suite run on 3181957."},
+    {"id": "TC-4", "satisfied": true, "evidence": "vitest both task files 5/5 exit 0 on 3181957; shimmer pinned to the exact string 'Themed via text-muted-foreground.' at enrichment-gates.test.ts:118 and enrichment-modules.test.ts:267; whole-class audit passes for all 56."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle-2 fixes exactly the compound-token truncation: longest-first alternation with a documented invariant, mirrored canonical order in both test files, appearsWhole boundary oracle plus note-vs-source set equality (genuinely non-circular — verified by reading and by the RED log catching the old output). Shimmer returns exactly 'Themed via text-muted-foreground.'; my independent 5-item spot-check found zero truncated or absent classes. No regression: diff touches only theming-note.ts and the two test files; full suite re-run 43 files / 630 tests exit 0; typecheck and biome clean; worktree clean."
+}

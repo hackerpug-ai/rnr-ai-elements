@@ -3,7 +3,8 @@ TASK: FUSE-03 - Enrichment modules: ts-morph props, usage snippet, theming note 
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog (planning seed — owned by kb-run-sprint sync-status after first dispatch)
+STATUS:     Completed (landed)
+COMMIT:     318195773617f8f81c22c27c343f4cb6e1369215
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
