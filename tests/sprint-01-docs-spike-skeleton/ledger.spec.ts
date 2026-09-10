@@ -45,10 +45,29 @@ type LedgerItem = {
   family: string;
 };
 
+/**
+ * Read the generated artifact, bridging a short window if it is transiently
+ * absent: Playwright imports spec FILES lazily per worker, and the lane's
+ * deliv-03 spec rmSyncs src/data WHOLESALE mid-run (its registry-items.json
+ * only returns after its prebuild leg — a ~20-30s window), so a module-scope
+ * read landing in that window must retry, not ENOENT the whole file. Retry is
+ * ENOENT-only and bounded; a genuinely missing artifact still fails after the
+ * deadline. Same pattern component-page.spec.ts (FUSE-07) uses, with a
+ * deadline sized to deliv-03's measured delete->regenerate window.
+ */
 function readGeneratedDataset(): LedgerItem[] {
-  return JSON.parse(
-    readFileSync(join(process.cwd(), 'apps/docs/src/data/registry-items.json'), 'utf8'),
-  ) as LedgerItem[];
+  const deadline = Date.now() + 60_000;
+  for (;;) {
+    try {
+      return JSON.parse(
+        readFileSync(join(process.cwd(), 'apps/docs/src/data/registry-items.json'), 'utf8'),
+      ) as LedgerItem[];
+    } catch (error) {
+      const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+      if (!retryable || Date.now() > deadline) throw error;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 500);
+    }
+  }
 }
 
 const ITEMS = readGeneratedDataset();
