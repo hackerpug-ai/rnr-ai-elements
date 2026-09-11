@@ -1,0 +1,178 @@
+{
+ "flows": [
+  {
+   "artifact": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-01-home-hero-evaluation-contract.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "UC-GEND-01 (T-GEND-001/002/003/005): at 1440x900 over astro preview the hero answers the evaluation question WITHOUT scrolling \u2014 one-screen identity statement (universal AI chat and agent UI components for React Native, copy-paste registry, NOT an npm package), version counter 0.2.1 and item counters 56/39/11/6 computed at build from package.json + src/data/registry-items.json, and both Get started (/registry) / Browse components (/components) CTAs resolving 200. Geometric fold proof: hero element bounding boxes inside the viewport.",
+   "gate_steps": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    13
+   ],
+   "id": "FLOW-GEND-01-home-hero-evaluation-contract",
+   "manual_physical": false,
+   "red_proof": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-01-home-hero-evaluation-contract-red.txt",
+   "run_cmd": "pnpm playwright test tests/sprint-02-shell-hero/home-hero.spec.ts --grep FLOW-GEND-01-home-hero-evaluation-contract",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-02-shell-hero/home-hero.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-GEND-01"
+  },
+  {
+   "artifact": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-02-hero-install-command-copy.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "UC-GEND-01 AC-3 / UC-GEND-04 (T-GEND-004): one click on the hero install copy yields exactly the displayed command matching ^npx @react-native-reusables/cli@latest add https://rnraielements\\.com/r/(nativewind|uniwind)/[a-z0-9-]+\\.json$ with a visible success state within 500 ms; the engine segment follows the persisted engine tab (localStorage 'rnr-engine', documented default nativewind, never in the URL); the full command stays selectable with JavaScript disabled.",
+   "gate_steps": [
+    1,
+    6,
+    7,
+    8
+   ],
+   "id": "FLOW-GEND-02-hero-install-command-copy",
+   "manual_physical": false,
+   "red_proof": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-02-hero-install-command-copy-red.txt",
+   "run_cmd": "pnpm playwright test tests/sprint-02-shell-hero/home-hero.spec.ts --grep FLOW-GEND-02-hero-install-command-copy",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-02-shell-hero/home-hero.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-GEND-01"
+  },
+  {
+   "artifact": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-20-exact-absolute-url-command-copy.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "UC-GEND-04 AC-1 (T-GEND-013 subset \u2014 all 39 existing /components/[item] pages; ui/lib item pages do not exist yet and complete at Sprint 04/05): every component page renders the engine-tabbed install block first; one-click copy on EACH engine tab yields that engine's exact absolute-URL command with a success state; both engines' panel text is server-rendered so the zero-JS project still reads it (T-SHELL-012); no short-name or un-tabbed duplicated forms anywhere (T-GEND-016).",
+   "gate_steps": [
+    1,
+    11
+   ],
+   "id": "FLOW-GEND-20-exact-absolute-url-command-copy",
+   "manual_physical": false,
+   "red_proof": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-20-exact-absolute-url-command-copy-red.txt",
+   "run_cmd": "pnpm playwright test tests/sprint-02-shell-hero/item-install-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-02-shell-hero/item-install-copy.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-GEND-04"
+  },
+  {
+   "artifact": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-21-dependency-panel-peers.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "UC-GEND-04 AC-2 (T-GEND-015 subset): shimmer and every chat-family component page render a dependency panel listing dependencies[] and registryDependencies[] VERBATIM from src/data/registry-items.json, with {engine} resolved per engine tab and {version} resolved from package.json at build; the AI SDK v7 peer is named \u2014 `ai` with the version range derived at build from apps/example/package.json (site-facts.json), never hand-typed. The >=5-sampled live-/r/*.json diff and dev-client peers/permissions matrix complete at Sprint 04.",
+   "gate_steps": [
+    1,
+    12
+   ],
+   "id": "FLOW-GEND-21-dependency-panel-peers",
+   "manual_physical": false,
+   "red_proof": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-21-dependency-panel-peers-red.txt",
+   "run_cmd": "pnpm playwright test tests/sprint-02-shell-hero/dependency-panels.spec.ts --grep FLOW-GEND-21-dependency-panel-peers",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-02-shell-hero/dependency-panels.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-GEND-04"
+  },
+  {
+   "artifact": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "UC-SHELL-01 AC-1 (T-SHELL-001): the header theme toggle flips the site theme (dark background oklch(0.145 0 0) vs light oklch(1 0 0)), writes localStorage 'rnr-theme', and the choice persists across reload; the header stays sticky at scrollY 1000 on a scrollable route; no wrong-theme frame on reload \u2014 the theme attribute is already correct at domContentLoaded via the pre-paint is:inline script. Theme state never appears in the URL; without JavaScript the toggle hides and the pre-paint-resolved theme remains readable.",
+   "gate_steps": [
+    1,
+    9
+   ],
+   "id": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+   "manual_physical": false,
+   "red_proof": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free-red.txt",
+   "run_cmd": "pnpm playwright test tests/sprint-02-shell-hero/theme-toggle.spec.ts --grep FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-02-shell-hero/theme-toggle.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-SHELL-01"
+  },
+  {
+   "artifact": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "UC-SHELL-01 AC-2 (T-SHELL-002): fresh (zero-storage) browser contexts with prefers-color-scheme dark render /docs/theming, /, and /components/message DARK from the FIRST frame \u2014 no light flash \u2014 via the pre-paint theme script on cold navigation (no bfcache); a light-scheme fresh context renders light. The /docs/theming route is the minimal real page created this sprint to host the content-shaped cold-boot proof. (The no-preference-renders-dark clause defers to sprint-05 \u2014 emulating 'no preference' is unreliable in Chromium.)",
+   "gate_steps": [
+    1,
+    10
+   ],
+   "id": "FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+   "manual_physical": false,
+   "red_proof": ".tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash-red.txt",
+   "run_cmd": "pnpm playwright test tests/sprint-02-shell-hero/theme-first-paint.spec.ts --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-02-shell-hero/theme-first-paint.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-SHELL-01"
+  }
+ ],
+ "deferred_journeys": [
+  {
+   "covers_ucs": [
+    "UC-DELIV-03",
+    "UC-EXT-01",
+    "UC-GEND-04"
+   ],
+   "id": "journeys/docs-agent-arc",
+   "outstanding_ucs": [
+    "UC-EXT-01"
+   ]
+  },
+  {
+   "covers_ucs": [
+    "UC-DOCS-06",
+    "UC-GEND-01",
+    "UC-GEND-02",
+    "UC-GEND-03",
+    "UC-GEND-05",
+    "UC-GEND-06"
+   ],
+   "id": "journeys/docs-evaluator-arc",
+   "outstanding_ucs": [
+    "UC-DOCS-06",
+    "UC-GEND-02",
+    "UC-GEND-05",
+    "UC-GEND-06"
+   ]
+  },
+  {
+   "covers_ucs": [
+    "UC-DOCS-01",
+    "UC-DOCS-02",
+    "UC-DOCS-04",
+    "UC-GEND-04",
+    "UC-GEND-07",
+    "UC-SHELL-03"
+   ],
+   "id": "journeys/docs-integrator-arc",
+   "outstanding_ucs": [
+    "UC-DOCS-01",
+    "UC-DOCS-02",
+    "UC-DOCS-04",
+    "UC-SHELL-03"
+   ]
+  },
+  {
+   "covers_ucs": [
+    "UC-DOCS-01",
+    "UC-DOCS-03",
+    "UC-GEND-03",
+    "UC-SHELL-01"
+   ],
+   "id": "journeys/docs-themer-arc",
+   "outstanding_ucs": [
+    "UC-DOCS-01",
+    "UC-DOCS-03"
+   ]
+  }
+ ]
+}
