@@ -10,7 +10,7 @@ planned_at: 2026-09-09
 
 # Sprint 01: docs-spike-skeleton
 
-**Status:** in_progress
+**Status:** completed
 **Sequence:** 1
 **Timeline:** Phase 1
 
