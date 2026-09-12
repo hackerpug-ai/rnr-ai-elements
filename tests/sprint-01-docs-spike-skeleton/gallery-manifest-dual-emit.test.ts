@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -100,6 +100,12 @@ describe('gallery manifest dual emit (FUSE-02)', () => {
     runManifestScript();
     const first = readFileSync(MANIFEST_JSON);
 
+    // The committed families map — snapshotted because the delete-dir case
+    // below removes src/data wholesale (it regenerates only the manifest)
+    // and FUSE-05's prebuild consumes families.json.
+    const FAMILIES_JSON = join(DATA_DIR, 'families.json');
+    const familiesBytes = readFileSync(FAMILIES_JSON);
+
     rmSync(MANIFEST_JSON);
     runManifestScript();
     expect(readFileSync(MANIFEST_JSON).equals(first), 'delete-file + rerun changed bytes').toBe(
@@ -111,5 +117,9 @@ describe('gallery manifest dual emit (FUSE-02)', () => {
     expect(readFileSync(MANIFEST_JSON).equals(first), 'delete-dir + rerun changed bytes').toBe(
       true,
     );
+
+    // Restore the snapshotted families.json: the delete-dir case above removed
+    // it along with the generated manifest.
+    writeFileSync(FAMILIES_JSON, familiesBytes);
   }, 120_000);
 });
