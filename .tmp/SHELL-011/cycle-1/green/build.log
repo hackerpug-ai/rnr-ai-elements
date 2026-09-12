@@ -1,0 +1,90 @@
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+00:37:51 [types] Generated 158ms
+00:37:51 [build] output: "static"
+00:37:51 [build] mode: "static"
+00:37:51 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-011/apps/docs/dist/
+00:37:51 [build] Collecting build info...
+00:37:51 [build] ✓ Completed in 173ms.
+00:37:51 [build] Building static entrypoints...
+00:37:51 [vite] ✓ built in 457ms
+00:37:51 [vite] ✓ built in 64ms
+00:37:51 [build] Rearranging server assets...
+
+ generating static routes 
+00:37:51   ├─ /components/shimmer/index.html (+4ms) 
+00:37:51   ├─ /components/checkpoint/index.html (+1ms) 
+00:37:51   ├─ /components/image/index.html (+1ms) 
+00:37:51   ├─ /components/persona/index.html (+1ms) 
+00:37:51   ├─ /components/speech-input/index.html (+1ms) 
+00:37:51   ├─ /components/conversation/index.html (+1ms) 
+00:37:51   ├─ /components/message/index.html (+1ms) 
+00:37:51   ├─ /components/prompt-input/index.html (+1ms) 
+00:37:51   ├─ /components/suggestion/index.html (+1ms) 
+00:37:51   ├─ /components/tool/index.html (+1ms) 
+00:37:51   ├─ /components/reasoning/index.html (+1ms) 
+00:37:51   ├─ /components/task/index.html (+1ms) 
+00:37:51   ├─ /components/question/index.html (+1ms) 
+00:37:51   ├─ /components/agent/index.html (+1ms) 
+00:37:51   ├─ /components/chain-of-thought/index.html (+0ms) 
+00:37:51   ├─ /components/plan/index.html (+0ms) 
+00:37:51   ├─ /components/confirmation/index.html (+0ms) 
+00:37:51   ├─ /components/queue/index.html (+0ms) 
+00:37:51   ├─ /components/sources/index.html (+0ms) 
+00:37:51   ├─ /components/inline-citation/index.html (+0ms) 
+00:37:51   ├─ /components/artifact/index.html (+0ms) 
+00:37:51   ├─ /components/snippet/index.html (+0ms) 
+00:37:51   ├─ /components/commit/index.html (+0ms) 
+00:37:51   ├─ /components/attachments/index.html (+0ms) 
+00:37:51   ├─ /components/context/index.html (+0ms) 
+00:37:51   ├─ /components/open-in-chat/index.html (+0ms) 
+00:37:51   ├─ /components/model-selector/index.html (+0ms) 
+00:37:51   ├─ /components/mic-selector/index.html (+0ms) 
+00:37:51   ├─ /components/voice-selector/index.html (+1ms) 
+00:37:51   ├─ /components/audio-player/index.html (+0ms) 
+00:37:51   ├─ /components/transcription/index.html (+0ms) 
+00:37:51   ├─ /components/terminal/index.html (+1ms) 
+00:37:51   ├─ /components/file-tree/index.html (+0ms) 
+00:37:51   ├─ /components/environment-variables/index.html (+0ms) 
+00:37:51   ├─ /components/package-info/index.html (+1ms) 
+00:37:51   ├─ /components/stack-trace/index.html (+0ms) 
+00:37:51   ├─ /components/schema-display/index.html (+1ms) 
+00:37:51   ├─ /components/test-results/index.html (+1ms) 
+00:37:51   ├─ /components/web-preview/index.html (+0ms) 
+00:37:51   ├─ /components/index.html (+1ms) 
+00:37:51   ├─ /docs/theming/index.html (+1ms) 
+00:37:51   ├─ /islands/copy-button/index.html (+1ms) 
+00:37:51   ├─ /registry/index.html (+2ms) 
+00:37:51   ├─ /index.html (+1ms) 
+00:37:51 ✓ Completed in 45ms.
+
+00:37:51 [build] ✓ Completed in 588ms.
+00:37:51 [build] 44 page(s) built in 762ms
+00:37:51 [build] Complete!

@@ -4,9 +4,12 @@ import config from '../../playwright.config';
 // UNIT_TEST_JUSTIFIED: pure config-object assertions — importing the config and
 // checking fields involves no runtime service.
 it('FUSE-10-config-contract', () => {
-  // The Playwright lane is this sprint's directory and the *.spec.ts extension only —
-  // the sibling vitest files (*.test.ts) belong to vitest's `tests/**/*.test.ts` include.
-  expect(config.testDir).toBe('tests/sprint-01-docs-spike-skeleton');
+  // The Playwright lane is the whole tests/ tree (SHELL-011 widened it from the
+  // sprint-01 directory): every lane's *.spec.ts files run in this ONE turnkey
+  // runner — serialized by workers:1 below. The extension stays *.spec.ts only —
+  // the sibling vitest files (*.test.ts) belong to vitest's
+  // `tests/**/*.test.ts` include and must never be double-run by this lane.
+  expect(config.testDir).toBe('tests');
   expect(config.testMatch).toBe('**/*.spec.ts');
 
   // Flake policy: run once, failures are real.
