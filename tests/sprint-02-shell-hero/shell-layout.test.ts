@@ -301,6 +301,14 @@ it('SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h),
     layoutScripts.length - contractedThemeScripts.length,
     'DocsLayout: only the contracted pre-paint theme script may live here — a non-contracted script was found',
   ).toBe(0);
+  // The paired-tag regex above requires a closing </script>, so a self-closing
+  // <script ... /> never enters layoutScripts and would slip past both counts.
+  // Every <script opener in the source must therefore be one the paired scan
+  // matched — any unpaired opener (self-closing or unclosed) fails here.
+  expect(
+    countMatches(shellSources.layout, /<script\b/g),
+    'DocsLayout: an unpaired or self-closing <script ... /> was found — only the paired contracted pre-paint theme script may live here',
+  ).toBe(layoutScripts.length);
   const allShellCss = Object.values(shellSources).join('\n');
   for (const token of ['--background', '--foreground', '--border', '--primary']) {
     expect(allShellCss, `the authored shell must consume ${token} via var()`).toContain(

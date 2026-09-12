@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/FIX-SHELL-002-1
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts (3 tests | 1 failed) 8533ms
+   × SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/shell-layout.test.ts > SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles
+AssertionError: DocsLayout: an unpaired or self-closing <script ... /> was found — only the paired contracted pre-paint theme script may live here: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts:311:5
+    309|     countMatches(shellSources.layout, /<script\b/g),
+    310|     'DocsLayout: an unpaired or self-closing <script ... /> was found …
+    311|   ).toBe(layoutScripts.length);
+       |     ^
+    312|   const allShellCss = Object.values(shellSources).join('\n');
+    313|   for (const token of ['--background', '--foreground', '--border', '--…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:29:21
+   Duration  8.65s (transform 17ms, setup 0ms, import 25ms, tests 8.53s, environment 0ms)
+
