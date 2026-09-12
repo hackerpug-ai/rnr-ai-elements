@@ -1,3 +1,5 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { navigateLocalhost } from '../harness/docs-preview';
 
@@ -26,7 +28,24 @@ import { navigateLocalhost } from '../harness/docs-preview';
  *
  * page.evaluate calls use string expressions: the repo tsconfig carries no DOM
  * lib (same precedent as the sprint-01 ledger spec).
+ *
+ * On the green path the spec writes its DECLARED flow artifact
+ * (.tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-02-first-visit-prefers-
+ * dark-no-flash.json) with the real observed values (home-hero convention).
  */
+
+// Evidence JSON per flow, under the sprint's e2e-evidence directory (the
+// home-hero convention: written on the green path with real observed values,
+// so the flow runner sees a fresh DECLARED artifact after every run).
+const EVIDENCE_DIR = join(process.cwd(), '.tmp/sprint-02-shell-hero/e2e-evidence');
+
+function writeEvidence(flow: string, observed: Record<string, unknown>): void {
+  mkdirSync(EVIDENCE_DIR, { recursive: true });
+  writeFileSync(
+    join(EVIDENCE_DIR, `${flow}.json`),
+    JSON.stringify({ flow, capturedAt: new Date().toISOString(), ...observed }, null, 2),
+  );
+}
 
 // Dark = no `light` class on the root element; light = `light` present.
 function themeStateOf(className: unknown): 'light' | 'dark' {
@@ -56,10 +75,6 @@ const READ_STORAGE =
 const DARK_BG = 'oklch(0.145 0 0)';
 const LIGHT_BG = 'oklch(1 0 0)';
 
-// The locked cold-boot routes: the theming doc page, the site root, and a
-// component item page — one SEPARATE fresh context per route.
-const DARK_ROUTES = ['/docs/theming', '/', '/components/message'];
-
 test('FLOW-SHELL-02-first-visit-prefers-dark-no-flash', async ({ browser }, testInfo) => {
   // The DCL recorder is itself JS — under the runner's zero-JS project the
   // first frame cannot be sampled; the zero-JS rendering contract is
@@ -69,38 +84,105 @@ test('FLOW-SHELL-02-first-visit-prefers-dark-no-flash', async ({ browser }, test
     'the domContentLoaded sampler needs JS; zero-JS rendering is covered by the theme-toggle spec no-JS case',
   );
 
-  // CASE 1 — every cold-boot route renders dark from the first frame in a
-  // brand-new dark-scheme context.
-  for (const route of DARK_ROUTES) {
-    const context = await browser.newContext({ colorScheme: 'dark' });
-    await context.addInitScript(THEME_DCL_RECORDER);
-    const page = await context.newPage();
-    const response = await navigateLocalhost(page, route);
-    expect(response?.status(), `${route} must answer 200 from the built preview`).toBe(200);
+  // CASE 1 — every locked cold-boot route renders dark from the first frame.
+  // One SEPARATE fresh context per route, and each route's literal sits on its
+  // navigation AND assertion lines so the governed surface lint observes the
+  // product target inside an assertion window (a shared route array would sit
+  // outside every observation window and read as PRODUCT_TARGET_MISSING).
 
-    const dclClass: unknown = await page.evaluate(READ_DCL_SAMPLE);
-    expect(
-      themeStateOf(dclClass),
-      `${route} must already carry the dark theme at domContentLoaded (got root class ${String(
-        dclClass,
-      )}) — a light sample there is the light-flash signature`,
-    ).toBe('dark');
-    expect(
-      await page.evaluate(READ_BODY_BG),
-      `${route} must paint the dark canvas on the first frame`,
-    ).toBe(DARK_BG);
-    expect(
-      JSON.parse(await page.evaluate(READ_STORAGE)).theme,
-      `${route}: a fresh first visit must have no pre-existing rnr-theme — the pre-paint script only reads it`,
-    ).toBeNull();
+  // CASE 1a — /docs/theming
+  const themingContext = await browser.newContext({ colorScheme: 'dark' });
+  await themingContext.addInitScript(THEME_DCL_RECORDER);
+  const themingPage = await themingContext.newPage();
+  const themingResponse = await navigateLocalhost(themingPage, '/docs/theming');
+  expect(themingResponse?.status(), '/docs/theming must answer 200 from the built preview').toBe(
+    200,
+  );
 
-    const evidenceName = route === '/' ? 'home' : route.replaceAll('/', '-').slice(1);
-    await testInfo.attach(`flow-shell-02-dark-first-frame-${evidenceName}`, {
-      body: await page.screenshot(),
-      contentType: 'image/png',
-    });
-    await context.close();
-  }
+  const themingDclClass: unknown = await themingPage.evaluate(READ_DCL_SAMPLE);
+  expect(
+    themeStateOf(themingDclClass),
+    `/docs/theming must already carry the dark theme at domContentLoaded (got root class ${String(
+      themingDclClass,
+    )}) — a light sample there is the light-flash signature`,
+  ).toBe('dark');
+  const themingBackground = await themingPage.evaluate(READ_BODY_BG);
+  expect(themingBackground, '/docs/theming must paint the dark canvas on the first frame').toBe(
+    DARK_BG,
+  );
+  const themingStoredTheme = JSON.parse(await themingPage.evaluate(READ_STORAGE)).theme;
+  expect(
+    themingStoredTheme,
+    '/docs/theming: a fresh first visit must have no pre-existing rnr-theme — the pre-paint script only reads it',
+  ).toBeNull();
+
+  await testInfo.attach('flow-shell-02-dark-first-frame-docs-theming', {
+    body: await themingPage.screenshot(),
+    contentType: 'image/png',
+  });
+  await themingContext.close();
+
+  // CASE 1b — /
+  const homeContext = await browser.newContext({ colorScheme: 'dark' });
+  await homeContext.addInitScript(THEME_DCL_RECORDER);
+  const homePage = await homeContext.newPage();
+  const homeResponse = await navigateLocalhost(homePage, '/');
+  expect(homeResponse?.status(), '/ must answer 200 from the built preview').toBe(200);
+
+  const homeDclClass: unknown = await homePage.evaluate(READ_DCL_SAMPLE);
+  expect(
+    themeStateOf(homeDclClass),
+    `/ must already carry the dark theme at domContentLoaded (got root class ${String(
+      homeDclClass,
+    )}) — a light sample there is the light-flash signature`,
+  ).toBe('dark');
+  const homeBackground = await homePage.evaluate(READ_BODY_BG);
+  expect(homeBackground, '/ must paint the dark canvas on the first frame').toBe(DARK_BG);
+  const homeStoredTheme = JSON.parse(await homePage.evaluate(READ_STORAGE)).theme;
+  expect(
+    homeStoredTheme,
+    '/: a fresh first visit must have no pre-existing rnr-theme — the pre-paint script only reads it',
+  ).toBeNull();
+
+  await testInfo.attach('flow-shell-02-dark-first-frame-home', {
+    body: await homePage.screenshot(),
+    contentType: 'image/png',
+  });
+  await homeContext.close();
+
+  // CASE 1c — /components/message
+  const messageContext = await browser.newContext({ colorScheme: 'dark' });
+  await messageContext.addInitScript(THEME_DCL_RECORDER);
+  const messagePage = await messageContext.newPage();
+  const messageResponse = await navigateLocalhost(messagePage, '/components/message');
+  expect(
+    messageResponse?.status(),
+    '/components/message must answer 200 from the built preview',
+  ).toBe(200);
+
+  const messageDclClass: unknown = await messagePage.evaluate(READ_DCL_SAMPLE);
+  expect(
+    themeStateOf(messageDclClass),
+    `/components/message must already carry the dark theme at domContentLoaded (got root class ${String(
+      messageDclClass,
+    )}) — a light sample there is the light-flash signature`,
+  ).toBe('dark');
+  const messageBackground = await messagePage.evaluate(READ_BODY_BG);
+  expect(
+    messageBackground,
+    '/components/message must paint the dark canvas on the first frame',
+  ).toBe(DARK_BG);
+  const messageStoredTheme = JSON.parse(await messagePage.evaluate(READ_STORAGE)).theme;
+  expect(
+    messageStoredTheme,
+    '/components/message: a fresh first visit must have no pre-existing rnr-theme — the pre-paint script only reads it',
+  ).toBeNull();
+
+  await testInfo.attach('flow-shell-02-dark-first-frame-components-message', {
+    body: await messagePage.screenshot(),
+    contentType: 'image/png',
+  });
+  await messageContext.close();
 
   // CASE 2 — a fresh light-scheme visitor must get light, not a forced dark.
   const lightContext = await browser.newContext({ colorScheme: 'light' });
@@ -115,10 +197,35 @@ test('FLOW-SHELL-02-first-visit-prefers-dark-no-flash', async ({ browser }, test
       lightDclClass,
     )}) — forcing dark ignores the scheme`,
   ).toBe('light');
-  expect(await lightPage.evaluate(READ_BODY_BG)).toBe(LIGHT_BG);
+  const lightBackground = await lightPage.evaluate(READ_BODY_BG);
+  expect(lightBackground, 'the light-scheme canvas must resolve the light token').toBe(LIGHT_BG);
   await testInfo.attach('flow-shell-02-light-first-frame-home', {
     body: await lightPage.screenshot(),
     contentType: 'image/png',
   });
   await lightContext.close();
+
+  writeEvidence('FLOW-SHELL-02-first-visit-prefers-dark-no-flash', {
+    darkSchemeColdBoots: {
+      '/docs/theming': {
+        dclRootClass: themingDclClass,
+        bodyBackground: themingBackground,
+        storedTheme: themingStoredTheme,
+      },
+      '/': {
+        dclRootClass: homeDclClass,
+        bodyBackground: homeBackground,
+        storedTheme: homeStoredTheme,
+      },
+      '/components/message': {
+        dclRootClass: messageDclClass,
+        bodyBackground: messageBackground,
+        storedTheme: messageStoredTheme,
+      },
+    },
+    lightSchemeColdBoot: {
+      dclRootClass: lightDclClass,
+      bodyBackground: lightBackground,
+    },
+  });
 });
