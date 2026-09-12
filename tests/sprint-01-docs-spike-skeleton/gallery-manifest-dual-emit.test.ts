@@ -106,6 +106,19 @@ describe('gallery manifest dual emit (FUSE-02)', () => {
     const FAMILIES_JSON = join(DATA_DIR, 'families.json');
     const familiesBytes = readFileSync(FAMILIES_JSON);
 
+    // The gitignored prebuild emits — snapshotted for the same reason: the
+    // delete-dir case below removes src/data wholesale and the manifest
+    // script regenerates only gallery-manifest.json, so every later vitest
+    // file in the run (and any FUSE-05 prebuild consumer) would find
+    // registry-items.json gone. Conditional on pre-existence: a fresh
+    // checkout legitimately lacks them until the first prebuild runs.
+    const REGISTRY_ITEMS_JSON = join(DATA_DIR, 'registry-items.json');
+    const SITE_FACTS_JSON = join(DATA_DIR, 'site-facts.json');
+    const registryItemsBytes = existsSync(REGISTRY_ITEMS_JSON)
+      ? readFileSync(REGISTRY_ITEMS_JSON)
+      : null;
+    const siteFactsBytes = existsSync(SITE_FACTS_JSON) ? readFileSync(SITE_FACTS_JSON) : null;
+
     rmSync(MANIFEST_JSON);
     runManifestScript();
     expect(readFileSync(MANIFEST_JSON).equals(first), 'delete-file + rerun changed bytes').toBe(
@@ -118,8 +131,11 @@ describe('gallery manifest dual emit (FUSE-02)', () => {
       true,
     );
 
-    // Restore the snapshotted families.json: the delete-dir case above removed
-    // it along with the generated manifest.
+    // Restore the snapshotted files: the delete-dir case above removed them
+    // along with the generated manifest. Files absent before the run stay
+    // absent — the first prebuild regenerates them.
     writeFileSync(FAMILIES_JSON, familiesBytes);
+    if (registryItemsBytes !== null) writeFileSync(REGISTRY_ITEMS_JSON, registryItemsBytes);
+    if (siteFactsBytes !== null) writeFileSync(SITE_FACTS_JSON, siteFactsBytes);
   }, 120_000);
 });
