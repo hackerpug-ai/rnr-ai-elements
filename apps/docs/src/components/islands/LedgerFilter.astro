@@ -1,0 +1,66 @@
+---
+/**
+ * LedgerFilter — island 4/5 (FAM-004). A generalized WAI-ARIA search box the
+ * bundled script upgrades into `rnr-ledger-filter`: typing narrows the cards
+ * the `target` container serves (each carries data-filter-text), fully-emptied
+ * sections hide with their headers, zero matches shows the one muted row, and
+ * clearing restores the full grid. State lives in client DOM only — the URL
+ * never changes.
+ *
+ * Zero-JS fallback: the element never upgrades, `:not(:defined)` keeps it off
+ * screen, and its input ships disabled — the full server-rendered grid stays
+ * exactly as served, with no dead control on the page.
+ */
+interface Props {
+  /** Selector of the container whose [data-filter-text] cards are filtered. */
+  target: string;
+}
+
+const { target } = Astro.props;
+---
+
+<rnr-ledger-filter class="ledger-filter" role="search" aria-label="Filter the component ledger" target={target}>
+  <input
+    type="search"
+    class="ledger-filter__input"
+    placeholder="Filter by name, description, or family"
+    aria-label="Filter components by name, description, or family"
+    disabled
+  />
+  <p class="ledger-filter__no-results" data-no-results hidden>
+    No components match that filter.
+  </p>
+</rnr-ledger-filter>
+
+<script src="../../scripts/ledger-filter.ts"></script>
+
+<style>
+  /* An un-upgraded custom element is inert; hide it rather than ship a fake
+     control to zero-JS visitors (upgrades to visible once defined). */
+  rnr-ledger-filter:not(:defined) {
+    display: none;
+  }
+  .ledger-filter {
+    display: block;
+    margin-block-end: 1.5rem;
+  }
+  .ledger-filter__input {
+    width: 100%;
+    min-height: 44px; /* touch target */
+    padding: 0.5rem 0.75rem;
+    font: inherit;
+    color: var(--foreground);
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  /* Focus-ring contract: 2px ring in the theme token, 2px offset. */
+  .ledger-filter__input:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .ledger-filter__no-results {
+    margin: 0;
+    color: var(--muted-foreground);
+  }
+</style>

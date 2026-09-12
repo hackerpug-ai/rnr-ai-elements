@@ -4,12 +4,15 @@
  * the FUSE-07 lean list. Everything derives at build from the committed
  * families map + the FUSE-05 dataset: the sections are exactly the families
  * whose itemNames are all registry:component, in families.json order — ui/lib
- * names stay on /registry. Zero JS: FAM-004's filter island mounts in the
- * reserved slot div and matches against each card's data-filter-text.
+ * names stay on /registry. The island mounts at the reserved slot position
+ * (the slot div stays plain — FAM-003's lane pins it) and its filter matches
+ * against each card's data-filter-text; with no JS the full grid is exactly
+ * as served.
  */
 import Layout from '../../layouts/DocsLayout.astro';
 import ComponentCard from '../../components/ComponentCard.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import LedgerFilter from '../../components/islands/LedgerFilter.astro';
 import families from '../../data/families.json';
 import items from '../../data/registry-items.json';
 
@@ -41,6 +44,7 @@ const itemsByName = new Map(
       }
     </nav>
     <div class="family-grid-slot"></div>
+    <LedgerFilter target=".components-index" />
     {
       componentFamilies.map((family) => (
         <section id={family.id} aria-labelledby={`${family.id}-heading`}>
