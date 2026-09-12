@@ -8,11 +8,11 @@ import { describe, expect, it } from 'vitest';
  * FUSE-09-island-budget — AC-2 island budget accounting over the REAL
  * apps/docs/src tree on disk.
  *
- * Boundary contract: exactly five vanilla custom elements site-wide. Two are
- * registered so far — `rnr-copy-button` (FUSE-09) and `rnr-theme-toggle`
- * (SHELL-003). So the whole docs source must contain exactly TWO
- * customElements.define calls naming those tags, and zero client-framework
- * imports (react/svelte/vue/preact/solid).
+ * Boundary contract: exactly five vanilla custom elements site-wide. Three are
+ * registered so far — `rnr-copy-button` (FUSE-09), `rnr-theme-toggle`
+ * (SHELL-003) and `rnr-tab-group` (SHELL-004). So the whole docs source must
+ * contain exactly THREE customElements.define calls naming those tags, and
+ * zero client-framework imports (react/svelte/vue/preact/solid).
  *
  * UNIT_TEST_JUSTIFIED: pure static source scan — file reads only, no runtime
  * behavior, no network, no rendering.
@@ -20,6 +20,7 @@ import { describe, expect, it } from 'vitest';
 const SRC_ROOT = join(process.cwd(), 'apps', 'docs', 'src');
 const SOURCE_EXTENSIONS = ['.ts', '.mjs', '.js', '.astro'];
 const ELEMENT_NAME = 'rnr-copy-button';
+const TAB_ELEMENT_NAME = 'rnr-tab-group';
 const THEME_ELEMENT_NAME = 'rnr-theme-toggle';
 
 function collectSourceFiles(dir: string, found: string[] = []): string[] {
@@ -39,7 +40,7 @@ const FRAMEWORK_IMPORT =
   /(?:^|\n)\s*(?:import|export)\s[^;]*?from\s*['"](react|react-dom|svelte|vue|preact|solid-js)(?:\/[\w.-]+)*['"]|(?:^|\n)\s*import\s*\(\s*['"](react|react-dom|svelte|vue|preact|solid-js)(?:\/[\w.-]+)*['"]\s*\)/g;
 
 describe('FUSE-09 island budget', () => {
-  it('FUSE-09-island-budget: exactly two customElements.define (rnr-copy-button, rnr-theme-toggle), zero framework imports', () => {
+  it('FUSE-09-island-budget: exactly three customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle), zero framework imports', () => {
     const files = collectSourceFiles(SRC_ROOT);
     expect(files.length).toBeGreaterThan(0);
 
@@ -60,9 +61,86 @@ describe('FUSE-09 island budget', () => {
 
     expect(defineSites).toEqual([
       { file: expect.stringContaining('copy-button.ts'), tag: ELEMENT_NAME },
+      { file: expect.stringContaining('tab-group.ts'), tag: TAB_ELEMENT_NAME },
       { file: expect.stringContaining('theme-toggle.ts'), tag: THEME_ELEMENT_NAME },
     ]);
     expect(frameworkImports).toEqual([]);
+  });
+});
+
+/**
+ * SHELL-004-tab-group-island-contract — TC-1/TC-2 over the REAL authored
+ * island sources on disk: the WAI-ARIA tabs DOM shape, the hidden-attribute
+ * toggling wiring, the `rnr-engine` persistence key, and the locked
+ * absolute-URL install command shape.
+ *
+ * UNIT_TEST_JUSTIFIED: no page imports TabGroup/InstallCommand at this task's
+ * commit (SHELL-007/SHELL-008 adopt them in later waves), so no built artifact
+ * can observe them; the only real observable inside this task's write boundary
+ * is the real source tree, scanned without mocks. Behavioral proof is owned by
+ * SHELL-011 (FLOW-GEND-02) and SHELL-012 (FLOW-GEND-20) against the adopted DOM.
+ */
+const TAB_GROUP_ISLAND = join(SRC_ROOT, 'components', 'islands', 'TabGroup.astro');
+const TAB_GROUP_SCRIPT = join(SRC_ROOT, 'scripts', 'tab-group.ts');
+const INSTALL_COMMAND = join(SRC_ROOT, 'components', 'InstallCommand.astro');
+
+// BOUNDARIES: the one locked command shape — absolute URL only, engine in the
+// path, lowercase-dash item slug.
+const LOCKED_COMMAND =
+  /^npx @react-native-reusables\/cli@latest add https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[a-z0-9-]+\.json$/;
+
+describe('SHELL-004 tab-group island contract', () => {
+  it('SHELL-004-tab-group-island-contract: TabGroup ARIA DOM + InstallCommand wraps one TabGroup with the locked absolute-URL command', () => {
+    const island = readFileSync(TAB_GROUP_ISLAND, 'utf8');
+    const script = readFileSync(TAB_GROUP_SCRIPT, 'utf8');
+    const composite = readFileSync(INSTALL_COMMAND, 'utf8');
+
+    // TC-1: TabGroup emits the tabs DOM — storage key on the element, tablist
+    // of role=tab buttons, role=tabpanel divs carrying data-engine, and the
+    // hidden attribute that carries visibility (never max-height).
+    expect(island).toContain('storage-key="rnr-engine"');
+    expect(island).toContain('role="tablist"');
+    expect(island).toContain('role="tab"');
+    expect(island).toContain('aria-controls');
+    expect(island).toContain('role="tabpanel"');
+    expect(island).toContain('data-engine');
+    expect(island).toContain('hidden');
+    expect(island).toContain('<slot');
+
+    // The island wiring: ARIA strings, hidden toggling, the storage key, the
+    // registered tag name pinned for the budget scan.
+    expect(script).toContain("'rnr-engine'");
+    expect(script).toContain('role="tab"');
+    expect(script).toContain('aria-selected');
+    expect(script).toContain('hidden');
+    expect(script).toContain("customElements.define('rnr-tab-group'");
+
+    // TC-2: InstallCommand wraps exactly ONE TabGroup, nativewind panel first,
+    // reuses CopyButton verbatim per panel (no copy logic of its own).
+    expect(
+      composite.match(/<TabGroup/g)?.length,
+      'InstallCommand must wrap exactly one TabGroup',
+    ).toBe(1);
+    expect(composite.indexOf('nativewind'), 'nativewind panel must precede uniwind').toBeLessThan(
+      composite.indexOf('uniwind'),
+    );
+    expect(composite.match(/<CopyButton/g)?.length, 'CopyButton embedded per panel').toBe(2);
+    expect(composite).toContain("import CopyButton from './islands/CopyButton.astro'");
+    expect(composite).not.toContain('navigator.clipboard');
+    expect(composite).not.toContain('max-height');
+
+    // BOUNDARIES: the command template is byte-pinned, then proven against the
+    // locked regex by substituting the same placeholders the source uses.
+    const template = composite.match(
+      /`npx @react-native-reusables\/cli@latest add https:\/\/rnraielements\.com\/r\/\$\{engine\}\/\$\{item\}\.json`/,
+    );
+    expect(template, 'locked command template missing from InstallCommand.astro').not.toBeNull();
+    const sample = (template?.[0] ?? '')
+      .replace(/^`/, '')
+      .replace(/`$/, '')
+      .replaceAll(/\$\{engine\}/g, 'nativewind')
+      .replaceAll(/\$\{item\}/g, 'conversation');
+    expect(sample).toMatch(LOCKED_COMMAND);
   });
 });
 

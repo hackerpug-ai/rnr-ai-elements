@@ -1,0 +1,45 @@
+---
+/**
+ * InstallCommand — the engine-tabbed install composite (SHELL-004). Wraps ONE
+ * TabGroup whose panels each carry the engine-correct install line with the
+ * existing CopyButton island reused verbatim: the copied text IS the
+ * displayed panel text, so display and clipboard cannot drift.
+ *
+ * The command shape is locked (SHELL-004 BOUNDARIES): absolute URL only,
+ * engine in the path, engine state never in the URL, never a short or
+ * relative form.
+ */
+import CopyButton from './islands/CopyButton.astro';
+import TabGroup from './islands/TabGroup.astro';
+
+interface Props {
+  /** Registry item slug, e.g. "conversation" — lower-case and dashed. */
+  item: string;
+}
+
+const { item } = Astro.props;
+
+const PANELS = [
+  { engine: 'nativewind', label: 'nativewind' },
+  { engine: 'uniwind', label: 'uniwind' },
+];
+
+function installCommand(engine: string, item: string): string {
+  return `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/${engine}/${item}.json`;
+}
+---
+
+<TabGroup panels={PANELS}>
+  <Fragment slot="nativewind">
+    <CopyButton
+      command={installCommand('nativewind', item)}
+      label="Copy nativewind install command"
+    />
+  </Fragment>
+  <Fragment slot="uniwind">
+    <CopyButton
+      command={installCommand('uniwind', item)}
+      label="Copy uniwind install command"
+    />
+  </Fragment>
+</TabGroup>

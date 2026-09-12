@@ -1,0 +1,49 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-004
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts (3 tests | 1 failed | 2 skipped) 7ms
+     × FUSE-09-island-budget: exactly three customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle), zero framework imports 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/island-budget.test.ts > FUSE-09 island budget > FUSE-09-island-budget: exactly three customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle), zero framework imports
+AssertionError: expected [ { …(2) }, { …(2) } ] to deeply equal [ { …(2) }, { …(2) }, { …(2) } ]
+
+- Expected
++ Received
+
+@@ -2,13 +2,9 @@
+    {
+      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-004/apps/docs/src/scripts/copy-button.ts",
+      "tag": "rnr-copy-button",
+    },
+    {
+-     "file": StringContaining "tab-group.ts",
+-     "tag": "rnr-tab-group",
+-   },
+-   {
+-     "file": StringContaining "theme-toggle.ts",
++     "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-004/apps/docs/src/scripts/theme-toggle.ts",
+      "tag": "rnr-theme-toggle",
+    },
+  ]
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:62:25
+     60|     }
+     61|
+     62|     expect(defineSites).toEqual([
+       |                         ^
+     63|       { file: expect.stringContaining('copy-button.ts'), tag: ELEMENT_…
+     64|       { file: expect.stringContaining('tab-group.ts'), tag: TAB_ELEMEN…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  23:33:50
+   Duration  86ms (transform 11ms, setup 0ms, import 16ms, tests 7ms, environment 0ms)
+
