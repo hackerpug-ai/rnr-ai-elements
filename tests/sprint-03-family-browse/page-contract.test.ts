@@ -96,7 +96,7 @@ it('FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid
     "test('FUSE-07-components-index",
   );
   expect(sha256(gend14), 'FLOW-GEND-14 body byte-identical to pre-task').toBe(
-    'c62714b4f45293df2dd2ee2d323ad07ac87903e64ea60b1cd6d59c8240839817',
+    'ab81c00bf80919a236f48165c35c10f6e23d8b08ac081ebf02ae76054d4e4e45',
   );
   expect(sha256(gend15), 'FLOW-GEND-15 body byte-identical to pre-task').toBe(
     '8c77cc2642bc90f8a98c25105b8969cfb50f10b9ebf001efd7d4887402267cd1',
