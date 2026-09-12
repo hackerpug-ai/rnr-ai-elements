@@ -2,7 +2,8 @@
 
 # FAM-002: SectionHeader + ComponentCard primitives, one-line description clamp, Chip counter-optional
 
-> Status: Backlog
+> Status: ✅ Completed
+> Commit: 72aa84b1ae42fe1f173da3f2e10ae5a5e50a8e72
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 5 · Type: FEATURE · Wave: A
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
