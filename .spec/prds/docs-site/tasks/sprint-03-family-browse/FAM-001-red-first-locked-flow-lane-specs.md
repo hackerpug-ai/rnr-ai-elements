@@ -2,7 +2,8 @@
 
 # FAM-001: RED-first locked-flow lane specs: /components 39-in-7-families grid + card anatomy
 
-> Status: Backlog
+> Status: ✅ Completed
+> Commit: fdbc02a5aa7fcb2dde8e2ed573d63d375ad3f69f
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P0 · Points: 3 · Type: FEATURE · Wave: ?
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
