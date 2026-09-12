@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts (4 tests | 1 failed | 3 skipped) 6ms
+   × FAM-002-chip-counter-optional: counter is optional, the counter-less path emits no data-counter, the counter-present passthrough and styles stay sprint-02 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-chip-counter-optional: counter is optional, the counter-less path emits no data-counter, the counter-present passthrough and styles stay sprint-02
+AssertionError: one 'counter?:' optional marker: expected undefined to be 1 // Object.is equality
+
+- Expected:
+1
+
++ Received:
+undefined
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts:240:80
+    238|
+    239|   // The optional signature — exactly one optional marker.
+    240|   expect(chip.match(/counter\?:/g)?.length, "one 'counter?:' optional …
+       |                                                                                ^
+    241|
+    242|   // The sprint-01 hook union survives untouched: exactly the five nam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  11:31:07
+   Duration  183ms (transform 23ms, setup 0ms, import 34ms, tests 6ms, environment 0ms)
+

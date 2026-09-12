@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts (4 tests | 1 failed | 3 skipped) 5ms
+   × FAM-002-section-header-source-contract: anchored h2, scroll-margin clearing the sticky Header, baseline flex row, counter-less count Chip 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-section-header-source-contract: anchored h2, scroll-margin clearing the sticky Header, baseline flex row, counter-less count Chip
+AssertionError: SectionHeader exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002/apps/docs/src/components/SectionHeader.astro: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts:198:67
+    196|
+    197| it('FAM-002-section-header-source-contract: anchored h2, scroll-margin…
+    198|   expect(existsSync(HEADER), `SectionHeader exists at ${HEADER}`).toBe…
+       |                                                                   ^
+    199|   const header = readFileSync(HEADER, 'utf8');
+    200|   const style = styleBlock(header, 'SectionHeader');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  11:31:06
+   Duration  178ms (transform 29ms, setup 0ms, import 40ms, tests 5ms, environment 0ms)
+

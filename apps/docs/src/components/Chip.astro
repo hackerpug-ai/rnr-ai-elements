@@ -2,15 +2,21 @@
 /**
  * Chip — the counter/value pill (TR-07 R6 health counters, detail chip rows).
  *
- * Renders the value inside a <data data-counter> element so the sprint-01
- * home spec hooks (version / total / components / ui / libs) survive the hero
- * redesign byte-for-byte. `label` opts into the two-part label + value form;
- * a ChipRow is consumers composing Chips in a row. Zero JS; tokens only.
+ * With `counter` present, the value renders inside a <data data-counter>
+ * element so the sprint-01 home spec hooks (version / total / components /
+ * ui / libs) survive the hero redesign byte-for-byte. `label` opts into the
+ * two-part label + value form; a ChipRow is consumers composing Chips in a
+ * row. Zero JS; tokens only.
+ *
+ * FAM-002: `counter` is optional — an absent counter renders the plain pill
+ * (same styles, no <data data-counter> passthrough) for counter-less
+ * consumers like SectionHeader counts and ComponentCard categories. The
+ * counter-present markup and styles are unchanged from sprint-02.
  */
 type CounterHook = 'version' | 'total' | 'components' | 'ui' | 'libs';
 
 interface Props {
-  counter: CounterHook;
+  counter?: CounterHook;
   value: string | number;
   label?: string;
 }
@@ -19,17 +25,31 @@ const { counter, value, label } = Astro.props;
 ---
 
 {
-  label === undefined ? (
-    <data class:list={['chip', 'chip__value']} data-counter={counter} value={String(value)}>
-      {value}
-    </data>
-  ) : (
-    <span class="chip">
-      <span class="chip__label">{label}</span>
-      <data class="chip__value" data-counter={counter} value={String(value)}>
+  counter === undefined && (
+    label === undefined ? (
+      <span class:list={['chip', 'chip__value']}>{value}</span>
+    ) : (
+      <span class="chip">
+        <span class="chip__label">{label}</span>
+        <span class="chip__value">{value}</span>
+      </span>
+    )
+  )
+}
+{
+  counter !== undefined && (
+    label === undefined ? (
+      <data class:list={['chip', 'chip__value']} data-counter={counter} value={String(value)}>
         {value}
       </data>
-    </span>
+    ) : (
+      <span class="chip">
+        <span class="chip__label">{label}</span>
+        <data class="chip__value" data-counter={counter} value={String(value)}>
+          {value}
+        </data>
+      </span>
+    )
   )
 }
 

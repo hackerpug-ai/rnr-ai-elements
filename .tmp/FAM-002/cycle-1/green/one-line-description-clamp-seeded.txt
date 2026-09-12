@@ -1,0 +1,19 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+
+stdout | tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-one-line-description-clamp: all 39 real descriptions window to <=120 chars at a word boundary, ellipsis only on truncation
+FAM-002 clamp: 39/39 one-liners non-empty and <=120 chars (longest output 120); 39/39 truncated with the ellipsis
+
+ ✓ tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-one-line-description-clamp: all 39 real descriptions window to <=120 chars at a word boundary, ellipsis only on truncation 18ms
+ ↓ tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-component-card-source-contract: one anchor root, inheriting h3, clamped one-liner, Chip+Badge footer, token surface, hover/focus idiom, gated motion, data hooks
+ ↓ tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-section-header-source-contract: anchored h2, scroll-margin clearing the sticky Header, baseline flex row, counter-less count Chip
+ ↓ tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-chip-counter-optional: counter is optional, the counter-less path emits no data-counter, the counter-present passthrough and styles stay sprint-02
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  11:34:24
+   Duration  271ms (transform 45ms, setup 0ms, import 55ms, tests 20ms, environment 0ms)
+

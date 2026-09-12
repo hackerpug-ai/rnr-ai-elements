@@ -1,0 +1,91 @@
+---
+/**
+ * ComponentCard — the one family-browse card primitive (TR-07 components-index
+ * wireframe card anatomy). The whole card is the link: a single anchor root
+ * wrapping an h3 that inherits the base heading scale, the 2-line-clamped
+ * one-liner from oneLineDescription, and a footer pinned to the card base
+ * composing Chip (category pill) + Badge (verdict tone keyed off expoGo,
+ * consumed unmodified). Null-imagery this sprint — the anatomy stays stacked
+ * so a media row can prepend inside the anchor later. Zero JS; tokens only.
+ */
+import Badge from './Badge.astro';
+import Chip from './Chip.astro';
+import { oneLineDescription } from '../lib/one-line-description';
+
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  category: string;
+  expoGo: boolean;
+}
+
+const { href, title, description, category, expoGo } = Astro.props;
+
+const oneLiner = oneLineDescription(description);
+// FAM-003's filter island matches against this text: name + one-liner + family.
+const filterText = [title, oneLiner, category].join(' ');
+---
+
+<a class="card" href={href} data-card data-filter-text={filterText}>
+  <h3>{title}</h3>
+  <p class="card__summary">{oneLiner}</p>
+  <footer class="card__footer">
+    <Chip value={category} />
+    <Badge tone={expoGo ? 'expo-go' : 'dev-client'} />
+  </footer>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    color: var(--card-foreground);
+    text-decoration: none;
+  }
+
+  /* Button's outline hover idiom — edge lift + accent fill, never a shadow. */
+  .card:hover {
+    border-color: var(--input);
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  /* Focus-ring contract: 2px ring in the theme token, 2px offset. */
+  .card:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* The one-liner — small muted summary, clamped to two lines. */
+  .card__summary {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  /* Pinned to the card base so short cards keep their pill row down. */
+  .card__footer {
+    margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Motion only for visitors who allow it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .card {
+      transition: border-color 120ms ease, background-color 120ms ease;
+    }
+  }
+</style>
