@@ -62,7 +62,11 @@ const { version: VERSION } = readJson<{ version: string }>('../../package.json')
 
 const components = items.filter((item) => item.type === 'registry:component');
 
-/** The pinned canonical origin — Astro.site in apps/docs/astro.config.mjs. */
+/**
+ * The pinned INSTALL-command origin — Astro.site in apps/docs/astro.config.mjs.
+ * Install commands are the only consumers: dependency-panel URLs are
+ * dataset-resolved through resolveRegistryDependencies, never this constant.
+ */
 const SITE = 'https://rnraielements.com';
 const CLI_PREFIX = 'npx @react-native-reusables/cli@latest add ';
 
@@ -189,13 +193,24 @@ test('FLOW-GEND-20-exact-absolute-url-command-copy', async ({ page }, testInfo) 
   const message = components.find((item) => item.name === 'message');
   if (!message) throw new Error('registry-items.json has no `message` entry');
   expect(message.dependencies, 'message ships no npm dependencies').toEqual([]);
+  // The panel's URLs come from the dataset through the SAME resolver the page
+  // frontmatter uses — first entry in dataset order is avatar.json — so this
+  // expectation cannot drift when the registry's domain or version bumps.
+  const messageNativewind = resolveRegistryDependencies(
+    message.registryDependencies,
+    'nativewind',
+    VERSION,
+  );
+  expect(messageNativewind[0], 'message fixture sanity: avatar.json is first').toContain(
+    '/nativewind/avatar.json',
+  );
   await navigateLocalhost(page, '/components/message');
   await expect(page.locator(`${DEPENDENCIES_SECTION} [data-deps-empty]`)).toContainText(
     'No required npm packages',
   );
   await expect(
     page.locator(`${DEPENDENCIES_SECTION} tbody[data-engine-urls="nativewind"] code`),
-  ).toContainText(`${SITE}/r/nativewind/avatar.json`);
+  ).toContainText(messageNativewind[0]);
 
   // CASE 4 — spike.astro is retired: the file is gone, no importer remains.
   const docsSrc = join(fileURLToPath(new URL('../../', import.meta.url)), 'apps/docs/src');
