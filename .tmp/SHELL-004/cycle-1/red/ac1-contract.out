@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-004
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts (3 tests | 1 failed | 2 skipped) 3ms
+     × SHELL-004-tab-group-island-contract: TabGroup ARIA DOM + InstallCommand wraps one TabGroup with the locked absolute-URL command 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/island-budget.test.ts > SHELL-004 tab-group island contract > SHELL-004-tab-group-island-contract: TabGroup ARIA DOM + InstallCommand wraps one TabGroup with the locked absolute-URL command
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-004/apps/docs/src/components/islands/TabGroup.astro'
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:94:20
+     92| describe('SHELL-004 tab-group island contract', () => {
+     93|   it('SHELL-004-tab-group-island-contract: TabGroup ARIA DOM + Install…
+     94|     const island = readFileSync(TAB_GROUP_ISLAND, 'utf8');
+       |                    ^
+     95|     const script = readFileSync(TAB_GROUP_SCRIPT, 'utf8');
+     96|     const composite = readFileSync(INSTALL_COMMAND, 'utf8');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  23:33:43
+   Duration  90ms (transform 12ms, setup 0ms, import 18ms, tests 3ms, environment 0ms)
+

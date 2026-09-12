@@ -1,0 +1,103 @@
+---
+/**
+ * TabGroup — island 3/5 (SHELL-004). A generic, attribute-driven WAI-ARIA
+ * tabs element: pass the labeled panels and slot each panel's content under
+ * its engine name. Every tab and panel is server-rendered into the served
+ * HTML — the bundled island only toggles the hidden attribute and persists
+ * the engine, it never fetches panel content.
+ *
+ * Zero-JS fallback: the first panel (nativewind) is the served default and
+ * stays visible; `:not(:defined)` un-hides the remaining stacked panels so
+ * every engine line is readable with no JS at all. An un-upgraded element is
+ * fully readable content — never a dead control.
+ */
+interface Panel {
+  /** Value stored under the element's storage-key; matches the panel DOM. */
+  engine: string;
+  label: string;
+}
+
+interface Props {
+  panels: Panel[];
+}
+
+const { panels } = Astro.props;
+---
+
+<rnr-tab-group class="tab-group" storage-key="rnr-engine">
+  <div class="tab-group__tabs" role="tablist">
+    {
+      panels.map((panel, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${panel.engine}`}
+          data-engine={panel.engine}
+          aria-controls={`panel-${panel.engine}`}
+          aria-selected={index === 0 ? 'true' : 'false'}
+          tabindex={index === 0 ? 0 : -1}
+        >
+          {panel.label}
+        </button>
+      ))
+    }
+  </div>
+  {
+    panels.map((panel, index) => (
+      <div
+        class="tab-group__panel"
+        role="tabpanel"
+        id={`panel-${panel.engine}`}
+        data-engine={panel.engine}
+        aria-labelledby={`tab-${panel.engine}`}
+        tabindex="0"
+        hidden={index !== 0}
+      >
+        <slot name={panel.engine} />
+      </div>
+    ))
+  }
+</rnr-tab-group>
+
+<script src="../../scripts/tab-group.ts"></script>
+
+<style>
+  .tab-group__tabs {
+    display: flex;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-group__tabs [role='tab'] {
+    min-height: 44px; /* touch target */
+    padding: 0.25rem 0.75rem;
+    font: inherit;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .tab-group__tabs [role='tab']:hover {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+  /* Active tab: the --primary fill, with the --ring bar as the indicator. */
+  .tab-group__tabs [role='tab'][aria-selected='true'] {
+    color: var(--primary-foreground);
+    background: var(--primary);
+    border-bottom-color: var(--ring);
+  }
+  .tab-group__panel {
+    padding-block: 0.75rem;
+  }
+  .tab-group__panel:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  /* Zero-JS: hidden panels render stacked and labeled until the element
+     upgrades; once defined, the island owns visibility via the attribute. */
+  rnr-tab-group:not(:defined) [role='tabpanel'][hidden] {
+    display: block;
+  }
+</style>
