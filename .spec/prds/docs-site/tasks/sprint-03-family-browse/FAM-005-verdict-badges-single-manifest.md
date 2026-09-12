@@ -2,7 +2,8 @@
 
 # FAM-005: Verdict badges from the single manifest onto item pages + the 56-row ledger
 
-> Status: Backlog
+> Status: ✅ Completed
+> Commit: 073da630c2f021c9ea80970846c27c839dbcc558
 > Assignee: react-native-reusables-implementer (implementer) · react-native-reusables-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FEATURE · Wave: C
 > Proposed By: react-native-reusables-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
