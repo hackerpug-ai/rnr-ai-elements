@@ -10,7 +10,7 @@ planned_at: 2026-09-12
 
 # Sprint 03: family-browse
 
-**Status:** Planned
+**Status:** completed
 **Sequence:** 3
 **Timeline:** Phase 1
 
@@ -34,11 +34,11 @@ The browse surface: /components becomes the seven-family card grid — SectionHe
 
 <!-- TESTING-GATE-START -->
 
-- [ ] 1. At the repo root run `pnpm e2e:docs` — it exits 0 with retries: 0: the ordered chain (registry:build → gallery:manifest → docs build → playwright install → playwright test) completes with every lane green, including the superseded sprint-01 lanes (component-page, ledger, island-budget), all sprint-02 lanes, and the new tests/sprint-03-family-browse lane — both FLOW ids plus the verdict-badge-wiring, ledger-filter-island, and home-family-teaser specs.   `exercises: FAM-001, FAM-002, FAM-003, FAM-004, FAM-005, FAM-006`
-- [ ] 2. Run `pnpm playwright test tests/sprint-03-family-browse/components-family-grid.spec.ts --grep FLOW-GEND-07-components-page-39-in-7-families` — 3 passed (chromium-desktop, chromium-mobile, chromium-nojs); evidence JSON written to .tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-07-components-page-39-in-7-families.json.   `exercises: FAM-001, FAM-003`
-- [ ] 3. Run `pnpm playwright test tests/sprint-03-family-browse/card-anatomy.spec.ts --grep FLOW-GEND-08-family-card-anatomy` — 3 passed across all three projects; cards_with_all_fields == 39 in the evidence JSON at .tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-08-family-card-anatomy.json.   `exercises: FAM-001, FAM-002, FAM-003`
-- [ ] 4. Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, then open http://localhost:4321/components in a browser and tally: exactly seven anchored family sections in the order conversation, message, prompt-input, reasoning, sources, suggestion, tool; each section heading carries a count chip reading 3, 7, 6, 7, 4, 1, 11 respectively (sum 39); 39 cards total; spot-check that conversation, shimmer, persona, and sources each appear on exactly one card; click any card — it opens that item's real /components/{item} page, and no card links anywhere else.   `exercises: FAM-002, FAM-003`
-- [ ] 5. On the same page read cards top to bottom across all seven sections: every card shows (1) the component's display name, (2) a non-empty one-line description in muted text, (3) a category chip, and (4) an Expo Go verdict badge reading exactly 'runs in Expo Go' or 'requires a dev client' — no card missing any of the four; also open http://localhost:4321/registry and confirm every one of the 56 rows' Expo Go column shows the same badge.   `exercises: FAM-002, FAM-005`
+- [x] 1. At the repo root run `pnpm e2e:docs` — it exits 0 with retries: 0: the ordered chain (registry:build → gallery:manifest → docs build → playwright install → playwright test) completes with every lane green, including the superseded sprint-01 lanes (component-page, ledger, island-budget), all sprint-02 lanes, and the new tests/sprint-03-family-browse lane — both FLOW ids plus the verdict-badge-wiring, ledger-filter-island, and home-family-teaser specs.   `exercises: FAM-001, FAM-002, FAM-003, FAM-004, FAM-005, FAM-006`
+- [x] 2. Run `pnpm playwright test tests/sprint-03-family-browse/components-family-grid.spec.ts --grep FLOW-GEND-07-components-page-39-in-7-families` — 3 passed (chromium-desktop, chromium-mobile, chromium-nojs); evidence JSON written to .tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-07-components-page-39-in-7-families.json.   `exercises: FAM-001, FAM-003`
+- [x] 3. Run `pnpm playwright test tests/sprint-03-family-browse/card-anatomy.spec.ts --grep FLOW-GEND-08-family-card-anatomy` — 3 passed across all three projects; cards_with_all_fields == 39 in the evidence JSON at .tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-08-family-card-anatomy.json.   `exercises: FAM-001, FAM-002, FAM-003`
+- [x] 4. Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, then open http://localhost:4321/components in a browser and tally: exactly seven anchored family sections in the order conversation, message, prompt-input, reasoning, sources, suggestion, tool; each section heading carries a count chip reading 3, 7, 6, 7, 4, 1, 11 respectively (sum 39); 39 cards total; spot-check that conversation, shimmer, persona, and sources each appear on exactly one card; click any card — it opens that item's real /components/{item} page, and no card links anywhere else.   `exercises: FAM-002, FAM-003`
+- [x] 5. On the same page read cards top to bottom across all seven sections: every card shows (1) the component's display name, (2) a non-empty one-line description in muted text, (3) a category chip, and (4) an Expo Go verdict badge reading exactly 'runs in Expo Go' or 'requires a dev client' — no card missing any of the four; also open http://localhost:4321/registry and confirm every one of the 56 rows' Expo Go column shows the same badge.   `exercises: FAM-002, FAM-005`
 
 <!-- TESTING-GATE-END -->
 
