@@ -35,6 +35,7 @@ const { panels } = Astro.props;
           data-engine={panel.engine}
           aria-controls={`panel-${panel.engine}`}
           aria-selected={index === 0 ? 'true' : 'false'}
+          aria-label={`${panel.engine} engine`}
           tabindex={index === 0 ? 0 : -1}
         >
           {panel.label}
