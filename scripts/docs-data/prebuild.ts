@@ -32,6 +32,11 @@ import {
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { Project } from 'ts-morph';
+import {
+  type AiSdkPeer,
+  deriveAiSdkPeers,
+  resolveRegistryDependencies,
+} from '../../apps/docs/src/lib/resolve-deps';
 import { ENGINES } from '../../packages/registry/scripts/build-registry';
 import { type EnrichedItem, type Expectation, runAllGates } from './gates';
 import { createDocsProject, extractProps, type PropInfo, type RegistryItem } from './props';
@@ -41,6 +46,9 @@ import { extractUsageSnippets } from './usage-snippet';
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const DATA_DIR = join(REPO_ROOT, 'apps/docs/src/data');
 const ITEMS_JSON = join(DATA_DIR, 'registry-items.json');
+const SITE_FACTS_JSON = join(DATA_DIR, 'site-facts.json');
+const ROOT_PKG = join(REPO_ROOT, 'package.json');
+const EXAMPLE_PKG = join(REPO_ROOT, 'apps/example/package.json');
 const FAMILIES_JSON = join(DATA_DIR, 'families.json');
 const MANIFEST_JSON = join(DATA_DIR, 'gallery-manifest.json');
 const ROOT_PUBLIC_R = join(REPO_ROOT, 'public/r');
@@ -200,6 +208,28 @@ function countFiles(dir: string): number {
   return count;
 }
 
+/** The site-facts-v1 shape: build-derived, project-level facts (SHELL-006). */
+export type SiteFacts = { aiSdkPeers: AiSdkPeer[] };
+
+/**
+ * Derives site-facts.json bytes from the example app's real dependency pins.
+ * Fail-closed: an empty AI SDK peers resolution throws BEFORE any output byte
+ * is written — the example app really pins `ai`, so an empty resolution means
+ * the manifest or the derivation broke, and the build must not publish.
+ */
+export function siteFactsBytes(exampleDependencies: Record<string, string>): string {
+  const aiSdkPeers = deriveAiSdkPeers(exampleDependencies);
+  if (aiSdkPeers.length === 0) {
+    throw new Error(
+      '[docs-data] prebuild: aiSdkPeers resolved empty — apps/example/package.json pins no ' +
+        'AI SDK package; restore dependencies["ai"] and rerun ' +
+        '`pnpm --filter @rnr-ai-elements/docs build`',
+    );
+  }
+  const facts: SiteFacts = { aiSdkPeers };
+  return `${JSON.stringify(facts, null, 2)}\n`;
+}
+
 function main(): void {
   // One shared ts-morph Project amortizes setup across extraction and gates.
   const project = createDocsProject();
@@ -209,6 +239,34 @@ function main(): void {
   // ALL FIVE gates over the fully-built dataset — any violation throws a
   // GateError naming every offending item BEFORE a single output byte.
   runAllGates(dataset, familiesExpectation(families), project);
+
+  // SHELL-006 gate: every {engine}/{version} template in the dataset must
+  // resolve to a concrete URL for BOTH engines through the one resolver
+  // (resolve-deps.ts) — the same module the item panels resolve with, so the
+  // emitted dataset and the rendered URLs can never drift. The version is the
+  // ROOT package.json's (the sprint-01 chip's version), read here at build.
+  const version = readJson<{ version: string }>(
+    ROOT_PKG,
+    'the root package.json names the release the v{version} URLs pin to',
+  ).version;
+  for (const item of dataset) {
+    for (const engine of ENGINES) {
+      resolveRegistryDependencies(
+        (item as { registryDependencies?: string[] }).registryDependencies,
+        engine,
+        version,
+      );
+    }
+  }
+
+  // site-facts gate-then-compute: throws on an empty peers resolution above,
+  // bytes written only after every gate has passed.
+  const siteFacts = siteFactsBytes(
+    readJson<{ dependencies: Record<string, string> }>(
+      EXAMPLE_PKG,
+      'apps/example/package.json is the consumer manifest the AI SDK peers derive from',
+    ).dependencies,
+  );
 
   const entries = dataset.map((item) =>
     serialize(item, {
@@ -226,6 +284,10 @@ function main(): void {
   writeFileSync(`${ITEMS_JSON}.tmp`, bytes);
   renameSync(`${ITEMS_JSON}.tmp`, ITEMS_JSON);
 
+  // site-facts.json: same emission discipline — temp+rename, whole or absent.
+  writeFileSync(`${SITE_FACTS_JSON}.tmp`, siteFacts);
+  renameSync(`${SITE_FACTS_JSON}.tmp`, SITE_FACTS_JSON);
+
   // The public/r copy: wholesale bytes from the freshly built root fan-out.
   rmSync(DOCS_PUBLIC_R, { recursive: true, force: true });
   cpSync(ROOT_PUBLIC_R, DOCS_PUBLIC_R, { recursive: true });
@@ -241,10 +303,12 @@ function main(): void {
   const resolvedCount = dataset.filter(
     (i) => i.type === 'registry:component' && Array.isArray(props[i.name]),
   ).length;
+  const peers = JSON.parse(siteFacts) as SiteFacts;
   console.log(
     `[docs-data] prebuild: ${dataset.length} items; ` +
       `props resolved for ${resolvedCount}/${componentCount} component items; ` +
-      `${families.length} families; public/r copy ${copied} files`,
+      `${families.length} families; public/r copy ${copied} files; ` +
+      `site-facts aiSdkPeers ${peers.aiSdkPeers.map((p) => `${p.name}@${p.range}`).join(', ')}`,
   );
 }
 
