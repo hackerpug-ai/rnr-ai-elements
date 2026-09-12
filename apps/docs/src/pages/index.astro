@@ -2,8 +2,11 @@
 import pkg from '../../../../package.json';
 import Button from '../components/Button.astro';
 import Chip from '../components/Chip.astro';
+import ComponentCard from '../components/ComponentCard.astro';
 import InstallCommand from '../components/InstallCommand.astro';
 import Layout from '../layouts/DocsLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import families from '../data/families.json';
 import items from '../data/registry-items.json';
 
 /**
@@ -14,9 +17,11 @@ import items from '../data/registry-items.json';
  *
  * Counters stay build-computed from the same single sources the ledger and
  * component pages use (root package.json version + registry-items.json type
- * filters), so a fixture edit moves the rendered numbers. R9-R12 (family
- * teaser grid, quickstart strip, boundary teaser, QR) are Sprint 03+ — zero
- * dead links here. The phrasing is structural; SHELL-010 owns the copy pass.
+ * filters), so a fixture edit moves the rendered numbers.
+ * R9 (the family teaser grid below the hero) ships from the same derivation
+ * as /components.
+ * R10-R12 (quickstart strip, boundary teaser, QR) stay deferred — zero dead
+ * links here. The phrasing is structural; SHELL-010 owns the copy pass.
  */
 type HomeItem = { type: string };
 
@@ -25,6 +30,26 @@ const total = registry.length;
 const componentCount = registry.filter((item) => item.type === 'registry:component').length;
 const uiCount = registry.filter((item) => item.type === 'registry:ui').length;
 const libCount = registry.filter((item) => item.type === 'registry:lib').length;
+
+/**
+ * FAM-006 — the R9 teaser derivation: byte-for-byte the same families.json +
+ * registry-items.json join /components renders (order sort, all-component
+ * family filter, registry:component-only item map), so the two surfaces can
+ * never drift. No filter island here — the cards' data-filter-text rides
+ * along unconsumed until a later sprint wires one.
+ */
+const ordered = [...families].sort((a, b) => a.order - b.order);
+const componentNames = new Set(
+  items.filter((entry) => entry.type === 'registry:component').map((entry) => entry.name),
+);
+const componentFamilies = ordered.filter((family) =>
+  family.itemNames.every((name) => componentNames.has(name)),
+);
+const itemsByName = new Map(
+  items
+    .filter((entry) => entry.type === 'registry:component')
+    .map((entry) => [entry.name, entry]),
+);
 ---
 
 <Layout title="RNR AI Elements — Docs" variant="home">
@@ -53,6 +78,39 @@ const libCount = registry.filter((item) => item.type === 'registry:lib').length;
       <Button variant="outline" href="/components">Browse components</Button>
     </nav>
   </main>
+
+  <section id="families" aria-label="Component families">
+    {
+      componentFamilies.map((family) => (
+        <section id={family.id} aria-labelledby={`${family.id}-heading`}>
+          <SectionHeader
+            title={family.title}
+            anchor={`${family.id}-heading`}
+            count={family.itemNames.length}
+          />
+          <ul class="family-grid">
+            {family.itemNames.map((name) => {
+              const item = itemsByName.get(name);
+              if (!item) {
+                throw new Error(`family ${family.id} names unknown item ${name}`);
+              }
+              return (
+                <li>
+                  <ComponentCard
+                    href={`/components/${name}`}
+                    title={item.title}
+                    description={item.description}
+                    category={item.type.replace('registry:', '')}
+                    expoGo={item.expoGo}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </section>
 </Layout>
 
 <style>
@@ -88,5 +146,30 @@ const libCount = registry.filter((item) => item.type === 'registry:lib').length;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+  }
+</style>
+
+<style>
+  /*
+   * FAM-006 — the R9 teaser region's own layout, mirroring /components
+   * verbatim (page-level placement the primitives do not carry): the same
+   * max-width container, the same per-family rhythm, the same auto-fill card
+   * grid that reflows to one column on narrow viewports — no media query.
+   */
+  #families {
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  #families section {
+    margin-block: 2rem;
+  }
+  .family-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
   }
 </style>
