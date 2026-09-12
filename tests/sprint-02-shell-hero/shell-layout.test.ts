@@ -20,8 +20,11 @@ import { beforeAll, expect, it } from 'vitest';
  * - SHELL-002-shell-css-token-governed (TC-3, AC-2): the built CSS makes the
  *   header position:sticky at var(--layout-header-h) with scroll-margin-top on
  *   anchored content; the authored shell components consume var(--*) tokens
- *   only (zero hex literals), carry a prefers-reduced-motion guard, and no
- *   script tag.
+ *   only (zero hex literals), carry a prefers-reduced-motion guard, and stay
+ *   script-free — Header.astro/Footer.astro with zero exemptions, and
+ *   DocsLayout.astro admitting exactly one script: the contracted is:inline
+ *   data-astro-rerun pre-paint theme bootstrap (SHELL-003, resolving stored
+ *   rnr-theme > prefers-color-scheme > dark); any other script fails.
  * - SHELL-002-sprint01-contracts-preserved (TC-4, AC-3): adoption wraps — never
  *   rewrites — the sprint-01 content structure: family section[id] anchors and
  *   ul li rows on /components, ledger table rows on /registry, all counts
@@ -267,13 +270,37 @@ it('SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h),
       source,
       `${name}: a hex color literal is banned — consume var(--*) tokens instead`,
     ).not.toMatch(HEX_LITERAL);
-    expect(source, `${name}: no script tag may live in the shell components`).not.toContain(
-      '<script',
-    );
     expect(source, `${name}: position:fixed is banned on the shell`).not.toContain(
       'position: fixed',
     );
   }
+
+  // No script tag may live in the shell chrome — Header/Footer, zero
+  // exemptions. DocsLayout is narrowed for SHELL-003: it may carry exactly one
+  // script, the contracted is:inline data-astro-rerun pre-paint theme
+  // bootstrap (stored rnr-theme > prefers-color-scheme > dark). Every contract
+  // marker is pinned, so a second script — or a drift of the contracted one —
+  // still fails.
+  for (const name of ['header', 'footer'] as const) {
+    expect(shellSources[name], `${name}: no script tag may live in the shell chrome`).not.toContain(
+      '<script',
+    );
+  }
+  const layoutScripts = [...shellSources.layout.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)];
+  const contractedThemeScripts = layoutScripts.filter(
+    ([, attrs, content]) =>
+      attrs.includes('is:inline') &&
+      attrs.includes('data-astro-rerun') &&
+      content.includes('rnr-theme'),
+  );
+  expect(
+    contractedThemeScripts.length,
+    'DocsLayout: the contracted is:inline data-astro-rerun rnr-theme pre-paint script is missing',
+  ).toBe(1);
+  expect(
+    layoutScripts.length - contractedThemeScripts.length,
+    'DocsLayout: only the contracted pre-paint theme script may live here — a non-contracted script was found',
+  ).toBe(0);
   const allShellCss = Object.values(shellSources).join('\n');
   for (const token of ['--background', '--foreground', '--border', '--primary']) {
     expect(allShellCss, `the authored shell must consume ${token} via var()`).toContain(
