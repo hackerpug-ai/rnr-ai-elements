@@ -1,0 +1,15 @@
+@@RUN-FLOW flow=FLOW-GEND-08-family-card-anatomy sprint=sprint-03-family-browse expect=green cmd_sha=3aeffdbac20b3b8be70a914d39d90f8d2bb22d7259d43be8f9628f414e131224 head=ee10aa785d7c10850ea5b1b66fdf651dd023a285+dirty at=2026-09-12T21:37:40Z@@
++ pnpm playwright test tests/sprint-03-family-browse/card-anatomy.spec.ts --grep FLOW-GEND-08-family-card-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[2/3] [chromium-mobile] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[3/3] [chromium-nojs] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+  3 passed (5.0s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+@@GATE-EXIT=0@@

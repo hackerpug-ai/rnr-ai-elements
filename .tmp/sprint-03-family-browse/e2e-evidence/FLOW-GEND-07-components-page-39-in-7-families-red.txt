@@ -1,3 +1,5 @@
+@@RUN-FLOW flow=FLOW-GEND-07-components-page-39-in-7-families sprint=sprint-03-family-browse expect=red cmd_sha=18fcc21ac91e46daa294cc8a0db99c14d2b24a2274ff3d1398b11ee41be65220 head=fdbc02a5aa7fcb2dde8e2ed573d63d375ad3f69f at=2026-09-12T21:36:54Z@@
++ pnpm playwright test tests/sprint-03-family-browse/components-family-grid.spec.ts --grep FLOW-GEND-07-components-page-39-in-7-families
 
 Running 3 tests using 1 worker
 
@@ -18,7 +20,7 @@ Running 3 tests using 1 worker
       94 |   const sectionIds: string[] = [];
       95 |   for (let index = 0; index < sectionCount; index++) {
       96 |     sectionIds.push((await sections.nth(index).getAttribute('id')) ?? '');
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:93:5
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:93:5
 
     Error: sections render in committed families.json order
 
@@ -44,7 +46,7 @@ Running 3 tests using 1 worker
        99 |     componentFamilies.map((family) => family.id),
       100 |   );
       101 |
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:98:72
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:98:72
 
     Error: family conversation renders 3 cards (lean list: 0)
 
@@ -60,7 +62,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family conversation count chip reads 3
 
@@ -76,7 +78,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family message renders 7 cards (lean list: 0)
 
@@ -92,7 +94,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family message count chip reads 7
 
@@ -108,7 +110,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family prompt-input renders 6 cards (lean list: 0)
 
@@ -124,7 +126,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family prompt-input count chip reads 6
 
@@ -140,7 +142,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family reasoning renders 7 cards (lean list: 0)
 
@@ -156,7 +158,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family reasoning count chip reads 7
 
@@ -172,7 +174,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family sources renders 4 cards (lean list: 0)
 
@@ -188,7 +190,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family sources count chip reads 4
 
@@ -204,7 +206,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family suggestion renders 1 cards (lean list: 0)
 
@@ -220,7 +222,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family suggestion count chip reads 1
 
@@ -236,7 +238,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family tool renders 11 cards (lean list: 0)
 
@@ -252,7 +254,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family tool count chip reads 11
 
@@ -268,7 +270,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: total cards (lean-list start: 0)
 
@@ -284,7 +286,7 @@ Running 3 tests using 1 worker
       136 |   soft(
       137 |     [...slugs].sort(),
       138 |     'card names equal the registry:component names, each exactly once',
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:135:55
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:135:55
 
     Error: card names equal the registry:component names, each exactly once
 
@@ -343,7 +345,7 @@ Running 3 tests using 1 worker
       140 |
       141 |   // Every card href resolves to a real page (root-relative only — a foreign
       142 |   // href is a test bug, not a navigation).
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:139:5
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:139:5
 
     Error: every card href probed
 
@@ -359,7 +361,7 @@ Running 3 tests using 1 worker
       152 |   soft(statuses.filter((status) => status !== 200).length, 'card hrefs NOT returning 200').toBe(0);
       153 |
       154 |   // The writer fires on a genuine full pass only — never a partial state.
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:151:51
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:151:51
 
     Error Context: test-results/sprint-03-family-browse-co-7e1fb-nents-page-39-in-7-families-chromium-desktop/error-context.md
 
@@ -381,7 +383,7 @@ Running 3 tests using 1 worker
       94 |   const sectionIds: string[] = [];
       95 |   for (let index = 0; index < sectionCount; index++) {
       96 |     sectionIds.push((await sections.nth(index).getAttribute('id')) ?? '');
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:93:5
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:93:5
 
     Error: sections render in committed families.json order
 
@@ -407,7 +409,7 @@ Running 3 tests using 1 worker
        99 |     componentFamilies.map((family) => family.id),
       100 |   );
       101 |
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:98:72
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:98:72
 
     Error: family conversation renders 3 cards (lean list: 0)
 
@@ -423,7 +425,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family conversation count chip reads 3
 
@@ -439,7 +441,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family message renders 7 cards (lean list: 0)
 
@@ -455,7 +457,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family message count chip reads 7
 
@@ -471,7 +473,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family prompt-input renders 6 cards (lean list: 0)
 
@@ -487,7 +489,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family prompt-input count chip reads 6
 
@@ -503,7 +505,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family reasoning renders 7 cards (lean list: 0)
 
@@ -519,7 +521,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family reasoning count chip reads 7
 
@@ -535,7 +537,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family sources renders 4 cards (lean list: 0)
 
@@ -551,7 +553,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family sources count chip reads 4
 
@@ -567,7 +569,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family suggestion renders 1 cards (lean list: 0)
 
@@ -583,7 +585,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family suggestion count chip reads 1
 
@@ -599,7 +601,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family tool renders 11 cards (lean list: 0)
 
@@ -615,7 +617,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family tool count chip reads 11
 
@@ -631,7 +633,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: total cards (lean-list start: 0)
 
@@ -647,7 +649,7 @@ Running 3 tests using 1 worker
       136 |   soft(
       137 |     [...slugs].sort(),
       138 |     'card names equal the registry:component names, each exactly once',
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:135:55
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:135:55
 
     Error: card names equal the registry:component names, each exactly once
 
@@ -706,7 +708,7 @@ Running 3 tests using 1 worker
       140 |
       141 |   // Every card href resolves to a real page (root-relative only — a foreign
       142 |   // href is a test bug, not a navigation).
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:139:5
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:139:5
 
     Error: every card href probed
 
@@ -722,7 +724,7 @@ Running 3 tests using 1 worker
       152 |   soft(statuses.filter((status) => status !== 200).length, 'card hrefs NOT returning 200').toBe(0);
       153 |
       154 |   // The writer fires on a genuine full pass only — never a partial state.
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:151:51
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:151:51
 
     Error Context: test-results/sprint-03-family-browse-co-7e1fb-nents-page-39-in-7-families-chromium-mobile/error-context.md
 
@@ -744,7 +746,7 @@ Running 3 tests using 1 worker
       94 |   const sectionIds: string[] = [];
       95 |   for (let index = 0; index < sectionCount; index++) {
       96 |     sectionIds.push((await sections.nth(index).getAttribute('id')) ?? '');
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:93:5
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:93:5
 
     Error: sections render in committed families.json order
 
@@ -770,7 +772,7 @@ Running 3 tests using 1 worker
        99 |     componentFamilies.map((family) => family.id),
       100 |   );
       101 |
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:98:72
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:98:72
 
     Error: family conversation renders 3 cards (lean list: 0)
 
@@ -786,7 +788,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family conversation count chip reads 3
 
@@ -802,7 +804,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family message renders 7 cards (lean list: 0)
 
@@ -818,7 +820,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family message count chip reads 7
 
@@ -834,7 +836,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family prompt-input renders 6 cards (lean list: 0)
 
@@ -850,7 +852,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family prompt-input count chip reads 6
 
@@ -866,7 +868,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family reasoning renders 7 cards (lean list: 0)
 
@@ -882,7 +884,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family reasoning count chip reads 7
 
@@ -898,7 +900,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family sources renders 4 cards (lean list: 0)
 
@@ -914,7 +916,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family sources count chip reads 4
 
@@ -930,7 +932,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family suggestion renders 1 cards (lean list: 0)
 
@@ -946,7 +948,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family suggestion count chip reads 1
 
@@ -962,7 +964,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: family tool renders 11 cards (lean list: 0)
 
@@ -978,7 +980,7 @@ Running 3 tests using 1 worker
       118 |
       119 |     const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
       120 |       (text) => text.trim(),
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:117:84
 
     Error: family tool count chip reads 11
 
@@ -994,7 +996,7 @@ Running 3 tests using 1 worker
       124 |     familiesOk &&= observed === expected && countChips === 1;
       125 |
       126 |     for (const card of await cards.all()) {
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:123:74
 
     Error: total cards (lean-list start: 0)
 
@@ -1010,7 +1012,7 @@ Running 3 tests using 1 worker
       136 |   soft(
       137 |     [...slugs].sort(),
       138 |     'card names equal the registry:component names, each exactly once',
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:135:55
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:135:55
 
     Error: card names equal the registry:component names, each exactly once
 
@@ -1069,7 +1071,7 @@ Running 3 tests using 1 worker
       140 |
       141 |   // Every card href resolves to a real page (root-relative only — a foreign
       142 |   // href is a test bug, not a navigation).
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:139:5
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:139:5
 
     Error: every card href probed
 
@@ -1085,7 +1087,7 @@ Running 3 tests using 1 worker
       152 |   soft(statuses.filter((status) => status !== 200).length, 'card hrefs NOT returning 200').toBe(0);
       153 |
       154 |   // The writer fires on a genuine full pass only — never a partial state.
-        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-001/tests/sprint-03-family-browse/components-family-grid.spec.ts:151:51
+        at /private/tmp/gate-red-fam03/tests/sprint-03-family-browse/components-family-grid.spec.ts:151:51
 
     Error Context: test-results/sprint-03-family-browse-co-7e1fb-nents-page-39-in-7-families-chromium-nojs/error-context.md
 
@@ -1094,3 +1096,4 @@ Running 3 tests using 1 worker
     [chromium-desktop] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families 
     [chromium-mobile] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families 
     [chromium-nojs] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families 
+@@GATE-EXIT=1@@
