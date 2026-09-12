@@ -12,9 +12,9 @@ pr_sequencing: false
 
 ## Overview
 
-**Sprints:** 13  (2 committed · 11 provisional)
-**Total Tasks:** 25  (committed sprints only; provisional sprints carry a size band)
-**Current Sprint:** Sprint 01 (in progress, all 12 FUSE tasks landed) — Sprint 02 promoted + expanded to task files by `/kb-sprint-tasks-plan` on 2026-09-10
+**Sprints:** 13  (3 committed · 10 provisional)
+**Total Tasks:** 31  (committed sprints only; provisional sprints carry a size band)
+**Current Sprint:** Sprint 01 (all 12 FUSE tasks landed) — Sprint 02 completed; Sprint 03 promoted + expanded to task files by `/kb-sprint-tasks-plan` on 2026-09-12
 
 All 28 in-scope use cases are demonstrated by exactly the gate of the sprint that ships them. Sprints 01–11 were authored by the dispatched specialist set (astro-planner, cloudflare-workers-planner, techwriting-planner, react-native-reusables-planner, frontend-designer) through fusion and convergence rounds staged verbatim at `.tmp/kb-sprint-plan/docs-site/`; sprints 12–13 were added by the v2.0.0 delta replan (flue-planner + ghactions-planner + techwriting-planner, staged at `.tmp/kb-sprint-plan/docs-site-delta/`).
 
@@ -24,7 +24,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 |---|-----------|--------|------|-------|--------------|--------|
 | 1 | — | [Sprint 01: docs-spike-skeleton](#sprint-01-docs-spike-skeleton) | Walk find-and-install on the built site (ledger → component page → copy command → same-origin JSON), proven by `pnpm e2e:docs` green, retries: 0 | 12 | — | In Progress |
 | 2 | — | [Sprint 02: shell-hero](#sprint-02-shell-hero) | Hero fits one 1440×900 screen: statement, counters, copyable engine-tabbed command, both CTAs (T-GEND-002) | 13 | Sprint 01 | In Progress |
-| 3 | — | [Sprint 03: family-browse](#sprint-03-family-browse) | /components counts 7 anchored families, 39 cards, verdict badges | — | Sprint 01 | Planned |
+| 3 | — | [Sprint 03: family-browse](#sprint-03-family-browse) | /components counts 7 anchored families, 39 cards, verdict badges | 6 | Sprint 01 | In Progress |
 | 4 | — | [Sprint 04: generated-reference](#sprint-04-generated-reference) | Mutate any enriched field → build fails naming the item; props/deps/source byte-match the served JSON | — | Sprint 01, Sprint 03 | Planned |
 | 5 | — | [Sprint 05: orient-search](#sprint-05-orient-search) | Stranger reads /docs/introduction in one pass (T-DOCS-002) | — | Sprint 01, Sprint 02 | Planned |
 | 6 | — | [Sprint 06: guides-boundary-changelog](#sprint-06-guides-boundary-changelog) | Boundary gaps cross-check vs ledger + porting not-ported: zero contradictions (T-DOCS-018) | — | Sprint 05 | Planned |
@@ -213,23 +213,47 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 **Sequence:** 3
 **Timeline:** Phase 1
-**Status:** Planned
-**Fidelity:** provisional
-**Proposed by:** react-native-reusables-planner (lead) + frontend-designer + astro-planner
+**Status:** In Progress
+**Fidelity:** committed
+**Proposed by:** react-native-reusables-planner (lead) + astro-planner + frontend-designer (promotion dispatch 2026-09-12; proposals + convergence rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-03-family-browse/`)
 **Milestone:** —
 
 #### Human Testing Gate
 
 **Gate:** Done means a visitor opening /components over `astro preview` counts seven anchored family sections holding exactly 39 cards, each card showing its component name plus an Expo Go verdict badge, proven by opening http://localhost:4321/components and tallying the sections, cards, and badges in the browser.
 **Entrypoint:** Built dist over `astro preview` at http://localhost:4321/components.
-**Before:** /components is a lean anchored list of 39 plain links with no cards, no verdict badges, no filter; the dev-client opt-in facts (the 4 integration-level items with peers and permissions) exist nowhere as data.
-**Demonstrates:** UC-GEND-02, UC-GEND-05
+**Before:** AS OBSERVED 2026-09-12 at HEAD 2107567 (sprint-02 completed; three specialist reads agree): /components (src/pages/components/index.astro) is the sprint-01 FUSE-07 lean list — nine anchored `<section>`s render from families.json in family order (the seven component families plus ui and lib) as two-column `<ul>` lists holding all 56 names: 39 plain `<a>` links (the registry:component name set, verified identical to the 7 component families' itemNames) and 17 text `<span>`s. No cards, no descriptions, no category chips, no Expo Go verdict badges, no filter. Badge.astro exists unwired (zero imports site-wide); the component detail page renders the verdict as a plain chip (li[data-chip="expo"], text 'Expo Go'/'Dev client') and the /registry ledger as plain .ledger-verdict text. Exactly three custom elements exist (rnr-copy-button, rnr-tab-group, rnr-theme-toggle), pinned by tests/sprint-01-docs-spike-skeleton/island-budget.test.ts. Home carries no R9 teaser (src/pages/index.astro's own comment defers R9-R12 to Sprint 03+). Data facts that shape the sprint: every registry:component description exceeds 120 chars (longest 1840) and zero items carry expoGo:false today. The gate is RED: sections are nine not seven, cards are zero, badges are zero.
+**Demonstrates:** UC-GEND-02 (UC-GEND-05's badge wiring ships here as supporting task work — card badges stay gate-proven via the card-anatomy flow; UC-GEND-05 demonstrates at Sprint 09 where its QR/gallery flow completes)
 
-**Sizing (provisional):** ~6 items · ~15–24 pts — SectionHeader/ComponentCard NEW components, LedgerFilter island generalization (island 3/5), card-grid upgrade, home R9 teaser upgrade, verdict-badge wiring from the single manifest source
+**Test Steps:** *(each stranger-runnable verbatim; steps bind only to the two locked flows — the filter-island, home-teaser, and theme-flip human checks ride inside step 1 via their lane specs and the task ACs)*
+1. At the repo root run `pnpm e2e:docs` — it exits 0 with retries: 0: the ordered chain (registry:build → gallery:manifest → docs build → playwright install → playwright test) completes with every lane green, including the superseded sprint-01 lanes (component-page, ledger, island-budget), all sprint-02 lanes, and the new tests/sprint-03-family-browse lane — both FLOW ids plus the verdict-badge-wiring, ledger-filter-island, and home-family-teaser specs.   `exercises: FAM-001, FAM-002, FAM-003, FAM-004, FAM-005, FAM-006`
+2. Run `pnpm playwright test tests/sprint-03-family-browse/components-family-grid.spec.ts --grep FLOW-GEND-07-components-page-39-in-7-families` — 3 passed (chromium-desktop, chromium-mobile, chromium-nojs); evidence JSON written to .tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-07-components-page-39-in-7-families.json.   `exercises: FAM-001, FAM-003`
+3. Run `pnpm playwright test tests/sprint-03-family-browse/card-anatomy.spec.ts --grep FLOW-GEND-08-family-card-anatomy` — 3 passed across all three projects; cards_with_all_fields == 39 in the evidence JSON at .tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-08-family-card-anatomy.json.   `exercises: FAM-001, FAM-002, FAM-003`
+4. Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, then open http://localhost:4321/components in a browser and tally: exactly seven anchored family sections in the order conversation, message, prompt-input, reasoning, sources, suggestion, tool; each section heading carries a count chip reading 3, 7, 6, 7, 4, 1, 11 respectively (sum 39); 39 cards total; spot-check that conversation, shimmer, persona, and sources each appear on exactly one card; click any card — it opens that item's real /components/{item} page, and no card links anywhere else.   `exercises: FAM-002, FAM-003`
+5. On the same page read cards top to bottom across all seven sections: every card shows (1) the component's display name, (2) a non-empty one-line description in muted text, (3) a category chip, and (4) an Expo Go verdict badge reading exactly 'runs in Expo Go' or 'requires a dev client' — no card missing any of the four; also open http://localhost:4321/registry and confirm every one of the 56 rows' Expo Go column shows the same badge.   `exercises: FAM-002, FAM-005`
 
-> Test steps and the task table are authored when this sprint becomes next
-> (`/kb-sprint-tasks-plan`), against the codebase as it is then. See
-> [`~/Projects/brain/docs/COMMIT-HORIZON.md`](~/Projects/brain/docs/COMMIT-HORIZON.md).
+**Dark tasks:** None — every task is exercised by at least one gate step.
+
+#### Tasks
+
+| ID | Title | Agent | Points | Wave | Status |
+|----|-------|-------|--------|------|--------|
+| FAM-001 | RED-first locked-flow lane specs (FLOW-GEND-07 + FLOW-GEND-08) with evidence plumbing | astro-implementer | 3 | A | ⬜ Pending |
+| FAM-002 | SectionHeader + ComponentCard + one-line description clamp + Chip counter-optional | frontend-designer | 5 | A | ⬜ Pending |
+| FAM-003 | /components seven-family card grid; supersede the FUSE-07 lean-list spec block | astro-implementer | 5 | B | ⬜ Pending |
+| FAM-004 | rnr-ledger-filter island (4 of 5) + island-budget 3→4 + own lane spec | astro-implementer | 5 | C | ⬜ Pending |
+| FAM-005 | Verdict badges from the single manifest onto item pages + 56 ledger rows; Badge strings scenario-exact | react-native-reusables-implementer | 3 | C | ⬜ Pending |
+| FAM-006 | Home R9 family teaser grid + own lane spec | frontend-designer | 3 | D | ⬜ Pending |
+
+**Waves:** A(2) → B(1) → C(2) → D(1) — 4 waves over 6 tasks (no two tasks in a wave share a write_allowed path; FAM-003 wave B and FAM-005 wave C both touch tests/sprint-01-docs-spike-skeleton/component-page.spec.ts — sequential waves, per the lead's sequencing; promotion merged from three specialist proposals with rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-03-family-browse/convergence-rulings.md`)
+
+**Next Sprint Tasks:** *(generated by /kb-sprint-tasks-plan on 2026-09-12)*
+- FAM-001-red-first-locked-flow-lane-specs.md
+- FAM-002-sectionheader-componentcard-clamp.md
+- FAM-003-components-seven-family-card-grid.md
+- FAM-004-ledger-filter-island.md
+- FAM-005-verdict-badges-single-manifest.md
+- FAM-006-home-r9-family-teaser.md
 
 #### Dependencies
 
@@ -261,7 +285,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 **Gate:** Done means a visitor can open any of the 39 generated reference pages over `astro preview` and read its auto-generated props table (Name/Type/Default/Description with at least one row), its dependency panel listing registryDependencies and AI SDK v7 peers, and its full untruncated source that byte-matches the served /r/*.json content, proven by opening http://localhost:4321/components/conversation in a browser and diffing its Code view against `curl http://localhost:4321/r/nativewind/conversation.json` (T-GEND-023/024/015 shape).
 **Entrypoint:** Built dist over `astro preview` at http://localhost:4321/components/[item], plus curl of the same origin's /r/*.json.
 **Before:** Reference pages carry breadcrumb/chips/install/source only — no props tables, no dependency panels, no theming notes or usage snippets rendered, no family pager, no QR panels, no seam links; the enriched data fields shipped in sprint 01 are still unwritten on any page.
-**Demonstrates:** UC-GEND-03, UC-GEND-04, UC-GEND-05, UC-GEND-06, UC-SHELL-03
+**Demonstrates:** UC-GEND-03, UC-GEND-04, UC-GEND-06, UC-SHELL-03 (UC-GEND-05's matrix + QR-panel work ships here as supporting task work; UC-GEND-05 demonstrates at Sprint 09 where its QR/gallery flow completes)
 
 **Sizing (provisional):** ~8 items · ~27–42 pts — component-detail template (dependency DataTable, family Pager, seam Callouts), Preview|Code TabGroup with null-imagery omission, PropsTable, theming/usage rendering from the sprint-01 fields, QrPanel, the authored dev-client matrix data (4 opt-in entries, shape-gated fail-closed), matrix rendering, GEND criteria binding + drill extension
 
@@ -459,7 +483,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 **Gate:** Done means a visitor can scan the QR code on a live component page at https://rnraielements.com with a phone running Expo Go and the live gallery screen opens within 30 seconds with no clone, install, or dev client required (T-GEND-018).
 **Entrypoint:** A live component page at https://rnraielements.com/components/[item] scanned by a physical phone with Expo Go (iOS or Android — multi-platform repo)
 **Before:** At sprint start the deployed component pages carry build-time QR codes that dead-end — the gallery they deep-link to is not published, so scanning opens nothing in Expo Go.
-**Demonstrates:** UC-GEND-05
+**Demonstrates:** UC-GEND-05 (complete demonstration: badges landed Sprint 03, matrix + QR panel landed Sprint 04, live gallery + phone proof land here)
 
 **Sizing (provisional):** ~3 items · ~3–8 pts — publish the live Expo Go gallery (app config, channel, deep-link scheme: the one real unknown), QR decode verification (T-GEND-017 on the harness), human QR-check packaging. No deploy content; QR panels come from Sprint 04, live pages from Sprint 07.
 

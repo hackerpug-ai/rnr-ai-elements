@@ -1,0 +1,60 @@
+{
+ "flows": [
+  {
+   "id": "FLOW-GEND-07-components-page-39-in-7-families",
+   "uc_ref": "UC-GEND-02",
+   "type": "core",
+   "scope": "task",
+   "desc": "Open /components in the built site and count cards per family heading. Expected: exactly 7 family sections render in a stable order \u2014 conversation, message, prompt-input, reasoning, sources, suggestion, tool \u2014 and their card counts sum to exactly 39. Every registry:component name in src/data/registry-items.json appears on exactly one card, and no card links anywhere except to a real /components/{item} page that exists in dist/.",
+   "gate_steps": [
+    1,
+    2,
+    4
+   ],
+   "run_cmd": "pnpm playwright test tests/sprint-03-family-browse/components-family-grid.spec.ts --grep FLOW-GEND-07-components-page-39-in-7-families",
+   "test": "tests/sprint-03-family-browse/components-family-grid.spec.ts",
+   "artifact": ".tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-07-components-page-39-in-7-families.json",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "red_proof": ".tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-07-components-page-39-in-7-families-red.txt",
+   "manual_physical": false
+  },
+  {
+   "id": "FLOW-GEND-08-family-card-anatomy",
+   "uc_ref": "UC-GEND-02",
+   "type": "core",
+   "scope": "task",
+   "desc": "Iterate all 39 cards on /components. Expected: each renders (1) the item title, (2) its one-line registry description (non-empty, at most 120 chars, equal to the enriched item's description field or its word-boundary clamp), (3) a category chip, and (4) an Expo Go verdict badge whose text is exactly one of the two verdict states ('runs in Expo Go' / 'requires a dev client'). No card has an empty description, a missing chip, or a blank/placeholder badge \u2014 the count assertion cards_with_all_fields == 39 holds.",
+   "gate_steps": [
+    1,
+    3,
+    5
+   ],
+   "run_cmd": "pnpm playwright test tests/sprint-03-family-browse/card-anatomy.spec.ts --grep FLOW-GEND-08-family-card-anatomy",
+   "test": "tests/sprint-03-family-browse/card-anatomy.spec.ts",
+   "artifact": ".tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-08-family-card-anatomy.json",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "red_proof": ".tmp/sprint-03-family-browse/e2e-evidence/FLOW-GEND-08-family-card-anatomy-red.txt",
+   "manual_physical": false
+  }
+ ],
+ "deferred_journeys": [
+  {
+   "covers_ucs": [
+    "UC-DOCS-06",
+    "UC-GEND-01",
+    "UC-GEND-02",
+    "UC-GEND-03",
+    "UC-GEND-05",
+    "UC-GEND-06"
+   ],
+   "id": "journeys/docs-evaluator-arc",
+   "outstanding_ucs": [
+    "UC-DOCS-06",
+    "UC-GEND-05",
+    "UC-GEND-06"
+   ]
+  }
+ ]
+}
