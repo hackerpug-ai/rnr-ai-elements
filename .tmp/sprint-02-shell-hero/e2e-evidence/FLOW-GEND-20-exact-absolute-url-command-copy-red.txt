@@ -1,0 +1,20 @@
+SHELL-012 RED proof — FLOW-GEND-20-exact-absolute-url-command-copy
+Captured: 2026-09-12T07:29:15Z against sprint-start commit 41f519dea484c32e37ed5d61f5d04ed4b842791d
+Procedure: git archive 41f519dea484c32e37ed5d61f5d04ed4b842791d extracted to /tmp/SHELL-012-red-41f519d;
+  pnpm install --frozen-lockfile (exit 0); ordered chain pnpm registry:build && pnpm gallery:manifest
+  && pnpm --filter @rnr-ai-elements/docs build (exit 0); then ONLY the two SHELL-012 spec files plus the
+  SHELL-011-landed playwright.config.ts lane widening (testDir 'tests' — a declared dependency of this
+  task, required for the lane to discover the specs at all) copied in. Byte-for-byte locked run_cmd:
+  pnpm playwright test tests/sprint-02-shell-hero/item-install-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy
+Expected: RED — the SHELL-006 resolver and the SHELL-008 tabbed install/dependency panels this spec
+  asserts do not exist at sprint-start (specs land after features; convergence Ruling 4).
+Exit code: 1
+
+--- raw output ---
+Error: Cannot find module '/private/tmp/SHELL-012-red-41f519d/apps/docs/src/lib/resolve-deps' imported from /private/tmp/SHELL-012-red-41f519d/tests/sprint-02-shell-hero/item-install-copy.spec.ts
+    at eval (<anonymous>:1:1)
+
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+
