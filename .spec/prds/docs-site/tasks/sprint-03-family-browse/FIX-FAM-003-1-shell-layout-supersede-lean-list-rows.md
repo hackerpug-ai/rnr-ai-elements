@@ -42,11 +42,6 @@ Still-true assertions to KEEP unchanged:
 - The `/registry` ledger block (table + derived row count) — FAM-005 touches ledger rows later,
   but nothing in this FIX's scope changes the ledger's shape today.
 - The dataset oracle style: constants derive from the dataset files, never typed literals.
-- cards: count of `a[data-card]` in `componentsHtml` === `componentNames` (39).
-- card hrefs: distinct `href="/components/{item}"` values on `a[data-card]` === `componentNames`
-  (each registry:component name appears exactly once).
-- Rename the test title's "ul li rows" phrasing to the card grid so the test name no longer lies
-  about what it asserts.
 
 ## How to verify
 
