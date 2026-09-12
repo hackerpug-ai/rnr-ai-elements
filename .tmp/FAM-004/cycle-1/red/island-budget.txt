@@ -1,0 +1,54 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts (3 tests | 1 failed | 2 skipped) 29ms
+     × FUSE-09-island-budget: exactly four customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle, rnr-ledger-filter), zero framework imports 28ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/island-budget.test.ts > FUSE-09 island budget > FUSE-09-island-budget: exactly four customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle, rnr-ledger-filter), zero framework imports
+AssertionError: expected [ { …(2) }, { …(2) }, { …(2) } ] to deeply equal [ { …(2) }, { …(2) }, { …(2) }, …(1) ]
+
+- Expected
++ Received
+
+@@ -2,17 +2,13 @@
+    {
+      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/scripts/copy-button.ts",
+      "tag": "rnr-copy-button",
+    },
+    {
+-     "file": StringContaining "ledger-filter.ts",
+-     "tag": "rnr-ledger-filter",
+-   },
+-   {
+-     "file": StringContaining "tab-group.ts",
++     "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/scripts/tab-group.ts",
+      "tag": "rnr-tab-group",
+    },
+    {
+-     "file": StringContaining "theme-toggle.ts",
++     "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/scripts/theme-toggle.ts",
+      "tag": "rnr-theme-toggle",
+    },
+  ]
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:67:25
+     65|     // platform's directory-read order.
+     66|     defineSites.sort((a, b) => a.file.localeCompare(b.file) || a.tag.l…
+     67|     expect(defineSites).toEqual([
+       |                         ^
+     68|       { file: expect.stringContaining('copy-button.ts'), tag: ELEMENT_…
+     69|       { file: expect.stringContaining('ledger-filter.ts'), tag: FILTER…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  13:10:44
+   Duration  255ms (transform 30ms, setup 0ms, import 44ms, tests 29ms, environment 0ms)
+
