@@ -1,0 +1,47 @@
+---
+/**
+ * ThemeToggle — island 2/5 (SHELL-003). A `<rnr-theme-toggle>` element the
+ * bundled island script upgrades: on connect it relocates itself into the
+ * Header's `[data-theme-slot]` mount and wires the class-flip trigger. The
+ * rendered markup is server-static — theme state never reaches the build,
+ * so every page ships identical HTML and the pre-paint script in DocsLayout
+ * resolves the theme before first paint.
+ *
+ * Zero-JS fallback: the element never upgrades, and `:not(:defined)` keeps it
+ * hidden — dark-first site, fully readable, no dead control on screen.
+ */
+---
+
+<rnr-theme-toggle class="theme-toggle">
+  <button type="button" class="theme-toggle__trigger" aria-pressed="false">Theme</button>
+</rnr-theme-toggle>
+
+<script src="../../scripts/theme-toggle.ts"></script>
+
+<style>
+  /* An un-upgraded custom element is inert; hide it rather than ship a fake
+     control to zero-JS visitors (upgrades to visible once defined). */
+  rnr-theme-toggle:not(:defined) {
+    display: none;
+  }
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+  .theme-toggle__trigger {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.75rem;
+    font: inherit;
+    color: var(--foreground);
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+  .theme-toggle__trigger:hover {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+</style>
