@@ -2,7 +2,8 @@
 
 # FAM-003: /components seven-family card grid; supersede the FUSE-07 lean-list spec block
 
-> Status: in_progress
+> Status: ✅ Completed
+> Commit: 83b7d69ad25bfc30a7f6d61185b455368cff4bd0
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P0 · Points: 5 · Type: FEATURE · Wave: ?
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
