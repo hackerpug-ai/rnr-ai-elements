@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/FIX-SHELL-002-1
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts (3 tests | 1 failed | 2 skipped) 6503ms
+   × SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/shell-layout.test.ts > SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles
+AssertionError: DocsLayout: only the contracted pre-paint theme script may live here — a non-contracted script was found: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts:301:5
+    299|     layoutScripts.length - contractedThemeScripts.length,
+    300|     'DocsLayout: only the contracted pre-paint theme script may live h…
+    301|   ).toBe(0);
+       |     ^
+    302|   const allShellCss = Object.values(shellSources).join('\n');
+    303|   for (const token of ['--background', '--foreground', '--border', '--…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  00:15:20
+   Duration  6.63s (transform 20ms, setup 0ms, import 27ms, tests 6.50s, environment 0ms)
+

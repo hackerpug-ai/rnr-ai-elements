@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/FIX-SHELL-002-1
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts (3 tests | 1 failed) 6778ms
+   × SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/shell-layout.test.ts > SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles
+AssertionError: DocsLayout: only the contracted pre-paint theme script may live here — a non-contracted script was found: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts:303:5
+    301|     layoutScripts.length - contractedThemeScripts.length,
+    302|     'DocsLayout: only the contracted pre-paint theme script may live h…
+    303|   ).toBe(0);
+       |     ^
+    304|   // The paired-tag regex above requires a closing </script>, so a sel…
+    305|   // <script ... /> never enters layoutScripts and would slip past bot…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  00:29:47
+   Duration  6.87s (transform 13ms, setup 0ms, import 18ms, tests 6.78s, environment 0ms)
+
