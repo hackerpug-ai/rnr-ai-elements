@@ -85,15 +85,17 @@ test('FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable'
 });
 
 /*
- * FUSE-08 — the structural home block on /, below FUSE-09's landed island
- * proofs in this shared spec file (FUSE-09's gates grep this file too, so its
- * tests above stay untouched).
+ * FUSE-08 → SHELL-007 — the designed home hero on /, below FUSE-09's landed
+ * island proofs in this shared spec file (FUSE-09's gates grep this file too,
+ * so its tests above stay untouched).
  *
  * FLOW-GEND-01: the hero states what the library is and is not, carries
  * build-computed counters (root package.json version + registry-items.json
- * type counts), and both CTAs resolve 200.
- * FLOW-GEND-02: the hero install command copies exactly and renders
- * selectable with zero JS (the sprint-01 nativewind subset).
+ * type counts), renders Button CTAs on the DocsLayout home variant, and both
+ * CTA targets resolve 200.
+ * FLOW-GEND-02: the engine-tabbed install command (SHELL-004's
+ * InstallCommand) copies exactly from the ACTIVE tab panel while BOTH engine
+ * panels stay in the served DOM, and renders selectable with zero JS.
  *
  * Expected values are computed from the REAL artifacts at run time — never
  * hand-copied literals — so a fixture edit moves the expectation with it.
@@ -153,22 +155,36 @@ const COMMAND_PATTERN =
   /^npx @react-native-reusables\/cli@latest add https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[a-z0-9-]+\.json$/;
 
 const HERO = 'main.hero';
-const HERO_COPY_CODE = 'main.hero rnr-copy-button code';
-const HERO_COPY_TRIGGER = 'main.hero rnr-copy-button button';
+// Locator discipline (SHELL-007): reads scope to the ACTIVE tab panel so the
+// command textContent stays single-match while BOTH engine panels remain in
+// the served DOM. The served default (and the island's no-storage fallback)
+// is nativewind, the first panel in source order.
+const HERO_ACTIVE_PANEL = `${HERO} div[role=tabpanel]:not([hidden])`;
+const HERO_ACTIVE_CODE = `${HERO_ACTIVE_PANEL} rnr-copy-button code`;
+const HERO_ACTIVE_TRIGGER = `${HERO_ACTIVE_PANEL} rnr-copy-button button`;
+const HERO_PANELS = `${HERO} div[role=tabpanel][data-engine]`;
 
-// Optional screenshot evidence sink (RED/GREEN gate evidence under .tmp/).
-const evidenceDir = process.env.FUSE08_EVIDENCE_DIR ?? null;
-function evidenceShot(name: string): { path: string } | undefined {
-  return evidenceDir ? { path: join(evidenceDir, name) } : undefined;
-}
+const ENGINE_COMMANDS = {
+  nativewind:
+    'npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json',
+  uniwind:
+    'npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json',
+} as const;
 
-test('FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs', async ({
+test('FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant', async ({
   page,
 }, testInfo) => {
   const expected = expectedCounters();
 
   const response = await navigateLocalhost(page, '/');
   expect(response?.status()).toBe(200);
+
+  // The DocsLayout home variant: the shell header renders, and the home body
+  // suppresses the sidebar/ToC regions (no aside, no ToC landmark).
+  expect(await page.locator('body').getAttribute('data-layout')).toBe('home');
+  await expect(page.locator('header.site-header')).toBeVisible();
+  await expect(page.locator('aside')).toHaveCount(0);
+  await expect(page.locator('[data-toc]')).toHaveCount(0);
 
   const hero = page.locator(HERO);
   await expect(hero).toContainText('Universal AI chat and agent UI components for React Native');
@@ -185,21 +201,24 @@ test('FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package,
   expect(await counterText('ui')).toBe(String(expected.ui));
   expect(await counterText('libs')).toBe(String(expected.lib));
 
+  // CTAs are Button instances (the btn fingerprint classes) targeting the two
+  // real routes, and both targets resolve 200.
   const getStarted = hero.getByRole('link', { name: 'Get started' });
   const browse = hero.getByRole('link', { name: 'Browse components' });
   await expect(getStarted).toHaveAttribute('href', '/registry');
   await expect(browse).toHaveAttribute('href', '/components');
+  expect((await getStarted.getAttribute('class')) ?? '').toContain('btn');
+  expect((await getStarted.getAttribute('class')) ?? '').toContain('btn--primary');
+  expect((await browse.getAttribute('class')) ?? '').toContain('btn');
+  expect((await browse.getAttribute('class')) ?? '').toContain('btn--outline');
   expect((await page.request.get(new URL('/registry', PREVIEW_URL).href)).status()).toBe(200);
   expect((await page.request.get(new URL('/components', PREVIEW_URL).href)).status()).toBe(200);
 
-  const body = await page.screenshot({
-    ...evidenceShot('flow-gend-01-home-hero.png'),
-    fullPage: true,
-  });
+  const body = await page.screenshot({ fullPage: true });
   await testInfo.attach('flow-gend-01-home-hero', { body, contentType: 'image/png' });
 });
 
-test('FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command', async ({
+test('FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command', async ({
   browser,
 }, testInfo) => {
   test.skip(
@@ -213,30 +232,47 @@ test('FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact na
   const response = await navigateLocalhost(page, '/');
   expect(response?.status()).toBe(200);
 
+  // Both engine panels stay in the served DOM; exactly one is active.
+  await expect(page.locator(HERO_PANELS)).toHaveCount(2);
+  await expect(page.locator(`${HERO} div[role=tabpanel][data-engine="nativewind"]`)).toHaveCount(1);
+  await expect(page.locator(`${HERO} div[role=tabpanel][data-engine="uniwind"]`)).toHaveCount(1);
+
+  // The active-panel-scoped read stays single-match: an unscoped textContent
+  // would merge both engine commands and fail the exact-equality check below.
+  const activeCode = page.locator(HERO_ACTIVE_CODE);
+  await expect(activeCode).toHaveCount(1);
+  const displayed = (await activeCode.textContent())?.trim();
+  expect(displayed).toBe(ENGINE_COMMANDS.nativewind); // served default tab
+
   // The copy source is the displayed text itself, so clipboard and display
   // cannot drift apart (the hardcoded-echo negative control).
-  const displayed = (await page.locator(HERO_COPY_CODE).textContent())?.trim();
-  expect(displayed).toBe(COMMAND);
-
-  await page.locator(HERO_COPY_TRIGGER).click();
+  await page.locator(HERO_ACTIVE_TRIGGER).click();
   const clipboard = await page.evaluate(() => navigator.clipboard.readText());
-  expect(clipboard).toBe(COMMAND); // exact equality — catches trailing newline
+  expect(clipboard).toBe(displayed);
+  expect(clipboard).toBe(ENGINE_COMMANDS.nativewind); // exact equality — catches trailing newline
   expect(clipboard).toMatch(COMMAND_PATTERN);
 
-  const body = await page.screenshot(evidenceShot('flow-gend-02-hero-copy.png'));
+  const body = await page.screenshot();
   await testInfo.attach('flow-gend-02-hero-copy', { body, contentType: 'image/png' });
   await context.close();
 });
 
-test('FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200', async ({
+test('FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200', async ({
   browser,
 }) => {
   // Unguarded on purpose: under the chromium-nojs project this doubles as the
-  // project-level proof that the hero command is never gated behind JS.
+  // project-level proof that the hero commands are never gated behind JS. The
+  // explicit no-JS context keeps the stacked-panels observable identical in
+  // every project (TabGroup's :not(:defined) fallback un-hides both panels).
   const noJsContext = await browser.newContext({ javaScriptEnabled: false });
   const noJsPage = await noJsContext.newPage();
   const response = await navigateLocalhost(noJsPage, '/');
   expect(response?.status()).toBe(200);
-  expect((await noJsPage.locator(HERO_COPY_CODE).textContent())?.trim()).toBe(COMMAND);
+  for (const engine of ['nativewind', 'uniwind'] as const) {
+    const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    await expect(panelCode).toHaveCount(1);
+    await expect(panelCode).toBeVisible();
+    expect((await panelCode.textContent())?.trim()).toBe(ENGINE_COMMANDS[engine]);
+  }
   await noJsContext.close();
 });
