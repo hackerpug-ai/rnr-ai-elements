@@ -1,0 +1,455 @@
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+  1) [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+
+    Error: every item page badge matches item.expoGo from the manifest
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 41
+
+    - Array []
+    + Array [
+    +   "shimmer: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "checkpoint: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "image: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "persona: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "speech-input: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "conversation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "message: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "prompt-input: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "suggestion: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "tool: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "reasoning: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "task: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "question: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "agent: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "chain-of-thought: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "plan: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "confirmation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "queue: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "sources: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "inline-citation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "artifact: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "snippet: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "commit: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "attachments: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "context: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "open-in-chat: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "model-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "mic-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "voice-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "audio-player: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "transcription: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "terminal: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "file-tree: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "environment-variables: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "package-info: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "stack-trace: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "schema-display: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "test-results: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "web-preview: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    + ]
+
+      107 |   }
+      108 |
+    > 109 |   expect(mismatches, `every item page badge matches item.expoGo from the manifest`).toEqual([]);
+          |                                                                                     ^
+      110 |   expect(badgeMatches, 'item pages with a matching Badge verdict').toBe(components.length);
+      111 | });
+      112 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:109:85
+
+    Error Context: test-results/sprint-03-family-browse-ve-bc6a0-erdict-matching-item-expoGo-chromium-desktop/error-context.md
+
+
+[2/9] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+  2) [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget 
+
+    Error: every ledger verdict, tone, and docs href matches the manifest
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 58
+
+    - Array []
+    + Array [
+    +   "shimmer: verdict=\"\" class=\"\" href=\"/components/shimmer\" expected=\"runs in Expo Go\"/badge--expo-go//components/shimmer",
+    +   "checkpoint: verdict=\"\" class=\"\" href=\"/components/checkpoint\" expected=\"runs in Expo Go\"/badge--expo-go//components/checkpoint",
+    +   "image: verdict=\"\" class=\"\" href=\"/components/image\" expected=\"runs in Expo Go\"/badge--expo-go//components/image",
+    +   "persona: verdict=\"\" class=\"\" href=\"/components/persona\" expected=\"runs in Expo Go\"/badge--expo-go//components/persona",
+    +   "speech-input: verdict=\"\" class=\"\" href=\"/components/speech-input\" expected=\"runs in Expo Go\"/badge--expo-go//components/speech-input",
+    +   "kbd: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-kbd",
+    +   "breadcrumb: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-breadcrumb",
+    +   "button-group: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-button-group",
+    +   "slider: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-slider",
+    +   "table: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-table",
+    +   "command: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-command",
+    +   "mono: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-mono",
+    +   "markdown: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-markdown",
+    +   "code-block: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-code-block",
+    +   "conversation: verdict=\"\" class=\"\" href=\"/components/conversation\" expected=\"runs in Expo Go\"/badge--expo-go//components/conversation",
+    +   "message: verdict=\"\" class=\"\" href=\"/components/message\" expected=\"runs in Expo Go\"/badge--expo-go//components/message",
+    +   "prompt-input: verdict=\"\" class=\"\" href=\"/components/prompt-input\" expected=\"runs in Expo Go\"/badge--expo-go//components/prompt-input",
+    +   "empty: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-empty",
+    +   "item: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-item",
+    +   "input-group: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-input-group",
+    +   "sheet: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-sheet",
+    +   "suggestion: verdict=\"\" class=\"\" href=\"/components/suggestion\" expected=\"runs in Expo Go\"/badge--expo-go//components/suggestion",
+    +   "status: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-status",
+    +   "reasoning-lifecycle: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-reasoning-lifecycle",
+    +   "tool: verdict=\"\" class=\"\" href=\"/components/tool\" expected=\"runs in Expo Go\"/badge--expo-go//components/tool",
+    +   "reasoning: verdict=\"\" class=\"\" href=\"/components/reasoning\" expected=\"runs in Expo Go\"/badge--expo-go//components/reasoning",
+    +   "task: verdict=\"\" class=\"\" href=\"/components/task\" expected=\"runs in Expo Go\"/badge--expo-go//components/task",
+    +   "question: verdict=\"\" class=\"\" href=\"/components/question\" expected=\"runs in Expo Go\"/badge--expo-go//components/question",
+    +   "agent: verdict=\"\" class=\"\" href=\"/components/agent\" expected=\"runs in Expo Go\"/badge--expo-go//components/agent",
+    +   "chain-of-thought: verdict=\"\" class=\"\" href=\"/components/chain-of-thought\" expected=\"runs in Expo Go\"/badge--expo-go//components/chain-of-thought",
+    +   "plan: verdict=\"\" class=\"\" href=\"/components/plan\" expected=\"runs in Expo Go\"/badge--expo-go//components/plan",
+    +   "confirmation: verdict=\"\" class=\"\" href=\"/components/confirmation\" expected=\"runs in Expo Go\"/badge--expo-go//components/confirmation",
+    +   "queue: verdict=\"\" class=\"\" href=\"/components/queue\" expected=\"runs in Expo Go\"/badge--expo-go//components/queue",
+    +   "url: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-url",
+    +   "sources: verdict=\"\" class=\"\" href=\"/components/sources\" expected=\"runs in Expo Go\"/badge--expo-go//components/sources",
+    +   "inline-citation: verdict=\"\" class=\"\" href=\"/components/inline-citation\" expected=\"runs in Expo Go\"/badge--expo-go//components/inline-citation",
+    +   "artifact: verdict=\"\" class=\"\" href=\"/components/artifact\" expected=\"runs in Expo Go\"/badge--expo-go//components/artifact",
+    +   "snippet: verdict=\"\" class=\"\" href=\"/components/snippet\" expected=\"runs in Expo Go\"/badge--expo-go//components/snippet",
+    +   "commit: verdict=\"\" class=\"\" href=\"/components/commit\" expected=\"runs in Expo Go\"/badge--expo-go//components/commit",
+    +   "attachments: verdict=\"\" class=\"\" href=\"/components/attachments\" expected=\"runs in Expo Go\"/badge--expo-go//components/attachments",
+    +   "context: verdict=\"\" class=\"\" href=\"/components/context\" expected=\"runs in Expo Go\"/badge--expo-go//components/context",
+    +   "open-in-chat: verdict=\"\" class=\"\" href=\"/components/open-in-chat\" expected=\"runs in Expo Go\"/badge--expo-go//components/open-in-chat",
+    +   "model-selector: verdict=\"\" class=\"\" href=\"/components/model-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/model-selector",
+    +   "mic-selector: verdict=\"\" class=\"\" href=\"/components/mic-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/mic-selector",
+    +   "voice-selector: verdict=\"\" class=\"\" href=\"/components/voice-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/voice-selector",
+    +   "audio-player: verdict=\"\" class=\"\" href=\"/components/audio-player\" expected=\"runs in Expo Go\"/badge--expo-go//components/audio-player",
+    +   "transcription: verdict=\"\" class=\"\" href=\"/components/transcription\" expected=\"runs in Expo Go\"/badge--expo-go//components/transcription",
+    +   "terminal: verdict=\"\" class=\"\" href=\"/components/terminal\" expected=\"runs in Expo Go\"/badge--expo-go//components/terminal",
+    +   "file-tree: verdict=\"\" class=\"\" href=\"/components/file-tree\" expected=\"runs in Expo Go\"/badge--expo-go//components/file-tree",
+    +   "environment-variables: verdict=\"\" class=\"\" href=\"/components/environment-variables\" expected=\"runs in Expo Go\"/badge--expo-go//components/environment-variables",
+    +   "package-info: verdict=\"\" class=\"\" href=\"/components/package-info\" expected=\"runs in Expo Go\"/badge--expo-go//components/package-info",
+    +   "stack-trace-parser: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-stack-trace-parser",
+    +   "stack-trace: verdict=\"\" class=\"\" href=\"/components/stack-trace\" expected=\"runs in Expo Go\"/badge--expo-go//components/stack-trace",
+    +   "schema-display: verdict=\"\" class=\"\" href=\"/components/schema-display\" expected=\"runs in Expo Go\"/badge--expo-go//components/schema-display",
+    +   "test-results: verdict=\"\" class=\"\" href=\"/components/test-results\" expected=\"runs in Expo Go\"/badge--expo-go//components/test-results",
+    +   "web-preview: verdict=\"\" class=\"\" href=\"/components/web-preview\" expected=\"runs in Expo Go\"/badge--expo-go//components/web-preview",
+    + ]
+
+      163 |   }
+      164 |
+    > 165 |   expect(mismatches, 'every ledger verdict, tone, and docs href matches the manifest').toEqual([]);
+          |                                                                                        ^
+      166 |   expect(verdictMatches, 'ledger rows with a matching Badge verdict').toBe(items.length);
+      167 |   expect(anchoredRows, 'every row carries its in-page #row- anchor target').toBe(items.length);
+      168 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:165:88
+
+    Error Context: test-results/sprint-03-family-browse-ve-54434-dances-survive-the-retarget-chromium-desktop/error-context.md
+
+
+[3/9] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:202:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[4/9] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+  3) [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+
+    Error: every item page badge matches item.expoGo from the manifest
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 41
+
+    - Array []
+    + Array [
+    +   "shimmer: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "checkpoint: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "image: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "persona: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "speech-input: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "conversation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "message: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "prompt-input: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "suggestion: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "tool: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "reasoning: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "task: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "question: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "agent: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "chain-of-thought: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "plan: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "confirmation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "queue: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "sources: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "inline-citation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "artifact: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "snippet: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "commit: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "attachments: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "context: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "open-in-chat: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "model-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "mic-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "voice-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "audio-player: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "transcription: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "terminal: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "file-tree: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "environment-variables: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "package-info: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "stack-trace: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "schema-display: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "test-results: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "web-preview: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    + ]
+
+      107 |   }
+      108 |
+    > 109 |   expect(mismatches, `every item page badge matches item.expoGo from the manifest`).toEqual([]);
+          |                                                                                     ^
+      110 |   expect(badgeMatches, 'item pages with a matching Badge verdict').toBe(components.length);
+      111 | });
+      112 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:109:85
+
+    Error Context: test-results/sprint-03-family-browse-ve-bc6a0-erdict-matching-item-expoGo-chromium-mobile/error-context.md
+
+
+[5/9] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+  4) [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget 
+
+    Error: every ledger verdict, tone, and docs href matches the manifest
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 58
+
+    - Array []
+    + Array [
+    +   "shimmer: verdict=\"\" class=\"\" href=\"/components/shimmer\" expected=\"runs in Expo Go\"/badge--expo-go//components/shimmer",
+    +   "checkpoint: verdict=\"\" class=\"\" href=\"/components/checkpoint\" expected=\"runs in Expo Go\"/badge--expo-go//components/checkpoint",
+    +   "image: verdict=\"\" class=\"\" href=\"/components/image\" expected=\"runs in Expo Go\"/badge--expo-go//components/image",
+    +   "persona: verdict=\"\" class=\"\" href=\"/components/persona\" expected=\"runs in Expo Go\"/badge--expo-go//components/persona",
+    +   "speech-input: verdict=\"\" class=\"\" href=\"/components/speech-input\" expected=\"runs in Expo Go\"/badge--expo-go//components/speech-input",
+    +   "kbd: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-kbd",
+    +   "breadcrumb: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-breadcrumb",
+    +   "button-group: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-button-group",
+    +   "slider: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-slider",
+    +   "table: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-table",
+    +   "command: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-command",
+    +   "mono: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-mono",
+    +   "markdown: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-markdown",
+    +   "code-block: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-code-block",
+    +   "conversation: verdict=\"\" class=\"\" href=\"/components/conversation\" expected=\"runs in Expo Go\"/badge--expo-go//components/conversation",
+    +   "message: verdict=\"\" class=\"\" href=\"/components/message\" expected=\"runs in Expo Go\"/badge--expo-go//components/message",
+    +   "prompt-input: verdict=\"\" class=\"\" href=\"/components/prompt-input\" expected=\"runs in Expo Go\"/badge--expo-go//components/prompt-input",
+    +   "empty: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-empty",
+    +   "item: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-item",
+    +   "input-group: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-input-group",
+    +   "sheet: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-sheet",
+    +   "suggestion: verdict=\"\" class=\"\" href=\"/components/suggestion\" expected=\"runs in Expo Go\"/badge--expo-go//components/suggestion",
+    +   "status: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-status",
+    +   "reasoning-lifecycle: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-reasoning-lifecycle",
+    +   "tool: verdict=\"\" class=\"\" href=\"/components/tool\" expected=\"runs in Expo Go\"/badge--expo-go//components/tool",
+    +   "reasoning: verdict=\"\" class=\"\" href=\"/components/reasoning\" expected=\"runs in Expo Go\"/badge--expo-go//components/reasoning",
+    +   "task: verdict=\"\" class=\"\" href=\"/components/task\" expected=\"runs in Expo Go\"/badge--expo-go//components/task",
+    +   "question: verdict=\"\" class=\"\" href=\"/components/question\" expected=\"runs in Expo Go\"/badge--expo-go//components/question",
+    +   "agent: verdict=\"\" class=\"\" href=\"/components/agent\" expected=\"runs in Expo Go\"/badge--expo-go//components/agent",
+    +   "chain-of-thought: verdict=\"\" class=\"\" href=\"/components/chain-of-thought\" expected=\"runs in Expo Go\"/badge--expo-go//components/chain-of-thought",
+    +   "plan: verdict=\"\" class=\"\" href=\"/components/plan\" expected=\"runs in Expo Go\"/badge--expo-go//components/plan",
+    +   "confirmation: verdict=\"\" class=\"\" href=\"/components/confirmation\" expected=\"runs in Expo Go\"/badge--expo-go//components/confirmation",
+    +   "queue: verdict=\"\" class=\"\" href=\"/components/queue\" expected=\"runs in Expo Go\"/badge--expo-go//components/queue",
+    +   "url: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-url",
+    +   "sources: verdict=\"\" class=\"\" href=\"/components/sources\" expected=\"runs in Expo Go\"/badge--expo-go//components/sources",
+    +   "inline-citation: verdict=\"\" class=\"\" href=\"/components/inline-citation\" expected=\"runs in Expo Go\"/badge--expo-go//components/inline-citation",
+    +   "artifact: verdict=\"\" class=\"\" href=\"/components/artifact\" expected=\"runs in Expo Go\"/badge--expo-go//components/artifact",
+    +   "snippet: verdict=\"\" class=\"\" href=\"/components/snippet\" expected=\"runs in Expo Go\"/badge--expo-go//components/snippet",
+    +   "commit: verdict=\"\" class=\"\" href=\"/components/commit\" expected=\"runs in Expo Go\"/badge--expo-go//components/commit",
+    +   "attachments: verdict=\"\" class=\"\" href=\"/components/attachments\" expected=\"runs in Expo Go\"/badge--expo-go//components/attachments",
+    +   "context: verdict=\"\" class=\"\" href=\"/components/context\" expected=\"runs in Expo Go\"/badge--expo-go//components/context",
+    +   "open-in-chat: verdict=\"\" class=\"\" href=\"/components/open-in-chat\" expected=\"runs in Expo Go\"/badge--expo-go//components/open-in-chat",
+    +   "model-selector: verdict=\"\" class=\"\" href=\"/components/model-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/model-selector",
+    +   "mic-selector: verdict=\"\" class=\"\" href=\"/components/mic-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/mic-selector",
+    +   "voice-selector: verdict=\"\" class=\"\" href=\"/components/voice-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/voice-selector",
+    +   "audio-player: verdict=\"\" class=\"\" href=\"/components/audio-player\" expected=\"runs in Expo Go\"/badge--expo-go//components/audio-player",
+    +   "transcription: verdict=\"\" class=\"\" href=\"/components/transcription\" expected=\"runs in Expo Go\"/badge--expo-go//components/transcription",
+    +   "terminal: verdict=\"\" class=\"\" href=\"/components/terminal\" expected=\"runs in Expo Go\"/badge--expo-go//components/terminal",
+    +   "file-tree: verdict=\"\" class=\"\" href=\"/components/file-tree\" expected=\"runs in Expo Go\"/badge--expo-go//components/file-tree",
+    +   "environment-variables: verdict=\"\" class=\"\" href=\"/components/environment-variables\" expected=\"runs in Expo Go\"/badge--expo-go//components/environment-variables",
+    +   "package-info: verdict=\"\" class=\"\" href=\"/components/package-info\" expected=\"runs in Expo Go\"/badge--expo-go//components/package-info",
+    +   "stack-trace-parser: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-stack-trace-parser",
+    +   "stack-trace: verdict=\"\" class=\"\" href=\"/components/stack-trace\" expected=\"runs in Expo Go\"/badge--expo-go//components/stack-trace",
+    +   "schema-display: verdict=\"\" class=\"\" href=\"/components/schema-display\" expected=\"runs in Expo Go\"/badge--expo-go//components/schema-display",
+    +   "test-results: verdict=\"\" class=\"\" href=\"/components/test-results\" expected=\"runs in Expo Go\"/badge--expo-go//components/test-results",
+    +   "web-preview: verdict=\"\" class=\"\" href=\"/components/web-preview\" expected=\"runs in Expo Go\"/badge--expo-go//components/web-preview",
+    + ]
+
+      163 |   }
+      164 |
+    > 165 |   expect(mismatches, 'every ledger verdict, tone, and docs href matches the manifest').toEqual([]);
+          |                                                                                        ^
+      166 |   expect(verdictMatches, 'ledger rows with a matching Badge verdict').toBe(items.length);
+      167 |   expect(anchoredRows, 'every row carries its in-page #row- anchor target').toBe(items.length);
+      168 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:165:88
+
+    Error Context: test-results/sprint-03-family-browse-ve-54434-dances-survive-the-retarget-chromium-mobile/error-context.md
+
+
+[6/9] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:202:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[7/9] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+  5) [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+
+    Error: every item page badge matches item.expoGo from the manifest
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 41
+
+    - Array []
+    + Array [
+    +   "shimmer: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "checkpoint: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "image: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "persona: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "speech-input: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "conversation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "message: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "prompt-input: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "suggestion: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "tool: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "reasoning: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "task: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "question: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "agent: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "chain-of-thought: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "plan: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "confirmation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "queue: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "sources: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "inline-citation: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "artifact: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "snippet: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "commit: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "attachments: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "context: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "open-in-chat: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "model-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "mic-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "voice-selector: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "audio-player: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "transcription: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "terminal: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "file-tree: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "environment-variables: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "package-info: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "stack-trace: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "schema-display: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "test-results: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    +   "web-preview: badge=\"\" class=\"\" expected=\"runs in Expo Go\"/badge--expo-go",
+    + ]
+
+      107 |   }
+      108 |
+    > 109 |   expect(mismatches, `every item page badge matches item.expoGo from the manifest`).toEqual([]);
+          |                                                                                     ^
+      110 |   expect(badgeMatches, 'item pages with a matching Badge verdict').toBe(components.length);
+      111 | });
+      112 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:109:85
+
+    Error Context: test-results/sprint-03-family-browse-ve-bc6a0-erdict-matching-item-expoGo-chromium-nojs/error-context.md
+
+
+[8/9] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+  6) [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget 
+
+    Error: every ledger verdict, tone, and docs href matches the manifest
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 58
+
+    - Array []
+    + Array [
+    +   "shimmer: verdict=\"\" class=\"\" href=\"/components/shimmer\" expected=\"runs in Expo Go\"/badge--expo-go//components/shimmer",
+    +   "checkpoint: verdict=\"\" class=\"\" href=\"/components/checkpoint\" expected=\"runs in Expo Go\"/badge--expo-go//components/checkpoint",
+    +   "image: verdict=\"\" class=\"\" href=\"/components/image\" expected=\"runs in Expo Go\"/badge--expo-go//components/image",
+    +   "persona: verdict=\"\" class=\"\" href=\"/components/persona\" expected=\"runs in Expo Go\"/badge--expo-go//components/persona",
+    +   "speech-input: verdict=\"\" class=\"\" href=\"/components/speech-input\" expected=\"runs in Expo Go\"/badge--expo-go//components/speech-input",
+    +   "kbd: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-kbd",
+    +   "breadcrumb: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-breadcrumb",
+    +   "button-group: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-button-group",
+    +   "slider: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-slider",
+    +   "table: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-table",
+    +   "command: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-command",
+    +   "mono: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-mono",
+    +   "markdown: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-markdown",
+    +   "code-block: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-code-block",
+    +   "conversation: verdict=\"\" class=\"\" href=\"/components/conversation\" expected=\"runs in Expo Go\"/badge--expo-go//components/conversation",
+    +   "message: verdict=\"\" class=\"\" href=\"/components/message\" expected=\"runs in Expo Go\"/badge--expo-go//components/message",
+    +   "prompt-input: verdict=\"\" class=\"\" href=\"/components/prompt-input\" expected=\"runs in Expo Go\"/badge--expo-go//components/prompt-input",
+    +   "empty: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-empty",
+    +   "item: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-item",
+    +   "input-group: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-input-group",
+    +   "sheet: verdict=\"\" class=\"\" href=\"/components#ui\" expected=\"runs in Expo Go\"/badge--expo-go/#row-sheet",
+    +   "suggestion: verdict=\"\" class=\"\" href=\"/components/suggestion\" expected=\"runs in Expo Go\"/badge--expo-go//components/suggestion",
+    +   "status: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-status",
+    +   "reasoning-lifecycle: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-reasoning-lifecycle",
+    +   "tool: verdict=\"\" class=\"\" href=\"/components/tool\" expected=\"runs in Expo Go\"/badge--expo-go//components/tool",
+    +   "reasoning: verdict=\"\" class=\"\" href=\"/components/reasoning\" expected=\"runs in Expo Go\"/badge--expo-go//components/reasoning",
+    +   "task: verdict=\"\" class=\"\" href=\"/components/task\" expected=\"runs in Expo Go\"/badge--expo-go//components/task",
+    +   "question: verdict=\"\" class=\"\" href=\"/components/question\" expected=\"runs in Expo Go\"/badge--expo-go//components/question",
+    +   "agent: verdict=\"\" class=\"\" href=\"/components/agent\" expected=\"runs in Expo Go\"/badge--expo-go//components/agent",
+    +   "chain-of-thought: verdict=\"\" class=\"\" href=\"/components/chain-of-thought\" expected=\"runs in Expo Go\"/badge--expo-go//components/chain-of-thought",
+    +   "plan: verdict=\"\" class=\"\" href=\"/components/plan\" expected=\"runs in Expo Go\"/badge--expo-go//components/plan",
+    +   "confirmation: verdict=\"\" class=\"\" href=\"/components/confirmation\" expected=\"runs in Expo Go\"/badge--expo-go//components/confirmation",
+    +   "queue: verdict=\"\" class=\"\" href=\"/components/queue\" expected=\"runs in Expo Go\"/badge--expo-go//components/queue",
+    +   "url: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-url",
+    +   "sources: verdict=\"\" class=\"\" href=\"/components/sources\" expected=\"runs in Expo Go\"/badge--expo-go//components/sources",
+    +   "inline-citation: verdict=\"\" class=\"\" href=\"/components/inline-citation\" expected=\"runs in Expo Go\"/badge--expo-go//components/inline-citation",
+    +   "artifact: verdict=\"\" class=\"\" href=\"/components/artifact\" expected=\"runs in Expo Go\"/badge--expo-go//components/artifact",
+    +   "snippet: verdict=\"\" class=\"\" href=\"/components/snippet\" expected=\"runs in Expo Go\"/badge--expo-go//components/snippet",
+    +   "commit: verdict=\"\" class=\"\" href=\"/components/commit\" expected=\"runs in Expo Go\"/badge--expo-go//components/commit",
+    +   "attachments: verdict=\"\" class=\"\" href=\"/components/attachments\" expected=\"runs in Expo Go\"/badge--expo-go//components/attachments",
+    +   "context: verdict=\"\" class=\"\" href=\"/components/context\" expected=\"runs in Expo Go\"/badge--expo-go//components/context",
+    +   "open-in-chat: verdict=\"\" class=\"\" href=\"/components/open-in-chat\" expected=\"runs in Expo Go\"/badge--expo-go//components/open-in-chat",
+    +   "model-selector: verdict=\"\" class=\"\" href=\"/components/model-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/model-selector",
+    +   "mic-selector: verdict=\"\" class=\"\" href=\"/components/mic-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/mic-selector",
+    +   "voice-selector: verdict=\"\" class=\"\" href=\"/components/voice-selector\" expected=\"runs in Expo Go\"/badge--expo-go//components/voice-selector",
+    +   "audio-player: verdict=\"\" class=\"\" href=\"/components/audio-player\" expected=\"runs in Expo Go\"/badge--expo-go//components/audio-player",
+    +   "transcription: verdict=\"\" class=\"\" href=\"/components/transcription\" expected=\"runs in Expo Go\"/badge--expo-go//components/transcription",
+    +   "terminal: verdict=\"\" class=\"\" href=\"/components/terminal\" expected=\"runs in Expo Go\"/badge--expo-go//components/terminal",
+    +   "file-tree: verdict=\"\" class=\"\" href=\"/components/file-tree\" expected=\"runs in Expo Go\"/badge--expo-go//components/file-tree",
+    +   "environment-variables: verdict=\"\" class=\"\" href=\"/components/environment-variables\" expected=\"runs in Expo Go\"/badge--expo-go//components/environment-variables",
+    +   "package-info: verdict=\"\" class=\"\" href=\"/components/package-info\" expected=\"runs in Expo Go\"/badge--expo-go//components/package-info",
+    +   "stack-trace-parser: verdict=\"\" class=\"\" href=\"/components#lib\" expected=\"runs in Expo Go\"/badge--expo-go/#row-stack-trace-parser",
+    +   "stack-trace: verdict=\"\" class=\"\" href=\"/components/stack-trace\" expected=\"runs in Expo Go\"/badge--expo-go//components/stack-trace",
+    +   "schema-display: verdict=\"\" class=\"\" href=\"/components/schema-display\" expected=\"runs in Expo Go\"/badge--expo-go//components/schema-display",
+    +   "test-results: verdict=\"\" class=\"\" href=\"/components/test-results\" expected=\"runs in Expo Go\"/badge--expo-go//components/test-results",
+    +   "web-preview: verdict=\"\" class=\"\" href=\"/components/web-preview\" expected=\"runs in Expo Go\"/badge--expo-go//components/web-preview",
+    + ]
+
+      163 |   }
+      164 |
+    > 165 |   expect(mismatches, 'every ledger verdict, tone, and docs href matches the manifest').toEqual([]);
+          |                                                                                        ^
+      166 |   expect(verdictMatches, 'ledger rows with a matching Badge verdict').toBe(items.length);
+      167 |   expect(anchoredRows, 'every row carries its in-page #row- anchor target').toBe(items.length);
+      168 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:165:88
+
+    Error Context: test-results/sprint-03-family-browse-ve-54434-dances-survive-the-retarget-chromium-nojs/error-context.md
+
+
+[9/9] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:202:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+  6 failed
+    [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+    [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget 
+    [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+    [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget 
+    [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:72:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+    [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:113:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget 
+  3 passed (13.8s)

@@ -112,7 +112,7 @@ test('FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages
   const engineChips = page.locator('li[data-chip="engine"]');
   await expect(engineChips).toHaveText(conversation.engines);
   await expect(page.locator('li[data-chip="expo"]')).toHaveText(
-    conversation.expoGo ? 'Expo Go' : 'Dev client',
+    conversation.expoGo ? 'runs in Expo Go' : 'requires a dev client',
   );
 
   const install = page.locator(INSTALL_SECTION);

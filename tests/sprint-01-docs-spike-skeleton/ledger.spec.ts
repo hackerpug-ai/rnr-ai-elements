@@ -12,8 +12,9 @@ import { grantClipboardPermissions, navigateLocalhost, PREVIEW_URL } from '../ha
  *       6 registry:lib, matching registry-items.json name-for-name.
  * TC-2: both engine base URLs above the table with copy, bulk-add instructions
  *       before the table in DOM order, generated-at-build note naming public/r/.
- * TC-3: all 56 row docs links return 200; the 39 component rows link
- *       /components/{item}; every row shows an Expo Go verdict.
+ * TC-3: all 56 row docs links resolve; the 39 component rows link
+ *       /components/{item}, the rest anchor their row in-page; every row
+ *       shows the Badge verdict (FAM-005 vocabulary, from expoGo).
  * TC-4: all 56 rows carry a copy button; sampled copies match the absolute-URL
  *       command regex and equal the row's displayed text character-for-character.
  * TC-5: with javaScriptEnabled:false the full unfiltered table, both base URLs,
@@ -83,11 +84,14 @@ const COMMAND_PATTERN =
 // Sprint-01 subset: rows render the nativewind form.
 const installCommand = (name: string): string =>
   `npx @react-native-reusables/cli@latest add ${NATIVEWIND_BASE}/${name}.json`;
-// Component rows get their own page; ui/lib rows anchor the family section on
-// the /components index (FUSE-07) so all 56 links resolve without extra pages.
+// Component rows get their own page; every other row anchors itself in-page
+// (FAM-005) so all 56 links resolve without extra pages.
 const docsHref = (item: LedgerItem): string =>
-  item.type === 'registry:component' ? `/components/${item.name}` : `/components#${item.family}`;
-const verdictLabel = (expoGo: boolean): string => (expoGo ? 'Expo Go' : 'Dev client');
+  item.type === 'registry:component' ? `/components/${item.name}` : `#row-${item.name}`;
+// The Badge vocabulary (FAM-005): expected verdict text derived from the
+// dataset's expoGo field at run time — the data-equality shape.
+const verdictLabel = (expoGo: boolean): string =>
+  expoGo ? 'runs in Expo Go' : 'requires a dev client';
 
 const ROWS = 'tbody tr';
 const NOTE = 'p.ledger__note';
@@ -140,7 +144,7 @@ test('FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name
   expect(renderedTypes.filter((type) => type === 'registry:lib')).toHaveLength(LIB_ITEMS.length);
   expect(renderedTypes.filter((type) => type === 'registry:lib')).toHaveLength(6);
 
-  // Every row shows an Expo Go verdict value, name-for-name with the dataset.
+  // Every row shows the Badge verdict value, name-for-name with the dataset.
   const renderedVerdicts = await page.locator(`${ROWS} ${ROW_VERDICT}`).allTextContents();
   expect(renderedVerdicts.map((verdict) => verdict.trim())).toEqual(
     ITEMS.map((item) => verdictLabel(item.expoGo)),
@@ -221,8 +225,8 @@ test('FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 2
   }
   await noJsContext.close();
 
-  // The 39 component rows link /components/{item}; the rest anchor their
-  // family section on the /components index — name-for-name with the dataset.
+  // The 39 component rows link /components/{item}; the rest anchor their own
+  // row in-page — name-for-name with the dataset.
   const componentNames = new Set(COMPONENT_ITEMS.map((item) => item.name));
   expect(hrefs).toEqual(ITEMS.map((item) => docsHref(item)));
   const componentHrefs = hrefs.filter((href) => href.startsWith('/components/'));
@@ -232,16 +236,32 @@ test('FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 2
     expect(componentNames.has(item.name)).toBe(true);
   }
 
-  // Every one of the 56 links must resolve on the served site (fragment-only
-  // difference stripped for the GET; the anchor target itself is FUSE-07's).
+  // Every one of the 56 links must resolve on the served site: page hrefs GET
+  // their path; in-page #row- anchors have no path of their own, so they GET
+  // the ledger page once and must find their tr id in the served HTML — the
+  // dead-anchor check, not a homepage 200.
+  const fragmentHrefs = hrefs.filter((href) => href.startsWith('#'));
+  expect(fragmentHrefs).toHaveLength(ITEMS.length - COMPONENT_ITEMS.length);
+  let registryHtml: string | null = null;
+  if (fragmentHrefs.length > 0) {
+    const registryResponse = await request.get(`${PREVIEW_URL}/registry`);
+    expect(registryResponse.status(), '/registry serves the in-page anchor host').toBe(200);
+    registryHtml = await registryResponse.text();
+  }
   const seen = new Set<string>();
   for (let index = 0; index < hrefs.length; index += 1) {
-    const path = hrefs[index].split('#')[0];
-    const linkResponse = await request.get(`${PREVIEW_URL}${path}`);
-    expect(linkResponse.status(), `row ${index} (${ITEMS[index].name}) -> ${hrefs[index]}`).toBe(
-      200,
-    );
-    seen.add(path);
+    const href = hrefs[index];
+    if (href.startsWith('#')) {
+      expect(
+        registryHtml?.includes(`id="${href.slice(1)}"`),
+        `row ${index} (${ITEMS[index].name}) -> ${href} anchor target exists in the served ledger`,
+      ).toBe(true);
+      seen.add('/registry');
+      continue;
+    }
+    const linkResponse = await request.get(`${PREVIEW_URL}${href}`);
+    expect(linkResponse.status(), `row ${index} (${ITEMS[index].name}) -> ${href}`).toBe(200);
+    seen.add(href);
   }
   expect(seen.size).toBeGreaterThan(0);
 });

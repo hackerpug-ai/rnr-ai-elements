@@ -11,6 +11,7 @@
  * No preview panel this sprint (T-GEND-021): omitted, never a placeholder.
  */
 import { readFileSync } from 'node:fs';
+import Badge from '../../components/Badge.astro';
 import DependencyPanel from '../../components/DependencyPanel.astro';
 import InstallCommand from '../../components/InstallCommand.astro';
 import families from '../../data/families.json';
@@ -80,7 +81,7 @@ const sourceFiles = item.sourceFiles.map((file) => ({
         <li data-chip="version">v{version}</li>
         <li data-chip="category">{item.type.replace('registry:', '')}</li>
         {item.engines.map((engine) => <li data-chip="engine">{engine}</li>)}
-        <li data-chip="expo">{item.expoGo ? 'Expo Go' : 'Dev client'}</li>
+        <li data-chip="expo"><Badge tone={item.expoGo ? 'expo-go' : 'dev-client'} /></li>
       </ul>
     </header>
 
@@ -138,6 +139,13 @@ const sourceFiles = item.sourceFiles.map((file) => ({
     border-radius: 999px;
     padding: 0.125rem 0.625rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  /* The expo chip hosts the site-wide Badge: the Badge's own chrome is the
+     chip chrome, so the slot drops its pill instead of nesting one. */
+  .chips li[data-chip='expo'] {
+    border: none;
+    padding: 0;
+    font-size: 0.75rem;
   }
   .source-file pre {
     overflow-x: auto;
