@@ -50,13 +50,13 @@ PROGRESS: 0/5 ACs
 
 ### DONE WHEN
 
-- [ ] AC 1: GIVEN the committed ledger-filter.ts + LedgerFilter.astro source WHEN the source-contract 
-- [ ] AC 2: GIVEN the committed island source WHEN the source-contract scan runs THEN ledger-filter.ts
-- [ ] AC 3: GIVEN the committed page + component source WHEN the source-contract scan runs THEN all 39
-- [ ] AC 4: GIVEN the island-budget vitest lane WHEN it scans the committed source THEN it asserts exa
-- [ ] AC 5: GIVEN the committed island source WHEN the source-contract scan runs THEN the input elemen
-- [ ] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
-- [ ] Only SCOPE.writeAllowed files modified (git diff --name-only)
+- [x] AC 1: GIVEN the committed ledger-filter.ts + LedgerFilter.astro source WHEN the source-contract 
+- [x] AC 2: GIVEN the committed island source WHEN the source-contract scan runs THEN ledger-filter.ts
+- [x] AC 3: GIVEN the committed page + component source WHEN the source-contract scan runs THEN all 39
+- [x] AC 4: GIVEN the island-budget vitest lane WHEN it scans the committed source THEN it asserts exa
+- [x] AC 5: GIVEN the committed island source WHEN the source-contract scan runs THEN the input elemen
+- [x] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
+- [x] Only SCOPE.writeAllowed files modified (git diff --name-only)
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
@@ -541,3 +541,14 @@ writeProhibited:
 -->
 
 </details>
+
+## Amendments
+
+### AMEND-1 (AC-1 mount position — reviewer ruling cycle 1, no change of criterion text required)
+
+Ruling: the island mounts at the slot position — immediately after FAM-003's pinned empty
+`<div class="family-grid-slot"></div>`, before the first section (slot < island < first section,
+contract-locked by ledger-filter-contract.test.ts). Literal containment inside the slot div is
+unsatisfiable alongside the same file's writeProhibited pin on the literal empty slot, and the
+PRD (07-ui-infrastructure.md) governs position as the full-width filter row above the grid — it
+never mandates containment. Reviewer: satisfied-in-intent, zero restructuring.
