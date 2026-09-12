@@ -1,4 +1,8 @@
 ---
+// Interim wiring (SHELL-001): global tokens for pages still served through spike.astro.
+// SHELL-002's DocsLayout import supersedes this; SHELL-008 deletes spike.astro.
+import '../styles/global.css';
+
 interface Props {
   title: string;
 }

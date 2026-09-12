@@ -8,7 +8,7 @@
  *
  * Dark-first: :root — the unclassed html default — carries the DARK column, and every
  * light value lives under html.light. The pre-paint class flip (SHELL-003) is the ONLY
- * theme mechanism: no prefers-color-scheme media query, ever.
+ * theme mechanism — this sheet never reads the visitor's OS color preference.
  *
  * Plain CSS custom properties only — no Tailwind, no @theme, no new dependency.
  * Every color is oklch; no hex literal appears in this file.

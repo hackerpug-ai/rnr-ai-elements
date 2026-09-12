@@ -88,21 +88,26 @@ function decimalForm(percent: string): string {
  * value the build is known to emit (verified against a real Astro 7.3.2 build):
  * authored 0.145, the minifier's leading-zero drop .145, and its percentage form
  * 14.5%. A re-picked or rounded value (0.15, 98%) matches none of them.
+ *
+ * Every alternation is anchored with (?![\d.]): a real CSS number is never
+ * immediately followed by another digit or dot, so a longer re-picked number
+ * (e.g. minified alpha .15 prefix-matching the .1 form of 10%) can never
+ * satisfy a value pattern.
  */
 function numberAlternatives(num: string): string {
   if (num === '1') {
-    return '(?:1\\b|100%)';
+    return '(?:1\\b|100%)(?![\\d.])';
   }
   if (/^0?\.\d+$/.test(num)) {
-    return `(?:0?\\.${num.replace(/^0?\./, '')}|${escapeValue(percentForm(num))}%)`;
+    return `(?:0?\\.${num.replace(/^0?\./, '')}|${escapeValue(percentForm(num))}%)(?![\\d.])`;
   }
   if (/^\d+(\.\d+)?%$/.test(num)) {
-    return `(?:${escapeValue(num)}|${decimalForm(num)})`;
+    return `(?:${escapeValue(num)}|${decimalForm(num)})(?![\\d.])`;
   }
   if (num === '0') {
-    return '(?:0\\b|0%)';
+    return '(?:0\\b|0%)(?![\\d.])';
   }
-  return escapeValue(num);
+  return `${escapeValue(num)}(?![\\d.])`;
 }
 
 /**
