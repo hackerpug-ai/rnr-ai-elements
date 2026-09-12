@@ -5,7 +5,9 @@ import { PREVIEW_URL, strictPreviewCommand } from './tests/harness/docs-preview'
 // BUILT dist — never `astro dev`. Invoked by `pnpm e2e:docs`, which runs the ordered
 // build chain before handing off to this config.
 export default defineConfig({
-  testDir: 'tests/sprint-01-docs-spike-skeleton',
+  // The ONE turnkey runner owns every lane under tests/ (SHELL-011 widened it
+  // from the sprint-01 directory); lanes serialize under workers:1 below.
+  testDir: 'tests',
   // *.spec.ts only: the sibling vitest files (*.test.ts) belong to vitest's
   // `tests/**/*.test.ts` include and must never be double-run by this lane.
   testMatch: '**/*.spec.ts',
@@ -21,6 +23,10 @@ export default defineConfig({
     ['junit', { outputFile: 'apps/docs/playwright-report/junit.xml' }],
     ['html', { outputFolder: 'apps/docs/playwright-report/html', open: 'never' }],
   ],
+  // Relative gotos in lane specs resolve against the preview origin (the L6
+  // origin guard in the harness's navigateLocalhost still applies to every
+  // harness-mediated navigation).
+  use: { baseURL: PREVIEW_URL },
   projects: [
     { name: 'chromium-desktop', use: { ...devices['Desktop Chrome'] } },
     { name: 'chromium-mobile', use: { ...devices['Pixel 5'] } },
