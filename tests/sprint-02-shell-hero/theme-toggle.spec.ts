@@ -1,3 +1,5 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { navigateLocalhost, PREVIEW_URL } from '../harness/docs-preview';
 
@@ -24,8 +26,26 @@ import { navigateLocalhost, PREVIEW_URL } from '../harness/docs-preview';
  * never a post-load read, which a late island could launder.
  *
  * page.evaluate calls use string expressions: the repo tsconfig carries no DOM
- * lib (same precedent as the sprint-01 ledger spec).
+ * lib (same precedent as the sprint-01 ledger spec). The root theme class is
+ * read that way too — never locator('html'), a generic-root success oracle.
+ *
+ * On the green path the spec writes its DECLARED flow artifact
+ * (.tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-01-theme-toggle-persisted-
+ * flash-free.json) with the real observed values (home-hero convention).
  */
+
+// Evidence JSON per flow, under the sprint's e2e-evidence directory (the
+// home-hero convention: written on the green path with real observed values,
+// so the flow runner sees a fresh DECLARED artifact after every run).
+const EVIDENCE_DIR = join(process.cwd(), '.tmp/sprint-02-shell-hero/e2e-evidence');
+
+function writeEvidence(flow: string, observed: Record<string, unknown>): void {
+  mkdirSync(EVIDENCE_DIR, { recursive: true });
+  writeFileSync(
+    join(EVIDENCE_DIR, `${flow}.json`),
+    JSON.stringify({ flow, capturedAt: new Date().toISOString(), ...observed }, null, 2),
+  );
+}
 
 // Dark = no `light` class on the root element; light = `light` present.
 function themeStateOf(className: unknown): 'light' | 'dark' {
@@ -49,6 +69,9 @@ const THEME_DCL_RECORDER = `(() => {
   });
 })();`;
 
+// The root theme class comes back through a string-expression evaluate — never
+// locator('html'), a generic-root success oracle the governed surface lint bans.
+const READ_ROOT_CLASS = 'document.documentElement.className';
 const READ_DCL_SAMPLE = 'window.__rnrThemeSample.atDomContentLoaded';
 const READ_BODY_BG = 'getComputedStyle(document.body).backgroundColor';
 const READ_STORAGE =
@@ -87,13 +110,16 @@ test('FLOW-SHELL-01-theme-toggle-persisted-flash-free', async ({ browser }, test
   expect(firstVisit?.status(), '/ must answer 200 from the built preview').toBe(200);
 
   // Cold first visit with a dark scheme preference: dark state, zero storage.
+  const firstVisitRootClass = await flipPage.evaluate(READ_ROOT_CLASS);
   expect(
-    themeStateOf(await flipPage.locator('html').getAttribute('class')),
+    themeStateOf(firstVisitRootClass),
     'a dark-scheme first visit must resolve dark (no light class)',
   ).toBe('dark');
-  expect(await flipPage.evaluate(READ_BODY_BG)).toBe(DARK_BG);
+  const firstVisitBackground = await flipPage.evaluate(READ_BODY_BG);
+  expect(firstVisitBackground).toBe(DARK_BG);
+  const firstVisitStoredTheme = JSON.parse(await flipPage.evaluate(READ_STORAGE)).theme;
   expect(
-    JSON.parse(await flipPage.evaluate(READ_STORAGE)).theme,
+    firstVisitStoredTheme,
     'a cold first visit must have no pre-existing rnr-theme',
   ).toBeNull();
 
@@ -111,9 +137,11 @@ test('FLOW-SHELL-01-theme-toggle-persisted-flash-free', async ({ browser }, test
   // Flip 1: dark -> light. Class, computed canvas, and storage must all move.
   await toggle.click();
   const afterFlipOne = JSON.parse(await flipPage.evaluate(READ_STORAGE));
-  expect(themeStateOf(await flipPage.locator('html').getAttribute('class'))).toBe('light');
+  const flipOneRootClass = await flipPage.evaluate(READ_ROOT_CLASS);
+  expect(themeStateOf(flipOneRootClass)).toBe('light');
+  const flipOneBackground = await flipPage.evaluate(READ_BODY_BG);
   expect(
-    await flipPage.evaluate(READ_BODY_BG),
+    flipOneBackground,
     'the flipped canvas must re-resolve to the light --background token',
   ).toBe(LIGHT_BG);
   expect(afterFlipOne.theme).toBe('light');
@@ -125,8 +153,10 @@ test('FLOW-SHELL-01-theme-toggle-persisted-flash-free', async ({ browser }, test
   // Flip 2: light -> dark restored.
   await toggle.click();
   const afterFlipTwo = JSON.parse(await flipPage.evaluate(READ_STORAGE));
-  expect(themeStateOf(await flipPage.locator('html').getAttribute('class'))).toBe('dark');
-  expect(await flipPage.evaluate(READ_BODY_BG)).toBe(DARK_BG);
+  const flipTwoRootClass = await flipPage.evaluate(READ_ROOT_CLASS);
+  expect(themeStateOf(flipTwoRootClass)).toBe('dark');
+  const flipTwoBackground = await flipPage.evaluate(READ_BODY_BG);
+  expect(flipTwoBackground).toBe(DARK_BG);
   expect(afterFlipTwo.theme).toBe('dark');
   expect(
     afterFlipTwo.keys.filter((key: string) => !keysBeforeClicks.includes(key)),
@@ -159,14 +189,12 @@ test('FLOW-SHELL-01-theme-toggle-persisted-flash-free', async ({ browser }, test
       dclClass,
     )}) — a dark sample there is the wrong-theme flash signature`,
   ).toBe('light');
-  expect(
-    await reloadPage.evaluate(READ_BODY_BG),
-    'after the reload the canvas must resolve the light token',
-  ).toBe(LIGHT_BG);
-  expect(
-    await reloadPage.evaluate('localStorage.getItem("rnr-theme")'),
-    'the reload must not reset the stored choice',
-  ).toBe('light');
+  const reloadBackground = await reloadPage.evaluate(READ_BODY_BG);
+  expect(reloadBackground, 'after the reload the canvas must resolve the light token').toBe(
+    LIGHT_BG,
+  );
+  const reloadedStoredTheme = await reloadPage.evaluate('localStorage.getItem("rnr-theme")');
+  expect(reloadedStoredTheme, 'the reload must not reset the stored choice').toBe('light');
   await testInfo.attach('flow-shell-01-light-persisted-reload', {
     body: await reloadPage.screenshot(),
     contentType: 'image/png',
@@ -221,4 +249,37 @@ test('FLOW-SHELL-01-theme-toggle-persisted-flash-free', async ({ browser }, test
     contentType: 'image/png',
   });
   await noJsContext.close();
+
+  writeEvidence('FLOW-SHELL-01-theme-toggle-persisted-flash-free', {
+    previewOrigin: PREVIEW_URL,
+    firstVisit: {
+      rootClass: firstVisitRootClass,
+      bodyBackground: firstVisitBackground,
+      storedTheme: firstVisitStoredTheme,
+      storageKeysBeforeClicks: keysBeforeClicks,
+    },
+    flipOne: {
+      rootClass: flipOneRootClass,
+      bodyBackground: flipOneBackground,
+      storedTheme: afterFlipOne.theme,
+      newStorageKeys: afterFlipOne.keys.filter((key: string) => !keysBeforeClicks.includes(key)),
+    },
+    flipTwo: {
+      rootClass: flipTwoRootClass,
+      bodyBackground: flipTwoBackground,
+      storedTheme: afterFlipTwo.theme,
+      newStorageKeys: afterFlipTwo.keys.filter((key: string) => !keysBeforeClicks.includes(key)),
+    },
+    persistedReload: {
+      dclRootClass: dclClass,
+      bodyBackground: reloadBackground,
+      storedTheme: reloadedStoredTheme,
+    },
+    stickyHeader: { yAt1000: headerBox?.y ?? null },
+    zeroJs: {
+      toggleAttached: zeroJs.attached,
+      htmlClass: zeroJs.htmlClass,
+      bodyBackground: zeroJs.bodyBackground,
+    },
+  });
 });
