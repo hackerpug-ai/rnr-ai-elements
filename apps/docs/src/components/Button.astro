@@ -1,0 +1,83 @@
+---
+/**
+ * Button — the one CTA primitive (TR-07 component plan, NEW 1/4).
+ *
+ * Prop-driven, zero JS: `variant` selects the tone class (btn--primary fill,
+ * btn--outline bordered, btn--link text) and `href` selects the element — an
+ * anchor when present, a button otherwise. Every color resolves through
+ * SHELL-001 tokens; no hex, no scripts.
+ */
+interface Props {
+  variant?: 'primary' | 'outline' | 'link';
+  href?: string;
+  class?: string;
+  [attribute: string]: unknown;
+}
+
+const { variant = 'primary', href, class: className, ...rest } = Astro.props;
+---
+
+{
+  href !== undefined ? (
+    <a href={href} class:list={['btn', `btn--${variant}`, className]} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class:list={['btn', `btn--${variant}`, className]} {...rest}>
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 0.625rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  /* Filled — THE accent pairing for CTAs. */
+  .btn--primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  /* Outline — the quiet secondary action. */
+  .btn--outline {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--foreground);
+  }
+
+  .btn--outline:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  /* Link — an inline text action in running prose. */
+  .btn--link {
+    background: transparent;
+    border-color: transparent;
+    color: var(--primary);
+    padding-inline: 0;
+  }
+
+  .btn--link:hover {
+    text-decoration: underline;
+  }
+
+  /* Focus-ring contract: 2px ring in the theme token, 2px offset. */
+  .btn:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+</style>

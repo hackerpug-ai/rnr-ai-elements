@@ -1,0 +1,55 @@
+---
+/**
+ * Chip — the counter/value pill (TR-07 R6 health counters, detail chip rows).
+ *
+ * Renders the value inside a <data data-counter> element so the sprint-01
+ * home spec hooks (version / total / components / ui / libs) survive the hero
+ * redesign byte-for-byte. `label` opts into the two-part label + value form;
+ * a ChipRow is consumers composing Chips in a row. Zero JS; tokens only.
+ */
+type CounterHook = 'version' | 'total' | 'components' | 'ui' | 'libs';
+
+interface Props {
+  counter: CounterHook;
+  value: string | number;
+  label?: string;
+}
+
+const { counter, value, label } = Astro.props;
+---
+
+{
+  label === undefined ? (
+    <data class:list={['chip', 'chip__value']} data-counter={counter} value={String(value)}>
+      {value}
+    </data>
+  ) : (
+    <span class="chip">
+      <span class="chip__label">{label}</span>
+      <data class="chip__value" data-counter={counter} value={String(value)}>
+        {value}
+      </data>
+    </span>
+  )
+}
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--secondary);
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+  }
+
+  .chip__value {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--foreground);
+  }
+</style>
