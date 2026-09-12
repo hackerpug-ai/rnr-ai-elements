@@ -1,0 +1,42 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-001
+
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts (2 tests | 2 failed) 5770ms
+   × SHELL-001-token-sheet-contract: real build emits the complete TR-07 vocabulary verbatim 2ms
+   × SHELL-001-dark-first-single-mechanism: dark on :root, light scoped to the html light class 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/tokens.test.ts > SHELL-001-token-sheet-contract: real build emits the complete TR-07 vocabulary verbatim
+AssertionError: no dist/_astro/*.css bundles exist on disk — global.css must be imported by the layout (SHELL-002 DocsLayout contract) and apps/docs/astro.config.mjs must set build.inlineStylesheets:'never' (Astro's default 'auto' inlines styles into HTML instead): expected 0 to be greater than 0
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts:233:5
+    231|       '(SHELL-002 DocsLayout contract) and apps/docs/astro.config.mjs …
+    232|       "build.inlineStylesheets:'never' (Astro's default 'auto' inlines…
+    233|   ).toBeGreaterThan(0);
+       |     ^
+    234|
+    235|   // TC-1: every token name with its exact light AND dark value in the…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-02-shell-hero/tokens.test.ts > SHELL-001-dark-first-single-mechanism: dark on :root, light scoped to the html light class
+AssertionError: the built CSS lost the dark :root rule: expected null not to be null
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts:315:70
+    313|   // Built structure: the emitted bundle keeps dark-first + the class …
+    314|   const builtDefault = themeRule(builtCss, /:root\s*\{/);
+    315|   expect(builtDefault, 'the built CSS lost the dark :root rule').not.t…
+       |                                                                      ^
+    316|   expect(builtDefault).toMatch(declarationPattern('--background', 'okl…
+    317|   expect(builtDefault).not.toMatch(declarationPattern('--background', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  22:15:06
+   Duration  5.86s (transform 14ms, setup 0ms, import 19ms, tests 5.77s, environment 0ms)
+
