@@ -1,0 +1,21 @@
+# SHELL-001 cycle-1 GREEN PROOF WITH SCRATCH WIRING (not the committed state)
+#
+# This run added TWO scratch patches OUTSIDE SHELL-001's writeAllowed, to prove the
+# stylesheet + test are complete and the only remaining gap is that wiring:
+#   1. apps/docs/src/layouts/spike.astro:        import '../styles/global.css';
+#   2. apps/docs/astro.config.mjs:               build: { inlineStylesheets: 'never' },
+# Both patches were REVERTED immediately after this run (git checkout --). The
+# committed-state run is vitest-green.committed-state.txt in this directory.
+#
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-001
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  22:13:06
+   Duration  5.92s (transform 13ms, setup 0ms, import 19ms, tests 5.84s, environment 0ms)
+

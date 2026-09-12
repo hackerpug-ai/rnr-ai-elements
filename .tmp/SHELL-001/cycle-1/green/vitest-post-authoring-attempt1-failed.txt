@@ -1,0 +1,44 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-001
+
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts (2 tests | 2 failed) 7228ms
+   × SHELL-001-token-sheet-contract: real build emits the complete TR-07 vocabulary verbatim 3ms
+   × SHELL-001-dark-first-single-mechanism: dark on :root, light scoped to the html light class 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/tokens.test.ts > SHELL-001-token-sheet-contract: real build emits the complete TR-07 vocabulary verbatim
+AssertionError: no dist/_astro/*.css bundles exist on disk: expected 0 to be greater than 0
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts:172:72
+    170|     'the docs prebuild marker is absent — the pnpm filter matched noth…
+    171|   ).toContain('56 items');
+    172|   expect(cssBundleCount, 'no dist/_astro/*.css bundles exist on disk')…
+       |                                                                        ^
+    173|
+    174|   // TC-1: every token name with its exact light AND dark value in the…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-02-shell-hero/tokens.test.ts > SHELL-001-dark-first-single-mechanism: dark on :root, light scoped to the html light class
+TypeError: String.prototype.matchAll called with a non-global RegExp argument
+ ❯ ruleBodies tests/sprint-02-shell-hero/tokens.test.ts:88:30
+     86|   const source = stripComments(css);
+     87|   const bodies: string[] = [];
+     88|   for (const match of source.matchAll(selector)) {
+       |                              ^
+     89|     const open = source.indexOf('{', match.index);
+     90|     if (open === -1) {
+ ❯ themeRule tests/sprint-02-shell-hero/tokens.test.ts:113:5
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts:232:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  22:07:06
+   Duration  7.35s (transform 16ms, setup 0ms, import 24ms, tests 7.23s, environment 0ms)
+
