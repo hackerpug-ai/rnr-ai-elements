@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+/**
+ * DocsLayout (SHELL-002) — the themed shell every adopted docs route renders
+ * through: SHELL-001's token sheet imported exactly once, the sticky Header,
+ * the page slot, then the Footer. The named head slot below is the seam
+ * SHELL-003's pre-paint theme script fills; the theme island itself mounts
+ * inside the Header's data-theme-slot element. Pages keep their own content
+ * trees — adoption wraps, it never rewrites page structure.
+ */
+interface Props {
+  title: string;
+  /** Reserved for SHELL-007: the home variant suppresses the sidebar + ToC once they exist. */
+  variant?: 'docs' | 'home';
+}
+
+const { title, variant = 'docs' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body data-layout={variant}>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /*
+   * Deep links land below the sticky header (R1): every anchored region on an
+   * adopting route compensates by --layout-header-h. The selectors are global
+   * because the anchored sections and headings live in page trees, not here.
+   */
+  :global(section[id], h2[id], h3[id]) {
+    scroll-margin-top: var(--layout-header-h);
+  }
+</style>
