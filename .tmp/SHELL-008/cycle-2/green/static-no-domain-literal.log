@@ -1,0 +1,33 @@
+# Static check (a): no dataset-contradicting domain literal remains in item-install-copy.spec.ts
+
+## 1. Every SITE / domain-literal occurrence with context:
+68- * dataset-resolved through resolveRegistryDependencies, never this constant.
+69- */
+70:const SITE = 'https://rnraielements.com';
+71-const CLI_PREFIX = 'npx @react-native-reusables/cli@latest add ';
+72-
+--
+102-    const panel = install.locator(`[role="tabpanel"][data-engine="${engine}"]`);
+103-    await expect(panel.locator('rnr-copy-button code')).toHaveText(
+104:      `${CLI_PREFIX}${SITE}/r/${engine}/conversation.json`,
+105-    );
+106-    await expect(panel.locator('rnr-copy-button button')).toHaveCount(1);
+
+## 2. The dependencies-panel expectations (dataset-derived via resolveRegistryDependencies):
+7 matches in 2 files:
+
+204:0:avatar.json is first').toContain(
+tests/sprint-02-shell-hero/item-install-copy.spec.ts:5:import { resolveRegistryDependencies } from '../../apps/docs/src/lib/resolve-...
+tests/sprint-02-shell-hero/item-install-copy.spec.ts:68:* dataset-resolved through resolveRegistryDependencies, never this constant.
+tests/sprint-02-shell-hero/item-install-copy.spec.ts:113:const expected = resolveRegistryDependencies(
+tests/sprint-02-shell-hero/item-install-copy.spec.ts:169:const expected = resolveRegistryDependencies(item.registryDependencies, engin...
+tests/sprint-02-shell-hero/item-install-copy.spec.ts:199:const messageNativewind = resolveRegistryDependencies(
+tests/sprint-02-shell-hero/item-install-copy.spec.ts:213:).toContainText(messageNativewind[0]);
+
+## 3. Every SITE interpolation (fixed-string match):
+104:      `${CLI_PREFIX}${SITE}/r/${engine}/conversation.json`,
+
+## 4. VERDICT: SITE interpolations at 104 (install command, AC-1-named origin) only;
+   the only rnraielements.com literal is the SITE const itself (line 70), consumed
+   solely by install commands. Dependency-panel expectations resolve through the
+   dataset (lines 208-213) — proven equal to the AC-2 URL by derived-expectation-eval.log.

@@ -113,8 +113,11 @@ test('FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages
   );
 
   const install = page.locator(INSTALL_SECTION);
-  const nativewindRow = install.locator('.install-row', { hasText: 'nativewind' });
-  const uniwindRow = install.locator('.install-row', { hasText: 'uniwind' });
+  // SHELL-008 supersede: the install block is the SHELL-004 engine-tabbed
+  // composite now — both panels stay server-rendered (hidden attribute only),
+  // so the selectors address each engine's tabpanel directly.
+  const nativewindRow = install.locator('[role="tabpanel"][data-engine="nativewind"]');
+  const uniwindRow = install.locator('[role="tabpanel"][data-engine="uniwind"]');
   await expect(nativewindRow.locator('rnr-copy-button code')).toHaveText(
     commandFor('nativewind', 'conversation'),
   );
@@ -123,6 +126,7 @@ test('FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages
     commandFor('uniwind', 'conversation'),
   );
   await expect(uniwindRow.locator('rnr-copy-button button')).toHaveCount(1);
+  await expect(install.locator('rnr-tab-group[storage-key="rnr-engine"]')).toHaveCount(1);
 
   await page.screenshot({ path: evidencePath(testInfo, 'conversation-anatomy'), fullPage: true });
 

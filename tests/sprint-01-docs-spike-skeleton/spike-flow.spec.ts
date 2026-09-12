@@ -74,7 +74,10 @@ test('spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /reg
 
   // 4. Click the nativewind install command's copy button; assert the visible
   // success state, then read the REAL clipboard (secure context).
-  const nativewindRow = install.locator('.install-row', { hasText: 'nativewind' });
+  // SHELL-008: the install block is the engine-tabbed composite now — both
+  // panels stay server-rendered, so the nativewind panel is addressed by its
+  // tabpanel and remains the visible default.
+  const nativewindRow = install.locator('[role="tabpanel"][data-engine="nativewind"]');
   const trigger = nativewindRow.locator('rnr-copy-button button');
   await trigger.click();
   await expect(trigger).toHaveAttribute('data-state', 'copied', { timeout: 500 });
