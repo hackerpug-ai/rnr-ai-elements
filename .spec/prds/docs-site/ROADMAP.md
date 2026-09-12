@@ -12,9 +12,9 @@ pr_sequencing: false
 
 ## Overview
 
-**Sprints:** 13  (3 committed · 10 provisional)
-**Total Tasks:** 31  (committed sprints only; provisional sprints carry a size band)
-**Current Sprint:** Sprint 01 (all 12 FUSE tasks landed) — Sprint 02 completed; Sprint 03 promoted + expanded to task files by `/kb-sprint-tasks-plan` on 2026-09-12
+**Sprints:** 13  (4 committed · 9 provisional)
+**Total Tasks:** 42  (committed sprints only; provisional sprints carry a size band)
+**Current Sprint:** Sprint 01 (all 12 FUSE tasks landed) — Sprint 02 completed; Sprint 03 promoted + expanded to task files by `/kb-sprint-tasks-plan` on 2026-09-12 — Sprint 04 promoted the same day
 
 All 28 in-scope use cases are demonstrated by exactly the gate of the sprint that ships them. Sprints 01–11 were authored by the dispatched specialist set (astro-planner, cloudflare-workers-planner, techwriting-planner, react-native-reusables-planner, frontend-designer) through fusion and convergence rounds staged verbatim at `.tmp/kb-sprint-plan/docs-site/`; sprints 12–13 were added by the v2.0.0 delta replan (flue-planner + ghactions-planner + techwriting-planner, staged at `.tmp/kb-sprint-plan/docs-site-delta/`).
 
@@ -25,7 +25,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 | 1 | — | [Sprint 01: docs-spike-skeleton](#sprint-01-docs-spike-skeleton) | Walk find-and-install on the built site (ledger → component page → copy command → same-origin JSON), proven by `pnpm e2e:docs` green, retries: 0 | 12 | — | In Progress |
 | 2 | — | [Sprint 02: shell-hero](#sprint-02-shell-hero) | Hero fits one 1440×900 screen: statement, counters, copyable engine-tabbed command, both CTAs (T-GEND-002) | 13 | Sprint 01 | In Progress |
 | 3 | — | [Sprint 03: family-browse](#sprint-03-family-browse) | /components counts 7 anchored families, 39 cards, verdict badges | 6 | Sprint 01 | In Progress |
-| 4 | — | [Sprint 04: generated-reference](#sprint-04-generated-reference) | Mutate any enriched field → build fails naming the item; props/deps/source byte-match the served JSON | — | Sprint 01, Sprint 03 | Planned |
+| 4 | — | [Sprint 04: generated-reference](#sprint-04-generated-reference) | Mutate any enriched field → build fails naming the item; props/deps/source byte-match the served JSON | 11 | Sprint 01, Sprint 03 | In Progress |
 | 5 | — | [Sprint 05: orient-search](#sprint-05-orient-search) | Stranger reads /docs/introduction in one pass (T-DOCS-002) | — | Sprint 01, Sprint 02 | Planned |
 | 6 | — | [Sprint 06: guides-boundary-changelog](#sprint-06-guides-boundary-changelog) | Boundary gaps cross-check vs ledger + porting not-ported: zero contradictions (T-DOCS-018) | — | Sprint 05 | Planned |
 | 7 | — | [Sprint 07: deploy-live-at-apex](#sprint-07-deploy-live-at-apex) | Real CLI add from the live domain into a scratch Expo app exits 0, both engines, tsc clean (T-DELIV-013) | — | Sprint 01 | Planned |
@@ -275,23 +275,66 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 **Sequence:** 4
 **Timeline:** Phase 2
-**Status:** Planned
-**Fidelity:** provisional
-**Proposed by:** react-native-reusables-planner (lead) + frontend-designer + astro-planner
+**Status:** In Progress
+**Fidelity:** committed
+**Proposed by:** react-native-reusables-planner (lead) + astro-planner + frontend-designer (promotion dispatch 2026-09-12; proposals, fusion positions, and rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-04-generated-reference/`)
 **Milestone:** —
 
 #### Human Testing Gate
 
 **Gate:** Done means a visitor can open any of the 39 generated reference pages over `astro preview` and read its auto-generated props table (Name/Type/Default/Description with at least one row), its dependency panel listing registryDependencies and AI SDK v7 peers, and its full untruncated source that byte-matches the served /r/*.json content, proven by opening http://localhost:4321/components/conversation in a browser and diffing its Code view against `curl http://localhost:4321/r/nativewind/conversation.json` (T-GEND-023/024/015 shape).
 **Entrypoint:** Built dist over `astro preview` at http://localhost:4321/components/[item], plus curl of the same origin's /r/*.json.
-**Before:** Reference pages carry breadcrumb/chips/install/source only — no props tables, no dependency panels, no theming notes or usage snippets rendered, no family pager, no QR panels, no seam links; the enriched data fields shipped in sprint 01 are still unwritten on any page.
+**Before:** At HEAD 31bca18, /components/conversation over `astro preview` renders breadcrumb, h1, one-line description, chip row (v0.2.1/category/engines/Expo Go), the engine-tabbed InstallCommand as first section, the DependencyPanel (registryDependencies + dependencies + the AI SDK peer `ai ^7.0.89`), full untruncated nativewind-substituted source as a bare <section data-section="source">, and the within-family pager — the roadmap's 'no dependency panels, no family pager' clauses are stale (both shipped sprint-02). Still absent, all RED against the gate: no props table, no theming-note or usage-snippet rendering (39/39 components carry non-empty props[]/themingNote/usageSnippet in apps/docs/src/data/registry-items.json, verified present and unrendered), no tabbed or standalone Code view contract, no seam callouts (renderMarkdown users: message/reasoning/context; TextClassContext users: message/prompt-input/tool/plan/queue/commit/terminal/environment-variables), no QrPanel, no dev-client matrix (enriched-markdown/streamdown/speech-recognition/extended-audio appear nowhere; zero items have expoGo:false), and no family install commands on /components (the FAM-003 seven-family card grid). The FUSE-04 gates module has five gates (count/files/props/family/verdict) plus drill-item-count.ts — no matrix-shape gate, no imagery flag, no qrDeepLink/metaDescription derivation. Opening the gate URL and diffing its Code view against curl of /r/nativewind/conversation.json cannot pass the props-table clause: no table renders.
 **Demonstrates:** UC-GEND-03, UC-GEND-04, UC-GEND-06, UC-SHELL-03 (UC-GEND-05's matrix + QR-panel work ships here as supporting task work; UC-GEND-05 demonstrates at Sprint 09 where its QR/gallery flow completes)
 
-**Sizing (provisional):** ~8 items · ~27–42 pts — component-detail template (dependency DataTable, family Pager, seam Callouts), Preview|Code TabGroup with null-imagery omission, PropsTable, theming/usage rendering from the sprint-01 fields, QrPanel, the authored dev-client matrix data (4 opt-in entries, shape-gated fail-closed), matrix rendering, GEND criteria binding + drill extension
+**Test Steps:** *(each stranger-runnable verbatim; step 1's `pnpm e2e:docs` also carries the non-flow riding specs — qr-panel decode, dev-client matrix, site crawl, preview-omission no-JS, enrichment drill)*
+1. At the repo root run `pnpm e2e:docs` — it exits 0 with retries: 0: the ordered chain (registry:build → gallery:manifest → docs build → playwright install → playwright test) completes with every lane green, including the superseded sprint-01/02/03 lanes and the NEW tests/sprint-04-generated-reference lane — the eight FLOW specs plus the riding specs qr-panel.spec.ts (T-GEND-017), dev-client-matrix.spec.ts (T-GEND-020), site-crawl.spec.ts (T-GEND-016), preview-omission-nojs.spec.ts (T-GEND-021), and the enrichment-drill.test.ts vitest file (T-GEND-022/026).   `exercises: REF-001, REF-002, REF-003, REF-004, REF-005, REF-006, REF-007, REF-008, REF-009, REF-010, REF-011`
+2. Run `pnpm playwright test tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts --grep FLOW-GEND-14-reference-page-anatomy` — 3 passed (chromium-desktop, chromium-mobile, chromium-nojs); evidence JSON written to .tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-14-reference-page-anatomy.json, asserting across all 39 pages that top-level section DOM order is install before source/props/theming/usage and that 0 preview-panel elements exist.   `exercises: REF-001, REF-009`
+3. Run `pnpm playwright test tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family` — 3 passed across all three projects; the evidence JSON at .tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-15-family-pager-stays-in-family.json records set(pages_reachable_via_pager) == set(family_members) for each of the seven families and every pager href returning 200 in dist/.   `exercises: REF-001, REF-009`
+4. Run `pnpm playwright test tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy` — 3 passed; every one of the 39 component pages yields, per engine tab, a one-click copy matching ^npx @react-native-reusables/cli@latest add https://rnraielements\.com/r/(nativewind|uniwind)/[a-z0-9-]+\.json$ with a visible success state; the 17 ui/lib items complete at Sprint 05 (no such pages yet).   `exercises: REF-001, REF-009`
+5. Run `pnpm playwright test tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts --grep FLOW-GEND-21-dependency-panel-peers` — 3 passed; panels on shimmer and conversation equal registry dependencies + engine-resolved registryDependencies + the AI SDK v7 peer, and >=5 sampled panels match the live-served /r/nativewind/*.json dependency fields with 0 invented or dropped entries.   `exercises: REF-001, REF-006, REF-009`
+6. Run `pnpm playwright test tests/sprint-04-generated-reference/props-table-generated.spec.ts --grep FLOW-GEND-34-props-table-generated` — 3 passed; props_tables == 39 in the evidence JSON at .tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-34-props-table-generated.json, every table carrying Name/Type/Default/Description headers and >=1 row (conversation: 5 rows), types as resolved text — never any/unknown placeholders.   `exercises: REF-001, REF-002, REF-009`
+7. Run `pnpm playwright test tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts --grep FLOW-GEND-35-code-view-byte-identical-to-shipped-source` — 3 passed; >=5 sampled multi-file items (e.g. audio-player, prompt-input, tool) byte-match the Code view text against files[].text fetched from http://localhost:4321/r/nativewind/{item}.json — zero normalization diffs, every file present, no height limit or clipping.   `exercises: REF-001, REF-003, REF-009`
+8. Run `pnpm playwright test tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts --grep FLOW-SHELL-13-engine-tab-persists-across-pages` — 3 passed across all three projects (the chromium-nojs project asserts the stacked server-rendered fallback): clicking uniwind on /components/conversation sets localStorage 'rnr-engine'="uniwind", soft navigation and a hard load of /components/message keep aria-selected="true" on uniwind, switching back rewrites storage, and no engine state ever appears in any URL.   `exercises: REF-001, REF-009`
+9. Run `pnpm playwright test tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts --grep FLOW-SHELL-14-tab-panels-in-initial-html` — 3 passed; the raw pre-JS HTML of /components/conversation and /components/message contains BOTH literal strings https://rnraielements.com/r/nativewind/ and https://rnraielements.com/r/uniwind/ inside their server-rendered tab panels, and with JavaScript disabled both panels render stacked and readable.   `exercises: REF-001, REF-009`
+10. Run `pnpm --filter @rnr-ai-elements/docs build && pnpm --filter @rnr-ai-elements/docs preview`, then open http://localhost:4321/components/conversation in a browser and read: (1) the props table with Name/Type/Default/Description columns and >=1 row; (2) the dependency panel listing registryDependencies button/icon/empty plus react-native-safe-area-context plus the AI SDK v7 peer; (3) the theming note with token chips and the usage snippet with an always-visible copy button; (4) the full untruncated source in the Code view with its QR aside. Then run `curl -s http://localhost:4321/r/nativewind/conversation.json` and diff the served files[].text against the Code view text — zero byte differences.   `exercises: REF-002, REF-003, REF-004, REF-005, REF-006, REF-009`
+11. On the same preview, open http://localhost:4321/components/conversation at a 390px viewport (browser DevTools responsive mode) and check the FLOW-GEND-14 anatomy's mobile frame: the props table renders as stacked cards (one card per prop, label plus value), the dependency table scrolls horizontally with the first column sticky, theming/usage/source regions stay readable with zero clipped or overlapped text, and every copy button plus the QR aside remains operable with touch targets >=44px.   `exercises: REF-002, REF-003, REF-006, REF-009`
 
-> Test steps and the task table are authored when this sprint becomes next
-> (`/kb-sprint-tasks-plan`), against the codebase as it is then. See
-> [`~/Projects/brain/docs/COMMIT-HORIZON.md`](~/Projects/brain/docs/COMMIT-HORIZON.md).
+**Dark tasks:** None — every task is exercised by at least one gate step.
+
+#### Tasks
+
+| ID | Title | Agent | Points | Wave | Status |
+|----|-------|-------|--------|------|--------|
+| REF-001 | RED-first locked-flow lane specs (8 flows, flow-id-verbatim filenames) + riding specs with evidence plumbing | astro-implementer | 3 | A | ⬜ Pending |
+| REF-002 | PropsTable.astro — zero-JS R8 table from prebuild props[] | frontend-designer | 2 | A | ⬜ Pending |
+| REF-003 | CodeBlock + ThemingNote + UsageSnippet — R6c/R9/R10 visual primitives | frontend-designer | 3 | A | ⬜ Pending |
+| REF-004 | Callout.astro + build-time seam map + real seam sections on /docs/theming | frontend-designer | 3 | A | ⬜ Pending |
+| REF-005 | QrPanel.astro — build-time inline SVG deep-link QR | frontend-designer | 2 | A | ⬜ Pending |
+| REF-006 | DataTable.astro + DependencyPanel re-skin (R7) | frontend-designer | 2 | A | ⬜ Pending |
+| REF-007 | Authored dev-client matrix dataset — 4 opt-in entries with real peers + permissions | react-native-reusables-implementer | 3 | A | ⬜ Pending |
+| REF-008 | Consolidated data pipeline — prebuild qrDeepLink/metaDescription + matrix gate wiring + imagery flag (single owner of prebuild.ts + gates.ts) | astro-implementer | 5 | B | ⬜ Pending |
+| REF-009 | [item].astro assembly — R5–R12 region order, Code-alone source (no tab chrome), props/theming/usage/seams/QR/pager + region-contract re-pins | astro-implementer | 5 | C | ⬜ Pending |
+| REF-010 | /components single owner — trailing no-id matrix section + family install commands (T-GEND-014) | astro-implementer | 3 | B | ⬜ Pending |
+| REF-011 | Enrichment drill — unresolved props, matrix shape, imagery-flag pair, single-source derivation (T-GEND-026) | react-native-reusables-implementer | 5 | D | ⬜ Pending |
+
+**Waves:** A(7) → B(2) → C(1) → D(1) — 4 waves over 11 tasks (no two tasks in a wave share a write_allowed path; promotion fused from three specialist proposals with positions + rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-04-generated-reference/`)
+
+#### Next Sprint Tasks
+
+Generated by /kb-sprint-tasks-plan on 2026-09-12
+
+- REF-001-red-first-locked-flow-lane-specs-8-flows-flow-id-verbatim-filenames-riding-specs.md
+- REF-002-propstable-astro-zero-js-r8-table-from-prebuild-props.md
+- REF-003-codeblock-themingnote-usagesnippet-r6c-r9-r10-visual-primitives.md
+- REF-004-callout-astro-build-time-seam-map-real-seam-sections-on-docs-theming.md
+- REF-005-qrpanel-astro-build-time-inline-svg-deep-link-qr.md
+- REF-006-datatable-astro-dependencypanel-re-skin-r7.md
+- REF-007-authored-dev-client-matrix-dataset-4-opt-in-entries-with-real-peers-permissions.md
+- REF-008-consolidated-data-pipeline-prebuild-qrdeeplink-metadescription-matrix-gate-wirin.md
+- REF-009-item-astro-assembly-r5-r12-region-order-code-alone-source-no-tab-chrome-props-th.md
+- REF-010-components-single-owner-trailing-no-id-matrix-section-family-install-commands-t.md
+- REF-011-enrichment-drill-unresolved-props-matrix-shape-imagery-flag-pair-single-source-d.md
 
 #### Dependencies
 
@@ -302,7 +345,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 - 05-uc-gend.md UC-GEND-03..06; 06-uc-shell.md UC-SHELL-03
 - TR-02, TR-03 (registry_page_model), TR-07 (component-detail wireframe, 14 regions + mobile frame), TR-08 R7/R8, TR-10
-- 11-e2e-testing-criteria.md T-GEND-009..026
+- 12-e2e-testing-criteria.md T-GEND-009..026
 
 #### Capability Coverage
 
