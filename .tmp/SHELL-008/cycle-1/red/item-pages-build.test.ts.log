@@ -1,0 +1,119 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-008
+
+ ❯ tests/sprint-02-shell-hero/item-pages-build.test.ts (2 tests | 2 failed) 5953ms
+   × SHELL-008-tabbed-install-first: install first, both engines server-rendered in tabbed panels, no templates, no duplicates 4ms
+   × SHELL-008-dependencies-dataverbatim: sections equal the resolved dataset, peers line present, empty deps explicit 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/item-pages-build.test.ts > SHELL-008-tabbed-install-first: install first, both engines server-rendered in tabbed panels, no templates, no duplicates
+AssertionError: shimmer: storage-key: expected '<!DOCTYPE html><html lang="en"><head>…' to contain 'storage-key="rnr-engine"'
+
+- Expected
++ Received
+
+- storage-key="rnr-engine"
++ <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Shimmer — RNR AI Elements</title><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/global.85M6f-Yl.css"><link rel="stylesheet" href="/_astro/_item_.Cwq6tpnR.css"></head><body><main class="component-page" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Message</p><h1 data-astro-cid-ziig2kl5>Shimmer</h1><p class="item-description" data-astro-cid-ziig2kl5>The still-generating signal, applied to text. React Native has no background-clip:text, so this reuses RNR Skeleton&#39;s exact pulse (1000ms, opacity 1-&gt;0.5) rather than inventing a tempo. Gated on reduced motion.</p><ul class="chips" aria-label="Status" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5>Expo Go</li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><div class="install-row" data-astro-cid-ziig2kl5><span class="engine-label" data-astro-cid-ziig2kl5>nativewind</span><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/shimmer.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy the nativewind install command for Shimmer" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script></div><div class="install-row" data-astro-cid-ziig2kl5><span class="engine-label" data-astro-cid-ziig2kl5>uniwind</span><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/shimmer.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy the uniwind install command for Shimmer" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>shimmer.tsx</figcaption><pre data-astro-cid-ziig2kl5><code data-astro-cid-ziig2kl5>import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
++ import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
++ import * as React from &#39;react&#39;;
++ import Animated, {
++   ReduceMotion,
++   useAnimatedStyle,
++   useReducedMotion,
++   useSharedValue,
++   withRepeat,
++   withTiming,
++ } from &#39;react-native-reanimated&#39;;
++
++ /**
++  * Shimmer — the &quot;still generating&quot; signal, applied TO text rather than beside it.
++  *
++  * THE HIGHEST DESIGN RISK IN THE PORT, and the only genuinely invented treatment.
++  * The web effect is a linear-gradient with `background-clip: text` and an animated
++  * background-position. React Native has no background-clip:text — not &quot;hard&quot;, absent — so
++  * whatever we ship here is new visual vocabulary rather than a port.
++  *
++  * The design lens&#39;s resolution, followed exactly: reuse RNR SKELETON&#39;S OWN MOTION
++  * SIGNATURE — opacity 1 → 0.5, 1000ms, withRepeat(-1, reverse) — on text at
++  * `text-muted-foreground`, which is also the web original&#39;s resting colour. An invented
++  * treatment that borrows the house pulse reads as house style; a 2000ms gradient sweep
++  * reads as a foreign component sitting in someone&#39;s app.
++  *
++  * The masked-gradient variant is deliberately NOT here. It would need
++  * @react-native-masked-view and a motion identity RNR does not have, so if it ever ships
++  * it ships opt-in.
++  *
++  * GATED ON REDUCED MOTION. RNR&#39;s own Skeleton does not honour it, so this is one place we
++  * are stricter — which changes nothing visually when the setting is off, so parity holds.
++  * A continuously looping animation is also a WCAG 2.2.2 concern, and streamed responses
++  * routinely run past five seconds.
++  */
++
++ type ShimmerProps = React.ComponentProps&lt;typeof Text&gt; &amp; {
++   /** Pulse period in ms. RNR Skeleton&#39;s is 1000; changing it gives us our own tempo. */
++   duration?: number;
++   active?: boolean;
++ };
++
++ function Shimmer({ className, duration = 1000, active = true, children, ...props }: ShimmerProps) {
++   const reduced = useReducedMotion();
++   const opacity = useSharedValue(1);
++
++   React.useEffect(() =&gt; {
++     if (!active || reduced) {
++       opacity.value = 1;
++       return;
++     }
++     opacity.value = withRepeat(
++       withTiming(0.5, { duration, reduceMotion: ReduceMotion.System }),
++       -1,
++       true,
++     );
++   }, [active, reduced, duration, opacity]);
++
++   const style = useAnimatedStyle(() =&gt; ({ opacity: opacity.value }));
++
++   return (
++     &lt;Animated.View style={style}&gt;
++       &lt;Text className={cn(&#39;text-muted-foreground&#39;, className)} {...props}&gt;
++         {children}
++       &lt;/Text&gt;
++     &lt;/Animated.View&gt;
++   );
++ }
++
++ export { Shimmer };
++ </code></pre></figure></section><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/attachments" data-astro-cid-ziig2kl5>← attachments</a><a rel="next" href="/components/image" data-astro-cid-ziig2kl5>image →</a></nav></main></body></html>
+
+ ❯ tests/sprint-02-shell-hero/item-pages-build.test.ts:152:47
+    150|
+    151|     // TC-1: the tab group persists the engine under the contracted ke…
+    152|     expect(html, `${item.name}: storage-key`).toContain('storage-key="…
+       |                                               ^
+    153|
+    154|     // TC-2: exactly two command LINES on the whole page — a stacked u…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-02-shell-hero/item-pages-build.test.ts > SHELL-008-dependencies-dataverbatim: sections equal the resolved dataset, peers line present, empty deps explicit
+AssertionError: shimmer: the dependencies section must exist (never dropped): expected -1 to be greater than -1
+ ❯ tests/sprint-02-shell-hero/item-pages-build.test.ts:176:88
+    174|     const html = pages.get(item.name) ?? '';
+    175|     const start = html.indexOf('data-section="dependencies"');
+    176|     expect(start, `${item.name}: the dependencies section must exist (…
+       |                                                                                        ^
+    177|     const sectionStart = html.lastIndexOf('<section', start);
+    178|     const depsHtml = html.slice(sectionStart, html.indexOf('</section>…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  00:11:44
+   Duration  6.04s (transform 16ms, setup 0ms, import 22ms, tests 5.95s, environment 0ms)
+

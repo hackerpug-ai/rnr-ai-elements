@@ -1,18 +1,23 @@
 ---
 /**
- * FUSE-07 — generated component reference page, sprint-01 lean subset.
+ * SHELL-008 — generated component reference page on the DocsLayout shell.
  * getStaticPaths fans one page per registry:component entry in the FUSE-05
  * dataset (39 pages, slug = item name) — never hand-written per page.
- * Anatomy: header + chip row, the install block as FIRST content section
- * (both engines labeled, absolute-URL commands, each with a CopyButton),
- * then the full untruncated nativewind source, then the within-family pager.
+ * Anatomy: header + chip row, the engine-tabbed InstallCommand composite as
+ * FIRST content section (SHELL-004; both engine commands server-rendered),
+ * then the data-verbatim DependencyPanel (SHELL-006's resolve-deps resolves
+ * in frontmatter — the served HTML is already concrete), then the full
+ * untruncated nativewind source, then the within-family pager.
  * No preview panel this sprint (T-GEND-021): omitted, never a placeholder.
  */
 import { readFileSync } from 'node:fs';
-import CopyButton from '../../components/islands/CopyButton.astro';
-import Layout from '../../layouts/spike.astro';
+import DependencyPanel from '../../components/DependencyPanel.astro';
+import InstallCommand from '../../components/InstallCommand.astro';
 import families from '../../data/families.json';
 import items from '../../data/registry-items.json';
+import siteFacts from '../../data/site-facts.json';
+import { resolveRegistryDependencies } from '../../lib/resolve-deps';
+import Layout from '../../layouts/DocsLayout.astro';
 
 interface Props {
   item: (typeof items)[number];
@@ -26,13 +31,15 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 
-/** Sprint-01 renders the nativewind form as the default/only active form. */
+/** The source view renders the nativewind form (the served /r default). */
 const DEFAULT_ENGINE = 'nativewind';
 
-// The release version the chip carries, read at build time so a version bump
-// lands without hand edits. The ordered build chain runs astro from apps/docs,
-// so the path resolves there; a wrong cwd fails the build rather than
-// rendering a stale chip.
+// The release version the chip carries AND the {version} substitution the
+// dependency URLs resolve with — one build-time read of the ROOT
+// package.json, so a version bump moves chip, URLs, and raw.githubusercontent
+// pins together, never apart. The ordered build chain runs astro from
+// apps/docs, so the path resolves there; a wrong cwd fails the build rather
+// than rendering a stale page.
 const { version } = JSON.parse(readFileSync('../../package.json', 'utf8')) as { version: string };
 
 const family = families.find((entry) => entry.itemNames.includes(item.name));
@@ -43,8 +50,13 @@ const memberIndex = family.itemNames.indexOf(item.name);
 const prevName = family.itemNames[(memberIndex - 1 + family.itemNames.length) % family.itemNames.length];
 const nextName = family.itemNames[(memberIndex + 1) % family.itemNames.length];
 
-const commandFor = (engine: string): string =>
-  `npx @react-native-reusables/cli@latest add ${new URL(`r/${engine}/${item.name}.json`, Astro.site)}`;
+// The dependencies panel's engine forms resolve HERE through the one
+// resolver (SHELL-006) — never in markup, never hand-typed. Both engines
+// resolve so both forms are server-rendered (the inactive one hidden only).
+const resolvedRegistryUrls = {
+  nativewind: resolveRegistryDependencies(item.registryDependencies, 'nativewind', version),
+  uniwind: resolveRegistryDependencies(item.registryDependencies, 'uniwind', version),
+};
 
 const sourceFiles = item.sourceFiles.map((file) => ({
   filename: file.filename,
@@ -64,7 +76,7 @@ const sourceFiles = item.sourceFiles.map((file) => ({
       </p>
       <h1>{item.title}</h1>
       <p class="item-description">{item.description}</p>
-      <ul class="chips" aria-label="Status">
+      <ul class="chips" aria-label="Item facts">
         <li data-chip="version">v{version}</li>
         <li data-chip="category">{item.type.replace('registry:', '')}</li>
         {item.engines.map((engine) => <li data-chip="engine">{engine}</li>)}
@@ -74,17 +86,16 @@ const sourceFiles = item.sourceFiles.map((file) => ({
 
     <section data-section="install" aria-labelledby="install-heading">
       <h2 id="install-heading">Install</h2>
-      {
-        item.engines.map((engine) => (
-          <div class="install-row">
-            <span class="engine-label">{engine}</span>
-            <CopyButton
-              command={commandFor(engine)}
-              label={`Copy the ${engine} install command for ${item.title}`}
-            />
-          </div>
-        ))
-      }
+      <InstallCommand item={item.name} />
+    </section>
+
+    <section data-section="dependencies" aria-labelledby="dependencies-heading">
+      <h2 id="dependencies-heading">Dependencies</h2>
+      <DependencyPanel
+        dependencies={item.dependencies}
+        registryUrls={resolvedRegistryUrls}
+        peers={siteFacts.aiSdkPeers}
+      />
     </section>
 
     <section data-section="source" aria-labelledby="source-heading">
@@ -127,18 +138,6 @@ const sourceFiles = item.sourceFiles.map((file) => ({
     border-radius: 999px;
     padding: 0.125rem 0.625rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-  .install-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-    margin-block: 0.5rem;
-  }
-  .engine-label {
-    min-width: 6.5rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-weight: 700;
   }
   .source-file pre {
     overflow-x: auto;
