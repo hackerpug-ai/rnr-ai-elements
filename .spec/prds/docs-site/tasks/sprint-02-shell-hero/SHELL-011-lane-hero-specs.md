@@ -2,7 +2,8 @@
 TASK: SHELL-011 - Widen the Playwright lane to tests/ + hero flow specs (FLOW-GEND-01 one-screen, FLOW-GEND-02 engine-following copy)
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     f5dd0128625a1297ff28474b92c21e8d27cbbc74
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
@@ -34,11 +35,11 @@ CRITICAL CONSTRAINTS (Never tier — read before acting)
 --------------------------------------------------------------------------------
 DONE WHEN
 --------------------------------------------------------------------------------
-- [ ] AC-1: statement + not-npm phrase + computed counters + tabbed install + both CTAs all sit inside the viewport with zero scroll and both CTA targets return HTTP 200 [PRIMARY]
-- [ ] AC-2: each clipboard equals the displayed active-panel command matching the locked regex exactly, success shows by value within 500 ms, the persisted engine survives cold reload, and zero-JS keeps both commands selectable [PRIMARY]
-- [ ] AC-3: testDir == 'tests' with testMatch **/*.spec.ts, retries 0, workers 1, strict-port astro-preview webServer (never astro dev), and the three chromium projects unchanged
-- [ ] typecheck + lint clean on touched paths
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1: statement + not-npm phrase + computed counters + tabbed install + both CTAs all sit inside the viewport with zero scroll and both CTA targets return HTTP 200 [PRIMARY]
+- [x] AC-2: each clipboard equals the displayed active-panel command matching the locked regex exactly, success shows by value within 500 ms, the persisted engine survives cold reload, and zero-JS keeps both commands selectable [PRIMARY]
+- [x] AC-3: testDir == 'tests' with testMatch **/*.spec.ts, retries 0, workers 1, strict-port astro-preview webServer (never astro dev), and the three chromium projects unchanged
+- [x] typecheck + lint clean on touched paths
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA (TDD beads — ordered happy-path first)
 --------------------------------------------------------------------------------

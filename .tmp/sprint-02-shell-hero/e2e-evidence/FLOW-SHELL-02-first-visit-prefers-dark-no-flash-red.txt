@@ -1,0 +1,55 @@
+@@RUN-FLOW flow=FLOW-SHELL-02-first-visit-prefers-dark-no-flash sprint=sprint-02-shell-hero expect=red cmd_sha=e5aa5f21a5d150b2a8bc061f33798990cb2252e1d9d88b5ef85505baaa822088 head=9b274278c0f8b278445efc036ac2d967b9b0c09b+dirty at=2026-09-12T08:31:26Z@@
++ pnpm playwright test tests/sprint-02-shell-hero/theme-first-paint.spec.ts --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+  1) [chromium-desktop] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash 
+
+    Error: /docs/theming must answer 200 from the built preview
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+       96 |   const themingPage = await themingContext.newPage();
+       97 |   const themingResponse = await navigateLocalhost(themingPage, '/docs/theming');
+    >  98 |   expect(themingResponse?.status(), '/docs/theming must answer 200 from the built preview').toBe(
+          |                                                                                             ^
+       99 |     200,
+      100 |   );
+      101 |
+        at /private/tmp/gate-red-theme/tests/sprint-02-shell-hero/theme-first-paint.spec.ts:98:93
+
+    Error Context: test-results/sprint-02-shell-hero-theme-8c9ab-visit-prefers-dark-no-flash-chromium-desktop/error-context.md
+
+
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+  2) [chromium-mobile] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash 
+
+    Error: /docs/theming must answer 200 from the built preview
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+       96 |   const themingPage = await themingContext.newPage();
+       97 |   const themingResponse = await navigateLocalhost(themingPage, '/docs/theming');
+    >  98 |   expect(themingResponse?.status(), '/docs/theming must answer 200 from the built preview').toBe(
+          |                                                                                             ^
+       99 |     200,
+      100 |   );
+      101 |
+        at /private/tmp/gate-red-theme/tests/sprint-02-shell-hero/theme-first-paint.spec.ts:98:93
+
+    Error Context: test-results/sprint-02-shell-hero-theme-8c9ab-visit-prefers-dark-no-flash-chromium-mobile/error-context.md
+
+
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+  2 failed
+    [chromium-desktop] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash 
+    [chromium-mobile] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash 
+  1 skipped
+@@GATE-EXIT=1@@

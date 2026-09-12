@@ -2,7 +2,8 @@
 TASK: SHELL-013 - Theme flow specs: FLOW-SHELL-01 persisted flash-free toggle + FLOW-SHELL-02 first-visit dark, no flash
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     74ba34d2e54d27217f94b40d51a31d2af8fae10c (reviewed at merged head 4ca606c)
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer

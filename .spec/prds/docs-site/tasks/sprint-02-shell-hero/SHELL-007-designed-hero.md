@@ -2,7 +2,8 @@
 TASK: SHELL-007 - Compose the designed home hero per wireframe R5-R8 — one screen at 1440x900, computed counters, engine-tabbed InstallCommand, Button CTAs
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     ffd9063c8ae285e5c9b4502c9b0b176d4307644f
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=frontend-designer | reviewer=astro-reviewer
@@ -35,12 +36,12 @@ CRITICAL CONSTRAINTS (Never tier — read before acting)
 --------------------------------------------------------------------------------
 DONE WHEN
 --------------------------------------------------------------------------------
-- [ ] AC-1: the hero contains the identity sentence, 'copy-paste registry', and the literal 'NOT an npm package'; the data-counter hooks equal the computed expectations inside one hero element tree; Get started targets /registry and Browse components targets /components via Button; the page renders on DocsLayout (header present, sidebar/ToC suppressed)
-- [ ] AC-2: the clipboard equals the displayed active-panel command exactly — `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json` by default, matching the boundary regex character-for-character with no trailing newline — and both engine panels exist in the DOM
-- [ ] AC-3: the page serves 200 and BOTH the nativewind and the uniwind conversation.json commands render as selectable stacked, labeled text
-- [ ] AC-4: every hero element's box lies fully inside the 1440x900 viewport (bottom edge <= 900, no scroll) with the sticky header accounted for; the counters equal the run-time-computed values and both CTA targets return 200
-- [ ] typecheck + lint clean on touched paths
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1: the hero contains the identity sentence, 'copy-paste registry', and the literal 'NOT an npm package'; the data-counter hooks equal the computed expectations inside one hero element tree; Get started targets /registry and Browse components targets /components via Button; the page renders on DocsLayout (header present, sidebar/ToC suppressed)
+- [x] AC-2: the clipboard equals the displayed active-panel command exactly — `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json` by default, matching the boundary regex character-for-character with no trailing newline — and both engine panels exist in the DOM
+- [x] AC-3: the page serves 200 and BOTH the nativewind and the uniwind conversation.json commands render as selectable stacked, labeled text
+- [x] AC-4: every hero element's box lies fully inside the 1440x900 viewport (bottom edge <= 900, no scroll) with the sticky header accounted for; the counters equal the run-time-computed values and both CTA targets return 200
+- [x] typecheck + lint clean on touched paths
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA (TDD beads — ordered happy-path first)
 --------------------------------------------------------------------------------

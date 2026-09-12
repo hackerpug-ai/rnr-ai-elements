@@ -2,7 +2,8 @@
 TASK: SHELL-008 - Item pages: engine-tabbed InstallCommand (install stays first) + data-driven dependency panel; retire spike.astro
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     0cdd8680db3f5b6d6d2dc8c5f8ee2fdbff62ff71
 PRIORITY:   P1
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer

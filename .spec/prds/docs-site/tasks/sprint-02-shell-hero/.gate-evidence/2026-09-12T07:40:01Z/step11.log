@@ -1,0 +1,27 @@
+@@GATE-META step=step11 cmd_sha=ae4038046a642c663515ea2a69ce16aacc9bcfe3e0e78d10946bc5e57a42e113@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 11
+[run_flow] sprint=sprint-02-shell-hero root=/Users/justinrich/Projects/rnr-ai-elements head=64a3c2ab90a0cf7e19c354e3fc071e9fab069279+dirty expect=green flows=1/6
+[run_flow] FLOW-GEND-20-exact-absolute-url-command-copy (steps 1,11): $ pnpm playwright test tests/sprint-02-shell-hero/item-install-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[2/9] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[3/9] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[4/9] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[5/9] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[6/9] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[7/9] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[8/9] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[9/9] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+  1 skipped
+  8 passed (1.3m)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-20-exact-absolute-url-command-copy (steps 1,11): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-20-exact-absolute-url-command-copy.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

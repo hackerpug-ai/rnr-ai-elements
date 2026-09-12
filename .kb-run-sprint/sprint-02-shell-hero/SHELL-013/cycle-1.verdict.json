@@ -1,0 +1,15 @@
+{
+  "verdict": "APPROVED",
+  "spec_commit_sha": "74ba34d2e54d27217f94b40d51a31d2af8fae10c",
+  "reviewed_head_sha": "4ca606c",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "theme-toggle.spec.ts:74-224. Flip dark->light->dark asserts root class + EXACT computed bg (oklch(1 0 0)/oklch(0.145 0 0)) + rnr-theme value + storage key-set delta (no key beyond rnr-theme, :109-134); exact URL no ?/# state (:137); cold-reload DCL sample of persisted light via addInitScript recorder before any page script (:145-174); sticky header box.y~0 at scrollY 1000 on /components/message (:177-189); zero-JS context: toggle attached-but-hidden + dark canvas + dark root state (:191-223). Per-case fresh contexts, cold nav, retries:0. Reviewer locked verify at 4ca606c on fresh build: exit 0 (2 passed + 1 nojs project skip, precedented; zero-JS contract asserted in dedicated case)."},
+    {"id": "AC-2", "satisfied": true, "evidence": "theme-first-paint.spec.ts:63-124. Three separate fresh dark zero-storage contexts cold-navigate /docs/theming, /, /components/message: 200 + DCL class dark + bg oklch(0.145 0 0) + rnr-theme null; fresh light context: light + oklch(1 0 0). Reviewer's independent standalone probe reproduced both schemes' first-frame values. Served dist statically verified (no served light class, pre-paint present)."},
+    {"id": "TC-1..TC-4", "satisfied": true, "evidence": "All four TCs green in reviewer's locked runs; TC-3 zero-JS confirmed against :not(:defined) in ThemeToggle.astro:31-33."},
+    {"id": "typecheck+lint+scope", "satisfied": true, "evidence": "pnpm typecheck exit 0; biome ci both specs exit 0 (reviewer runs at 4ca606c). Diff = exactly the two writeAllowed spec files + five .tmp evidence files; writeProhibited untouched; sync-merge touched no spec."},
+    {"id": "RED-EVIDENCE", "satisfied": true, "evidence": "Honest RED for a reconciliation task: stale specs fail against the landed scheme-respecting product (both exit 1); rewritten CASE 3 fails on bare base 747e7cd (SHELL-008 adoption absent)."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Approved at merged head 4ca606c (implementer spec commit 74ba34d; sync-merge touched no spec). Rewrite strengthens on every axis: per-case fresh colorScheme contexts, exact oklch equality, storage reads + key-set write-surface delta, exact-URL no-state, DCL sampling via init script before any page script. Both locked verify commands exit 0 on reviewer's own build; standalone probe reproduced both schemes' first-frame values. Gate steps 9/10 map 1:1 onto FLOW-SHELL-01/02 observables. Non-blocking notes: (a) canonical RED JSONs will be recomputed by the gate runner at human-gate time; (b) future hardening: assert typeof dclClass === 'string' on dark routes (null would classify dark; light-side cases prove the recorder works); (c) untracked run-artifact dirs in worktree, hygiene only."
+}

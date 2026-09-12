@@ -1,0 +1,15 @@
+@@RUN-FLOW flow=FLOW-GEND-21-dependency-panel-peers sprint=sprint-02-shell-hero expect=green cmd_sha=471a65f5ebce8e9577d5a4a5b2a2592545b79bf1a6ebbfaa789934a3b19f6af6 head=64a3c2ab90a0cf7e19c354e3fc071e9fab069279+dirty at=2026-09-12T08:41:50Z@@
++ pnpm playwright test tests/sprint-02-shell-hero/dependency-panels.spec.ts --grep FLOW-GEND-21-dependency-panel-peers
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+  3 passed (3.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+@@GATE-EXIT=0@@

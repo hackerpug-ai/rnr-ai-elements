@@ -2,7 +2,8 @@
 TASK: SHELL-002 - DocsLayout base + sticky Header (nav, theme slot) + Footer + zero-JS mobile drawer; adopt on ledger, components index, and island-demo pages
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     fd6ad402fd5d41ee3b4f6cc0af61c5bfedbee126
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=frontend-designer | reviewer=astro-reviewer

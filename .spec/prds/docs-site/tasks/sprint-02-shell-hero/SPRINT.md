@@ -1,7 +1,7 @@
 ---
 sequence: 2
 timeline: Phase 1
-status: planned
+status: completed
 sprint_id: sprint-02-shell-hero
 planned_from_roadmap_sha: f257062df7b0c3eb5250b73dbced88ecac7950a8fe5aacca89d03172f0b66832
 planned_from_source_sha: 41f519dea484c32e37ed5d61f5d04ed4b842791d
@@ -10,7 +10,7 @@ planned_at: 2026-09-10
 
 # Sprint 02: shell-hero
 
-**Status:** Planned
+**Status:** completed
 **Sequence:** 2
 **Timeline:** Phase 1
 
@@ -54,19 +54,21 @@ The designed shell and hero: the site gets its 18-token oklch vocabulary, DocsLa
 
 | ID | Title | Agent | Points | Wave | Status |
 |----|-------|-------|--------|------|--------|
-| SHELL-001 | Author the 18-token oklch stylesheet (global.css): light+dark, radius/layout vars, focus ring, dark-first | frontend-designer | 3 | A | ⬜ Pending |
-| SHELL-002 | DocsLayout base + sticky Header (nav, theme slot) + Footer + zero-JS mobile drawer; adopt on ledger, components index, and island-demo pages | frontend-designer | 5 | B | ⬜ Pending |
-| SHELL-003 | ThemeToggle island + pre-paint flash-free theme script (rnr-theme, dark default, scheme-respecting) | astro-implementer | 3 | C | ⬜ Pending |
-| SHELL-004 | TabGroup island (WAI-ARIA engine tabs, persisted rnr-engine, server-rendered panels) + InstallCommand composite | astro-implementer | 5 | D | ⬜ Pending |
-| SHELL-005 | Create Button (NEW 1/4), Chip/ChipRow, and Expo Go verdict Badge — token-governed primitives | frontend-designer | 2 | B | ⬜ Pending |
-| SHELL-006 | Prebuild data: engine/version URL resolver + derived AI SDK v7 peers (site-facts.json) | react-native-reusables-implementer | 3 | A | ⬜ Pending |
-| SHELL-007 | Compose the designed home hero per wireframe R5-R8 — one screen at 1440x900, computed counters, engine-tabbed InstallCommand, Button CTAs | frontend-designer | 5 | E | ⬜ Pending |
-| SHELL-008 | Item pages: engine-tabbed InstallCommand (install stays first) + data-driven dependency panel; retire spike.astro | astro-implementer | 5 | E | ⬜ Pending |
-| SHELL-009 | /docs/theming: minimal real route (first-frame-dark surface for FLOW-SHELL-02) | techwriting-implementer | 2 | C | ⬜ Pending |
-| SHELL-010 | THE COPY PASS: hero statement, not-an-npm phrasing, counter/CTA/tab/toggle microcopy | techwriting-implementer | 3 | F | ⬜ Pending |
-| SHELL-011 | Widen the Playwright lane to tests/ + hero flow specs (FLOW-GEND-01 one-screen, FLOW-GEND-02 engine-following copy) | astro-implementer | 3 | F | ⬜ Pending |
-| SHELL-012 | Item install + dependency-panel flow specs (data-equality against the enriched dataset) | react-native-reusables-implementer | 3 | G | ⬜ Pending |
-| SHELL-013 | Theme flow specs: FLOW-SHELL-01 persisted flash-free toggle + FLOW-SHELL-02 first-visit dark, no flash | astro-implementer | 3 | G | ⬜ Pending |
+| SHELL-001 | Author the 18-token oklch stylesheet (global.css): light+dark, radius/layout vars, focus ring, dark-first | frontend-designer | 3 | A | ✅ Completed |
+| SHELL-002 | DocsLayout base + sticky Header (nav, theme slot) + Footer + zero-JS mobile drawer; adopt on ledger, components index, and island-demo pages | frontend-designer | 5 | B | ✅ Completed |
+| SHELL-003 | ThemeToggle island + pre-paint flash-free theme script (rnr-theme, dark default, scheme-respecting) | astro-implementer | 3 | C | ✅ Completed |
+| SHELL-004 | TabGroup island (WAI-ARIA engine tabs, persisted rnr-engine, server-rendered panels) + InstallCommand composite | astro-implementer | 5 | D | ✅ Completed |
+| SHELL-005 | Create Button (NEW 1/4), Chip/ChipRow, and Expo Go verdict Badge — token-governed primitives | frontend-designer | 2 | B | ✅ Completed |
+| SHELL-006 | Prebuild data: engine/version URL resolver + derived AI SDK v7 peers (site-facts.json) | react-native-reusables-implementer | 3 | A | ✅ Completed |
+| SHELL-007 | Compose the designed home hero per wireframe R5-R8 — one screen at 1440x900, computed counters, engine-tabbed InstallCommand, Button CTAs | frontend-designer | 5 | E | ✅ Completed |
+| SHELL-008 | Item pages: engine-tabbed InstallCommand (install stays first) + data-driven dependency panel; retire spike.astro | astro-implementer | 5 | E | ✅ Completed |
+| SHELL-009 | /docs/theming: minimal real route (first-frame-dark surface for FLOW-SHELL-02) | techwriting-implementer | 2 | C | ✅ Completed |
+| SHELL-010 | THE COPY PASS: hero statement, not-an-npm phrasing, counter/CTA/tab/toggle microcopy | techwriting-implementer | 3 | F | ✅ Completed |
+| SHELL-011 | Widen the Playwright lane to tests/ + hero flow specs (FLOW-GEND-01 one-screen, FLOW-GEND-02 engine-following copy) | astro-implementer | 3 | F | ✅ Completed |
+| SHELL-012 | Item install + dependency-panel flow specs (data-equality against the enriched dataset) | react-native-reusables-implementer | 3 | G | ✅ Completed |
+| SHELL-013 | Theme flow specs: FLOW-SHELL-01 persisted flash-free toggle + FLOW-SHELL-02 first-visit dark, no flash | astro-implementer | 3 | G | ✅ Completed |
+| FIX-SHELL-001-1 | Guard dual-emit lane test against deleting tracked families.json | astro-implementer | 1 | A* | ✅ Completed |
+| FIX-SHELL-002-1 | Scope shell-layout's zero-script assertion around the contracted pre-paint theme script | astro-implementer | 1 | E* | ✅ Completed |
 
 **Waves:** A(2) → B(2) → C(2) → D(1) → E(2) → F(2) → G(2) — 7 waves over 13 tasks
 

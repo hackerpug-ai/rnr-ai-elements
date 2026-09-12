@@ -1,0 +1,20 @@
+@@GATE-META step=step12 cmd_sha=65de406f1a95ed93f119e31ee317fbc300de3b7344fe6608c3a8abf5855deaab@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 12
+[run_flow] sprint=sprint-02-shell-hero root=/Users/justinrich/Projects/rnr-ai-elements head=64a3c2ab90a0cf7e19c354e3fc071e9fab069279+dirty expect=green flows=1/6
+[run_flow] FLOW-GEND-21-dependency-panel-peers (steps 1,12): $ pnpm playwright test tests/sprint-02-shell-hero/dependency-panels.spec.ts --grep FLOW-GEND-21-dependency-panel-peers
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+  3 passed (3.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-21-dependency-panel-peers (steps 1,12): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-21-dependency-panel-peers.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

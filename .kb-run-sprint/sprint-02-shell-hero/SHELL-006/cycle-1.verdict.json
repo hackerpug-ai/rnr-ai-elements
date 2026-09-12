@@ -1,0 +1,18 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "81fb4f4ecea6a467b642345ab20f0c64b58bd58b",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "tests/sprint-02-shell-hero/resolve-deps.test.ts:71-137 — real registry-items.json (56 asserted) + real resolver; shimmer resolves to reactnativereusables.com/r/{nativewind,uniwind}/text.json; conversation raw.githubusercontent URL resolves v{version} from live root package.json both engines; zero {engine}/{version} across all 56 items both engines; negative control — resolver source must not contain root version literal; byte-parity: resolved URLs equal served public/r/<engine>/<item>.json fan-out. `pnpm vitest run tests/sprint-02-shell-hero/resolve-deps.test.ts -t SHELL-006-resolver-substitution` — reviewer run: 1 passed, exit=0."},
+    {"id": "AC-2", "satisfied": true, "evidence": "resolve-deps.test.ts:139-194 — real docs build subprocess exit 0, aiSdkPeers == [{name:'ai', range:'^7.0.89'}] derived at runtime from apps/example/package.json; git ls-files empty + check-ignore exit 0 re-verified; delete-and-regenerate byte-identical; empty-peers fail-closed at exported siteFactsBytes() seam = the exact function main() calls (scripts/docs-data/prebuild.ts:264) before any write. Reviewer run: 1 passed, exit=0."},
+    {"id": "AC-3", "satisfied": true, "evidence": "resolve-deps.test.ts:196-214 — real build exit 0, 56 items, every item's key set equals CONTRACT_KEYS in order (prebuild.ts:60, 14 keys untouched), stdout contains 'site-facts' and 'ai@^7.0.89'; gate-then-write ordering confirmed in source. Reviewer run: 1 passed, exit=0."},
+    {"id": "TC-1", "satisfied": true, "evidence": "resolve-deps.test.ts:83-96,121; token exit=0 in reviewer run"},
+    {"id": "TC-2", "satisfied": true, "evidence": "resolve-deps.test.ts:99-108,113-119,135-136; token exit=0 in reviewer run"},
+    {"id": "TC-3", "satisfied": true, "evidence": "resolve-deps.test.ts:153-160; token exit=0 in reviewer run"},
+    {"id": "TC-4", "satisfied": true, "evidence": "resolve-deps.test.ts:162-193; token exit=0 in reviewer run"},
+    {"id": "TC-5", "satisfied": true, "evidence": "resolve-deps.test.ts:199-213; token exit=0 in reviewer run"}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Clean implementation, independently verified. All three SHELL-006 vitest tokens pass under reviewer's own runs; typecheck exit=0; biome ci clean on touched paths; sprint-01 regression pair 4/4 exit=0. RED evidence genuine (module-not-found, exit=1). No stubs/skips/mocks/weakened assertions. All four implementer assumptions accepted (byte-parity-by-test forced by writeAllowed; templated registryDependencies required by AC-3 shape lock; playwright FLOW-GEND-21 proof belongs to SHELL-012 — deferred serial, not a defect here; empty-peers fail-closed at siteFactsBytes() seam strongest real criterion available). Deferred serial to track: FLOW-GEND-21 playwright proof lands in SHELL-012 scope (dependency-panels.spec.ts + playwright.config.ts testDir widening).",
+  "deferred_serial": {"flow": "FLOW-GEND-21-dependency-panel-peers", "fix_location": "tests/sprint-02-shell-hero/dependency-panels.spec.ts + playwright.config.ts testDir", "owner_task": "SHELL-012"}
+}

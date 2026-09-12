@@ -1,0 +1,161 @@
+{
+  "sprint": "sprint-02-shell-hero",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero",
+    "sprint_slug": "sprint-02-shell-hero"
+  },
+  "run_id": "2026-09-12T07:40:01Z",
+  "verdict": "pass",
+  "steps_total": 13,
+  "steps_executed": 13,
+  "steps_passed": 13,
+  "ui_driver": "playwright-chromium",
+  "ui_driver_note": "all steps are locked-flow terminal steps played via run_flow.py; the flows' own specs drive chromium against the strict-port astro preview (run_ui-step not used \u2014 no direct ui-typed steps in the plan)",
+  "exec_surface": "surface:480 (9BBCADFF-21DC-47AC-906E-EB379C3B4777)",
+  "qa_surface_id": "4D04AC79-43C2-448E-A3CE-91EA40FB9F08",
+  "steps": [
+    {
+      "n": 1,
+      "text": "In the repo root run `pnpm e2e:docs` \u2014 it exits 0 with retries: 0, and the summary lists passing specs from BOTH tests/sprint-01-docs-spike-skeleton and the new tests/sprint-02-shell-hero lane, including all six sprint-02 FLOW ids.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-01-home-hero-evaluation-contract, GEND-02-hero-install-command-copy, GEND-20-exact-absolute-url-command-copy, GEND-21-dependency-panel-peers, SHELL-01-theme-toggle-persisted-flash-free, SHELL-02-first-visit-prefers-dark-no-flash (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step1.log",
+      "duration_ms": 99252
+    },
+    {
+      "n": 2,
+      "text": "Run `pnpm --filter @rnr-ai-elements/docs preview`, then open http://localhost:4321/ in a browser window sized exactly 1440x900 \u2014 the page renders inside a themed shell: a header carrying the RNR wordmark, section links, and a theme toggle, above a hero block.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-01-home-hero-evaluation-contract (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step2.log",
+      "duration_ms": 7203
+    },
+    {
+      "n": 3,
+      "text": "On / at 1440x900, read the hero statement top to bottom without scrolling \u2014 it says in one pass that this is universal AI chat and agent UI components for React Native, distributed as a copy-paste registry, and that it is NOT an npm package.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-01-home-hero-evaluation-contract (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step3.log",
+      "duration_ms": 7259
+    },
+    {
+      "n": 4,
+      "text": "Look at the hero counters row on the same screen \u2014 it shows version 0.2.1 and the item counters 56, 39, 11, 6, each with a readable label.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-01-home-hero-evaluation-contract (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step4.log",
+      "duration_ms": 5166
+    },
+    {
+      "n": 5,
+      "text": "On / at 1440x900, compare the bottom edge of the window with the Get started and Browse components buttons \u2014 both buttons, the statement, the counters, and the install command are all fully visible without scrolling.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-01-home-hero-evaluation-contract (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step5.log",
+      "duration_ms": 6169
+    },
+    {
+      "n": 6,
+      "text": "Click the uniwind tab on the hero install block \u2014 the displayed command's engine segment changes to https://rnraielements.com/r/uniwind/conversation.json while keeping the `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/...` form.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-02-hero-install-command-copy (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step6.log",
+      "duration_ms": 9182
+    },
+    {
+      "n": 7,
+      "text": "Click the copy button in the hero install block \u2014 the button shows a visible success state and pasting anywhere yields exactly the displayed command.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-02-hero-install-command-copy (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step7.log",
+      "duration_ms": 9418
+    },
+    {
+      "n": 8,
+      "text": "Reload http://localhost:4321/ after selecting uniwind \u2014 the hero install block still shows the uniwind tab active with its command (the engine choice persisted).",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-02-hero-install-command-copy (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step8.log",
+      "duration_ms": 9182
+    },
+    {
+      "n": 9,
+      "text": "Click the theme toggle in the header twice (dark to light and back) \u2014 the whole page flips both ways, and after a reload the last-chosen theme persists with no flash of the wrong theme.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: SHELL-01-theme-toggle-persisted-flash-free (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step9.log",
+      "duration_ms": 6168
+    },
+    {
+      "n": 10,
+      "text": "Set the OS/browser appearance to dark, open a fresh private window, and load http://localhost:4321/docs/theming, then http://localhost:4321/, then http://localhost:4321/components/message \u2014 every page renders dark from the very first frame with no light flash.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: SHELL-02-first-visit-prefers-dark-no-flash (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step10.log",
+      "duration_ms": 5150
+    },
+    {
+      "n": 11,
+      "text": "Open http://localhost:4321/components/shimmer \u2014 the install block leads the page with engine tabs; click copy on the nativewind tab (button shows success, paste yields the exact nativewind command), then switch to the uniwind tab and copy again (paste yields the exact uniwind command).",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-20-exact-absolute-url-command-copy (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step11.log",
+      "duration_ms": 77803
+    },
+    {
+      "n": 12,
+      "text": "Read the Dependencies section on http://localhost:4321/components/shimmer and http://localhost:4321/components/conversation \u2014 each lists that item's required packages (e.g. react-native-reanimated, react-native-safe-area-context) and its registry dependency URLs with the engine segment resolved to real rnraielements.com URLs.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-21-dependency-panel-peers (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step12.log",
+      "duration_ms": 5130
+    },
+    {
+      "n": 13,
+      "text": "On / click Get started \u2014 the registry ledger at /registry opens; go back, click Browse components \u2014 /components opens showing the family sections.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow exit 0; flows PASS: GEND-01-home-hero-evaluation-contract (evidence refreshed under .tmp/sprint-02-shell-hero/e2e-evidence/)",
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/.gate-evidence/2026-09-12T07:40:01Z/step13.log",
+      "duration_ms": 4118
+    }
+  ]
+}

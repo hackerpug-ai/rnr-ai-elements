@@ -2,7 +2,8 @@
 TASK: SHELL-006 - Prebuild data: engine/version URL resolver + derived AI SDK v7 peers (site-facts.json)
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     81fb4f4ecea6a467b642345ab20f0c64b58bd58b
 PRIORITY:   P1
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer

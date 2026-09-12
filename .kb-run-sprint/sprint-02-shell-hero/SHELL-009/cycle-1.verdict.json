@@ -1,0 +1,16 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "61e52dc2b129e2ebb7617fe2d6c8d3a01ac47d8d",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Reviewer ran AC-1 lane at 61e52dc: exit=0. Real filtered build subprocess; '56 items' prebuild marker verified genuine dynamic output of scripts/docs-data/prebuild.ts:307-312 (no-match pnpm filter cannot pass). dist/docs/theming/index.html 3.6K >0 bytes; anchors 'ship no tokens' (theming.astro:18), 'oklch' (:26), 'prefers-color-scheme' (:28), 'toggle' (:33), '<header' (DocsLayout import at :10). RED captured (.tmp red/ac1-red.txt 404 signature) AND independently reproduced by reviewer (route moved aside, rerun exit=1 same assertion, restored)."},
+    {"id": "AC-2", "satisfied": true, "evidence": "AC-2 lane rerun exit=0. Placeholder/banned-strings grep of dist = 0 matches. Full-page anchor hrefs {/, /components, /registry} all resolve to non-empty dist files. Page-content set (chrome stripped) == exactly {/, /components} (onward nav theming.astro:38-41). No forbidden-route hrefs."},
+    {"id": "TC-1", "satisfied": true, "evidence": "Build exit 0 + '56 items' marker + dist file 3.6K >0 bytes (stat'd directly)."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Per-anchor grep counts each = 1 on real built artifact; anchors map to theming.astro:18,26,28,33."},
+    {"id": "TC-3", "satisfied": true, "evidence": "Independent grep for all placeholder signatures + TR-12 banned terms = 0; lane also asserts (theming-route.test.ts:151-159)."},
+    {"id": "TC-4", "satisfied": true, "evidence": "Lane asserts every internal anchor href resolves to existing non-empty dist file (:170-178) + set equality (:182-189) + /components/index.html exists (:192-196). Green under reviewer run."},
+    {"id": "GATES-typecheck-lint-scope", "satisfied": true, "evidence": "pnpm typecheck exit=0; biome ci on both touched files exit=0. Diff = theming.astro + theming-route.test.ts + .tmp evidence only; docs/theming.astro the only file under pages/docs/; no sibling routes/content collections; theme-first-paint.spec.ts untouched (predates task; playwright verify is SHELL-013's proof per task CODE PATTERN)."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "All three prose claims verify against the real product: no-config token contract matches apps/example/global.css (registry items carry no cssVars/theme.ts; no tailwind.config.* in apps/example); dark-first oklch matches SHELL-001's global.css exactly (:root dark, html.light light, no prefers-color-scheme query, pinned by tokens.test.ts:315-316); the toggle paragraph describes the contracted mechanism — not a faked demo (light-class flip asserted-real by theme-first-paint.spec.ts; [data-theme-slot] mount exists from SHELL-002; the island is SHELL-003's same-sprint deliverable the MUST names). RED captured + independently reproduced. Oracle is real build subprocess + real dist read with dynamic '56 items' marker. Google style clean. Non-blocking nit forwarded to SHELL-010: paragraph 2's 'This site styles itself the same way' could be misread as docs-site-uses-Tailwind-@theme (docs uses plain CSS custom properties per global.css header) — colon-scoped claim accurate, anchors unaffected."
+}

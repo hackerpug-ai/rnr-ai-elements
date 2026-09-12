@@ -2,7 +2,8 @@
 TASK: SHELL-001 - Author the 18-token oklch stylesheet (global.css): light+dark, radius/layout vars, focus ring, dark-first
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     aa659a8e5bf3fe76514b30bbdd886e6b8ecd53bd
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=frontend-designer | reviewer=astro-reviewer
@@ -81,6 +82,10 @@ AC-2: Dark-first default with the class flip as the single theme mechanism
     NEGATIVE_CONTROL: would fail if the stylesheet is light-first (:root carries oklch(1 0 0)) — the site would flash light before SHELL-003's script adds the class; a prefers-color-scheme media query duplicates the theme mechanism, racing the pre-paint script…
 
 --------------------------------------------------------------------------------
+## Amendments
+
+- 2026-09-11 (orchestrator, driven by reviewer cycle-1 verdict, .kb-run-sprint/sprint-02-shell-hero/SHELL-001/cycle-1.verdict.json): SCOPE.writeAllowed extended with apps/docs/astro.config.mjs and apps/docs/src/layouts/spike.astro. Evidence: Astro 7.3.2 default build.inlineStylesheets:'auto' inlines the imported sheet and emits ZERO dist/_astro/*.css bundles, so AC-1/AC-2's built-emission halves are structurally red in the committed state (reviewer reproduced: vitest exit 1 at tokens.test.ts:233/315; isolation run proves the config line independently required; with both wiring lines the full lane passes 2/2 exit 0). No sprint-02 task owns astro.config.mjs (zero references across all 13 task files). The spike.astro import is real interim wiring: /components/[item] serves through spike.astro until SHELL-008 retires it, and SHELL-002's DocsLayout import supersedes it for adopted pages. A separate FIX task was rejected as structurally circular (config-only task cannot prove token-CSS emission before global.css exists on trunk).
+
 TEST CRITERIA (boolean, mapped to ACs)
 --------------------------------------------------------------------------------
 - TC-1 [happy_path, → AC-1]: The real build's emitted CSS contains all 18 core token names plus --code-background/--code-foreground, each with its exact TR-07 light and dark oklch values.
@@ -95,6 +100,8 @@ writeAllowed:
 - apps/docs/src/styles/global.css (NEW)
 - tests/sprint-02-shell-hero/tokens.test.ts (NEW)
 - tests/sprint-02-shell-hero/theme-first-paint.spec.ts (NEW)
+- apps/docs/astro.config.mjs (MODIFY — AMENDED 2026-09-11, see Amendments)
+- apps/docs/src/layouts/spike.astro (MODIFY — AMENDED 2026-09-11, see Amendments)
 writeProhibited:
 - packages/**
 - apps/example/global.css

@@ -2,7 +2,8 @@
 TASK: SHELL-009 - /docs/theming: minimal real route (first-frame-dark surface for FLOW-SHELL-02)
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     61e52dc2b129e2ebb7617fe2d6c8d3a01ac47d8d
 PRIORITY:   P0
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=techwriting-implementer | reviewer=techwriting-reviewer

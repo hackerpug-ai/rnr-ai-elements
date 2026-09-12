@@ -1,12 +1,14 @@
+@@RUN-FLOW flow=FLOW-GEND-02-hero-install-command-copy sprint=sprint-02-shell-hero expect=red cmd_sha=a15319878b503265b189d3fb95480d53865529e7fc21330f962f3bbc8508382c head=2107567cbda5f09ad67e66424c6aefb713768a54+dirty at=2026-09-12T08:17:07Z@@
++ pnpm playwright test tests/sprint-02-shell-hero/home-hero.spec.ts --grep FLOW-GEND-02-hero-install-command-copy
 
 Running 9 tests using 1 worker
 
-[1/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
-  1) [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
+[1/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+  1) [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
 
     TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
 
-       at ../harness/docs-preview.ts:95
+       at harness/docs-preview.ts:95
 
       93 |   );
       94 |   if (islandInitFlag) {
@@ -15,158 +17,168 @@ Running 9 tests using 1 worker
       96 |       (flag) => (globalThis as unknown as Record<string, unknown>)[flag] === true,
       97 |       islandInitFlag,
       98 |       { timeout: 10_000 },
-        at waitForAstroPageLoad (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:95:16)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:198:3
+        at waitForAstroPageLoad (/private/tmp/gate-red-hero/tests/harness/docs-preview.ts:95:16)
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:203:3
 
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-e8215-thin-500-ms-URL-stays-clean-chromium-desktop/error-context.md
+    Error Context: test-results/sprint-02-shell-hero-home--7b87c-thin-500-ms-URL-stays-clean-chromium-desktop/error-context.md
 
 
-[2/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
-  2) [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
+[2/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+  2) [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
 
-    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/
+    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
+
+       at harness/docs-preview.ts:95
+
+      93 |   );
+      94 |   if (islandInitFlag) {
+    > 95 |     await page.waitForFunction(
+         |                ^
+      96 |       (flag) => (globalThis as unknown as Record<string, unknown>)[flag] === true,
+      97 |       islandInitFlag,
+      98 |       { timeout: 10_000 },
+        at waitForAstroPageLoad (/private/tmp/gate-red-hero/tests/harness/docs-preview.ts:95:16)
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:258:3
+
+    Error Context: test-results/sprint-02-shell-hero-home--3656f--click-path-and-pre-seeded--chromium-desktop/error-context.md
+
+
+[3/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+  3) [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
     Call log:
-      - navigating to "http://localhost:4321/", waiting until "load"
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine="nativewind"] code') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
 
 
-       at ../harness/docs-preview.ts:44
+      348 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      349 |     const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    > 350 |     await expect(panelCode).toHaveCount(1);
+          |                             ^
+      351 |     await expect(panelCode).toBeVisible();
+      352 |     const text = (await panelCode.textContent())?.trim() ?? '';
+      353 |     expect(text).toBe(ENGINE_COMMANDS[engine]);
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:350:29
 
-      42 |     throw new Error(`refusing non-localhost navigation: ${url.href}`);
-      43 |   }
-    > 44 |   return page.goto(url.href);
-         |               ^
-      45 | }
-      46 |
-      47 | /**
-        at navigateLocalhost (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:44:15)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:251:26
-
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-16217--click-path-and-pre-seeded--chromium-desktop/error-context.md
+    Error Context: test-results/sprint-02-shell-hero-home--c2a45--commands-selectable-on-200-chromium-desktop/error-context.md
 
 
-[3/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
-  3) [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
+[4/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+  4) [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
 
-    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/
+    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
+
+       at harness/docs-preview.ts:95
+
+      93 |   );
+      94 |   if (islandInitFlag) {
+    > 95 |     await page.waitForFunction(
+         |                ^
+      96 |       (flag) => (globalThis as unknown as Record<string, unknown>)[flag] === true,
+      97 |       islandInitFlag,
+      98 |       { timeout: 10_000 },
+        at waitForAstroPageLoad (/private/tmp/gate-red-hero/tests/harness/docs-preview.ts:95:16)
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:203:3
+
+    Error Context: test-results/sprint-02-shell-hero-home--7b87c-thin-500-ms-URL-stays-clean-chromium-mobile/error-context.md
+
+
+[5/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+  5) [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
+
+    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
+
+       at harness/docs-preview.ts:95
+
+      93 |   );
+      94 |   if (islandInitFlag) {
+    > 95 |     await page.waitForFunction(
+         |                ^
+      96 |       (flag) => (globalThis as unknown as Record<string, unknown>)[flag] === true,
+      97 |       islandInitFlag,
+      98 |       { timeout: 10_000 },
+        at waitForAstroPageLoad (/private/tmp/gate-red-hero/tests/harness/docs-preview.ts:95:16)
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:258:3
+
+    Error Context: test-results/sprint-02-shell-hero-home--3656f--click-path-and-pre-seeded--chromium-mobile/error-context.md
+
+
+[6/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+  6) [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
     Call log:
-      - navigating to "http://localhost:4321/", waiting until "load"
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine="nativewind"] code') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
 
 
-       at ../harness/docs-preview.ts:44
+      348 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      349 |     const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    > 350 |     await expect(panelCode).toHaveCount(1);
+          |                             ^
+      351 |     await expect(panelCode).toBeVisible();
+      352 |     const text = (await panelCode.textContent())?.trim() ?? '';
+      353 |     expect(text).toBe(ENGINE_COMMANDS[engine]);
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:350:29
 
-      42 |     throw new Error(`refusing non-localhost navigation: ${url.href}`);
-      43 |   }
-    > 44 |   return page.goto(url.href);
-         |               ^
-      45 | }
-      46 |
-      47 | /**
-        at navigateLocalhost (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:44:15)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:340:26
-
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-2cdef--commands-selectable-on-200-chromium-desktop/error-context.md
+    Error Context: test-results/sprint-02-shell-hero-home--c2a45--commands-selectable-on-200-chromium-mobile/error-context.md
 
 
-[4/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
-  4) [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
+[7/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[8/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[9/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+  7) [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
 
-    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
     Call log:
-      - navigating to "http://localhost:4321/", waiting until "load"
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine="nativewind"] code') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
 
 
-       at ../harness/docs-preview.ts:44
+      348 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      349 |     const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    > 350 |     await expect(panelCode).toHaveCount(1);
+          |                             ^
+      351 |     await expect(panelCode).toBeVisible();
+      352 |     const text = (await panelCode.textContent())?.trim() ?? '';
+      353 |     expect(text).toBe(ENGINE_COMMANDS[engine]);
+        at /private/tmp/gate-red-hero/tests/sprint-02-shell-hero/home-hero.spec.ts:350:29
 
-      42 |     throw new Error(`refusing non-localhost navigation: ${url.href}`);
-      43 |   }
-    > 44 |   return page.goto(url.href);
-         |               ^
-      45 | }
-      46 |
-      47 | /**
-        at navigateLocalhost (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:44:15)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:196:26
-
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-e8215-thin-500-ms-URL-stays-clean-chromium-mobile/error-context.md
-
-
-[5/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
-  5) [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
-
-    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/
-    Call log:
-      - navigating to "http://localhost:4321/", waiting until "load"
-
-
-       at ../harness/docs-preview.ts:44
-
-      42 |     throw new Error(`refusing non-localhost navigation: ${url.href}`);
-      43 |   }
-    > 44 |   return page.goto(url.href);
-         |               ^
-      45 | }
-      46 |
-      47 | /**
-        at navigateLocalhost (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:44:15)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:251:26
-
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-16217--click-path-and-pre-seeded--chromium-mobile/error-context.md
-
-
-[6/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
-  6) [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
-
-    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/
-    Call log:
-      - navigating to "http://localhost:4321/", waiting until "load"
-
-
-       at ../harness/docs-preview.ts:44
-
-      42 |     throw new Error(`refusing non-localhost navigation: ${url.href}`);
-      43 |   }
-    > 44 |   return page.goto(url.href);
-         |               ^
-      45 | }
-      46 |
-      47 | /**
-        at navigateLocalhost (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:44:15)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:340:26
-
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-2cdef--commands-selectable-on-200-chromium-mobile/error-context.md
-
-
-[7/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
-[8/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
-[9/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
-  7) [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
-
-    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/
-    Call log:
-      - navigating to "http://localhost:4321/", waiting until "load"
-
-
-       at ../harness/docs-preview.ts:44
-
-      42 |     throw new Error(`refusing non-localhost navigation: ${url.href}`);
-      43 |   }
-    > 44 |   return page.goto(url.href);
-         |               ^
-      45 | }
-      46 |
-      47 | /**
-        at navigateLocalhost (/private/tmp/rnr-shell011-sprint-start/tests/harness/docs-preview.ts:44:15)
-        at /private/tmp/rnr-shell011-sprint-start/tests/sprint-02-shell-hero/home-hero.spec.ts:340:26
-
-    Error Context: test-results/home-hero-FLOW-GEND-02-her-2cdef--commands-selectable-on-200-chromium-nojs/error-context.md
+    Error Context: test-results/sprint-02-shell-hero-home--c2a45--commands-selectable-on-200-chromium-nojs/error-context.md
 
 
   7 failed
-    [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
-    [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
-    [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
-    [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:185:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
-    [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:238:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
-    [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
-    [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:331:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
+    [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
+    [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
+    [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
+    [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean 
+    [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded) 
+    [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
+    [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200 
   2 skipped
+@@GATE-EXIT=1@@

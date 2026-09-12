@@ -1,0 +1,15 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "32180eccbad58c99bbd9c215e97c4b2ad3dbe287",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Reviewer ran copy-pass.test.ts: 3 passed exit 0. index.astro:35-38 two-sentence statement (13/13 words, active, second person), identity h1 byte-unchanged, 'copy-paste registry' + 'NOT an npm package' in <strong>s, CTA pairings at :50-51, 'Registry items' label at :41. Rebuilt dist 44 pages exit 0: 'Registry items' x1, T-GEND-001 set present. Zero banned terminology."},
+    {"id": "AC-2", "satisfied": true, "evidence": "theming-route.test.ts 2 passed. All four anchors in source + dist. Fact-correction REAL (reviewer verified): DocsLayout.astro:36-49 pre-paint resolves stored rnr-theme > matchMedia('(prefers-color-scheme: light)') > dark — old sentence was false; new sentence states verified order. global.css has no @media/@theme rules — 'plain CSS custom properties' accurate."},
+    {"id": "AC-3", "satisfied": true, "evidence": "Third gate test passes. dist/conversation shows install > dependencies > source; headings byte-identical; 'Item facts' x1; toggle label on home + item pages; both engine aria-labels present. [item].astro diff exactly 1 line. Assumption (2) sound: theme-toggle.ts syncs only aria-pressed, never the label — static dual-destination label is the only honest form; Label-in-Name satisfied."},
+    {"id": "TC-1..TC-4", "satisfied": true, "evidence": "All four TCs green under reviewer runs: copy assertions, 25-word check with real sentence-splitting, anchors + placeholder + href-set checks, first-section === install + island aria-label scans."},
+    {"id": "SCOPE", "satisfied": true, "evidence": "Diff = 5 writeAllowed MODIFY files + NEW copy-pass.test.ts + .tmp evidence. No spec touched, no product logic. Assumption (1) correct: machine-readable contract governs over NOTES prose."},
+    {"id": "EVIDENCE", "satisfied": true, "evidence": "SHELL-010-red.txt: pre-pass grep 'Registry items' = 0 exit 1 with three green suites, post-pass = 1 with lane results; cycle-1 per-lane logs present."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Words-only copy pass verified end to end under reviewer's own runs. Most valuable fix: the fact correction — old theming sentence ('first visit paints dark no matter what your system prefers') was factually false against SHELL-003's landed pre-paint script; replacement states the true resolution order; all anchors survived. Static dual-destination toggle label honest given the script never updates the label. All lanes green (copy-pass 3, theming-route 2, home-hero 10, sprint-01 GEND-01 3, FLOW-GEND-14 39x3), typecheck/biome 0, every contracted string greppable in dist. Hero copy meets TR-12. No stubs, no weakened specs, no smuggled structure."
+}

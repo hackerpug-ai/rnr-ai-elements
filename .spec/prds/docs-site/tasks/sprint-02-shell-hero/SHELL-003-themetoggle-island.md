@@ -2,7 +2,8 @@
 TASK: SHELL-003 - ThemeToggle island + pre-paint flash-free theme script (rnr-theme, dark default, scheme-respecting)
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     917b9b3381138d961f24fda6c6802275b3f31cc5
 PRIORITY:   P0
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer

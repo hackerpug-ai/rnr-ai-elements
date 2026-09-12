@@ -1,0 +1,185 @@
+{
+  "sprint": "sprint-02-shell-hero",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero",
+    "sprint_slug": "sprint-02-shell-hero"
+  },
+  "planned_at": "2026-09-12T00:00:00Z",
+  "planned_steps": 13,
+  "steps": [
+    {
+      "n": 1,
+      "text": "In the repo root run `pnpm e2e:docs` \u2014 it exits 0 with retries: 0, and the summary lists passing specs from BOTH tests/sprint-01-docs-spike-skeleton and the new tests/sprint-02-shell-hero lane, including all six sprint-02 FLOW ids.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 1",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract",
+          "FLOW-GEND-02-hero-install-command-copy",
+          "FLOW-GEND-20-exact-absolute-url-command-copy",
+          "FLOW-GEND-21-dependency-panel-peers",
+          "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+          "FLOW-SHELL-02-first-visit-prefers-dark-no-flash"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "text": "Run `pnpm --filter @rnr-ai-elements/docs preview`, then open http://localhost:4321/ in a browser window sized exactly 1440x900 \u2014 the page renders inside a themed shell: a header carrying the RNR wordmark, section links, and a theme toggle, above a hero block.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 2",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract"
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "text": "On / at 1440x900, read the hero statement top to bottom without scrolling \u2014 it says in one pass that this is universal AI chat and agent UI components for React Native, distributed as a copy-paste registry, and that it is NOT an npm package.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 3",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract"
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "text": "Look at the hero counters row on the same screen \u2014 it shows version 0.2.1 and the item counters 56, 39, 11, 6, each with a readable label.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 4",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract"
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "text": "On / at 1440x900, compare the bottom edge of the window with the Get started and Browse components buttons \u2014 both buttons, the statement, the counters, and the install command are all fully visible without scrolling.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 5",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract"
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "text": "Click the uniwind tab on the hero install block \u2014 the displayed command's engine segment changes to https://rnraielements.com/r/uniwind/conversation.json while keeping the `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/...` form.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 6",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-02-hero-install-command-copy"
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "text": "Click the copy button in the hero install block \u2014 the button shows a visible success state and pasting anywhere yields exactly the displayed command.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 7",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-02-hero-install-command-copy"
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "text": "Reload http://localhost:4321/ after selecting uniwind \u2014 the hero install block still shows the uniwind tab active with its command (the engine choice persisted).",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 8",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-02-hero-install-command-copy"
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "text": "Click the theme toggle in the header twice (dark to light and back) \u2014 the whole page flips both ways, and after a reload the last-chosen theme persists with no flash of the wrong theme.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 9",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-01-theme-toggle-persisted-flash-free"
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "text": "Set the OS/browser appearance to dark, open a fresh private window, and load http://localhost:4321/docs/theming, then http://localhost:4321/, then http://localhost:4321/components/message \u2014 every page renders dark from the very first frame with no light flash.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 10",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-02-first-visit-prefers-dark-no-flash"
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "text": "Open http://localhost:4321/components/shimmer \u2014 the install block leads the page with engine tabs; click copy on the nativewind tab (button shows success, paste yields the exact nativewind command), then switch to the uniwind tab and copy again (paste yields the exact uniwind command).",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 11",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-20-exact-absolute-url-command-copy"
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "text": "Read the Dependencies section on http://localhost:4321/components/shimmer and http://localhost:4321/components/conversation \u2014 each lists that item's required packages (e.g. react-native-reanimated, react-native-safe-area-context) and its registry dependency URLs with the engine segment resolved to real rnraielements.com URLs.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 12",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-21-dependency-panel-peers"
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "text": "On / click Get started \u2014 the registry ledger at /registry opens; go back, click Browse components \u2014 /components opens showing the family sections.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 13",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-01-home-hero-evaluation-contract"
+        ]
+      }
+    }
+  ]
+}

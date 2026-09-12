@@ -2,7 +2,8 @@
 TASK: SHELL-010 - THE COPY PASS: hero statement, not-an-npm phrasing, counter/CTA/tab/toggle microcopy
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     32180eccbad58c99bbd9c215e97c4b2ad3dbe287
 PRIORITY:   P1
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=techwriting-implementer | reviewer=techwriting-reviewer

@@ -2,7 +2,8 @@
 TASK: SHELL-005 - Create Button (NEW 1/4), Chip/ChipRow, and Expo Go verdict Badge — token-governed primitives
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     aefa7825295f60ba1ccd6e067adcf6267e7bc944
 PRIORITY:   P1
 POINTS:     2   # Fibonacci story points — relative size, never time
 AGENT:      implementer=frontend-designer | reviewer=astro-reviewer

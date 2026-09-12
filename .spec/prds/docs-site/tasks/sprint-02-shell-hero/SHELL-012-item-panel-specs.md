@@ -2,7 +2,8 @@
 TASK: SHELL-012 - Item install + dependency-panel flow specs (data-equality against the enriched dataset)
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     1da022830a000b4224723a7a70f3c3eba2dfe7cd
 PRIORITY:   P1
 POINTS:     3   # Fibonacci story points — relative size, never time
 AGENT:      implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer

@@ -2,7 +2,8 @@
 TASK: SHELL-004 - TabGroup island (WAI-ARIA engine tabs, persisted rnr-engine, server-rendered panels) + InstallCommand composite
 ================================================================================
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed (landed)
+COMMIT:     81c9072239359b03f0d25849b6e981e131516c23
 PRIORITY:   P0
 POINTS:     5   # Fibonacci story points — relative size, never time
 AGENT:      implementer=astro-implementer | reviewer=astro-reviewer
@@ -35,10 +36,10 @@ CRITICAL CONSTRAINTS (Never tier — read before acting)
 --------------------------------------------------------------------------------
 DONE WHEN
 --------------------------------------------------------------------------------
-- [ ] AC-1: TabGroup emits role=tab buttons and role=tabpanel divs carrying data-engine with hidden-attribute toggling and storage-key="rnr-engine"; InstallCommand wraps one TabGroup whose nativewind panel precedes uniwind and whose command construction matches the locked absolute-URL shape
-- [ ] AC-2: exactly THREE customElements.define sites (rnr-copy-button, rnr-theme-toggle, rnr-tab-group) and zero client-framework imports
-- [ ] typecheck + lint clean on touched paths
-- [ ] git diff --name-only ⊆ SCOPE.writeAllowed
+- [x] AC-1: TabGroup emits role=tab buttons and role=tabpanel divs carrying data-engine with hidden-attribute toggling and storage-key="rnr-engine"; InstallCommand wraps one TabGroup whose nativewind panel precedes uniwind and whose command construction matches the locked absolute-URL shape
+- [x] AC-2: exactly THREE customElements.define sites (rnr-copy-button, rnr-theme-toggle, rnr-tab-group) and zero client-framework imports
+- [x] typecheck + lint clean on touched paths
+- [x] git diff --name-only ⊆ SCOPE.writeAllowed
 --------------------------------------------------------------------------------
 ACCEPTANCE CRITERIA (TDD beads — ordered happy-path first)
 --------------------------------------------------------------------------------

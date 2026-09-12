@@ -1,20 +1,237 @@
-SHELL-012 RED proof — FLOW-GEND-20-exact-absolute-url-command-copy
-Captured: 2026-09-12T07:29:15Z against sprint-start commit 41f519dea484c32e37ed5d61f5d04ed4b842791d
-Procedure: git archive 41f519dea484c32e37ed5d61f5d04ed4b842791d extracted to /tmp/SHELL-012-red-41f519d;
-  pnpm install --frozen-lockfile (exit 0); ordered chain pnpm registry:build && pnpm gallery:manifest
-  && pnpm --filter @rnr-ai-elements/docs build (exit 0); then ONLY the two SHELL-012 spec files plus the
-  SHELL-011-landed playwright.config.ts lane widening (testDir 'tests' — a declared dependency of this
-  task, required for the lane to discover the specs at all) copied in. Byte-for-byte locked run_cmd:
-  pnpm playwright test tests/sprint-02-shell-hero/item-install-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy
-Expected: RED — the SHELL-006 resolver and the SHELL-008 tabbed install/dependency panels this spec
-  asserts do not exist at sprint-start (specs land after features; convergence Ruling 4).
-Exit code: 1
+@@RUN-FLOW flow=FLOW-GEND-20-exact-absolute-url-command-copy sprint=sprint-02-shell-hero expect=red cmd_sha=473efc12f660c759ffefcae0a46b58f46527e1fdcbce545bf4970ed40ce7ca4d head=747e7cdc55fb0907840bd9d775c619b7029bc5ae+dirty at=2026-09-12T08:18:14Z@@
++ pnpm playwright test tests/sprint-02-shell-hero/item-install-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy
 
---- raw output ---
-Error: Cannot find module '/private/tmp/SHELL-012-red-41f519d/apps/docs/src/lib/resolve-deps' imported from /private/tmp/SHELL-012-red-41f519d/tests/sprint-02-shell-hero/item-install-copy.spec.ts
-    at eval (<anonymous>:1:1)
+Running 9 tests using 1 worker
 
-Error: No tests found.
-Make sure that arguments are regular expressions matching test files.
-You may need to escape symbols like "$" or "*" and quote the arguments.
+[1/9] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  1) [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
 
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]') with timeout 5000ms
+      - waiting for locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      164 |   );
+      165 |   const tabGroup = install.locator('rnr-tab-group[storage-key="rnr-engine"]');
+    > 166 |   await expect(tabGroup).toHaveCount(1);
+          |                          ^
+      167 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      168 |     const panel = install.locator(`[role="tabpanel"][data-engine="${engine}"]`);
+      169 |     await expect(panel.locator('rnr-copy-button code')).toHaveText(
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:166:26
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-desktop/error-context.md
+
+
+[2/9] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+  2) [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms 
+
+    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
+
+       at harness/docs-preview.ts:95
+
+      93 |   );
+      94 |   if (islandInitFlag) {
+    > 95 |     await page.waitForFunction(
+         |                ^
+      96 |       (flag) => (globalThis as unknown as Record<string, unknown>)[flag] === true,
+      97 |       islandInitFlag,
+      98 |       { timeout: 10_000 },
+        at waitForAstroPageLoad (/private/tmp/gate-red-items/tests/harness/docs-preview.ts:95:16)
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:318:5
+
+    Error Context: test-results/sprint-02-shell-hero-item--b4a1f-cess-by-value-within-500-ms-chromium-desktop/error-context.md
+
+
+[3/9] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+  3) [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page 
+
+    Error: shimmer nativewind panel code
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - shimmer nativewind panel code locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code') with timeout 5000ms
+      - waiting for locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      391 |         `${INSTALL_SECTION} [role="tabpanel"][data-engine="${engine}"] rnr-copy-button code`,
+      392 |       );
+    > 393 |       await expect(code, `${item.name} ${engine} panel code`).toHaveCount(1);
+          |                                                               ^
+      394 |       await expect(code, `${item.name} ${engine} selectable under zero JS`).toBeVisible();
+      395 |       const text = ((await code.textContent()) ?? '').trim();
+      396 |       expect(text, `${item.name} ${engine} zero-JS command`).toBe(commandFor(engine, item.name));
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:393:63
+
+    Error Context: test-results/sprint-02-shell-hero-item--c3b9f-nd-selectable-on-every-page-chromium-desktop/error-context.md
+
+
+[4/9] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  4) [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]') with timeout 5000ms
+      - waiting for locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      164 |   );
+      165 |   const tabGroup = install.locator('rnr-tab-group[storage-key="rnr-engine"]');
+    > 166 |   await expect(tabGroup).toHaveCount(1);
+          |                          ^
+      167 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      168 |     const panel = install.locator(`[role="tabpanel"][data-engine="${engine}"]`);
+      169 |     await expect(panel.locator('rnr-copy-button code')).toHaveText(
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:166:26
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-mobile/error-context.md
+
+
+[5/9] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+  5) [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms 
+
+    TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.
+
+       at harness/docs-preview.ts:95
+
+      93 |   );
+      94 |   if (islandInitFlag) {
+    > 95 |     await page.waitForFunction(
+         |                ^
+      96 |       (flag) => (globalThis as unknown as Record<string, unknown>)[flag] === true,
+      97 |       islandInitFlag,
+      98 |       { timeout: 10_000 },
+        at waitForAstroPageLoad (/private/tmp/gate-red-items/tests/harness/docs-preview.ts:95:16)
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:318:5
+
+    Error Context: test-results/sprint-02-shell-hero-item--b4a1f-cess-by-value-within-500-ms-chromium-mobile/error-context.md
+
+
+[6/9] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+  6) [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page 
+
+    Error: shimmer nativewind panel code
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - shimmer nativewind panel code locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code') with timeout 5000ms
+      - waiting for locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      391 |         `${INSTALL_SECTION} [role="tabpanel"][data-engine="${engine}"] rnr-copy-button code`,
+      392 |       );
+    > 393 |       await expect(code, `${item.name} ${engine} panel code`).toHaveCount(1);
+          |                                                               ^
+      394 |       await expect(code, `${item.name} ${engine} selectable under zero JS`).toBeVisible();
+      395 |       const text = ((await code.textContent()) ?? '').trim();
+      396 |       expect(text, `${item.name} ${engine} zero-JS command`).toBe(commandFor(engine, item.name));
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:393:63
+
+    Error Context: test-results/sprint-02-shell-hero-item--c3b9f-nd-selectable-on-every-page-chromium-mobile/error-context.md
+
+
+[7/9] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  7) [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]') with timeout 5000ms
+      - waiting for locator('main > section[data-section="install"]').locator('rnr-tab-group[storage-key="rnr-engine"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      164 |   );
+      165 |   const tabGroup = install.locator('rnr-tab-group[storage-key="rnr-engine"]');
+    > 166 |   await expect(tabGroup).toHaveCount(1);
+          |                          ^
+      167 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      168 |     const panel = install.locator(`[role="tabpanel"][data-engine="${engine}"]`);
+      169 |     await expect(panel.locator('rnr-copy-button code')).toHaveText(
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:166:26
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-nojs/error-context.md
+
+
+[8/9] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[9/9] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+  8) [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page 
+
+    Error: shimmer nativewind panel code
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - shimmer nativewind panel code locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code') with timeout 5000ms
+      - waiting for locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      391 |         `${INSTALL_SECTION} [role="tabpanel"][data-engine="${engine}"] rnr-copy-button code`,
+      392 |       );
+    > 393 |       await expect(code, `${item.name} ${engine} panel code`).toHaveCount(1);
+          |                                                               ^
+      394 |       await expect(code, `${item.name} ${engine} selectable under zero JS`).toBeVisible();
+      395 |       const text = ((await code.textContent()) ?? '').trim();
+      396 |       expect(text, `${item.name} ${engine} zero-JS command`).toBe(commandFor(engine, item.name));
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/item-install-copy.spec.ts:393:63
+
+    Error Context: test-results/sprint-02-shell-hero-item--c3b9f-nd-selectable-on-every-page-chromium-nojs/error-context.md
+
+
+  8 failed
+    [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+    [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms 
+    [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page 
+    [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+    [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms 
+    [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page 
+    [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+    [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page 
+  1 skipped
+@@GATE-EXIT=1@@

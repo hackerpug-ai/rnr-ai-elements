@@ -1,0 +1,15 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "0cdd8680db3f5b6d6d2dc8c5f8ee2fdbff62ff71",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Cycle-1-passing assertions untouched (diff f9bb69c..0cdd868 = SITE doc comment + CASE 3 only). SITE narrowed to sole correct consumer (spec:70 def, single usage :104 install command) matching InstallCommand.astro:28 + astro.config.mjs:6 + AC-1 scenario. Narrow lane SHELL-008-tabbed-install-first re-run by reviewer exit=0."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Blocker closed: CASE 3 (spec:199-213) derives via resolveRegistryDependencies(message.registryDependencies,'nativewind',VERSION)[0] (item-pages-build.test.ts:225-233 pattern) + fixture-sanity guard (:204). Reviewer's own tsx evaluation over real resolver + real registry.json + v0.2.1: derived[0] === https://reactnativereusables.com/r/nativewind/avatar.json (AC-2-named), !== old wrong literal. Fresh dist carries the right URL, zero wrong-literal occurrences. Sibling sweep clean: 0 domain/v0.2.1/7.x-range/raw.githubusercontent literals in spec; empty-state matches DependencyPanel.astro:36; VERSION from root package.json. Narrow lane dependencies-dataverbatim exit=0."},
+    {"id": "AC-3", "satisfied": true, "evidence": "Unchanged from cycle 1; no diff touches AC-3 surface; spike.astro absent."},
+    {"id": "DONE-WHEN-typecheck-lint", "satisfied": true, "evidence": "pnpm typecheck exit=0; biome ci on touched spec exit=0 (reviewer runs)."},
+    {"id": "DONE-WHEN-scope", "satisfied": true, "evidence": "Diff = 1 writeAllowed test file + 5 .tmp/SHELL-008/cycle-2/ evidence files. Worktree clean; families.json intact."},
+    {"id": "ASSUMPTION-1..3", "satisfied": true, "evidence": "AC-1 names rnraielements.com for install (task :60), AC-2 names reactnativereusables.com for deps (:84,:334) — SITE-for-install is AC-correct. registry-items.json absent pre-build; verbatim-copy verified at prebuild.ts:186 with fail-closed gate :252-260; lane re-proved dist === resolver(dataset) under reviewer execution. Spec unexecuted under worktree's pinned testDir (branched pre-SHELL-011); corrected expectation verified against the same dist artifact the widened lane will serve."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle 2 closes the sole cycle-1 blocker with the strongest available fix — deriving the expectation through the same real resolver the page uses, plus a fixture-sanity guard — instead of pinning another literal. Reviewer independently reproduced the derivation, the dist state, both narrow lanes, typecheck, and biome. Every cycle-1-passing assertion byte-identical. No stubs. The corrected CASE 3 runs green under SHELL-011's widened lane."
+}
