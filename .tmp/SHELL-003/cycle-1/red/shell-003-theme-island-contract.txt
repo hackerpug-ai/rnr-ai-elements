@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-003
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts (2 tests | 1 failed | 1 skipped) 7248ms
+     × SHELL-003-theme-island-contract: built DocsLayout pages serve the inline pre-paint theme script and the rnr-theme-toggle island 7248ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/island-budget.test.ts > SHELL-003 theme island contract > SHELL-003-theme-island-contract: built DocsLayout pages serve the inline pre-paint theme script and the rnr-theme-toggle island
+AssertionError: apps/docs/dist/components/index.html: no inline data-astro-rerun theme script in <head> — first paint runs theme-less: expected 0 to be greater than 0
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:195:11
+    193|           themeScripts.length,
+    194|           `${label}: no inline data-astro-rerun theme script in <head>…
+    195|         ).toBeGreaterThan(0);
+       |           ^
+    196|
+    197|         const themeLogic = themeScripts.map(([, , content]) => content…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  23:14:24
+   Duration  7.33s (transform 11ms, setup 0ms, import 16ms, tests 7.25s, environment 0ms)
+

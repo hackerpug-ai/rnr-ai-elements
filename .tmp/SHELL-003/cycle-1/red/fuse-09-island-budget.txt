@@ -1,0 +1,44 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-003
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts (2 tests | 1 failed | 1 skipped) 6ms
+     × FUSE-09-island-budget: exactly two customElements.define (rnr-copy-button, rnr-theme-toggle), zero framework imports 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/island-budget.test.ts > FUSE-09 island budget > FUSE-09-island-budget: exactly two customElements.define (rnr-copy-button, rnr-theme-toggle), zero framework imports
+AssertionError: expected [ { …(2) } ] to deeply equal [ { …(2) }, { …(2) } ]
+
+- Expected
++ Received
+
+  [
+    {
+      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-003/apps/docs/src/scripts/copy-button.ts",
+      "tag": "rnr-copy-button",
+    },
+-   {
+-     "file": StringContaining "theme-toggle.ts",
+-     "tag": "rnr-theme-toggle",
+-   },
+  ]
+
+ ❯ tests/sprint-01-docs-spike-skeleton/island-budget.test.ts:61:25
+     59|     }
+     60|
+     61|     expect(defineSites).toEqual([
+       |                         ^
+     62|       { file: expect.stringContaining('copy-button.ts'), tag: ELEMENT_…
+     63|       { file: expect.stringContaining('theme-toggle.ts'), tag: THEME_E…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  23:12:43
+   Duration  100ms (transform 10ms, setup 0ms, import 16ms, tests 6ms, environment 0ms)
+
