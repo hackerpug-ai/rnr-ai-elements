@@ -323,7 +323,7 @@ it('SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h),
   ).toContain('prefers-reduced-motion');
 });
 
-it('SHELL-002-sprint01-contracts-preserved: family section[id] anchors + ul li rows on /components, ledger table rows on /registry', () => {
+it('SHELL-002-sprint01-contracts-preserved: family section[id] anchors + a[data-card] card grid on /components, ledger table rows on /registry', () => {
   expect(buildExit, `docs build exited ${buildExit}\n${buildLog}`).toBe(0);
 
   // Dataset-derived expectations — never hand-copied literals (AC-3).
@@ -333,28 +333,40 @@ it('SHELL-002-sprint01-contracts-preserved: family section[id] anchors + ul li r
   const items = JSON.parse(
     readFileSync(join(DOCS_SRC, 'data/registry-items.json'), 'utf8'),
   ) as LedgerItem[];
-  const familyAnchoredSections = families.length;
-  const totalListedNames = families.reduce((sum, family) => sum + family.itemNames.length, 0);
-  const componentNames = items.filter((item) => item.type === 'registry:component').length;
+  const componentItems = items.filter((item) => item.type === 'registry:component');
+  const componentNames = new Set(componentItems.map((item) => item.name));
+  // FAM-003 renders the all-component families only — ui and lib are excluded.
+  const allComponentFamilies = families.filter((family) =>
+    family.itemNames.every((name) => componentNames.has(name)),
+  );
 
-  // /components: the shell wraps — not replaces — the anchored family structure.
+  // /components: the FAM-003 card grid — one anchored section per all-component
+  // family, one a[data-card] per registry:component name.
   const componentsHtml = builtRoutes['components/index.html'];
   expect(componentsHtml, 'components/index.html was not built').not.toBe('');
   const sectionsWithId = countMatches(componentsHtml, /<section\b[^>]*\bid="[^"]*"/);
-  expect(sectionsWithId, 'id-anchored family sections on /components').toBe(familyAnchoredSections);
+  expect(
+    sectionsWithId,
+    'id-anchored family sections on /components must equal the all-component families',
+  ).toBe(allComponentFamilies.length);
   expect(
     sectionsWithId,
     'at least 7 anchored family sections (sprint-01 contract)',
   ).toBeGreaterThanOrEqual(7);
-  const liRows = countMatches(componentsHtml, /<li\b/);
-  expect(liRows, 'ul li item rows on /components must total every family name').toBe(
-    totalListedNames,
-  );
-  const liAnchoredRows = countMatches(componentsHtml, /<li\b[^>]*>\s*<a\s/);
+  const cardTags = componentsHtml.match(/<a\b[^>]*\bdata-card\b[^>]*>/g) ?? [];
   expect(
-    liAnchoredRows,
-    'ul li rows linking a component page must total the registry:component count',
-  ).toBe(componentNames);
+    cardTags.length,
+    'a[data-card] cards on /components must total the registry:component count',
+  ).toBe(componentItems.length);
+  const cardHrefs = cardTags.map((tag) => /href="\/components\/([^"]*)"/.exec(tag)?.[1] ?? '');
+  expect(
+    new Set(cardHrefs).size,
+    'distinct /components/{item} card hrefs must equal the registry:component count',
+  ).toBe(componentItems.length);
+  expect(
+    [...cardHrefs].sort(),
+    'card href slugs equal the registry:component names, each exactly once',
+  ).toEqual(componentItems.map((item) => item.name).sort());
 
   // /registry: the ledger keeps its table and its derived row count.
   const registryHtml = builtRoutes['registry/index.html'];

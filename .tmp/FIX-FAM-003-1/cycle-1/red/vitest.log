@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-003-1
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts (3 tests | 1 failed) 15078ms
+   × SHELL-002-sprint01-contracts-preserved: family section[id] anchors + ul li rows on /components, ledger table rows on /registry 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/shell-layout.test.ts > SHELL-002-sprint01-contracts-preserved: family section[id] anchors + ul li rows on /components, ledger table rows on /registry
+AssertionError: id-anchored family sections on /components: expected 7 to be 9 // Object.is equality
+
+- Expected
++ Received
+
+- 9
++ 7
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts:344:72
+    342|   expect(componentsHtml, 'components/index.html was not built').not.to…
+    343|   const sectionsWithId = countMatches(componentsHtml, /<section\b[^>]*…
+    344|   expect(sectionsWithId, 'id-anchored family sections on /components')…
+       |                                                                        ^
+    345|   expect(
+    346|     sectionsWithId,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  13:02:14
+   Duration  15.32s (transform 28ms, setup 0ms, import 43ms, tests 15.08s, environment 0ms)
+
