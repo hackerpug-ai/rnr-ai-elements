@@ -31,14 +31,14 @@ const libCount = registry.filter((item) => item.type === 'registry:lib').length;
   <main class="hero">
     <h1 id="hero-heading">Universal AI chat and agent UI components for React Native</h1>
     <p class="hero__statement">
-      A <strong>copy-paste registry</strong> of chat and agent UI building blocks.
-      This is <strong>NOT an npm package</strong> — you add the source to your
-      project with the CLI and own every line.
+      A <strong>copy-paste registry</strong>: the CLI copies each registry item's
+      source into your project. This is <strong>NOT an npm package</strong> — you
+      read, change, and own every line.
     </p>
 
     <ul class="hero__chips" aria-label="Registry health">
       <li><Chip counter="version" value={pkg.version} label="Version" /></li>
-      <li><Chip counter="total" value={total} label="Items" /></li>
+      <li><Chip counter="total" value={total} label="Registry items" /></li>
       <li><Chip counter="components" value={componentCount} label="Components" /></li>
       <li><Chip counter="ui" value={uiCount} label="UI primitives" /></li>
       <li><Chip counter="libs" value={libCount} label="Libs" /></li>

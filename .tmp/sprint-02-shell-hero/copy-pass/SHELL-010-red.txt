@@ -1,0 +1,58 @@
+SHELL-010 pre-pass copy-delta RED capture
+Date: 2026-09-12T07:06:07Z
+Trunk base: df14d49 (worktree @ df14d49)
+
+Command: grep -c "Registry items" apps/docs/dist/index.html
+0
+grep exit=1
+
+--- pre-pass green suite 1: home-hero FLOW-GEND-01 (playwright) ---
+exit=0
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+  3 passed (3.7s)
+
+--- pre-pass green suite 2: theming-route SHELL-009 anchors (vitest) ---
+exit=0
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-010
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  01:06:27
+   Duration  6.16s (transform 12ms, setup 0ms, import 18ms, tests 6.07s, environment 0ms)
+
+
+--- pre-pass green suite 3: component-page FLOW-GEND-14 anatomy (playwright) ---
+exit=0
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+  3 passed (12.1s)
+
+=== POST-PASS GREEN capture (same file, after the copy pass) ===
+Date: 2026-09-12T07:11:13Z
+
+Command: grep -c "Registry items" apps/docs/dist/index.html
+1
+grep exit=0 (>=1 match — the deliverable string landed)
+
+Command: grep -rni "styling engine|flavor|registry variant" <four touched files>
+terminology grep exit=1 (zero matches)
+
+Post-pass lanes (logs under .tmp/SHELL-010/cycle-1/):
+- home-hero.spec.ts FULL FILE: exit=0 (10 passed, 2 clipboard skips under chromium-nojs by design)
+- sprint-01 home.spec.ts FLOW-GEND-01: exit=0 (3 passed)
+- theming-route.test.ts FULL FILE: exit=0 (2 passed — anchors + honesty/links)
+- component-page.spec.ts FLOW-GEND-14: exit=0 (3 passed, all 39 pages x 3 projects)
+- copy-pass.test.ts: exit=0 (3 passed)
+- pnpm typecheck: exit=0
+- biome ci <six touched paths>: exit=0
+
+Copy deltas landed this pass:
+- index.astro statement -> two sentences (13/13 words), counter label Items -> Registry items
+- ThemeToggle.astro trigger + aria-label="Toggle dark and light theme"
+- TabGroup.astro tabs + aria-label="<engine> engine" (nativewind engine / uniwind engine)
+- [item].astro chips aria-label Status -> Item facts
+- theming.astro: p2 rewritten — corrects the false "first visit paints dark no matter what your system prefers" claim (pre-paint script resolves stored > OS scheme > dark per DocsLayout.astro) and the "styles itself the same way" ambiguity (docs sheet is plain CSS custom properties, no Tailwind/@theme); p1 "never means editing" -> "never touches"; p3 "live actor" -> "live control"

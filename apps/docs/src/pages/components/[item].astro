@@ -76,7 +76,7 @@ const sourceFiles = item.sourceFiles.map((file) => ({
       </p>
       <h1>{item.title}</h1>
       <p class="item-description">{item.description}</p>
-      <ul class="chips" aria-label="Status">
+      <ul class="chips" aria-label="Item facts">
         <li data-chip="version">v{version}</li>
         <li data-chip="category">{item.type.replace('registry:', '')}</li>
         {item.engines.map((engine) => <li data-chip="engine">{engine}</li>)}

@@ -17,20 +17,22 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     <p>
       The registry items ship no tokens of their own. Each one you copy in
       reads its colors from your app's Tailwind v4 <code>@theme</code> block.
-      Re-theming your product never means editing registry code. There is no
+      Re-theming your product never touches registry code. There is no
       <code>tailwind.config.js</code> and no theme setting to configure.
     </p>
 
     <p>
-      This site styles itself the same way: one token sheet, dark first. Every
-      color in the sheet is an <code>oklch</code> value, and the dark values are
-      the defaults — the sheet never reads your OS
-      <code>prefers-color-scheme</code> setting, so a first visit paints dark no
-      matter what your system prefers.
+      This site reads its colors from one token sheet of plain CSS custom
+      properties — no Tailwind, no <code>@theme</code> block. Every color in
+      that sheet is an <code>oklch</code> value, and the dark values are the
+      defaults. The sheet itself never reads your OS
+      <code>prefers-color-scheme</code> setting. A script in the page head
+      resolves your theme before first paint: your stored choice first, then
+      your OS scheme, then dark.
     </p>
 
     <p>
-      The toggle in the site header is the live actor. It flips a
+      The toggle in the site header is the live control. It flips a
       <code>light</code> class on the root element, and every token re-resolves
       in place — no reload, no second stylesheet.
     </p>
