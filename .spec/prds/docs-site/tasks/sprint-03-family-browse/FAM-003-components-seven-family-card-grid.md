@@ -2,7 +2,7 @@
 
 # FAM-003: /components seven-family card grid; supersede the FUSE-07 lean-list spec block
 
-> Status: Backlog
+> Status: in_progress
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P0 · Points: 5 · Type: FEATURE · Wave: ?
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -472,3 +472,18 @@ writeProhibited:
 -->
 
 </details>
+
+## Amendments
+
+### AMEND-1 (AC-4, reviewer-proposed cycle 1, 2026-09-12)
+
+- **Original criterion:** AC-4 required `data-filter-text` as name + description + family.
+- **Replacement real criterion:** `data-filter-text` on every card as name + one-line description +
+  category (the locked FAM-002 ComponentCard join), with the family dimension carried by the
+  card's section ancestor (`section id={family.id}`), asserted per card in the rendered extras proof.
+- **Because (probe evidence):** ComponentCard.astro is writeProhibited with
+  `filterText=[title, oneLiner, category]` (ComponentCard.astro:27) and FAM-001's locked chip
+  oracle pins the category slot to the registry type (`card-anatomy.spec.ts:127,132,141`), while
+  FAM-004 (the sole consumer) matches free text over `[data-filter-text]` and has no family-facet
+  requirement. Reviewer verified the implemented resolution serves the consumer: extras vitest 2/2
+  and rendered extras proof 3/3 (per-card ancestry assertion).
