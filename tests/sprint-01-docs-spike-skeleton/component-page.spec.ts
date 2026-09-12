@@ -24,8 +24,8 @@ function readJson<T>(relative: string): T {
 }
 
 /**
- * FUSE-07 — generated component reference pages + lean /components index,
- * served by the real `astro preview` over dist via `pnpm e2e:docs`.
+ * FUSE-07 — generated component reference pages + the /components family card
+ * grid, served by the real `astro preview` over dist via `pnpm e2e:docs`.
  *
  * FLOW-GEND-14-reference-page-anatomy (AC-1): header/chips anatomy on
  *   /components/conversation, then the same anatomy looped over all 39
@@ -34,9 +34,12 @@ function readJson<T>(relative: string): T {
  * FLOW-GEND-15-family-pager-stays-in-family (AC-2): a next-link walk per
  *   component family must visit exactly the family's member set and never
  *   cross families; every pager href serves 200.
- * FUSE-07-components-index (AC-3): the /components index anchors all 56
- *   names exactly once across the families.json sections; the 39 component
- *   links all serve 200.
+ * FUSE-07-components-index (AC-3, superseded by FAM-003): the /components
+ *   index renders the seven-family card grid — exactly the all-component
+ *   families in families.json order, one card per registry:component, every
+ *   card href serving 200, and zero ui/lib entries.
+ * FAM-003-family-grid-extras (AC-4 rendered proof): the derived jump nav, the
+ *   empty mount slot above the grid, and per-card data-filter-text coverage.
  *
  * Every assertion is server-rendered DOM or an API-context fetch — nothing
  * here needs page JS, so all three tests stay UNGUARDED and the chromium-nojs
@@ -246,49 +249,110 @@ test.describe('FLOW-GEND-15-family-pager-stays-in-family', () => {
     await page.screenshot({ path: evidencePath(testInfo, 'family-pager'), fullPage: true });
   });
 
-  test('FUSE-07-components-index — lean index anchors all 56 names exactly once', async ({
+  test('FUSE-07-components-index — /components renders the seven-family card grid', async ({
     page,
     request,
   }, testInfo) => {
     const response = await page.goto(`${PREVIEW_URL}/components`);
     expect(response?.status(), '/components must serve 200').toBe(200);
 
-    const sections = page.locator('main > section[id]');
-    expect(await sections.count(), 'one anchored section per family').toBe(families.length);
-
-    const seen = new Map<string, number>();
-    for (const family of families) {
-      const section = page.locator(`main > section[id="${family.id}"]`);
-      expect(await section.count(), `section #${family.id}`).toBe(1);
-      const texts = (await section.locator('ul li').allTextContents()).map((text) => text.trim());
-      expect(texts, `${family.id} members in families.json order`).toEqual(family.itemNames);
-      for (const text of texts) seen.set(text, (seen.get(text) ?? 0) + 1);
+    // One anchored section per all-component family, in families.json order.
+    const sections = page.locator('main section[id]');
+    expect(await sections.count(), 'one anchored section per component family').toBe(
+      componentFamilies.length,
+    );
+    const sectionIds: string[] = [];
+    for (let index = 0; index < componentFamilies.length; index++) {
+      sectionIds.push((await sections.nth(index).getAttribute('id')) ?? '');
     }
+    expect(sectionIds, 'sections in committed families.json order').toEqual(
+      componentFamilies.map((family) => family.id),
+    );
 
-    const allNames = items.map((item) => item.name);
-    expect([...seen.keys()].sort(), 'exactly the 56 registry names').toEqual([...allNames].sort());
-    expect(
-      [...seen.values()].every((count) => count === 1),
-      'every name appears exactly once',
-    ).toBe(true);
-
-    // The 39 component names link their page; ui/lib names stay anchor rows.
-    for (const name of componentNames) {
-      const link = page.locator(`main a[href="/components/${name}"]`);
-      expect(await link.count(), `${name} link`).toBe(1);
-      expect((await link.textContent())?.trim(), `${name} link text`).toBe(name);
+    // The card multiset: every registry:component renders exactly one card.
+    const hrefs: string[] = [];
+    for (const family of componentFamilies) {
+      const cards = page.locator(`main section[id="${family.id}"] a[data-card]`);
+      expect(await cards.count(), `${family.id} renders one card per member`).toBe(
+        family.itemNames.length,
+      );
+      for (const card of await cards.all()) {
+        hrefs.push((await card.getAttribute('href')) ?? '');
+      }
     }
+    const slugs = hrefs.map((href) => href.replace('/components/', ''));
+    expect(hrefs.length, 'one card per registry:component').toBe(components.length);
+    expect([...slugs].sort(), 'card names equal the registry:component names').toEqual(
+      components.map((item) => item.name).sort(),
+    );
+
+    // 0 ui/lib entries: no ui/lib name renders a card, a link, or a section.
     for (const item of items.filter((entry) => entry.type !== 'registry:component')) {
       expect(
         await page.locator(`main a[href="/components/${item.name}"]`).count(),
-        `${item.name} must not link a component page`,
+        `${item.name} must not render`,
+      ).toBe(0);
+      expect(
+        await page.locator(`main section[id="${item.family}"]`).count(),
+        `${item.family} family must not render`,
       ).toBe(0);
     }
-    for (const name of componentNames) {
-      const linkResponse = await request.get(`${PREVIEW_URL}/components/${name}`);
-      expect(linkResponse.status(), `/components/${name}`).toBe(200);
+
+    // Every card href resolves to its real page.
+    for (const href of hrefs) {
+      const linkResponse = await request.get(`${PREVIEW_URL}${href}`);
+      expect(linkResponse.status(), href).toBe(200);
     }
 
     await page.screenshot({ path: evidencePath(testInfo, 'components-index'), fullPage: true });
   });
+});
+
+test('FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage', async ({
+  page,
+}, testInfo) => {
+  const response = await page.goto(`${PREVIEW_URL}/components`);
+  expect(response?.status(), '/components must serve 200').toBe(200);
+
+  // R1 jump nav: one derived anchor per component family, in families.json order.
+  const jumpLinks = page.locator('nav.family-jump a');
+  expect(await jumpLinks.count(), 'one jump anchor per component family').toBe(
+    componentFamilies.length,
+  );
+  for (const [index, family] of componentFamilies.entries()) {
+    const link = jumpLinks.nth(index);
+    expect(await link.getAttribute('href'), `${family.id} jump anchor`).toBe(`#${family.id}`);
+    expect((await link.textContent())?.trim(), `${family.id} jump label`).toBe(family.title);
+  }
+
+  // The mount slot: exactly one empty plain div, immediately above the grid —
+  // structural only, never stub UI.
+  const slot = page.locator('main div.family-grid-slot');
+  expect(await slot.count(), 'exactly one mount slot above the grid').toBe(1);
+  expect(await slot.locator('*').count(), '0 stub-UI children in the slot').toBe(0);
+  expect(
+    await page.locator('main div.family-grid-slot + section').count(),
+    'the slot directly precedes the first family section',
+  ).toBe(1);
+
+  // data-filter-text: every card carries it, names its item, and sits in its
+  // family section (the family dimension rides the section ancestor).
+  const itemsByName = new Map(components.map((item) => [item.name, item]));
+  const cards = page.locator('main a[data-card][data-filter-text]');
+  expect(await cards.count(), 'every card carries data-filter-text').toBe(components.length);
+  for (const card of await cards.all()) {
+    const slug = ((await card.getAttribute('href')) ?? '').replace('/components/', '');
+    const item = itemsByName.get(slug);
+    expect(item, `${slug || '(no href)'} is a registry:component`).toBeTruthy();
+    if (!item) continue;
+    const filterText = (await card.getAttribute('data-filter-text')) ?? '';
+    expect(filterText.trim().length, `${slug} filter text non-empty`).toBeGreaterThan(0);
+    expect(filterText, `${slug} filter text names the card`).toContain(item.title);
+    expect(
+      await card.locator('xpath=ancestor::section[1]').getAttribute('id'),
+      `${slug} sits in its family section`,
+    ).toBe(item.family);
+  }
+
+  await page.screenshot({ path: evidencePath(testInfo, 'family-grid-extras'), fullPage: true });
 });

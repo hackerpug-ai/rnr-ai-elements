@@ -1,13 +1,15 @@
 ---
 /**
- * FUSE-07 — lean /components index, sprint-01.
- * One anchored section per families.json family (family order), covering all
- * 56 registry names exactly once: registry:component names link their
- * /components/{item} page, ui/lib names render as anchor rows (no detail
- * pages this sprint). Generated from the committed families map + the FUSE-05
- * dataset — never a hand-written link list.
+ * FAM-003 — the /components seven-family card grid (TR-07 R1-R4), superseding
+ * the FUSE-07 lean list. Everything derives at build from the committed
+ * families map + the FUSE-05 dataset: the sections are exactly the families
+ * whose itemNames are all registry:component, in families.json order — ui/lib
+ * names stay on /registry. Zero JS: FAM-004's filter island mounts in the
+ * reserved slot div and matches against each card's data-filter-text.
  */
 import Layout from '../../layouts/DocsLayout.astro';
+import ComponentCard from '../../components/ComponentCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
 import families from '../../data/families.json';
 import items from '../../data/registry-items.json';
 
@@ -15,27 +17,56 @@ const ordered = [...families].sort((a, b) => a.order - b.order);
 const componentNames = new Set(
   items.filter((entry) => entry.type === 'registry:component').map((entry) => entry.name),
 );
+const componentFamilies = ordered.filter((family) =>
+  family.itemNames.every((name) => componentNames.has(name)),
+);
+const itemsByName = new Map(
+  items
+    .filter((entry) => entry.type === 'registry:component')
+    .map((entry) => [entry.name, entry]),
+);
 ---
 
 <Layout title="Components — RNR AI Elements">
   <main class="components-index">
     <header class="page-header">
       <h1>Components</h1>
+      <p class="page-header__note">browse the {componentNames.size} items by AI family</p>
     </header>
+    <nav class="family-jump" aria-label="Jump to a family">
+      {
+        componentFamilies.map((family) => (
+          <a href={`#${family.id}`}>{family.title}</a>
+        ))
+      }
+    </nav>
+    <div class="family-grid-slot"></div>
     {
-      ordered.map((family) => (
+      componentFamilies.map((family) => (
         <section id={family.id} aria-labelledby={`${family.id}-heading`}>
-          <h2 id={`${family.id}-heading`}>{family.title}</h2>
-          <ul>
-            {family.itemNames.map((name) => (
-              <li>
-                {componentNames.has(name) ? (
-                  <a href={`/components/${name}`}>{name}</a>
-                ) : (
-                  <span>{name}</span>
-                )}
-              </li>
-            ))}
+          <SectionHeader
+            title={family.title}
+            anchor={`${family.id}-heading`}
+            count={family.itemNames.length}
+          />
+          <ul class="family-grid">
+            {family.itemNames.map((name) => {
+              const item = itemsByName.get(name);
+              if (!item) {
+                throw new Error(`family ${family.id} names unknown item ${name}`);
+              }
+              return (
+                <li>
+                  <ComponentCard
+                    href={`/components/${name}`}
+                    title={item.title}
+                    description={item.description}
+                    category={item.type.replace('registry:', '')}
+                    expoGo={item.expoGo}
+                  />
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))
@@ -44,16 +75,43 @@ const componentNames = new Set(
 </Layout>
 
 <style>
+  .components-index {
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .page-header {
+    margin-block-end: 1.5rem;
+  }
+  .page-header__note {
+    margin: 0;
+    color: var(--muted-foreground);
+  }
+  .family-jump {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .family-jump a {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    color: var(--foreground);
+    text-decoration: none;
+  }
   .components-index section {
     margin-block: 2rem;
   }
-  .components-index h2 {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-  .components-index ul {
+  /* The card grid: auto-fill + minmax reflows to one column on narrow
+   * viewports — no media query anywhere. */
+  .family-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+    margin: 1rem 0 0;
     padding: 0;
     list-style: none;
-    columns: 2;
-    column-gap: 2rem;
   }
 </style>
