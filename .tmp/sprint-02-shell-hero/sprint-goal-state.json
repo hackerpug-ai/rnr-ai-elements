@@ -2,11 +2,6 @@
   "sprint": "sprint-02-shell-hero",
   "trunk": "main",
   "head": "fe10dc4bfdb365b31af9e6ed9f102e824b97ea88",
-  "tasks": {
-    "all_completed": true,
-    "total": 16,
-    "note": "13 sprint tasks + FIX-SHELL-001-1 + FIX-SHELL-002-1 + FIX-GATE-SHELL-013-1, all landed"
-  },
   "human_test": {
     "verdict": "pass",
     "verified": true,
@@ -21,5 +16,125 @@
     "orphan_branches": 0,
     "stranded_tasks": 0
   },
-  "state": "goal:complete"
+  "state": "goal:complete",
+  "tasks": {
+    "all_completed": true
+  },
+  "gate": {
+    "overall": "PASS",
+    "steps": [
+      {
+        "n": null,
+        "id": "FLOW-GEND-01-home-hero-evaluation-contract",
+        "run_mode": "AUTO",
+        "result": "PASS"
+      },
+      {
+        "n": null,
+        "id": "FLOW-GEND-02-hero-install-command-copy",
+        "run_mode": "AUTO",
+        "result": "PASS"
+      },
+      {
+        "n": null,
+        "id": "FLOW-GEND-20-exact-absolute-url-command-copy",
+        "run_mode": "AUTO",
+        "result": "PASS"
+      },
+      {
+        "n": null,
+        "id": "FLOW-GEND-21-dependency-panel-peers",
+        "run_mode": "AUTO",
+        "result": "PASS"
+      },
+      {
+        "n": null,
+        "id": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+        "run_mode": "AUTO",
+        "result": "PASS"
+      },
+      {
+        "n": null,
+        "id": "FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+        "run_mode": "AUTO",
+        "result": "PASS"
+      }
+    ],
+    "subgates": {},
+    "subgate_blocking": []
+  },
+  "e2e": {
+    "overall": "PASS",
+    "flows_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero/human-flows.json",
+    "steps": [
+      {
+        "n": null,
+        "id": "FLOW-GEND-01-home-hero-evaluation-contract",
+        "gate_steps": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          13
+        ],
+        "result": "PASS",
+        "reasons": []
+      },
+      {
+        "n": null,
+        "id": "FLOW-GEND-02-hero-install-command-copy",
+        "gate_steps": [
+          1,
+          6,
+          7,
+          8
+        ],
+        "result": "PASS",
+        "reasons": []
+      },
+      {
+        "n": null,
+        "id": "FLOW-GEND-20-exact-absolute-url-command-copy",
+        "gate_steps": [
+          1,
+          11
+        ],
+        "result": "PASS",
+        "reasons": []
+      },
+      {
+        "n": null,
+        "id": "FLOW-GEND-21-dependency-panel-peers",
+        "gate_steps": [
+          1,
+          12
+        ],
+        "result": "PASS",
+        "reasons": []
+      },
+      {
+        "n": null,
+        "id": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+        "gate_steps": [
+          1,
+          9
+        ],
+        "result": "PASS",
+        "reasons": []
+      },
+      {
+        "n": null,
+        "id": "FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+        "gate_steps": [
+          1,
+          10
+        ],
+        "result": "PASS",
+        "reasons": []
+      }
+    ],
+    "reasons": []
+  },
+  "_provenance": "gate_evidence_check.py \u2014 computed from exit codes + artifacts + coverage + subgates only; no agent input"
 }
