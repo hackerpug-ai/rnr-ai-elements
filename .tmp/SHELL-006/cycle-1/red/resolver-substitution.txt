@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-006
+
+ ❯ tests/sprint-02-shell-hero/resolve-deps.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/resolve-deps.test.ts [ tests/sprint-02-shell-hero/resolve-deps.test.ts ]
+Error: Cannot find module '../../apps/docs/src/lib/resolve-deps' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-006/tests/sprint-02-shell-hero/resolve-deps.test.ts
+ ❯ tests/sprint-02-shell-hero/resolve-deps.test.ts:6:1
+      4| import { fileURLToPath } from 'node:url';
+      5| import { expect, it } from 'vitest';
+      6| import {
+       | ^
+      7|   deriveAiSdkPeers,
+      8|   resolveRegistryDependencies,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  22:04:03
+   Duration  139ms (transform 19ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+exit=1
