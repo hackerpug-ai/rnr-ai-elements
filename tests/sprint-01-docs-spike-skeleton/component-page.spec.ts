@@ -325,15 +325,18 @@ test('FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-tex
     expect((await link.textContent())?.trim(), `${family.id} jump label`).toBe(family.title);
   }
 
-  // The mount slot: exactly one empty plain div, immediately above the grid —
-  // structural only, never stub UI.
+  // The mount slot: exactly one empty plain div, structural only, never stub
+  // UI. The rnr-ledger-filter island (FAM-004's ruled, contract-locked
+  // position) lawfully mounts between the slot and the grid, so precedence is
+  // general-sibling — the slot precedes every family section, not merely the
+  // first.
   const slot = page.locator('main div.family-grid-slot');
   expect(await slot.count(), 'exactly one mount slot above the grid').toBe(1);
   expect(await slot.locator('*').count(), '0 stub-UI children in the slot').toBe(0);
   expect(
-    await page.locator('main div.family-grid-slot + section').count(),
-    'the slot directly precedes the first family section',
-  ).toBe(1);
+    await page.locator('main div.family-grid-slot ~ section').count(),
+    'the slot precedes every family section',
+  ).toBe(componentFamilies.length);
 
   // data-filter-text: every card carries it, names its item, and sits in its
   // family section (the family dimension rides the section ancestor).

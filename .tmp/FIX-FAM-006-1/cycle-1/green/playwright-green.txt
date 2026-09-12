@@ -1,0 +1,28 @@
+
+Running 12 tests using 1 worker
+·T··········
+
+  1) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:205:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.getAttribute: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('nav[aria-label="Family pager"] a[rel="next"]')
+
+
+      238 |         await page.goto(`${PREVIEW_URL}/components/${member}`);
+      239 |         for (const rel of ['prev', 'next'] as const) {
+    > 240 |           const href = await page.locator(`${PAGER} a[rel="${rel}"]`).getAttribute('href');
+          |                                                                       ^
+      241 |           const target = href?.replace('/components/', '') ?? '';
+      242 |           expect(family.itemNames, `${member} ${rel} -> ${target} stays in ${family.id}`).toContain(
+      243 |             target,
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:240:71
+
+    Error Context: test-results/sprint-01-docs-spike-skele-df36c-ch-component-family-exactly-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:205:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly 
+  11 passed (2.5m)
+exit=1
