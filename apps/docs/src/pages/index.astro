@@ -1,19 +1,22 @@
 ---
 import pkg from '../../../../package.json';
-import CopyButton from '../components/islands/CopyButton.astro';
-import Layout from '../layouts/spike.astro';
+import Button from '../components/Button.astro';
+import Chip from '../components/Chip.astro';
+import InstallCommand from '../components/InstallCommand.astro';
+import Layout from '../layouts/DocsLayout.astro';
 import items from '../data/registry-items.json';
 
 /**
- * FUSE-08 — the structural home block on /. States what the library is and is
- * not, carries build-computed counters (root package.json version +
- * registry-items.json type counts — the same single sources the ledger and
- * component pages use, so a fixture edit moves the rendered numbers), one
- * copyable nativewind install command, and CTAs to the two real routes.
+ * SHELL-007 — the designed home hero (wireframe R5-R8) on the DocsLayout home
+ * variant: the statement (R5), the ChipRow health counters (R6), the
+ * engine-tabbed InstallCommand (R7), and the Button CTA pair (R8). This
+ * supersedes FUSE-08's structural block, which pre-declared this redesign.
  *
- * Structural only: the token stylesheet, theme toggle, and one-screen design
- * contract are Sprint 02's designed hero, which supersedes this block (its
- * task lists home.spec.ts under its supersedes).
+ * Counters stay build-computed from the same single sources the ledger and
+ * component pages use (root package.json version + registry-items.json type
+ * filters), so a fixture edit moves the rendered numbers. R9-R12 (family
+ * teaser grid, quickstart strip, boundary teaser, QR) are Sprint 03+ — zero
+ * dead links here. The phrasing is structural; SHELL-010 owns the copy pass.
  */
 type HomeItem = { type: string };
 
@@ -22,14 +25,9 @@ const total = registry.length;
 const componentCount = registry.filter((item) => item.type === 'registry:component').length;
 const uiCount = registry.filter((item) => item.type === 'registry:ui').length;
 const libCount = registry.filter((item) => item.type === 'registry:lib').length;
-
-// Sprint-01 subset: one nativewind-form command; engine tabs land with
-// TabGroup in Sprint 02/03.
-const NATIVEWIND_BASE = 'https://rnraielements.com/r/nativewind';
-const installCommand = `npx @react-native-reusables/cli@latest add ${NATIVEWIND_BASE}/conversation.json`;
 ---
 
-<Layout title="RNR AI Elements — Docs">
+<Layout title="RNR AI Elements — Docs" variant="home">
   <main class="hero">
     <h1 id="hero-heading">Universal AI chat and agent UI components for React Native</h1>
     <p class="hero__statement">
@@ -38,65 +36,57 @@ const installCommand = `npx @react-native-reusables/cli@latest add ${NATIVEWIND_
       project with the CLI and own every line.
     </p>
 
-    <dl class="hero__counters">
-      <div class="hero__counter">
-        <dt>Version</dt>
-        <dd><data data-counter="version" value={pkg.version}>{pkg.version}</data></dd>
-      </div>
-      <div class="hero__counter">
-        <dt>Items</dt>
-        <dd><data data-counter="total" value={String(total)}>{total}</data></dd>
-      </div>
-      <div class="hero__counter">
-        <dt>Components</dt>
-        <dd><data data-counter="components" value={String(componentCount)}>{componentCount}</data></dd>
-      </div>
-      <div class="hero__counter">
-        <dt>UI primitives</dt>
-        <dd><data data-counter="ui" value={String(uiCount)}>{uiCount}</data></dd>
-      </div>
-      <div class="hero__counter">
-        <dt>Libs</dt>
-        <dd><data data-counter="libs" value={String(libCount)}>{libCount}</data></dd>
-      </div>
-    </dl>
+    <ul class="hero__chips" aria-label="Registry health">
+      <li><Chip counter="version" value={pkg.version} label="Version" /></li>
+      <li><Chip counter="total" value={total} label="Items" /></li>
+      <li><Chip counter="components" value={componentCount} label="Components" /></li>
+      <li><Chip counter="ui" value={uiCount} label="UI primitives" /></li>
+      <li><Chip counter="libs" value={libCount} label="Libs" /></li>
+    </ul>
 
     <div class="hero__install">
-      <CopyButton
-        command={installCommand}
-        label="Copy the nativewind install command for conversation"
-      />
+      <InstallCommand item="conversation" />
     </div>
 
     <nav class="hero__ctas" aria-label="Primary">
-      <a href="/registry">Get started</a>
-      <a href="/components">Browse components</a>
+      <Button variant="primary" href="/registry">Get started</Button>
+      <Button variant="outline" href="/components">Browse components</Button>
     </nav>
   </main>
 </Layout>
 
 <style>
+  /*
+   * One-screen contract at 1440x900 (BOUNDARIES): the statement, counters row,
+   * tabbed install block, and both CTAs all sit inside the first 900px beneath
+   * the var(--layout-header-h) sticky header, sized on the token scale — no
+   * viewport-fitted magic numbers, no full-bleed stretch that could push a CTA
+   * past the fold.
+   */
   .hero {
     max-width: 64rem;
     margin-inline: auto;
-    padding: 1.5rem;
+    padding: 4rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
   }
-  .hero__counters {
+  .hero__chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem 2rem;
-    margin: 0;
-  }
-  .hero__counter dd {
-    margin: 0;
-    font-weight: 700;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    gap: 0.5rem;
   }
   .hero__install {
-    margin-block: 1rem;
+    width: 100%;
+    max-width: 48rem;
   }
   .hero__ctas {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
   }
 </style>

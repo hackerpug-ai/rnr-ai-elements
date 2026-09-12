@@ -1,0 +1,106 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts (3 tests | 1 failed) 5382ms
+   × SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/shell-layout.test.ts > SHELL-002-shell-css-token-governed: sticky header at var(--layout-header-h), scroll-margin compensation, var(--*)-only authored styles
+AssertionError: layout: no script tag may live in the shell components: expected '---\nimport \'../styles/global.css\';…' not to contain '<script'
+
+- Expected
++ Received
+
+- <script
++ ---
++ import '../styles/global.css';
++ import Footer from '../components/Footer.astro';
++ import Header from '../components/Header.astro';
++ import ThemeToggle from '../components/islands/ThemeToggle.astro';
++
++ /**
++  * DocsLayout (SHELL-002) — the themed shell every adopted docs route renders
++  * through: SHELL-001's token sheet imported exactly once, the sticky Header,
++  * the page slot, then the Footer. The inline pre-paint script below (SHELL-003)
++  * resolves the theme BEFORE first paint — stored `rnr-theme` > system scheme >
++  * dark — and flips the root class in the served HTML's first parse; it must
++  * stay is:inline + data-astro-rerun (never a fetched module: ClientRouter
++  * swapRootAttributes would overwrite root attrs on soft nav). The theme island
++  * renders just after the Header and relocates itself into the Header's
++  * data-theme-slot mount on connect. Pages keep their own content trees —
++  * adoption wraps, it never rewrites page structure.
++  */
++ interface Props {
++   title: string;
++   /** Reserved for SHELL-007: the home variant suppresses the sidebar + ToC once they exist. */
++   variant?: 'docs' | 'home';
++ }
++
++ const { title, variant = 'docs' } = Astro.props;
++ ---
++
++ <!doctype html>
++ <html lang="en">
++   <head>
++     <meta charset="utf-8" />
++     <meta name="viewport" content="width=device-width, initial-scale=1" />
++     <meta name="generator" content={Astro.generator} />
++     <title>{title}</title>
++     <script is:inline data-astro-rerun>
++       (() => {
++         var stored = null;
++         try {
++           stored = localStorage.getItem('rnr-theme');
++         } catch (error) {
++           // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
++         }
++         var light =
++           stored === 'light' ||
++           (stored !== 'dark' &&
++             typeof window.matchMedia === 'function' &&
++             window.matchMedia('(prefers-color-scheme: light)').matches);
++         document.documentElement.classList.toggle('light', light);
++       })();
++     </script>
++     <slot name="head" />
++   </head>
++   <body data-layout={variant}>
++     <Header />
++     <ThemeToggle />
++     <slot />
++     <Footer />
++   </body>
++ </html>
++
++ <style>
++   /*
++    * Deep links land below the sticky header (R1): every anchored region on an
++    * adopting route compensates by --layout-header-h. The selectors are global
++    * because the anchored sections and headings live in page trees, not here.
++    */
++   :global(section[id], h2[id], h3[id]) {
++     scroll-margin-top: var(--layout-header-h);
++   }
++ </style>
++
+
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts:270:83
+    268|       `${name}: a hex color literal is banned — consume var(--*) token…
+    269|     ).not.toMatch(HEX_LITERAL);
+    270|     expect(source, `${name}: no script tag may live in the shell compo…
+       |                                                                                   ^
+    271|       '<script',
+    272|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 14 passed (15)
+      Tests  1 failed | 34 passed (35)
+   Start at  00:01:16
+   Duration  146.62s (transform 100ms, setup 0ms, import 602ms, tests 145.11s, environment 1ms)
+
