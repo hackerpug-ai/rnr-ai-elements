@@ -1,0 +1,81 @@
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+11:45:00 [vite] Re-optimizing dependencies because vite config has changed
+11:45:00 [types] Generated 107ms
+11:45:00 [build] output: "static"
+11:45:00 [build] mode: "static"
+11:45:00 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002/apps/docs/dist/
+11:45:00 [build] Collecting build info...
+11:45:00 [build] ✓ Completed in 115ms.
+11:45:00 [build] Building static entrypoints...
+11:45:00 [vite] ✓ built in 143ms
+11:45:00 [vite] ✓ built in 24ms
+11:45:00 [build] Rearranging server assets...
+
+ generating static routes 
+11:45:00   ├─ /components/shimmer/index.html (+6ms) 
+11:45:00   ├─ /components/checkpoint/index.html (+1ms) 
+11:45:00   ├─ /components/image/index.html (+1ms) 
+11:45:00   ├─ /components/persona/index.html (+1ms) 
+11:45:00   ├─ /components/speech-input/index.html (+1ms) 
+11:45:00   ├─ /components/conversation/index.html (+1ms) 
+11:45:00   ├─ /components/message/index.html (+1ms) 
+11:45:00   ├─ /components/prompt-input/index.html (+1ms) 
+11:45:00   ├─ /components/suggestion/index.html (+1ms) 
+11:45:00   ├─ /components/tool/index.html (+1ms) 
+11:45:00   ├─ /components/reasoning/index.html (+1ms) 
+11:45:00   ├─ /components/task/index.html (+1ms) 
+11:45:00   ├─ /components/question/index.html (+1ms) 
+11:45:00   ├─ /components/agent/index.html (+1ms) 
+11:45:00   ├─ /components/chain-of-thought/index.html (+1ms) 
+11:45:00   ├─ /components/plan/index.html (+1ms) 
+11:45:00   ├─ /components/confirmation/index.html (+1ms) 
+11:45:00   ├─ /components/queue/index.html (+1ms) 
+11:45:00   ├─ /components/sources/index.html (+1ms) 
+11:45:00   ├─ /components/inline-citation/index.html (+0ms) 
+11:45:00   ├─ /components/artifact/index.html (+1ms) 
+11:45:00   ├─ /components/snippet/index.html (+1ms) 
+11:45:00   ├─ /components/commit/index.html (+1ms) 
+11:45:00   ├─ /components/attachments/index.html (+1ms) 
+11:45:00   ├─ /components/context/index.html (+1ms) 
+11:45:00   ├─ /components/open-in-chat/index.html (+0ms) 
+11:45:00   ├─ /components/model-selector/index.html (+1ms) 
+11:45:00   ├─ /components/mic-selector/index.html (+1ms) 
+11:45:00   ├─ /components/voice-selector/index.html (+1ms) 
+11:45:00   ├─ /components/audio-player/index.html (+1ms) 
+11:45:00   ├─ /components/transcription/index.html (+1ms) 
+11:45:00   ├─ /components/terminal/index.html (+1ms) 
+11:45:00   ├─ /components/file-tree/index.html (+1ms) 
+11:45:00   ├─ /components/environment-variables/index.html (+1ms) 
+11:45:00   ├─ /components/package-info/index.html (+1ms) 
+11:45:00   ├─ /components/stack-trace/index.html (+1ms) 
+11:45:00   ├─ /components/schema-display/index.html (+1ms) 
+11:45:00   ├─ /components/test-results/index.html (+1ms) 
+11:45:00   ├─ /components/web-preview/index.html (+1ms) 
+11:45:00   ├─ /components/index.html (+1ms) 
+11:45:00   ├─ /docs/theming/index.html (+1ms) 
+11:45:00   ├─ /islands/copy-button/index.html (+1ms) 
+11:45:00   ├─ /registry/index.html (+2ms) 
+11:45:00   ├─ /index.html (+1ms) 
+11:45:00 ✓ Completed in 54ms.
+
+11:45:00 [build] ✓ Completed in 240ms.
+11:45:00 [build] 44 page(s) built in 369ms
+11:45:00 [build] Complete!

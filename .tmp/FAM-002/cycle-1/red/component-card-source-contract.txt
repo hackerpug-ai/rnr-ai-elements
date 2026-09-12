@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts (4 tests | 1 failed | 3 skipped) 7ms
+   × FAM-002-component-card-source-contract: one anchor root, inheriting h3, clamped one-liner, Chip+Badge footer, token surface, hover/focus idiom, gated motion, data hooks 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-component-card-source-contract: one anchor root, inheriting h3, clamped one-liner, Chip+Badge footer, token surface, hover/focus idiom, gated motion, data hooks
+AssertionError: ComponentCard exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002/apps/docs/src/components/ComponentCard.astro: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts:123:63
+    121|
+    122| it('FAM-002-component-card-source-contract: one anchor root, inheritin…
+    123|   expect(existsSync(CARD), `ComponentCard exists at ${CARD}`).toBe(tru…
+       |                                                               ^
+    124|   const card = readFileSync(CARD, 'utf8');
+    125|   const style = styleBlock(card, 'ComponentCard');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  11:31:06
+   Duration  135ms (transform 22ms, setup 0ms, import 32ms, tests 7ms, environment 0ms)
+

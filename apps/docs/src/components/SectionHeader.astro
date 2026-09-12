@@ -1,0 +1,37 @@
+---
+/**
+ * SectionHeader — the one family-browse section heading primitive (TR-07
+ * components-index wireframe family section). An anchored h2 whose
+ * scroll-margin stops anchor jumps clear of the sticky Header, plus an
+ * optional count composed through Chip's counter-less form (tabular
+ * numerals, so counts align in columns). Consumers bind aria-labelledby
+ * to the anchor id. Zero JS; tokens only.
+ */
+import Chip from './Chip.astro';
+
+interface Props {
+  title: string;
+  anchor: string;
+  count?: number;
+}
+
+const { title, anchor, count } = Astro.props;
+---
+
+<div class="section-header">
+  <h2 id={anchor}>{title}</h2>
+  {count !== undefined && <Chip value={count} />}
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  /* Anchor jumps stop clear of the sticky Header. */
+  .section-header h2 {
+    scroll-margin-block-start: calc(var(--layout-header-h) + 1rem);
+  }
+</style>
