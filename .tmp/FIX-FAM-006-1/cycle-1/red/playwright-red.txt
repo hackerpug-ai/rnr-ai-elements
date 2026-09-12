@@ -1,0 +1,27 @@
+
+Running 1 test using 1 worker
+F
+
+  1) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:311:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage 
+
+    Error: the slot directly precedes the first family section
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      334 |     await page.locator('main div.family-grid-slot + section').count(),
+      335 |     'the slot directly precedes the first family section',
+    > 336 |   ).toBe(1);
+          |     ^
+      337 |
+      338 |   // data-filter-text: every card carries it, names its item, and sits in its
+      339 |   // family section (the family dimension rides the section ancestor).
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:336:5
+
+    Error Context: test-results/sprint-01-docs-spike-skele-1e0dc-t-data-filter-text-coverage-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:311:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage 
+exit=1
