@@ -100,9 +100,11 @@ test('FLOW-GEND-07-components-page-39-in-7-families', async ({ page, request }, 
   );
 
   // Per family: the card count equals the family's member count, and the
-  // SectionHeader count chip reads that number. The chip's value lives in a
-  // <data> element in both Chip forms; card category chips never read as a
-  // bare number, so the exact-text match isolates the count chip.
+  // SectionHeader count chip reads that number. SectionHeader composes the
+  // counter-LESS Chip form — a plain <span class="chip chip__value"> inside
+  // its .section-header wrapper (FAM-002, no <data> passthrough) — and card
+  // category chips sit outside that wrapper, never reading as a bare number,
+  // so the exact-text match isolates the count chip.
   const hrefs: string[] = [];
   let cardCount = 0;
   let familiesOk = true;
@@ -114,7 +116,9 @@ test('FLOW-GEND-07-components-page-39-in-7-families', async ({ page, request }, 
     cardCount += observed;
     soft(observed, `family ${family.id} renders ${expected} cards (lean list: 0)`).toBe(expected);
 
-    const chipValues = (await section.locator('data').allTextContents()).map((text) => text.trim());
+    const chipValues = (await section.locator('.section-header .chip').allTextContents()).map(
+      (text) => text.trim(),
+    );
     const countChips = chipValues.filter((value) => value === String(expected)).length;
     soft(countChips, `family ${family.id} count chip reads ${expected}`).toBe(1);
     familiesOk &&= observed === expected && countChips === 1;
