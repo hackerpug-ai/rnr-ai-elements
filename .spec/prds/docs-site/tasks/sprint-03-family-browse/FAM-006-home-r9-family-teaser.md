@@ -2,7 +2,8 @@
 
 # FAM-006: Home R9 family teaser grid — seven anchored family sections below the hero
 
-> Status: Backlog
+> Status: ✅ Completed
+> Commit: 6d632f231491068ab9683f363a0ac58631c7a888
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P2 · Points: 3 · Type: FEATURE · Wave: D
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
