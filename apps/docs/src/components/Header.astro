@@ -1,0 +1,199 @@
+---
+/**
+ * Header (wireframe R1 desktop / M1+M2 mobile) — the sticky site bar: the RNR
+ * wordmark, the Components/Registry section nav, and two inert mount slots.
+ *
+ * Zero-JS by construction: the mobile drawer is a <details> element, and the
+ * Cmd+K trigger plus the ThemeToggle are mount slots only — their islands are
+ * later sprints' (SearchDialog; SHELL-003 ThemeToggle). Every color resolves
+ * through the SHELL-001 var(--*) vocabulary: no hex literals, ever.
+ */
+const NAV_LINKS = [
+  { href: '/components', label: 'Components' },
+  { href: '/registry', label: 'Registry' },
+];
+---
+
+<header class="site-header">
+  <div class="site-header__row">
+    <a class="site-header__wordmark" href="/">RNR</a>
+    <nav class="site-header__nav" aria-label="Primary">
+      {
+        NAV_LINKS.map((link) => (
+          <a class="site-header__nav-link" href={link.href}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="site-header__actions">
+      <!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. -->
+      <span class="site-header__search-slot" data-search-slot hidden></span>
+      <span class="site-header__theme-slot" data-theme-slot></span>
+    </div>
+    <details class="site-drawer">
+      <summary class="site-drawer__toggle" aria-label="Toggle navigation menu">
+        <span aria-hidden="true">Menu</span>
+      </summary>
+      <nav class="site-drawer__nav" aria-label="Primary">
+        {
+          NAV_LINKS.map((link) => (
+            <a class="site-drawer__link" href={link.href}>
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* The sticky bar (R1): exactly --layout-header-h tall, glued to the viewport
+     top, sitting on the page canvas with a token divider. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--layout-header-h);
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+  }
+  .site-header__row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  .site-header__wordmark {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+  .site-header__wordmark:hover {
+    color: var(--primary);
+  }
+
+  /* Desktop nav: hidden below lg, where the <details> drawer takes over. */
+  .site-header__nav {
+    display: none;
+  }
+  .site-header__nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.75rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .site-header__nav-link:hover {
+    color: var(--foreground);
+    background: var(--accent);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+  .site-header__theme-slot {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* Zero-JS mobile drawer (M1): the toggle is the <summary>; the panel is
+     absolutely positioned below the bar so the header box stays
+     --layout-header-h tall while open. */
+  .site-drawer {
+    position: relative;
+  }
+  .site-drawer__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px; /* touch target */
+    min-width: 44px; /* touch target */
+    padding-inline: 0.75rem;
+    color: var(--foreground);
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    list-style: none;
+  }
+  .site-drawer__toggle::-webkit-details-marker {
+    display: none;
+  }
+  .site-drawer__nav {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    display: grid;
+    gap: 0.25rem;
+    min-width: 12rem;
+    padding: 0.5rem;
+    background: var(--popover);
+    color: var(--popover-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .site-drawer__link {
+    display: flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.75rem;
+    color: var(--foreground);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .site-drawer__link:hover {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+
+  @media (min-width: 64rem) {
+    .site-header__nav {
+      display: flex;
+      gap: 0.25rem;
+    }
+    .site-drawer {
+      display: none;
+    }
+  }
+
+  /* Motion is opt-in only, and the reduce guard kills any transition that
+     sneaks in later — the drawer must stay operable and calm. */
+  @media (prefers-reduced-motion: no-preference) {
+    .site-drawer__nav {
+      animation: site-drawer-in 120ms ease-out;
+    }
+  }
+  @keyframes site-drawer-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .site-drawer__nav,
+    .site-header__nav-link,
+    .site-drawer__link {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>
