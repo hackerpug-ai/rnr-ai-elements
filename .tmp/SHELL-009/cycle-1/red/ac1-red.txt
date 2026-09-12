@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-009
+
+ ❯ tests/sprint-02-shell-hero/theming-route.test.ts (2 tests | 1 failed | 1 skipped) 7565ms
+   × SHELL-009-theming-route-served-with-authored-content: real build emits the route on DocsLayout with the four copy-stable anchors 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/theming-route.test.ts > SHELL-009-theming-route-served-with-authored-content: real build emits the route on DocsLayout with the four copy-stable anchors
+AssertionError: apps/docs/dist/docs/theming/index.html is absent — /docs/theming 404s (the sprint-start RED signature): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-02-shell-hero/theming-route.test.ts:124:5
+    122|     existsSync(THEMING_HTML_PATH),
+    123|     'apps/docs/dist/docs/theming/index.html is absent — /docs/theming …
+    124|   ).toBe(true);
+       |     ^
+    125|   expect(
+    126|     statSync(THEMING_HTML_PATH).size,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  23:11:07
+   Duration  7.66s (transform 13ms, setup 0ms, import 18ms, tests 7.56s, environment 0ms)
+

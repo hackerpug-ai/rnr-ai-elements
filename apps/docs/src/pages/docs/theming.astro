@@ -1,0 +1,59 @@
+---
+/**
+ * SHELL-009 — /docs/theming: the content-shaped cold-boot surface FLOW-SHELL-02
+ * lands on. Authored prose states only what the shell does today, pinned to the
+ * four copy-stable anchors ('ship no tokens', 'oklch', 'prefers-color-scheme',
+ * 'toggle' — SHELL-010 may reword around them, never remove them). The
+ * TokenTable live demo and Expressive Code theming are sprint-05's remainder on
+ * this same route and are deliberately absent, not faked.
+ */
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Theming — RNR AI Elements">
+  <main class="theming">
+    <h1>Theming</h1>
+
+    <p>
+      The registry items ship no tokens of their own. Each one you copy in
+      reads its colors from your app's Tailwind v4 <code>@theme</code> block.
+      Re-theming your product never means editing registry code. There is no
+      <code>tailwind.config.js</code> and no theme setting to configure.
+    </p>
+
+    <p>
+      This site styles itself the same way: one token sheet, dark first. Every
+      color in the sheet is an <code>oklch</code> value, and the dark values are
+      the defaults — the sheet never reads your OS
+      <code>prefers-color-scheme</code> setting, so a first visit paints dark no
+      matter what your system prefers.
+    </p>
+
+    <p>
+      The toggle in the site header is the live actor. It flips a
+      <code>light</code> class on the root element, and every token re-resolves
+      in place — no reload, no second stylesheet.
+    </p>
+
+    <nav class="theming__onward" aria-label="Onward">
+      <a href="/">Back to the home page</a>
+      <a href="/components">Browse components</a>
+    </nav>
+  </main>
+</DocsLayout>
+
+<style>
+  .theming {
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .theming p {
+    max-width: var(--measure);
+  }
+  .theming__onward {
+    display: flex;
+    gap: 1rem;
+    margin-block-start: 2rem;
+  }
+</style>
