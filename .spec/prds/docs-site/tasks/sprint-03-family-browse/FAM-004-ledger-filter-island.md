@@ -2,7 +2,8 @@
 
 # FAM-004: rnr-ledger-filter island (4 of 5) + island-budget 3→4 + own lane spec
 
-> Status: Backlog
+> Status: ✅ Completed
+> Commit: bd570d60627d3f2f29beff192ae141803ddc7fce
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 5 · Type: FEATURE · Wave: ?
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
