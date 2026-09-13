@@ -2,7 +2,8 @@
 
 # REF-010: /components single owner — trailing no-id matrix section + family install commands (T-GEND-014)
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: 037bc73c0d80dbe2b535d849471d9aef42aa1a5c (approved cycle 1)
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FEATURE · Wave: B
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
