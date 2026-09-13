@@ -2,7 +2,8 @@
 
 # REF-008: Consolidated data pipeline — prebuild qrDeepLink/metaDescription + matrix gate wiring + imagery flag (single owner of prebuild.ts + gates.ts)
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: 9fdcef68199ebdf2ecb6fadbf850f0292ceb626f (approved cycle 1)
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 5 · Type: FEATURE · Wave: B
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
