@@ -1,0 +1,37 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-002
+
+ ❯ tests/sprint-04-generated-reference/props-table-contract.test.ts (4 tests | 1 failed | 3 skipped) 3ms
+   × REF-002-props-table-null-em-dash-cells: null default/description render explicit em-dash cells 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/props-table-contract.test.ts > REF-002-props-table-null-em-dash-cells: null default/description render explicit em-dash cells
+AssertionError: RED anchor: PropsTable.astro is absent — author the component at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-002/apps/docs/src/components/PropsTable.astro (REF-002): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ readComponent tests/sprint-04-generated-reference/props-table-contract.test.ts:41:5
+     39|     existsSync(COMPONENT),
+     40|     `RED anchor: PropsTable.astro is absent — author the component at …
+     41|   ).toBe(true);
+       |     ^
+     42|   return readFileSync(COMPONENT, 'utf8');
+     43| }
+ ❯ tests/sprint-04-generated-reference/props-table-contract.test.ts:220:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:00:40
+   Duration  74ms (transform 10ms, setup 0ms, import 15ms, tests 3ms, environment 0ms)
+
