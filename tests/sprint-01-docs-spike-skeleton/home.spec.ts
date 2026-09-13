@@ -181,7 +181,7 @@ test('FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package,
 
   // The DocsLayout home variant: the shell header renders, and the home body
   // suppresses the sidebar/ToC regions (no aside, no ToC landmark).
-  expect(await page.locator('body').getAttribute('data-layout')).toBe('home');
+  await expect(page.locator('[data-layout="home"]')).toHaveCount(1);
   await expect(page.locator('header.site-header')).toBeVisible();
   await expect(page.locator('aside')).toHaveCount(0);
   await expect(page.locator('[data-toc]')).toHaveCount(0);
