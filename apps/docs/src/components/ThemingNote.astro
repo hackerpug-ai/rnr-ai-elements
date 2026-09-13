@@ -1,0 +1,48 @@
+---
+/**
+ * ThemingNote — R9: the theming note as prose plus token Chips (TR-07
+ * component detail). The note prop is the sole string source: the
+ * deterministic identifier split renders each hyphenated semantic-class
+ * identifier as a counter-less mono Chip and every other segment as plain
+ * prose, so the full note stays reconstructible from the rendered parts.
+ * Zero JS; tokens only.
+ */
+import Chip from './Chip.astro';
+
+interface Props {
+  note: string;
+}
+
+const { note } = Astro.props;
+
+const TOKEN_IDENTIFIER = /[a-z]+(?:-[a-z0-9]+)+/g;
+
+const identifiers = note.match(TOKEN_IDENTIFIER) ?? [];
+const segments = note.split(TOKEN_IDENTIFIER);
+
+type Part = { text: string; identifier?: string };
+const parts: Part[] = [];
+identifiers.forEach((identifier, index) => {
+  parts.push({ text: segments[index] ?? '' });
+  parts.push({ text: identifier, identifier });
+});
+parts.push({ text: segments[identifiers.length] ?? '' });
+---
+
+<p class="theming-note">
+  {
+    parts.map((part) =>
+      part.identifier === undefined ? part.text : <Chip value={part.identifier} />,
+    )
+  }
+</p>
+
+<style>
+  .theming-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.5rem;
+    color: var(--muted-foreground);
+  }
+</style>
