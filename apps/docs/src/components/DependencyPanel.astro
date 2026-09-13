@@ -1,21 +1,26 @@
 ---
 /**
- * DependencyPanel (SHELL-008) — the item page's data-verbatim dependencies
- * panel. Receives the item's raw arrays plus the resolved-per-engine URL
- * pairs ([item].astro resolves through lib/resolve-deps in frontmatter, so
- * the served HTML is already concrete — nothing is fetched or templated on
- * the client) and renders:
+ * DependencyPanel (SHELL-008; re-skinned onto DataTable in REF-006) — the item
+ * page's data-verbatim dependencies panel. Receives the item's raw arrays plus
+ * the resolved-per-engine URL pairs ([item].astro resolves through
+ * lib/resolve-deps in frontmatter, so the served HTML is already concrete —
+ * nothing is fetched or templated on the client) and renders:
  *
  * - the npm dependency list verbatim, or an explicit empty state when the
  *   dataset's dependencies[] is empty (the section never silently drops),
- * - one engine-tabbed table of the resolved registry dependency URLs per
+ * - one engine-tabbed DataTable of the resolved registry dependency URLs per
  *   engine — both forms render; the inactive one is hidden-attribute only,
- * - the project-level AI SDK peers line verbatim from site-facts.json.
+ * - the project-level AI SDK peers line verbatim from site-facts.json,
+ * - a footer Callout (REF-004) linking the registry ledger for
+ *   troubleshooting.
  *
- * Plain token-styled table: the DataTable polish stays sprint-04's. Every
- * rendered string arrives as a prop — a dataset edit moves this panel.
+ * Table mechanics live in the generic DataTable; this panel owns every domain
+ * string and the sprint-02 data-testid surface. Every rendered string arrives
+ * as a prop — a dataset edit moves this panel.
  */
 import type { AiSdkPeer } from '../lib/resolve-deps';
+import Callout from './Callout.astro';
+import DataTable from './DataTable.astro';
 import TabGroup from './islands/TabGroup.astro';
 
 interface Props {
@@ -28,6 +33,10 @@ interface Props {
 }
 
 const { dependencies, registryUrls, peers } = Astro.props;
+
+/** One engine's URL rows — mono cells so every URL renders as <code>. */
+const engineRows = (engine: 'nativewind' | 'uniwind') =>
+  registryUrls[engine].map((url) => [{ text: url, mono: true }]);
 ---
 
 {
@@ -52,30 +61,10 @@ const { dependencies, registryUrls, peers } = Astro.props;
   ]}
 >
   <Fragment slot="nativewind">
-    <table class="deps-urls">
-      <tbody data-engine-urls="nativewind">
-        {registryUrls.nativewind.map((url) => (
-          <tr>
-            <td>
-              <code>{url}</code>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <DataTable bodyAttrs={{ 'data-engine-urls': 'nativewind' }} rows={engineRows('nativewind')} />
   </Fragment>
   <Fragment slot="uniwind">
-    <table class="deps-urls">
-      <tbody data-engine-urls="uniwind">
-        {registryUrls.uniwind.map((url) => (
-          <tr>
-            <td>
-              <code>{url}</code>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <DataTable bodyAttrs={{ 'data-engine-urls': 'uniwind' }} rows={engineRows('uniwind')} />
   </Fragment>
 </TabGroup>
 {
@@ -88,6 +77,11 @@ const { dependencies, registryUrls, peers } = Astro.props;
     </p>
   )
 }
+<footer class="deps-footer">
+  <Callout variant="info" title="A dependency URL not resolving?">
+    <a slot="link" href="/registry">Open the registry ledger</a>
+  </Callout>
+</footer>
 
 <style>
   .deps-packages {
@@ -102,23 +96,10 @@ const { dependencies, registryUrls, peers } = Astro.props;
     border: 1px solid var(--border);
     border-radius: 999px;
     padding: 0.125rem 0.625rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   .deps-empty {
     margin: 0 0 0.75rem;
     color: var(--muted-foreground);
-  }
-  .deps-urls {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .deps-urls td {
-    border-top: 1px solid var(--border);
-    padding: 0.375rem 0;
-  }
-  .deps-urls code {
-    overflow-wrap: anywhere;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   .deps-peers {
     display: flex;
@@ -128,7 +109,7 @@ const { dependencies, registryUrls, peers } = Astro.props;
     margin: 0.75rem 0 0;
     color: var(--muted-foreground);
   }
-  .deps-peers code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  .deps-footer {
+    margin: 0.75rem 0 0;
   }
 </style>
