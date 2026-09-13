@@ -1,0 +1,61 @@
+REF-007 authoring-time permission grounding — quoted from the real published packages
+(tarballs fetched via `npm pack` on 2026-09-13, same versions as the npm view evidence).
+
+=== enriched-markdown / streamdown — iOS NSPhotoLibraryAddUsageDescription ===
+Source: react-native-enriched-markdown@1.0.2 README.md, "Expo app" install section:
+
+  > [IMPORTANT]
+  > **iOS: Save to Camera Roll**
+  >
+  > If your Markdown content includes images and you want users to save them to
+  > their photo library, add the following to your `Info.plist`:
+  >
+  > ```xml
+  > <key>NSPhotoLibraryAddUsageDescription</key>
+  > <string>This app needs access to your photo library to save images.</string>
+  > ```
+
+Feature list (same README): "Native image interactions (iOS: Copy, Save to Camera Roll)".
+streamdown grounds to the same surface: react-native-streamdown@0.3.0 README, Features:
+"CommonMark and GitHub Flavored Markdown rendering powered by
+`react-native-enriched-markdown`" (peer >=1.0.0), so its render pipeline carries
+em's image interactions and their iOS permission.
+
+=== enriched-markdown / streamdown — Android INTERNET ===
+Source: react-native-enriched-markdown@1.0.2 docs/IMAGE_CACHING.md:
+
+  | Source                       | Android | iOS / macOS |
+  | `http://`, `https://`        | Yes     | Yes         |
+
+  ## Cache Layers
+  - **Disk** | OkHttp `Cache` | `NSURLCache` | 100 MB
+
+The capability loads remote http/https images on Android through an OkHttp disk
+cache; Android network access is governed by the platform permission INTERNET
+(android.Manifest.permission#INTERNET). No other Android permission is documented
+anywhere in the package (grepped android/src, docs/, README — the save-to-roll
+interaction is iOS-only).
+
+=== speech-recognition — iOS NSMicrophoneUsageDescription + NSSpeechRecognitionUsageDescription, Android RECORD_AUDIO ===
+Source: expo-speech-recognition@57.0.0 README.md:
+
+  - On Android, this requests [`RECORD_AUDIO`](https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO) permissions.
+  - On iOS, this requests two permissions: [`AVAudioSession.RecordPermission`](...) and [`SFSpeechRecognizer.requestAuthorization()`](...).
+
+  Config plugin (same README, app.json example):
+          "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone.",
+          "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition."
+
+The plugin keys are the Expo spellings of the two iOS usage-description keys
+(NSMicrophoneUsageDescription / NSSpeechRecognitionUsageDescription).
+
+=== extended-audio — iOS NSMicrophoneUsageDescription, Android RECORD_AUDIO ===
+Source: expo-audio@57.0.5 plugin/build/withAudio.js (verbatim from the tarball):
+
+  const withAudio = (config, { microphonePermission, recordAudioAndroid = true, ... } = {}) => {
+      ... NSMicrophoneUsageDescription: MICROPHONE_USAGE,
+      ... recordAudioAndroid !== false && 'android.permission.RECORD_AUDIO',
+
+plugin/build/withAudio.d.ts:
+  /** A string to set the `NSMicrophoneUsageDescription` permission message, or `false` to disable. */
+  /** Whether to enable the `RECORD_AUDIO` permission on Android. */

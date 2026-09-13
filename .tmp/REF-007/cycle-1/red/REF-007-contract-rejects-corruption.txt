@@ -1,0 +1,21 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/dev-client-matrix-contract.test.ts > REF-007-contract-rejects-corruption
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-007/apps/docs/src/data/dev-client-matrix.json'
+ ❯ tests/sprint-04-generated-reference/dev-client-matrix-contract.test.ts:293:25
+    291|
+    292| it('REF-007-contract-rejects-corruption', () => {
+    293|   const pristineBytes = readFileSync(MATRIX_PATH, 'utf8');
+       |                         ^
+    294|   const pristine = loadMatrix();
+    295|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:04:21
+   Duration  77ms (transform 12ms, setup 0ms, import 17ms, tests 2ms, environment 0ms)
+
+exit=0
