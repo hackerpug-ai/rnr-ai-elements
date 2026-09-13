@@ -332,7 +332,10 @@ test('FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-tex
   // first.
   const slot = page.locator('main div.family-grid-slot');
   expect(await slot.count(), 'exactly one mount slot above the grid').toBe(1);
-  expect(await slot.locator('*').count(), '0 stub-UI children in the slot').toBe(0);
+  expect(
+    await slot.evaluate((el) => el.children.length),
+    'empty structural slot — zero element children',
+  ).toBe(0);
   expect(
     await page.locator('main div.family-grid-slot ~ section').count(),
     'the slot precedes every family section',
