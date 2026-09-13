@@ -1,0 +1,113 @@
+---
+/**
+ * PropsTable (REF-002, TR-07 R8) — the item page's props region: a zero-JS
+ * 4-column table (Name / Type / Default / Description) rendering the sprint-01
+ * prebuild props[] dataset verbatim. Every string arrives through the `rows`
+ * prop — a dataset edit moves this table, nothing is hand-curated here.
+ *
+ * Full fidelity: type and description cells wrap in place
+ * (`overflow-wrap: anywhere`); nothing is ever truncated, clamped, or hidden.
+ * Null `default` / `description` render an explicit em-dash (—) cell — all 4
+ * columns are emitted unconditionally on every row.
+ *
+ * Mobile: one max-width media query re-flows each row into a stacked card and
+ * restores the column labels through `td::before content: attr(data-label)`.
+ * The DOM is identical at every width — no script, no second markup tree, so
+ * the no-JS crawl sees one table.
+ */
+interface PropRow {
+  name: string;
+  type: string;
+  default: string | null;
+  description: string | null;
+}
+
+interface Props {
+  /** The item's props[] from registry-items.json, rendered verbatim. */
+  rows: PropRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<table class="props-table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Default</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {rows.map((prop) => (
+      <tr>
+        <td class="props-table__name" data-label="Name">{prop.name}</td>
+        <td class="props-table__type" data-label="Type">{prop.type}</td>
+        <td class="props-table__default" data-label="Default">{prop.default ?? '—'}</td>
+        <td class="props-table__description" data-label="Description">{prop.description ?? '—'}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<style>
+  .props-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .props-table th {
+    padding: 0.5rem 0.75rem 0.25rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .props-table td {
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .props-table__name {
+    font-family: var(--font-mono);
+  }
+  .props-table__type {
+    color: var(--muted-foreground);
+    overflow-wrap: anywhere;
+  }
+  .props-table__description {
+    overflow-wrap: anywhere;
+  }
+  .props-table tbody tr:nth-child(even) {
+    background: var(--muted);
+  }
+
+  /* Mobile (covers the 390px frame): one query flips rows to stacked cards,
+     hides the thead, and restores each column label from the td data-label
+     attribute — CSS-only, the markup is unchanged. */
+  @media (max-width: 480px) {
+    .props-table thead {
+      display: none;
+    }
+    .props-table tbody tr {
+      display: block;
+      margin: 0 0 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.5rem 0.75rem;
+    }
+    .props-table td {
+      display: block;
+      border-top: 0;
+      padding: 0.25rem 0;
+    }
+    .props-table td::before {
+      content: attr(data-label);
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+  }
+</style>
