@@ -2,7 +2,8 @@
 
 # REF-005: QrPanel.astro — build-time inline SVG deep-link QR
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: 89b1f694fcfd77f01280d8f389ae4eea47b3e253 (approved cycle 1)
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 2 · Type: FEATURE · Wave: A
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
