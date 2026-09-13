@@ -37,6 +37,33 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       in place — no reload, no second stylesheet.
     </p>
 
+    <section id="textclasscontext">
+      <h2>The TextClassContext seam</h2>
+      <p>
+        React Native has no style cascade: a parent view cannot restyle the
+        text inside a child component just by wrapping it. Registry parents
+        that need to restyle nested text — message, prompt-input, tool, and
+        the other list-bearing components — instead publish their class
+        strings through the <code>TextClassContext</code> provider from the
+        text module. Those class strings are ordinary Tailwind classes, so
+        they resolve against your <code>@theme</code> block exactly like the
+        classes you write yourself.
+      </p>
+    </section>
+
+    <section id="rendermarkdown">
+      <h2>The renderMarkdown seam</h2>
+      <p>
+        The components that render model output — message, reasoning, context
+        — do not bundle a markdown renderer. Each takes a
+        <code>renderMarkdown</code> prop and defaults to plain text. The
+        reference renderer, <code>react-native-enriched-markdown</code>, is a
+        Fabric native module absent from Expo 57's bundled list; keeping it
+        behind the prop is what leaves the core runnable in Expo Go, with
+        markdown an opt-in step for dev-client apps.
+      </p>
+    </section>
+
     <nav class="theming__onward" aria-label="Onward">
       <a href="/">Back to the home page</a>
       <a href="/components">Browse components</a>
@@ -52,6 +79,11 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
   }
   .theming p {
     max-width: var(--measure);
+  }
+  /* Seam-section anchors stop clear of the sticky Header (SectionHeader idiom). */
+  #textclasscontext,
+  #rendermarkdown {
+    scroll-margin-block-start: calc(var(--layout-header-h) + 1rem);
   }
   .theming__onward {
     display: flex;
