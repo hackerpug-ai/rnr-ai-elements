@@ -1,0 +1,28 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/FIX-REF-008-1
+
+ ❯ tests/sprint-04-generated-reference/qr-dep-contract.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/qr-dep-contract.test.ts [ tests/sprint-04-generated-reference/qr-dep-contract.test.ts ]
+Error: Cannot find package 'qrcode' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/FIX-REF-008-1/tests/sprint-04-generated-reference/qr-dep-contract.test.ts
+ ❯ tests/sprint-04-generated-reference/qr-dep-contract.test.ts:7:1
+      5| // this file fails to load with module-not-found, which is AC-2's asse…
+      6| // absent-state. REF-009's assembly frontmatter uses this same import …
+      7| import QRCode from 'qrcode';
+       | ^
+      8| import { expect, it } from 'vitest';
+      9|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  16:06:11
+   Duration  78ms (transform 9ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
