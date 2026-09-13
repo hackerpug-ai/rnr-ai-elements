@@ -2,7 +2,8 @@
 
 # REF-004: Callout.astro + build-time seam map + real seam sections on /docs/theming
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: bf006cba9f57e5f11a3f73b297df398894f3391e (approved cycle 1)
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FEATURE · Wave: A
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -32,7 +33,7 @@ RUNTIME_COMMANDS:
   typecheck: pnpm typecheck
   lint:      ./node_modules/.bin/biome ci <paths>   # pnpm lint crashes locally
 
-PROGRESS: 0/4 ACs
+PROGRESS: 4/4 ACs
 
 
 ### 🚫 CRITICAL CONSTRAINTS (Never tier — read before acting)
@@ -49,12 +50,12 @@ PROGRESS: 0/4 ACs
 
 ### DONE WHEN
 
-- [ ] AC 1: Callout source contract — info/warning variants, link slot, 2 tone rules / 4 declarations
-- [ ] AC 2: seam-map derivation — real counts from real sourceFiles text
-- [ ] AC 3: theming.astro seam sections — literal content anchors, 4 surviving copy anchors
-- [ ] AC 4: Seam scoping — zero seams for non-users, exactly 2 kinds, one-line retarget surface
-- [ ] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
-- [ ] Only SCOPE.writeAllowed files modified (git diff --name-only)
+- [x] AC 1: Callout source contract — info/warning variants, link slot, 2 tone rules / 4 declarations
+- [x] AC 2: seam-map derivation — real counts from real sourceFiles text
+- [x] AC 3: theming.astro seam sections — literal content anchors, 4 surviving copy anchors
+- [x] AC 4: Seam scoping — zero seams for non-users, exactly 2 kinds, one-line retarget surface
+- [x] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
+- [x] Only SCOPE.writeAllowed files modified (git diff --name-only)
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
