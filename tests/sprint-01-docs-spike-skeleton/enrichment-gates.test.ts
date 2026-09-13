@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -10,6 +11,8 @@ import {
   type Expectation,
   formatViolation,
   GateError,
+  gateImagery,
+  gateMatrix,
   loadDefaultDataset,
   runAllGates,
 } from '../../scripts/docs-data/gates';
@@ -362,5 +365,210 @@ describe('enrichment gates', () => {
     expect(
       formatViolation({ gate: 'verdict', item: 'shimmer', detail: 'missing expoGo verdict' }),
     ).toBe('[docs-data] verdict: item "shimmer" missing expoGo verdict');
+  });
+});
+
+/**
+ * REF-008: the matrix shape gate over REF-007's committed dev-client matrix
+ * and the flag-gated imagery gate pair (T-GEND-022). Same build-lock
+ * discipline as docs-data-prebuild.test.ts (duplicated on purpose — no
+ * shared helper module inside SCOPE.writeAllowed) because the matrix case
+ * runs the real prebuild, whose wired gates must exit 0.
+ */
+describe('REF-008 matrix + imagery gates', () => {
+  const MATRIX_JSON = join(ROOT, 'apps/docs/src/data/dev-client-matrix.json');
+  const sha256 = (bytes: Buffer): string => createHash('sha256').update(bytes).digest('hex');
+
+  // Duplicated from docs-data-prebuild.test.ts on purpose: no shared helper
+  // module may be created inside SCOPE.writeAllowed, and the lock keeps this
+  // lane's prebuild from racing the FUSE-01/05 lane's chains on dist/ and
+  // public/r when vitest runs files in parallel workers.
+  const lockDir = join(ROOT, 'node_modules/.cache/FUSE-01-docs-build.lock');
+  const LOCK_TIMEOUT_MS = 15 * 60_000;
+
+  function acquireBuildLock(): void {
+    mkdirSync(join(ROOT, 'node_modules/.cache'), { recursive: true });
+    const startedAt = Date.now();
+    for (;;) {
+      try {
+        mkdirSync(lockDir);
+        return;
+      } catch {
+        if (Date.now() - startedAt > LOCK_TIMEOUT_MS) {
+          throw new Error(`timed out waiting for docs build lock at ${lockDir}`);
+        }
+        try {
+          if (Date.now() - statSync(lockDir).mtimeMs > LOCK_TIMEOUT_MS) {
+            rmSync(lockDir, { recursive: true, force: true });
+          }
+        } catch {
+          // Lock vanished between mkdir and stat — retry the acquire.
+        }
+        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 500);
+      }
+    }
+  }
+
+  function cleanExpectation(): Expectation {
+    const items = loadRegistryItems();
+    return {
+      expectedNames: items.map((i) => i.name),
+      families: deriveKindFamilies(items),
+    };
+  }
+
+  type MatrixRow = {
+    id: string;
+    peers: unknown[];
+    permissions: { ios?: string[]; android?: string[] } | null;
+  };
+
+  it('REF-008-matrix-gate: committed 4-entry dataset passes; renamed-entry drill fails closed and restores byte-exact', {
+    timeout: 300_000,
+  }, () => {
+    // Clean case: 0 matrix violations over the real committed dataset — the
+    // expected names are the PIN, never derived from the file under test.
+    // (The matrix entries are consumer-opt-in capability names, not docs
+    // registry item names, so no registry-item join here: AC-3 pins 0
+    // violations over the committed four as the false-positive guard.)
+    const dataset = loadDefaultDataset();
+    const expectation = cleanExpectation();
+    const project = createDocsProject();
+    expect(gateMatrix(), 'matrix violations over the committed dataset').toEqual([]);
+
+    const matrix = JSON.parse(readFileSync(MATRIX_JSON, 'utf8')) as MatrixRow[];
+    expect(matrix, 'the committed dev-client matrix pins exactly 4 entries').toHaveLength(4);
+    expect(matrix.map((e) => e.id).sort(), 'the pinned four dev-client matrix entries').toEqual([
+      'enriched-markdown',
+      'extended-audio',
+      'speech-recognition',
+      'streamdown',
+    ]);
+    for (const entry of matrix) {
+      expect(entry.peers.length, `${entry.id}.peers non-empty`).toBeGreaterThan(0);
+      expect(
+        entry.permissions?.ios?.length,
+        `${entry.id}.permissions.ios non-empty`,
+      ).toBeGreaterThan(0);
+      expect(
+        entry.permissions?.android?.length,
+        `${entry.id}.permissions.android non-empty`,
+      ).toBeGreaterThan(0);
+    }
+
+    // Wiring: the clean real tree passes the WHOLE aggregate with the flag off.
+    delete process.env.DOCS_GATE_IMAGERY;
+    expect(() => runAllGates(dataset, expectation, project)).not.toThrow();
+
+    // The real prebuild — matrix + imagery gates now wired into it — exits 0.
+    acquireBuildLock();
+    let prebuild: ReturnType<typeof spawnSync>;
+    try {
+      prebuild = spawnSync('pnpm', ['--filter', '@rnr-ai-elements/docs', 'prebuild'], {
+        encoding: 'utf8',
+        cwd: ROOT,
+      });
+    } finally {
+      rmSync(lockDir, { recursive: true, force: true });
+    }
+    expect(prebuild.error).toBeUndefined();
+    expect(prebuild.status, `prebuild failed\n${prebuild.stdout}\n${prebuild.stderr}`).toBe(0);
+
+    // Drill: rename 'speech-recognition' -> 'speech-recognition-x' on disk
+    // (count still 4) — the gate must fail closed naming it, and the file
+    // must restore byte-exact in the finally (shimmer-drill precedent).
+    const preBytes = readFileSync(MATRIX_JSON);
+    const preSha = sha256(preBytes);
+    let err: unknown;
+    try {
+      const mutated = JSON.parse(preBytes.toString('utf8')) as MatrixRow[];
+      const renamed = mutated.find((e) => e.id === 'speech-recognition');
+      expect(renamed, 'speech-recognition present pre-mutation').toBeDefined();
+      if (renamed) renamed.id = 'speech-recognition-x';
+      writeFileSync(MATRIX_JSON, `${JSON.stringify(mutated, null, 2)}\n`);
+      try {
+        runAllGates(loadDefaultDataset(), cleanExpectation(), project);
+      } catch (e) {
+        err = e;
+      }
+    } finally {
+      writeFileSync(MATRIX_JSON, preBytes);
+    }
+    expect(err, 'the mutated tree must fail the gates').toBeInstanceOf(GateError);
+    const gateError = err as GateError;
+    const matrixViolations = gateError.violations.filter((v) => v.gate === 'matrix');
+    expect(matrixViolations, 'exactly one matrix violation for the renamed entry').toHaveLength(1);
+    expect(matrixViolations[0]?.item).toBe('speech-recognition-x');
+    expect(gateError.message).toMatch(/\[docs-data\] matrix: item "speech-recognition-x"/);
+    expect(
+      sha256(readFileSync(MATRIX_JSON)),
+      'dev-client-matrix.json must restore byte-exact',
+    ).toBe(preSha);
+  });
+
+  it('REF-008-imagery-flag: unset flag holds 0 imagery violations; DOCS_GATE_IMAGERY=1 fails closed naming items', {
+    timeout: 120_000,
+  }, () => {
+    const dataset = loadDefaultDataset();
+    expect(dataset).toHaveLength(56);
+    const expectation = cleanExpectation();
+    const project = createDocsProject();
+    const hadFlag = process.env.DOCS_GATE_IMAGERY;
+    const dir = mkdtempSync(join(tmpdir(), 'ref008-clean-expectation-'));
+    try {
+      const expectationPath = join(dir, 'expectation.json');
+      writeFileSync(expectationPath, JSON.stringify(cleanExpectation()));
+
+      // Flag OFF: the gate is inert over the all-null-imagery dataset; the
+      // clean real tree passes the whole aggregate (default-build parity).
+      expect(gateImagery(dataset), 'imagery violations with the flag unset').toEqual([]);
+      expect(() => runAllGates(dataset, expectation, project)).not.toThrow();
+
+      // The gates CLI success line names all six always-on gates — extend
+      // never delete — asserted through the real CLI subprocess.
+      const clean = spawnSync(
+        join(ROOT, 'node_modules/.bin/tsx'),
+        [join(ROOT, 'scripts/docs-data/gates.ts'), '--expectation', expectationPath],
+        { encoding: 'utf8', cwd: ROOT },
+      );
+      expect(clean.error).toBeUndefined();
+      expect(clean.status, `stdout: ${clean.stdout}\nstderr: ${clean.stderr}`).toBe(0);
+      expect(clean.stdout).toContain('count, files, props, family, verdict, matrix gates pass');
+
+      // Flag ON: every null-imagery item is one violation naming it — 56/56
+      // over the real dataset — and the aggregate fails closed.
+      process.env.DOCS_GATE_IMAGERY = '1';
+      const violations = gateImagery(dataset);
+      expect(violations, 'one imagery violation per null-imagery item').toHaveLength(56);
+      expect(violations[0]?.item, 'the first offending item is a real dataset name').toBe(
+        dataset[0]?.name,
+      );
+      let err: unknown;
+      try {
+        runAllGates(dataset, expectation, project);
+      } catch (e) {
+        err = e;
+      }
+      expect(err, 'the flag-on run must fail closed').toBeInstanceOf(GateError);
+      const gateError = err as GateError;
+      expect(gateError.violations.filter((v) => v.gate === 'imagery')).toHaveLength(56);
+      expect(gateError.message).toMatch(/\[docs-data\] imagery: item "[a-z0-9-]+" missing imagery/);
+      expect(gateError.message).toContain(
+        `[docs-data] imagery: item "${dataset[0]?.name}" missing imagery`,
+      );
+
+      // The real CLI under the flag exits non-zero naming the item.
+      const flagged = spawnSync(
+        join(ROOT, 'node_modules/.bin/tsx'),
+        [join(ROOT, 'scripts/docs-data/gates.ts'), '--expectation', expectationPath],
+        { encoding: 'utf8', cwd: ROOT },
+      );
+      expect(flagged.status, `flag-on CLI must exit non-zero\n${flagged.stdout}`).not.toBe(0);
+      expect(flagged.stderr).toMatch(/\[docs-data\] imagery: item "[a-z0-9-]+" missing imagery/);
+    } finally {
+      if (hadFlag === undefined) delete process.env.DOCS_GATE_IMAGERY;
+      else process.env.DOCS_GATE_IMAGERY = hadFlag;
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

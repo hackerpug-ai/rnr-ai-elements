@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-008
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts (6 tests | 1 failed | 5 skipped) 26ms
+     × REF-008-matrix-gate: committed 4-entry dataset passes; renamed-entry drill fails closed and restores byte-exact 25ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts > REF-008 matrix + imagery gates > REF-008-matrix-gate: committed 4-entry dataset passes; renamed-entry drill fails closed and restores byte-exact
+TypeError: gateMatrix is not a function
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts:435:12
+    433|     const expectation = cleanExpectation();
+    434|     const project = createDocsProject();
+    435|     expect(gateMatrix(dataset), 'matrix violations over the committed …
+       |            ^
+    436|
+    437|     const matrix = JSON.parse(readFileSync(MATRIX_JSON, 'utf8')) as Ma…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  15:30:35
+   Duration  251ms (transform 36ms, setup 0ms, import 163ms, tests 26ms, environment 0ms)
+
