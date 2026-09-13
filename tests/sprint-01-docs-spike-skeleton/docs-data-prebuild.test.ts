@@ -4,6 +4,7 @@ import { mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync }
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { oneLineDescription } from '../../apps/docs/src/lib/one-line-description';
 
 const repoRoot = resolve(fileURLToPath(new URL('../../', import.meta.url)));
 const ITEMS_JSON = join(repoRoot, 'apps/docs/src/data/registry-items.json');
@@ -15,9 +16,8 @@ const DOCS_PUBLIC_R = join(repoRoot, 'apps/docs/public/r');
 const DOCS_PKG = '@rnr-ai-elements/docs';
 
 // The registry-items-v1 entry keys, in contract order — the LOCKED field list
-// FUSE-06/07/08 consume. (The task prose says "15 contract fields"; the
-// boundary_contracts literal enumerates exactly these 14 — the enumerated
-// shape is authoritative, see the task's assumptions.)
+// REF-009/11 consume. REF-008 appended qrDeepLink then metaDescription after
+// themingNote (extend never delete — the FIX-FAM-005-1 re-pin precedent).
 const CONTRACT_KEYS = [
   'name',
   'title',
@@ -33,6 +33,8 @@ const CONTRACT_KEYS = [
   'props',
   'usageSnippet',
   'themingNote',
+  'qrDeepLink',
+  'metaDescription',
 ] as const;
 
 // The pinned family assignment: 9 families; the 7 AI families split the 39
@@ -391,5 +393,75 @@ describe('FUSE-05 docs-data prebuild', () => {
     // The real prebuild passes the family gate consuming the committed map.
     const prebuild = runDocsPrebuild();
     expect(prebuild.status, `prebuild failed\n${prebuild.stdout}\n${prebuild.stderr}`).toBe(0);
+  });
+
+  /**
+   * REF-008 AC-1: the extended derivation. The real ordered chain emits the
+   * 16-key contract dataset; every entry carries qrDeepLink derived from the
+   * app.json expo.scheme (never a literal) and metaDescription built from the
+   * single-source oneLineDescription clamp (TR-03 pattern).
+   */
+  it('REF-008-qr-metalink-derivation: 16-key dataset with app-derived qrDeepLink and clamped metaDescription', {
+    timeout: 900_000,
+  }, () => {
+    const chain = runOrderedChain();
+    const evidence =
+      `--- registry stdout ---\n${chain.registry.stdout}\n${chain.registry.stderr}` +
+      `--- gallery stdout ---\n${chain.gallery.stdout}\n${chain.gallery.stderr}` +
+      `--- docs stdout ---\n${chain.docs.stdout}\n${chain.docs.stderr}`;
+    expect(chain.registry.status, `registry:build failed\n${evidence}`).toBe(0);
+    expect(chain.gallery.status, `gallery:manifest failed\n${evidence}`).toBe(0);
+    expect(chain.docs.status, `docs build failed\n${evidence}`).toBe(0);
+
+    const entries = JSON.parse(readFileSync(ITEMS_JSON, 'utf8')) as Record<string, unknown>[];
+    expect(entries).toHaveLength(56);
+
+    // Expected values computed from the REAL build inputs — app.json's
+    // expo.scheme and the registry items — never from a 'ai-elements-example'
+    // literal, so a hard-coded scheme in prebuild diverges and fails here.
+    const appJson = JSON.parse(readFileSync(join(repoRoot, 'apps/example/app.json'), 'utf8')) as {
+      expo: { scheme: string };
+    };
+    const scheme = appJson.expo.scheme;
+    expect(scheme.length, 'app.json must declare a non-empty expo.scheme').toBeGreaterThan(0);
+    const registry = JSON.parse(readFileSync(REGISTRY_JSON, 'utf8')) as {
+      items: { name: string; title?: string; description?: string }[];
+    };
+    const registryByName = new Map(registry.items.map((i) => [i.name, i]));
+
+    const META_TAIL = ' for React Native, installable via the nativewind/uniwind registry tree';
+    let componentCount = 0;
+    for (const entry of entries) {
+      // TC-1/TC-8: exactly the 16 contract keys, in order, on every entry.
+      expect(Object.keys(entry), `${entry.name}: 16-key contract order`).toEqual([
+        ...CONTRACT_KEYS,
+      ]);
+      // TC-2: qrDeepLink == app.json-derived scheme + '/' + name, 56/56.
+      expect(entry.qrDeepLink, `${entry.name}.qrDeepLink`).toBe(`${scheme}/${entry.name}`);
+
+      // TC-3: the TR-03 pattern with the single-source oneLineDescription
+      // clamp — byte-for-byte on every entry, component entries included.
+      const item = registryByName.get(entry.name as string);
+      expect(item, `${entry.name} absent from registry.json`).toBeDefined();
+      const description = item?.description ?? '';
+      const expectedMeta = `${item?.title ?? (entry.name as string)} — ${oneLineDescription(description)}${META_TAIL}`;
+      expect(entry.metaDescription, `${entry.name}.metaDescription`).toBe(expectedMeta);
+      if (description.length > 120) {
+        expect(
+          (entry.metaDescription as string).includes(description),
+          `${entry.name}.metaDescription carries the unclamped description`,
+        ).toBe(false);
+      }
+      if (entry.type === 'registry:component') componentCount += 1;
+    }
+    expect(componentCount, 'component entries').toBe(39);
+
+    // Pinned single-item expectations (conversation), scheme still derived.
+    const conversation = entries.find((e) => e.name === 'conversation');
+    expect(conversation?.qrDeepLink, 'conversation.qrDeepLink').toBe(`${scheme}/conversation`);
+    expect(String(conversation?.metaDescription)).toMatch(/^Conversation — /);
+    expect(String(conversation?.metaDescription)).toMatch(
+      / for React Native, installable via the nativewind\/uniwind registry tree$/,
+    );
   });
 });

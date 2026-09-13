@@ -1,7 +1,8 @@
 /**
  * DocsDataPrebuild (FUSE-05) — the one composition point of the docs data
- * path: registry + FUSE-02 verdicts + FUSE-03 enrichment -> ALL FIVE FUSE-04
- * gates -> apps/docs/src/data/registry-items.json + the wholesale public/r
+ * path: registry + FUSE-02 verdicts + FUSE-03 enrichment -> ALL FUSE-04
+ * gates (count, files, props, family, verdict, matrix, imagery) ->
+ * apps/docs/src/data/registry-items.json + the wholesale public/r
  * copy. Gate-then-write: every gate runs over the fully-built in-memory
  * dataset BEFORE any output byte is written, so a degraded tree fails the
  * build naming the item instead of publishing.
@@ -32,6 +33,7 @@ import {
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { Project } from 'ts-morph';
+import { oneLineDescription } from '../../apps/docs/src/lib/one-line-description';
 import {
   type AiSdkPeer,
   deriveAiSdkPeers,
@@ -49,6 +51,7 @@ const ITEMS_JSON = join(DATA_DIR, 'registry-items.json');
 const SITE_FACTS_JSON = join(DATA_DIR, 'site-facts.json');
 const ROOT_PKG = join(REPO_ROOT, 'package.json');
 const EXAMPLE_PKG = join(REPO_ROOT, 'apps/example/package.json');
+const EXAMPLE_APP_JSON = join(REPO_ROOT, 'apps/example/app.json');
 const FAMILIES_JSON = join(DATA_DIR, 'families.json');
 const MANIFEST_JSON = join(DATA_DIR, 'gallery-manifest.json');
 const ROOT_PUBLIC_R = join(REPO_ROOT, 'public/r');
@@ -56,7 +59,7 @@ const DOCS_PUBLIC_R = join(REPO_ROOT, 'apps/docs/public/r');
 /** 56 item JSONs + the registry.json index, per engine, x2 engines. */
 const PUBLIC_R_FILE_COUNT = 114;
 
-/** The registry-items-v1 entry keys, in contract order (LOCKED by FUSE-06). */
+/** The registry-items-v1 entry keys, in contract order (LOCKED by FUSE-06; REF-008 appended the last two). */
 export const CONTRACT_KEYS = [
   'name',
   'title',
@@ -72,6 +75,8 @@ export const CONTRACT_KEYS = [
   'props',
   'usageSnippet',
   'themingNote',
+  'qrDeepLink',
+  'metaDescription',
 ] as const;
 
 type ManifestEntry = {
@@ -172,12 +177,15 @@ function serialize(
     props: PropInfo[] | null;
     usageSnippet: string;
     themingNote: string;
+    qrScheme: string;
   },
 ): Record<(typeof CONTRACT_KEYS)[number], unknown> {
+  const title = (item as { title?: string }).title ?? item.name;
+  const description = (item as { description?: string }).description ?? '';
   return {
     name: item.name,
-    title: (item as { title?: string }).title ?? item.name,
-    description: (item as { description?: string }).description ?? '',
+    title,
+    description,
     type: item.type,
     engines: [...ENGINES],
     expoGo: item.expoGo,
@@ -192,6 +200,10 @@ function serialize(
     props: fields.props,
     usageSnippet: fields.usageSnippet,
     themingNote: fields.themingNote,
+    qrDeepLink: `${fields.qrScheme}/${item.name}`,
+    // TR-03 pattern; the one-line segment is the single-source FAM-002 clamp
+    // (never a second clamp), {engine} = engines.join('/').
+    metaDescription: `${title} — ${oneLineDescription(description)} for React Native, installable via the ${ENGINES.join('/')} registry tree`,
   };
 }
 
@@ -236,7 +248,7 @@ function main(): void {
   const { dataset, props, snippets, notes, families, manifestByName, familyOf } =
     buildDataset(project);
 
-  // ALL FIVE gates over the fully-built dataset — any violation throws a
+  // ALL gates over the fully-built dataset — any violation throws a
   // GateError naming every offending item BEFORE a single output byte.
   runAllGates(dataset, familiesExpectation(families), project);
 
@@ -268,6 +280,18 @@ function main(): void {
     ).dependencies,
   );
 
+  // The qr deep link scheme: read at build from the example app's expo config
+  // — never a hard-coded literal. Fail closed when it is missing or empty.
+  const qrScheme = readJson<{ expo?: { scheme?: string } }>(
+    EXAMPLE_APP_JSON,
+    'apps/example/app.json declares the expo scheme qrDeepLink derives from',
+  ).expo?.scheme;
+  if (typeof qrScheme !== 'string' || qrScheme.length === 0) {
+    throw new Error(
+      `[docs-data] prebuild: ${EXAMPLE_APP_JSON} declares no expo.scheme — qrDeepLink cannot derive`,
+    );
+  }
+
   const entries = dataset.map((item) =>
     serialize(item, {
       permissions: manifestByName.get(item.name)?.permissions ?? null,
@@ -275,6 +299,7 @@ function main(): void {
       props: props[item.name],
       usageSnippet: snippets[item.name],
       themingNote: notes[item.name],
+      qrScheme,
     }),
   );
 

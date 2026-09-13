@@ -1,0 +1,43 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-008
+
+ ❯ tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts (4 tests | 1 failed | 3 skipped) 6939ms
+     × REF-008-qr-metalink-derivation: 16-key dataset with app-derived qrDeepLink and clamped metaDescription 6939ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts > FUSE-05 docs-data prebuild > REF-008-qr-metalink-derivation: 16-key dataset with app-derived qrDeepLink and clamped metaDescription
+AssertionError: shimmer: 16-key contract order: expected [ 'name', 'title', …(12) ] to deeply equal [ 'name', 'title', …(14) ]
+
+- Expected
++ Received
+
+@@ -11,8 +11,6 @@
+    "dependencies",
+    "sourceFiles",
+    "props",
+    "usageSnippet",
+    "themingNote",
+-   "qrDeepLink",
+-   "metaDescription",
+  ]
+
+ ❯ tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts:437:74
+    435|     for (const entry of entries) {
+    436|       // TC-1/TC-8: exactly the 16 contract keys, in order, on every e…
+    437|       expect(Object.keys(entry), `${entry.name}: 16-key contract order…
+       |                                                                          ^
+    438|         ...CONTRACT_KEYS,
+    439|       ]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:30:51
+   Duration  7.02s (transform 18ms, setup 0ms, import 25ms, tests 6.94s, environment 0ms)
+

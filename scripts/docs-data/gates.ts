@@ -1,15 +1,17 @@
 /**
- * Fail-closed docs-data gates (FUSE-04). Five pure checks over the enriched
+ * Fail-closed docs-data gates (FUSE-04). Seven pure checks over the enriched
  * dataset plus the real FUSE-03 props extractor, so a silently-degraded docs
  * dataset is impossible: exact-56 count naming the mismatching item, non-empty
  * files, props resolved (extractor throw = violation; [] is legal), exact
- * family coverage, verdict present.
+ * family coverage, verdict present, REF-007's dev-client matrix shape, and the
+ * flag-gated imagery check (inert while DOCS_GATE_IMAGERY is unset).
  *
  * - Every violation renders as '[docs-data] <gate>: item "<name>" ...' — the
  *   build failure always names the offending item.
  * - The expected count is the PINNED EXPECTED_ITEM_COUNT plus the passed-in
  *   expected-names list — never derived from the dataset under test, so a
- *   hand-shortened 55-item registry cannot pass against itself.
+ *   hand-shortened 55-item registry cannot pass against itself. The matrix
+ *   gate is pinned the same way (PINNED_MATRIX_NAMES), never self-derived.
  * - Gates never write output files (FUSE-05 owns writing). runAllGates
  *   aggregates ALL violations into one GateError instead of first-throw.
  * - CLI: `tsx scripts/docs-data/gates.ts --expectation <json>` over the real
@@ -27,7 +29,7 @@ import { createDocsProject, extractPropsForItem, type RegistryItem } from './pro
 /** The registry pin: the docs dataset contains exactly this many items. */
 export const EXPECTED_ITEM_COUNT = 56;
 
-export type GateName = 'count' | 'files' | 'props' | 'family' | 'verdict';
+export type GateName = 'count' | 'files' | 'props' | 'family' | 'verdict' | 'matrix' | 'imagery';
 
 /** One failed check. `item` is the offending dataset item (quoted when rendered). */
 export type Violation = {
@@ -46,7 +48,11 @@ export type Expectation = {
 };
 
 /** The enriched-entry shape the gates operate on: a registry item plus its verdict. */
-export type EnrichedItem = RegistryItem & { expoGo?: boolean };
+export type EnrichedItem = RegistryItem & {
+  expoGo?: boolean;
+  /** TR-03 imagery: {matrix, darkStrip} once illustrated; null until then. */
+  imagery?: { matrix?: unknown; darkStrip?: unknown } | null;
+};
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -207,8 +213,114 @@ export function gateVerdict(dataset: EnrichedItem[]): Violation[] {
     }));
 }
 
+/** The committed REF-007 dataset the matrix gate enforces the shape of. */
+const MATRIX_JSON = join(REPO_ROOT, 'apps/docs/src/data/dev-client-matrix.json');
+
 /**
- * Runs all five gates and throws ONE GateError listing every offending item
+ * The pinned dev-client matrix names — the trusted outside source the gate
+ * checks AGAINST, never derived from the dataset under test (the same
+ * discipline as EXPECTED_ITEM_COUNT, so a mutated entry cannot pass against
+ * its own mutation).
+ */
+export const PINNED_MATRIX_NAMES = [
+  'enriched-markdown',
+  'streamdown',
+  'speech-recognition',
+  'extended-audio',
+] as const;
+
+export const EXPECTED_MATRIX_COUNT = PINNED_MATRIX_NAMES.length;
+
+type MatrixEntry = {
+  id: string;
+  peers: unknown[];
+  permissions: { ios?: unknown[]; android?: unknown[] } | null;
+};
+
+/**
+ * Matrix shape gate: the committed dev-client-matrix.json must hold exactly
+ * the pinned entries — count 4, each id one of the pinned names, each with
+ * non-empty peers[] and non-empty permissions {ios[], android[]}. The
+ * expected names are the PIN, never derived from the file under test and
+ * never from the docs registry item list — the matrix entries are
+ * consumer-opt-in capability names, not registry item names (a docs-registry
+ * join would false-positive all four committed entries). A name failure is
+ * ONE violation per entry (short-circuit), so a renamed entry is reported
+ * exactly once.
+ */
+export function gateMatrix(): Violation[] {
+  let entries: MatrixEntry[];
+  try {
+    entries = JSON.parse(readFileSync(MATRIX_JSON, 'utf8')) as MatrixEntry[];
+  } catch (err) {
+    return [
+      {
+        gate: 'matrix',
+        item: '<matrix>',
+        detail:
+          'dev-client-matrix.json unreadable — restore apps/docs/src/data/dev-client-matrix.json ' +
+          `(${err instanceof Error ? err.message : String(err)})`,
+      },
+    ];
+  }
+  const violations: Violation[] = [];
+  if (entries.length !== EXPECTED_MATRIX_COUNT) {
+    violations.push({
+      gate: 'matrix',
+      item: '<matrix>',
+      detail: `dev-client matrix has ${entries.length} entries; expected exactly ${EXPECTED_MATRIX_COUNT}`,
+    });
+  }
+  for (const entry of entries) {
+    const name = typeof entry.id === 'string' ? entry.id : '';
+    if (!(PINNED_MATRIX_NAMES as readonly string[]).includes(name)) {
+      violations.push({
+        gate: 'matrix',
+        item: name || '<unnamed>',
+        detail: `not one of the pinned dev-client matrix names (${PINNED_MATRIX_NAMES.join(', ')})`,
+      });
+      continue;
+    }
+    if (!Array.isArray(entry.peers) || entry.peers.length === 0) {
+      violations.push({ gate: 'matrix', item: name, detail: 'has empty peers' });
+    }
+    if (!Array.isArray(entry.permissions?.ios) || entry.permissions.ios.length === 0) {
+      violations.push({ gate: 'matrix', item: name, detail: 'has empty permissions.ios' });
+    }
+    if (!Array.isArray(entry.permissions?.android) || entry.permissions.android.length === 0) {
+      violations.push({ gate: 'matrix', item: name, detail: 'has empty permissions.android' });
+    }
+  }
+  return violations;
+}
+
+/** True only when DOCS_GATE_IMAGERY is set (default builds keep it unset). */
+export function imageryGateEnabled(): boolean {
+  const flag = process.env.DOCS_GATE_IMAGERY;
+  return flag !== undefined && flag !== '';
+}
+
+/**
+ * Imagery gate, flag-gated (T-GEND-022's fail-once-live pair): inert while
+ * DOCS_GATE_IMAGERY is unset, so default builds behave exactly as before;
+ * under the flag every null-imagery item is one violation naming it.
+ */
+export function gateImagery(
+  dataset: EnrichedItem[],
+  enabled: boolean = imageryGateEnabled(),
+): Violation[] {
+  if (!enabled) return [];
+  return dataset
+    .filter((item) => !item.imagery)
+    .map((item) => ({
+      gate: 'imagery' as const,
+      item: item.name,
+      detail: 'missing imagery',
+    }));
+}
+
+/**
+ * Runs all seven gates and throws ONE GateError listing every offending item
  * (never first-throw — one build failure beats five CI runs). Returns [] on a
  * clean dataset. Pass a shared ts-morph Project to amortize extractor setup.
  */
@@ -223,6 +335,8 @@ export function runAllGates(
     ...gateProps(dataset, project),
     ...gateFamily(dataset, expectation.families),
     ...gateVerdict(dataset),
+    ...gateMatrix(),
+    ...gateImagery(dataset),
   ];
   if (violations.length > 0) throw new GateError(violations);
   return violations;
@@ -305,7 +419,7 @@ function main(argv: string[] = process.argv.slice(2)): void {
     throw err;
   }
   console.log(
-    `[docs-data] gates: ${dataset.length} of ${EXPECTED_ITEM_COUNT} names match expectation; count, files, props, family, verdict gates pass`,
+    `[docs-data] gates: ${dataset.length} of ${EXPECTED_ITEM_COUNT} names match expectation; count, files, props, family, verdict, matrix gates pass`,
   );
 }
 
