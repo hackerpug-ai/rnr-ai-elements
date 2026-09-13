@@ -2,7 +2,8 @@
 
 # REF-002: PropsTable.astro — zero-JS R8 table from prebuild props[]
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: d1e40c273b9917bba3aa54cf8ea57f9c5b267737 (approved cycle 1)
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 2 · Type: FEATURE · Wave: A
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -49,12 +50,12 @@ PROGRESS: 0/4 ACs
 
 ### DONE WHEN
 
-- [ ] AC 1: PropsTable source contract — 4-column table driven by the generated props[] dataset
-- [ ] AC 2: Full-fidelity cells — mega types wrap in place, never truncated
-- [ ] AC 3: CSS-only mobile card mode keyed on data-label attributes
-- [ ] AC 4: Null default/description render explicit em-dash cells — columns never dropped
-- [ ] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
-- [ ] Only SCOPE.writeAllowed files modified (git diff --name-only)
+- [x] AC 1: PropsTable source contract — 4-column table driven by the generated props[] dataset
+- [x] AC 2: Full-fidelity cells — mega types wrap in place, never truncated
+- [x] AC 3: CSS-only mobile card mode keyed on data-label attributes
+- [x] AC 4: Null default/description render explicit em-dash cells — columns never dropped
+- [x] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
+- [x] Only SCOPE.writeAllowed files modified (git diff --name-only)
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 

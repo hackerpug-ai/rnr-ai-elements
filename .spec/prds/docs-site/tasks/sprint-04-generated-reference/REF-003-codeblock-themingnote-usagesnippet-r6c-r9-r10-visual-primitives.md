@@ -2,7 +2,8 @@
 
 # REF-003: CodeBlock + ThemingNote + UsageSnippet — R6c/R9/R10 visual primitives
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: 11b150794803469529e88a9fd6b1f8b9b1262662 (approved cycle 1)
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FEATURE · Wave: A
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -50,13 +51,13 @@ PROGRESS: 0/5 ACs
 
 ### DONE WHEN
 
-- [ ] AC 1: CodeBlock verbatim source contract over the unmodified rnr-copy-button island
-- [ ] AC 2: Full untruncated body — the block never height-limits or clips
-- [ ] AC 3: Copy affordance always visible — no hover gating, 44px touch target, label plumbing
-- [ ] AC 4: ThemingNote deterministic token-chip split over the real notes
-- [ ] AC 5: UsageSnippet verbatim passthrough — never fabricated
-- [ ] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
-- [ ] Only SCOPE.writeAllowed files modified (git diff --name-only)
+- [x] AC 1: CodeBlock verbatim source contract over the unmodified rnr-copy-button island
+- [x] AC 2: Full untruncated body — the block never height-limits or clips
+- [x] AC 3: Copy affordance always visible — no hover gating, 44px touch target, label plumbing
+- [x] AC 4: ThemingNote deterministic token-chip split over the real notes
+- [x] AC 5: UsageSnippet verbatim passthrough — never fabricated
+- [x] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
+- [x] Only SCOPE.writeAllowed files modified (git diff --name-only)
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
