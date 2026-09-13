@@ -11,6 +11,8 @@
  */
 import Layout from '../../layouts/DocsLayout.astro';
 import ComponentCard from '../../components/ComponentCard.astro';
+import DevClientMatrix from '../../components/DevClientMatrix.astro';
+import InstallCommand from '../../components/InstallCommand.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import LedgerFilter from '../../components/islands/LedgerFilter.astro';
 import families from '../../data/families.json';
@@ -72,9 +74,11 @@ const itemsByName = new Map(
               );
             })}
           </ul>
+          <InstallCommand items={family.itemNames} />
         </section>
       ))
     }
+    <DevClientMatrix />
   </main>
 </Layout>
 
