@@ -1,9 +1,15 @@
 ---
 /**
- * InstallCommand — the engine-tabbed install composite (SHELL-004). Wraps ONE
- * TabGroup whose panels each carry the engine-correct install line with the
- * existing CopyButton island reused verbatim: the copied text IS the
- * displayed panel text, so display and clipboard cannot drift.
+ * InstallCommand — the engine-tabbed install composite (SHELL-004; REF-010
+ * adds the family form). Wraps ONE TabGroup whose panels each carry the
+ * engine-correct install line with the existing CopyButton island reused
+ * verbatim: the copied text IS the displayed panel text, so display and
+ * clipboard cannot drift.
+ *
+ * Two forms over the same panel pair: a single `item` (the [item] detail
+ * page) and a family `items` list (/components — ONE add invocation per
+ * engine whose arguments are every family item's absolute URL, in the
+ * caller's order).
  *
  * The command shape is locked (SHELL-004 BOUNDARIES): absolute URL only,
  * engine in the path, engine state never in the URL, never a short or
@@ -14,10 +20,12 @@ import TabGroup from './islands/TabGroup.astro';
 
 interface Props {
   /** Registry item slug, e.g. "conversation" — lower-case and dashed. */
-  item: string;
+  item?: string;
+  /** Family form: every family member, in families.json order. */
+  items?: readonly string[];
 }
 
-const { item } = Astro.props;
+const { item, items } = Astro.props;
 
 const PANELS = [
   { engine: 'nativewind', label: 'nativewind' },
@@ -27,18 +35,27 @@ const PANELS = [
 function installCommand(engine: string, item: string): string {
   return `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/${engine}/${item}.json`;
 }
+
+/** Family form: ONE add invocation naming every item's absolute URL. */
+function familyCommand(engine: string, items: readonly string[]): string {
+  const urls = items.map((name) => `https://rnraielements.com/r/${engine}/${name}.json`);
+  return `npx @react-native-reusables/cli@latest add ${urls.join(' ')}`;
+}
+
+const commandFor = (engine: string): string =>
+  items ? familyCommand(engine, items) : installCommand(engine, item ?? '');
 ---
 
 <TabGroup panels={PANELS}>
   <Fragment slot="nativewind">
     <CopyButton
-      command={installCommand('nativewind', item)}
+      command={commandFor('nativewind')}
       label="Copy nativewind install command"
     />
   </Fragment>
   <Fragment slot="uniwind">
     <CopyButton
-      command={installCommand('uniwind', item)}
+      command={commandFor('uniwind')}
       label="Copy uniwind install command"
     />
   </Fragment>

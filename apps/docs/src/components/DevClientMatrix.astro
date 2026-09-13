@@ -1,0 +1,52 @@
+---
+/**
+ * DevClientMatrix (REF-010) — the /components trailing section listing the
+ * opt-in dev-client items with their peer dependencies and platform
+ * permissions. Every row derives at build from the committed
+ * dev-client-matrix.json (REF-007); table mechanics ride the generic
+ * DataTable (REF-006) and the verdict rides the site-wide Badge.
+ *
+ * The wrapping section deliberately carries NO id attribute and emits no
+ * card links: /components' pinned count contracts (the seven anchored
+ * family sections and their 39 cards) must not move. The matrix anchor
+ * arrives with sprint-05's /docs/installation relocation.
+ */
+import Badge from './Badge.astro';
+import DataTable from './DataTable.astro';
+import matrix from '../data/dev-client-matrix.json';
+
+const COLUMNS = ['Item', 'Peer dependencies', 'iOS permissions', 'Android permissions'];
+
+const rows = matrix.map((entry) => [
+  { text: entry.label, mono: true },
+  { text: entry.peers.map((peer) => `${peer.name} ${peer.range}`).join(', '), mono: true },
+  { text: entry.permissions.ios.join(', '), mono: true },
+  { text: entry.permissions.android.join(', '), mono: true },
+]);
+---
+
+<section class="dev-client-matrix">
+  <h2>Dev client requirements</h2>
+  <p class="dev-client-matrix__note">
+    Opt-in items <Badge tone="dev-client" /> — install the listed peers and declare
+    the platform permissions before the first dev-client build.
+  </p>
+  <DataTable
+    columns={COLUMNS}
+    rows={rows}
+    caption="Dev-client items: peer dependencies and platform permissions"
+  />
+</section>
+
+<style>
+  .dev-client-matrix {
+    margin-block: 2rem;
+  }
+  .dev-client-matrix h2 {
+    margin: 0;
+  }
+  .dev-client-matrix__note {
+    margin: 0.5rem 0 1rem;
+    color: var(--muted-foreground);
+  }
+</style>

@@ -1,0 +1,38 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-010
+
+ ❯ tests/sprint-04-generated-reference/components-page-contract.test.ts (4 tests | 1 failed | 3 skipped) 4ms
+   × REF-010-matrix-section-contract 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/components-page-contract.test.ts > REF-010-matrix-section-contract
+AssertionError: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-010/apps/docs/src/components/DevClientMatrix.astro exists (the REF-010 trailing matrix component): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ readExisting tests/sprint-04-generated-reference/components-page-contract.test.ts:58:56
+     56|
+     57| function readExisting(path: string, hint: string): string {
+     58|   expect(existsSync(path), `${path} exists (${hint})`).toBe(true);
+       |                                                        ^
+     59|   return readFileSync(path, 'utf8');
+     60| }
+ ❯ tests/sprint-04-generated-reference/components-page-contract.test.ts:100:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:28:02
+   Duration  85ms (transform 12ms, setup 0ms, import 18ms, tests 4ms, environment 0ms)
+
+exit=1
