@@ -1,0 +1,12 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Reproduced both directions. Commit: e2e_surface_check.py --test tests/sprint-01-docs-spike-skeleton/home.spec.ts --policy .spec/e2e-policy/surface.json -> surface_ok=true exit=0. Main (old oracle at line 184) -> exit=1 GENERIC_ROOT_ORACLE selector body. Committed captures at .tmp/FIX-FUSE-08-1/cycle-1/red/surface-check-red.txt and cycle-1/green/surface-check-green.txt. Policy file untouched."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Committed evidence: cycle-1/green/playwright-home-green.txt shows 15 tests over 3 real chromium projects, 13 passed / 2 skipped, exit=0 echoed. Corroborated vs worktree junit.xml tests=15 failures=0 skipped=2. webServer pinned to astro preview over dist (runner-config.test.ts:26-34); 2 skips are pre-existing nojs clipboard/click skips (home.spec.ts:41,224), byte-identical on main."},
+    {"id": "TC-1", "satisfied": true, "evidence": "git diff main...6607c17 --name-only = home.spec.ts + 3 .tmp/FIX-FUSE-08-1/cycle-1 evidence files only."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Single hunk at home.spec.ts:184, verbatim prescribed line; neighbors 185-187 unchanged context; no assertion weakened; locator inline inside expect."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "The commit does exactly what FIX-FUSE-08-1 prescribes: one assertion swapped for the attribute-selected count-1 oracle, neighbors byte-identical, RED and GREEN independently reproduced, Playwright green corroborated against junit, typecheck and biome clean."
+}
