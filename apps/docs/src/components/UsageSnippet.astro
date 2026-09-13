@@ -1,0 +1,18 @@
+---
+/**
+ * UsageSnippet — R10: the item's gallery-cell usage snippet rendered
+ * verbatim (TR-07 fidelity rule v1.2.0 — never hand-written per page). Pure
+ * CodeBlock passthrough: `snippet` is required with no default and no
+ * fallback, so a missing field fails at the caller instead of fabricating
+ * content here. Zero JS; tokens only.
+ */
+import CodeBlock from './CodeBlock.astro';
+
+interface Props {
+  snippet: string;
+}
+
+const { snippet } = Astro.props;
+---
+
+<CodeBlock code={snippet} />

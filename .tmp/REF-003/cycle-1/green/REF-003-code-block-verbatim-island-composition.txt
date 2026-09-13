@@ -1,0 +1,21 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-003
+
+stdout | tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-code-block-verbatim-island-composition: one CopyButton with command={code}, counted token declarations, zero normalization
+[REF-003 AC-1] declarations: background var(--code-background)=1, color var(--code-foreground)=1, pre-wrap=1, font-mono=1
+
+ ✓ tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-code-block-verbatim-island-composition: one CopyButton with command={code}, counted token declarations, zero normalization 2ms
+ ↓ tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-code-block-untruncated-body: no height limit, no clipping, overflow-wrap anywhere, multi-line dataset grounding
+ ↓ tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-code-block-copy-affordance: always-visible trigger, 44px touch target, label plumbing, byte-identical island pair
+ ↓ tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-theming-note-token-chips: one identifier regex, counter-less Chip composition, real-dataset grounding
+ ↓ tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-usage-snippet-verbatim: required snippet prop, single verbatim CodeBlock passthrough, zero fabrication
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 4 skipped (5)
+   Start at  15:03:41
+   Duration  193ms (transform 84ms, setup 0ms, import 112ms, tests 2ms, environment 0ms)
+
+exit=0
