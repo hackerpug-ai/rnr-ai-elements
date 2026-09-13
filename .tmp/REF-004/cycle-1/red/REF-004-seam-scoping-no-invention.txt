@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004
+
+ ❯ tests/sprint-04-generated-reference/seam-contract.test.ts (4 tests | 1 failed | 3 skipped) 6ms
+   × REF-004-seam-scoping-no-invention: zero seams for non-users, exactly 2 kinds, one retarget surface 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-seam-scoping-no-invention: zero seams for non-users, exactly 2 kinds, one retarget surface
+Error: Cannot find module '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004/apps/docs/src/lib/seam-map.ts' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004/tests/sprint-04-generated-reference/seam-contract.test.ts
+ ❯ tests/sprint-04-generated-reference/seam-contract.test.ts:220:58
+    218|
+    219| it('REF-004-seam-scoping-no-invention: zero seams for non-users, exact…
+    220|   const { deriveSeams, SEAM_KINDS, SEAM_LINK_TARGETS } = await import(…
+       |                                                          ^
+    221|
+    222|   // TC-7 — the probed non-users carry no marker, so they derive zero …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:01:04
+   Duration  105ms (transform 16ms, setup 0ms, import 24ms, tests 6ms, environment 0ms)
+

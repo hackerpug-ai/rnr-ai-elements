@@ -1,0 +1,19 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004
+
+stdout | tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-callout-source-contract: info/warning variants, link slot, 2 tone rules / 4 declarations
+[REF-004] Callout tone contract: 2 rules (.callout--info, .callout--warning), 4 declarations
+
+ ✓ tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-callout-source-contract: info/warning variants, link slot, 2 tone rules / 4 declarations 2ms
+ ↓ tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-seam-map-derivation: real counts from real sourceFiles text
+ ↓ tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-theming-seam-sections: literal content anchors, 4 surviving copy anchors
+ ↓ tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-seam-scoping-no-invention: zero seams for non-users, exactly 2 kinds, one retarget surface
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  15:02:51
+   Duration  77ms (transform 12ms, setup 0ms, import 17ms, tests 2ms, environment 0ms)
+

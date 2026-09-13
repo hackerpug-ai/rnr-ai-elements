@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004
+
+ ❯ tests/sprint-04-generated-reference/seam-contract.test.ts (4 tests | 1 failed | 3 skipped) 4ms
+   × REF-004-theming-seam-sections: literal content anchors, 4 surviving copy anchors 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-theming-seam-sections: literal content anchors, 4 surviving copy anchors
+AssertionError: exactly one section id="textclasscontext": expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/sprint-04-generated-reference/seam-contract.test.ts:173:5
+    171|     theming.match(/<section id="textclasscontext">/g) ?? [],
+    172|     'exactly one section id="textclasscontext"',
+    173|   ).toHaveLength(1);
+       |     ^
+    174|   expect(
+    175|     theming.match(/<section id="rendermarkdown">/g) ?? [],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:01:04
+   Duration  82ms (transform 11ms, setup 0ms, import 16ms, tests 4ms, environment 0ms)
+
