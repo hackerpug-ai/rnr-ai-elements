@@ -1,0 +1,37 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-010
+
+ ❯ tests/sprint-04-generated-reference/components-page-contract.test.ts (4 tests | 1 failed | 3 skipped) 5ms
+   × REF-010-components-page-contract 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/components-page-contract.test.ts > REF-010-components-page-contract
+AssertionError: one InstallCommand composition site: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/sprint-04-generated-reference/components-page-contract.test.ts:339:84
+    337|   const installAt = page.indexOf('<InstallCommand');
+    338|   const matrixAt = page.indexOf('<DevClientMatrix');
+    339|   expect(count(page, /<InstallCommand\b/g), 'one InstallCommand compos…
+       |                                                                                    ^
+    340|   expect(
+    341|     installAt,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:28:03
+   Duration  84ms (transform 13ms, setup 0ms, import 18ms, tests 5ms, environment 0ms)
+
+exit=1

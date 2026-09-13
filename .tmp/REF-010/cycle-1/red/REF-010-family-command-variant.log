@@ -1,0 +1,82 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-010
+
+ ❯ tests/sprint-04-generated-reference/components-page-contract.test.ts (4 tests | 1 failed | 3 skipped) 4ms
+   × REF-010-family-command-variant 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/components-page-contract.test.ts > REF-010-family-command-variant
+AssertionError: the family variant prop exists: expected '---\n/**\n * InstallCommand — the eng…' to match /items\?:/
+
+- Expected:
+/items\?:/
+
++ Received:
+"---
+/**
+ * InstallCommand — the engine-tabbed install composite (SHELL-004). Wraps ONE
+ * TabGroup whose panels each carry the engine-correct install line with the
+ * existing CopyButton island reused verbatim: the copied text IS the
+ * displayed panel text, so display and clipboard cannot drift.
+ *
+ * The command shape is locked (SHELL-004 BOUNDARIES): absolute URL only,
+ * engine in the path, engine state never in the URL, never a short or
+ * relative form.
+ */
+import CopyButton from './islands/CopyButton.astro';
+import TabGroup from './islands/TabGroup.astro';
+
+interface Props {
+  /** Registry item slug, e.g. \"conversation\" — lower-case and dashed. */
+  item: string;
+}
+
+const { item } = Astro.props;
+
+const PANELS = [
+  { engine: 'nativewind', label: 'nativewind' },
+  { engine: 'uniwind', label: 'uniwind' },
+];
+
+function installCommand(engine: string, item: string): string {
+  return `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/${engine}/${item}.json`;
+}
+---
+
+<TabGroup panels={PANELS}>
+  <Fragment slot=\"nativewind\">
+    <CopyButton
+      command={installCommand('nativewind', item)}
+      label=\"Copy nativewind install command\"
+    />
+  </Fragment>
+  <Fragment slot=\"uniwind\">
+    <CopyButton
+      command={installCommand('uniwind', item)}
+      label=\"Copy uniwind install command\"
+    />
+  </Fragment>
+</TabGroup>
+"
+
+ ❯ tests/sprint-04-generated-reference/components-page-contract.test.ts:188:53
+    186|
+    187|   // The variant accepts a family items list beside the untouched sing…
+    188|   expect(install, 'the family variant prop exists').toMatch(/items\?:/…
+       |                                                     ^
+    189|   expect(install, 'the single-item prop stays declared').toMatch(/\bit…
+    190|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:28:02
+   Duration  87ms (transform 14ms, setup 0ms, import 19ms, tests 4ms, environment 0ms)
+
+exit=1
