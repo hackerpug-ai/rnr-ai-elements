@@ -2,7 +2,8 @@
 
 # REF-006: DataTable.astro + DependencyPanel re-skin (R7)
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: 074ea9e6c00ebd5c55ad616554d0161b615a0e10 (approved cycle 1)
 > Assignee: frontend-designer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 2 · Type: FEATURE · Wave: A
 > Proposed By: frontend-designer · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -50,12 +51,12 @@ PROGRESS: 0/4 ACs
 
 ### DONE WHEN
 
-- [ ] AC 1: DataTable generic source contract — prop-driven table, zebra, sticky header, mobile scroll
-- [ ] AC 2: Panel mount stability — props contract unchanged, resolver untouched
-- [ ] AC 3: Testid continuity + contents equality + Callout footer
-- [ ] AC 4: Empty-deps explicit state and the no-max-height/no-print/no-new-island guards
-- [ ] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
-- [ ] Only SCOPE.writeAllowed files modified (git diff --name-only)
+- [x] AC 1: DataTable generic source contract — prop-driven table, zebra, sticky header, mobile scroll
+- [x] AC 2: Panel mount stability — props contract unchanged, resolver untouched
+- [x] AC 3: Testid continuity + contents equality + Callout footer
+- [x] AC 4: Empty-deps explicit state and the no-max-height/no-print/no-new-island guards
+- [x] `pnpm typecheck` clean + `./node_modules/.bin/biome ci <paths>` clean
+- [x] Only SCOPE.writeAllowed files modified (git diff --name-only) — product/test files are exactly the 3 write_allowed paths; .tmp/REF-006/cycle-1 RED+GREEN evidence committed per sprint convention (REF-005 precedent)
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
