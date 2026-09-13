@@ -1,0 +1,49 @@
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 523, reused 0, downloaded 0, added 0
+Progress: resolved 1307, reused 0, downloaded 0, added 0
+Progress: resolved 1309, reused 0, downloaded 0, added 0
+ WARN  2 deprecated subdependencies found: tsconfck@3.1.6, uuid@7.0.3
+Progress: resolved 1309, reused 0, downloaded 0, added 0, done
+ WARN  Issues with peer dependencies found
+apps/harness
+├─┬ @storybook/react-native 10.5.4
+│ ├── ✕ unmet peer react-native-safe-area-context@5.8.0: found 5.7.0
+│ ├─┬ @storybook/mcp 0.8.0
+│ │ └─┬ @tmcp/adapter-valibot 0.1.6
+│ │   └─┬ @valibot/to-json-schema 1.7.1
+│ │     └── ✕ unmet peer valibot@^1.4.0: found 1.2.0 in @storybook/mcp
+│ └─┬ @storybook/react-native-ui 10.5.4
+│   └── ✕ unmet peer react-native-safe-area-context@5.8.0: found 5.7.0
+├─┬ @storybook/react-native-web-vite 10.5.10
+│ ├─┬ vite-plugin-rnw 0.0.11
+│ │ └── ✕ unmet peer typescript@^5: found 6.0.3
+│ └─┬ vite-tsconfig-paths 6.1.1
+│   └─┬ tsconfck 3.1.6
+│     └── ✕ unmet peer typescript@^5.0.0: found 6.0.3
+└─┬ nativewind 4.2.6
+  └─┬ react-native-css-interop 0.2.6
+    └── ✕ unmet peer tailwindcss@~3: found 4.3.3
+
+apps/harness-nativewind
+├─┬ @storybook/react-native 10.5.4
+│ ├── ✕ unmet peer react-native-safe-area-context@5.8.0: found 5.7.0
+│ └─┬ @storybook/react-native-ui 10.5.4
+│   └── ✕ unmet peer react-native-safe-area-context@5.8.0: found 5.7.0
+└─┬ @storybook/react-native-web-vite 10.5.10
+  └─┬ vite-plugin-rnw 0.0.11
+    └── ✕ unmet peer typescript@^5: found 6.0.3
+
+devDependencies:
++ @types/qrcode ^1.5.6
++ qrcode ^1.5.4
+
+Packages: +20
+++++++++++++++++++++
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild@0.28.2.                                     │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 4s using pnpm v10.32.1
