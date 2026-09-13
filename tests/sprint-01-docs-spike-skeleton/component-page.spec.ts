@@ -1,5 +1,8 @@
 import { readFileSync } from 'node:fs';
-import { expect, type TestInfo, test } from '@playwright/test';
+import { expect, type Page, type TestInfo, test } from '@playwright/test';
+// REF-004's seam derivation — the item pages render one seam Callout per
+// derived kind, so the expected count joins the same pure module the page uses.
+import { deriveSeams } from '../../apps/docs/src/lib/seam-map';
 import { PREVIEW_URL } from '../harness/docs-preview';
 
 /**
@@ -51,6 +54,13 @@ interface SourceFile {
   text: string;
 }
 
+interface PropRow {
+  name: string;
+  type: string;
+  default: string | null;
+  description: string | null;
+}
+
 interface Item {
   name: string;
   title: string;
@@ -60,6 +70,12 @@ interface Item {
   expoGo: boolean;
   family: string;
   sourceFiles: SourceFile[];
+  // REF-008's 16-key contract tail — the regions REF-009 renders.
+  props: PropRow[];
+  themingNote: string;
+  usageSnippet: string;
+  qrDeepLink: string;
+  metaDescription: string;
 }
 
 interface Family {
@@ -85,9 +101,40 @@ const SITE = 'https://rnraielements.com';
 const commandFor = (engine: string, name: string): string =>
   `npx @react-native-reusables/cli@latest add ${SITE}/r/${engine}/${name}.json`;
 
+// REF-009 — the five top-level regions the TR-07 anatomy pins (dependencies
+// keeps its data-verbatim section between install and source; the order below
+// is the filtered subsequence every page must render, in full and in order).
+const EXPECTED_REGIONS = ['install', 'source', 'props', 'theming', 'usage'];
+
 const INSTALL_SECTION = 'main > section[data-section="install"]';
-const SOURCE_CODE = 'section[data-section="source"] pre code';
+// REF-009 re-pin: the source figures compose the CodeBlock primitive now —
+// the byte surface is the island's server-rendered <code> child (one per
+// source file), which the count and byte-compare assertions below address.
+const SOURCE_CODE = 'section[data-section="source"] rnr-copy-button code';
+const PROPS_TABLE_ROWS = 'section[data-section="props"] table.props-table tbody tr';
+const THEMING_NOTE = 'section[data-section="theming"] .theming-note';
+const USAGE_CODE = 'section[data-section="usage"] rnr-copy-button code';
+const QR_PANEL = '[data-qr-panel]';
+// R11 seam callouts are direct children of main; DependencyPanel's own
+// empty-deps callout nests inside the dependencies section and stays excluded.
+const SEAM_CALLOUTS = 'main.component-page > aside.callout';
 const PAGER = 'nav[aria-label="Family pager"]';
+
+/**
+ * The data-section order of the current page, filtered to the five asserted
+ * regions — the dependencies data-verbatim panel renders between install and
+ * source without entering this five-name contract.
+ */
+async function regionOrder(page: Page): Promise<string[]> {
+  const names = await page
+    .locator('main > section[data-section]')
+    .evaluateAll((nodes) =>
+      nodes.map(
+        (node) => (node as unknown as { dataset: Record<string, string> }).dataset.section ?? '',
+      ),
+    );
+  return names.filter((name) => EXPECTED_REGIONS.includes(name));
+}
 
 function evidencePath(testInfo: TestInfo, slug: string): string {
   return `.tmp/FUSE-07/evidence/${testInfo.project.name}-${slug}.png`;
@@ -131,6 +178,35 @@ test('FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages
   await expect(uniwindRow.locator('rnr-copy-button button')).toHaveCount(1);
   await expect(install.locator('rnr-tab-group[storage-key="rnr-engine"]')).toHaveCount(1);
 
+  // REF-009 — the five-region anatomy on the conversation page: the filtered
+  // section order must equal the five asserted regions in this exact order
+  // (dependencies keeps its data-verbatim slot between install and source).
+  expect(await regionOrder(page), 'the five-region anatomy order').toEqual([
+    'install',
+    'source',
+    'props',
+    'theming',
+    'usage',
+  ]);
+  expect(await page.locator(PROPS_TABLE_ROWS).count(), 'conversation prop rows').toBe(
+    conversation.props.length,
+  );
+  expect(await page.locator(THEMING_NOTE).count(), 'one theming note').toBe(1);
+  await expect(page.locator(THEMING_NOTE)).toContainText(conversation.themingNote.slice(0, 24));
+  expect(await page.locator(USAGE_CODE).count(), 'one usage snippet block').toBe(1);
+  await expect(page.locator(USAGE_CODE)).toHaveText(conversation.usageSnippet);
+  // R6b — the QR aside renders the build-time deep-link SVG, and the Layout
+  // carries the dataset-derived meta description.
+  expect(await page.locator(QR_PANEL).count(), 'one QR aside').toBe(1);
+  await expect(page.locator('head meta[name="description"]')).toHaveAttribute(
+    'content',
+    conversation.metaDescription,
+  );
+  // R11 — seam callouts join REF-004's derivation (conversation has none).
+  expect(await page.locator(SEAM_CALLOUTS).count(), 'conversation seam callouts').toBe(
+    deriveSeams(conversation.sourceFiles).length,
+  );
+
   await page.screenshot({ path: evidencePath(testInfo, 'conversation-anatomy'), fullPage: true });
 
   // CASE 2 — the same anatomy on every generated component page
@@ -158,11 +234,31 @@ test('FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages
     await expect(commands.nth(0)).toHaveText(commandFor('nativewind', item.name));
     await expect(commands.nth(1)).toHaveText(commandFor('uniwind', item.name));
 
-    // Full untruncated source: a Code view per source file, and the served
-    // HTML itself carries no max-height anywhere to clip it.
+    // REF-009 — the five-region anatomy on every generated page.
+    expect(await regionOrder(page), `${item.name} region order`).toEqual(EXPECTED_REGIONS);
+
+    // Full untruncated source: a CodeBlock code surface per source file, and
+    // the served HTML itself carries no max-height anywhere to clip it.
     expect(await page.locator(SOURCE_CODE).count(), item.name).toBe(item.sourceFiles.length);
     const html = (await response?.text()) ?? '';
     expect(html, `${item.name} must not height-limit its Code view`).not.toMatch(/max-height/i);
+
+    // REF-009 — the R8/R9/R10 regions render the dataset verbatim, with the
+    // QrPanel aside (R6b), the head meta description, and the derived seam
+    // callouts (R11) completing the anatomy.
+    expect(await page.locator(PROPS_TABLE_ROWS).count(), `${item.name} prop rows`).toBe(
+      item.props.length,
+    );
+    expect(await page.locator(THEMING_NOTE).count(), `${item.name} theming note`).toBe(1);
+    expect(await page.locator(USAGE_CODE).count(), `${item.name} usage snippet`).toBe(1);
+    expect(await page.locator(QR_PANEL).count(), `${item.name} QR aside`).toBe(1);
+    expect(
+      await page.locator('head meta[name="description"]').getAttribute('content'),
+      `${item.name} meta description`,
+    ).toBe(item.metaDescription);
+    expect(await page.locator(SEAM_CALLOUTS).count(), `${item.name} seam callouts`).toBe(
+      deriveSeams(item.sourceFiles).length,
+    );
 
     // NO-IMAGERY sprint subset: 0 preview panels, 0 placeholder stand-ins.
     // Bare /placeholder/ would false-positive on real shipped source — the
@@ -243,6 +339,14 @@ test.describe('FLOW-GEND-15-family-pager-stays-in-family', () => {
             target,
           );
         }
+        // REF-009 — the pager closes the extended anatomy: exactly one nav,
+        // rendered after the usage region, with the five regions before it.
+        expect(await page.locator(PAGER).count(), `${member} pager count`).toBe(1);
+        expect(
+          await page.locator('section[data-section="usage"] ~ nav.pager').count(),
+          `${member} pager placement`,
+        ).toBe(1);
+        expect(await regionOrder(page), `${member} region order`).toEqual(EXPECTED_REGIONS);
       }
     }
 

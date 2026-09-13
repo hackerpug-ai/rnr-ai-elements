@@ -1,0 +1,76 @@
+### TOKEN: REF-009-item-page-region-contract
+AssertionError: imports PropsTable: expected null not to be null
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:89:11
+     87|       page.match(new RegExp(`import ${primitive} from '`)),
+     88|       `imports ${primitive}`,
+     89|     ).not.toBeNull();
+       |           ^
+     90|     expect(page, `composes <${primitive}`).toContain(`<${primitive}`);
+     91|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  16:38:39
+   Duration  86ms (transform 12ms, setup 0ms, import 18ms, tests 3ms, environment 0ms)
+
+exit=1
+### TOKEN: REF-009-code-alone-region
+
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:160:5
+    158|     page.match(/sourceFiles\.map\(\(file\) =>/g) ?? [],
+    159|     'exactly one template .map emitting the source figures',
+    160|   ).toHaveLength(1);
+       |     ^
+    161|
+    162|   // The template map emits exactly 1 <figure> per iteration: one <fig…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  16:38:39
+   Duration  90ms (transform 12ms, setup 0ms, import 20ms, tests 4ms, environment 0ms)
+
+exit=1
+### TOKEN: REF-009-seams-qr-pager
+
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:194:56
+    192|   // TC-5 — the seam map is consumed (imported, derived per item, rend…
+    193|   // Callouts); the coverage comes from the REAL dataset, never a hard…
+    194|   expect(page, 'the page imports the seam map module').toContain("from…
+       |                                                        ^
+    195|   expect(page.match(/deriveSeams\(item\.sourceFiles\)/g) ?? [], 'per-i…
+    196|     .toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  16:38:40
+   Duration  79ms (transform 12ms, setup 0ms, import 18ms, tests 5ms, environment 0ms)
+
+exit=1
+### TOKEN: REF-009-spec-repins
+AssertionError: the GEND-14 anatomy asserts the install region in order: expected -1 to be greater than -1
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:289:75
+    287|   for (const name of ['install', 'source', 'props', 'theming', 'usage'…
+    288|     const at = gend14.indexOf(`"${name}"`, cursor + 1);
+    289|     expect(at, `the GEND-14 anatomy asserts the ${name} region in orde…
+       |                                                                           ^
+    290|     cursor = at;
+    291|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  16:38:40
+   Duration  78ms (transform 12ms, setup 0ms, import 18ms, tests 3ms, environment 0ms)
+
+exit=1
