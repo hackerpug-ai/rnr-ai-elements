@@ -1,0 +1,21 @@
+
+ FAIL  tests/sprint-04-generated-reference/dev-client-matrix-contract.test.ts > REF-007-matrix-shape
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-007/apps/docs/src/data/dev-client-matrix.json'
+ ❯ loadMatrix tests/sprint-04-generated-reference/dev-client-matrix-contract.test.ts:73:21
+     71|
+     72| function loadMatrix(): Matrix {
+     73|   return JSON.parse(readFileSync(MATRIX_PATH, 'utf8')) as Matrix;
+       |                     ^
+     74| }
+     75|
+ ❯ tests/sprint-04-generated-reference/dev-client-matrix-contract.test.ts:200:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:04:20
+   Duration  84ms (transform 12ms, setup 0ms, import 18ms, tests 3ms, environment 0ms)
+
+exit=0
