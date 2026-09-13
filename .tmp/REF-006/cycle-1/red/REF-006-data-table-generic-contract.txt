@@ -1,0 +1,36 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-006
+
+ ❯ tests/sprint-04-generated-reference/data-table-contract.test.ts (4 tests | 1 failed | 3 skipped) 3ms
+   × REF-006-data-table-generic-contract: prop-driven table, zebra var(--muted), sticky thead, mobile first-column scroll 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/data-table-contract.test.ts > REF-006-data-table-generic-contract: prop-driven table, zebra var(--muted), sticky thead, mobile first-column scroll
+AssertionError: DataTable.astro exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-006/apps/docs/src/components/DataTable.astro: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-04-generated-reference/data-table-contract.test.ts:50:77
+     48| it('REF-006-data-table-generic-contract: prop-driven table, zebra var(…
+     49|   // RED at task start: DataTable.astro does not exist yet.
+     50|   expect(existsSync(DATA_TABLE), `DataTable.astro exists at ${DATA_TAB…
+       |                                                                             ^
+     51|   const dataTable = readFileSync(DATA_TABLE, 'utf8');
+     52|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:03:52
+   Duration  86ms (transform 12ms, setup 0ms, import 17ms, tests 3ms, environment 0ms)
+
