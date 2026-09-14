@@ -12,11 +12,11 @@ import {
  * REF-001 — FLOW-GEND-20-exact-absolute-url-command-copy, authored RED-first:
  * the engine-tabbed install block already ships (sprint-02), so this spec's
  * clipboard and served-byte clauses hold today and the run exits 1 through the
- * shared sprint-04 anatomy preamble until REF-009 lands the five-section page.
+ * shared sprint-04 anatomy preamble until REF-009 lands the six-section page.
  *
  * The shared sprint-04 anatomy preamble (duplicated in every flow spec of this
  * lane — the task's write scope is exactly the twelve spec files) asserts, on
- * every dataset-enumerated page: the five-section section[data-section] order,
+ * every dataset-enumerated page: the six-section section[data-section] order,
  * 0 preview-panel elements, and the pager in-family.
  *
  * The flow's own clauses over all 39 dataset-enumerated pages:
@@ -76,7 +76,7 @@ for (const family of families) {
   for (const name of family.itemNames) familyOf.set(name, family);
 }
 
-const EXPECTED_SECTIONS = ['install', 'source', 'props', 'theming', 'usage'];
+const EXPECTED_SECTIONS = ['install', 'dependencies', 'source', 'props', 'theming', 'usage'];
 const PREVIEW_PANEL_SELECTOR = '[data-preview-panel], .preview-panel';
 const INSTALL_SECTION = 'main > section[data-section="install"]';
 

@@ -6,14 +6,16 @@ import { navigateLocalhost } from '../harness/docs-preview';
 /**
  * REF-001 — FLOW-GEND-14-reference-page-anatomy, authored RED-first: this spec
  * is the locked lane for the TR-07 component-detail anatomy and fails verbatim
- * (expected five sections / received sprint-start remainder) until REF-009
+ * (expected six sections / received sprint-start remainder) until REF-009
  * lands the props/theming/usage regions.
  *
  * The shared sprint-04 anatomy preamble (duplicated in every flow spec of this
  * lane — the task's write scope is exactly the twelve spec files) asserts, on
  * every page enumerated from the REAL dataset at module scope:
- *   1. top-level section[data-section] order install, source, props, theming,
- *      usage (the five-region TR-07 anatomy),
+ *   1. top-level section[data-section] order install, dependencies, source,
+ *      props, theming, usage (the six-region TR-07 anatomy per AMEND-1 — the
+ *      DependencyPanel stays the direct-child section it has been since
+ *      sprint-02),
  *   2. 0 preview-panel elements while imagery is null (T-GEND-021 — omitted,
  *      never a placeholder),
  *   3. the family pager's prev/next targets stay in-family.
@@ -67,8 +69,8 @@ for (const family of families) {
   for (const name of family.itemNames) familyOf.set(name, family);
 }
 
-/** The five-region TR-07 anatomy every component page must render, in order. */
-const EXPECTED_SECTIONS = ['install', 'source', 'props', 'theming', 'usage'];
+/** The six-region TR-07 anatomy every component page must render, in order. */
+const EXPECTED_SECTIONS = ['install', 'dependencies', 'source', 'props', 'theming', 'usage'];
 /** Imagery is null this sprint: the preview panel is omitted, never placeholder. */
 const PREVIEW_PANEL_SELECTOR = '[data-preview-panel], .preview-panel';
 
@@ -83,8 +85,9 @@ async function sprint04AnatomyPreamble(page: Page, soft: typeof expect.soft): Pr
     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
     ok &&= response?.status() === 200;
 
-    // The five-section order — the sprint-04 anatomy this lane pins (RED until
-    // REF-009: the sprint-start DOM renders the install/source remainder only).
+    // The six-section order — the sprint-04 anatomy this lane pins (RED until
+    // REF-009: the sprint-start DOM renders the install/dependencies/source
+    // remainder only).
     const sectionLocators = page.locator('main > section[data-section]');
     const sectionCount = await sectionLocators.count();
     const sections: string[] = [];

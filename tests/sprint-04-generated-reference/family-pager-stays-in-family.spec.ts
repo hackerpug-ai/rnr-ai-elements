@@ -7,11 +7,11 @@ import { navigateLocalhost, PREVIEW_URL } from '../harness/docs-preview';
  * REF-001 — FLOW-GEND-15-family-pager-stays-in-family, authored RED-first:
  * the within-family pager already ships (sprint-02/03), so this spec's pager
  * walk derives its whole oracle from families.json and exits 1 through the
- * shared sprint-04 anatomy preamble until REF-009 lands the five-section page.
+ * shared sprint-04 anatomy preamble until REF-009 lands the six-section page.
  *
  * The shared sprint-04 anatomy preamble (duplicated in every flow spec of this
  * lane — the task's write scope is exactly the twelve spec files) asserts, on
- * every dataset-enumerated page: the five-section section[data-section] order,
+ * every dataset-enumerated page: the six-section section[data-section] order,
  * 0 preview-panel elements, and the pager in-family.
  *
  * The flow's own clauses: per all-component family, the set of pages reachable
@@ -62,7 +62,7 @@ for (const family of componentFamilies) {
   for (const name of family.itemNames) familyOf.set(name, family);
 }
 
-const EXPECTED_SECTIONS = ['install', 'source', 'props', 'theming', 'usage'];
+const EXPECTED_SECTIONS = ['install', 'dependencies', 'source', 'props', 'theming', 'usage'];
 const PREVIEW_PANEL_SELECTOR = '[data-preview-panel], .preview-panel';
 
 /**

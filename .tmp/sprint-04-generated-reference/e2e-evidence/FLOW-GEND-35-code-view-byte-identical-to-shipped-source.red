@@ -1,4 +1,4 @@
-@@RUN-FLOW flow=FLOW-GEND-35-code-view-byte-identical-to-shipped-source sprint=sprint-04-generated-reference expect=red cmd_sha=ea9f105f884e42abb759c1a76b68911827871d2448520245984e5f9ccc569549 head=58e92c5824f2ae020a50e642be702504b88da3b6+dirty at=2026-09-13T22:34:10Z@@
+@@RUN-FLOW flow=FLOW-GEND-35-code-view-byte-identical-to-shipped-source sprint=sprint-04-generated-reference expect=red cmd_sha=ea9f105f884e42abb759c1a76b68911827871d2448520245984e5f9ccc569549 head=9357634a67238f8229f80d6fd145c999696d7adf+dirty at=2026-09-14T00:05:54Z@@
 + pnpm playwright test tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts --grep FLOW-GEND-35-code-view-byte-identical-to-shipped-source
 
 Running 3 tests using 1 worker
@@ -6,16 +6,16 @@ FFF
 
   1) [chromium-desktop] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source 
 
-    Error: shimmer: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: shimmer: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -32,16 +32,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: checkpoint: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: checkpoint: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -58,16 +58,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: image: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: image: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -84,16 +84,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: persona: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: persona: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -110,16 +110,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: speech-input: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: speech-input: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -136,16 +136,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: conversation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: conversation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -162,16 +162,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: message: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: message: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -188,16 +188,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: prompt-input: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: prompt-input: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -214,16 +214,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: suggestion: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: suggestion: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -240,16 +240,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: tool: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: tool: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -266,16 +266,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: reasoning: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: reasoning: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -292,16 +292,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: task: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: task: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -318,16 +318,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: question: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: question: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -344,16 +344,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: agent: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: agent: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -370,16 +370,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: chain-of-thought: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: chain-of-thought: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -396,16 +396,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: plan: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: plan: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -422,16 +422,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: confirmation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: confirmation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -448,16 +448,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: queue: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: queue: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -474,16 +474,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: sources: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: sources: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -500,16 +500,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: inline-citation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: inline-citation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -526,16 +526,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: artifact: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: artifact: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -552,16 +552,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: snippet: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: snippet: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -578,16 +578,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: commit: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: commit: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -604,16 +604,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: attachments: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: attachments: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -630,16 +630,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: context: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: context: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -656,16 +656,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: open-in-chat: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: open-in-chat: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -682,16 +682,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: model-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: model-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -708,16 +708,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: mic-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: mic-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -734,16 +734,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: voice-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: voice-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -760,16 +760,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: audio-player: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: audio-player: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -786,16 +786,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: transcription: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: transcription: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -812,16 +812,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: terminal: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: terminal: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -838,16 +838,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: file-tree: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: file-tree: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -864,16 +864,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: environment-variables: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: environment-variables: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -890,16 +890,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: package-info: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: package-info: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -916,16 +916,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: stack-trace: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: stack-trace: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -942,16 +942,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: schema-display: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: schema-display: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -968,16 +968,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: test-results: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: test-results: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -994,16 +994,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: web-preview: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: web-preview: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1456,16 +1456,16 @@ FFF
 
   2) [chromium-mobile] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source 
 
-    Error: shimmer: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: shimmer: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1482,16 +1482,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: checkpoint: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: checkpoint: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1508,16 +1508,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: image: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: image: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1534,16 +1534,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: persona: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: persona: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1560,16 +1560,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: speech-input: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: speech-input: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1586,16 +1586,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: conversation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: conversation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1612,16 +1612,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: message: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: message: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1638,16 +1638,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: prompt-input: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: prompt-input: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1664,16 +1664,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: suggestion: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: suggestion: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1690,16 +1690,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: tool: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: tool: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1716,16 +1716,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: reasoning: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: reasoning: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1742,16 +1742,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: task: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: task: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1768,16 +1768,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: question: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: question: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1794,16 +1794,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: agent: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: agent: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1820,16 +1820,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: chain-of-thought: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: chain-of-thought: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1846,16 +1846,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: plan: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: plan: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1872,16 +1872,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: confirmation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: confirmation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1898,16 +1898,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: queue: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: queue: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1924,16 +1924,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: sources: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: sources: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1950,16 +1950,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: inline-citation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: inline-citation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -1976,16 +1976,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: artifact: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: artifact: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2002,16 +2002,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: snippet: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: snippet: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2028,16 +2028,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: commit: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: commit: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2054,16 +2054,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: attachments: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: attachments: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2080,16 +2080,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: context: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: context: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2106,16 +2106,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: open-in-chat: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: open-in-chat: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2132,16 +2132,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: model-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: model-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2158,16 +2158,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: mic-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: mic-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2184,16 +2184,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: voice-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: voice-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2210,16 +2210,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: audio-player: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: audio-player: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2236,16 +2236,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: transcription: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: transcription: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2262,16 +2262,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: terminal: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: terminal: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2288,16 +2288,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: file-tree: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: file-tree: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2314,16 +2314,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: environment-variables: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: environment-variables: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2340,16 +2340,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: package-info: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: package-info: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2366,16 +2366,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: stack-trace: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: stack-trace: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2392,16 +2392,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: schema-display: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: schema-display: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2418,16 +2418,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: test-results: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: test-results: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2444,16 +2444,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: web-preview: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: web-preview: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2906,16 +2906,16 @@ FFF
 
   3) [chromium-nojs] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source 
 
-    Error: shimmer: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: shimmer: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2932,16 +2932,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: checkpoint: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: checkpoint: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2958,16 +2958,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: image: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: image: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -2984,16 +2984,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: persona: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: persona: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3010,16 +3010,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: speech-input: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: speech-input: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3036,16 +3036,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: conversation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: conversation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3062,16 +3062,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: message: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: message: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3088,16 +3088,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: prompt-input: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: prompt-input: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3114,16 +3114,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: suggestion: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: suggestion: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3140,16 +3140,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: tool: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: tool: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3166,16 +3166,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: reasoning: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: reasoning: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3192,16 +3192,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: task: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: task: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3218,16 +3218,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: question: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: question: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3244,16 +3244,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: agent: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: agent: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3270,16 +3270,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: chain-of-thought: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: chain-of-thought: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3296,16 +3296,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: plan: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: plan: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3322,16 +3322,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: confirmation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: confirmation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3348,16 +3348,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: queue: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: queue: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3374,16 +3374,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: sources: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: sources: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3400,16 +3400,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: inline-citation: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: inline-citation: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3426,16 +3426,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: artifact: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: artifact: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3452,16 +3452,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: snippet: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: snippet: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3478,16 +3478,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: commit: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: commit: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3504,16 +3504,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: attachments: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: attachments: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3530,16 +3530,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: context: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: context: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3556,16 +3556,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: open-in-chat: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: open-in-chat: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3582,16 +3582,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: model-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: model-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3608,16 +3608,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: mic-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: mic-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3634,16 +3634,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: voice-selector: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: voice-selector: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3660,16 +3660,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: audio-player: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: audio-player: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3686,16 +3686,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: transcription: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: transcription: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3712,16 +3712,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: terminal: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: terminal: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3738,16 +3738,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: file-tree: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: file-tree: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3764,16 +3764,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: environment-variables: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: environment-variables: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3790,16 +3790,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: package-info: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: package-info: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3816,16 +3816,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: stack-trace: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: stack-trace: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3842,16 +3842,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: schema-display: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: schema-display: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3868,16 +3868,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: test-results: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: test-results: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",
@@ -3894,16 +3894,16 @@ FFF
         at sprint04AnatomyPreamble (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:98:7)
         at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:154:21
 
-    Error: web-preview: top-level section[data-section] order — expected ["install","source","props","theming","usage"]
+    Error: web-preview: top-level section[data-section] order — expected ["install","dependencies","source","props","theming","usage"]
 
     expect(received).toEqual(expected) // deep equality
 
     - Expected  - 3
-    + Received  + 1
+    + Received  + 0
 
       Array [
         "install",
-    +   "dependencies",
+        "dependencies",
         "source",
     -   "props",
     -   "theming",

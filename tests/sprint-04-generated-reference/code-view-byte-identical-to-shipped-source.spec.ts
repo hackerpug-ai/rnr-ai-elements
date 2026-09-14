@@ -12,7 +12,7 @@ import { navigateLocalhost, PREVIEW_URL } from '../harness/docs-preview';
  *
  * The shared sprint-04 anatomy preamble (duplicated in every flow spec of this
  * lane — the task's write scope is exactly the twelve spec files) asserts, on
- * every dataset-enumerated page: the five-section section[data-section] order,
+ * every dataset-enumerated page: the six-section section[data-section] order,
  * 0 preview-panel elements, and the pager in-family.
  *
  * The flow's own clauses over EVERY multi-file item (26 of 39 in the real
@@ -69,7 +69,7 @@ for (const family of families) {
   for (const name of family.itemNames) familyOf.set(name, family);
 }
 
-const EXPECTED_SECTIONS = ['install', 'source', 'props', 'theming', 'usage'];
+const EXPECTED_SECTIONS = ['install', 'dependencies', 'source', 'props', 'theming', 'usage'];
 const PREVIEW_PANEL_SELECTOR = '[data-preview-panel], .preview-panel';
 const SOURCE_SECTION = 'main > section[data-section="source"]';
 /** A Code view: the CodeBlock-composed copy surface carrying the file text. */

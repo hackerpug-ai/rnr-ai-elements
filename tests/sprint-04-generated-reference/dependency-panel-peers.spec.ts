@@ -9,11 +9,11 @@ import { navigateLocalhost, PREVIEW_URL } from '../harness/docs-preview';
  * DependencyPanel already ships (sprint-02) and the same origin serves
  * /r/{engine}/{item}.json, so this spec's panel-equality clauses hold today
  * and the run exits 1 through the shared sprint-04 anatomy preamble until
- * REF-009 lands the five-section page.
+ * REF-009 lands the six-section page.
  *
  * The shared sprint-04 anatomy preamble (duplicated in every flow spec of this
  * lane — the task's write scope is exactly the twelve spec files) asserts, on
- * every dataset-enumerated page: the five-section section[data-section] order,
+ * every dataset-enumerated page: the six-section section[data-section] order,
  * 0 preview-panel elements, and the pager in-family.
  *
  * The flow's own clauses on every page: the panel lists the dataset's
@@ -69,7 +69,7 @@ for (const family of families) {
   for (const name of family.itemNames) familyOf.set(name, family);
 }
 
-const EXPECTED_SECTIONS = ['install', 'source', 'props', 'theming', 'usage'];
+const EXPECTED_SECTIONS = ['install', 'dependencies', 'source', 'props', 'theming', 'usage'];
 const PREVIEW_PANEL_SELECTOR = '[data-preview-panel], .preview-panel';
 const DEPENDENCIES_SECTION = 'main > section[data-section="dependencies"]';
 
