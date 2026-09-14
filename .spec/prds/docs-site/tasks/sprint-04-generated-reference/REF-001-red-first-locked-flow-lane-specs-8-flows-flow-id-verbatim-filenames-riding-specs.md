@@ -2,7 +2,8 @@
 
 # REF-001: RED-first locked-flow lane specs (8 flows, flow-id-verbatim filenames) + riding specs with evidence plumbing
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: 09a1a3eceb86dfd1d48fce00471c0141c6cc72c9 (approved cycle 2, AMEND-1 applied)
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FEATURE · Wave: A
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -1204,3 +1205,19 @@ writeProhibited:
 -->
 
 </details>
+
+## Amendments
+
+### AMEND-1 (2026-09-13, driver, per review cycle 1 AC-4 finding): anatomy expectation is SIX top-level sections, not five
+
+**Original criterion:** the shared anatomy preamble asserts top-level `section[data-section]` order `['install','source','props','theming','usage']` (AC-1 :74, AC-10 :183, TC-1, TC-10; preamble MUST :41).
+
+**Replacement real criterion:** the preamble asserts `['install','dependencies','source','props','theming','usage']` — six top-level sections.
+
+**Evidence (commands/lines run by the driver):**
+1. `REF-009` task line 40: five named regions PLUS "(dependencies renders between install and source **as the data-verbatim panel it is today**)" and provides line 158: "R7 DependencyPanel **retained**". REF-009 AC-1's "5 region markers" (:74/:113/:268/:442) counts `section[data-section]` bindings **in the [item].astro template** — the panel's `data-section="dependencies"` binding lives in DependencyPanel.astro (REF-006's file), not the template. Six-section DOM, five template markers.
+2. Sprint-start reality already contradicts this task's DOM model: the task prose says "received ['install','source']" but the true received order is `['install','dependencies','source']` (DependencyPanel has carried a top-level `data-section` since sprint-02; the implementer's assumption 1 documented this). The five-array expectation flows from the same stale DOM model.
+3. Sprint-02 landed specs pin `main > section[data-section="dependencies"]` as a DIRECT CHILD of main (tests/sprint-02-shell-hero/dependency-panels.spec.ts:66, item-install-copy.spec.ts:116) — outside every sprint-04 task's write_allowed. Under the six-section ruling they stay green untouched; under a five-section nesting they deadlock with REF-009's "retained" MUST.
+4. SPRINT.md gate step 2: "top-level section DOM order is install **before** source/props/theming/usage" — an order constraint satisfied by the six-section form.
+
+**Consequences:** the preamble expected array changes to six; REF-001's `DEPENDENCIES_SECTION = 'main > section[data-section="dependencies"]'` (line 74) stays DIRECT-CHILD and becomes satisfiable (the review's proposed descendant-selector fix is superseded by this amendment); the 8 committed .red proofs are re-captured fresh against the amended expectation (still exit 1 for the named reason: expected six, received three). The next review cycle confirms this amendment.
