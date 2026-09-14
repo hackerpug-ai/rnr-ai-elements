@@ -7,8 +7,12 @@
     "node": ">=24"
   },
   "scripts": {
+    "prepare": "bash scripts/install-git-hooks.sh",
+    "hooks:install": "bash scripts/install-git-hooks.sh",
+    "hooks:check": "righthook run pre-commit",
     "typecheck": "tsc --noEmit && pnpm --filter @rnr-ai-elements/registry typecheck",
     "lint": "biome ci .",
+    "check:fallow": "fallow audit --base HEAD",
     "test": "vitest run",
     "storybook:device": "pnpm --filter harness storybook:device",
     "storybook:web": "pnpm --filter harness storybook:web",
@@ -26,6 +30,7 @@
     "@playwright/test": "^1.63.0",
     "@types/node": "^24.13.3",
     "@types/qrcode": "^1.5.6",
+    "fallow": "3.25.0",
     "qrcode": "^1.5.4",
     "ts-morph": "^28.0.0",
     "tsx": "^4.20.6",
