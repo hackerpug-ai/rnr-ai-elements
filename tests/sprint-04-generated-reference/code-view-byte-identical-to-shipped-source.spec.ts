@@ -167,6 +167,9 @@ test('FLOW-GEND-35-code-view-byte-identical-to-shipped-source', async ({
   for (const item of multiFileItems) {
     const response = await request.get(`${PREVIEW_URL}/r/nativewind/${item.name}.json`);
     soft(response.status(), `${item.name}: served /r/nativewind JSON responds 200`).toBe(200);
+    // Product-surface anchor: the byte oracle is served from the product's own
+    // registry route — never a proxy, mirror, or fixture.
+    expect(response.url(), `${item.name}: live /r/nativewind oracle`).toContain('/r/nativewind/');
     const served = (await response.json()) as { files: ServedFile[] };
 
     // Served file order equals the dataset's sourceFiles order (basenames).

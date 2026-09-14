@@ -156,6 +156,13 @@ test('FLOW-SHELL-14-tab-panels-in-initial-html', async ({ page, request, browser
     const response = await request.get(`${PREVIEW_URL}/components/${item.name}`);
     soft(response.status(), `${item.name}: initial HTML serves 200`).toBe(200);
     const html = await response.text();
+    // Product-surface anchor: the raw served bytes carry the product's own
+    // registry origin.
+    expect(
+      html.includes('https://rnraielements.com/r/'),
+      `${item.name}: rnraielements.com registry origin in the initial HTML`,
+    ).toBe(true);
+    literalsOk &&= html.includes('https://rnraielements.com/r/');
     const nativewind = html.split(LITERAL_NATIVEWIND).length - 1;
     const uniwind = html.split(LITERAL_UNIWIND).length - 1;
     soft(
