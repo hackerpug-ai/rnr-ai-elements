@@ -1,0 +1,20 @@
+@@GATE-META step=step4 cmd_sha=9b657fbd0f38a3e4fcd5222929b0098767b2151d520f9d39c434921e8c4e3ccc@@
++ python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 4
+[run_flow] sprint=sprint-04-generated-reference root=/Users/justinrich/Projects/rnr-ai-elements head=904cf5b62b3c88237ca23f760e5b7a1afc263bb3+dirty expect=green flows=1/8
+[run_flow] FLOW-GEND-20-exact-absolute-url-command-copy (steps 1,4): $ pnpm playwright test tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  3 passed (1.6m)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-20-exact-absolute-url-command-copy (steps 1,4): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-20-exact-absolute-url-command-copy.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

@@ -1,0 +1,21 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "reference-page-anatomy.spec.ts anchor intact (6+/0- in net diff main..8a70cc4); live green run verified in cycle 3 (exit 0, 3 passed, 0 skipped) and the anchor is unchanged since"},
+    {"id": "AC-2", "satisfied": true, "evidence": "family-pager spec untouched in net diff vs main (not among the 6 anchored files); green under the merged six-section anatomy"},
+    {"id": "AC-3", "satisfied": true, "evidence": "exact-absolute-url-command-copy.spec.ts anchor intact (5+/0-); committed cycle-3 green log 3 passed"},
+    {"id": "AC-4", "satisfied": true, "evidence": "dependency-panel-peers.spec.ts anchor intact (3+/0-); surface_ok=true confirmed in committed cycle-4 surface JSON"},
+    {"id": "AC-5", "satisfied": true, "evidence": "props-table-generated.spec.ts anchor intact (3+/0-); committed green log 3 passed"},
+    {"id": "AC-6", "satisfied": true, "evidence": "code-view-byte-identical-to-shipped-source.spec.ts anchor intact (3+/0-); surface_ok=true in committed JSON (spot-checked)"},
+    {"id": "AC-7", "satisfied": true, "evidence": "engine-tab spec untouched; surface_ok=true confirmed in committed cycle-4 JSON"},
+    {"id": "AC-8", "satisfied": true, "evidence": "tab-panels-in-initial-html.spec.ts anchor intact (7+/0-); committed green log 3 passed"},
+    {"id": "AC-9", "satisfied": true, "evidence": "cycle-3 live run: 3 projects, 0 skipped, 1 spec file selected; unchanged since"},
+    {"id": "AC-10", "satisfied": true, "evidence": "six-section anatomy landed and pinned (dist order install, dependencies, source, props, theming, usage verified in cycle 3)"},
+    {"id": "AC-11", "satisfied": true, "evidence": "riding specs untouched across cycles 3-4; standing warning remains that qr-panel/dev-client-matrix/preview-omission-nojs report surface_ok=FALSE under the same checker (pre-existing, outside the flow-gate set — for REF-005/007/010 replays)"},
+    {"id": "AC-12", "satisfied": true, "evidence": ".red RED baseline unchanged; green evidence under .tmp/REF-001/cycle-3/green/ plus cycle-3 live green; surface outputs committed under .tmp/REF-001/cycle-4/surface/"},
+    {"id": "AC-13", "satisfied": true, "evidence": "SCOPE RESTORED: git diff main..8a70cc4 -- tests/ lists exactly the 6 anchored specs (27+/0-); code-primitives-contract.test.ts blob SHA fef1b6f8ea5edce014a1d627ce05c37f073199a2 identical on both sides — byte-exact revert to main; pnpm typecheck exit 0 on the restored static import with the worktree's generated dataset present, matching the cycle-3 scratch experiment"}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle 4 executes the ruling exactly: code-primitives-contract.test.ts is byte-identical to main (matching blob SHAs), the net diff vs main touches only the six anchored specs (27 insertions, 0 deletions), all six anchors are intact, the committed surface outputs read surface_ok=true, and typecheck passes on the restored static import — precisely what the cycle-3 provisioning experiment predicted. APPROVED."
+}

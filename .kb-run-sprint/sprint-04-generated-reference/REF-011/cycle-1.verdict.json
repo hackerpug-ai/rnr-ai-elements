@@ -1,0 +1,67 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Direct `tsx scripts/docs-data/drill-enrichment.ts` exit=0; my own report: expectationsHeld true, 4 arms [props 1/0, matrix 1/0, imagery on=1/default=0, derivation 0/0]; registry.json sha pair 9aa8d8a7\u2026 == my independent pre-run `shasum` baseline (not sha256 theater); `-t REF-011-drill-report` exit 0, tests 44.53s (real drill spawn); drill-enrichment.ts:453-458 arms unconditionally constructed, precheck refuses dirty tree (drill-enrichment.ts:293-303)"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Captured mutated stderr: `[docs-data] props: item \"shimmer\" prop \"tone\" has unresolved type` (matches /\\[docs-data\\] props: item \"shimmer\".*unresolved type/); mutated exit 1, restored exit 0 with 56-of-56 line (gates.ts:422 shape); anchor verified exactly once in real shimmer.tsx; test lines 197-204; `-t REF-011-unresolved-props-drill` exit 0"
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Mutated run exits 1 with `[docs-data] matrix: item \"streamdown\" has empty peers` (gates.ts:285 pin); restored exit 0; dev-client-matrix.json sha 1eb805d9\u2026 == my pre/post `shasum` baselines; only streamdown mutated (drill-enrichment.ts:191-197); `-t REF-011-matrix-drill` exit 0"
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "ON exit 1 naming exactly the prompt-input holdout, onImageryViolationCount===1 (gateImagery filters !item.imagery, gates.ts:314 \u2014 the holdout design is forced by gate semantics: strict 'inject one, name that one' is impossible since the gate flags ABSENT imagery; count===1 is the stronger attribution control \u2014 failed injection names all 56); default exit 0 over same mutated tree; registry.json sha pair == baseline; `-t REF-011-imagery-flag-pair` exit 0"
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "Both real docs builds exit 0; my run: mutatedDist {propsRegionHasProp:true, sourceRegionHasEdit:true} (regions sliced by data-section=\"source\"\u2192\"props\"\u2192\"theming\", verified in [item].astro:141,153,158), restoredDist {propOccurrences:0, editOccurrences:0}; conversation.tsx sha pair identical; `-t REF-011-single-source-derivation` exit 0"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "assertArmsShape (test:101-132): 4 arms, integer exitCodes, anchored pairs 1/0 and !==0/0, non-empty captured stderr on failing runs"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "test:196-204 asserts regex, exit pair, 56-of-56 line, sha pair + test-side byte compare"
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "test:208-219 asserts streamdown naming, exit pair, sha pair + byte compare"
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "test:222-238 asserts ON!==0, default===0, ON!==default, holdout named, count===1, no imagery line in default stdout"
+    },
+    {
+      "id": "TC-5",
+      "satisfied": true,
+      "evidence": "test:241-264 asserts both regions moved together, restored 0/0 occurrences, both builds exit 0"
+    },
+    {
+      "id": "TC-6",
+      "satisfied": true,
+      "evidence": "test:149-161 byte-compares all four fixtures test-side + git status --porcelain over packages/registry, apps/docs/src/data, public/r empty; I confirmed empty git status after my own direct drill run; dist is gitignored, covered by the 0-occurrence counts"
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "No stubs. All four arms mutate real pinned files (shimmer.tsx, dev-client-matrix.json, registry.json, conversation.tsx), restore captured bytes in finally, and capture the gate expectation from the clean pre-mutation tree (precheck refuses a dirty tree). I re-drove the drill myself: exit 0, and my own pre/post shasum baselines for registry.json and dev-client-matrix.json match the report's sha pairs \u2014 the restores are real. All five -t tokens exit 0 (~45s each, proving beforeAll spawns the drill under selection), full file 5/5, regression enrichment-gates 6/6, typecheck 0, biome 0 on the three scope files. vitest.config.ts diff is comment-only. RED evidence (18:44) predates the drill file (19:08). Two non-blocking nits: the fallow-ignore directive is not 'same shape as drill-item-count.ts' (that file has none), and arm (c)'s holdout design is an interpretation \u2014 but forced by gate semantics and strictly stronger than the literal reading."
+}

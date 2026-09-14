@@ -1,0 +1,45 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "scripts/docs-data/prebuild.ts:78-79 (CONTRACT_KEYS appended qrDeepLink, metaDescription after themingNote; existing 14 untouched), :203 qrDeepLink=`${fields.qrScheme}/${item.name}`, :206 metaDescription TR-03 pattern over imported oneLineDescription with engines.join('/'), :283-292 scheme read fail-closed from apps/example/app.json (no literal in product code — grep hits only a test comment). Verify `pnpm exec vitest run ...docs-data-prebuild.test.ts -t REF-008-qr-metalink-derivation` exit=0 over the real ordered chain (I ran it; runOrderedChain at tests/.../docs-data-prebuild.test.ts:111-122 spawns real pnpm registry:build/gallery:manifest/docs build, no cache). Test computes expectations from app.json + real registry, byte-equality on all 56, 39 components. Deviation rulings: (1) spaced 'for React Native' is correct — TR-03 03-data-schema.md:13, TC-3, and the provides contract all carry the space; the AC-1 scenario literal 'forReact Native' is a typo. (3) the '>200 chars' must_not literal is unsatisfiable against the real tree — I measured max metaDescription = 213 chars, 24 entries >200, structural to title+120-clamp+fixed tail; the substantive criterion (no unclamped description contained) IS asserted (test lines ~448-455) alongside byte-equality with the single-source clamp.",
+      "fix": "",
+      "fix_location": ""
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "gates.ts:296-299 imageryGateEnabled reads process.env.DOCS_GATE_IMAGERY (unset/empty = off), :308-318 gateImagery returns [] when disabled, runAllGates aggregates without imagery violations. Verify `-t REF-008-imagery-flag` exit=0. Independently reproduced outside vitest: real gates CLI clean run exit=0 with success line exactly 'count, files, props, family, verdict, matrix gates pass' (gates.ts:422) — matches AC-2's pinned six-gate literal; runAllGates not.toThrow over the clean 56-item dataset."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "gates.ts:225-231 PINNED_MATRIX_NAMES (the same pin discipline as EXPECTED_ITEM_COUNT), gateMatrix reads the committed apps/docs/src/data/dev-client-matrix.json; `-t REF-008-matrix-gate` exit=0: 0 violations over the committed four, count pinned 4, non-empty peers/permissions on both platforms, real `pnpm --filter docs prebuild` exit 0. Deviation ruling (2): I verified empirically that all four matrix ids are ABSENT from the 56-item docs registry (nearest registry names: markdown, speech-input, audio-player) — a docs-registry membership check would flag all four committed entries, directly violating AC-3's own must_not_observe 'a violation naming any of the 4 committed entries (false positive)'. The pinned-names reading is therefore the only satisfiable honest one; the drill's mutated name is absent from both the pin and the registry, so registry-absent names ARE caught. AC-3's must_observe clause 'all 4 names match registry dataset names' is a task-file factual error about REF-007's capability-id dataset; the MUST constraint's pinned set and the mutated_matrix_drill fixture ('absent from the pinned four and from the registry') support the implemented reading."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Test drill at tests/.../enrichment-gates.test.ts:483-508 (sha256 before/after, finally-restore). Independently reproduced outside vitest with the real gates CLI: renamed 'speech-recognition'->'speech-recognition-x' → exit=1, exactly one matrix violation rendering '[docs-data] matrix: item \"speech-recognition-x\" not one of the pinned dev-client matrix names (...)', file restored byte-exact (sha256 equal). Extra negative controls I drove: entry-count mutation (4→3) → exit=1 'dev-client matrix has 3 entries; expected exactly 4'; unreadable JSON → exit=1 'dev-client-matrix.json unreadable — restore ...' — no fail-open path found."
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "gates.ts:308-318 one violation per null-imagery item naming it; test (enrichment-gates.test.ts:509+) asserts 56 violations under the flag, GateError matching '[docs-data] imagery: item \"<name>\" missing imagery', flag restored in finally. Independently reproduced with the real CLI under DOCS_GATE_IMAGERY=1: exit=1, 56 imagery violations, first '[docs-data] imagery: item \"shimmer\" missing imagery'."
+    },
+    {
+      "id": "qrcode-devDependency",
+      "satisfied": true,
+      "evidence": "Not a binding REF-008 criterion: no AC, TC, DONE-WHEN, or VERIFICATION GATE mentions qrcode; the only in-task mentions are the provides-declaration line and a STRICTLY constraint on classification (build-time devDep, never runtime) that presupposes rather than commands the add. Nothing in REF-008's diff imports or needs a QR library — qrDeepLink is a pure string derivation; SVG encoding is REF-005/REF-009's QrPanel concern. The orchestrator has already routed it: FIX-REF-008-1-qrcode-buildtime-devdep-and-lockfile.md exists (driver-authored 2026-09-13) and explicitly completes the provides contract including the lockfile regen that is outside REF-008's write_allowed. No stub exists by its absence."
+    },
+    {
+      "id": "SCOPE+GATES",
+      "satisfied": true,
+      "evidence": "git diff --name-only 8bd0338..9fdcef6: 4 product files, all in writeAllowed (prebuild.ts, gates.ts, both MODIFY'd tests) + .tmp evidence; package.json writeAllowed-but-unmodified is permitted (MODIFY ≠ must). Test diffs are append-only: the only deleted lines are one stale comment (prebuild test) and one widened import (gates test) — no deleted, skipped, or weakened assertions. RED evidence genuine and named: 14-vs-16 key-order failure over the real chain (.tmp/REF-008/cycle-1/red/ac1...), 'gateImagery is not a function' (ac2-ac5), 'gateMatrix is not a function' (ac3-ac4)."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "All five ACs verified against the real services by my own runs, not the implementer's claims: the three -t verify commands exit 0 (AC-1 over the real ordered chain), both full MODIFY'd files pass 10/10 untokened, pnpm typecheck exit 0, biome ci exit 0 (3 infos, zero errors). I independently re-drove the fail-closed surface outside vitest with the real gates CLI — renamed-entry drill (exit 1, names 'speech-recognition-x', sha256 byte-exact restore), count drill (exit 1), unreadable-JSON drill (exit 1), flag-on run (exit 1, 56 named violations), clean run (exit 0, six-gate success line) — no fail-open path exists. The four flagged deviations all resolve in the implementer's favor on evidence: the 'forReact Native' scenario literal is a typo against TR-03:13/TC-3/provides; the >200-char literal is structurally unsatisfiable (real max 213, 24 entries over) while the substantive unclamped-leak assertion is present; the pinned-names matrix reading is the only one that doesn't false-positive all four committed entries (verified: all four ids absent from the 56-item registry); qrcode is a provides-declaration already routed to the on-disk follow-up FIX-REF-008-1. No stubs, no weakened tests, extend-never-delete holds."
+}
