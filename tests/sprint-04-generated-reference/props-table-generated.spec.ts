@@ -159,6 +159,9 @@ test('FLOW-GEND-34-props-table-generated', async ({ page }, testInfo) => {
   let tablesOk = true;
   for (const item of components) {
     await navigateLocalhost(page, `/components/${item.name}`);
+    // Product-surface anchor: every table read happens on the real component
+    // page of the generated /components surface.
+    expect(page.url(), `${item.name}: asserted on /components`).toContain('/components/');
     const section = page.locator(PROPS_SECTION);
     const tables = await section.locator('table').count();
     propsTables += tables;

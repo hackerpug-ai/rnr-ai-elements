@@ -200,6 +200,9 @@ test('FLOW-GEND-21-dependency-panel-peers', async ({ page, request }, testInfo) 
   for (const item of sampledItems) {
     const response = await request.get(`${PREVIEW_URL}/r/nativewind/${item.name}.json`);
     soft(response.status(), `${item.name}: served /r/nativewind JSON responds 200`).toBe(200);
+    // Product-surface anchor: the byte oracle is served from the product's own
+    // registry route — never a proxy, mirror, or fixture.
+    expect(response.url(), `${item.name}: live /r/nativewind oracle`).toContain('/r/nativewind/');
     const served = (await response.json()) as { dependencies: string[] };
     const names = item.dependencies;
     soft(

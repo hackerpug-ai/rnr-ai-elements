@@ -3,7 +3,21 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, it } from 'vitest';
-import registryItems from '../../apps/docs/src/data/registry-items.json';
+
+/**
+ * The registry dataset read through the lane's ENOENT-bridged readJson pattern:
+ * a direct JSON module import type-checks as `any` here (the dataset lives
+ * under the tsconfig's excluded apps/ tree), which fails the strict compiler.
+ */
+const registryItems = JSON.parse(
+  readFileSync(
+    resolve(
+      fileURLToPath(new URL('../../', import.meta.url)),
+      'apps/docs/src/data/registry-items.json',
+    ),
+    'utf8',
+  ),
+) as { name: string; type: string; usageSnippet: string; themingNote: string }[];
 
 /**
  * REF-003 — source-contract scan over the three authored visual primitives in

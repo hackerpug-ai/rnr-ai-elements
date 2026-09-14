@@ -112,6 +112,12 @@ async function sprint04AnatomyPreamble(page: Page, soft: typeof expect.soft): Pr
     );
     ok &&= previewPanels === 0;
 
+    // Product-surface anchor: the install block renders the engine's absolute
+    // registry URL on the real page every clause above reads.
+    await expect(page.locator('main > section[data-section="install"]')).toContainText(
+      '/r/nativewind/',
+    );
+
     // The pager stays in-family.
     const family = familyOf.get(item.name);
     for (const rel of ['prev', 'next'] as const) {

@@ -235,6 +235,11 @@ test('FLOW-GEND-20-exact-absolute-url-command-copy', async ({ page, browser }, t
       clipboardOk &&= clipboard === displayed;
       soft(clipboard, `${item.name} ${engine} clipboard shape`).toMatch(COMMAND_PATTERN);
       clipboardOk &&= COMMAND_PATTERN.test(clipboard);
+      // Product-surface anchor: the granted clipboard carries the product's
+      // own registry origin — the absolute command the page rendered.
+      expect(clipboard, `${item.name} ${engine} clipboard from rnraielements.com`).toContain(
+        'https://rnraielements.com/r/',
+      );
       copied += 1;
       if (item.name === 'shimmer') sample[engine] = clipboard;
     }
