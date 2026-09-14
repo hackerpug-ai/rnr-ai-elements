@@ -1,0 +1,139 @@
+{
+  "task_id": "ORI-AST-008",
+  "title": "Publish reference destinations for the remaining 17 UI and library items",
+  "status": "completed",
+  "captured_at": "2026-09-14T00:00:00Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008",
+  "run": {
+    "run_id": "cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "browser": {
+      "engine": "chromium",
+      "projects": ["chromium-desktop", "chromium-mobile", "chromium-nojs"],
+      "javascript_disabled_projects": ["chromium-nojs"],
+      "clipboard_permissions": ["clipboard-read", "clipboard-write"]
+    },
+    "hashes": {
+      "source_commit": "f1efc71c7ecc0dfdf98381aec686c996ccff1ec7",
+      "lockfile_sha256": "b5c1612485049396c397bc70a514ace907a1c69a1f677ce809c29311a64de620",
+      "dist_sha256": "1f983d3f735aefbd828aff673f8df6e38c07f00b4a74891dfcadc19c098e426f",
+      "test_spec_sha256": "62aee65975a87ce83062f7fd3578321f6b328894840a18bddd76ee14acfbeb77",
+      "template_sha256": "2966dbcd3e1e10888b293dfc2619f7fab4691b5be85435e50b5117237201310e",
+      "surface_policy_sha256": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+      "coldboot_policy_sha256": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+      "registry_items_sha256": "b9d25178cd5c3e4fd599946994eb0dbd6e28463707823f3f562f17d0535e5225",
+      "families_sha256": "f843bf1c61cd763c95e063b6bab8fb97c4661ef345bf198adba414062029bbba"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 61,
+        "note": "44 prior pages + 17 added ui/lib reference destinations; registry fan-out 56 items x 2 engines = 112 files."
+      },
+      "red": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts",
+        "exit_code": 1,
+        "observed": "all 17 ui/lib reference routes return HTTP 404 (static-path filter still registry:component-only); no data-pagefind-body or data-pagefind-meta on any item document.",
+        "captured_at": ".tmp/ORI-AST-008/cycle-1/red/"
+      },
+      "green": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts",
+        "exit_code": 0,
+        "result": "15 passed (5 acceptance criteria x 3 chromium projects), 0 failed, retries 0.",
+        "captured_at": ".tmp/ORI-AST-008/cycle-1/green/"
+      },
+      "typecheck": {
+        "command": "pnpm exec tsc --noEmit",
+        "exit_code": 0
+      },
+      "lint": {
+        "command": "pnpm exec biome ci .",
+        "exit_code": 0,
+        "note": "0 errors, 0 warnings, 4 pre-existing info-level lint hints."
+      }
+    }
+  },
+  "destinations": {
+    "ac": "AC-1",
+    "test_function": "ORI-AST-008-destinations",
+    "ui_routes": [
+      "kbd", "breadcrumb", "button-group", "slider", "table", "command",
+      "code-block", "empty", "item", "input-group", "sheet"
+    ],
+    "lib_routes": ["mono", "markdown", "status", "reasoning-lifecycle", "url", "stack-trace-parser"],
+    "observed": {
+      "ui_http_200": 11,
+      "lib_http_200": 6,
+      "props_section_count_for_null_props_items": 0,
+      "family_targets": {
+        "kbd_next": "/components/breadcrumb",
+        "mono_next": "/components/markdown"
+      }
+    }
+  },
+  "engine_copy": {
+    "ac": "AC-2",
+    "test_function": "ORI-AST-008-engine-copy",
+    "clipboard_values": [
+      "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/kbd.json",
+      "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/kbd.json",
+      "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mono.json",
+      "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mono.json"
+    ],
+    "dependencies": {
+      "kbd_registry_dependencies": [
+        "https://reactnativereusables.com/r/nativewind/text.json",
+        "https://reactnativereusables.com/r/uniwind/text.json"
+      ],
+      "mono_registry_dependencies": [],
+      "mono_npm_dependencies": []
+    },
+    "no_js": {
+      "engine_commands_per_page": 2,
+      "kbd_next_route_http_200": true,
+      "mono_next_route_http_200": true
+    }
+  },
+  "source_bytes": {
+    "ac": "AC-3",
+    "test_function": "ORI-AST-008-source-bytes",
+    "compared_items": 17,
+    "byte_identical": 17,
+    "served_oracle": "http://localhost:4321/r/nativewind/{item}.json",
+    "uniwind_install_selection_source_stays_nativewind": ["kbd", "mono"]
+  },
+  "component_regression": {
+    "ac": "AC-4",
+    "test_function": "ORI-AST-008-component-regression",
+    "destinations_http_200": 56,
+    "browse_cards": 39,
+    "browse_family_sections": 7,
+    "component_family_ids": [
+      "conversation", "message", "prompt-input", "reasoning",
+      "sources", "suggestion", "tool"
+    ],
+    "sampled_component_pages": ["conversation", "message", "tool"],
+    "message_rendermarkdown_seam_link": "/docs/theming#rendermarkdown"
+  },
+  "search_metadata": {
+    "ac": "AC-5",
+    "test_function": "ORI-AST-008-search-metadata",
+    "data_pagefind_body_documents": 56,
+    "category_counts": {
+      "components": 39,
+      "ui": 11,
+      "lib": 6
+    },
+    "category_by_item": {
+      "kbd": "ui",
+      "mono": "lib",
+      "message": "components"
+    },
+    "pagefind_ignore_exclusions_inside_body": 0,
+    "message_rendermarkdown_indexable": true
+  }
+}

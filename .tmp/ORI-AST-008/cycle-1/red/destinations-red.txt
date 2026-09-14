@@ -1,0 +1,938 @@
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations
+  1) [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations 
+
+    Error: kbd: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: breadcrumb: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: button-group: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: slider: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: table: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: command: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: mono: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: markdown: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: code-block: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: empty: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: item: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: input-group: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: sheet: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: status: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: reasoning-lifecycle: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: url: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: stack-trace-parser: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: kbd next pager target is /components/breadcrumb
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/components/breadcrumb"
+    Received: undefined
+
+      282 |
+      283 |   // The scenario's recorded anchors: kbd pages to breadcrumb, mono to markdown.
+    > 284 |   soft(nextHrefs.get('kbd'), 'kbd next pager target is /components/breadcrumb').toBe(
+          |                                                                                 ^
+      285 |     '/components/breadcrumb',
+      286 |   );
+      287 |   ok &&= nextHrefs.get('kbd') === '/components/breadcrumb';
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:284:81
+
+    Error: mono next pager target is /components/markdown
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/components/markdown"
+    Received: undefined
+
+      286 |   );
+      287 |   ok &&= nextHrefs.get('kbd') === '/components/breadcrumb';
+    > 288 |   soft(nextHrefs.get('mono'), 'mono next pager target is /components/markdown').toBe(
+          |                                                                                 ^
+      289 |     '/components/markdown',
+      290 |   );
+      291 |   ok &&= nextHrefs.get('mono') === '/components/markdown';
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:288:81
+
+    Error Context: test-results/sprint-05-orient-search-re-6f4f8-es-ORI-AST-008-destinations-chromium-desktop/error-context.md
+
+
+[2/3] [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations
+  2) [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations 
+
+    Error: kbd: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: breadcrumb: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: button-group: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: slider: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: table: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: command: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: mono: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: markdown: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: code-block: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: empty: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: item: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: input-group: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: sheet: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: status: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: reasoning-lifecycle: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: url: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: stack-trace-parser: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: kbd next pager target is /components/breadcrumb
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/components/breadcrumb"
+    Received: undefined
+
+      282 |
+      283 |   // The scenario's recorded anchors: kbd pages to breadcrumb, mono to markdown.
+    > 284 |   soft(nextHrefs.get('kbd'), 'kbd next pager target is /components/breadcrumb').toBe(
+          |                                                                                 ^
+      285 |     '/components/breadcrumb',
+      286 |   );
+      287 |   ok &&= nextHrefs.get('kbd') === '/components/breadcrumb';
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:284:81
+
+    Error: mono next pager target is /components/markdown
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/components/markdown"
+    Received: undefined
+
+      286 |   );
+      287 |   ok &&= nextHrefs.get('kbd') === '/components/breadcrumb';
+    > 288 |   soft(nextHrefs.get('mono'), 'mono next pager target is /components/markdown').toBe(
+          |                                                                                 ^
+      289 |     '/components/markdown',
+      290 |   );
+      291 |   ok &&= nextHrefs.get('mono') === '/components/markdown';
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:288:81
+
+    Error Context: test-results/sprint-05-orient-search-re-6f4f8-es-ORI-AST-008-destinations-chromium-mobile/error-context.md
+
+
+[3/3] [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations
+  3) [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations 
+
+    Error: kbd: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: breadcrumb: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: button-group: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: slider: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: table: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: command: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: mono: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: markdown: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: code-block: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: empty: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: item: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: input-group: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: sheet: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: status: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: reasoning-lifecycle: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: url: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: stack-trace-parser: serves 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      240 |   for (const item of uiLibItems) {
+      241 |     const response = await navigateLocalhost(page, `/components/${item.name}`);
+    > 242 |     soft(response?.status(), `${item.name}: serves 200`).toBe(200);
+          |                                                          ^
+      243 |     ok &&= response?.status() === 200;
+      244 |     // A missing route is already a recorded failure; the DOM reads below are
+      245 |     // meaningful only on the item's own page.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:242:58
+
+    Error: kbd next pager target is /components/breadcrumb
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/components/breadcrumb"
+    Received: undefined
+
+      282 |
+      283 |   // The scenario's recorded anchors: kbd pages to breadcrumb, mono to markdown.
+    > 284 |   soft(nextHrefs.get('kbd'), 'kbd next pager target is /components/breadcrumb').toBe(
+          |                                                                                 ^
+      285 |     '/components/breadcrumb',
+      286 |   );
+      287 |   ok &&= nextHrefs.get('kbd') === '/components/breadcrumb';
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:284:81
+
+    Error: mono next pager target is /components/markdown
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "/components/markdown"
+    Received: undefined
+
+      286 |   );
+      287 |   ok &&= nextHrefs.get('kbd') === '/components/breadcrumb';
+    > 288 |   soft(nextHrefs.get('mono'), 'mono next pager target is /components/markdown').toBe(
+          |                                                                                 ^
+      289 |     '/components/markdown',
+      290 |   );
+      291 |   ok &&= nextHrefs.get('mono') === '/components/markdown';
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:288:81
+
+    Error Context: test-results/sprint-05-orient-search-re-6f4f8-es-ORI-AST-008-destinations-chromium-nojs/error-context.md
+
+
+  3 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations 
+    [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations 
+    [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:220:1 › ORI-AST-008-destinations 
+EXIT=1
