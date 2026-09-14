@@ -1,23 +1,38 @@
 ---
 /**
- * SHELL-008 — generated component reference page on the DocsLayout shell.
+ * SHELL-008 + REF-009 — generated component reference page on the DocsLayout
+ * shell, assembled in the TR-07 component-detail region order (R5–R12).
  * getStaticPaths fans one page per registry:component entry in the FUSE-05
  * dataset (39 pages, slug = item name) — never hand-written per page.
- * Anatomy: header + chip row, the engine-tabbed InstallCommand composite as
- * FIRST content section (SHELL-004; both engine commands server-rendered),
- * then the data-verbatim DependencyPanel (SHELL-006's resolve-deps resolves
- * in frontmatter — the served HTML is already concrete), then the full
- * untruncated nativewind source, then the within-family pager.
- * No preview panel this sprint (T-GEND-021): omitted, never a placeholder.
+ * Anatomy: header + chip row (R5), the engine-tabbed InstallCommand composite
+ * as FIRST content section (SHELL-004; both engine commands server-rendered),
+ * then the data-verbatim DependencyPanel (SHELL-006's resolve-deps resolves in
+ * frontmatter — the served HTML is already concrete; REF-006's DataTable skin),
+ * then the Code-alone source region (R6/R6c: the CodeBlock primitives, no tab
+ * chrome — the capture sprint adds Preview|Code tabs as its own RED), the
+ * PropsTable (R8), the ThemingNote (R9), the UsageSnippet (R10), the seam
+ * callouts (R11, derived from REF-004's build-time seam map), the QrPanel
+ * aside (R6b: REF-008's build-time deep-link SVG), and the within-family pager
+ * (R12). No preview panel this sprint (T-GEND-021): omitted, never a
+ * placeholder. Zero islands in this file — the page is a static template over
+ * build-time data.
  */
 import { readFileSync } from 'node:fs';
+import QRCode from 'qrcode';
 import Badge from '../../components/Badge.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
 import DependencyPanel from '../../components/DependencyPanel.astro';
 import InstallCommand from '../../components/InstallCommand.astro';
+import PropsTable from '../../components/PropsTable.astro';
+import QrPanel from '../../components/QrPanel.astro';
+import ThemingNote from '../../components/ThemingNote.astro';
+import UsageSnippet from '../../components/UsageSnippet.astro';
+import Callout from '../../components/Callout.astro';
 import families from '../../data/families.json';
 import items from '../../data/registry-items.json';
 import siteFacts from '../../data/site-facts.json';
 import { resolveRegistryDependencies } from '../../lib/resolve-deps';
+import { deriveSeams, SEAM_LINK_TARGETS, type SeamKind } from '../../lib/seam-map';
 import Layout from '../../layouts/DocsLayout.astro';
 
 interface Props {
@@ -67,9 +82,33 @@ const sourceFiles = item.sourceFiles.map((file) => ({
   // /r/{engine}/{item}.json fails the build if the two ever drift.
   text: file.text.split('{engine}').join(DEFAULT_ENGINE),
 }));
+
+// R11 — the seams this item's own sources carry (REF-004): the map joins the
+// build-time derivation, so a source change moves the callouts, never a
+// hand-curated list. Each kind gets one explanatory Callout linking its
+// /docs/theming section through the single retarget surface.
+const seams = deriveSeams(item.sourceFiles);
+
+const SEAM_CALLOUTS: Record<SeamKind, { title: string; body: string }> = {
+  textclasscontext: {
+    title: 'The TextClassContext seam',
+    body: 'This component publishes its class strings through the TextClassContext provider, so a parent view can restyle its nested text.',
+  },
+  rendermarkdown: {
+    title: 'The renderMarkdown seam',
+    body: 'This component takes a renderMarkdown prop over the react-native-enriched-markdown native module and defaults to plain text.',
+  },
+};
+
+// R6b — the gallery deep link encodes at build time (REF-005/008): the QR is
+// finished inline SVG before this page renders; QrPanel only displays it.
+const qrSvg = await QRCode.toString(item.qrDeepLink, { type: 'svg' });
 ---
 
 <Layout title={`${item.title} — RNR AI Elements`}>
+  <Fragment slot="head">
+    <meta name="description" content={item.metaDescription} />
+  </Fragment>
   <main class="component-page">
     <header class="page-header">
       <p class="breadcrumb">
@@ -105,11 +144,38 @@ const sourceFiles = item.sourceFiles.map((file) => ({
         sourceFiles.map((file) => (
           <figure class="source-file">
             <figcaption>{file.filename}</figcaption>
-            <pre><code>{file.text}</code></pre>
+            <CodeBlock code={file.text} label={`Copy ${file.filename}`} />
           </figure>
         ))
       }
     </section>
+
+    <section data-section="props" aria-labelledby="props-heading">
+      <h2 id="props-heading">Props</h2>
+      <PropsTable rows={item.props} />
+    </section>
+
+    <section data-section="theming" aria-labelledby="theming-heading">
+      <h2 id="theming-heading">Theming</h2>
+      <ThemingNote note={item.themingNote} />
+    </section>
+
+    <section data-section="usage" aria-labelledby="usage-heading">
+      <h2 id="usage-heading">Usage</h2>
+      <UsageSnippet snippet={item.usageSnippet} />
+    </section>
+
+    {
+      seams.map((kind) => (
+        <Callout variant="info" title={SEAM_CALLOUTS[kind].title} body={SEAM_CALLOUTS[kind].body}>
+          <a slot="link" href={SEAM_LINK_TARGETS[kind]}>
+            Theming guide: {SEAM_CALLOUTS[kind].title}
+          </a>
+        </Callout>
+      ))
+    }
+
+    <QrPanel item={item.name} svg={qrSvg} />
 
     <nav class="pager" aria-label="Family pager">
       <a rel="prev" href={`/components/${prevName}`}>← {prevName}</a>
@@ -147,9 +213,14 @@ const sourceFiles = item.sourceFiles.map((file) => ({
     padding: 0;
     font-size: 0.75rem;
   }
-  .source-file pre {
-    overflow-x: auto;
-    margin: 0;
+  .source-file figcaption {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin-block: 0 0.5rem;
+  }
+  /* The seam callouts (R11) and the QR aside (R6b) are child-component roots,
+     so the page's scope styles their rhythm; the primitives keep their chrome. */
+  .component-page > aside {
+    margin-block: 2rem 0;
   }
   .pager {
     display: flex;

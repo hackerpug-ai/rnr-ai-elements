@@ -11,7 +11,8 @@ import { oneLineDescription } from '../../apps/docs/src/lib/one-line-description
  * block must assert the dataset-derived surface (7 sections / 39 cards /
  * 200-resolving links / 0 ui/lib entries), no stale 56-name oracle may remain
  * anywhere in the file, and the GEND-14 + GEND-15 sibling bodies must stay
- * byte-identical to pre-task (sha256 over their exact source regions). AC-4
+ * byte-identical to the REF-009 five-region re-pin (sha256 over their exact
+ * source regions). AC-4
  * pins the committed page source: families.json-derived jump nav, exactly one
  * empty plain mount slot above the grid, data-filter-text coverage for all 39
  * cards, 0 ui/lib family ids in the section join, 0 URL-param writes.
@@ -83,8 +84,9 @@ it('FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid
   expect(existsSync(SPEC), `the sprint-01 spec exists at ${SPEC}`).toBe(true);
   const spec = readFileSync(SPEC, 'utf8');
 
-  // 0 diffs to the sibling bodies: their exact pre-task source regions,
-  // hash-pinned at task start, must be byte-identical after the supersede.
+  // 0 diffs to the sibling bodies: their exact source regions, re-pinned by
+  // REF-009 to the extended five-region anatomy, must stay byte-identical to
+  // that pin (any drift after REF-009's commit fails here).
   const gend14 = region(
     spec,
     "test('FLOW-GEND-14-reference-page-anatomy",
@@ -95,11 +97,11 @@ it('FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid
     "test('family pager walks each component family exactly",
     "test('FUSE-07-components-index",
   );
-  expect(sha256(gend14), 'FLOW-GEND-14 body byte-identical to pre-task').toBe(
-    'ab81c00bf80919a236f48165c35c10f6e23d8b08ac081ebf02ae76054d4e4e45',
+  expect(sha256(gend14), 'FLOW-GEND-14 body byte-identical to the REF-009 re-pin').toBe(
+    'fbc0d8c450ee8643ffb570feb4a065649db7a3f64afa121f58d16a14c4e7c810',
   );
-  expect(sha256(gend15), 'FLOW-GEND-15 body byte-identical to pre-task').toBe(
-    '8c77cc2642bc90f8a98c25105b8969cfb50f10b9ebf001efd7d4887402267cd1',
+  expect(sha256(gend15), 'FLOW-GEND-15 body byte-identical to the REF-009 re-pin').toBe(
+    'a202c924464a8855e87a40e6920f6c19002a47683126f2430bfe3bdfe76a6344',
   );
 
   // The superseded block: from its title to its own close (the first 2-space
