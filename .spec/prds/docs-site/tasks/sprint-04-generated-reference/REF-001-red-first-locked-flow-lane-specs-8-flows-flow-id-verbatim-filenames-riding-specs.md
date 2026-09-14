@@ -3,7 +3,7 @@
 # REF-001: RED-first locked-flow lane specs (8 flows, flow-id-verbatim filenames) + riding specs with evidence plumbing
 
 > Status: ✅ Completed
-> Commit: 09a1a3eceb86dfd1d48fce00471c0141c6cc72c9 (approved cycle 2, AMEND-1 applied)
+> Commit: 8a70cc437ffb1330c9ee98d12593062f5c70cfa2 (approved cycle 4 — gate-replay remediation; cycle 2 09a1a3e + cycle 3 692b627 are ancestors)
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FEATURE · Wave: A
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
