@@ -2,7 +2,8 @@
 
 # REF-009: [item].astro assembly — R5–R12 region order, Code-alone source (no tab chrome), props/theming/usage/seams/QR/pager + region-contract re-pins
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+> Commit: b70a5c454a029a2b7c01b7af5539f9cecbcf0036 (approved cycle 1)
 > Assignee: astro-implementer (implementer) · astro-reviewer (reviewer)
 > Priority: P1 · Points: 5 · Type: FEATURE · Wave: C
 > Proposed By: astro-planner · TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
@@ -180,7 +181,7 @@ writeProhibited:
 
 ### DEPENDENCIES
 
-- Depends on: ['REF-002', 'REF-003', 'REF-004', 'REF-005', 'REF-008'] · Blocks: ['REF-011', 'sprint-09', 'sprint-11']
+- Depends on: ['REF-002', 'REF-003', 'REF-004', 'REF-005', 'REF-008', 'FIX-REF-008-1'] · Blocks: ['REF-011', 'sprint-09', 'sprint-11']
 
 ### CODING STANDARDS
 
@@ -516,3 +517,15 @@ writeProhibited:
 -->
 
 </details>
+
+## Amendments
+
+### AMEND-1 (2026-09-13, driver, mirrored from REF-001's AMEND-1): top-level DOM order is SIX sections — do NOT nest or move the DependencyPanel
+
+**Clarification of line 40's wording:** the five named regions (install, source, props, theming, usage) are the section[data-section] bindings YOUR TEMPLATE carries, in that source order — that part is unchanged. The DependencyPanel keeps rendering AS ITS OWN TOP-LEVEL SECTION between install and source, exactly as it is today (`main > section[data-section="dependencies"]`, from DependencyPanel.astro's own markup — REF-006's component, write-prohibited to you). The real served top-level DOM order across all 39 pages is:
+
+`['install','dependencies','source','props','theming','usage']`
+
+**Evidence:** REF-001's review cycle 1 found the five-element DOM reading produces a mathematically unsatisfiable contract (REF-001's FLOW-GEND-21 requires `main > section[data-section="dependencies"]` count 1 while the five-element preamble excludes it); sprint-02's landed specs (dependency-panels.spec.ts:66, item-install-copy.spec.ts:116) pin the panel as a direct child of main and stay green untouched under this reading; sprint-start reality already carries the panel as a top-level section (`['install','dependencies','source']`).
+
+**Implementation consequences for you (all consistent with the original task):** mount `<DependencyPanel … />` between install and source exactly as the page does today (top-level, not nested inside the install section); your template still carries exactly the five section[data-section] bindings in install→source→props→theming→usage order; do NOT modify DependencyPanel.astro; REF-001's specs (your green proofs) assert the six-element order.
