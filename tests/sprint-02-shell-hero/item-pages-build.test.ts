@@ -60,6 +60,24 @@ function urlsIn(html: string): string[] {
   return [...html.matchAll(/https:\/\/[^\s"<]+/g)].map((match) => match[0]);
 }
 
+/**
+ * FIX-REF-009-1: {engine}-guard exemption slice. REF-003 mandates the usage
+ * section render usageSnippet byte-verbatim, and code-block + schema-display
+ * legitimately document the registry-API pattern
+ * `path="/r/{engine}/{item}.json"` there. Returns the page minus that single
+ * exempted region, or the page unchanged when it has no usage section — the
+ * guard keeps its substitution-detection teeth on every substituted surface
+ * (install tabs + commands, dependencies, source, props, theming, QR/pager
+ * chrome).
+ */
+function htmlOutsideUsageRegion(html: string, label: string): string {
+  const usageStart = html.indexOf('data-section="usage"');
+  if (usageStart === -1) return html;
+  const usageEnd = html.indexOf('</section>', usageStart);
+  expect(usageEnd, `${label}: usage section must close`).toBeGreaterThan(-1);
+  return `${html.slice(0, usageStart)}${html.slice(usageEnd)}`;
+}
+
 let buildExit: number | null = null;
 let buildLog = '';
 let items: ItemEntry[] = [];
@@ -154,7 +172,12 @@ it('SHELL-008-tabbed-install-first: install first, both engines server-rendered 
     expect(html.split(CLI_PREFIX).length - 1, `${item.name}: command-line count`).toBe(2);
 
     // TC-2: no template literal and no height clipping ever reaches the page.
-    expect(html, `${item.name}: {engine} template`).not.toContain('{engine}');
+    // {engine} narrowed (FIX-REF-009-1, see htmlOutsideUsageRegion): the
+    // verbatim usage section is the only exempted region.
+    expect(
+      htmlOutsideUsageRegion(html, item.name),
+      `${item.name}: {engine} template`,
+    ).not.toContain('{engine}');
     expect(html, `${item.name}: {version} template`).not.toContain('{version}');
     expect(html, `${item.name}: max-height`).not.toMatch(/max-height/i);
 

@@ -1,0 +1,8 @@
+PASS T1-teeth-mutated-install-surface: narrowed guard verdict on mutated conversation: "conversation: {engine} template"
+PASS T1b-mutation-present-on-disk: mutated install command carries the literal {engine}
+PASS T2-control-old-guard-fails: old whole-page guard verdict on pristine schema-display: "schema-display: {engine} template"
+PASS T3-exemption-schema-display-passes: narrowed guard verdict on pristine schema-display: null
+PASS T3b-literal-verified-inside-usage-region: pristine schema-display carries both the usage region and the sanctioned literal
+PASS T4-pristine-conversation-passes: narrowed guard verdict on pristine conversation: null
+DRILL OK — all four checks hold
+drill exit=0
