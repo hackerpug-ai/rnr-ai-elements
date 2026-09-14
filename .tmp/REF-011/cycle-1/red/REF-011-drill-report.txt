@@ -1,0 +1,62 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011
+
+ ❯ tests/sprint-04-generated-reference/enrichment-drill.test.ts (5 tests | 5 skipped) 175ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/enrichment-drill.test.ts > REF-011 enrichment drill
+AssertionError: drill stdout:
+
+drill stderr:
+node:internal/modules/esm/resolve:275
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/scripts/docs-data/drill-enrichment.ts' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/
+    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:991:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:719:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:736:38)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveBaseSync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10932)
+    at resolveDirectorySync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:12238)
+    at resolveTsPathsSync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13445)
+    at resolve (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:15991) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/scripts/docs-data/drill-enrichment.ts'
+}
+
+Node.js v24.14.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ resolveBaseSync node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10932
+ ❯ resolveDirectorySync node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:12238
+ ❯ resolveTsPathsSync node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13445
+ ❯ tests/sprint-04-generated-reference/enrichment-drill.test.ts:101:89
+     99|     ], { encoding: 'utf8', cwd: ROOT, timeout: 560_000 });
+    100|     expect(proc.error, `drill failed to spawn: ${proc.error ?? ''}`).t…
+    101|     expect(proc.status, `drill stdout:\n${proc.stdout}\ndrill stderr:\…
+       |                                                                                         ^
+    102|     report = JSON.parse(proc.stdout) as Report;
+    103|     expect(report.expectationsHeld).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 skipped (5)
+   Start at  18:44:15
+   Duration  650ms (transform 42ms, setup 0ms, import 362ms, tests 175ms, environment 0ms)
+
+exit=1
