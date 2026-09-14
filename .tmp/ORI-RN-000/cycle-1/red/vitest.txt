@@ -1,0 +1,100 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000
+
+ ❯ tests/sprint-05-orient-search/prompt-input-sdk57.test.ts (4 tests | 3 failed) 875ms
+   × ORI-RN-000-AC-1-real-sdk: production mapper accepts the real Expo 57 ImagePickerAsset 332ms
+   × ORI-RN-000-AC-2-nativewind-artifact: emitted nativewind mapper matches source and compiles 228ms
+   × ORI-RN-000-AC-3-uniwind-artifact: emitted uniwind mapper matches source, compiles, freshness rejects stale output 214ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/prompt-input-sdk57.test.ts > ORI-RN-000-AC-1-real-sdk: production mapper accepts the real Expo 57 ImagePickerAsset
+AssertionError: Version 6.0.3 compiling the PRODUCTION mapper over /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/apps/example/node_modules/expo-image-picker:
+consumer.ts(5,21): error TS2345: Argument of type '(asset: ImagePickerAssetShape) => PromptInputAttachmentData' is not assignable to parameter of type '(value: ImagePickerAsset, index: number, array: ImagePickerAsset[]) => PromptInputAttachmentData'.
+  Types of parameters 'asset' and 'value' are incompatible.
+    Type 'ImagePickerAsset' is not assignable to type 'ImagePickerAssetShape'.
+      Types of property 'fileName' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string | null'.
+          Type 'undefined' is not assignable to type 'string | null'.
+(workspace: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/.tmp/ORI-RN-000/sdk57-workspace)
+: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ tests/sprint-05-orient-search/prompt-input-sdk57.test.ts:48:5
+     46|     result.exit,
+     47|     `${tsc.version} compiling the PRODUCTION mapper over ${sdk.dir}:\n…
+     48|   ).toBe(0);
+       |     ^
+     49| });
+     50|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/sprint-05-orient-search/prompt-input-sdk57.test.ts > ORI-RN-000-AC-2-nativewind-artifact: emitted nativewind mapper matches source and compiles
+AssertionError: compiling the EMITTED nativewind mapper:
+consumer.ts(5,21): error TS2345: Argument of type '(asset: ImagePickerAssetShape) => PromptInputAttachmentData' is not assignable to parameter of type '(value: ImagePickerAsset, index: number, array: ImagePickerAsset[]) => PromptInputAttachmentData'.
+  Types of parameters 'asset' and 'value' are incompatible.
+    Type 'ImagePickerAsset' is not assignable to type 'ImagePickerAssetShape'.
+      Types of property 'fileName' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string | null'.
+          Type 'undefined' is not assignable to type 'string | null'.
+(workspace: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/.tmp/ORI-RN-000/sdk57-workspace)
+: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ tests/sprint-05-orient-search/prompt-input-sdk57.test.ts:61:85
+     59|     `the SDK module must actually resolve:\n${result.output}`,
+     60|   ).not.toMatch(RESOLUTION_FAILURE);
+     61|   expect(result.exit, `compiling the EMITTED nativewind mapper:\n${res…
+       |                                                                                     ^
+     62| });
+     63|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/sprint-05-orient-search/prompt-input-sdk57.test.ts > ORI-RN-000-AC-3-uniwind-artifact: emitted uniwind mapper matches source, compiles, freshness rejects stale output
+AssertionError: compiling the EMITTED uniwind mapper:
+consumer.ts(5,21): error TS2345: Argument of type '(asset: ImagePickerAssetShape) => PromptInputAttachmentData' is not assignable to parameter of type '(value: ImagePickerAsset, index: number, array: ImagePickerAsset[]) => PromptInputAttachmentData'.
+  Types of parameters 'asset' and 'value' are incompatible.
+    Type 'ImagePickerAsset' is not assignable to type 'ImagePickerAssetShape'.
+      Types of property 'fileName' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string | null'.
+          Type 'undefined' is not assignable to type 'string | null'.
+(workspace: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/.tmp/ORI-RN-000/sdk57-workspace)
+: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ tests/sprint-05-orient-search/prompt-input-sdk57.test.ts:73:82
+     71|     RESOLUTION_FAILURE,
+     72|   );
+     73|   expect(result.exit, `compiling the EMITTED uniwind mapper:\n${result…
+       |                                                                                  ^
+     74|
+     75|   // The freshness gate must reject a stale mapper — proven in an isol…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 1 passed (4)
+   Start at  14:45:20
+   Duration  988ms (transform 21ms, setup 0ms, import 30ms, tests 875ms, environment 0ms)
+
