@@ -1,0 +1,180 @@
+{
+  "sprint": "sprint-05-orient-search",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search",
+    "sprint_slug": "sprint-05-orient-search"
+  },
+  "planned_at": "2026-09-14T08:36:10Z",
+  "planned_steps": 13,
+  "steps": [
+    {
+      "n": 1,
+      "text": "Use a fresh browser context over the built localhost preview to open all five getting-started routes. Assert 200 responses and their named rendered bodies. Introduction states the full product identity in its opening and links to substantive boundary content. Installation has exactly one engine TabGroup, correct project-fact mappings, and each complete canonical conversation command inside its corresponding panel. CLI describes the registry-specific URL and destination contract and links to the authoritative reference. Enhanced desktop and mobile projects exercise deliberate engine selection; the no-JavaScript project reads both labeled panels. A page containing only the shared shell fails.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 1",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DOCS-01-getting-started-engine-decision"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "text": "Read the built /docs/theming page and assert the scoped no-config statement, @theme mapping, Light and Dark columns, at least ten oklch occurrences, and distinct paired values for --primary. Traverse Getting started links to CLI and Dark mode and assert their actual content and 200 responses. Preserve and follow #textclasscontext and #rendermarkdown. The no-JavaScript project proves that the reference remains readable. The RED must expose missing paired values or navigation, not falsely assert that the existing Theming route is absent.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 2",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DOCS-01-theming-and-section-nav"
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "text": "Follow the built site's single quickstart, install both canonical engine variants into clean Expo 57 consumers, run the displayed seed-data screen on iOS, Android, and Web, and follow the conclusion to the real provider-backed apps/example live-chat screen.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 3",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DOCS-02-quickstart-chat-screen"
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "text": "Visitor changing the site theme: 1. Open /docs/theming and verify the light theme.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 4",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-01-theme-toggle-persisted-flash-free"
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "text": "First-time visitor whose system preference is dark: 1. Cold-navigate to /docs/theming.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 5",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-02-first-visit-prefers-dark-no-flash"
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "text": "Visitor finding documentation through search: 1. Open /docs/introduction and press Meta+K on macOS or Control+K elsewhere.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 6",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-07-cmdk-open-search-navigate"
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "text": "Visitor browsing before first using search: 1. Open /docs/introduction and wait five seconds without opening search.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 7",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-08-pagefind-lazy-load-on-first-open"
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "text": "Integrator choosing an engine once: 1. Open /docs/installation and verify the documented fresh-context default.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 8",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-13-engine-tab-persists-across-pages"
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "text": "Integrator reading the initial document without client execution: 1. Fetch the raw response body for /docs/installation.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 9",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-14-tab-panels-in-initial-html"
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "text": "Gate step 10, after the current maximum numbered step 9, exercises ORI-AST-004 through its already-planned search-contract.spec.ts. Prove real built indexing, immediate dialog opening, focus and keyboard navigation, actual result destinations, first-open lazy loading and reuse, and safe query rendering. Custom-404 composition remains exclusively in the unchanged downstream flow. This locks existing proof and adds no product or test-file scope.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 10",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-15-search-contract-before-recovery"
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "text": "Open Registry, verify totals 56/39/11/6, filter components by conversation, switch both engines, compare displayed commands with the real clipboard, follow component/ui/lib Docs links, prove no-match and clearing behavior, preserve component-grid filtering, and read all 56 rows with both engine commands without JavaScript.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 11",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-07-registry-ledger-controls"
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "text": "Visit a fresh unknown documentation URL, inspect the built custom recovery page, open shared search within 300ms, navigate to Message, verify focus restoration and search-index exclusion, retain the site shell/theme, and follow plain Components and Registry links without JavaScript.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 12",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-16-not-found-search-recovery"
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "text": "Execute the exact task-owned API integration selector against the real Node server and official OpenAI Responses endpoint. Prove incremental output, contextual SDK-produced history, request and startup rejection, genuine provider failure and recovery, cancellation during unfinished generation, actual pinned-package compatibility and complete owned-process teardown. Capture command-bound functional RED and current-run evidence. This step has no downstream Quickstart or native-composition dependency.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-05-orient-search --step 13",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-DOCS-02-live-example-api-stream-history-abort"
+        ]
+      }
+    }
+  ]
+}
