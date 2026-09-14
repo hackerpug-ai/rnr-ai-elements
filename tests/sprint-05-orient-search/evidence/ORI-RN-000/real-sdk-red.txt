@@ -1,0 +1,17 @@
+ORI-RN-000 real-SDK compiler proof — RED, captured BEFORE the source correction
+candidate HEAD: f1efc71c7ecc0dfdf98381aec686c996ccff1ec7
+command: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/packages/registry/node_modules/.bin/tsc --noEmit --project /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/.tmp/ORI-RN-000/sdk57-workspace
+consumer: import type { ImagePickerAsset } from 'expo-image-picker'; assets.map(imageAssetToAttachment)
+expo-image-picker: 57.0.16 at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/apps/example/node_modules/expo-image-picker (declaration: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/apps/example/node_modules/expo-image-picker/build/ImagePicker.types.d.ts)
+typescript: Version 6.0.3 at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/packages/registry/node_modules/.bin/tsc
+production mapper: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/packages/registry/src/components/ai/prompt-input.logic.ts (sha256 1a7e1f70f4586beee9525fd365c64b0579ece5f181c059b079f90833aa3628f1)
+compiler exit: 2
+--- compiler diagnostics (verbatim) ---
+consumer.ts(5,21): error TS2345: Argument of type '(asset: ImagePickerAssetShape) => PromptInputAttachmentData' is not assignable to parameter of type '(value: ImagePickerAsset, index: number, array: ImagePickerAsset[]) => PromptInputAttachmentData'.
+  Types of parameters 'asset' and 'value' are incompatible.
+    Type 'ImagePickerAsset' is not assignable to type 'ImagePickerAssetShape'.
+      Types of property 'fileName' are incompatible.
+        Type 'string | null | undefined' is not assignable to type 'string | null'.
+          Type 'undefined' is not assignable to type 'string | null'.
+(workspace: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/.tmp/ORI-RN-000/sdk57-workspace)
+--- end ---
