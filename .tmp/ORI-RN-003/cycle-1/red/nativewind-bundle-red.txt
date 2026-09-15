@@ -1,0 +1,25 @@
+ORI-RN-003 cycle-1 RED — observed pre-implementation failure (AC-1 nativewind legs)
+
+The exact committed nativewind consumer (packages/docs-snippets/nativewind) bundles its
+`tsc --noEmit` (ORI-RN-001/002 proof) but FAILS the Metro bundle — the runtime step
+tsc cannot exercise. Observed on a real iOS Expo Go 57.0.9 session (simulator
+81487B1E-A4D1-45AE-9BCE-D675802BACD1), Metro port 8091:
+
+  iOS Bundling failed 4152ms node_modules/.pnpm/expo-router@57.0.21.../expo-router/entry.js (1577 modules)
+  Unable to resolve "react-native-css-interop/jsx-runtime" from "app/index.tsx"
+  Import stack:
+   app/index.tsx
+   | import "react-native-css-interop/jsx-runtime"
+
+Root cause (verified): nativewind@4.2.6 declares react-native-css-interop@0.2.6 as a
+hard dependency, but pnpm's isolated linker nests it under
+node_modules/.pnpm/react-native-css-interop@.../node_modules/ and never hoists it to
+the consumer root. `jsxImportSource: 'nativewind'` (babel.config.js) injects the
+css-interop jsx-runtime import into every app file, and Metro resolves it from
+app/index.tsx — which cannot reach the nested transitive dep.
+
+Control: adding react-native-css-interop@0.2.6 as a DIRECT dependency to the disposable
+consumer hoists it and the SAME source bundles ("iOS Bundled 2942ms ... 3597 modules").
+
+This defect lives in packages/docs-snippets/nativewind/package.json (writeProhibited for
+ORI-RN-003). Reported to the recipe/template owner (ORI-RN-001/002), not repaired here.
