@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+@import 'uniwind';
+
+/*
+ * Uniwind / Tailwind v4 consumer theme — RNR's own tokens, transcribed verbatim. The
+ * colors are identical to the NativeWind variant; only the syntax differs (v4 @theme +
+ * @variant light/dark with hsl() values instead of v3 :root/.dark:root bare triplets).
+ * The registry ships no theme; tokens live in the consuming app.
+ */
+
+@theme {
+  --font-sans: 'Spline Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --radius: 0.625rem;
+
+  /* Tailwind's default palette does not reach Uniwind's RN interop — only the vars this
+   * file declares compile. The status hues below cover the installed components'
+   * non-token palette classes; values are Tailwind v4's own. */
+  --color-green-500: oklch(0.723 0.219 149.579);
+  --color-green-600: oklch(0.627 0.194 149.214);
+  --color-orange-500: oklch(0.705 0.213 47.604);
+  --color-orange-600: oklch(0.646 0.222 41.116);
+  --color-yellow-400: oklch(0.852 0.199 91.936);
+  --color-yellow-600: oklch(0.681 0.162 75.834);
+  --color-blue-400: oklch(0.707 0.165 254.624);
+  --color-blue-600: oklch(0.546 0.245 262.881);
+  --color-red-500: oklch(0.637 0.237 25.331);
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-background: hsl(0 0% 100%);
+      --color-foreground: hsl(0 0% 3.9%);
+      --color-card: hsl(0 0% 100%);
+      --color-card-foreground: hsl(0 0% 3.9%);
+      --color-popover: hsl(0 0% 100%);
+      --color-popover-foreground: hsl(0 0% 3.9%);
+      --color-primary: hsl(0 0% 9%);
+      --color-primary-foreground: hsl(0 0% 98%);
+      --color-secondary: hsl(0 0% 96.1%);
+      --color-secondary-foreground: hsl(0 0% 9%);
+      --color-muted: hsl(0 0% 96.1%);
+      --color-muted-foreground: hsl(0 0% 45.1%);
+      --color-accent: hsl(0 0% 96.1%);
+      --color-accent-foreground: hsl(0 0% 9%);
+      --color-destructive: hsl(0 84.2% 60.2%);
+      --color-border: hsl(0 0% 89.8%);
+      --color-input: hsl(0 0% 89.8%);
+      --color-ring: hsl(0 0% 63%);
+    }
+
+    @variant dark {
+      --color-background: hsl(0 0% 3.9%);
+      --color-foreground: hsl(0 0% 98%);
+      --color-card: hsl(0 0% 3.9%);
+      --color-card-foreground: hsl(0 0% 98%);
+      --color-popover: hsl(0 0% 3.9%);
+      --color-popover-foreground: hsl(0 0% 98%);
+      --color-primary: hsl(0 0% 98%);
+      --color-primary-foreground: hsl(0 0% 9%);
+      --color-secondary: hsl(0 0% 14.9%);
+      --color-secondary-foreground: hsl(0 0% 98%);
+      --color-muted: hsl(0 0% 14.9%);
+      --color-muted-foreground: hsl(0 0% 63.9%);
+      --color-accent: hsl(0 0% 14.9%);
+      --color-accent-foreground: hsl(0 0% 98%);
+      --color-destructive: hsl(0 70.9% 59.4%);
+      --color-border: hsl(0 0% 14.9%);
+      --color-input: hsl(0 0% 14.9%);
+      --color-ring: hsl(300 0% 45%);
+    }
+  }
+}

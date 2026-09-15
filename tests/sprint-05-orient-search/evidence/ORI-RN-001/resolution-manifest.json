@@ -1,0 +1,161 @@
+{
+  "task": "ORI-RN-001",
+  "candidate_head_sha": "5447639180825418595de89dee05332c0345a31a",
+  "generated_at": "2026-09-15T07:19:37.592Z",
+  "rnr_cli_version": "1.0.0",
+  "commands": [
+    "pnpm exec vitest run tests/sprint-05-orient-search/quickstart-consumer-install.test.ts",
+    "pnpm typecheck",
+    "pnpm lint"
+  ],
+  "engines": {
+    "nativewind": {
+      "run_id": "nativewind-2026-09-15T07:18:29.593Z",
+      "consumer_root": "/Users/justinrich/.cache/agent-scratch/ori-rn-001-nativewind-j7jMNu",
+      "script_exit": 0,
+      "cli_version": "1.0.0",
+      "public_urls": {
+        "conversation": "https://rnraielements.com/r/nativewind/conversation.json",
+        "message": "https://rnraielements.com/r/nativewind/message.json",
+        "prompt-input": "https://rnraielements.com/r/nativewind/prompt-input.json",
+        "item": "https://rnraielements.com/r/nativewind/item.json",
+        "sheet": "https://rnraielements.com/r/nativewind/sheet.json"
+      },
+      "public_hashes": {
+        "conversation": "570aba4ff5db35798a0842dcda7514e8480c5da749c2d72a81f815936a8706a7",
+        "message": "7166868f9d9608eaa46418c0e1bd86564a67ee4c6c3835a309f5f856f7a0ea92",
+        "prompt-input": "f1bae49c2f3125d21aa0711e563f8be60f3388fdf09c24811c03a413ee8f4d73",
+        "item": "a0d2c46de0ec000123387c5ee15b20977ee85cfbe5fc095bd9e38230508dcaed",
+        "sheet": "b39706723eec6acfad5a3cf87d026bf1ee33c9784f48ef23e11518865495fb14"
+      },
+      "installed_files": {
+        "components/ai/attachments.logic.ts": "255f791afd24de675f86f98f212b549bfdb8c3b7d66e4a541a26e302c62f9709",
+        "components/ai/conversation.tsx": "d2d711af6ea20b39be4a80929fcc969dbe7364ced19badaaefb48cc2529f1440",
+        "components/ai/message.tsx": "82d81ce21ee0b24983da0061574b355d92da3929a5e60f82c23ceb126fc7300d",
+        "components/ai/prompt-input.logic.ts": "ec16820abaf0ec23ac2d22fd663db208c3fdbe9f6c918ad552c0420dacc6987b",
+        "components/ai/prompt-input.tsx": "98ed198a05a6ebea299fc5fbd034883c1b791644ea1b8eb225ca6914f71786c2",
+        "components/ui/avatar.tsx": "0c638950a0d3f7b08be52ddd867db2401e7df3abfdb19b26994175011830afa9",
+        "components/ui/button.tsx": "32fb3025e31381f63bcb03f8383ee0bfc72be679d33e8e9932dc16347c6e87ac",
+        "components/ui/empty.tsx": "adfc1a963c59e087d08a073c86beb16cc90efaf6c60a8d017c0cb67128e5fc04",
+        "components/ui/icon.tsx": "2792b6b1ce263f5f43e5f9bcc5818108393d6e69e5afcabacfcb4d3f955a6b57",
+        "components/ui/input-group.tsx": "d559e4cbba0b82946e89662227c2ae7a83f051e30ff9030a57026f3164f62a08",
+        "components/ui/input.tsx": "fddd7231e1f5703e0f13bcc1c982dd5416a0328cd232047605d2289f2ae9d505",
+        "components/ui/item.tsx": "70c504566072f68d67913e95d6bca59c82b8a2cc7b70fb8a3e8d7f3206d63a97",
+        "components/ui/separator.tsx": "815bd6ecc2fb2c2b8023302e5ac1e0df0f1e9d14685b5483f9a36bcd9bd182d7",
+        "components/ui/sheet.tsx": "926a15e02ebd1a208ca6dc00720c80986043aade33645b4703945c65430be523",
+        "components/ui/text.tsx": "846436f6465343bf2150c19276a90401f787b443e47a7869e7aafdc834c1e151",
+        "lib/markdown.ts": "631b4fa84746eaee33cc19e24f24acdcba3e5fb9099421d93fccee9ca169a3b5",
+        "lib/theme.ts": "8584494fdeed05adf79859fca8114e1c9bd5f1d9f851bde769f843e265ead29c",
+        "lib/utils.ts": "af39cd2291f4ae593a40c48ad8eb9cb59e0b434d04ad4ffbb9bae86a23b22f87"
+      },
+      "resolved_versions": {
+        "expo": "57.0.22",
+        "react-native": "0.86.3",
+        "react": "19.2.3",
+        "typescript": "6.0.3",
+        "nativewind": "4.2.6",
+        "uniwind": "missing",
+        "tailwindcss": "3.4.19",
+        "@rn-primitives/dialog": "1.5.2",
+        "react-native-safe-area-context": "5.7.0"
+      },
+      "checks": {
+        "doctor": {
+          "exit": 0,
+          "command": "npx --yes @react-native-reusables/cli@latest doctor --summary"
+        },
+        "expo_install_check": {
+          "exit": 0,
+          "command": "npx expo install --check"
+        },
+        "tsc": {
+          "exit": 0,
+          "command": "pnpm exec tsc --noEmit"
+        },
+        "expo_doctor": {
+          "exit": 0,
+          "command": "pnpm exec expo-doctor"
+        }
+      },
+      "fail_closed": {
+        "missing_item_exit": 2,
+        "restored_exit": 0,
+        "diagnostic_named_item": true
+      }
+    },
+    "uniwind": {
+      "run_id": "uniwind-2026-09-15T07:18:51.252Z",
+      "consumer_root": "/Users/justinrich/.cache/agent-scratch/ori-rn-001-uniwind-shHpg5",
+      "script_exit": 0,
+      "cli_version": "1.0.0",
+      "public_urls": {
+        "conversation": "https://rnraielements.com/r/uniwind/conversation.json",
+        "message": "https://rnraielements.com/r/uniwind/message.json",
+        "prompt-input": "https://rnraielements.com/r/uniwind/prompt-input.json",
+        "item": "https://rnraielements.com/r/uniwind/item.json",
+        "sheet": "https://rnraielements.com/r/uniwind/sheet.json"
+      },
+      "public_hashes": {
+        "conversation": "ccf1b495f315a29bab040bbc9cc16faf7640edabd99158552a57bdf7be0a2139",
+        "message": "9fc3c8cb3feb4e4ac371ecd4eb133669ce30fdd7eaa3132ea347221c749646ab",
+        "prompt-input": "49b9ac11cd7dda300f34c2706e68634a2f30e3d4e34a24ae14972102ae180b92",
+        "item": "824b731c159ef65cf1162bd5f7ca2323607de9092472307d089af5e69809fe6c",
+        "sheet": "03587b040ba56c476fdddf96c512f8539f3b048cb89685b2ddf7903991e6539b"
+      },
+      "installed_files": {
+        "components/ai/attachments.logic.ts": "255f791afd24de675f86f98f212b549bfdb8c3b7d66e4a541a26e302c62f9709",
+        "components/ai/conversation.tsx": "d2d711af6ea20b39be4a80929fcc969dbe7364ced19badaaefb48cc2529f1440",
+        "components/ai/message.tsx": "82d81ce21ee0b24983da0061574b355d92da3929a5e60f82c23ceb126fc7300d",
+        "components/ai/prompt-input.logic.ts": "ec16820abaf0ec23ac2d22fd663db208c3fdbe9f6c918ad552c0420dacc6987b",
+        "components/ai/prompt-input.tsx": "98ed198a05a6ebea299fc5fbd034883c1b791644ea1b8eb225ca6914f71786c2",
+        "components/ui/avatar.tsx": "0c638950a0d3f7b08be52ddd867db2401e7df3abfdb19b26994175011830afa9",
+        "components/ui/button.tsx": "1ec86579a794b3ac54c2ab7a61d737713cec379dfb40ee9d72437e89104d6427",
+        "components/ui/empty.tsx": "adfc1a963c59e087d08a073c86beb16cc90efaf6c60a8d017c0cb67128e5fc04",
+        "components/ui/icon.tsx": "3eaabbdddd48462c43439bfbc461cc382fd95048415119bf17eaa61d3dcfc8b7",
+        "components/ui/input-group.tsx": "d559e4cbba0b82946e89662227c2ae7a83f051e30ff9030a57026f3164f62a08",
+        "components/ui/input.tsx": "08c1a8d5e5352db43d61ac3c7b0bef02fc9bc3a598c92ba46962949134427dd9",
+        "components/ui/item.tsx": "70c504566072f68d67913e95d6bca59c82b8a2cc7b70fb8a3e8d7f3206d63a97",
+        "components/ui/separator.tsx": "815bd6ecc2fb2c2b8023302e5ac1e0df0f1e9d14685b5483f9a36bcd9bd182d7",
+        "components/ui/sheet.tsx": "926a15e02ebd1a208ca6dc00720c80986043aade33645b4703945c65430be523",
+        "components/ui/text.tsx": "846436f6465343bf2150c19276a90401f787b443e47a7869e7aafdc834c1e151",
+        "lib/markdown.ts": "631b4fa84746eaee33cc19e24f24acdcba3e5fb9099421d93fccee9ca169a3b5",
+        "lib/theme.ts": "7b0c52206ec87e07025c177c619927d2cffb04bcaf26f1f7f13691ec6a758f13",
+        "lib/utils.ts": "af39cd2291f4ae593a40c48ad8eb9cb59e0b434d04ad4ffbb9bae86a23b22f87"
+      },
+      "resolved_versions": {
+        "expo": "57.0.22",
+        "react-native": "0.86.3",
+        "react": "19.2.3",
+        "typescript": "6.0.3",
+        "nativewind": "missing",
+        "uniwind": "1.11.0",
+        "tailwindcss": "4.3.3",
+        "@rn-primitives/dialog": "1.5.2",
+        "react-native-safe-area-context": "5.7.0"
+      },
+      "checks": {
+        "doctor": {
+          "exit": 0,
+          "command": "npx --yes @react-native-reusables/cli@latest doctor --summary"
+        },
+        "expo_install_check": {
+          "exit": 0,
+          "command": "npx expo install --check"
+        },
+        "tsc": {
+          "exit": 0,
+          "command": "pnpm exec tsc --noEmit"
+        },
+        "expo_doctor": {
+          "exit": 0,
+          "command": "pnpm exec expo-doctor"
+        }
+      },
+      "fail_closed": {
+        "missing_item_exit": 2,
+        "restored_exit": 0,
+        "diagnostic_named_item": true
+      }
+    }
+  }
+}
