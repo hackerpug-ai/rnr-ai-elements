@@ -1,0 +1,20 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-002
+
+[ORI-CONT-002] seam anchors: #textclasscontext 437 chars, #rendermarkdown 540 chars; owners verified in message.tsx/reasoning.tsx
+[ORI-CONT-002] token boundary: 1 TokenTable binding, 1 provenance-checked example(s), no duplicated palette literal
+[ORI-CONT-002] engine provenance: @theme example resolves byte-exact against apps/example/global.css (839 bytes)
+[ORI-CONT-002] dark mode: ownership split stated, resolution order rnr-theme -> prefers-color-scheme -> dark, 3 onward links, no numbered lesson
+ ✓ tests/sprint-05-orient-search/theming-manuscript.test.ts > ORI-CONT-002-seam-anchors 5ms
+ ✓ tests/sprint-05-orient-search/theming-manuscript.test.ts > ORI-CONT-002-token-boundary 1ms
+ ✓ tests/sprint-05-orient-search/theming-manuscript.test.ts > ORI-CONT-002-engine-provenance 1ms
+ ✓ tests/sprint-05-orient-search/theming-manuscript.test.ts > ORI-CONT-002-dark-mode-explanation 1ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  02:13:15
+   Duration  128ms (transform 20ms, setup 0ms, import 43ms, tests 9ms, environment 0ms)
+

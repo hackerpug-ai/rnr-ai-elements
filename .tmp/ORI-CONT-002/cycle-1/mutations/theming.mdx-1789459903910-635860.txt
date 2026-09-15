@@ -1,0 +1,48 @@
+---
+title: 'Theming'
+description: 'Where registry items read their colors from, the token map behind them, and the text and markdown extension points.'
+section: 'guides'
+order: 1
+---
+
+The registry items ship no tokens of their own. Each item you copy reads its colors from your app's theme tokens, so re-theming your product never touches registry code. This page is a lookup: the token map this site renders, the engine-specific configuration facts, and the two seams that shape text and markdown.
+
+## Token map
+
+This site styles itself with one token sheet of plain CSS custom properties in `apps/docs/src/styles/global.css`. Every color in the sheet is an oklch value, and the dark values are the defaults. The sheet never reads your OS `prefers-color-scheme` setting, and no Tailwind or `@theme` block is involved on this site. The table below is the complete map, rendered from that sheet:
+
+<TokenTable />
+
+The `--code-background` and `--code-foreground` pair is docs-specific: code frames and install strips on this site use it, and registry items never consume it. The theme toggle in the site header flips the root theme class, and every token re-resolves in place.
+
+## Engines
+
+Registry items resolve Tailwind classes at build time. Two engines do this, and their configuration differs.
+
+Uniwind pairs with Tailwind v4, and Tailwind v4 is CSS-first: Uniwind needs no tailwind.config.js. You declare tokens in a `@theme` block in your global CSS. Uniwind's React Native interop carries no default Tailwind theme, so only variables you declare compile to color; a class whose variable is missing renders nothing. The example app declares its status colors this way — copied byte-for-byte from `apps/example/global.css`:
+
+```css
+  --color-green-500: oklch(0.729 0.219 149.579); /* tool, lib/status.ts success dark twin */
+  --color-green-600: oklch(0.627 0.194 149.214); /* tool, lib/status.ts success */
+  --color-orange-500: oklch(0.705 0.213 47.604); /* tool, lib/status.ts denied-in-dark */
+  --color-orange-600: oklch(0.646 0.222 41.116); /* tool, lib/status.ts denied */
+  --color-yellow-400: oklch(0.852 0.199 91.936); /* tool, tool.logic.ts approval-requested dark twin */
+  --color-yellow-600: oklch(0.681 0.162 75.834); /* tool, tool.logic.ts approval-requested */
+  --color-blue-400: oklch(0.707 0.165 254.624); /* tool, tool.logic.ts approval-responded dark twin */
+  --color-blue-600: oklch(0.546 0.245 262.881); /* tool, tool.logic.ts approval-responded */
+  --color-red-500: oklch(0.637 0.237 25.331); /* icon (RNR primitive), icon.tsx JSDoc example */
+```
+
+The example app's surface tokens are a separate matter. They are bare HSL triplets, defined in `apps/example/global.css` and mirrored in `apps/example/lib/theme.ts`. They are not oklch values, and the oklch values in this site's token sheet belong to this site only.
+
+NativeWind 4 pairs with Tailwind v3. Its configuration lives in a tailwind.config.js file that maps each utility class onto a CSS variable such as `hsl(var(--primary))`; the harness consumer keeps that mapping in `apps/harness-nativewind/tailwind.config.js`.
+
+## TextClassContext
+
+React Native has no style cascade: wrapping a child in a parent view does not restyle the text inside it. Parents that need to restyle nested text — message, prompt-input, tool, and the other list-bearing items — publish their class strings through the `TextClassContext` provider from the text module. Those strings are ordinary Tailwind classes, so they resolve against your theme tokens exactly like the classes you write yourself.
+
+## renderMarkdown
+
+The components that render model output do not bundle a markdown renderer. MessageResponse takes a `renderMarkdown` prop, and ReasoningContent takes a `renderMarkdown` prop; both default to plain text. The reference renderer, `react-native-enriched-markdown`, is a Fabric native module absent from Expo 57's bundled list. Keeping it behind the prop keeps the core runnable in Expo Go, with markdown as an opt-in step for dev-client apps.
+
+For how the site picks light or dark — and how your app should — read [Dark mode](/docs/dark-mode).
