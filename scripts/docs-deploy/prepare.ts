@@ -285,7 +285,7 @@ function main(): void {
       )}\n`,
     );
     console.log(
-      `[docs-deploy] fresh preparation complete: ${manifest.assets.length} dist assets, ` +
+      `[docs-deploy] fresh preparation complete: ${Object.keys(manifest.assets).length} dist assets, ` +
         `release ${args.source}`,
     );
     return;
