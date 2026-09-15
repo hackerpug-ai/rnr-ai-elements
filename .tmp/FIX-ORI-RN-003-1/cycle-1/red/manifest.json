@@ -1,0 +1,20 @@
+{
+  "task": "FIX-ORI-RN-003-1",
+  "cycle": 1,
+  "phase": "red",
+  "candidate_head_sha": "18d875cdbc55a3fb0defc57d729fae01cbc942a0",
+  "captured_at": "2026-09-15T12:52:00Z",
+  "method": "Pre-fix reproduction via the contract's real proof path: copy the committed nativewind template files OUTSIDE the monorepo (os.tmpdir-derived), run the verbatim `packages/docs-snippets/commands/nativewind.sh` recipe (pnpm install -> npx expo install -> five literal RNR CLI adds -> doctor/tsc/expo-doctor) with cwd = the copy, overlay `app/index.tsx` + the shared quickstart screen, then `npx expo export --platform web`.",
+  "consumer_root": "/Users/justinrich/.cache/agent-scratch/fix-nw-red-qFghbv",
+  "recipe_exit": 0,
+  "export_exit": 1,
+  "export_command": "npx expo export --platform web --output-dir <red>/dist",
+  "expected_failure": "Unable to resolve module react-native-css-interop/jsx-runtime from app/index.tsx",
+  "observed_failure": "Error: Unable to resolve module react-native-css-interop/jsx-runtime from /Users/justinrich/.cache/agent-scratch/fix-nw-red-qFghbv/app/index.tsx: react-native-css-interop/jsx-runtime could not be found within the project or in these directories:",
+  "root_cause_confirmed": true,
+  "root_cause": "react-native-css-interop@0.2.6 is declared by nativewind@4.2.6 but pnpm's isolated linker nests it under .pnpm/nativewind@4.2.6_.../node_modules/react-native-css-interop and never hoists it to the consumer root; the babel-preset-expo jsxImportSource:'nativewind' injected `import 'react-native-css-interop/jsx-runtime'` therefore cannot resolve from app files.",
+  "nested_css_interop_path": "/Users/justinrich/.cache/agent-scratch/fix-nw-red-qFghbv/node_modules/.pnpm/nativewind@4.2.6_react-native-reanimated@4.5.1_react-native-worklets@0.10.1_@babel+core_c5a564bba9dfe7f89e3f13d97f36a08a/node_modules/react-native-css-interop",
+  "css_interop_hoisted_at_consumer_root": false,
+  "matches_ORI_RN_003_web_leg": true,
+  "evidence_files": ["export.log", "recipe.log"]
+}

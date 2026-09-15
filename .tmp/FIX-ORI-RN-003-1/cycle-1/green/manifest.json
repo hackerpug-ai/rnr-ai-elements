@@ -1,0 +1,20 @@
+{
+  "task": "FIX-ORI-RN-003-1",
+  "cycle": 1,
+  "phase": "green",
+  "candidate_head_sha": "18d875cdbc55a3fb0defc57d729fae01cbc942a0",
+  "captured_at": "2026-09-15T12:52:00Z",
+  "method": "Post-fix proof, identical to RED except the template package.json now declares `\"react-native-css-interop\": \"0.2.6\"` as a direct dependency. Fresh consumer from the fixed template, verbatim recipe, overlay entrypoint + shared screen, then `npx expo export --platform web`.",
+  "consumer_root": "/Users/justinrich/.cache/agent-scratch/fix-nw-green-h8JCPl",
+  "recipe_exit": 0,
+  "export_exit": 0,
+  "export_command": "npx expo export --platform web --output-dir <green>/dist",
+  "bundled_modules": "3112 modules (render.js) / 3083 modules (entry.js)",
+  "exported_to": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-003-1-impl/.tmp/FIX-ORI-RN-003-1/cycle-1/green/dist",
+  "unresolved_css_interop_diagnostic_absent": true,
+  "css_interop_hoisted_at_consumer_root": true,
+  "css_interop_resolved_version": "0.2.6",
+  "uniwind_control_unchanged": true,
+  "pnpm_lock_yaml_unchanged": true,
+  "evidence_files": ["export.log", "recipe.log"]
+}
