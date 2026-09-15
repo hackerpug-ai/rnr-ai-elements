@@ -1,0 +1,109 @@
+
+> rnr-ai-elements@0.2.1 check:fallow /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-001-1-impl
+> fallow audit --base HEAD
+
+loaded config: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-001-1-impl/.fallowrc.json
+[2m   0.363288583s[0m [33m WARN[0m fallow: skipped 2 hidden directories that contain source files (apps/harness/.storybook-web, apps/harness-nativewind/.storybook-web). Hidden directories are not traversed and no config field adds one: analyze one with fallow --root <dir> if it holds first-party source, or add '<dir>/**' to ignorePatterns to silence this.
+[2m   0.379690666s[0m [33m WARN[0m Skipped 1 package.json entry point outside project root or containing parent directory traversal: ../../scripts/docs-data/prebuild.ts
+[2m   0.432721541s[0m [33m WARN[0m Graph cache decoded but not reused: resolver, entry points, or plugins changed
+
+Audit scope: 23 changed files vs HEAD (614daa8..HEAD)
+
+── Dead Code ──────────────────────────────────────
+
+── Dependencies ─────────────────────────────────────
+
+● Unused dependencies (97)
+  @expo/ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-device (apps/example/package.json) (caveat: incomplete import graph)
+  expo-font (apps/example/package.json) (caveat: incomplete import graph)
+  expo-glass-effect (apps/example/package.json) (caveat: incomplete import graph)
+  expo-image (apps/example/package.json) (caveat: incomplete import graph)
+  expo-splash-screen (apps/example/package.json) (caveat: incomplete import graph)
+  expo-symbols (apps/example/package.json) (caveat: incomplete import graph)
+  expo-system-ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-web-browser (apps/example/package.json) (caveat: incomplete import graph)
+  react-native-web (apps/example/package.json) (caveat: incomplete import graph)
+  ... and 87 more (--format json for full list)
+  Listed in dependencies but never imported — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+● Unused devDependencies (8)
+  @storybook/icons (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/icons (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  expo-doctor (packages/docs-snippets/nativewind/package.json) (caveat: incomplete import graph)
+  expo-doctor (packages/docs-snippets/uniwind/package.json) (caveat: incomplete import graph)
+  Listed in devDependencies but never imported or referenced — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+✗ 97 unused dependencies · 8 dev/optional dependencies (0.25s)
+  105 issues · 4 suppressed · 0 stale suppressions
+
+── Duplication ────────────────────────────────────
+note: skipped 107 files matching default duplicates ignores (use --explain-skipped for the list)
+note: module wiring excluded from clone detection (--no-ignore-imports to include it)
+
+● Duplicates (9 clone groups)
+
+     60 lines  3 instances  spread 6  dup:adcba8ad
+    apps/harness/src/global.nativewind.css:1-60
+    apps/harness-nativewind/global.css:1-60
+    packages/docs-snippets/nativewind/global.css:1-52
+
+     69 lines  2 instances  spread 5  dup:76eb9516
+    apps/example/global.css:1-69
+    packages/docs-snippets/uniwind/global.css:1-50
+
+     24 lines  3 instances  spread 6  dup:c2a1a540
+    apps/example/global.css:46-69
+    apps/harness/src/global.css:57-80
+    packages/docs-snippets/uniwind/global.css:27-50
+
+     22 lines  3 instances  spread 6  dup:8ce24c33
+    apps/example/global.css:74-95
+    apps/harness/src/global.css:85-106
+    packages/docs-snippets/uniwind/global.css:50-71
+
+     69 lines  2 instances  spread 4  dup:78317c6c
+    packages/docs-snippets/nativewind/lib/theme.ts:8-76
+    packages/docs-snippets/uniwind/lib/theme.ts:20-88
+
+     52 lines  3 instances  spread 7  dup:c77b3abb6f87acd9-r3
+    apps/example/lib/theme.ts:36-87
+    packages/docs-snippets/nativewind/lib/theme.ts:30-76
+    packages/docs-snippets/uniwind/lib/theme.ts:42-88
+
+     27 lines  3 instances  spread 5  dup:c77b3abb6f87acd9-r2
+    apps/harness/tailwind.config.js:11-37
+    apps/harness-nativewind/tailwind.config.js:11-37
+    packages/docs-snippets/nativewind/tailwind.config.js:4-30
+
+     39 lines  3 instances  spread 6  dup:e7489b7a
+    apps/example/global.css:1-39
+    apps/harness/src/global.css:1-36
+    packages/docs-snippets/uniwind/global.css:1-20
+
+     12 lines  2 instances  spread 4  dup:c77b3abb6f87acd9-r1
+    packages/docs-snippets/nativewind/app/_layout.tsx:13-24
+    packages/docs-snippets/uniwind/app/_layout.tsx:13-24
+
+  Duplicate code blocks - https://docs.fallow.tools/explanations/duplication#clone-groups
+
+● Clone families (1 with multiple groups)
+
+  3 groups, 85 lines across apps/example/global.css, apps/harness/src/global.css, packages/docs-snippets/uniwind/global.css
+    → Extract 3 shared clone groups (85 lines) from global.css, global.css, global.css into a shared directory
+
+  Groups of related clones across the same files — https://docs.fallow.tools/explanations/duplication#clone-families
+
+✗ 711 lines (1.3%) duplicated across 14 files (0.02s)
+
+── Styling ────────────────────────────────────────
+  packages/docs-snippets/nativewind/global.css:10  css-duplicate-block  19-declaration block repeated 3 times  (advisory: rules.css-duplicate-block=warn, introduced design-system drift since HEAD)
+  packages/docs-snippets/nativewind/global.css:32  css-duplicate-block  18-declaration block repeated 3 times  (advisory: rules.css-duplicate-block=warn, introduced design-system drift since HEAD)
+  (run `fallow audit --format json` for full styling detail)
+✗ dead code: 105 issues · duplication: 9 clone groups · 23 changed files (1.26s)
+  audit gate excluded 73 inherited findings (run with --gate all to enforce)
+ ELIFECYCLE  Command failed with exit code 1.
