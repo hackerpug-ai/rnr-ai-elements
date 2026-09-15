@@ -121,15 +121,19 @@ function run(label: string, command: string, cwd = REPO_ROOT): CommandRecord {
 }
 
 /** git must be available and the working copy must be the expected source. */
+// The generated evidence tree and .tmp scratch are excluded from BOTH the source
+// diff and the clean-tree gate via a fixed path — they are regenerated output, not
+// source, and the probes exercise this entrypoint against disposable copies under
+// .tmp, so the exclusion cannot be derived from the --evidence argument.
+const EVIDENCE_TREE = 'tests/sprint-05-orient-search/evidence';
 // fallow-ignore-next-line complexity
-function verifySource(source: string, evidence: string): void {
-  const evidenceRel = relative(REPO_ROOT, resolve(evidence)).split(sep).join('/');
+function verifySource(source: string, _evidence: string): void {
   // The SOURCE tree (excluding generated evidence + .tmp scratch) must match the
   // release SHA. HEAD may legitimately be a later evidence-record commit; the source
   // files themselves must not have moved past `source`.
   const sourceDiff = run(
     'git diff --quiet <source> HEAD (excluding evidence + .tmp)',
-    `git diff --quiet ${source} HEAD -- . ":(exclude)${evidenceRel}" ":(exclude).tmp"`,
+    `git diff --quiet ${source} HEAD -- . ":(exclude)${EVIDENCE_TREE}" ":(exclude).tmp"`,
   );
   if (sourceDiff.exit_code !== 0) {
     fail(`source mismatch: the source tree differs from --source ${source}`);
@@ -150,13 +154,13 @@ function verifySource(source: string, evidence: string): void {
       `correction mismatch: HEAD does not contain the reviewed ORI-RN-000 correction ${CORRECTION_COMMIT}`,
     );
   }
-  // Tracked changes only: the evidence directory and .tmp scratch are generated
-  // output (regenerated each run, re-frozen on a legit config change), so they must
-  // not count against a clean SOURCE tree. Exclude both via pathspec; everything
-  // else dirty (uncommitted source / WIP) still refuses.
+  // Tracked changes only: the evidence tree and .tmp scratch are generated output
+  // (regenerated each run, re-frozen on a legit config change), so they must not
+  // count against a clean SOURCE tree. Exclude both via pathspec; everything else
+  // dirty (uncommitted source / WIP) still refuses.
   const status = run(
     'git status --porcelain --untracked-files=no (excluding evidence + .tmp)',
-    `git status --porcelain --untracked-files=no -- . ":(exclude)${evidenceRel}" ":(exclude).tmp"`,
+    `git status --porcelain --untracked-files=no -- . ":(exclude)${EVIDENCE_TREE}" ":(exclude).tmp"`,
   );
   if (status.output && status.output.trim().length > 0) {
     fail(`dirty working tree (tracked changes present):\n${status.output.trim()}`);
