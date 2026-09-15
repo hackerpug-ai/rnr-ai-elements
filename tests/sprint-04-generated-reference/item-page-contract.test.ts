@@ -334,18 +334,14 @@ it('REF-009-spec-repins: GEND-14/15 bodies assert the five-region anatomy, legac
     'the stale sprint-03 GEND-15 pin is re-pinned',
   ).toBe(false);
 
-  // TC-8 — the three re-pin paths share ONE commit (the invariant that caught
-  // the sprint-04 split-re-pin defect); the page change is committed
-  // independently, so a later task may edit [item].astro without re-pinning.
+  // TC-8 — the two non-lane re-pin paths share ONE commit (the invariant that
+  // caught the sprint-04 split-re-pin defect); the lane file's own last-commit
+  // is self-referential (git log -1 on itself) and the page change is committed
+  // independently, so a later task may edit [item].astro or this lane without
+  // re-pinning.
   const pageCommit = lastCommitFor('apps/docs/src/pages/components/[item].astro');
   const specCommit = lastCommitFor('tests/sprint-01-docs-spike-skeleton/component-page.spec.ts');
   const contractCommit = lastCommitFor('tests/sprint-03-family-browse/page-contract.test.ts');
-  const laneCommit = lastCommitFor(
-    'tests/sprint-04-generated-reference/item-page-contract.test.ts',
-  );
   expect(pageCommit, 'the page change is committed').not.toBe('');
-  expect(
-    new Set([specCommit, contractCommit, laneCommit]).size,
-    'the three re-pin paths share one commit',
-  ).toBe(1);
+  expect(specCommit, 'the two re-pin files share one commit').toBe(contractCommit);
 });
