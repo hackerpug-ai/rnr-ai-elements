@@ -122,7 +122,7 @@ function run(label: string, command: string, cwd = REPO_ROOT): CommandRecord {
 
 /** git must be available and the working copy must be the expected source. */
 // fallow-ignore-next-line complexity
-function verifySource(source: string): void {
+function verifySource(source: string, evidence: string): void {
   const head = run('git rev-parse HEAD', 'git rev-parse HEAD').output?.trim();
   if (!head) {
     fail('source check: `git rev-parse HEAD` returned no output — is this a git worktree?');
@@ -146,11 +146,14 @@ function verifySource(source: string): void {
       `correction mismatch: HEAD does not contain the reviewed ORI-RN-000 correction ${CORRECTION_COMMIT}`,
     );
   }
-  // Tracked changes only: the evidence directory is written after this gate and is
-  // untracked at fresh-build time, so it must not count against a clean tree.
+  // Tracked changes only: the evidence directory is generated output (regenerated
+  // each run, re-frozen on a legit config change), so it must not count against a
+  // clean source tree. Exclude it explicitly via pathspec; everything else dirty
+  // (uncommitted source / WIP) still refuses.
+  const evidenceRel = relative(REPO_ROOT, resolve(evidence)).split(sep).join('/');
   const status = run(
-    'git status --porcelain --untracked-files=no',
-    'git status --porcelain --untracked-files=no',
+    'git status --porcelain --untracked-files=no (excluding evidence)',
+    `git status --porcelain --untracked-files=no -- . ":(exclude)${evidenceRel}"`,
   );
   if (status.output && status.output.trim().length > 0) {
     fail(`dirty working tree (tracked changes present):\n${status.output.trim()}`);
@@ -220,7 +223,7 @@ function parseArgs(argv: string[]): CliArgs {
 // fallow-ignore-next-line complexity
 function main(): void {
   const args = parseArgs(process.argv.slice(2));
-  verifySource(args.source);
+  verifySource(args.source, args.evidence);
 
   const manifestPath = join(args.evidence, 'asset-manifest.json');
   const reVerify = existsSync(manifestPath);
