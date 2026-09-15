@@ -72,6 +72,11 @@ const REQUIRED_MANUSCRIPTS = [
   'owns-vs-does-not-own',
 ];
 
+/** The scratch candidate is served on its own port so the real preview (4321) stays
+ * owned by the conversation-source proof; both origins grant clipboard access. */
+const SCRATCH_PREVIEW_PORT = 4322;
+const SCRATCH_PREVIEW_URL = `http://localhost:${SCRATCH_PREVIEW_PORT}`;
+
 type BuildResult = { exit: number; stdout: string; stderr: string };
 
 /** The real README body the fixture copies into scratch collection entries. */
@@ -191,6 +196,35 @@ function expectSchemaFailure(result: BuildResult, id: string, field: string): vo
   const observed = `${result.stdout}\n${result.stderr}`;
   expect(observed, `diagnostic must name the source id "${id}"`).toContain(id);
   expect(observed, `diagnostic must name the offending field "${field}"`).toContain(field);
+}
+
+/**
+ * Write a scratch-only collection-reference MDX entry that imports the existing
+ * CodeBlock component and renders `codeSource` (leading indentation + terminal
+ * newline) through the normal code-rendering path. The MDX carries the code as a
+ * JS string literal (backslash-n escapes) so the evaluated prop equals `codeSource`.
+ */
+function writeMultilineCodeEntry(codeSource: string): void {
+  rmSync(CONTENT_DIR, { recursive: true, force: true });
+  mkdirSync(CONTENT_DIR, { recursive: true });
+  const escaped = codeSource.replace(/\\/g, '\\\\').replace(/\n/g, '\\n');
+  const mdx = [
+    '---',
+    'title: Multiline code reference',
+    'description: source-backed multiline code with boundary whitespace',
+    'section: getting-started',
+    'order: 1',
+    '---',
+    "import CodeBlock from '../../components/CodeBlock.astro';",
+    '',
+    '# Multiline code reference',
+    '',
+    'A code block whose source carries leading indentation and a terminal newline:',
+    '',
+    `<CodeBlock code={"${escaped}"} label="Copy multiline" />`,
+    '',
+  ].join('\n');
+  writeFileSync(join(CONTENT_DIR, 'multiline-code.mdx'), `${mdx.trimEnd()}\n`);
 }
 
 beforeAll(() => {
@@ -461,12 +495,19 @@ test('ORI-AST-001-prose-navigation', { timeout: 240_000 }, () => {
   ).toEqual([]);
 });
 
-// AC-4: themed MDX/code and byte-exact copy (e2e) — the copy correction is proven
-// on the real conversation source + real clipboard; the authored-MDX portion needs
-// manuscripts and reports the same blocker.
+// AC-4: themed MDX/code and byte-exact copy (e2e). The copy correction is proven
+// on the real conversation source + real clipboard, on a source-backed multiline
+// code block through the normal CodeBlock copy path, and on the ordinary install
+// command's idle reset; the authored-MDX themed-rendering portion needs the
+// manuscripts and reports the same blocker as AC-3.
+// Real clipboard/browser orchestration across three copy surfaces — the
+// complexity is inherent browser + subprocess setup, not branching logic.
+// fallow-ignore-next-line complexity
 test('ORI-AST-001-mdx-code-copy', { timeout: 240_000 }, async () => {
-  // The copy correction must preserve the terminal newline in served source.
-  // Build the real app, serve it, and read the real clipboard.
+  const INSTALL_COMMAND =
+    'npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json';
+
+  // --- Part A: conversation source + ordinary install command on the real app. ---
   const preview = spawn(strictPreviewCommand(), {
     shell: true,
     cwd: REPO_ROOT,
@@ -518,6 +559,7 @@ test('ORI-AST-001-mdx-code-copy', { timeout: 240_000 }, async () => {
       const code = page.locator('main section[data-section="source"] rnr-copy-button code').first();
       const displayed = (await code.textContent()) ?? '';
       expect(displayed.endsWith('\n'), 'displayed source carries the terminal newline').toBe(true);
+      expect(displayed, 'displayed source equals the served content').toBe(first.content);
 
       const trigger = page
         .locator('main section[data-section="source"] rnr-copy-button button')
@@ -534,13 +576,49 @@ test('ORI-AST-001-mdx-code-copy', { timeout: 240_000 }, async () => {
       expect(state, 'copy control reaches the copied state').toBe('copied');
       const clipboard = await page.evaluate(() => navigator.clipboard.readText());
 
-      // Byte-exact: the clipboard equals the unnormalized displayed source.
+      // Byte-exact: the clipboard equals the unnormalized displayed source AND the
+      // served content, including the terminal newline.
       expect(clipboard, 'clipboard equals displayed source (terminal newline preserved)').toBe(
         displayed,
       );
+      expect(clipboard, 'clipboard equals the served content byte-for-byte').toBe(first.content);
       expect(clipboard, 'clipboard ends with U+000A').toMatch(/\n$/);
-      expect(sha256(clipboard), 'clipboard SHA-256 equals displayed SHA-256').toBe(
-        sha256(displayed),
+      expect(sha256(clipboard), 'clipboard SHA-256 equals served-content SHA-256').toBe(
+        sha256(first.content),
+      );
+
+      // The ordinary install command: copied text equals the untrimmed command,
+      // the control reaches 'copied', then returns to idle with the original label.
+      const installCode = page.locator(
+        'main section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button code',
+      );
+      const installText = (await installCode.textContent()) ?? '';
+      expect(installText, 'install command displayed untrimmed').toBe(INSTALL_COMMAND);
+
+      const installTrigger = page.locator(
+        'main section[data-section="install"] [role="tabpanel"][data-engine="nativewind"] rnr-copy-button button',
+      );
+      await installTrigger.click();
+      let installState = '';
+      for (let i = 0; i < 40 && installState !== 'copied'; i += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        installState = (await installTrigger.getAttribute('data-state')) ?? '';
+      }
+      expect(installState, 'install control reaches the copied state').toBe('copied');
+      const installClipboard = await page.evaluate(() => navigator.clipboard.readText());
+      expect(installClipboard, 'install clipboard equals the untrimmed command').toBe(
+        INSTALL_COMMAND,
+      );
+
+      // The 2s reset timer returns the control to idle with the original label.
+      let idleState = '';
+      for (let i = 0; i < 60 && idleState !== 'idle'; i += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        idleState = (await installTrigger.getAttribute('data-state')) ?? '';
+      }
+      expect(idleState, 'install control returns to the idle state').toBe('idle');
+      expect((await installTrigger.textContent()) ?? '', 'install label returns to idle').toBe(
+        'Copy',
       );
 
       await context.close();
@@ -549,5 +627,89 @@ test('ORI-AST-001-mdx-code-copy', { timeout: 240_000 }, async () => {
     }
   } finally {
     stopPreview();
+  }
+
+  // --- Part B: a source-backed multiline code block with boundary whitespace in an
+  // isolated collection copy, built through the normal code-rendering path. ---
+  const MULTILINE_CODE = '  indented line one\n  indented line two\n';
+  writeMultilineCodeEntry(MULTILINE_CODE);
+  const build = runBuild();
+  expect(build.exit, 'multiline scratch build exits 0').toBe(0);
+
+  const scratchPreview = spawn(
+    ASTRO_BIN,
+    ['preview', '--host', '127.0.0.1', '--port', String(SCRATCH_PREVIEW_PORT), '--ignore-lock'],
+    {
+      cwd: DOCS_APP_DIR,
+      stdio: 'ignore',
+      env: { ...process.env, ASTRO_PREVIEW_BACKGROUND: '1' },
+    },
+  );
+  const stopScratchPreview = (): void => {
+    try {
+      scratchPreview.kill('SIGTERM');
+    } catch {
+      /* already gone */
+    }
+  };
+  const scratchDeadline = Date.now() + 30_000;
+  for (;;) {
+    try {
+      const probe = await fetch(`${SCRATCH_PREVIEW_URL}/`);
+      if (probe.ok) break;
+    } catch {
+      /* not up yet */
+    }
+    if (Date.now() > scratchDeadline) {
+      stopScratchPreview();
+      throw new Error(`scratch preview at ${SCRATCH_PREVIEW_URL} did not become ready within 30s`);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+
+  try {
+    const browser = await chromium.launch();
+    try {
+      const context = await browser.newContext({ javaScriptEnabled: true });
+      await context.grantPermissions(['clipboard-read', 'clipboard-write'], {
+        origin: SCRATCH_PREVIEW_URL,
+      });
+      const page = await context.newPage();
+
+      await page.goto(`${SCRATCH_PREVIEW_URL}/docs/multiline-code`);
+      await waitForAstroPageLoad(page, '__rnrCopyButtonRegistered');
+
+      const code = page.locator('main[data-pagefind-body] rnr-copy-button code').first();
+      const displayed = (await code.textContent()) ?? '';
+      expect(displayed, 'displayed multiline code equals the source oracle').toBe(MULTILINE_CODE);
+      expect(displayed, 'multiline source keeps leading indentation').toMatch(/^  /);
+      expect(displayed, 'multiline source keeps the terminal newline').toMatch(/\n$/);
+
+      const trigger = page.locator('main[data-pagefind-body] rnr-copy-button button').first();
+      await trigger.click();
+      let state = '';
+      for (let i = 0; i < 40 && state !== 'copied'; i += 1) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        state = (await trigger.getAttribute('data-state')) ?? '';
+      }
+      expect(state, 'multiline copy control reaches the copied state').toBe('copied');
+      const clipboard = await page.evaluate(() => navigator.clipboard.readText());
+
+      expect(clipboard, 'multiline clipboard equals the source oracle byte-for-byte').toBe(
+        MULTILINE_CODE,
+      );
+      expect(sha256(clipboard), 'multiline clipboard SHA-256 equals source SHA-256').toBe(
+        sha256(MULTILINE_CODE),
+      );
+      expect(sha256(displayed), 'multiline displayed SHA-256 equals source SHA-256').toBe(
+        sha256(MULTILINE_CODE),
+      );
+
+      await context.close();
+    } finally {
+      await browser.close();
+    }
+  } finally {
+    stopScratchPreview();
   }
 });
