@@ -40,12 +40,23 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-  return items
-    .filter((entry) => entry.type === 'registry:component')
-    .map((entry) => ({ params: { item: entry.name }, props: { item: entry } }));
+  // All 56 real registry items — 39 registry:component, 11 registry:ui, 6
+  // registry:lib — one reference destination each (ORI-AST-008). The browse
+  // index keeps its own 39-card registry:component membership; this fan-out is
+  // the reference ledger's destination surface, never the browse grid.
+  return items.map((entry) => ({ params: { item: entry.name }, props: { item: entry } }));
 }
 
 const { item } = Astro.props;
+
+/**
+ * The Pagefind category derives from the registry type — never the route text
+ * (ORI-AST-008): registry:component -> "components", registry:ui -> "ui",
+ * registry:lib -> "lib". The chip row keeps its singular replace() form; only
+ * the search metadata pluralizes the component kind.
+ */
+const pagefindCategory =
+  item.type === 'registry:component' ? 'components' : item.type.replace('registry:', '');
 
 /** The source view renders the nativewind form (the served /r default). */
 const DEFAULT_ENGINE = 'nativewind';
@@ -109,7 +120,11 @@ const qrSvg = await QRCode.toString(item.qrDeepLink, { type: 'svg' });
   <Fragment slot="head">
     <meta name="description" content={item.metaDescription} />
   </Fragment>
-  <main class="component-page">
+  <main
+    class="component-page"
+    data-pagefind-body
+    data-pagefind-meta={`category:${pagefindCategory}`}
+  >
     <header class="page-header">
       <p class="breadcrumb">
         <a href="/components">Components</a> <span aria-hidden="true">/</span> {family.title}
@@ -150,10 +165,17 @@ const qrSvg = await QRCode.toString(item.qrDeepLink, { type: 'svg' });
       }
     </section>
 
-    <section data-section="props" aria-labelledby="props-heading">
-      <h2 id="props-heading">Props</h2>
-      <PropsTable rows={item.props} />
-    </section>
+    {
+      // ORI-AST-008: the extractor returns null props for all 17 ui/lib items.
+      // Omit the entire section for those — never invent an empty or fabricated
+      // table. Components (non-null props) keep the landed PropsTable region.
+      item.props && (
+        <section data-section="props" aria-labelledby="props-heading">
+          <h2 id="props-heading">Props</h2>
+          <PropsTable rows={item.props} />
+        </section>
+      )
+    }
 
     <section data-section="theming" aria-labelledby="theming-heading">
       <h2 id="theming-heading">Theming</h2>
