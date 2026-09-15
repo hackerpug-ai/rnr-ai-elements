@@ -1,0 +1,20 @@
+{
+  "task": "ORI-DEP-001",
+  "generated_at": "2026-09-15T00:55:00Z",
+  "worker_name": "rnr-ai-elements-docs",
+  "account_id": "d5110b1895ee190e145c0c8756f49879",
+  "observation": {
+    "command": "pnpm --dir apps/docs exec wrangler deployments list --config wrangler.jsonc --json",
+    "exit_code": 1,
+    "api_code": 10007,
+    "message": "This Worker does not exist on your account.",
+    "interpretation": "Confirmed absent Worker — a valid first-release state. Distinguished from an authentication/authorization/network failure because the request reached the account API and returned the script-not-found code (10007) rather than a 401/403/network error."
+  },
+  "cycle_2_corroboration": {
+    "command": "GET /client/v4/accounts/{account}/workers/scripts (owner-granted User API Token)",
+    "result": "8 worker scripts listed; none named rnr-ai-elements-docs",
+    "custom_domains": "GET /accounts/{account}/workers/domains returned 1 (docs.holocrnlib.com, unrelated to rnraielements.com)"
+  },
+  "deployments": [],
+  "conflicting_ownership": null
+}

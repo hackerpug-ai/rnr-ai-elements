@@ -1,0 +1,27 @@
+{
+  // ORI-DEP-001 — assets-only Workers static-assets deployment for the docs site.
+  // No application entrypoint, no router, no bindings, no Pages configuration.
+  //
+  // account_id (d5110b1895ee190e145c0c8756f49879) and zone_id
+  // (1720eac2fbdd7dc2b975ffdfccbee97f) are VERIFIED identities observed
+  // 2026-09-14/15 via `wrangler whoami` and GET /client/v4/zones?name=
+  // rnraielements.com with the owner-granted User API Token. The zone is
+  // `status: active`, not paused.
+  "name": "rnr-ai-elements-docs",
+  "account_id": "d5110b1895ee190e145c0c8756f49879",
+  "compatibility_date": "2026-09-13",
+  "workers_dev": false,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    {
+      "pattern": "rnraielements.com",
+      "custom_domain": true,
+      "zone_id": "1720eac2fbdd7dc2b975ffdfccbee97f"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "task": "ORI-DEP-001",
+  "phase": "bootstrap",
+  "origin": "https://rnraielements.com",
+  "generated_at": "2026-09-15T03:32:12Z",
+  "release_sha": "10d7f1de11cfba9dab5abd4a3b0601f931ed0c81",
+  "worker_name": "rnr-ai-elements-docs",
+  "domain": "rnraielements.com",
+  "initial_version_id": "2aef7463-0e76-4655-8a67-051bf970f06f",
+  "deployment_id": "3a46d447-ff9d-4353-a097-858497e3ae62",
+  "method": "Trusted HTTPS with real TLS validation (rejectUnauthorized default true), SNI/host = rnraielements.com. Hostname resolved via PUBLIC DNS resolvers (1.1.1.1, 9.9.9.9) because this machine's LOCAL resolver holds a stale negative cache (ENODATA). NO hosts-file override, NO URL rewrite, NO disabled certificate validation.",
+  "dns": {
+    "authoritative_ns": ["etienne.ns.cloudflare.com", "shaz.ns.cloudflare.com"],
+    "resolver_1.1.1.1": {
+      "a": ["104.21.17.250", "172.67.178.234"],
+      "aaaa": ["2606:4700:3033::6815:11fa", "2606:4700:3036::ac43:b2ea"]
+    },
+    "resolver_9.9.9.9": {
+      "a": ["104.21.17.250", "172.67.178.234"],
+      "aaaa": ["2606:4700:3036::ac43:b2ea", "2606:4700:3033::6815:11fa"]
+    },
+    "resolver_1.0.0.1": {
+      "a": ["172.67.178.234", "104.21.17.250"],
+      "aaaa": ["2606:4700:3036::ac43:b2ea", "2606:4700:3033::6815:11fa"]
+    },
+    "resolver_8.8.8.8": "connection timed out (LOCAL network reachability issue, not a public-DNS fact; corroborated by 1.1.1.1, 9.9.9.9, 1.0.0.1 all returning the Cloudflare IPs)",
+    "local_resolver": "ENODATA (stale negative cache) — a LOCAL artifact, superseded by the public resolvers above"
+  },
+  "observations": {
+    "/": { "status": 200, "bytes": 40522, "content_type": "text/html", "note": "built docs (HTML)" },
+    "/r/nativewind/conversation.json": {
+      "status": 200,
+      "bytes": 9226,
+      "sha256": "570aba4ff5db35798a0842dcda7514e8480c5da749c2d72a81f815936a8706a7",
+      "byte_match": true,
+      "schema": { "name": "conversation", "type": "registry:component", "files_non_empty": true, "abs_https_deps": true, "engine_correct": true }
+    },
+    "/r/uniwind/conversation.json": {
+      "status": 200,
+      "bytes": 9205,
+      "sha256": "ccf1b495f315a29bab040bbc9cc16faf7640edabd99158552a57bdf7be0a2139",
+      "byte_match": true,
+      "schema": { "name": "conversation", "type": "registry:component", "files_non_empty": true, "abs_https_deps": true, "engine_correct": true }
+    },
+    "/r/nativewind/prompt-input.json": {
+      "status": 200,
+      "bytes": 47060,
+      "sha256": "f1bae49c2f3125d21aa0711e563f8be60f3388fdf09c24811c03a413ee8f4d73",
+      "byte_match": true
+    },
+    "/r/uniwind/kbd.json": {
+      "status": 200,
+      "bytes": 1556,
+      "sha256": "23399d664811566d14639cf70de166bfcae4e7bde019d179b13fe5b17b753a3c",
+      "byte_match": true
+    },
+    "/r/nativewind/registry.json": {
+      "status": 200,
+      "bytes": 5899,
+      "sha256": "e8d64536b72fc72f91c65acd35042e59a82d710e85d00afcf89e0fbcee9e6f5a",
+      "byte_match": true
+    },
+    "/r/uniwind/registry.json": {
+      "status": 200,
+      "bytes": 5899,
+      "sha256": "e8d64536b72fc72f91c65acd35042e59a82d710e85d00afcf89e0fbcee9e6f5a",
+      "byte_match": true
+    },
+    "/components": {
+      "status": 200,
+      "bytes": 58778,
+      "content_type": "text/html",
+      "sha256": "e4c442118f5f0977f637727a0e46b916177644b0c6b90b3005d64155953c172a",
+      "byte_match": true
+    }
+  },
+  "bootstrap_scope": "Bootstrap phase only: the two canonical conversation URLs plus the registry index, prompt-input, kbd, and the existing /components page. This does NOT certify orientation, search, custom 404, Quickstart, or native/provider acceptance (owned by later tasks)."
+}
