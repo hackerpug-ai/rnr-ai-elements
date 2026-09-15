@@ -54,12 +54,17 @@ this FIX resolves the *runtime* failure that the now-successful bundle exposed.
 
 **RED (the observed nativewind native runtime failure — replay, not a source-absence statement):**
 
-Prepare a clean nativewind consumer (copy `packages/docs-snippets/nativewind/` outside the monorepo,
-run the committed recipe `bash packages/docs-snippets/commands/nativewind.sh` with cwd = the copy, which
-installs the live `rnraielements.com/r/nativewind/*` items including the unfixed input-group), open it
-in Expo Go on a reserved iOS simulator / Android emulator, then focus the composer and attempt Send.
-Expected (RED): `Couldn't find a navigation context` in the Metro log and the `Send message` button
-absent from the accessibility hierarchy. This is the exact failure ORI-RN-003 recorded in
+Serve a PRE-FIX snapshot of `public/r/nativewind` from this commit (or the pre-fix commit) on a local
+port — `python3 -m http.server <port>` from `public/r/` or `npx http-server public/r` — then prepare a
+clean nativewind consumer (copy `packages/docs-snippets/nativewind/` outside the monorepo, run the
+committed recipe `bash packages/docs-snippets/commands/nativewind.sh` with cwd = the copy, but install
+from `http://localhost:<port>/nativewind/…` instead of the live `rnraielements.com/r/nativewind/…`
+host — substitute the host in a scratch copy of the recipe, never the committed file). Open it in Expo
+Go on a reserved iOS simulator / Android emulator, focus the composer, and attempt Send. Expected
+(RED): `Couldn't find a navigation context` in the Metro log and the `Send message` button absent from
+the accessibility hierarchy. Pinning the RED to a locally-served pre-fix snapshot keeps it reproducible
+after this FIX's fixed `public/r` is deployed — the live registry will then serve the FIXED item, so a
+live-host replay would no longer fail. This is the exact failure ORI-RN-003 recorded in
 `.tmp/ORI-RN-003/cycle-2/` on `kb-run-sprint/sprint-05-orient-search/ORI-RN-003`; the authoritative
 replay is ORI-RN-003's own harness
 (`tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind
@@ -71,10 +76,11 @@ replay is ORI-RN-003's own harness
    exits 0 (the shipped registry is fresh).
 2. The composer renders and the send button is tappable on BOTH nativewind iOS and Android (light+dark),
    with NO regression on uniwind iOS/Android and nativewind/uniwind web. Prove it with the harness
-   sign-off gate (`pnpm --filter harness storybook:device` for uniwind; `pnpm --filter harness-nativewind
-   storybook:device` for nativewind; `pnpm storybook:web`) after the harness/example copies below are
-   updated in lockstep, plus the disposable-consumer replay above now passing (no `Couldn't find a
-   navigation context`, `Send message` present and tappable).
+   sign-off gate (`pnpm --filter harness storybook:device` for uniwind device; `pnpm --filter
+   harness-nativewind storybook:device` for nativewind device; `pnpm storybook:web` for uniwind web; and
+   `pnpm --filter harness storybook:web:nativewind` for nativewind web) after the harness/example copies
+   below are updated in lockstep, plus the disposable-consumer replay above now passing (no
+   `Couldn't find a navigation context`, `Send message` present and tappable).
 3. `pnpm typecheck` clean and `pnpm lint` clean.
 
 ## Scope
@@ -110,9 +116,26 @@ replay is ORI-RN-003's own harness
   `cssInterop`/`withUniwind` call, no engine-only prop (the `placeholderTextColor` comment at line 55
   documents why engine-only props are banned here). Use the plain RN `style` prop + `useColorScheme()`
   (the file's own precedent at line 65) or a named theme token — NOT an engine wrapper.
+- The replacement literal MUST be `hsl(...)` / `hsla(...)` form ONLY. `scripts/check-tokens.ts` (CI
+  `pnpm check:tokens`) grants this file exactly one exception —
+  `TOKEN_EXCEPTIONS` for `input-group.tsx` carries `['#737373', '#a3a3a3', 'hsl(']` — so an `hsl(...)`
+  literal passes, but `rgb(...)`, `rgba(...)`, `oklch(...)`, and any hex OTHER than the two placeholder
+  parity values `#737373`/`#a3a3a3` FAIL the gate. The gate scans COMMENTS too, so do not name a hex /
+  rgb / oklch value in a comment (a comment must use `hsl(...)` or the two sanctioned hex values only).
+- The replacement style MUST be a HOISTED object or hoisted ternary, NOT an inline literal.
+  `scripts/check-contract.ts` (CI `pnpm check:contract`) runs the styling contract's
+  `inline-static-style-literal` rule, which globs `packages/registry/src/**/*.tsx` (no exclude) and
+  forbids `style={{ … backgroundColor|borderColor|borderRadius|color|fontSize|padding|margin|flex : … }}`.
+  Compute the wrapper style outside the JSX (`const wrapperStyle = focused ? focusedStyle : undefined;`
+  then `style={wrapperStyle}`) so the replacement is contract-legal; an inline
+  `style={{ backgroundColor: … }}` fails CI.
 - If you add a token, you touch the theme files (`global.css`, `theme.ts`, `tailwind.config.js`) which
   are NOT in WRITE-ALLOWED — so a token-based fix requires either a pre-existing token or the
   `useColorScheme()` + literal idiom. Prefer the literal idiom (no new theme surface).
+- Do NOT drift the placeholder line. The styling contract's `input-group-placeholder-parity` mustInclude
+  check pins line 65 byte-exact (`placeholderTextColor={scheme === 'dark' ? 'hsl(0 0% 63.9%)' :
+  'hsl(0 0% 45.1%)'}`) — if that line changes shape or value, `pnpm check:contract` fails. Leave it
+  untouched.
 - The three harness/example copies are HAND-MAINTAINED (verified byte-identical to the registry source
   after the `@/registry/{engine}/` → `@/` alias rewrite; no sync script exists). They must be updated in
   lockstep so the Storybook/example surfaces render the same fixed component. Do NOT regenerate them by
@@ -139,14 +162,16 @@ replay is ORI-RN-003's own harness
 
   GIVEN `packages/registry/src/components/ui/input-group.tsx` (lines 34–35 carrying
   `'dark:bg-input/30'` and `focused && 'border-ring ring-2 ring-ring/50'`) WHEN those two classes are
-  replaced with a plain-RN `style`-driven equivalent (or a named token) preserving the 30% dark-input
-  background and 50% ring opacity THEN `git diff packages/registry/src/components/ui/input-group.tsx`
-  shows only that change, the wrapper no longer contains any `*-color/opacity` shorthand, and
-  `pnpm typecheck` + `pnpm lint` exit 0.
+  replaced with a hoisted `style`-driven equivalent (a `const` object / ternary passed as
+  `style={wrapperStyle}`, computed from `useColorScheme()` + `focused`, using `hsl(...)` literals only)
+  — or a named theme token — preserving the 30% dark-input background and 50% ring opacity THEN
+  `git diff packages/registry/src/components/ui/input-group.tsx` shows only that change, the wrapper no
+  longer contains any `*-color/opacity` shorthand, and `pnpm typecheck` + `pnpm lint` +
+  `pnpm check:tokens` + `pnpm check:contract` all exit 0.
 
-  FLOW_REF: None · TEST_TIER: integration · verification_service: real `git diff` + tsc + biome
-  VERIFY: `git diff packages/registry/src/components/ui/input-group.tsx && pnpm typecheck && pnpm lint`
-  TEST_FILE: packages/registry/src/components/ui/input-group.tsx · TEST_FUNCTION: (source change; the scoped diff + typecheck/lint are the assertions)
+  FLOW_REF: None · TEST_TIER: integration · verification_service: real `git diff` + tsc + biome + token gate + contract gate
+  VERIFY: `git diff packages/registry/src/components/ui/input-group.tsx && pnpm typecheck && pnpm lint && pnpm check:tokens && pnpm check:contract`
+  TEST_FILE: packages/registry/src/components/ui/input-group.tsx · TEST_FUNCTION: (source change; the scoped diff + typecheck/lint/tokens/contract are the assertions)
 
 **AC-2: the shipped registry and the three hand-maintained copies are in sync with the source**
 
@@ -173,15 +198,18 @@ replay is ORI-RN-003's own harness
   `Couldn't find a navigation context` and the send button is absent.
 
   FLOW_REF: None · TEST_TIER: e2e · verification_service: real Expo Go (iOS + Android) via the harness sign-off and/or ORI-RN-003's on-branch proof harness
-  VERIFY: `pnpm --filter harness storybook:device` + `pnpm --filter harness-nativewind storybook:device` + `pnpm storybook:web`; the authoritative 6-leg proof is `tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind --platforms ios,android,web` (ORI-RN-003's branch), re-run by ORI-RN-003 after this FIX's `public/r` is deployed
+  VERIFY: `pnpm --filter harness storybook:device` + `pnpm --filter harness-nativewind storybook:device` + `pnpm storybook:web` (uniwind web) + `pnpm --filter harness storybook:web:nativewind` (nativewind web); the authoritative 6-leg proof is `tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind --platforms ios,android,web` (ORI-RN-003's branch), re-run by ORI-RN-003 after this FIX's `public/r` is deployed
   TEST_FILE: (real-device Maestro/Storybook session) · TEST_FUNCTION: (composer render + send tap, documented in evidence)
 
 ### TEST CRITERIA
 
 - TC-1 → AC-1: `git diff packages/registry/src/components/ui/input-group.tsx` touches only lines 34–35
-  (plus any adjacent `style`/`useColorScheme` wiring the replacement requires); no `bg-input/`, no
+  (plus any adjacent hoisted `style`/`useColorScheme` wiring the replacement requires); no `bg-input/`, no
   `ring-ring/` remain; no other component file changes.
-- TC-2 → AC-1: `pnpm typecheck` exits 0; `pnpm lint` (biome) exits 0.
+- TC-2 → AC-1: `pnpm typecheck` exits 0; `pnpm lint` (biome) exits 0; `pnpm check:tokens` exits 0 (the
+  replacement literal is `hsl(...)` only, no hex/rgb/oklch even in comments); `pnpm check:contract`
+  exits 0 (the replacement is a hoisted object/ternary, not an inline `style={{ … color }}`, and the
+  `input-group-placeholder-parity` line 65 is untouched).
 - TC-3 → AC-2: `pnpm registry:build && pnpm check:registry` exits 0; the two `input-group.json` differ
   from HEAD only in the embedded `content` of the `input-group.tsx` file (no manifest metadata drift).
 - TC-4 → AC-2: each of the three harness/example copies equals `sed 's|@/registry/{engine}/|@/|g'` of the
@@ -206,6 +234,8 @@ replay is ORI-RN-003's own harness
 
 - typecheck: `pnpm typecheck`
 - lint: `pnpm lint`
+- tokens: `pnpm check:tokens`
+- contract: `pnpm check:contract`
 - registry: `pnpm registry:build && pnpm check:registry`
 
 ### DEPENDENCIES
@@ -229,10 +259,17 @@ replay is ORI-RN-003's own harness
 
 ### CODING STANDARDS
 
-Keep the existing `cn(...)` composition and `useColorScheme()`/literal idiom style already in the file.
-If using a `style` object, add a comment mirroring the placeholder note at line 55: the literals are the
-`--color-input` / `--color-ring` token values at 30% / 50% opacity, and they change together with the
-theme. Do not introduce a new dependency, a new hook file, or an engine wrapper.
+Keep the existing `cn(...)` composition and `useColorScheme()` idiom already in the file. Compute the
+wrapper style OUTSIDE the JSX as a hoisted object/ternary (`const wrapperStyle = scheme === 'dark' ?
+{ backgroundColor: 'hsl(0 0% 14.9% / 0.3)' } : undefined;` … then `style={wrapperStyle}`) — never an
+inline `style={{ backgroundColor: … }}`, which trips the styling contract's
+`inline-static-style-literal` rule. Express every raw color as `hsl(...)`/`hsla(...)` (the sole form
+`check:tokens` permits for this file); do NOT write `#hex`, `rgb(...)`, `rgba(...)` or `oklch(...)` —
+not even in a comment (the token gate scans comments). The literals are the `--color-input` /
+`--color-ring` token values at 30% / 50% opacity and change together with the theme; state that in a
+comment that itself uses only `hsl(...)` / the two sanctioned hex values. Do not introduce a new
+dependency, a new hook file, or an engine wrapper, and leave the `placeholderTextColor` line 65
+byte-exact.
 
 ## OPEN QUESTIONS (stated, not resolved here)
 
@@ -247,3 +284,24 @@ theme. Do not introduce a new dependency, a new hook file, or an engine wrapper.
   NavigationContainer is an upstream nativewind bug, not explainable from this repo. The RED is scoped
   to the OBSERVED runtime failure + class pattern; the causal mechanism is cited from
   nativewind/nativewind#1536, not re-derived here.
+
+## Amendments
+
+- Cycle-2 remediation (independent reviewer NEEDS_FIXES, DOC-1/DOC-2/DOC-3/DOC-4):
+  - DOC-1 (token law) — added `tokens: pnpm check:tokens` to VERIFICATION GATES, AC-1's VERIFY, and
+    TC-2, and constrained the replacement literal to `hsl(...)`/`hsla(...)` only: `scripts/check-tokens.ts`
+    grants `input-group.tsx` exactly `TOKEN_EXCEPTIONS = ['#737373', '#a3a3a3', 'hsl(']`, so hex other
+    than those two parity values, `rgb(...)`, `rgba(...)`, and `oklch(...)` fail — including inside
+    comments, which the gate scans by design.
+  - DOC-2 (styling contract) — added `contract: pnpm check:contract` to VERIFICATION GATES and AC-1's
+    VERIFY, required a HOISTED `style` object/ternary (the contract's `inline-static-style-literal` rule
+    forbids inline `style={{ backgroundColor|borderColor|… }}`), and named the
+    `input-group-placeholder-parity` mustInclude check that pins line 65 byte-exact so the placeholder
+    line must not drift.
+  - DOC-3 (web leg coverage) — added `pnpm --filter harness storybook:web:nativewind` (nativewind web)
+    to AC-3's VERIFY alongside `pnpm storybook:web` (uniwind web), which alone resolves to the uniwind
+    harness and would leave the nativewind web leg unproven.
+  - DOC-4 (RED durability) — pinned the RED replay to a locally-served pre-fix snapshot of
+    `public/r/nativewind` (install from `http://localhost:<port>/nativewind/…`) instead of the live
+    `rnraielements.com` host, so the RED remains reproducible after the fixed `public/r` is deployed.
+  - The verified defect location, diagnosis, honest scoping, and WRITE-ALLOWED are otherwise unchanged.
