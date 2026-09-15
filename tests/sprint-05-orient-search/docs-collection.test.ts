@@ -682,7 +682,7 @@ test('ORI-AST-001-mdx-code-copy', { timeout: 240_000 }, async () => {
       const code = page.locator('main[data-pagefind-body] rnr-copy-button code').first();
       const displayed = (await code.textContent()) ?? '';
       expect(displayed, 'displayed multiline code equals the source oracle').toBe(MULTILINE_CODE);
-      expect(displayed, 'multiline source keeps leading indentation').toMatch(/^  /);
+      expect(displayed, 'multiline source keeps leading indentation').toMatch(/^ {2}/);
       expect(displayed, 'multiline source keeps the terminal newline').toMatch(/\n$/);
 
       const trigger = page.locator('main[data-pagefind-body] rnr-copy-button button').first();
