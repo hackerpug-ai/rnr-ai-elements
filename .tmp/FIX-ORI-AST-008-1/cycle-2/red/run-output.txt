@@ -1,0 +1,37 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-AST-008-1-impl
+
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts (4 tests | 1 failed) 221ms
+   × REF-009-spec-repins: GEND-14/15 bodies assert the five-region anatomy, legacy anchors retained, sha256 pins fresh, re-pins share the commit 191ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/item-page-contract.test.ts > REF-009-spec-repins: GEND-14/15 bodies assert the five-region anatomy, legacy anchors retained, sha256 pins fresh, re-pins share the commit
+AssertionError: the three re-pin paths share one commit: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:350:5
+    348|     new Set([specCommit, contractCommit, laneCommit]).size,
+    349|     'the three re-pin paths share one commit',
+    350|   ).toBe(1);
+       |     ^
+    351| });
+    352|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  19:20:08
+   Duration  386ms (transform 32ms, setup 0ms, import 37ms, tests 221ms, environment 0ms)
+
+EXIT=1

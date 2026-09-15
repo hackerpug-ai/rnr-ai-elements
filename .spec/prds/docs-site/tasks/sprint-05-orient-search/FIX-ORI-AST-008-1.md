@@ -16,9 +16,10 @@
 Re-pin the REF-009 TC-8 "re-pins share the page commit" clause in
 `tests/sprint-04-generated-reference/item-page-contract.test.ts` (~lines 337-350) so it no
 longer requires `apps/docs/src/pages/components/[item].astro` to share a last-commit hash with
-the three sprint-04 re-pin paths. The three re-pin files still must share ONE commit among
-themselves (the invariant that caught the real sprint-04 split-re-pin defect stays); the
-`[item].astro` clause becomes a non-empty committed-SHA existence check only.
+the sprint-04 re-pin paths. The two non-lane re-pin files still must share ONE commit
+(`specCommit === contractCommit`); the lane file's own last-commit is self-referential and
+moves on every lane edit, so it cannot join a stable shared-commit invariant. The `[item].astro`
+clause becomes a non-empty committed-SHA existence check only.
 
 ## Why
 
@@ -42,8 +43,8 @@ pnpm exec vitest run tests/sprint-04-generated-reference/item-page-contract.test
 ```
 
 Exits 0 (4/4 passed) on the candidate. RED before the fix: the same command exits 1 on the
-commit-identity assertion (`the re-pins share the page commit`). The three re-pin files must
-still assert one shared commit; only the `[item].astro` equality is relaxed.
+commit-identity assertion (`the re-pins share the page commit`). The two non-lane re-pin files
+must still assert one shared commit; only the `[item].astro` equality is relaxed.
 
 ## Scope
 
@@ -55,14 +56,16 @@ still assert one shared commit; only the `[item].astro` equality is relaxed.
 
 - The ONLY change is the commit-identity clause (~lines 337-350). Keep
   `expect(pageCommit, 'the page change is committed').not.toBe('')` byte-identical; replace ONLY
-  the `.toEqual([pageCommit, pageCommit, pageCommit])` equality with an assertion that the three
-  re-pin paths share one commit (e.g. `expect(new Set([specCommit, contractCommit, laneCommit]).size).toBe(1)`),
+  the `.toEqual([pageCommit, pageCommit, pageCommit])` equality with an assertion that the two
+  non-lane re-pin files share one commit (`expect(specCommit, 'the two re-pin files share one commit').toBe(contractCommit)`),
   and update the surrounding comment to state the new intent.
 - Extend-never-delete: no other assertion in the file may be weakened, reworded to a weaker form,
   or deleted. The sha256 body pins (lines 320-327), the anatomy/region assertions (TC-1..TC-7),
   and every other expect stay byte-for-byte.
-- The three re-pin files MUST still share one commit — that is the invariant that caught the real
-  sprint-04 split-re-pin defect, and relaxing it to a no-op is a defect.
+- The two non-lane re-pin files MUST still share one commit (`specCommit === contractCommit`) — that
+  is the invariant that caught the real sprint-04 split-re-pin defect, and relaxing it to a no-op
+  is a defect. The lane file's own last-commit is self-referential and must NOT be part of the
+  invariant (it moves on every lane edit by construction).
 - Do NOT edit `apps/docs/src/pages/components/[item].astro`, the three re-pin files, or any other
   file. This FIX touches only the test file's TC-8 clause plus its evidence dir.
 - Recompute nothing that is already green: the sha256 pins at 320-327 are correct on `main` and on
@@ -77,13 +80,14 @@ still assert one shared commit; only the `[item].astro` equality is relaxed.
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
-**AC-1: the relaxed clause passes on the candidate and keeps the three-re-pin invariant**
+**AC-1: the relaxed clause passes on the candidate and keeps the re-pin invariant**
 
-  GIVEN the merged candidate (ORI-AST-008's `[item].astro` edit at `f05d82c`, the three re-pin files at `b70a5c4`) WHEN
+  GIVEN the merged candidate (ORI-AST-008's `[item].astro` edit at `f05d82c`, the two non-lane re-pin files at `b70a5c4`) WHEN
   `pnpm exec vitest run tests/sprint-04-generated-reference/item-page-contract.test.ts` runs THEN it exits 0 (4/4 passed):
-  `pageCommit` is a non-empty committed SHA (existence check retained), the three re-pin paths share one commit among
-  themselves, and every other assertion (anatomy regions, sha256 pins, no-clipping, seams, qr, pager) is byte-identical to
-  the pre-fix file.
+  `pageCommit` is a non-empty committed SHA (existence check retained), `specCommit === contractCommit` (the two non-lane
+  re-pin files share one commit — the lane file's last-commit is self-referential via `git log -1` on itself, so it moves on
+  every lane edit and cannot join the invariant), and every other assertion (anatomy regions, sha256 pins, no-clipping,
+  seams, qr, pager) is byte-identical to the pre-fix file.
 
   FLOW_REF: None · TEST_TIER: unit · verification_service: real local `git log` + vitest
   VERIFY: `pnpm exec vitest run tests/sprint-04-generated-reference/item-page-contract.test.ts`
@@ -104,7 +108,7 @@ still assert one shared commit; only the `[item].astro` equality is relaxed.
 ### TEST CRITERIA
 
 - TC-1 → AC-1: `pnpm exec vitest run tests/sprint-04-generated-reference/item-page-contract.test.ts` exits 0 (4/4 passed) on the candidate; the diff touches only the TC-8 clause (+ comment) and evidence.
-- TC-2 → AC-1: `git diff` on the test file shows the three-re-pin `Set(...).size === 1` assertion and the retained `pageCommit ... not.toBe('')`; the sha256 pins at lines 320-327 are unchanged.
+- TC-2 → AC-1: `git diff` on the test file shows the `specCommit === contractCommit` assertion and the retained `pageCommit ... not.toBe('')`; the sha256 pins at lines 320-327 are unchanged.
 - TC-3 → AC-2: the mutation run (old equality restored in a scratch copy) exits 1 naming `the re-pins share the page commit`; evidence saved under `tests/sprint-05-orient-search/evidence/FIX-ORI-AST-008-1/`.
 
 ### SCOPE (file-level write permissions)
@@ -132,4 +136,8 @@ still assert one shared commit; only the `[item].astro` equality is relaxed.
 
 ### CODING STANDARDS
 
-Keep the clause's comment style; in one line state that the three re-pin paths share one commit and that later `[item].astro` edits move the page commit independently.
+Keep the clause's comment style; in one line state that the two non-lane re-pin files share one commit and that later `[item].astro` edits move the page commit independently.
+
+## Amendments
+
+- Cycle-2 remediation: AC-1 invariant reduced to `specCommit === contractCommit` per ghactions-reviewer cycle-1 finding (lane-file self-reference).

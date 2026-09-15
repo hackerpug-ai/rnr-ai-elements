@@ -1,0 +1,14 @@
+{
+  "task": "FIX-ORI-AST-008-1",
+  "ac": "AC-2",
+  "cycle": 2,
+  "mutation": "re-introduce the ORIGINAL .toEqual([pageCommit, pageCommit, pageCommit]) equality (re-adding the laneCommit computation) in the fixed file",
+  "result": "1 failed | 3 passed — AssertionError at item-page-contract.test.ts:346 'the re-pins share the page commit: expected [ …(3) ] to deeply equal [ …(3) ]'",
+  "mutation_exit_code": 1,
+  "restore": {
+    "sha256_before_fix": "c2233f9fe70e1738e01baae0aece1d42bcdee0a3ba0d56b042ef7b8cafd2b30d",
+    "sha256_after_restore": "c2233f9fe70e1738e01baae0aece1d42bcdee0a3ba0d56b042ef7b8cafd2b30d",
+    "byte_exact": true
+  },
+  "captured_at": "2026-09-14T19:25:31Z"
+}
