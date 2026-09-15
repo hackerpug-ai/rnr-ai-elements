@@ -123,12 +123,16 @@ function run(label: string, command: string, cwd = REPO_ROOT): CommandRecord {
 /** git must be available and the working copy must be the expected source. */
 // fallow-ignore-next-line complexity
 function verifySource(source: string, evidence: string): void {
-  const head = run('git rev-parse HEAD', 'git rev-parse HEAD').output?.trim();
-  if (!head) {
-    fail('source check: `git rev-parse HEAD` returned no output — is this a git worktree?');
-  }
-  if (head !== source) {
-    fail(`source mismatch: HEAD is ${head}, but --source names ${source}`);
+  const evidenceRel = relative(REPO_ROOT, resolve(evidence)).split(sep).join('/');
+  // The SOURCE tree (excluding generated evidence + .tmp scratch) must match the
+  // release SHA. HEAD may legitimately be a later evidence-record commit; the source
+  // files themselves must not have moved past `source`.
+  const sourceDiff = run(
+    'git diff --quiet <source> HEAD (excluding evidence + .tmp)',
+    `git diff --quiet ${source} HEAD -- . ":(exclude)${evidenceRel}" ":(exclude).tmp"`,
+  );
+  if (sourceDiff.exit_code !== 0) {
+    fail(`source mismatch: the source tree differs from --source ${source}`);
   }
   const isDescendant = run(
     'git merge-base --is-ancestor base HEAD',
@@ -150,7 +154,6 @@ function verifySource(source: string, evidence: string): void {
   // output (regenerated each run, re-frozen on a legit config change), so they must
   // not count against a clean SOURCE tree. Exclude both via pathspec; everything
   // else dirty (uncommitted source / WIP) still refuses.
-  const evidenceRel = relative(REPO_ROOT, resolve(evidence)).split(sep).join('/');
   const status = run(
     'git status --porcelain --untracked-files=no (excluding evidence + .tmp)',
     `git status --porcelain --untracked-files=no -- . ":(exclude)${evidenceRel}" ":(exclude).tmp"`,
