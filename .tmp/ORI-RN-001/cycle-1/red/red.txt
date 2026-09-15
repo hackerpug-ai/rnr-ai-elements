@@ -1,0 +1,28 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-001
+
+ ❯ tests/sprint-05-orient-search/quickstart-consumer-install.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/quickstart-consumer-install.test.ts [ tests/sprint-05-orient-search/quickstart-consumer-install.test.ts ]
+Error: Cannot find module './support/quickstart-consumer.ts' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-001/tests/sprint-05-orient-search/quickstart-consumer-install.test.ts
+ ❯ tests/sprint-05-orient-search/quickstart-consumer-install.test.ts:18:1
+     16|  */
+     17| import { afterAll, beforeAll, expect, it } from 'vitest';
+     18| import {
+       | ^
+     19|   REPO_ROOT,
+     20|   cleanupConsumer,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  23:12:36
+   Duration  103ms (transform 15ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
