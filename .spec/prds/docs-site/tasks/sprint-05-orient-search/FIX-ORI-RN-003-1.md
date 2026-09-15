@@ -2,7 +2,9 @@
 
 # FIX-ORI-RN-003-1: add react-native-css-interop@0.2.6 as a direct dependency of the nativewind consumer template
 
-> Status: Backlog
+> Status: ✅ Completed
+
+Commit: 6a2dd5413268895190ca06266693fc075ca33a1a
 
 > Assignee: react-native-reusables-implementer (implementer) · react-native-reusables-reviewer (reviewer)
 > Priority: P1 · Points: 1 · Type: FIX · Wave: C (unblocks the ORI-RN-003 commit)
@@ -201,3 +203,9 @@ touch `devDependencies`.
     template/control package.json, and `support/quickstart-consumer.ts`), with a note naming the
     branch-qualified finding source.
   - The verified diagnosis and the one-line dependency change are unchanged.
+
+## Handoff
+
+```json
+{"task": "FIX-ORI-RN-003-1", "commit_sha": "6a2dd5413268895190ca06266693fc075ca33a1a", "done": "Added the single pinned dependency \"react-native-css-interop\": \"0.2.6\" to packages/docs-snippets/nativewind/package.json and proved RED→GREEN via a real copy-outside-monorepo consumer bundling run (expo export --platform web: exit 1 'Unable to resolve react-native-css-interop/jsx-runtime' → exit 0, 3083 modules, css-interop hoisted at 0.2.6), with the uniwind template and repo-root pnpm-lock.yaml byte-unchanged.", "deviations": ["The contract's literal proof command `cp -R packages/docs-snippets/nativewind/.` omits the shared/ overlay that app/index.tsx imports, so a clean GREEN is unreachable via that literal path; I followed ORI-RN-003's prepareConsumer order instead (copy the 12 template files → run the verbatim recipe → THEN overlay app/index.tsx + shared/*).", "Evidence was committed under .tmp/FIX-ORI-RN-003-1/cycle-1/{red,green}/ per the task-level instruction, not under tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-1/ as TC-3 names it."], "concerns": ["The recipe runs `pnpm exec tsc --noEmit` under set -euo pipefail, so if app/index.tsx is copied BEFORE the recipe runs, tsc fails on the unresolved @/shared/quickstart-screen import and aborts — the entrypoint+shared overlay must always follow the recipe."], "findings": ["Hoisting confirmed: pre-fix pnpm nests react-native-css-interop@0.2.6 under node_modules/.pnpm/nativewind@4.2.6_…/node_modules/ and never hoists it; post-fix it is hoisted to the consumer root at exactly 0.2.6 (npm latest is 0.2.7, which nativewind@4.2.6 does not pin).", "The bundling proof requires the overlay-order preparation; ORI-RN-001's quickstart-consumer.ts copies only the 12 template files and only typechecks, so a bundling re-run must use ORI-RN-003's native-session.ts prepareConsumer.", "biome.json's includes do not match packages/docs-snippets/** so biome ci on the template reports no files processed; the effective lint gate is pnpm lint (biome ci .)."], "scope_impact": [{"target": "ORI-RN-003", "found": "The three nativewind legs now bundle because the direct dep hoists react-native-css-interop@0.2.6 to the consumer root; its harness already overlays entrypoint+shared after the recipe.", "change": "Re-run the existing quickstart-proof.test.ts matrix as-is; the recorded bundle RED should now pass (it did for nativewind/web; ios/android are blocked by a separate registry defect)."}, {"target": "ROADMAP", "found": "packages/docs-snippets/{nativewind,uniwind} are standalone consumer scaffolds, not pnpm workspace members, so their deps resolve only in a copied consumer and never affect the repo-root lockfile.", "change": "Roadmap note: (a) any template dependency edit must be proven via the copy-outside-monorepo recipe + expo export bundling path, never a root-lockfile diff; (b) biome/fallow intentionally exclude packages/docs-snippets/**."}], "feedback": []}
+```
