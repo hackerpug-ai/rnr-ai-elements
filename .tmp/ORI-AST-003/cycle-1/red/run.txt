@@ -1,0 +1,26 @@
+ORI-AST-003 — cycle-1 RED (pre-implementation baseline dist at head 4e1b209)
+
+Three lanes, all observed failing before any product edit:
+
+1. token-map.test.ts (vitest, TC-5)
+   command: pnpm exec vitest run tests/sprint-05-orient-search/token-map.test.ts
+   observed: "Cannot find module '../../scripts/docs-data/token-map'" — the
+   extractor module does not exist yet (module-absent RED, not an assertion
+   failure; the functional RED for this lane is the missing derivation).
+
+2. FLOW-SHELL-01-theme-toggle-persisted-flash-free (playwright, AC-1/3/4)
+   command: pnpm exec playwright test ... --grep FLOW-SHELL-01-theme-toggle-persisted-flash-free
+   observed: "the TokenTable renders at least ten semantic rows — Received: 0".
+   The /docs/theming prose route renders no tr[data-token] rows; inherited
+   theme-toggle behavior (light/dark classes, storage, scheme, canvas) is
+   already green from ORI-AST-002 and is NOT the failing surface.
+
+3. FLOW-SHELL-02-first-visit-prefers-dark-no-flash (playwright, AC-2)
+   command: pnpm exec playwright test ... --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+   observed: "/docs/theming code-background row reads oklch(0.235 0 0) — Received ''".
+   All three cold routes already paint dark before first paint (inherited
+   ORI-AST-002 pre-paint script); only the code-background token row is absent.
+
+Canonical gate RED captured by run_flow.py --expect red into:
+  tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red
+  tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/proof.red
