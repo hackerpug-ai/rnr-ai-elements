@@ -1,0 +1,134 @@
+{
+  "task_id": "ORI-AST-006",
+  "title": "Reject broken links in the built documentation",
+  "status": "completed",
+  "captured_at": "2026-09-15T08:13:57Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-006",
+  "source_identity": {
+    "source_commit": "30d14badaaadbf74cafbd81a20762319d62b70e9",
+    "lockfile_sha256": "49d85925d40445f37367506111ef3942568d5000a3097b4f26f318d74a446e55",
+    "checker_sha256": "4b12ce4d26727d4359b3acbc848ab9beeb9b80dbb8db8f708420497448d01335",
+    "test_sha256": "ce8c0d3ff4cbf7e3ccf23c38754db61194fe350b4226bf9e8adaee84dfdc8e40",
+    "astro_config_sha256": "92eaf36d4d6d0325d523c482eac1983561f09abd41e50fb538d28368001aad7e",
+    "content_config_sha256": "8533d2ca10343ef66b42902252a8c86cfd5e05db749b992ba94f9068bf533e1e"
+  },
+  "checker": {
+    "default_command": "pnpm exec tsx scripts/docs-data/check-dist-links.ts",
+    "default_dist": "apps/docs/dist",
+    "default_origin": "https://rnraielements.com",
+    "default_required_references": [
+      "https://github.com/vercel/ai-elements",
+      "https://elements.ai-sdk.dev",
+      "https://github.com/muratcakmak/expo-ai-elements",
+      "https://reactnativereusables.com",
+      "https://reactnativereusables.com/docs/cli"
+    ],
+    "cli_options": ["--dist <dir>", "--origin <url>", "--required <url> (repeatable, additive)"]
+  },
+  "commands": {
+    "build": {
+      "command": "pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build",
+      "exit_code": 0,
+      "pages_built": 61
+    },
+    "typecheck": { "command": "pnpm typecheck", "exit_code": 0 },
+    "lint": {
+      "command": "pnpm exec biome ci scripts/docs-data/check-dist-links.ts tests/sprint-05-orient-search/dist-link-gate.test.ts tests/sprint-05-orient-search/evidence/ORI-AST-006/manifest.json",
+      "exit_code": 0
+    },
+    "checker_on_real_dist": {
+      "command": "pnpm exec tsx scripts/docs-data/check-dist-links.ts",
+      "exit_code": 1,
+      "finding": "The real (incomplete) build carries two genuinely broken canonical-origin links in the ledger bulk-add section: `https://rnraielements.com/r/nativewind` and `https://rnraielements.com/r/uniwind` (bare engine base URLs — the deployed site returns 404 for both). The checker names both with source `registry/index.html`; the 61-file/1171-link traversal still completes. Fixing the ledger page is ORI-AST-002/ORI-AST-007 scope, out of scope here; the checker's correct failure is the gate behaving as designed on an incomplete build."
+    }
+  },
+  "acceptance": {
+    "AC-1": {
+      "test_function": "ORI-AST-006-resolves-emitted-targets",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/red/dist-link-gate.red.txt",
+        "observed": "stub checker prints no traversal evidence — 'traversal counts emitted html files' fails (expected /\\d+ html files/, received '')."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/green/ORI-AST-006-resolves-emitted-targets.txt",
+        "observed": "baseline fixture (real 61-page build + seeded /docs/introduction, /docs/owns-vs-does-not-own, /404, and the PRD redirects) exits 0; 67 html files / 1195 internal links; the /components/message link resolves identically in root-relative, relative (../../components/message), and canonical-origin (https://rnraielements.com/components/message) forms; /r/{nativewind,uniwind}/message.json resolve as files without index.html; the captured /_astro/ stylesheet resolves; the meta-refresh /docs redirect is recognized and its destination resolves."
+      }
+    },
+    "AC-2": {
+      "test_function": "ORI-AST-006-rejects-missing-documents",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/red/dist-link-gate.red.txt",
+        "observed": "stub checker exits 0 after a target deletion — 'message-document deletion fails the gate: expected +0 not to be +0'."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/green/ORI-AST-006-rejects-missing-documents.txt",
+        "observed": "5 independent owned-copy drills (delete message document, boundary document, /404 recovery target, redirect destination, /_astro asset) each exit nonzero naming source + URL; each restoration re-passes; empty and absent output both exit nonzero naming the path; baseline SHA-256 stable before/after.",
+        "drill_evidence": ".tmp/ORI-AST-006/cycle-1/green/drills/{missing-document,redirect-destination}.txt"
+      }
+    },
+    "AC-3": {
+      "test_function": "ORI-AST-006-validates-fragments",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/red/dist-link-gate.red.txt",
+        "observed": "stub checker exits 0 after the row-message ID is removed — 'missing fragment fails the gate: expected +0 not to be +0'."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/green/ORI-AST-006-validates-fragments.txt",
+        "observed": "plain (/registry#row-message), relative (../../registry#row-message), canonical (https://rnraielements.com/registry#row-message), encoded (/registry#row%2Dmessage), and same-document (#getting-started) fragments all resolve; removing only row-message's id attribute fails with `docs/introduction/index.html -> /registry#row-message: fragment #row-message not found in target document` (a fragment failure, not a missing-document); restoring the id re-passes."
+      }
+    },
+    "AC-4": {
+      "test_function": "ORI-AST-006-checks-external-policy",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/red/dist-link-gate.red.txt",
+        "observed": "stub checker performs no HTTP — 'ordinary 404 produces a warning: expected '' to contain warning'."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-006/cycle-1/green/ORI-AST-006-checks-external-policy.txt",
+        "observed": "6 real external requests are made; the 5 default required references return 200..299 and pass (exit 0); an ordinary 404 anchor warns (source + URL + HTTP 404, exit 0); the same URL declared via --required hard-fails (error, exit 1) while the default required set is preserved."
+      }
+    }
+  },
+  "external_http_evidence": {
+    "note": "reachability only — a passing external check proves the URL is reachable, never that live useChat/provider/native behavior works (that verification belongs to the AI SDK and native tasks).",
+    "required_references": [
+      { "url": "https://github.com/vercel/ai-elements", "final": "https://github.com/vercel/ai-elements", "status": 200 },
+      { "url": "https://elements.ai-sdk.dev", "final": "https://elements.ai-sdk.dev/", "status": 200 },
+      { "url": "https://github.com/muratcakmak/expo-ai-elements", "final": "https://github.com/muratcakmak/expo-ai-elements", "status": 200 },
+      { "url": "https://reactnativereusables.com/", "final": "https://reactnativereusables.com/", "status": 200 },
+      { "url": "https://reactnativereusables.com/docs/cli", "final": "https://reactnativereusables.com/docs/cli", "status": 200 }
+    ],
+    "ordinary_404": {
+      "url": "https://github.com/vercel/ai-elements/__orast006_no_such__",
+      "status": 404,
+      "severity": "warning",
+      "exit_code": 0
+    },
+    "required_404": {
+      "url": "https://github.com/vercel/ai-elements/__orast006_no_such__",
+      "status": 404,
+      "severity": "error",
+      "exit_code": 1
+    }
+  },
+  "mutation_evidence": {
+    "baseline_hash_before": "d1d65e097a492d4d8312548f004c81191a8acf4847d56f9ecbba41867e3c1a69",
+    "baseline_hash_after": "d1d65e097a492d4d8312548f004c81191a8acf4847d56f9ecbba41867e3c1a69",
+    "drills": {
+      "missing-document": { "exit_code": 1, "sample": "docs/introduction/index.html -> ../../components/message: no such target in the build" },
+      "missing-fragment": { "exit_code": 1, "sample": "docs/introduction/index.html -> /registry#row-message: fragment #row-message not found in target document" },
+      "redirect-destination": { "exit_code": 1, "sample": "r/nativewind/index.html -> /registry: no such target in the build" },
+      "empty-output": { "exit_code": 1, "sample": "no HTML files (empty output)" },
+      "absent-output": { "exit_code": 1, "sample": "output directory absent" }
+    }
+  },
+  "fixtures": {
+    "description": "owned scratch copies under node:os.tmpdir() seeded from the real `pnpm --filter @rnr-ai-elements/docs build` output; the not-yet-landed manuscript routes (/docs/introduction, /docs/owns-vs-does-not-own, /404) and the PRD redirects are added to owned copies only — never to shared source. The two bare engine-base-URL links in the real /registry page are repaired in the fixture via /r/{engine}/index.html meta-refresh redirects so the complete-build baseline can exit 0; this repair is documented and the underlying real break is reported by the checker on the unmodified real dist.",
+    "scratch_roots": "mkdtempSync(node:os.tmpdir()) — cleaned up after each drill and in afterAll"
+  },
+  "blockers": []
+}
