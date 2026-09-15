@@ -3,14 +3,38 @@
  * TabGroup — island 3/5 (SHELL-004). A generic, attribute-driven WAI-ARIA
  * tabs element: pass the labeled panels and slot each panel's content under
  * its engine name. Every tab and panel is server-rendered into the served
- * HTML — the bundled island only toggles the hidden attribute and persists
- * the engine, it never fetches panel content.
+ * HTML — the bundled island only toggles the hidden attribute and (for
+ * persistent engine groups) synchronizes the shared engine state, it never
+ * fetches panel content.
+ *
+ * Two group kinds (ORI-AST-002):
+ * - `persistent` (default) — an ENGINE group. It shares the `rnr-engine`
+ *   storage key, updates `document.documentElement.dataset.engine`, and
+ *   synchronizes every other engine group on the page through the one
+ *   engine-state contract. Only `nativewind`/`uniwind` are ever persisted.
+ * - `persistent={false}` — a GENERIC group (e.g. npm/pnpm). Its selection is
+ *   local to the instance: no storage read/write, no root engine, no
+ *   cross-group sync.
+ *
+ * Every rendered group carries a unique build-output prefix so `aria-controls`
+ * / `aria-labelledby` resolve inside the owning group and tab/panel IDs never
+ * collide when two groups share a page. An explicit `group` prop supplies the
+ * prefix; callers that omit it (InstallCommand / DependencyPanel pass only
+ * `panels` + slots) get a deterministic content digest — their slot content is
+ * byte-distinct, so the digest disambiguates them without editing either
+ * caller. The digest is stable across builds: same content, same prefix.
+ *
+ * The panels are rendered ONCE through `Astro.slots.render` and re-injected via
+ * `set:html`; rendering a slot twice (once for the digest, once for the
+ * template `<slot>`) would consume the child components' hoisted scripts.
  *
  * Zero-JS fallback: the first panel (nativewind) is the served default and
  * stays visible; `:not(:defined)` un-hides the remaining stacked panels so
  * every engine line is readable with no JS at all. An un-upgraded element is
  * fully readable content — never a dead control.
  */
+import { createHash } from 'node:crypto';
+
 interface Panel {
   /** Value stored under the element's storage-key; matches the panel DOM. */
   engine: string;
@@ -19,21 +43,46 @@ interface Panel {
 
 interface Props {
   panels: Panel[];
+  /** Explicit group identity; when absent, derived from slot content. */
+  group?: string;
+  /** Persistent engine group (default); false = nonpersistent generic tabs. */
+  persistent?: boolean;
 }
 
-const { panels } = Astro.props;
+const { panels, group, persistent = true } = Astro.props;
+
+// Render each panel's slot exactly once; the rendered HTML feeds both the
+// content digest and the template output (set:html), so child components'
+// scripts/styles are hoisted exactly once.
+const rendered = new Map<string, string>();
+for (const panel of panels) {
+  rendered.set(panel.engine, (await Astro.slots.render(panel.engine)) ?? '');
+}
+
+// Unique build-output prefix. An explicit `group` wins; otherwise a content
+// digest of the first panel's rendered slot disambiguates co-located engine
+// groups (InstallCommand vs DependencyPanel render byte-distinct content
+// through identical `panels` props — the slot is the only build-time signal).
+let groupId = group;
+if (!groupId) {
+  groupId = `g-${createHash('sha256').update(rendered.get(panels[0]?.engine ?? '') ?? '').digest('hex').slice(0, 12)}`;
+}
 ---
 
-<rnr-tab-group class="tab-group" storage-key="rnr-engine">
+<rnr-tab-group
+  class="tab-group"
+  storage-key="rnr-engine"
+  data-persistent={persistent ? 'true' : 'false'}
+>
   <div class="tab-group__tabs" role="tablist">
     {
       panels.map((panel, index) => (
         <button
           type="button"
           role="tab"
-          id={`tab-${panel.engine}`}
+          id={`${groupId}-tab-${panel.engine}`}
           data-engine={panel.engine}
-          aria-controls={`panel-${panel.engine}`}
+          aria-controls={`${groupId}-panel-${panel.engine}`}
           aria-selected={index === 0 ? 'true' : 'false'}
           aria-label={`${panel.engine} engine`}
           tabindex={index === 0 ? 0 : -1}
@@ -48,13 +97,13 @@ const { panels } = Astro.props;
       <div
         class="tab-group__panel"
         role="tabpanel"
-        id={`panel-${panel.engine}`}
+        id={`${groupId}-panel-${panel.engine}`}
         data-engine={panel.engine}
-        aria-labelledby={`tab-${panel.engine}`}
+        aria-labelledby={`${groupId}-tab-${panel.engine}`}
         tabindex="0"
         hidden={index !== 0}
       >
-        <slot name={panel.engine} />
+        <Fragment set:html={rendered.get(panel.engine)} />
       </div>
     ))
   }

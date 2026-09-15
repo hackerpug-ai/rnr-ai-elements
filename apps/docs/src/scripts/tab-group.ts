@@ -1,18 +1,32 @@
 /**
- * `rnr-tab-group` — vanilla custom element, island 3/5 (SHELL-004).
+ * `rnr-tab-group` — vanilla custom element, island 3/5 (SHELL-004 + ORI-AST-002).
  *
  * WAI-ARIA tabs over server-rendered panels. The whole DOM (tablist, role=tab
  * buttons, role=tabpanel divs carrying data-engine) is authored by
  * TabGroup.astro and fully present in the served HTML; this element ONLY
  * toggles the panels' hidden attribute, syncs aria-selected/roving tabindex,
- * and persists the chosen engine. Panels are never client-fetched, and engine
- * state never reaches the URL.
+ * and — for persistent engine groups — drives the ONE shared engine-state
+ * contract. Panels are never client-fetched, and engine state never reaches
+ * the URL.
  *
- * The storage key comes from the `storage-key` attribute (default
- * `rnr-engine`), so a page may namespace its tabs. Loaded as a processed
- * (bundled) module script — executes once per full page load; per-instance
- * wiring in connectedCallback keeps it safe under ClientRouter soft
- * navigation (same pattern as copy-button.ts).
+ * Two group kinds, keyed off the server-rendered `data-persistent` attribute:
+ * - ENGINE groups (data-persistent="true"): every selection validates the
+ *   value against the two real engines (nativewind/uniwind), sets
+ *   `document.documentElement.dataset.engine`, persists `rnr-engine`, and
+ *   applies the SAME selection to every engine group on the page. One state
+ *   transition, no per-group drift.
+ * - GENERIC groups (data-persistent="false"): selection is local — no storage
+ *   read/write, no root engine, no cross-group sync. The server-rendered
+ *   default (first panel) stays on a fresh load; generic labels never reach
+ *   rnr-engine.
+ *
+ * Storage is read/written through try/catch: a denied or unreadable store
+ * falls back to the nativewind default (read) or a this-visit-only switch
+ * (write), never an uncaught error, never every panel hidden.
+ *
+ * Loaded as a processed (bundled) module script — executes once per full page
+ * load; per-instance wiring in connectedCallback keeps it safe under
+ * ClientRouter soft navigation (same pattern as copy-button.ts).
  */
 declare global {
   interface Window {
@@ -20,10 +34,21 @@ declare global {
   }
 }
 
+/** The one validated engine contract: only these values may reach root
+ * data-engine or the rnr-engine storage key. Anything else — absent, malformed,
+ * bogus — collapses to the documented nativewind default. */
+const ENGINES = ['nativewind', 'uniwind'] as const;
+type Engine = (typeof ENGINES)[number];
+
+function resolveEngine(raw: string | null | undefined): Engine {
+  return ENGINES.includes(raw as Engine) ? (raw as Engine) : 'nativewind';
+}
+
 class RnrTabGroup extends HTMLElement {
   private storageKey = 'rnr-engine';
   private tabs: HTMLButtonElement[] = [];
   private panels: HTMLElement[] = [];
+  private persistent = true;
 
   connectedCallback(): void {
     this.tabs = [...this.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
@@ -32,14 +57,20 @@ class RnrTabGroup extends HTMLElement {
     if (this.dataset.tabGroupBound === 'true') return;
     this.dataset.tabGroupBound = 'true';
     this.storageKey = this.getAttribute('storage-key') ?? 'rnr-engine';
+    this.persistent = this.getAttribute('data-persistent') !== 'false';
 
     for (const tab of this.tabs) {
       tab.addEventListener('click', () => this.activate(tab.dataset.engine));
       tab.addEventListener('keydown', (event) => this.onKeydown(event));
     }
-    // Persisted engine wins; otherwise the server-rendered default (the first
-    // panel, nativewind) stays exactly as served.
-    this.activate(this.persistedEngine() ?? this.tabs[0]?.dataset.engine);
+
+    // Engine groups restore the shared validated engine (data-engine + every
+    // engine group's panels) without writing storage, so a fresh context stays
+    // free of an rnr-engine entry. Generic groups keep the server-rendered
+    // default (the first panel, already visible).
+    if (this.persistent) {
+      this.synchronize(this.readEngine());
+    }
   }
 
   /** ArrowLeft/ArrowRight: move focus AND activate (automatic activation). */
@@ -53,23 +84,61 @@ class RnrTabGroup extends HTMLElement {
     this.activate(next?.dataset.engine);
   }
 
-  /** Selected engine from storage, or null when unset or unreadable. */
-  private persistedEngine(): string | null {
+  /** The validated persisted engine, or the nativewind default when unset or
+   * unreadable. */
+  private readEngine(): Engine {
     try {
-      return localStorage.getItem(this.storageKey);
+      return resolveEngine(localStorage.getItem(this.storageKey));
     } catch {
-      return null; // Storage unavailable (privacy mode): default panel stays.
+      return 'nativewind'; // Storage unavailable (privacy mode): default panel stays.
     }
   }
 
+  /** Every engine group in the current document (this one included). */
+  private engineGroups(): RnrTabGroup[] {
+    return [
+      ...document.querySelectorAll<RnrTabGroup>(
+        'rnr-tab-group[data-persistent="true"], rnr-tab-group:not([data-persistent])',
+      ),
+    ];
+  }
+
   /**
-   * The ONE state mutation: aria-selected + roving tabindex on the tabs,
-   * hidden on every panel whose data-engine does not match, then persistence.
-   * An unknown stored value (or none) keeps the server-rendered default —
-   * nativewind, the first panel in source order.
+   * The ONE state transition for engine groups: validate, set root data-engine,
+   * persist rnr-engine, then apply visibility + ARIA to every engine group on
+   * the page. Generic groups bypass everything except their own visibility.
    */
-  private activate(engine: string | undefined): void {
+  activate(engine: string | undefined): void {
     if (!engine || !this.tabs.some((tab) => tab.dataset.engine === engine)) return;
+    if (!this.persistent) {
+      this.applyToGroup(engine);
+      return;
+    }
+    const resolved = resolveEngine(engine);
+    document.documentElement.dataset.engine = resolved;
+    try {
+      localStorage.setItem(this.storageKey, resolved);
+    } catch {
+      // Storage unavailable (privacy mode): the tabs still switch this visit.
+    }
+    for (const group of this.engineGroups()) {
+      group.applyToGroup(resolved);
+    }
+  }
+
+  /** Shared activation from the engine contract, used on connect and on
+   * cross-group sync. Sets root data-engine and applies to every engine group
+   * without touching storage (the connect path must not invent an rnr-engine
+   * entry on a fresh context). */
+  private synchronize(engine: Engine): void {
+    document.documentElement.dataset.engine = engine;
+    for (const group of this.engineGroups()) {
+      group.applyToGroup(engine);
+    }
+  }
+
+  /** Set aria-selected/roving tabindex/hidden on THIS group's own elements only. */
+  private applyToGroup(engine: string): void {
     for (const tab of this.tabs) {
       const selected = tab.dataset.engine === engine;
       tab.setAttribute('aria-selected', String(selected));
@@ -77,11 +146,6 @@ class RnrTabGroup extends HTMLElement {
     }
     for (const panel of this.panels) {
       panel.hidden = panel.dataset.engine !== engine;
-    }
-    try {
-      localStorage.setItem(this.storageKey, engine);
-    } catch {
-      // Storage unavailable (privacy mode): the tabs still switch this visit.
     }
   }
 }

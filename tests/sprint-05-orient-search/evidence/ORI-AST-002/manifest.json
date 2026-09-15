@@ -1,0 +1,139 @@
+{
+  "task_id": "ORI-AST-002",
+  "title": "Keep engine choices synchronized through prose and Astro navigation",
+  "status": "completed",
+  "captured_at": "2026-09-15T02:56:00Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002",
+  "run": {
+    "run_id": "cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "browser": {
+      "engine": "chromium",
+      "projects": ["chromium-desktop", "chromium-mobile", "chromium-nojs"],
+      "storage_denial": "--disable-local-storage (real Chromium Web Storage disable: window.localStorage is null/throws, never a monkey-patched prototype)",
+      "clipboard_permissions": ["clipboard-read", "clipboard-write"]
+    },
+    "hashes": {
+      "source_commit": "30d14badaaadbf74cafbd81a20762319d62b70e9",
+      "lockfile_sha256": "49d85925d40445f37367506111ef3942568d5000a3097b4f26f318d74a446e55",
+      "test_spec_sha256": "adfe93729d555689fb8a75d3688e63345941abc0000f3717fa792fae98204678",
+      "tab_group_astro_sha256": "5a4e281537ed335eb572f0b54c04e84bc0964b81f5f3baeaa383b038bfe67e14",
+      "tab_group_ts_sha256": "c06e6f54da30c7faa7f53a38172feca32838e45ca6e1955093416fe5cc7e97ed",
+      "docs_layout_astro_sha256": "11bf62a2c01c449c9e2e022b756bf2d7e62afbdb28a121b4b7e90b415e70c378",
+      "playwright_config_sha256": "a769f5e5a47b0accf741cd857534e2e1aa1037ddc509691cc31411039d24ecf8",
+      "surface_policy_sha256": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+      "coldboot_policy_sha256": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+      "docs_package_json_sha256": "d9d4c4ef3fa468381a7ce47822c7cb797174850d40ff9a5fc44aa141409daa9b"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 61,
+        "note": "real docs build over the 56-item generated dataset; ClientRouter, both engine panels, and the root pre-paint script all emit."
+      },
+      "typecheck": {
+        "command": "pnpm typecheck",
+        "exit_code": 0,
+        "note": "root tsc --noEmit (tests/**/*.ts included) + registry typecheck both exit 0."
+      },
+      "lint": {
+        "command": "pnpm lint",
+        "exit_code": 0,
+        "note": "0 errors, 0 warnings; 4 pre-existing info-level useTemplate hints in tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts (untouched by this task)."
+      },
+      "task_test": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/engine-state-contract.spec.ts",
+        "exit_code": 0,
+        "result": "15 passed (5 ACs x chromium-desktop/mobile/nojs), 0 failed, 0 skipped",
+        "red": ".tmp/ORI-AST-002/cycle-1/red/run.txt",
+        "green": ".tmp/ORI-AST-002/cycle-1/green/run.txt"
+      }
+    },
+    "scenario_validation": {
+      "command": "python3 /Users/justinrich/Projects/brain/tools/validate-scenario/validate_scenario.py (piped normalized {fixtures, requirements})",
+      "exit_code": 0,
+      "scenario_count": 5,
+      "violations": 0
+    }
+  },
+  "acceptance": {
+    "AC-1": {
+      "test_function": "ORI-AST-002-AC-1",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/red/run.txt",
+        "observed": "fresh root data-engine was null (no pre-paint resolution); 4 unique tab/panel IDs instead of 8 (tab-nativewind/tab-uniwind duplicated across the Install and Dependencies groups); cross-group selection did not synchronize; root data-engine stayed null after click and keyboard activation."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/green/run.txt",
+        "observed": "fresh root data-engine = nativewind; 8 unique tab/panel IDs across 2 groups, each aria-controls/aria-labelledby resolving inside its owning group; clicking uniwind in Dependencies synchronizes both groups + rnr-engine + root data-engine to uniwind, URL stays /components/message; ArrowRight wraps to nativewind in both groups, ArrowLeft restores uniwind; exactly one tabindex=0 per group and keyboard focus follows the selected tab."
+      }
+    },
+    "AC-2": {
+      "test_function": "ORI-AST-002-AC-2",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/red/run.txt",
+        "observed": "first-paint root data-engine was null for persisted uniwind (no pre-paint engine resolution); malformed/absent inputs produced no resolved root engine."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/green/run.txt",
+        "observed": "persisted uniwind resolves root data-engine to uniwind at first paint (MutationObserver captures the pre-paint inline script, before the deferred island); nativewind resolves likewise; bogus-engine, empty string, and absent input resolve to the documented nativewind default; selecting uniwind replaces malformed storage; under a real --disable-local-storage denial, initial engine is nativewind with one readable panel per group, and selecting uniwind still switches both groups + root despite the denied write."
+      }
+    },
+    "AC-3": {
+      "test_function": "ORI-AST-002-AC-3",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/red/run.txt",
+        "observed": "no ClientRouter (soft-navigation window probe failed — navigation was a full load); no html.dark marker; engine state not restored across navigation."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/green/run.txt",
+        "observed": "ClientRouter soft navigation preserves a window probe (soft nav, not a full load); after swap and reload root data-engine and rnr-engine equal uniwind; Install shows https://rnraielements.com/r/uniwind/message.json; real clipboard equals npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json; html.light/html.dark are complementary in light and dark including after swap and reload; filtering message retains the /components/message card and clearing restores the original 39-card count; 3 repeated message/back cycles leave a single click producing one consistent activation with no engine state in any URL."
+      }
+    },
+    "AC-4": {
+      "test_function": "ORI-AST-002-AC-4",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/red/run.txt",
+        "observed": "raw message response carried only 4 unique tab/panel IDs (duplicates across the two groups), violating the 8-unique-ID contract."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/green/run.txt",
+        "observed": "GET / and /components/message both return HTTP 200 with complete nativewind + uniwind install commands (conversation on /, message on /components/message); the message response carries 8 unique tab/panel IDs across 2 groups; with JavaScript disabled both labeled panels are stacked, visible, and readable (the :not(:defined) fallback), and ordinary links reach /components and /components/message with 200."
+      }
+    },
+    "AC-5": {
+      "test_function": "ORI-AST-002-AC-5",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/red/run.txt",
+        "observed": "the old TabGroup ignored the persistent=false generic group contract — no data-persistent attribute, non-unique IDs across the 3 groups, and selecting pnpm wrote pnpm into rnr-engine."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-002/cycle-1/green/run.txt",
+        "observed": "a real OS-derived scratch Astro consumer built from the candidate's actual TabGroup.astro + tab-group.ts composes 2 engine groups + 1 nonpersistent generic group with 12 unique tab/panel IDs; selecting pnpm displays pnpm add example while rnr-engine and root data-engine remain uniwind; selecting nativewind synchronizes both engine groups while the generic group stays pnpm; after reload the generic group returns to npm install example and the engine groups restore nativewind; storage contains only the engine value, never npm/pnpm."
+      }
+    }
+  },
+  "files_changed": [
+    "apps/docs/src/components/islands/TabGroup.astro",
+    "apps/docs/src/scripts/tab-group.ts",
+    "apps/docs/src/layouts/DocsLayout.astro",
+    "tests/sprint-05-orient-search/engine-state-contract.spec.ts",
+    "tests/sprint-05-orient-search/evidence/ORI-AST-002/manifest.json"
+  ],
+  "design_notes": {
+    "unique_group_identity": "TabGroup renders panels exactly once through Astro.slots.render and re-injects via set:html; an explicit `group` prop wins, otherwise a deterministic sha256 digest of the first panel's rendered slot disambiguates co-located groups without editing InstallCommand/DependencyPanel (and without the double-slot-render that consumed child-component script hoisting).",
+    "shared_engine_contract": "one resolveEngine (nativewind/uniwind only, nativewind default) is used both by the pre-paint inline script (root data-engine before paint) and the tab-group island (click/keyboard activation). A persistent group's activation sets root data-engine, writes rnr-engine, and applies visibility + ARIA to every engine group on the page; generic (data-persistent=false) groups are local-only.",
+    "complementary_theme_marker": "html.dark is derived from the same resolved light boolean as html.light; a window-guarded MutationObserver keeps html.dark complementary after ThemeToggle clicks (theme-toggle.ts owns the light flip and is writeProhibited here).",
+    "client_router": "ClientRouter is added to the shared DocsLayout head; bundled islands reconnect per-instance in connectedCallback, and the data-astro-rerun pre-paint script restores root engine/theme markers across swaps."
+  },
+  "blockers": []
+}
