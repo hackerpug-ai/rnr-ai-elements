@@ -31,8 +31,9 @@ class RnrCopyButton extends HTMLElement {
   }
 
   private async copy(trigger: HTMLButtonElement, command: Element): Promise<void> {
-    // Trimmed exactly: the clipboard must not carry template whitespace.
-    const text = (command.textContent ?? '').trim();
+    // Copied exactly: the clipboard carries the displayed source byte-for-byte,
+    // boundary whitespace (leading indentation, terminal newline) included.
+    const text = command.textContent ?? '';
     try {
       await navigator.clipboard.writeText(text);
       this.setState(trigger, 'copied', 'Copied');

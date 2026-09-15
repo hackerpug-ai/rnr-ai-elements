@@ -1,0 +1,118 @@
+{
+  "task_id": "ORI-AST-001",
+  "title": "Render authored documentation through the Astro collection and prose shell",
+  "status": "completed",
+  "captured_at": "2026-09-14T23:20:00Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-001",
+  "run": {
+    "run_id": "cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "browser": {
+      "engine": "chromium",
+      "clipboard_permissions": ["clipboard-read", "clipboard-write"]
+    },
+    "hashes": {
+      "source_commit": "8c19edee129c7404350773e567487ed1b20666cb",
+      "lockfile_sha256": "49d85925d40445f37367506111ef3942568d5000a3097b4f26f318d74a446e55",
+      "test_spec_sha256": "b6de661bec99c9da31ca3300cb9b807e9574023860cf81aa67971c17723311e9",
+      "astro_config_sha256": "92eaf36d4d6d0325d523c482eac1983561f09abd41e50fb538d28368001aad7e",
+      "content_config_sha256": "8533d2ca10343ef66b42902252a8c86cfd5e05db749b992ba94f9068bf533e1e",
+      "docs_navigation_sha256": "98e6b3b764292fd29fe57564ec72fe21bb910d2059b4405b47ae9816087ca3a5",
+      "copy_button_sha256": "65822a4b0e83220f97083fb86d8a188c560ad2e7f2a588467707e2a0a4cef61b",
+      "docs_package_json_sha256": "d9d4c4ef3fa468381a7ce47822c7cb797174850d40ff9a5fc44aa141409daa9b"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm --filter @rnr-ai-elements/docs exec astro build",
+        "exit_code": 0,
+        "pages_built": 61,
+        "note": "empty docs collection on the real tree (manuscripts supplied later by ORI-CONT-*); collection + catch-all + MDX + Expressive Code integrations compile clean."
+      },
+      "typecheck": {
+        "command": "pnpm typecheck && pnpm exec tsc --noEmit -p apps/docs/tsconfig.json",
+        "exit_code": 0
+      },
+      "lint": {
+        "command": "pnpm exec biome ci .",
+        "exit_code": 0,
+        "note": "0 errors, 0 warnings, 4 pre-existing info-level lint hints."
+      },
+      "check_tokens": { "command": "pnpm check:tokens", "exit_code": 0 },
+      "check_contract": { "command": "pnpm check:contract", "exit_code": 0 }
+    }
+  },
+  "acceptance": {
+    "AC-1": {
+      "test_function": "ORI-AST-001-collection-schema",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-1/red/ORI-AST-001-collection-schema.txt",
+        "observed": "scratch build emitted 0 collection routes (the real loader was disconnected from the source files — only /docs/theming under /docs/)."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-1/green/ORI-AST-001-collection-schema.txt",
+        "observed": "valid .md + .mdx entries render two collection-reference documents carrying `AI Elements Example`, `Structure`, `Run`; all 3 section values pass; omitted + boolean draft pass; all 7 invalid-frontmatter cases exit nonzero naming the source id and the offending field (title/description/section/order/draft)."
+      }
+    },
+    "AC-2": {
+      "test_function": "ORI-AST-001-publication-contract",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-1/red/ORI-AST-001-publication-contract.txt",
+        "observed": "0 published routes (publication contract absent)."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-1/green/ORI-AST-001-publication-contract.txt",
+        "observed": "route counts 2 -> 1 -> 2 with the real draft flag; draft excluded from routes, section navigation, and the single data-pagefind-body search region; exactly one /docs/theming destination with textclasscontext + rendermarkdown anchors; two slug-colliding sources fail the build with the destination and both source paths; collision removed rebuilds clean."
+      }
+    },
+    "AC-3": {
+      "test_function": "ORI-AST-001-prose-navigation",
+      "status": "blocked",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-1/red/ORI-AST-001-prose-navigation.txt",
+        "observed": "6 required manuscripts absent (introduction, installation, cli, dark-mode, quickstart, owns-vs-does-not-own) — supplied by ORI-CONT-001/002/003/005, writeProhibited here."
+      }
+    },
+    "AC-4": {
+      "test_function": "ORI-AST-001-mdx-code-copy",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-2/red/ORI-AST-001-mdx-code-copy.txt",
+        "observed": "cycle-2 mutation RED: with the .trim() re-introduced, `clipboard equals displayed source (terminal newline preserved)` fails — clipboard `...useConversation };` vs displayed `...useConversation };\n`, proving the new served-oracle/multiline/install assertions catch the boundary-whitespace loss."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-001/cycle-2/green/ORI-AST-001-mdx-code-copy.txt",
+        "observed": "displayed source and clipboard byte-equal the served conversation content (unnormalized, SHA-256 identical, terminal U+000A preserved); a scratch collection-reference MDX entry importing CodeBlock carries leading indentation + terminal newline and its displayed/clipboard byte-equal the source oracle (SHA-256 identical); the ordinary install command copies untrimmed and its control returns from 'copied' to the idle label."
+      },
+      "blocked_note": "the authored-MDX themed-code rendering portion of AC-4 (per-manuscript Expressive Code theme verification) still requires the actual manuscripts — same ORI-CONT-001/002/003/005 dependency as AC-3."
+    }
+  },
+  "cycle_2": {
+    "summary": "remediation for reviewer AC-4 gaps: served-oracle equality (displayed + clipboard vs served content), multiline boundary-whitespace input through the normal CodeBlock copy path, and ordinary install-command idle reset were added to the test. Test-only change; no product code changed (copy-button.ts verified unchanged).",
+    "red": ".tmp/ORI-AST-001/cycle-2/red/",
+    "green": ".tmp/ORI-AST-001/cycle-2/green/",
+    "commits": ["bf40899", "89d4fc5"]
+  },
+  "expressive_code_theme_mapping": {
+    "themes": ["github-dark", "github-light"],
+    "use_dark_mode_media_query": false,
+    "theme_css_selector": "dark -> '' (base on :root), light -> '.light' (scoped to :root.light)",
+    "observed_css": {
+      "light_scope": ":root.light",
+      "prefers_color_scheme_rules": 0
+    },
+    "note": "code theme follows the site's own pre-paint html.light class flip, never the OS media query."
+  },
+  "copy_button_correction": {
+    "file": "apps/docs/src/scripts/copy-button.ts",
+    "change": "removed the .trim() on the copy payload (command.textContent ?? '' retained verbatim); corrected the adjacent comment. The separate button-label trim (dataset.copyLabel) is untouched.",
+    "proved_on": "http://localhost:4321/components/conversation + /r/nativewind/conversation.json"
+  },
+  "blockers": [
+    "AC-3 and the authored-MDX portion of AC-4 require the actual manuscripts under apps/docs/src/content/docs/ (introduction, installation, cli, dark-mode, quickstart, owns-vs-does-not-own) supplied by ORI-CONT-001/002/003/005; that directory is writeProhibited in this task, so the final rendered-page acceptance is a downstream verification blocker, never a placeholder."
+  ]
+}
