@@ -1,0 +1,140 @@
+{
+  "task_id": "ORI-AST-003",
+  "title": "Make the Theming token table demonstrate the live site theme",
+  "status": "completed",
+  "captured_at": "2026-09-15T17:40:00Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-003",
+  "run": {
+    "run_id": "cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "browser": {
+      "engine": "chromium",
+      "projects": ["chromium-desktop", "chromium-mobile", "chromium-nojs"],
+      "explicit_contexts": "each case creates its own browser.newContext with explicit colorScheme and javaScriptEnabled, so the identical path runs under every project (the ORI-AST-002 convention)."
+    },
+    "hashes": {
+      "source_commit": "4e1b2093044ee1d296f7ac5c29c6fdfae56d90e2",
+      "lockfile_sha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+      "theme_toggle_spec_sha256": "33a6d44bec4148a6cfe233da4454479f9ef856d51bf159f334aef750b77fbd99",
+      "first_visit_spec_sha256": "7af96babf0c4888d0ff0d344eefba2355ff1b2bf739e87bccf88554b31cdf152",
+      "token_map_test_sha256": "f31954264c92f3512331033e917cf65037167b75ce18232fbeb887ee170e333f",
+      "token_map_ts_sha256": "36089efd4c633fcaa06fcfe33b303bdbc1e723c21a85169b0ceb6aef932ca0a1",
+      "token_table_astro_sha256": "301600674573ddfe8df74284fdc8002ea45da7a11ffd630cafa9226a1fa3d04c",
+      "theme_toggle_ts_sha256": "cc57bc7b3970185ddc0b8f4395230ce98bb8f97e6daf9d4fff283ac8e9413003",
+      "theming_astro_sha256": "cb5dae1fc93d426d6910a24a1d8bf69ddb5e2ff7804af20f827a47b00854e515",
+      "token_usage_json_sha256": "b8ca310eb4bf365269d48966aa8dc76ebc6852b5708465224cb732cd5be0e1b5",
+      "playwright_config_sha256": "a769f5e5a47b0accf741cd857534e2e1aa1037ddc509691cc31411039d24ecf8",
+      "surface_policy_sha256": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+      "coldboot_policy_sha256": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 63,
+        "note": "the static /docs/theming route binds ORI-CONT-002's theming.mdx via render(entry) + <Content components={{ TokenTable }} />; the table renders 20 paired rows with both value columns in the static HTML."
+      },
+      "typecheck": {
+        "command": "pnpm typecheck",
+        "exit_code": 0,
+        "note": "root tsc --noEmit (tests/**/*.ts + scripts/**/*.ts) + registry typecheck both exit 0; the spec evaluate bodies are string expressions so the no-DOM-lib tsconfig never sees browser globals."
+      },
+      "lint": {
+        "command": "pnpm exec biome ci scripts/docs-data/token-map.ts apps/docs/src/data/token-usage.json apps/docs/src/scripts/theme-toggle.ts tests/sprint-05-orient-search/token-map.test.ts tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts",
+        "exit_code": 0,
+        "note": "0 errors, 0 warnings across the contract's six files (token-usage.json is excluded by biome's !apps/docs/src/data/* rule; the .astro files are not in biome's includes)."
+      },
+      "token_map_test": {
+        "command": "pnpm exec vitest run tests/sprint-05-orient-search/token-map.test.ts",
+        "exit_code": 0,
+        "result": "1 passed (TC-5)",
+        "red": ".tmp/ORI-AST-003/cycle-1/red/run.txt",
+        "green": ".tmp/ORI-AST-003/cycle-1/green/run.txt"
+      },
+      "flow_tests": {
+        "FLOW-SHELL-01": {
+          "command": "pnpm exec playwright test tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts --grep FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+          "exit_code": 0,
+          "result": "3 passed (chromium-desktop/mobile/nojs) — AC-1 + AC-3 + AC-4"
+        },
+        "FLOW-SHELL-02": {
+          "command": "pnpm exec playwright test tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+          "exit_code": 0,
+          "result": "3 passed (chromium-desktop/mobile/nojs) — AC-2"
+        }
+      }
+    }
+  },
+  "acceptance": {
+    "AC-1": {
+      "test_function": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+      "status": "green",
+      "red": {
+        "captured_at": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red",
+        "observed": "the TokenTable renders at least ten semantic rows — Received 0 (the prose route renders no tr[data-token])."
+      },
+      "green": {
+        "observed": "fresh light visit resolves html.light/color-scheme light/oklch(1 0 0); toggle dark sets rnr-theme=dark + html.dark + color-scheme dark + oklch(0.145 0 0) with the background swatch and current-value cell both oklch(0.145 0 0); the first reload frame is dark (html.dark at DOMContentLoaded, no light frame); toggle back to light reverses everything."
+      }
+    },
+    "AC-2": {
+      "test_function": "FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+      "status": "green",
+      "red": {
+        "captured_at": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/proof.red",
+        "observed": "/docs/theming code-background row reads oklch(0.235 0 0) — Received '' (only the code-background token row is absent; the pre-paint dark classes were already green)."
+      },
+      "green": {
+        "observed": "on /docs/theming, / and /components/message, html.dark=true + color-scheme dark at body parse, first frame paints oklch(0.145 0 0), no light frame; the code-background row reads oklch(0.235 0 0); the /components/message .code-block resolves the dark code theme."
+      }
+    },
+    "AC-3": {
+      "test_function": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+      "status": "green",
+      "red": {
+        "captured_at": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red",
+        "observed": "the TokenTable renders at least ten semantic rows — Received 0."
+      },
+      "green": {
+        "observed": "with JavaScript disabled, 20 rows carry nonempty usage + oklch light/dark columns; background light oklch(1 0 0) / dark oklch(0.145 0 0); code-background and code-foreground both carry DOCS-ONLY; #textclasscontext and #rendermarkdown each occur exactly once; exactly one data-token-table binds."
+      }
+    },
+    "AC-4": {
+      "test_function": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+      "status": "green",
+      "red": {
+        "captured_at": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red",
+        "observed": "the TokenTable renders at least ten semantic rows — Received 0."
+      },
+      "green": {
+        "observed": "after a ClientRouter soft round trip (Theming → Dark mode → Theming), the background and code-background current-value cells are re-populated (oklch(0.145 0 0) / oklch(0.235 0 0)); one click to light resolves code-background/foreground to oklch(0.97 0 0)/oklch(0.205 0 0); one click back to dark resolves oklch(0.235 0 0)/oklch(0.922 0 0); the /components/message .code-block follows the active dark code theme."
+      }
+    }
+  },
+  "files_changed": [
+    "scripts/docs-data/token-map.ts",
+    "apps/docs/src/data/token-usage.json",
+    "apps/docs/src/components/TokenTable.astro",
+    "apps/docs/src/scripts/theme-toggle.ts",
+    "apps/docs/src/pages/docs/theming.astro",
+    "tests/sprint-05-orient-search/token-map.test.ts",
+    "tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts",
+    "tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts",
+    "tests/sprint-05-orient-search/evidence/ORI-AST-003/manifest.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/run.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/run.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/proof.red"
+  ],
+  "design_notes": {
+    "component_binding": "Astro's render(entry) + <Content components={{ TokenTable }} /> is the render-time binding the manuscript's bare <TokenTable /> needs; the catch-all excludes the reserved theming slug, so the static route is the single destination.",
+    "value_vs_metadata": "values come only from the real global.css :root/html.light declarations (parseCssVariables anchored at line-start so prose mentions of html.light/:root never match a comment); usage labels + DOCS-ONLY classification come only from token-usage.json (which carries zero oklch/hsl literals).",
+    "computed_current_value": "the current-value cell reads its sibling swatch's resolved backgroundColor (background: var(--token)), which serializes as the same oklch number form the static columns print — getPropertyValue re-serializes as percentages and would disagree with the sheet text.",
+    "dark_marker": "theme-toggle.ts now flips both html.light and html.dark in the one click transition; the DocsLayout MutationObserver remains redundant-but-consistent (both derive dark = !light).",
+    "reconnect": "refreshTokenValues() runs on every connectedCallback and every click; a ClientRouter swap upgrades a fresh island so the freshly-inserted TokenTable cells re-populate with no duplicate listener and no sixth custom element."
+  },
+  "blockers": []
+}

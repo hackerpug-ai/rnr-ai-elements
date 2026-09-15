@@ -1,0 +1,27 @@
+{
+  "runIdentity": "ori-ast-003-1789460000000",
+  "command": "pnpm exec playwright test tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts --grep FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+  "exit": 0,
+  "result": "3 passed (chromium-desktop, chromium-mobile, chromium-nojs)",
+  "sourceHashes": {
+    "sourceCommit": "4e1b2093044ee1d296f7ac5c29c6fdfae56d90e2",
+    "testSpec": "33a6d44bec4148a6cfe233da4454479f9ef856d51bf159f334aef750b77fbd99",
+    "tokenTable": "301600674573ddfe8df74284fdc8002ea45da7a11ffd630cafa9226a1fa3d04c",
+    "themeToggle": "cc57bc7b3970185ddc0b8f4395230ce98bb8f97e6daf9d4fff283ac8e9413003",
+    "themingPage": "cb5dae1fc93d426d6910a24a1d8bf69ddb5e2ff7804af20f827a47b00854e515",
+    "tokenMap": "36089efd4c633fcaa06fcfe33b303bdbc1e723c21a85169b0ceb6aef932ca0a1",
+    "tokenUsage": "b8ca310eb4bf365269d48966aa8dc76ebc6852b5708465224cb732cd5be0e1b5",
+    "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+    "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420"
+  },
+  "observations": {
+    "AC-1": "fresh light html.light + color-scheme light + body oklch(1 0 0); toggle dark -> rnr-theme=dark, html.dark=true, html.light=false, body oklch(0.145 0 0), background swatch oklch(0.145 0 0), current-value cell oklch(0.145 0 0); first reload frame dark (html.dark at DOMContentLoaded); toggle light -> reverse.",
+    "AC-3": "no-JS: 20 rows with nonempty usage + oklch light/dark columns; background light oklch(1 0 0) / dark oklch(0.145 0 0); code-background + code-foreground carry DOCS-ONLY; #textclasscontext and #rendermarkdown each once; one data-token-table.",
+    "AC-4": "ClientRouter round trip Theming -> Dark mode -> Theming; reconnect re-populates background oklch(0.145 0 0) + code-background oklch(0.235 0 0); one click light -> code-background/foreground oklch(0.97 0 0)/oklch(0.205 0 0); one click dark -> oklch(0.235 0 0)/oklch(0.922 0 0); /components/message .code-block dark oklch(0.235 0 0)."
+  },
+  "references": [
+    "tests/sprint-05-orient-search/evidence/ORI-AST-003/manifest.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red"
+  ]
+}

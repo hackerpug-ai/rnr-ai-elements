@@ -1,93 +1,61 @@
 ---
 /**
- * SHELL-009 — /docs/theming: the content-shaped cold-boot surface FLOW-SHELL-02
- * lands on. Authored prose states only what the shell does today, pinned to the
- * four copy-stable anchors ('ship no tokens', 'oklch', 'prefers-color-scheme',
- * 'toggle' — SHELL-010 may reword around them, never remove them). The
- * TokenTable live demo and Expressive Code theming are sprint-05's remainder on
- * this same route and are deliberately absent, not faked.
+ * /docs/theming (ORI-AST-003) — the static route that binds ORI-CONT-002's
+ * reviewed collection manuscript to the real TokenTable component.
+ *
+ * The authored manuscript (`src/content/docs/theming.mdx`) declares exactly one
+ * bare `<TokenTable />` with no import — the content contract forbids importing
+ * the absent component. Astro's `render(entry)` exposes the `Content` component,
+ * and the `<Content components={{ TokenTable }} />` prop is the render-time
+ * binding that supplies it. The catch-all (`/docs/[...id]`) excludes the
+ * reserved `theming` slug (docs-navigation RESERVED_DOC_SLUGS), so this static
+ * route stays the single destination and the manuscript renders only here.
+ *
+ * The heading texts `TextClassContext` and `renderMarkdown` are preserved from
+ * the manuscript, so `/docs/theming#textclasscontext` and
+ * `/docs/theming#rendermarkdown` keep resolving through the same github-slugger
+ * ids the collection nav derives.
  */
-import DocsLayout from '../../layouts/DocsLayout.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import { join, sep } from 'node:path';
+import MarkdownLayout from '../../layouts/MarkdownLayout.astro';
+import TokenTable from '../../components/TokenTable.astro';
+import {
+  assertUniqueDestinations,
+  sectionNavigation,
+  type DocsCollectionEntry,
+  type SectionNavGroup,
+} from '../../lib/docs-navigation';
+
+// The publication contract the catch-all uses: the raw sources must resolve to
+// unique destinations before any route renders, and the section navigation
+// derives from the same published set.
+const contentDir = join(process.cwd(), 'src', 'content', 'docs');
+assertUniqueDestinations(contentDir);
+const entries = await getCollection('docs');
+const nav: SectionNavGroup[] = sectionNavigation(entries as unknown as DocsCollectionEntry[]);
+
+const entry = await getEntry('docs', 'theming');
+if (!entry) {
+  throw new Error('[docs/theming] the reviewed theming collection entry is missing');
+}
+
+const { Content, headings } = await render(entry);
+
+const sourcePath = entry.filePath
+  ? `apps/docs/${entry.filePath.split(sep).join('/')}`
+  : 'apps/docs/src/content/docs/theming.mdx';
+const editUrl = `https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/${sourcePath}`;
 ---
 
-<DocsLayout title="Theming — RNR AI Elements">
-  <main class="theming">
-    <h1>Theming</h1>
-
-    <p>
-      The registry items ship no tokens of their own. Each one you copy in
-      reads its colors from your app's Tailwind v4 <code>@theme</code> block.
-      Re-theming your product never touches registry code. There is no
-      <code>tailwind.config.js</code> and no theme setting to configure.
-    </p>
-
-    <p>
-      This site reads its colors from one token sheet of plain CSS custom
-      properties — no Tailwind, no <code>@theme</code> block. Every color in
-      that sheet is an <code>oklch</code> value, and the dark values are the
-      defaults. The sheet itself never reads your OS
-      <code>prefers-color-scheme</code> setting. A script in the page head
-      resolves your theme before first paint: your stored choice first, then
-      your OS scheme, then dark.
-    </p>
-
-    <p>
-      The toggle in the site header is the live control. It flips a
-      <code>light</code> class on the root element, and every token re-resolves
-      in place — no reload, no second stylesheet.
-    </p>
-
-    <section id="textclasscontext">
-      <h2>The TextClassContext seam</h2>
-      <p>
-        React Native has no style cascade: a parent view cannot restyle the
-        text inside a child component just by wrapping it. Registry parents
-        that need to restyle nested text — message, prompt-input, tool, and
-        the other list-bearing components — instead publish their class
-        strings through the <code>TextClassContext</code> provider from the
-        text module. Those class strings are ordinary Tailwind classes, so
-        they resolve against your <code>@theme</code> block exactly like the
-        classes you write yourself.
-      </p>
-    </section>
-
-    <section id="rendermarkdown">
-      <h2>The renderMarkdown seam</h2>
-      <p>
-        The components that render model output — message, reasoning, context
-        — do not bundle a markdown renderer. Each takes a
-        <code>renderMarkdown</code> prop and defaults to plain text. The
-        reference renderer, <code>react-native-enriched-markdown</code>, is a
-        Fabric native module absent from Expo 57's bundled list; keeping it
-        behind the prop is what leaves the core runnable in Expo Go, with
-        markdown an opt-in step for dev-client apps.
-      </p>
-    </section>
-
-    <nav class="theming__onward" aria-label="Onward">
-      <a href="/">Back to the home page</a>
-      <a href="/components">Browse components</a>
-    </nav>
-  </main>
-</DocsLayout>
-
-<style>
-  .theming {
-    max-width: 64rem;
-    margin-inline: auto;
-    padding: 1.5rem;
-  }
-  .theming p {
-    max-width: var(--measure);
-  }
-  /* Seam-section anchors stop clear of the sticky Header (SectionHeader idiom). */
-  #textclasscontext,
-  #rendermarkdown {
-    scroll-margin-block-start: calc(var(--layout-header-h) + 1rem);
-  }
-  .theming__onward {
-    display: flex;
-    gap: 1rem;
-    margin-block-start: 2rem;
-  }
-</style>
+<MarkdownLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  section={entry.data.section}
+  headings={headings}
+  nav={nav}
+  editUrl={editUrl}
+  id="theming"
+>
+  <Content components={{ TokenTable }} />
+</MarkdownLayout>

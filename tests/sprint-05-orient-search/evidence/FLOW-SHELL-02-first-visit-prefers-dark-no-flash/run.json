@@ -1,0 +1,21 @@
+{
+  "runIdentity": "ori-ast-003-1789460100000",
+  "command": "pnpm exec playwright test tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+  "exit": 0,
+  "result": "3 passed (chromium-desktop, chromium-mobile, chromium-nojs)",
+  "sourceHashes": {
+    "sourceCommit": "4e1b2093044ee1d296f7ac5c29c6fdfae56d90e2",
+    "testSpec": "7af96babf0c4888d0ff0d344eefba2355ff1b2bf739e87bccf88554b31cdf152",
+    "tokenTable": "301600674573ddfe8df74284fdc8002ea45da7a11ffd630cafa9226a1fa3d04c",
+    "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+    "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420"
+  },
+  "observations": {
+    "AC-2": "independent dark-scheme cold contexts on /docs/theming, / and /components/message: html.dark=true + html.light=false + color-scheme dark at body parse; first recorded frame paints oklch(0.145 0 0) and no later light frame; /docs/theming code-background row reads oklch(0.235 0 0); /components/message .code-block resolves the dark code theme oklch(0.235 0 0)."
+  },
+  "references": [
+    "tests/sprint-05-orient-search/evidence/ORI-AST-003/manifest.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/proof.red"
+  ]
+}
