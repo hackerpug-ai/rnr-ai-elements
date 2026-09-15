@@ -2,13 +2,11 @@
   // ORI-DEP-001 — assets-only Workers static-assets deployment for the docs site.
   // No application entrypoint, no router, no bindings, no Pages configuration.
   //
-  // account_id is the VERIFIED owning account (observed via `wrangler whoami`,
-  // 2026-09-14). zone_id is a planning placeholder: the active zone identity is
-  // NOT observable with the permitted read-only tools (wrangler exposes no zone
-  // listing, and the task forbids reading the cached OAuth token to query the
-  // zones API). The attended first-domain attachment resolves and verifies the
-  // active zone_id before any deploy; see tests/sprint-05-orient-search/
-  // initial-deployment.md and authority.json.
+  // account_id (d5110b1895ee190e145c0c8756f49879) and zone_id
+  // (1720eac2fbdd7dc2b975ffdfccbee97f) are VERIFIED identities observed
+  // 2026-09-14/15 via `wrangler whoami` and GET /client/v4/zones?name=
+  // rnraielements.com with the owner-granted User API Token. The zone is
+  // `status: active`, not paused.
   "name": "rnr-ai-elements-docs",
   "account_id": "d5110b1895ee190e145c0c8756f49879",
   "compatibility_date": "2026-09-13",
@@ -23,7 +21,7 @@
     {
       "pattern": "rnraielements.com",
       "custom_domain": true,
-      "zone_id": "Populate with the verified active zone ID before execution."
+      "zone_id": "1720eac2fbdd7dc2b975ffdfccbee97f"
     }
   ]
 }
