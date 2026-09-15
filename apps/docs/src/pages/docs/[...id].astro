@@ -1,0 +1,69 @@
+---
+/**
+ * /docs/[...id] — the catch-all static route for authored documentation
+ * (CAP-DOCS-01). getStaticPaths fans one page per published collection entry
+ * (drafts excluded, the reserved theming slug excluded so the static
+ * /docs/theming route stays authoritative), through the real collection loader.
+ * Each page renders the manuscript via `render()` — the authored MDX binding
+ * contract — and hands the result, its source-derived headings, and the
+ * publication navigation to MarkdownLayout. The edit URL identifies the
+ * manuscript's recorded path under apps/docs/src/content/docs/.
+ */
+import { getCollection, getEntry, render } from 'astro:content';
+import { join } from 'node:path';
+import MarkdownLayout from '../../layouts/MarkdownLayout.astro';
+import {
+  assertUniqueDestinations,
+  publishedDocs,
+  sectionNavigation,
+  type DocsCollectionEntry,
+  type PublishedDoc,
+  type SectionNavGroup,
+} from '../../lib/docs-navigation';
+
+export async function getStaticPaths() {
+  // Deterministic collision gate: the raw sources must resolve to unique
+  // published destinations before any route is generated (the loader's own
+  // duplicate warning races under concurrent file processing). getStaticPaths
+  // runs in its own prerender scope, so resolve the content dir from the build
+  // process cwd (the docs project root) rather than a module-level const.
+  const contentDir = join(process.cwd(), 'src', 'content', 'docs');
+  assertUniqueDestinations(contentDir);
+  const entries = await getCollection('docs');
+  const typed = entries as unknown as DocsCollectionEntry[];
+  const nav = sectionNavigation(typed);
+  const docs = publishedDocs(typed);
+  return docs.map((doc) => ({
+    params: { id: doc.id },
+    props: { doc, nav },
+  }));
+}
+
+interface Props {
+  doc: PublishedDoc;
+  nav: SectionNavGroup[];
+}
+
+const { doc, nav } = Astro.props;
+
+const entry = await getEntry('docs', doc.id);
+if (!entry) {
+  throw new Error(`[docs/${doc.id}] collection entry vanished after publication derivation`);
+}
+
+const { Content, headings } = await render(entry);
+
+const editUrl = `https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/${doc.sourcePath}`;
+---
+
+<MarkdownLayout
+  title={doc.title}
+  description={doc.description}
+  section={doc.section}
+  headings={headings}
+  nav={nav}
+  editUrl={editUrl}
+  id={doc.id}
+>
+  <Content />
+</MarkdownLayout>

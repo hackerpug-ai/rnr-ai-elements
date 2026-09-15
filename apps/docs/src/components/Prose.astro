@@ -1,0 +1,30 @@
+---
+/**
+ * Prose (TR-07 R4) — the long-form article wrapper. Contains the rendered
+ * Markdown/MDX content (the <Content /> component) with a 70ch measure, anchored
+ * headings, and token-governed inline code pills. Zero JS. This component is the
+ * semantic contract Astro owns before frontend-designer styles it.
+ */
+---
+
+<div class="prose">
+  <slot />
+</div>
+
+<style>
+  .prose {
+    max-width: var(--measure);
+  }
+  .prose :global(h2[id]),
+  .prose :global(h3[id]) {
+    scroll-margin-top: calc(var(--layout-header-h) + 1rem);
+  }
+  /* Long-form rhythm — prose owns its own spacing, not a cascade into the shell. */
+  .prose :global(p) {
+    line-height: 1.65;
+  }
+  /* Rendered code fences (Expressive Code) stay full-width inside the measure. */
+  .prose :global(.expressive-code) {
+    margin-block: 1.5rem;
+  }
+</style>
