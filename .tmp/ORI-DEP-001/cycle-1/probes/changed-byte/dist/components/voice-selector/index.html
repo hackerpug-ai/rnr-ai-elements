@@ -1,0 +1,721 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Voice Selector — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Voice Selector — The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Prompt Input</p><h1 data-astro-cid-ziig2kl5>Voice Selector</h1><p class="item-description" data-astro-cid-ziig2kl5>The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from the caller&#39;s native speech synthesis provider — no audio dependency in the registry, preview playback is a caller callback reported back through previewingId/previewLoadingId. The PRD composition law is structural: the preview button lives in the row&#39;s action slot, so pressing it PLAYS and NEVER selects; three states (play, playing, loading-disabled), disabled-when-unwired. Upstream traps at byte parity: useVoiceSelector throws outside the root, the accent lookup is CASE-SENSITIVE (&#39;AMERICAN&#39; renders no flag), unknown genders fall back, explicit empty state. Shortcut and dialog parts dropped (no ⌘ on a phone; the sheet is the presentation).</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/voice-selector.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/voice-selector.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><ul class="deps-packages" data-deps-packages data-astro-cid-fdx2nnaa><li data-astro-cid-fdx2nnaa><code data-astro-cid-fdx2nnaa>react-native-reanimated</code></li></ul><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/command.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/item.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/command.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/item.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>voice-selector.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Button } from &#39;@/registry/nativewind/components/ui/button&#39;;
+import { Command } from &#39;@/registry/nativewind/components/ui/command&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+} from &#39;@/registry/nativewind/components/ui/item&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  AudioLinesIcon,
+  ChevronsUpDownIcon,
+  CircleSmallIcon,
+  LoaderCircleIcon,
+  MarsStrokeIcon,
+  NonBinaryIcon,
+  PauseIcon,
+  PlayIcon,
+  TransgenderIcon,
+  VenusAndMarsIcon,
+  VenusIcon,
+  MarsIcon,
+  type LucideIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { View, type ViewProps } from &#39;react-native&#39;;
+import Animated, {
+  cancelAnimation,
+  Easing,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from &#39;react-native-reanimated&#39;;
+import {
+  resolveVoiceGender,
+  voiceAccentFlag,
+  voicePreviewState,
+  type VoiceSelectorVoice,
+} from &#39;./voice-selector.logic&#39;;
+import type { CommandItem } from &#39;../ui/command.logic&#39;;
+
+/**
+ * VoiceSelector — the TTS voice picker (UC-VOICE-02 AC-2: &quot;select a text-to-speech
+ * voice from a bottom-sheet list showing each voice name and language&quot;).
+ *
+ * THE PRD VERDICT IS PORT-ADAPTED, PURE-RNR: &quot;Voice list ports, but the picker
+ * becomes a bottom sheet and the available voice set comes from the native speech
+ * synthesis provider rather than the browser.&quot; The set is therefore CALLER-SUPPLIED
+ * (expo-speech&#39;s getVoices(), a provider roster) — the browser&#39;s voice enumeration
+ * has no RN equivalent, and the registry takes no audio dependency. Preview playback
+ * is a caller callback too: onPreview(voice) fires, the component only DISPLAYS the
+ * state you report back.
+ *
+ * THE COMPOSITION LAW (the PRD&#39;s own words): &quot;tapping the preview button PLAYS the
+ * sample and must NOT select the voice. Two nested targets, two distinct outcomes.&quot;
+ * Realized structurally: the preview Button lives in the row&#39;s ItemActions, and React
+ * Native&#39;s responder system gives the touch to the DEEPEST pressable — the row&#39;s
+ * onPress never fires when the preview is the target. The preview target is RNR&#39;s
+ * h-10 icon Button + hitSlop (the 44pt house formula), visually separated in the
+ * row&#39;s action slot per the KB&#39;s mistap advice. THE ROW-PRESS-DOES-NOT-FIRE HALF IS
+ * A DEVICE-TIER CLAIM — verify it on the sign-off run.
+ *
+ * PREVIEW STATES are the web&#39;s three: idle (play mark, &quot;Play preview&quot;), playing
+ * (pause mark, &quot;Pause preview&quot;), loading (disabled). Report them with
+ * previewingId / previewLoadingId. With NO onPreview wired the control DISABLES
+ * rather than disappears (speech-input: a control that pretends to work is the lie).
+ *
+ * THE UPSTREAM TRAPS, PRESERVED AT BYTE PARITY:
+ *  - useVoiceSelector() outside &lt;VoiceSelector&gt; throws
+ *    &#39;VoiceSelector components must be used within VoiceSelector&#39;.
+ *  - The accent lookup is CASE-SENSITIVE — &quot;AMERICAN&quot; renders no flag (voice-selector.logic).
+ *  - Unknown genders fall back to a default mark rather than throwing.
+ *  - Type-to-filter with an explicit empty state (the command atom&#39;s).
+ *
+ * DROPPED ON THE RECORD: VoiceSelectorShortcut (⌘ hints — no ⌘ on a phone, PRD port
+ * advice) and VoiceSelectorDialog (the ⌘K dialog variant — the bottom sheet IS the
+ * presentation). Input/List/Item/Empty are absorbed into the command atom; rows are
+ * data-driven because the list is a FlatList (the KB: &quot;a voice picker can carry
+ * hundreds of entries&quot;).
+ *
+ * Composition:
+ *   &lt;VoiceSelector voices={VOICES} value={v} onValueChange={setV} onPreview={play}
+ *                  previewingId={playingId} previewLoadingId={loadingId}&gt;
+ *     &lt;VoiceSelectorTrigger /&gt;
+ *   &lt;/VoiceSelector&gt;
+ */
+
+// The web&#39;s full mark set (voice-selector.tsx:205-229), at the web&#39;s size-4 (16px);
+// omitted or unknown input falls to the default mark rather than throwing.
+const genderIcons: Record&lt;string, LucideIcon&gt; = {
+  male: MarsIcon,
+  female: VenusIcon,
+  transgender: TransgenderIcon,
+  androgyne: MarsStrokeIcon,
+  &#39;non-binary&#39;: NonBinaryIcon,
+  intersex: VenusAndMarsIcon,
+  unknown: CircleSmallIcon,
+};
+
+type VoiceSelectorContextValue = {
+  value: string | undefined;
+  setValue: (value: string) =&gt; void;
+  open: boolean;
+  setOpen: (open: boolean) =&gt; void;
+  /** The roster, so the default trigger can resolve an id to its NAME. */
+  voices: readonly VoiceSelectorVoice[];
+};
+
+const VoiceSelectorContext = React.createContext&lt;VoiceSelectorContextValue | null&gt;(null);
+
+/**
+ * The web hook, byte-shape ({ value, setValue, open, setOpen }) and byte-trap
+ * (throws outside the provider). setValue notifies onValueChange WITHOUT closing —
+ * the row press is what selects-and-closes, the hook is the programmatic seam.
+ */
+function useVoiceSelector(): VoiceSelectorContextValue {
+  const ctx = React.useContext(VoiceSelectorContext);
+  if (!ctx) {
+    throw new Error(&#39;VoiceSelector components must be used within VoiceSelector&#39;);
+  }
+  return ctx;
+}
+
+type VoiceSelectorProps = {
+  /** The voices YOUR provider offers — native TTS or a hosted roster. */
+  voices: readonly VoiceSelectorVoice[];
+  value: string | undefined;
+  onValueChange: (value: string) =&gt; void;
+  /** Play this voice&#39;s sample. Absent → every preview control DISABLES, never fakes. */
+  onPreview?: (voice: VoiceSelectorVoice) =&gt; void;
+  /** The voice whose sample is currently playing (pause mark on that row). */
+  previewingId?: string;
+  /** The voice whose sample is loading (disabled control on that row). */
+  previewLoadingId?: string;
+  open?: boolean;
+  /** The web contract ships defaultOpen; the sheet opens closed without it. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) =&gt; void;
+  placeholder?: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  /** The sheet&#39;s screen-reader title — the web Content&#39;s `title` prop. */
+  title?: string;
+  /** Passed to the sheet content — height and padding adjustments. */
+  className?: string;
+  children?: React.ReactNode;
+};
+
+function VoiceSelector({
+  voices,
+  value,
+  onValueChange,
+  onPreview,
+  previewingId,
+  previewLoadingId,
+  open: openProp,
+  defaultOpen = false,
+  onOpenChange,
+  placeholder = &#39;Search voices…&#39;,
+  emptyTitle = &#39;No voices found&#39;,
+  emptyDescription = &#39;Try a different search.&#39;,
+  title = &#39;Select AI Voice&#39;,
+  className,
+  children,
+}: VoiceSelectorProps) {
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const open = openProp ?? internalOpen;
+  const setOpen = React.useCallback(
+    (next: boolean) =&gt; {
+      if (openProp === undefined) setInternalOpen(next);
+      onOpenChange?.(next);
+    },
+    [openProp, onOpenChange],
+  );
+
+  const setValue = React.useCallback(
+    (next: string) =&gt; {
+      onValueChange(next);
+    },
+    [onValueChange],
+  );
+
+  const items = React.useMemo(
+    () =&gt;
+      voices.map((v) =&gt; ({
+        value: v.id,
+        label: v.name,
+        description: v.description,
+        keywords: [v.accent, v.age, v.keywords].filter(Boolean).join(&#39; &#39;) || undefined,
+        group: v.group,
+      })),
+    [voices],
+  );
+  const voicesById = React.useMemo(
+    () =&gt; new Map(voices.map((v) =&gt; [v.id, v])),
+    [voices],
+  );
+
+  function renderRow({ item, selected }: { item: CommandItem; selected: boolean }) {
+    const voice = voicesById.get(item.value);
+    if (!voice) return null;
+    return (
+      &lt;Item
+        variant={selected ? &#39;muted&#39; : &#39;default&#39;}
+        onPress={() =&gt; {
+          onValueChange(voice.id);
+          setOpen(false);
+        }}
+      &gt;
+        &lt;ItemContent&gt;
+          &lt;VoiceSelectorName&gt;{voice.name}&lt;/VoiceSelectorName&gt;
+          &lt;VoiceSelectorAttributes voice={voice} /&gt;
+          {voice.description ? (
+            &lt;VoiceSelectorDescription&gt;{voice.description}&lt;/VoiceSelectorDescription&gt;
+          ) : null}
+        &lt;/ItemContent&gt;
+        &lt;ItemActions&gt;
+          &lt;VoiceSelectorPreview
+            playing={voicePreviewState(voice.id, previewingId, previewLoadingId) === &#39;playing&#39;}
+            loading={voicePreviewState(voice.id, previewingId, previewLoadingId) === &#39;loading&#39;}
+            onPlay={onPreview ? () =&gt; onPreview(voice) : undefined}
+          /&gt;
+        &lt;/ItemActions&gt;
+      &lt;/Item&gt;
+    );
+  }
+
+  const contextValue = React.useMemo&lt;VoiceSelectorContextValue&gt;(
+    () =&gt; ({ value, setValue, open, setOpen, voices }),
+    [value, setValue, open, setOpen, voices],
+  );
+
+  return (
+    &lt;VoiceSelectorContext.Provider value={contextValue}&gt;
+      &lt;Command
+        open={open}
+        onOpenChange={setOpen}
+        items={items}
+        value={value}
+        onSelect={(next) =&gt; {
+          onValueChange(next);
+          setOpen(false);
+        }}
+        renderItem={renderRow}
+        // The rows read previewingId/previewLoadingId from the closure — without
+        // extraData the FlatList would keep stale rows while the sheet is open.
+        extraData={[previewingId, previewLoadingId]}
+        placeholder={placeholder}
+        emptyTitle={emptyTitle}
+        emptyDescription={emptyDescription}
+        title={title}
+        className={className}
+      &gt;
+        {children}
+      &lt;/Command&gt;
+    &lt;/VoiceSelectorContext.Provider&gt;
+  );
+}
+
+type VoiceSelectorTriggerProps = {
+  /** Overrides the default outline button (web: children on the trigger). */
+  children?: React.ReactNode;
+  className?: string;
+};
+
+function VoiceSelectorTrigger({ children, className }: VoiceSelectorTriggerProps) {
+  const { value, open, setOpen, voices } = useVoiceSelector();
+  // The trigger reads the NAME, never the raw id (findMicRoute/resolveModelLabel
+  // precedent — review M1: an id like &#39;voice-9f2a&#39; is not a human label).
+  const label = value === undefined ? &#39;Select voice&#39; : (voices.find((v) =&gt; v.id === value)?.name ?? value);
+
+  return (
+    children ?? (
+      &lt;Button
+        variant=&quot;outline&quot;
+        onPress={() =&gt; setOpen(!open)}
+        accessibilityLabel={`Select voice, current: ${label}`}
+        accessibilityState={{ expanded: open }}
+        className={cn(&#39;justify-between gap-2&#39;, className)}
+      &gt;
+        &lt;Icon as={AudioLinesIcon} size={16} className=&quot;text-muted-foreground&quot; /&gt;
+        &lt;Text numberOfLines={1} className=&quot;flex-1 text-left&quot;&gt;
+          {label}
+        &lt;/Text&gt;
+        &lt;Icon as={ChevronsUpDownIcon} size={16} className=&quot;shrink-0 text-muted-foreground&quot; /&gt;
+      &lt;/Button&gt;
+    )
+  );
+}
+
+type VoiceSelectorNameProps = {
+  children: string;
+  className?: string;
+};
+
+/** The voice&#39;s display name — the web part, one Text. */
+function VoiceSelectorName({ children, className }: VoiceSelectorNameProps) {
+  return &lt;ItemTitle className={className}&gt;{children}&lt;/ItemTitle&gt;;
+}
+
+type VoiceSelectorDescriptionProps = {
+  children: string;
+  className?: string;
+};
+
+/** The voice&#39;s optional second line — the web part, one Text. */
+function VoiceSelectorDescription({ children, className }: VoiceSelectorDescriptionProps) {
+  return &lt;ItemDescription className={className}&gt;{children}&lt;/ItemDescription&gt;;
+}
+
+type VoiceSelectorAttributesProps = {
+  voice: VoiceSelectorVoice;
+  className?: string;
+};
+
+/**
+ * The gender/accent/age line. Renders nothing when the voice carries no attribute
+ * fields at all — the web composes the Attributes part per item, so a voice with no
+ * attributes shows no line, not an empty one. Unknown accents leave a GAP (upstream&#39;s
+ * empty span), never a placeholder glyph.
+ */
+function VoiceSelectorAttributes({ voice, className }: VoiceSelectorAttributesProps) {
+  const flag = voiceAccentFlag(voice.accent);
+  const age = voice.age?.trim();
+  const hasAny = Boolean(voice.gender || flag || age);
+  if (!hasAny) return null;
+
+  const trailing = [flag, age].filter((part): part is string =&gt; Boolean(part)).join(&#39; • &#39;);
+
+  return (
+    &lt;View className={cn(&#39;flex-row items-center gap-1&#39;, className)}&gt;
+      &lt;VoiceSelectorGender value={voice.gender} /&gt;
+      {trailing ? (
+        &lt;Text numberOfLines={1} className=&quot;text-xs text-muted-foreground tabular-nums&quot;&gt;
+          {trailing}
+        &lt;/Text&gt;
+      ) : null}
+    &lt;/View&gt;
+  );
+}
+
+type VoiceSelectorGenderProps = {
+  /** One of VOICE_GENDERS — anything else renders the default mark. */
+  value?: string;
+  className?: string;
+};
+
+/**
+ * The gender mark — the web&#39;s full set (male/female/transgender/androgyne/non-binary/
+ * intersex) at size-4/16px, default CircleSmallIcon for omitted or unknown values
+ * (voice-selector.tsx:205-229).
+ */
+function VoiceSelectorGender({ value, className }: VoiceSelectorGenderProps) {
+  const gender = resolveVoiceGender(value);
+  return (
+    &lt;View accessible accessibilityLabel={`Voice gender: ${gender}`}&gt;
+      &lt;Icon
+        as={genderIcons[gender]}
+        size={16}
+        className={cn(&#39;shrink-0 text-muted-foreground&#39;, className)}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+type VoiceSelectorAccentProps = {
+  /** One of the 30 lowercase accent keys — CASE-SENSITIVE; unknown renders NOTHING. */
+  value?: string;
+  className?: string;
+};
+
+/**
+ * The accent flag, upstream byte-behavior: exactly-lowercase keys render their flag
+ * emoji; anything else renders nothing (the web&#39;s empty span — no placeholder).
+ */
+function VoiceSelectorAccent({ value, className }: VoiceSelectorAccentProps) {
+  const flag = voiceAccentFlag(value);
+  if (!flag) return null;
+  return (
+    &lt;Text className={cn(&#39;text-xs text-muted-foreground&#39;, className)} accessibilityLabel={value}&gt;
+      {flag}
+    &lt;/Text&gt;
+  );
+}
+
+type VoiceSelectorAgeProps = {
+  children?: string;
+  className?: string;
+};
+
+/** The free-text age band (&quot;40-50&quot;) — the web part, `tabular-nums` on (:423). */
+function VoiceSelectorAge({ children, className }: VoiceSelectorAgeProps) {
+  if (!children) return null;
+  return &lt;Text className={cn(&#39;text-xs text-muted-foreground tabular-nums&#39;, className)}&gt;{children}&lt;/Text&gt;;
+}
+
+type VoiceSelectorBulletProps = ViewProps;
+
+/**
+ * The attributes separator — the web&#39;s `•` span (aria-hidden, text-border;
+ * voice-selector.tsx:461-472). RNR Text has no cascade, so the web&#39;s inherited
+ * text-xs is stated explicitly.
+ */
+function VoiceSelectorBullet({ className, ...props }: VoiceSelectorBulletProps) {
+  return (
+    &lt;Text aria-hidden className={cn(&#39;text-xs text-border&#39;, className)} {...props}&gt;
+      •
+    &lt;/Text&gt;
+  );
+}
+
+type VoiceSelectorPreviewProps = {
+  playing?: boolean;
+  loading?: boolean;
+  /** Play this row&#39;s sample. Absent → the control DISABLES, never disappears. */
+  onPlay?: () =&gt; void;
+  className?: string;
+};
+
+/**
+ * The loading mark, spinning: the web&#39;s &lt;Spinner&gt; (voice-selector.tsx:505) as a
+ * Reanimated rotate — the PulseRing idiom (speech-input.tsx): withRepeat -1,
+ * ReduceMotion.System, cancelAnimation cleanup. Under the OS reduce-motion setting
+ * the animation resolves to its end value — the mark sits still instead of spinning.
+ */
+function SpinningLoaderIcon({ className }: { className?: string }) {
+  const rotation = useSharedValue(0);
+
+  React.useEffect(() =&gt; {
+    rotation.value = withRepeat(
+      withTiming(360, { duration: 1000, easing: Easing.linear, reduceMotion: ReduceMotion.System }),
+      -1,
+      false,
+    );
+    return () =&gt; cancelAnimation(rotation);
+  }, [rotation]);
+
+  const style = useAnimatedStyle(() =&gt; ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
+
+  return (
+    &lt;Animated.View style={style}&gt;
+      &lt;Icon as={LoaderCircleIcon} size={12} className={className} /&gt;
+    &lt;/Animated.View&gt;
+  );
+}
+
+/**
+ * THE TWO-TARGET LAW&#39;S PLAY HALF. Lives in the row&#39;s action slot — a nested pressable
+ * wins the touch over the row, so pressing this NEVER selects the voice. Three
+ * states: play, playing (pause mark), loading (disabled) — and disabled-when-unwired
+ * (no onPlay), because a control that pretends to play is the lie (speech-input).
+ *
+ * Converged to the web control (voice-selector.tsx:511-518): variant outline, 12px
+ * mark. KEPT on the record: the 40pt hit target (the web button is size-6/24px —
+ * under the touch floor) and disabled-when-unwired. The mark inherits the outline
+ * button&#39;s text class, as the web&#39;s bare icons inherit — no explicit color.
+ */
+function VoiceSelectorPreview({ playing, loading, onPlay, className }: VoiceSelectorPreviewProps) {
+  const label = loading ? &#39;Loading preview&#39; : playing ? &#39;Pause preview&#39; : &#39;Play preview&#39;;
+
+  return (
+    &lt;Button
+      variant=&quot;outline&quot;
+      size=&quot;icon&quot;
+      disabled={loading || !onPlay}
+      onPress={onPlay}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: loading || !onPlay, busy: loading }}
+      // House formula (item/attachments precedent): h-10 + hitSlop 2/side = the 44pt
+      // platform minimum, no pixel of extra chrome.
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={cn(&#39;shrink-0&#39;, className)}
+    &gt;
+      {loading ? &lt;SpinningLoaderIcon /&gt; : &lt;Icon as={playing ? PauseIcon : PlayIcon} size={12} /&gt;}
+    &lt;/Button&gt;
+  );
+}
+
+export {
+  useVoiceSelector,
+  VoiceSelector,
+  VoiceSelectorAccent,
+  VoiceSelectorAge,
+  VoiceSelectorAttributes,
+  VoiceSelectorBullet,
+  VoiceSelectorDescription,
+  VoiceSelectorGender,
+  VoiceSelectorName,
+  VoiceSelectorPreview,
+  VoiceSelectorTrigger,
+};
+export type { VoiceSelectorVoice };
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy voice-selector.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>voice-selector.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * VoiceSelector — pure logic. Zero react-native imports, so the Vitest tier owns it
+ * (see the header of sources.logic.ts for why component files themselves cannot load
+ * under Node).
+ *
+ * The web original&#39;s voice set comes from the browser TTS API; the PRD verdict
+ * (port-adapted) says the available voice set comes from the NATIVE speech synthesis
+ * provider — so the list is caller-supplied here and this file holds what the
+ * component derives from it: the accent→flag table, the gender fallback, and the
+ * preview-button state machine.
+ */
+
+/** One voice the caller offers (native TTS provider, ElevenLabs roster, …). */
+export type VoiceSelectorVoice = {
+  id: string;
+  name: string;
+  /** Section heading — the web&#39;s VoiceSelectorGroup heading, caller-defined. */
+  group?: string;
+  description?: string;
+  /** &#39;male&#39; | &#39;female&#39; | &#39;transgender&#39; | &#39;non-binary&#39; — anything else falls back, never throws. */
+  gender?: string;
+  /** One of the VOICE_ACCENTS keys, CASE-SENSITIVE (upstream byte-behavior). */
+  accent?: string;
+  /** Free text, e.g. &quot;40-50&quot;. */
+  age?: string;
+  /** Extra filter terms beyond name, accent, age and description. */
+  keywords?: string;
+};
+
+/**
+ * The web original&#39;s accent table, verbatim: 30 lowercase keys, each to a flag
+ * emoji. THE LOOKUP IS CASE-SENSITIVE — upstream renders nothing for &quot;AMERICAN&quot;
+ * (the KB&#39;s documented trap), and the port preserves that byte-behavior rather than
+ * silently normalizing data the caller can normalize themselves. Android flag-glyph
+ * coverage varies (KB port advice); the accent is ALSO carried into the filter
+ * keywords, so the text channel is never lost.
+ */
+export const VOICE_ACCENTS = {
+  american: &#39;🇺🇸&#39;,
+  british: &#39;🇬🇧&#39;,
+  australian: &#39;🇦🇺&#39;,
+  canadian: &#39;🇨🇦&#39;,
+  irish: &#39;🇮🇪&#39;,
+  scottish: &#39;🏴󠁧󠁢󠁳󠁣󠁴󠁿&#39;,
+  indian: &#39;🇮🇳&#39;,
+  &#39;south-african&#39;: &#39;🇿🇦&#39;,
+  &#39;new-zealand&#39;: &#39;🇳🇿&#39;,
+  spanish: &#39;🇪🇸&#39;,
+  french: &#39;🇫🇷&#39;,
+  german: &#39;🇩🇪&#39;,
+  italian: &#39;🇮🇹&#39;,
+  portuguese: &#39;🇵🇹&#39;,
+  brazilian: &#39;🇧🇷&#39;,
+  mexican: &#39;🇲🇽&#39;,
+  argentinian: &#39;🇦🇷&#39;,
+  japanese: &#39;🇯🇵&#39;,
+  chinese: &#39;🇨🇳&#39;,
+  korean: &#39;🇰🇷&#39;,
+  russian: &#39;🇷🇺&#39;,
+  arabic: &#39;🇸🇦&#39;,
+  dutch: &#39;🇳🇱&#39;,
+  swedish: &#39;🇸🇪&#39;,
+  norwegian: &#39;🇳🇴&#39;,
+  danish: &#39;🇩🇰&#39;,
+  finnish: &#39;🇫🇮&#39;,
+  polish: &#39;🇵🇱&#39;,
+  turkish: &#39;🇹🇷&#39;,
+  greek: &#39;🇬🇷&#39;,
+} as const;
+
+export type VoiceAccent = keyof typeof VOICE_ACCENTS;
+
+/**
+ * The flag for `accent`, or undefined when it is unknown or not exactly lowercase —
+ * &quot;AMERICAN&quot; renders NOTHING, by upstream behavior. Callers render nothing for
+ * undefined, which is the web&#39;s empty span.
+ */
+export function voiceAccentFlag(accent: string | undefined): string | undefined {
+  if (!accent) return undefined;
+  return (VOICE_ACCENTS as Record&lt;string, string | undefined&gt;)[accent];
+}
+
+export const VOICE_GENDERS = [
+  &#39;male&#39;,
+  &#39;female&#39;,
+  &#39;transgender&#39;,
+  &#39;androgyne&#39;,
+  &#39;non-binary&#39;,
+  &#39;intersex&#39;,
+] as const;
+
+export type VoiceGender = (typeof VOICE_GENDERS)[number] | &#39;unknown&#39;;
+
+/**
+ * The gender key for the icon lookup. UNKNOWN VALUES FALL BACK, NEVER THROW (the
+ * KB&#39;s documented gender behavior) — and unlike the accent table, the match is
+ * case-INSENSITIVE: the web documents graceful fallback for gender with no
+ * case-sensitivity language, so &quot;Male&quot; resolves instead of silently icon-less.
+ * undefined and unrecognized inputs return &#39;unknown&#39;, which renders the default mark.
+ */
+export function resolveVoiceGender(gender: string | undefined): VoiceGender {
+  const key = gender?.trim().toLowerCase();
+  return (VOICE_GENDERS as readonly string[]).includes(key ?? &#39;&#39;)
+    ? (key as Exclude&lt;VoiceGender, &#39;unknown&#39;&gt;)
+    : &#39;unknown&#39;;
+}
+
+export type VoicePreviewState = &#39;idle&#39; | &#39;playing&#39; | &#39;loading&#39;;
+
+/**
+ * The preview button&#39;s state for one voice: loading wins over playing (a restart
+ * requested mid-playback shows loading), playing needs previewingId === voiceId, and
+ * everything else is idle. Loading is disabled; playing shows the pause mark.
+ */
+export function voicePreviewState(
+  voiceId: string,
+  previewingId?: string,
+  previewLoadingId?: string,
+): VoicePreviewState {
+  if (previewLoadingId &amp;&amp; previewLoadingId === voiceId) return &#39;loading&#39;;
+  if (previewingId &amp;&amp; previewingId === voiceId) return &#39;playing&#39;;
+  return &#39;idle&#39;;
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy voice-selector.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>command.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Command — pure logic. Zero react-native imports, so the Vitest tier owns it (see the
+ * header of sources.logic.ts for why component files themselves cannot load under
+ * Node).
+ *
+ * Extracted when model-selector needed provider grouping and voice-selector needed
+ * custom rows: the palette&#39;s filter and its flat-item → render-rows transform are the
+ * two behaviors those selectors build on, and both are data-in/data-out. The component
+ * file consumes them; tests pin them.
+ */
+
+/** One selectable entry in the palette. `group` names the section heading it sits under. */
+export type CommandItem = {
+  value: string;
+  label: string;
+  description?: string;
+  /** Extra match terms beyond label and description — model-selector puts the provider here. */
+  keywords?: string;
+  /** Section heading. Ungrouped items render without a header, in list order. */
+  group?: string;
+};
+
+/** A row of the palette&#39;s list: either a section heading or a selectable item. */
+export type CommandRow =
+  | { kind: &#39;header&#39;; key: string; label: string }
+  | { kind: &#39;item&#39;; key: string; item: CommandItem; selected: boolean };
+
+/**
+ * The palette filter — the web original&#39;s cmdk match (case-insensitive substring
+ * across label, description and keywords). A blank query matches everything; a
+ * whitespace query is blank. Order is preserved — the caller&#39;s list order IS the
+ * display order.
+ */
+export function filterCommandItems&lt;T extends CommandItem&gt;(
+  items: readonly T[],
+  query: string,
+): T[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [...items];
+  return items.filter((i) =&gt;
+    `${i.label} ${i.description ?? &#39;&#39;} ${i.keywords ?? &#39;&#39;}`.toLowerCase().includes(q),
+  );
+}
+
+/**
+ * Interleave section headings into the flat item list: a group&#39;s heading renders the
+ * first time one of its items appears, so groups keep the caller&#39;s first-appearance
+ * order and interleaved groups each get exactly one header. Runs AFTER filtering, so
+ * a group whose items all failed the filter renders no header at all.
+ *
+ * `selected` is resolved here, not at render time, so the memoized row array changes
+ * identity when the selection changes — the FlatList&#39;s re-render trigger.
+ */
+export function buildCommandRows(
+  items: readonly CommandItem[],
+  value?: string,
+): CommandRow[] {
+  const rows: CommandRow[] = [];
+  const seen = new Set&lt;string&gt;();
+  for (const item of items) {
+    const group = item.group?.trim();
+    if (group &amp;&amp; !seen.has(group)) {
+      seen.add(group);
+      rows.push({ kind: &#39;header&#39;, key: `header:${group}`, label: group });
+    }
+    rows.push({ kind: &#39;item&#39;, key: item.value, item, selected: item.value === value });
+  }
+  return rows;
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy command.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>voices</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>readonly VoiceSelectorVoice[]</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The voices YOUR provider offers — native TTS or a hosted roster.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>value</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onValueChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>(value: string) =&gt; void</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onPreview</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((voice: VoiceSelectorVoice) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Play this voice&#39;s sample. Absent → every preview control DISABLES, never fakes.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>previewingId</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The voice whose sample is currently playing (pause mark on that row).</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>previewLoadingId</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The voice whose sample is loading (disabled control on that row).</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>open</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>defaultOpen</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The web contract ships defaultOpen; the sheet opens closed without it.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onOpenChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((open: boolean) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>placeholder</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;Search voices…&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>emptyTitle</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;No voices found&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>emptyDescription</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;Try a different search.&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>title</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;Select AI Voice&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The sheet&#39;s screen-reader title — the web Content&#39;s `title` prop.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>className</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Passed to the sheet content — height and padding adjustments.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-border</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>() =&gt; (
+      &lt;VoiceSelector
+        voices={[
+          { id: &#39;alloy&#39;, name: &#39;Alloy&#39;, group: &#39;Neutral&#39;, description: &#39;Balanced and clear&#39;, gender: &#39;female&#39;, accent: &#39;american&#39; },
+          { id: &#39;echo&#39;, name: &#39;Echo&#39;, group: &#39;Neutral&#39;, description: &#39;Warm and even&#39;, gender: &#39;male&#39;, accent: &#39;american&#39; },
+          { id: &#39;fable&#39;, name: &#39;Fable&#39;, group: &#39;Expressive&#39;, description: &#39;British storytelling&#39;, gender: &#39;female&#39;, accent: &#39;british&#39; },
+        ]}
+        value=&quot;alloy&quot;
+        onValueChange={() =&gt; {}}
+      &gt;
+        &lt;VoiceSelectorTrigger /&gt;
+      &lt;/VoiceSelector&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the voice-selector gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m1 0h1m2 0h1m1 0h3m1 0h4m1 0h7M4 5.5h1m5 0h1m1 0h3m2 0h1m2 0h2m4 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m3 0h4m1 0h3m1 0h1m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m1 0h3m2 0h5M4 12.5h1m1 0h2m1 0h3m1 0h1m3 0h1m1 0h6m1 0h1m2 0h1m1 0h2M4 13.5h2m2 0h1m3 0h2m2 0h4m2 0h8m1 0h2M5 14.5h2m2 0h3m1 0h3m1 0h1m3 0h2m2 0h1m3 0h3M4 15.5h1m1 0h1m1 0h2m4 0h1m1 0h1m2 0h2m1 0h1m1 0h5m2 0h2M5 16.5h1m1 0h4m2 0h2m3 0h6m6 0h1m1 0h1M4 17.5h2m1 0h1m4 0h2m1 0h2m1 0h3m2 0h5m1 0h1m2 0h1M5 18.5h1m2 0h1m1 0h3m3 0h2m4 0h3m2 0h3m2 0h1M4 19.5h1m1 0h2m3 0h1m2 0h2m2 0h1m1 0h1m3 0h2m2 0h2M5 20.5h3m2 0h1m1 0h5m1 0h2m2 0h1m1 0h2m2 0h1m3 0h1M8 21.5h2m1 0h1m4 0h1m1 0h2m2 0h1m1 0h1m2 0h1M4 22.5h1m3 0h6m3 0h3m1 0h2m2 0h1m2 0h2M6 23.5h2m1 0h1m2 0h2m1 0h4m1 0h3m2 0h1m3 0h3M5 24.5h2m2 0h2m2 0h3m1 0h2m2 0h2m1 0h7m1 0h1M12 25.5h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h5M4 26.5h7m1 0h5m1 0h1m1 0h5m1 0h1m1 0h4M4 27.5h1m5 0h1m1 0h1m3 0h5m1 0h1m1 0h1m3 0h1M4 28.5h1m1 0h3m1 0h1m5 0h1m2 0h1m1 0h1m2 0h5m1 0h2M4 29.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2m3 0h2m2 0h3m1 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m1 0h2m6 0h2m3 0h1m4 0h1M4 31.5h1m5 0h1m3 0h1m1 0h1m1 0h3m1 0h3m1 0h1m2 0h1m1 0h1M4 32.5h7m1 0h1m4 0h2m3 0h4m2 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/mic-selector" data-astro-cid-ziig2kl5>← mic-selector</a><a rel="next" href="/components/transcription" data-astro-cid-ziig2kl5>transcription →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

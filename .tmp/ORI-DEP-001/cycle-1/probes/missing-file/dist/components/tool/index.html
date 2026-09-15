@@ -1,0 +1,455 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Tool — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Tool — The tool-call card: status badge and disclosure for arguments and result. Covers every AI SDK tool-part state with no… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Tool</p><h1 data-astro-cid-ziig2kl5>Tool</h1><p class="item-description" data-astro-cid-ziig2kl5>The tool-call card: status badge and disclosure for arguments and result. Covers every AI SDK tool-part state with no unmapped case; input renders while arguments are still streaming and never throws on partial JSON; both output and errorText undefined renders empty, exactly as the web original.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/tool.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/tool.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><ul class="deps-packages" data-deps-packages data-astro-cid-fdx2nnaa><li data-astro-cid-fdx2nnaa><code data-astro-cid-fdx2nnaa>react-native-reanimated</code></li></ul><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/badge.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/mono.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/status.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/badge.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/mono.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/status.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>tool.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Badge } from &#39;@/registry/nativewind/components/ui/badge&#39;;
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from &#39;@/registry/nativewind/components/ui/collapsible&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { Text, TextClassContext } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { monoStyle } from &#39;@/registry/nativewind/lib/mono&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  CircleCheckIcon,
+  CircleHelpIcon,
+  CircleIcon,
+  CircleSlashIcon,
+  CircleXIcon,
+  ChevronDownIcon,
+  ClockIcon,
+  type LucideIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { Platform, ScrollView, View, type ViewProps } from &#39;react-native&#39;;
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from &#39;react-native-reanimated&#39;;
+import {
+  formatToolInput,
+  toolDisplayName,
+  toolStatusMeta,
+  type ToolStatus,
+  type ToolStatusIconName,
+} from &#39;./tool.logic&#39;;
+
+/**
+ * Tool — the tool-call card. Name, status badge, and a disclosure with the arguments
+ * and the result. It is the primary reason a chat UI reads as an agent.
+ *
+ * COMPOSITION IS THE WEB ORIGINAL&#39;S: Tool &gt; ToolHeader (state → badge) + ToolContent &gt;
+ * (ToolInput + ToolOutput). `state` sits on the HEADER exactly where the web original
+ * puts it, so a consumer streams `part.state` straight in — no adapter — and a state
+ * change swaps the badge in place without reflowing the transcript (UC-AGENT-01 AC-1).
+ * The status map itself is pure data in tool.logic.ts, covering EVERY AI SDK tool-part
+ * state; no state renders nothing.
+ *
+ * THE COLLAPSIBLE IS UNSTYLED at the primitive layer, so the disclosure look is
+ * invented here and kept minimal: `rounded-md border` with NO shadow — the tool card is
+ * an inset panel, which is exactly the shape law the design contract encodes. The
+ * chevron rotates with the house motion scale (250ms open / 200ms close) chained to
+ * ReduceMotion.System; the Running badge&#39;s clock pulses on RNR Skeleton&#39;s own
+ * 1000ms signature and is gated on useReducedMotion — one of the looping animations the
+ * design lens explicitly calls out, and the one place this registry is stricter than
+ * RNR&#39;s own Skeleton.
+ *
+ * INPUTS RENDER WHILE STILL STREAMING. During input-streaming the arguments are a
+ * half-arrived string; formatToolInput displays them verbatim and never throws, so a
+ * malformed partial never crashes the transcript. Long lines SCROLL horizontally — raw
+ * JSON never wraps on a phone.
+ *
+ * Both output and errorText undefined renders EMPTY — not a spinner, not an error. The
+ * web original&#39;s documented contract, preserved.
+ */
+
+type ToolContextValue = { open: boolean };
+
+const ToolContext = React.createContext&lt;ToolContextValue | null&gt;(null);
+
+function useTool() {
+  const ctx = React.useContext(ToolContext);
+  if (!ctx) throw new Error(&#39;Tool sub-components must be used within &lt;Tool&gt;&#39;);
+  return ctx;
+}
+
+type ToolProps = Omit&lt;ViewProps, &#39;children&#39;&gt; &amp; {
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) =&gt; void;
+  children?: React.ReactNode;
+};
+
+function Tool({ defaultOpen = false, onOpenChange, className, children, ...props }: ToolProps) {
+  const [open, setOpen] = React.useState(defaultOpen);
+
+  function handleOpenChange(next: boolean) {
+    setOpen(next);
+    onOpenChange?.(next);
+  }
+
+  return (
+    &lt;ToolContext.Provider value={{ open }}&gt;
+      &lt;Collapsible
+        open={open}
+        onOpenChange={handleOpenChange}
+        className={cn(&#39;rounded-md border border-border bg-muted/50&#39;, className)}
+        {...props}
+      &gt;
+        {children}
+      &lt;/Collapsible&gt;
+    &lt;/ToolContext.Provider&gt;
+  );
+}
+
+/** iconName (from tool.logic.ts) → Lucide component. Static and exhaustive by type. */
+const STATUS_ICONS: Record&lt;ToolStatusIconName, LucideIcon&gt; = {
+  circle: CircleIcon,
+  clock: ClockIcon,
+  &#39;circle-check&#39;: CircleCheckIcon,
+  &#39;circle-x&#39;: CircleXIcon,
+  &#39;circle-slash&#39;: CircleSlashIcon,
+  &#39;circle-help&#39;: CircleHelpIcon,
+};
+
+/**
+ * The status icon. Streaming carries the web&#39;s plain circle; Running carries the
+ * clock, and it is the one icon that pulses (remediation row 4, web tool.tsx:61-63).
+ * For the running state it pulses on RNR Skeleton&#39;s signature (1→0.5, 1000ms,
+ * reversed repeat) — and stands perfectly still when the OS asks for reduced motion,
+ * which changes nothing visually when the setting is off.
+ */
+function ToolStatusIcon({ state }: { state: ToolStatus }) {
+  const meta = toolStatusMeta(state);
+  const reduced = useReducedMotion();
+  const looping = state === &#39;input-available&#39;;
+  const opacity = useSharedValue(1);
+
+  React.useEffect(() =&gt; {
+    if (!looping || reduced) {
+      opacity.value = 1;
+      return;
+    }
+    opacity.value = withRepeat(
+      withTiming(0.5, { duration: 1000, reduceMotion: ReduceMotion.System }),
+      -1,
+      true,
+    );
+  }, [looping, reduced, opacity]);
+
+  const style = useAnimatedStyle(() =&gt; ({ opacity: opacity.value }));
+
+  return (
+    &lt;Animated.View style={style}&gt;
+      &lt;Icon as={STATUS_ICONS[meta.iconName]} size={12} className={cn(meta.className)} /&gt;
+    &lt;/Animated.View&gt;
+  );
+}
+
+/** House motion scale for the chevron: 250ms open, 200ms close, system-reduced. */
+function Chevron({ open }: { open: boolean }) {
+  const rotation = useSharedValue(open ? 1 : 0);
+
+  React.useEffect(() =&gt; {
+    rotation.value = withTiming(open ? 1 : 0, {
+      duration: open ? 250 : 200,
+      reduceMotion: ReduceMotion.System,
+    });
+  }, [open, rotation]);
+
+  const style = useAnimatedStyle(() =&gt; ({
+    transform: [{ rotate: `${rotation.value * 180}deg` }],
+  }));
+
+  return (
+    &lt;Animated.View style={style}&gt;
+      &lt;Icon as={ChevronDownIcon} size={14} className=&quot;text-muted-foreground&quot; /&gt;
+    &lt;/Animated.View&gt;
+  );
+}
+
+type ToolHeaderProps = {
+  /** The AI SDK part type — `tool-fetch_weather_data` or `dynamic-tool`. */
+  type: string;
+  /** The AI SDK tool-part `state`, streamed straight in. */
+  state: ToolStatus;
+  /** Wins over everything derived from `type`. */
+  title?: string;
+  /** A dynamic tool&#39;s label comes from here. */
+  toolName?: string;
+  className?: string;
+};
+
+function ToolHeader({ type, state, title, toolName, className }: ToolHeaderProps) {
+  const { open } = useTool();
+  const meta = toolStatusMeta(state);
+
+  return (
+    &lt;CollapsibleTrigger
+      className={cn(
+        &#39;flex-row items-center gap-2 rounded-md p-3 active:bg-accent&#39;,
+        Platform.select({ web: &#39;transition-colors hover:bg-accent/50&#39; }),
+        className,
+      )}
+    &gt;
+      &lt;Text numberOfLines={1} className=&quot;flex-1 text-sm font-medium text-foreground&quot;&gt;
+        {toolDisplayName(type, title, toolName)}
+      &lt;/Text&gt;
+      &lt;Badge
+        variant=&quot;secondary&quot;
+        // Color is never the sole channel — the label and icon carry status for a
+        // screen reader, and the badge is a legitimate live region: it changes at human
+        // pace (a few times per tool call), unlike streaming text.
+        accessibilityLabel={`Status: ${meta.label}`}
+        accessibilityLiveRegion=&quot;polite&quot;
+        // Remediation row 4: the badge family converges to the web&#39;s — secondary
+        // variant, rounded-full, gap-1.5 (web tool.tsx:74).
+        className=&quot;gap-1.5 rounded-full&quot;
+      &gt;
+        &lt;ToolStatusIcon state={state} /&gt;
+        &lt;Text className={cn(&#39;text-xs&#39;, meta.className)}&gt;{meta.label}&lt;/Text&gt;
+      &lt;/Badge&gt;
+      &lt;Chevron open={open} /&gt;
+    &lt;/CollapsibleTrigger&gt;
+  );
+}
+
+function ToolContent({ className, children, ...props }: ViewProps &amp; { children?: React.ReactNode }) {
+  // The design contract publishes the popover text family here; it must arrive through
+  // TextClassContext — a parent className never reaches a descendant Text on native.
+  return (
+    &lt;TextClassContext.Provider value=&quot;text-foreground&quot;&gt;
+      &lt;CollapsibleContent className={cn(&#39;px-3 pb-3&#39;, className)} {...props}&gt;
+        &lt;View className=&quot;gap-2&quot;&gt;{children}&lt;/View&gt;
+      &lt;/CollapsibleContent&gt;
+    &lt;/TextClassContext.Provider&gt;
+  );
+}
+
+function ToolSectionLabel({ children }: { children: string }) {
+  return (
+    &lt;Text className=&quot;text-xs font-medium uppercase tracking-wide text-muted-foreground&quot;&gt;
+      {children}
+    &lt;/Text&gt;
+  );
+}
+
+type ToolInputProps = {
+  input?: unknown;
+  className?: string;
+};
+
+function ToolInput({ input, className }: ToolInputProps) {
+  const text = React.useMemo(() =&gt; formatToolInput(input), [input]);
+  // Nothing has arrived yet — render nothing rather than an empty Parameters shell.
+  if (!text) return null;
+
+  return (
+    &lt;View className={cn(&#39;gap-1&#39;, className)}&gt;
+      &lt;ToolSectionLabel&gt;Parameters&lt;/ToolSectionLabel&gt;
+      &lt;ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerClassName=&quot;py-0.5&quot;
+      &gt;
+        &lt;Text selectable style={monoStyle} className=&quot;text-xs leading-5 text-foreground&quot;&gt;
+          {text}
+        &lt;/Text&gt;
+      &lt;/ScrollView&gt;
+    &lt;/View&gt;
+  );
+}
+
+type ToolOutputProps = {
+  output?: React.ReactNode;
+  errorText?: string;
+  className?: string;
+};
+
+function ToolOutput({ output, errorText, className }: ToolOutputProps) {
+  // The web original&#39;s contract, verbatim: both undefined renders EMPTY. Not a
+  // spinner, not an error — a tool call may legitimately have no result to show.
+  if (output === undefined &amp;&amp; errorText === undefined) return null;
+
+  return (
+    &lt;View className={cn(&#39;gap-1&#39;, className)}&gt;
+      {errorText !== undefined ? (
+        &lt;View className=&quot;gap-1&quot;&gt;
+          &lt;ToolSectionLabel&gt;Error&lt;/ToolSectionLabel&gt;
+          &lt;Text selectable className=&quot;text-xs leading-5 text-destructive&quot;&gt;
+            {errorText}
+          &lt;/Text&gt;
+        &lt;/View&gt;
+      ) : (
+        &lt;View className=&quot;gap-1&quot;&gt;
+          &lt;ToolSectionLabel&gt;Result&lt;/ToolSectionLabel&gt;
+          {/* A bare string inside a View crashes React Native (&quot;Text strings must be
+              rendered within a &lt;Text&gt; component&quot;) while typechecking as a valid
+              ReactNode and passing web Storybook — the device gate&#39;s exact blind spot.
+              Mirror ToolInput: strings get a selectable Text; nodes pass through. */}
+          {typeof output === &#39;string&#39; ? (
+            &lt;Text selectable className=&quot;text-xs leading-5 text-foreground&quot;&gt;
+              {output}
+            &lt;/Text&gt;
+          ) : (
+            output
+          )}
+        &lt;/View&gt;
+      )}
+    &lt;/View&gt;
+  );
+}
+
+export { Tool, ToolContent, ToolHeader, ToolInput, ToolOutput, useTool };
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy tool.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>tool.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Tool — pure logic. Everything here is data-in, data-out with zero react-native
+ * imports, which is what lets the Vitest tier own it (see the header of
+ * lib/reasoning-lifecycle.ts for why component files themselves cannot load under
+ * Node). tool.tsx holds only the static iconName → Lucide component table, typed
+ * exhaustively against `iconName` so a key added here without an icon there fails tsc.
+ *
+ * THE INTEGRATION SEAM. `ToolStatus` mirrors the AI SDK tool-part `state` union
+ * verbatim (&#39;input-streaming&#39; | &#39;input-available&#39; | &#39;output-available&#39; | &#39;output-error&#39;
+ * | &#39;output-denied&#39; | &#39;approval-requested&#39; | &#39;approval-responded&#39;). It is declared
+ * locally, not imported from `ai` — message.tsx&#39;s precedent: the registry is stateless
+ * about the model and takes no runtime dependency on any SDK. A consumer streams
+ * `part.state` straight into `&lt;Tool state={part.state}&gt;` with no adapter.
+ */
+
+import { statusColor, type StatusTone } from &#39;@/registry/nativewind/lib/status&#39;;
+
+export type ToolStatus =
+  | &#39;input-streaming&#39;
+  | &#39;input-available&#39;
+  | &#39;output-available&#39;
+  | &#39;output-error&#39;
+  | &#39;output-denied&#39;
+  | &#39;approval-requested&#39;
+  | &#39;approval-responded&#39;;
+
+/** Every AI SDK tool-part state, spelled out. UC-AGENT-01 AC-4: none may be unhandled. */
+export const TOOL_STATUS_KEYS = [
+  &#39;input-streaming&#39;,
+  &#39;input-available&#39;,
+  &#39;output-available&#39;,
+  &#39;output-error&#39;,
+  &#39;output-denied&#39;,
+  &#39;approval-requested&#39;,
+  &#39;approval-responded&#39;,
+] as const satisfies readonly ToolStatus[];
+
+/** Lucide icon NAME (kebab-case); the component resolves the component. */
+export type ToolStatusIconName =
+  | &#39;clock&#39;
+  | &#39;circle&#39;
+  | &#39;circle-check&#39;
+  | &#39;circle-x&#39;
+  | &#39;circle-slash&#39;
+  | &#39;circle-help&#39;;
+
+export type ToolStatusMeta = {
+  /** Badge text — verbatim from the web original&#39;s header map. */
+  label: string;
+  tone: StatusTone;
+  iconName: ToolStatusIconName;
+  /**
+   * Precomposed text class. &#39;&#39; inherits the Badge&#39;s own color — the web gives the
+   * streaming/running states no hue (remediation row 4). Everything else is either a
+   * shared statusColor value or the web&#39;s approval hues (yellow/blue, dark twins).
+   */
+  className: string;
+};
+
+/**
+ * The web original maps state → badge with NO mapping layer, and so do we — one record,
+ * every state, labels byte-identical to the original: input-streaming→Pending,
+ * input-available→Running, output-available→Completed, output-error→Error,
+ * approval-requested→Awaiting Approval, approval-responded→Responded,
+ * output-denied→Denied.
+ *
+ * HUES CONVERGE TO THE WEB (remediation row 4, web tool.tsx:62-72): streaming and
+ * running get NO color (&#39;&#39; — the badge&#39;s secondary surface carries them, exactly the
+ * web&#39;s uncolored Pending/Running); approval-requested is yellow-600 (dark:yellow-400)
+ * and approval-responded is blue-600 (dark:blue-400), the web&#39;s exact approval pair.
+ * output-available/output-error/output-denied keep the shared statusColor values — the
+ * destructive token for error is the recorded keep versus the web&#39;s red-600, and
+ * denied&#39;s orange-600 already matches the web. The shared lib/status.ts map is
+ * INTENTIONALLY UNTOUCHED: its other consumers keep the recorded 5-tone compression.
+ *
+ * Icon + color ride along because color is never the sole channel (WCAG 1.4.1): a
+ * completed call and an errored one must tell apart with the badge text hidden. The
+ * web pairs the plain circle with streaming and the clock with running (web
+ * tool.tsx:61-63); the pulse is the one icon the component animates, and it stays on
+ * input-available only — gated on reduced motion, per the design lens.
+ */
+export const TOOL_STATUS_META: Record&lt;ToolStatus, ToolStatusMeta&gt; = {
+  &#39;input-streaming&#39;: { label: &#39;Pending&#39;, tone: &#39;pending&#39;, iconName: &#39;circle&#39;, className: &#39;&#39; },
+  &#39;input-available&#39;: { label: &#39;Running&#39;, tone: &#39;running&#39;, iconName: &#39;clock&#39;, className: &#39;&#39; },
+  &#39;output-available&#39;: { label: &#39;Completed&#39;, tone: &#39;success&#39;, iconName: &#39;circle-check&#39;, className: statusColor.success },
+  &#39;output-error&#39;: { label: &#39;Error&#39;, tone: &#39;error&#39;, iconName: &#39;circle-x&#39;, className: statusColor.error },
+  &#39;output-denied&#39;: { label: &#39;Denied&#39;, tone: &#39;denied&#39;, iconName: &#39;circle-slash&#39;, className: statusColor.denied },
+  &#39;approval-requested&#39;: { label: &#39;Awaiting Approval&#39;, tone: &#39;running&#39;, iconName: &#39;circle-help&#39;, className: &#39;text-yellow-600 dark:text-yellow-400&#39; },
+  &#39;approval-responded&#39;: { label: &#39;Responded&#39;, tone: &#39;pending&#39;, iconName: &#39;circle-check&#39;, className: &#39;text-blue-600 dark:text-blue-400&#39; },
+};
+
+export function toolStatusMeta(state: ToolStatus): ToolStatusMeta {
+  return TOOL_STATUS_META[state];
+}
+
+/**
+ * The header&#39;s display name, with the web original&#39;s precedence: an explicit `title`
+ * wins over everything; `type=&quot;tool-web-search&quot;` derives &quot;web-search&quot; by stripping the
+ * prefix; a dynamic tool&#39;s label is its `toolName`; anything else shows the type itself.
+ */
+export function toolDisplayName(type: string, title?: string, toolName?: string): string {
+  if (title) return title;
+  if (type.startsWith(&#39;tool-&#39;)) return type.slice(&#39;tool-&#39;.length);
+  if (type === &#39;dynamic-tool&#39; &amp;&amp; toolName) return toolName;
+  return type;
+}
+
+/**
+ * ToolInput must render WHILE ARGUMENTS ARE STILL STREAMING IN (input-streaming), so it
+ * has to tolerate partial or invalid JSON. Strings pass through verbatim — a
+ * half-arrived `{&quot;query&quot;: &quot;wea` is displayed exactly as received, never parsed, never
+ * repaired. Objects pretty-print at indent 2, the web original&#39;s format. Nothing in
+ * this function may throw: a circular structure or a stringify-undefined value degrades
+ * to String() instead of crashing the transcript.
+ */
+export function formatToolInput(input: unknown): string {
+  if (input === undefined) return &#39;&#39;;
+  if (typeof input === &#39;string&#39;) return input;
+  if (input === null) return &#39;null&#39;;
+  try {
+    return JSON.stringify(input, null, 2) ?? String(input);
+  } catch {
+    return String(input);
+  }
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy tool.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>defaultOpen</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onOpenChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((open: boolean) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>border-border</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-muted</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-accent</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-destructive</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>(o) =&gt; (
+      &lt;Tool&gt;
+        &lt;ToolHeader
+          type={(o.type as string) ?? &#39;tool-fetch_registry_item&#39;}
+          state={(o.state as &#39;input-streaming&#39; | &#39;input-available&#39; | &#39;output-available&#39; | &#39;output-error&#39;) ?? &#39;output-available&#39;}
+        /&gt;
+        &lt;ToolContent&gt;
+          &lt;Text className=&quot;text-sm text-muted-foreground&quot;&gt;
+            {&#39;{ &quot;item&quot;: &quot;conversation&quot;, &quot;engine&quot;: &quot;uniwind&quot;, &quot;tag&quot;: &quot;v0.2.0&quot; }&#39;}
+          &lt;/Text&gt;
+        &lt;/ToolContent&gt;
+      &lt;/Tool&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>The TextClassContext seam</p><p class="callout__body" data-astro-cid-q2ml7llr>This component publishes its class strings through the TextClassContext provider, so a parent view can restyle its nested text.</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/docs/theming#textclasscontext" data-astro-cid-ziig2kl5>Theming guide: The TextClassContext seam</a></div></aside><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the tool gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M4 4.5h7m3 0h1m2 0h3m2 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m2 0h3m2 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h3m1 0h3m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m3 0h7m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M16 11.5h5M4 12.5h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h5m3 0h1m2 0h1M4 13.5h2m1 0h3m1 0h1m1 0h1m6 0h1m1 0h1m3 0h3M7 14.5h1m2 0h1m1 0h4m1 0h1m3 0h2m2 0h2m1 0h1M4 15.5h3m1 0h2m1 0h1m1 0h2m1 0h4m1 0h1m2 0h1M4 16.5h1m3 0h1m1 0h3m2 0h1m1 0h1m2 0h3M5 17.5h1m1 0h3m1 0h5m1 0h2m1 0h1m1 0h1m4 0h2M4 18.5h1m1 0h2m1 0h3m8 0h1m1 0h7M5 19.5h1m1 0h1m5 0h3m1 0h1m1 0h1m2 0h1M4 20.5h1m1 0h6m1 0h2m1 0h2m1 0h6m3 0h1M12 21.5h5m3 0h1m3 0h1m1 0h3M4 22.5h7m4 0h3m1 0h2m1 0h1m1 0h1m1 0h3M4 23.5h1m5 0h1m3 0h1m1 0h3m1 0h1m3 0h1m2 0h1M4 24.5h1m1 0h3m1 0h1m1 0h1m1 0h4m2 0h5M4 25.5h1m1 0h3m1 0h1m2 0h3m5 0h1m1 0h2M4 26.5h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h2m2 0h4m1 0h1M4 27.5h1m5 0h1m2 0h1m1 0h6m1 0h1m4 0h1M4 28.5h7m1 0h1m2 0h3m1 0h5m3 0h2"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/test-results" data-astro-cid-ziig2kl5>← test-results</a><a rel="next" href="/components/artifact" data-astro-cid-ziig2kl5>artifact →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

@@ -1,0 +1,15 @@
+{
+  "name": "url",
+  "type": "registry:lib",
+  "title": "URL helpers",
+  "description": "The one place a source URL becomes display parts and an open decision: no-throw hostname extraction (the web's bare new URL() throws take transcripts down; this falls back) and the http/https scheme allowlist guarding the Linking.openURL hop that replaces the web anchor's target=_blank. Backs sources and inline-citation.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/registry/src/lib/url.ts",
+      "type": "registry:lib",
+      "target": "lib/url.ts",
+      "content": "/**\n * URL — the one place that turns a source URL into display parts and an open decision.\n * Backs sources (UC-CHAT-05 AC-1: each row shows title AND domain) and inline-citation\n * (the web chip shows the first source's hostname), and guards the Linking.openURL hop\n * (UC-CHAT-05 AC-3) that replaces the web anchor's target=\"_blank\".\n *\n * Zero imports on purpose, same rule as lib/status.ts: this file is imported by pure\n * logic modules and must stay loadable under Vitest, which cannot resolve a\n * react-native module graph.\n *\n * NO-THROW IS THE CONTRACT. The web original calls `new URL(sources[0]).hostname`\n * bare, which throws on a malformed entry and takes the transcript down with it. Every\n * function here degrades to a fallback instead — a bad URL in a streamed source list is\n * a rendering problem, never a crash.\n */\n\n/**\n * The hostname of `url`, or `fallback` when it is missing or unparseable — the web\n * original's `new URL(...).hostname` with the throw replaced by a fallback. Lowercase\n * is URL-standard, so `HTTPS://EXAMPLE.COM` and `https://example.com` compare equal.\n */\nexport function hostnameOf(url: string | undefined | null, fallback = 'unknown'): string {\n  if (!url) return fallback;\n  try {\n    const { hostname } = new URL(url.trim());\n    return hostname || fallback;\n  } catch {\n    return fallback;\n  }\n}\n\nconst SAFE_OPEN_PROTOCOLS = new Set(['http:', 'https:']);\n\n/**\n * The scheme allowlist for handing a URL to the platform link handler (the\n * data-schema doc's security-review surface). `javascript:`/`data:`/`file:` and every\n * other scheme is refused BEFORE Linking sees it; the web anchor's `rel=\"noreferrer\"`\n * has no RN equivalent, so the allowlist is the whole guard. No-throw by construction.\n */\nexport function isSafeOpenUrl(url: string | undefined | null): boolean {\n  if (!url) return false;\n  try {\n    return SAFE_OPEN_PROTOCOLS.has(new URL(url.trim()).protocol);\n  } catch {\n    return false;\n  }\n}\n"
+    }
+  ]
+}

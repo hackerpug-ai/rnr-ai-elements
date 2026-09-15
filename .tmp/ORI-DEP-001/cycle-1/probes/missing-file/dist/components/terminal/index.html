@@ -1,0 +1,679 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Terminal — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Terminal — Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4).… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Tool</p><h1 data-astro-cid-ziig2kl5>Terminal</h1><p class="item-description" data-astro-cid-ziig2kl5>Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4). Port-adapted per the PRD verdict — an interactive pseudo-terminal is explicitly NOT part of this: the caller hands a string, the component renders it. Upstream part set at parity (Header/Title/Status/Actions/ClearButton/CopyButton/Content; output/isStreaming/autoScroll/onClear). ansi-to-react is replaced by a pure SGR tokenizer (terminal.logic.ts, Vitest-owned) whose 16-color map compresses onto the house palette — RNR roles plus the three sanctioned status colors; bright is a weight bump, 256/truecolor resolves to default, non-SGR escapes strip, attributes persist across newlines. Copy hands over stripAnsi(output) — escape codes are useless on a clipboard. autoScroll sticks to the bottom while on; the clear button ENABLES only when onClear is wired; isStreaming shows the reduced-motion-gated shimmer pulse.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/terminal.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/terminal.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><ul class="deps-packages" data-deps-packages data-astro-cid-fdx2nnaa><li data-astro-cid-fdx2nnaa><code data-astro-cid-fdx2nnaa>expo-clipboard</code></li></ul><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/mono.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/shimmer.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/status.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/mono.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/shimmer.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/status.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>terminal.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Shimmer } from &#39;@/registry/nativewind/components/ai/shimmer&#39;;
+import { Button } from &#39;@/registry/nativewind/components/ui/button&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { Text, TextClassContext } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { monoStyle } from &#39;@/registry/nativewind/lib/mono&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import * as Clipboard from &#39;expo-clipboard&#39;;
+import { CheckIcon, CopyIcon, Trash2Icon } from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { ScrollView, View, type ViewProps } from &#39;react-native&#39;;
+import { parseAnsiLines, stripAnsi } from &#39;./terminal.logic&#39;;
+
+/**
+ * Terminal — a read-only log surface for run output (UC-CODE-02 AC-1: monospace output
+ * that scrolls horizontally without wrapping and vertically without dropping frames;
+ * AC-4: any run output block copies with one tap).
+ *
+ * THE PRD VERDICT IS PORT-ADAPTED and its line is the constitution of this file: &quot;ships
+ * as a read-only, horizontally scrollable monospace log view with ANSI colors mapped to
+ * theme tokens. An interactive pseudo-terminal is explicitly not part of this.&quot; There is
+ * no stdin, no prompt, no PTY — the caller hands a string, the component renders it.
+ *
+ * THE UPSTREAM PART SET, from the KB, ported part for part: Terminal root (output /
+ * isStreaming=false / autoScroll=true / onClear), TerminalHeader (TerminalTitle +
+ * TerminalStatus), TerminalActions (TerminalClearButton + TerminalCopyButton), and
+ * TerminalContent. The web renders `output` through ansi-to-react with hardcoded hex;
+ * the ANSI half is replaced by the pure SGR tokenizer in terminal.logic.ts (Vitest-
+ * owned) whose color map resolves onto fixed-palette classes — the RNR roles PLUS the
+ * Tailwind-default hues the web original uses, which the consumer declares in `@theme`
+ * (the remediation palette slice in the harness global.css). The DOM half is replaced by
+ * nested axis-scrolled ScrollViews: the vertical outer is a bounded host (max-h-64 by
+ * default, caller-overridable) and the horizontal inner carries the unwrapped line
+ * tails — different axes, so the two do not fight (code-block precedent).
+ *
+ * THE SURFACE IS SCHEME-INDEPENDENT (remediation row 2): the port&#39;s `bg-muted`
+ * rounded-md card converged to the web&#39;s always-dark `rounded-lg border-zinc-800
+ * bg-zinc-950 text-zinc-100` surface (web terminal.tsx:250). Every text class in this
+ * file is therefore a FIXED zinc value — a scheme-flipping token (text-foreground,
+ * text-muted-foreground) would render dark-on-dark in light mode, because the surface
+ * no longer flips with colorScheme.
+ *
+ * The line Text&#39;s `text-zinc-100` does NOT cascade to its spans: React Native
+ * nested-Text color inheritance is unreliable under an inline mono style, and the
+ * standing rule (wave 13) is that NO segment relies on inheritance. So every span
+ * Text in TerminalContent carries its own `text-zinc-100` default — without it a
+ * plain (non-ANSI) span fell back to the scheme default text color: near-black on
+ * this near-black surface, invisible until on-device capture zoom proved it. ANSI
+ * span classes still win — cn places span.classNames last, so twMerge keeps them
+ * (including the inverse pair&#39;s text-zinc-950).
+ *
+ * BEHAVIOR PRESERVED FROM THE WEB ORIGINAL:
+ *  - autoScroll sticks to the bottom on every content change while on; off never moves
+ *    the viewport (the web&#39;s boolean contract, nothing smarter is invented)
+ *  - isStreaming shows the house shimmer pulse (&quot;Running…&quot;) — the streaming indicator
+ *    the KB credits the original with, rendered through our reduced-motion-gated
+ *    Shimmer, not a spinner
+ *  - TerminalClearButton is ENABLED ONLY when onClear is wired (the KB&#39;s documented
+ *    gating); TerminalCopyButton copies stripAnsi(output) — escape codes are useless on
+ *    a clipboard, so the copy hands over what the eye saw — and flip-and-reverts with
+ *    onError on failure (snippet/code-block precedent)
+ *  - text is selectable (code-block precedent), line by line
+ *
+ * NOT SHIPPED, on the record: an interactive pseudo-terminal (the verdict forbids it);
+ * xterm.js-style cursor addressing — cursor-movement escapes are stripped by the
+ * tokenizer, so progress-bar redraws accumulate as plain lines rather than repainting.
+ */
+
+type TerminalContextValue = {
+  output: string;
+  isStreaming: boolean;
+  autoScroll: boolean;
+  /** Unwired → the clear button DISABLES, never pretends. */
+  canClear: boolean;
+  clear: () =&gt; void;
+};
+
+const TerminalContext = React.createContext&lt;TerminalContextValue | null&gt;(null);
+
+function useTerminal() {
+  const ctx = React.useContext(TerminalContext);
+  if (!ctx) throw new Error(&#39;Terminal sub-components must be used within &lt;Terminal&gt;&#39;);
+  return ctx;
+}
+
+export type TerminalProps = ViewProps &amp; {
+  /** The log — ANSI escapes welcome, they tokenize into themed spans. */
+  output: string;
+  /** Shows the streaming pulse. The caller&#39;s stream state; nothing here listens. */
+  isStreaming?: boolean;
+  /** Stick to the bottom on content changes. The web default: true. */
+  autoScroll?: boolean;
+  /** Wired → the clear button enables and calls this. Absent → it disables. */
+  onClear?: () =&gt; void;
+  children?: React.ReactNode;
+};
+
+function Terminal({
+  output,
+  isStreaming = false,
+  autoScroll = true,
+  onClear,
+  className,
+  children,
+  ...props
+}: TerminalProps) {
+  const contextValue = React.useMemo&lt;TerminalContextValue&gt;(
+    () =&gt; ({
+      output,
+      isStreaming,
+      autoScroll,
+      canClear: Boolean(onClear),
+      clear: () =&gt; onClear?.(),
+    }),
+    [output, isStreaming, autoScroll, onClear],
+  );
+
+  return (
+    &lt;TerminalContext.Provider value={contextValue}&gt;
+      &lt;View
+        className={cn(&#39;overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950&#39;, className)}
+        {...props}
+      &gt;
+        {children}
+      &lt;/View&gt;
+    &lt;/TerminalContext.Provider&gt;
+  );
+}
+
+function TerminalHeader({ className, ...props }: ViewProps) {
+  return (
+    &lt;View
+      className={cn(&#39;flex-row items-center gap-2 border-b border-zinc-800 px-3 py-2&#39;, className)}
+      {...props}
+    /&gt;
+  );
+}
+
+/** The log&#39;s name. House mono, like the code-block filename it sits beside. Fixed
+ *  zinc-100: the surface is always dark (remediation row 2). */
+function TerminalTitle({ className, ...props }: React.ComponentProps&lt;typeof Text&gt;) {
+  return (
+    &lt;Text
+      numberOfLines={1}
+      style={monoStyle}
+      className={cn(&#39;min-w-0 flex-1 text-xs font-medium text-zinc-100&#39;, className)}
+      {...props}
+    /&gt;
+  );
+}
+
+/** Free status slot (&quot;exit 0&quot;, &quot;pid 4121&quot;) — zinc-500 so the title leads. Publishes
+ *  the fixed zinc-xs pair so its Text children style without per-call classes; the
+ *  surface never flips with colorScheme, so neither may its text. */
+function TerminalStatus({ className, children, ...props }: ViewProps &amp; { children?: React.ReactNode }) {
+  return (
+    &lt;TextClassContext.Provider value=&quot;text-xs text-zinc-500&quot;&gt;
+      &lt;View className={cn(&#39;shrink-0 flex-row items-center&#39;, className)} {...props}&gt;
+        {children}
+      &lt;/View&gt;
+    &lt;/TextClassContext.Provider&gt;
+  );
+}
+
+function TerminalActions({ className, ...props }: ViewProps) {
+  return &lt;View className={cn(&#39;shrink-0 flex-row items-center gap-1&#39;, className)} {...props} /&gt;;
+}
+
+type TerminalClearButtonProps = {
+  className?: string;
+};
+
+/**
+ * The KB&#39;s documented gate: enabled when the Terminal&#39;s onClear is set. Clearing is the
+ * CALLER&#39;s state change (output is caller-owned); this only fires the callback.
+ */
+function TerminalClearButton({ className }: TerminalClearButtonProps) {
+  const { canClear, clear } = useTerminal();
+
+  return (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      size=&quot;icon&quot;
+      onPress={clear}
+      disabled={!canClear}
+      accessibilityLabel=&quot;Clear terminal&quot;
+      // House formula: RNR&#39;s h-10 (40pt) + hitSlop 2/side = the 44pt platform minimum.
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={className}
+    &gt;
+      &lt;Icon as={Trash2Icon} size={14} className=&quot;text-zinc-500&quot; /&gt;
+    &lt;/Button&gt;
+  );
+}
+
+type TerminalCopyButtonProps = {
+  timeout?: number;
+  onCopy?: () =&gt; void;
+  onError?: (error: unknown) =&gt; void;
+  className?: string;
+};
+
+/** AC-4&#39;s one-tap copy: the WHOLE log, escapes stripped. Flip-and-revert. */
+function TerminalCopyButton({ timeout = 2000, onCopy, onError, className }: TerminalCopyButtonProps) {
+  const { output } = useTerminal();
+  const [copied, setCopied] = React.useState(false);
+  const timer = React.useRef&lt;ReturnType&lt;typeof setTimeout&gt; | null&gt;(null);
+
+  React.useEffect(() =&gt; () =&gt; { if (timer.current) clearTimeout(timer.current); }, []);
+
+  async function copy() {
+    try {
+      await Clipboard.setStringAsync(stripAnsi(output));
+      setCopied(true);
+      onCopy?.();
+      timer.current = setTimeout(() =&gt; setCopied(false), timeout);
+    } catch (error) {
+      // Never silent — the web original calls onError and so do we.
+      onError?.(error);
+    }
+  }
+
+  return (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      size=&quot;icon&quot;
+      onPress={copy}
+      accessibilityLabel={copied ? &#39;Copied&#39; : &#39;Copy output&#39;}
+      // House formula: RNR&#39;s h-10 (40pt) + hitSlop 2/side = the 44pt platform minimum.
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={className}
+    &gt;
+      &lt;Icon as={copied ? CheckIcon : CopyIcon} size={14} className=&quot;text-zinc-500&quot; /&gt;
+    &lt;/Button&gt;
+  );
+}
+
+/**
+ * The log itself: vertical outer (bounded host — max-h-64 by default, override with
+ * className), horizontal inner carrying unwrapped line tails. Lines are themed span
+ * runs from the pure tokenizer; attributes persist across newlines in the tokenizer, so
+ * the renderer never decides color. Selectable per line (code-block precedent).
+ */
+function TerminalContent({ className }: { className?: string }) {
+  const { output, isStreaming, autoScroll } = useTerminal();
+  const lines = React.useMemo(() =&gt; parseAnsiLines(output), [output]);
+  const scrollRef = React.useRef&lt;ScrollView&gt;(null);
+
+  React.useEffect(() =&gt; {
+    if (autoScroll) scrollRef.current?.scrollToEnd({ animated: false });
+  }, [output, autoScroll]);
+
+  return (
+    &lt;ScrollView
+      ref={scrollRef}
+      className={cn(&#39;max-h-64&#39;, className)}
+      nestedScrollEnabled
+      // Bounded-host law: the vertical bound is the component&#39;s default; the caller&#39;s
+      // className replaces it (e.g. max-h-40 in a dense card).
+    &gt;
+      &lt;ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerClassName=&quot;min-w-full px-3 py-2&quot;
+      &gt;
+        {/* A horizontal ScrollView is a ROW container — without this column wrapper
+            every log line lays out SIDE BY SIDE on one strip (review E1; code-block&#39;s
+            CodeBlockContent is the precedent being followed here). */}
+        &lt;View className=&quot;flex-col&quot;&gt;
+          {lines.map((spans, lineIndex) =&gt; (
+            &lt;Text
+              key={`line-${lineIndex}`}
+              selectable
+              style={monoStyle}
+              className=&quot;text-xs leading-5 text-zinc-100&quot;
+            &gt;
+              {/* Every span carries its own text-zinc-100 — see the header: RN
+                  nested-Text color inheritance is unreliable under an inline mono
+                  style (wave 13&#39;s standing rule: no segment relies on
+                  inheritance), and a span without an ANSI class otherwise falls
+                  back to the scheme default (near-black on this near-black
+                  surface; proven by device-capture zoom). cn puts
+                  span.classNames last, so ANSI classes — including the inverse
+                  pair&#39;s text-zinc-950 — still override via twMerge. */}
+              {spans.map((span, spanIndex) =&gt; (
+                &lt;Text
+                  key={`span-${lineIndex}-${spanIndex}`}
+                  style={monoStyle}
+                  className={cn(&#39;text-zinc-100&#39;, span.classNames)}
+                &gt;
+                  {span.text}
+                &lt;/Text&gt;
+              ))}
+            &lt;/Text&gt;
+          ))}
+          {isStreaming ? &lt;ShimmerLine /&gt; : null}
+        &lt;/View&gt;
+      &lt;/ScrollView&gt;
+    &lt;/ScrollView&gt;
+  );
+}
+
+/** The streaming pulse — the house shimmer at log scale, gated on reduced motion.
+ *  Fixed zinc-500: the surface is always dark (remediation row 2), so the caller
+ *  class overrides Shimmer&#39;s scheme-flipping text-muted-foreground default. */
+function ShimmerLine() {
+  return (
+    &lt;Shimmer className=&quot;text-xs text-zinc-500&quot; style={monoStyle}&gt;
+      Running…
+    &lt;/Shimmer&gt;
+  );
+}
+
+export {
+  Terminal,
+  TerminalActions,
+  TerminalClearButton,
+  TerminalContent,
+  TerminalCopyButton,
+  TerminalHeader,
+  TerminalStatus,
+  TerminalTitle,
+  useTerminal,
+};
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy terminal.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>terminal.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Terminal — pure logic. Zero react-native imports, so the Vitest tier owns it (see the
+ * header of lib/reasoning-lifecycle.ts for why component files themselves cannot load
+ * under Node).
+ *
+ * The web original renders its `output` string through `ansi-to-react`, which turns ANSI
+ * escape sequences into inline styles with hardcoded hex colors. Both halves are foreign
+ * here: React Native has no DOM spans, and the styling contract forbids color literals.
+ * So the port owns a small SGR tokenizer instead, and its COLOR MAP resolves onto
+ * fixed-palette classes the way the surface itself does (remediation row 2): the terminal
+ * converged to the web&#39;s always-dark `bg-zinc-950` surface (terminal.tsx web :250), so
+ * scheme-flipping RNR roles (text-foreground, text-muted-foreground, text-primary) would
+ * render invisible in light mode — dark text on the dark surface. The fixed zinc/blue
+ * Tailwind-default classes are the faithful equivalent of the web&#39;s always-dark terminal;
+ * the consumer declares them in `@theme` (the remediation palette slice in the harness
+ * global.css). The sanctioned lib/status.ts escape colors stay for red/green/orange —
+ * green-600/orange-600 read fine on zinc-950 and their dark: twins are already correct.
+ * No color literal exists anywhere in this file.
+ *
+ * THE COMPRESSION TABLE, DECLARED (color is never the sole channel — WCAG 1.4.1 — the
+ * log text itself carries the information):
+ *   black   → text-zinc-500               (the dim pole of the fixed ramp)
+ *   red     → statusColor.error            (text-destructive)
+ *   green   → statusColor.success          (text-green-600 dark:text-green-500)
+ *   yellow  → statusColor.denied           (text-orange-600 dark:text-orange-500)
+ *   blue    → text-blue-400                (the web&#39;s bright ANSI blue, legible on zinc-950)
+ *   magenta → text-blue-400                (declared compression — runs out of hues)
+ *   cyan    → text-blue-400                (declared compression)
+ *   white   → text-zinc-100
+ * The BRIGHT half (90–97) resolves to its base color&#39;s class plus a `font-medium` weight
+ * bump rather than a second hue — every rendered color stays inside the declared set.
+ * Extended palettes (38;5;N / 38;2;R;G;B) have no class counterpart at all, so 38/48
+ * resolve to the DEFAULT foreground and their parameter run is consumed (a stray `5`
+ * must never apply as a stray SGR).
+ *
+ * Backs: 40/100 → bg-zinc-800 (neutral); 47/107 → bg-zinc-100 forced with
+ * text-zinc-950 (the inverse look); the colored middles (41–46, 101–106) → bg-zinc-700
+ * forced with text-zinc-100. Backgrounds never ship a hue.
+ *
+ * ON THE RECORD: the web&#39;s streaming cursor (`ml-0.5 h-4 w-2 bg-zinc-100 animate-pulse`,
+ * terminal.tsx web :217) stays replaced by the port&#39;s reduced-motion-gated Shimmer text
+ * — the recorded keep from the original port; this remediation does not change it.
+ *
+ * Attributes PERSIST ACROSS NEWLINES — a color opened on one line is still open on the
+ * next (real terminal semantics, and how streamed logs actually arrive).
+ */
+
+import { statusColor } from &#39;@/registry/nativewind/lib/status&#39;;
+
+/** The 8 ANSI base colors, by name. Bright variants reuse these names. */
+export type AnsiColorName =
+  | &#39;black&#39;
+  | &#39;red&#39;
+  | &#39;green&#39;
+  | &#39;yellow&#39;
+  | &#39;blue&#39;
+  | &#39;magenta&#39;
+  | &#39;cyan&#39;
+  | &#39;white&#39;;
+
+/**
+ * color name → precomposed text class. The only color table in the port; every entry is
+ * an RNR role, a fixed remediation-palette class, or a lib/status.ts escape, auditable
+ * right here. Fixed zinc/blue throughout: the surface is scheme-independent.
+ */
+export const ANSI_COLOR_CLASS: Record&lt;AnsiColorName, string&gt; = {
+  black: &#39;text-zinc-500&#39;,
+  red: statusColor.error,
+  green: statusColor.success,
+  yellow: statusColor.denied,
+  blue: &#39;text-blue-400&#39;,
+  magenta: &#39;text-blue-400&#39;,
+  cyan: &#39;text-blue-400&#39;,
+  white: &#39;text-zinc-100&#39;,
+};
+
+/** SGR 30–37 → name. */
+const BASE_FG_CODES: Record&lt;number, AnsiColorName&gt; = {
+  30: &#39;black&#39;,
+  31: &#39;red&#39;,
+  32: &#39;green&#39;,
+  33: &#39;yellow&#39;,
+  34: &#39;blue&#39;,
+  35: &#39;magenta&#39;,
+  36: &#39;cyan&#39;,
+  37: &#39;white&#39;,
+};
+
+/** SGR 90–97 → the same names; the bright pole is a weight bump, not a hue. */
+const BRIGHT_FG_CODES: Record&lt;number, AnsiColorName&gt; = {
+  90: &#39;black&#39;,
+  91: &#39;red&#39;,
+  92: &#39;green&#39;,
+  93: &#39;yellow&#39;,
+  94: &#39;blue&#39;,
+  95: &#39;magenta&#39;,
+  96: &#39;cyan&#39;,
+  97: &#39;white&#39;,
+};
+
+/**
+ * The three background shapes a fixed palette can express: the neutral wash, the
+ * inverse block, and the accent block. Compressed from the web&#39;s 16 — colored
+ * backgrounds have no class counterpart, so the whole middle band resolves to accent.
+ */
+export type AnsiBackground = &#39;neutral&#39; | &#39;inverse&#39; | &#39;accent&#39;;
+
+/** background shape → precomposed background class. */
+export const ANSI_BG_CLASS: Record&lt;AnsiBackground, string&gt; = {
+  neutral: &#39;bg-zinc-800&#39;,
+  inverse: &#39;bg-zinc-100&#39;,
+  accent: &#39;bg-zinc-700&#39;,
+};
+
+/** The foreground class a background forces, so text stays legible on its own block.
+ *  Exported so the guard test can iterate it alongside the two color maps. */
+export const BG_FORCED_FG: Record&lt;AnsiBackground, string | null&gt; = {
+  neutral: null,
+  inverse: &#39;text-zinc-950&#39;,
+  accent: &#39;text-zinc-100&#39;,
+};
+
+/** SGR 40–47 / 100–107 → shape. */
+function bgShape(code: number): AnsiBackground {
+  const base = code &gt;= 100 ? code - 60 : code; // 100..107 → 40..47
+  if (base === 40) return &#39;neutral&#39;;
+  if (base === 47) return &#39;inverse&#39;;
+  return &#39;accent&#39;;
+}
+
+/** One styled run of a log line, classes fully resolved — the renderer never decides. */
+export type AnsiSpan = {
+  text: string;
+  /** Ordered classes: decorations, then foreground, then background (bg wins ties). */
+  classNames: string[];
+};
+
+type SpanState = {
+  bold: boolean;
+  italic: boolean;
+  underline: boolean;
+  bright: boolean;
+  /** SGR 2 — renders as the muted pole when no explicit foreground is set. */
+  dim: boolean;
+  fg: AnsiColorName | null;
+  bg: AnsiBackground | null;
+};
+
+const INITIAL_STATE: SpanState = {
+  bold: false,
+  italic: false,
+  underline: false,
+  bright: false,
+  dim: false,
+  fg: null,
+  bg: null,
+};
+
+/** state → ordered class list. Pure, and the exact thing the tests pin. */
+export function spanClassNames(state: SpanState): string[] {
+  const classes: string[] = [];
+  if (state.bold) classes.push(&#39;font-bold&#39;);
+  if (state.italic) classes.push(&#39;italic&#39;);
+  if (state.underline) classes.push(&#39;underline&#39;);
+  if (state.bright) classes.push(&#39;font-medium&#39;);
+  if (state.fg) classes.push(ANSI_COLOR_CLASS[state.fg]);
+  else if (state.dim) classes.push(&#39;text-zinc-500&#39;);
+  if (state.bg) {
+    classes.push(ANSI_BG_CLASS[state.bg]);
+    const forced = BG_FORCED_FG[state.bg];
+    if (forced) classes.push(forced);
+  }
+  return classes;
+}
+
+/**
+ * Apply one SGR parameter list to the state, in order, mutating the working copy.
+ * `38`/`48` are extended-color introducers: `38;5;N` and `38;2;R;G;B` are consumed
+ * whole and resolve to the default (extended palettes have no token counterpart).
+ */
+function applySgr(params: number[], state: SpanState): void {
+  for (let i = 0; i &lt; params.length; i++) {
+    const p = params[i];
+    if (p === 38 || p === 48) {
+      const mode = params[i + 1];
+      i += mode === 2 ? 4 : mode === 5 ? 2 : 0; // skip the color spec&#39;s parameters
+      continue;
+    }
+    switch (p) {
+      case 0:
+        Object.assign(state, INITIAL_STATE);
+        break;
+      case 1:
+        state.bold = true;
+        break;
+      case 2:
+        state.dim = true;
+        break;
+      case 3:
+        state.italic = true;
+        break;
+      case 4:
+        state.underline = true;
+        break;
+      // 21 is doubly-underlined in ECMA-48 and bold-off in xterm; the xterm reading is
+      // the one terminals actually emit, so it clears bold.
+      case 21:
+        state.bold = false;
+        break;
+      case 22:
+        state.bold = false;
+        state.dim = false;
+        break;
+      case 23:
+        state.italic = false;
+        break;
+      case 24:
+        state.underline = false;
+        break;
+      case 7:
+        state.bg = &#39;inverse&#39;;
+        break;
+      case 27:
+        state.bg = null;
+        break;
+      case 39:
+        state.fg = null;
+        break;
+      case 49:
+        state.bg = null;
+        break;
+      default: {
+        const base = BASE_FG_CODES[p];
+        if (base) {
+          state.fg = base;
+          state.bright = false;
+          break;
+        }
+        const bright = BRIGHT_FG_CODES[p];
+        if (bright) {
+          state.fg = bright;
+          state.bright = true;
+          break;
+        }
+        if ((p &gt;= 40 &amp;&amp; p &lt;= 47) || (p &gt;= 100 &amp;&amp; p &lt;= 107)) {
+          state.bg = bgShape(p);
+        }
+        // Anything else (blink, fonts, IDE-related modes) is ignored, never guessed.
+      }
+    }
+  }
+}
+
+/**
+ * `output` → lines of styled spans. The renderer&#39;s contract:
+ *  - escape sequences never reach the rendered text
+ *  - a line with no visible text yields ONE span holding a single space (the code-block
+ *    `{line || &#39; &#39;}` precedent — an empty Text collapses to zero height otherwise)
+ *  - exactly one trailing newline ends the output; a second one is a visible blank line
+ *  - a bare `\r` (progress-bar carriage returns) is dropped, never smuggled into a span
+ */
+export function parseAnsiLines(output: string): AnsiSpan[][] {
+  // OSC (ESC ] ... BEL or ESC \) strips whole. Complete CSI strips WHOLE unless its
+  // final byte is m (SGR — left for the line walker); an UNTERMINATED CSI (truncated
+  // mid-chunk) strips to the next ESC or end of string; finally any leftover ESC — one
+  // that opens no bracket sequence — strips alone. Order matters: a whole-sequence
+  // class that excludes &#39;m&#39; would fail to match SGR and this bare-ESC pass would eat
+  // only the ESC, leaving raw &quot;[31m&quot; as visible text.
+  const cleaned = output
+    .replace(/\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/g, &#39;&#39;)
+    .replace(/\x1b\[[0-9;:?&lt;=&gt; ]*([A-Za-z])/g, (sequence, final: string) =&gt; (final === &#39;m&#39; ? sequence : &#39;&#39;))
+    .replace(/\x1b\[[0-9;:?&lt;=&gt; ]*(?=\x1b|$)/g, &#39;&#39;)
+    .replace(/\x1b(?!\[)/g, &#39;&#39;)
+    .replace(/\r\n/g, &#39;\n&#39;)
+    .replace(/\r/g, &#39;&#39;);
+
+  const withoutTrailingNewline = cleaned.endsWith(&#39;\n&#39;) ? cleaned.slice(0, -1) : cleaned;
+  const rawLines = withoutTrailingNewline.split(&#39;\n&#39;);
+
+  let state: SpanState = { ...INITIAL_STATE };
+
+  return rawLines.map((line) =&gt; {
+    const spans: AnsiSpan[] = [];
+    let buffer = &#39;&#39;;
+
+    const flush = () =&gt; {
+      if (buffer.length &gt; 0) {
+        spans.push({ text: buffer, classNames: spanClassNames(state) });
+        buffer = &#39;&#39;;
+      }
+    };
+
+    // Walk the line, splitting on SGR sequences. Non-SGR sequences were already
+    // stripped, so every remaining ESC here is an SGR.
+    const sgr = /\x1b\[([0-9;:]*)(m)/g;
+    let cursor = 0;
+    for (const match of line.matchAll(sgr)) {
+      buffer += line.slice(cursor, match.index);
+      flush();
+      const params = (match[1] || &#39;&#39;)
+        .split(/[;:]/)
+        .map((token) =&gt; Number.parseInt(token, 10) || 0);
+      applySgr(params, state);
+      cursor = (match.index ?? 0) + match[0].length;
+    }
+    buffer += line.slice(cursor);
+    flush();
+
+    if (spans.length === 0) spans.push({ text: &#39; &#39;, classNames: [] });
+    return spans;
+  });
+}
+
+/**
+ * The plain text behind a log — what TerminalCopyButton puts on the clipboard. Escape
+ * codes are useless once copied; the copy hands over what the eye saw.
+ */
+export function stripAnsi(output: string): string {
+  return output
+    .replace(/\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/g, &#39;&#39;)
+    // EVERY complete CSI goes — SGR included — then unterminated ones, then leftover
+    // ESCs, so the clipboard never sees a bracket sequence or a control char.
+    .replace(/\x1b\[[0-9;:?&lt;=&gt; ]*[A-Za-z]/g, &#39;&#39;)
+    .replace(/\x1b\[[0-9;:?&lt;=&gt; ]*(?=\x1b|$)/g, &#39;&#39;)
+    .replace(/\x1b/g, &#39;&#39;);
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy terminal.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>output</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The log — ANSI escapes welcome, they tokenize into themed spans.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>isStreaming</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Shows the streaming pulse. The caller&#39;s stream state; nothing here listens.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>autoScroll</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>true</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Stick to the bottom on content changes. The web default: true.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onClear</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>(() =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Wired → the clear button enables and calls this. Absent → it disables.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-muted</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-primary</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-destructive</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>() =&gt; (
+      &lt;Terminal output={ANSI_LOG} isStreaming={false} autoScroll onClear={() =&gt; {}}&gt;
+        &lt;TerminalHeader&gt;
+          &lt;TerminalTitle&gt;registry — pnpm check:registry&lt;/TerminalTitle&gt;
+          &lt;TerminalStatus /&gt;
+          &lt;TerminalActions&gt;
+            &lt;TerminalCopyButton /&gt;
+            &lt;TerminalClearButton /&gt;
+          &lt;/TerminalActions&gt;
+        &lt;/TerminalHeader&gt;
+        &lt;TerminalContent /&gt;
+      &lt;/Terminal&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>The TextClassContext seam</p><p class="callout__body" data-astro-cid-q2ml7llr>This component publishes its class strings through the TextClassContext provider, so a parent view can restyle its nested text.</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/docs/theming#textclasscontext" data-astro-cid-ziig2kl5>Theming guide: The TextClassContext seam</a></div></aside><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the terminal gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m1 0h1m6 0h3m4 0h7M4 5.5h1m5 0h1m4 0h1m1 0h2m1 0h2m2 0h1m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h6m2 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m2 0h1m3 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h1m4 0h1m2 0h1m3 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M15 11.5h1m2 0h3m1 0h1m1 0h1M4 12.5h1m1 0h1m3 0h2m2 0h1m1 0h3m4 0h1m3 0h1m2 0h1m1 0h1M4 13.5h5m2 0h3m1 0h1m1 0h2m2 0h1m1 0h2m1 0h2m1 0h1m2 0h1M4 14.5h3m2 0h2m2 0h1m1 0h1m3 0h1m1 0h3m2 0h1m1 0h1m1 0h1m1 0h1M5 15.5h1m1 0h2m2 0h1m4 0h2m4 0h4m1 0h3m1 0h1M5 16.5h2m1 0h1m1 0h1m2 0h5m1 0h2m3 0h1m1 0h2m1 0h1M4 17.5h1m1 0h4m2 0h3m1 0h1m3 0h2m1 0h1m1 0h2m2 0h2m1 0h1M8 18.5h1m1 0h1m1 0h3m1 0h3m1 0h1m2 0h1m1 0h1m3 0h4M4 19.5h2m1 0h1m1 0h1m1 0h3m4 0h3m3 0h1m4 0h1m1 0h1M5 20.5h2m2 0h5m2 0h3m4 0h2m1 0h1m2 0h1m1 0h1M6 21.5h3m2 0h1m2 0h1m1 0h3m4 0h2m1 0h2m1 0h1m2 0h1M4 22.5h5m1 0h1m1 0h2m2 0h1m2 0h1m1 0h8m1 0h1m1 0h1M7 23.5h3m2 0h1m1 0h1m2 0h1m4 0h1m1 0h2m1 0h1m1 0h1m1 0h1M4 24.5h5m1 0h1m2 0h1m3 0h1m1 0h2m3 0h6m1 0h2M12 25.5h1m2 0h2m3 0h2m2 0h1m3 0h3m1 0h1M4 26.5h7m1 0h2m1 0h4m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1M4 27.5h1m5 0h1m2 0h4m1 0h3m2 0h2m3 0h2M4 28.5h1m1 0h3m1 0h1m2 0h3m1 0h2m2 0h9M4 29.5h1m1 0h3m1 0h1m2 0h6m2 0h1m3 0h1m1 0h3m1 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h3m3 0h3m2 0h1m1 0h3M4 31.5h1m5 0h1m3 0h1m1 0h3m2 0h1m1 0h4m1 0h2M4 32.5h7m1 0h1m2 0h2m1 0h4m2 0h1m1 0h1m2 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/commit" data-astro-cid-ziig2kl5>← commit</a><a rel="next" href="/components/file-tree" data-astro-cid-ziig2kl5>file-tree →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

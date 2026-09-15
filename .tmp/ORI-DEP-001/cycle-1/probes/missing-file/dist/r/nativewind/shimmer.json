@@ -1,0 +1,20 @@
+{
+  "name": "shimmer",
+  "type": "registry:component",
+  "title": "Shimmer",
+  "description": "The still-generating signal, applied to text. React Native has no background-clip:text, so this reuses RNR Skeleton's exact pulse (1000ms, opacity 1->0.5) rather than inventing a tempo. Gated on reduced motion.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/nativewind/text.json"
+  ],
+  "dependencies": [
+    "react-native-reanimated"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ai/shimmer.tsx",
+      "type": "registry:component",
+      "target": "components/ai/shimmer.tsx",
+      "content": "import { Text } from '@/registry/nativewind/components/ui/text';\nimport { cn } from '@/registry/nativewind/lib/utils';\nimport * as React from 'react';\nimport Animated, {\n  ReduceMotion,\n  useAnimatedStyle,\n  useReducedMotion,\n  useSharedValue,\n  withRepeat,\n  withTiming,\n} from 'react-native-reanimated';\n\n/**\n * Shimmer — the \"still generating\" signal, applied TO text rather than beside it.\n *\n * THE HIGHEST DESIGN RISK IN THE PORT, and the only genuinely invented treatment.\n * The web effect is a linear-gradient with `background-clip: text` and an animated\n * background-position. React Native has no background-clip:text — not \"hard\", absent — so\n * whatever we ship here is new visual vocabulary rather than a port.\n *\n * The design lens's resolution, followed exactly: reuse RNR SKELETON'S OWN MOTION\n * SIGNATURE — opacity 1 → 0.5, 1000ms, withRepeat(-1, reverse) — on text at\n * `text-muted-foreground`, which is also the web original's resting colour. An invented\n * treatment that borrows the house pulse reads as house style; a 2000ms gradient sweep\n * reads as a foreign component sitting in someone's app.\n *\n * The masked-gradient variant is deliberately NOT here. It would need\n * @react-native-masked-view and a motion identity RNR does not have, so if it ever ships\n * it ships opt-in.\n *\n * GATED ON REDUCED MOTION. RNR's own Skeleton does not honour it, so this is one place we\n * are stricter — which changes nothing visually when the setting is off, so parity holds.\n * A continuously looping animation is also a WCAG 2.2.2 concern, and streamed responses\n * routinely run past five seconds.\n */\n\ntype ShimmerProps = React.ComponentProps<typeof Text> & {\n  /** Pulse period in ms. RNR Skeleton's is 1000; changing it gives us our own tempo. */\n  duration?: number;\n  active?: boolean;\n};\n\nfunction Shimmer({ className, duration = 1000, active = true, children, ...props }: ShimmerProps) {\n  const reduced = useReducedMotion();\n  const opacity = useSharedValue(1);\n\n  React.useEffect(() => {\n    if (!active || reduced) {\n      opacity.value = 1;\n      return;\n    }\n    opacity.value = withRepeat(\n      withTiming(0.5, { duration, reduceMotion: ReduceMotion.System }),\n      -1,\n      true,\n    );\n  }, [active, reduced, duration, opacity]);\n\n  const style = useAnimatedStyle(() => ({ opacity: opacity.value }));\n\n  return (\n    <Animated.View style={style}>\n      <Text className={cn('text-muted-foreground', className)} {...props}>\n        {children}\n      </Text>\n    </Animated.View>\n  );\n}\n\nexport { Shimmer };\n"
+    }
+  ]
+}

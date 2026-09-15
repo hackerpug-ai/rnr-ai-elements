@@ -1,0 +1,508 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Audio Player — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Audio Player — Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4).… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Sources</p><h1 data-astro-cid-ziig2kl5>Audio Player</h1><p class="item-description" data-astro-cid-ziig2kl5>Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4). Native-substitute per the PRD verdict — the HTML audio element is replaced by the CALLER&#39;S audio module (expo-audio, a native player, an &lt;audio&gt; element on web): state-in/callbacks-out, no audio dependency in the registry, Expo Go-clean. Upstream part set at parity: play/pause, ±seek buttons (seekOffset 10 → seekOffsetMs 10000, clamped), time/duration displays, scrubber and volume over the slider atom, ButtonGroup control bar. AudioPlayerElement dropped on the record (it IS the substitution). Unwired seams disable their controls — never pretend; AC-3 (playback survives transcript scrolling) holds by construction: nothing here plays.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/audio-player.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/audio-player.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><p class="deps-empty" data-deps-empty data-astro-cid-fdx2nnaa>No required npm packages — this item installs through the registry dependencies below.</p><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/button-group.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/slider.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/button-group.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/slider.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>audio-player.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Button } from &#39;@/registry/nativewind/components/ui/button&#39;;
+import { ButtonGroup } from &#39;@/registry/nativewind/components/ui/button-group&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { Slider } from &#39;@/registry/nativewind/components/ui/slider&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  PauseIcon,
+  PlayIcon,
+  RotateCcwIcon,
+  RotateCwIcon,
+  Volume1Icon,
+  Volume2Icon,
+  VolumeXIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { View, type ViewProps } from &#39;react-native&#39;;
+import {
+  clampVolume,
+  formatPlaybackTime,
+  playbackProgress,
+  seekTarget,
+} from &#39;./audio-player.logic&#39;;
+
+/**
+ * AudioPlayer — transport controls and a scrubbable progress bar for a generated
+ * audio response (UC-VOICE-02 AC-1 &quot;play, pause, and a scrubbable progress bar&quot;,
+ * AC-4 &quot;elapsed and total duration&quot;).
+ *
+ * THE PRD VERDICT IS NATIVE-SUBSTITUTE: &quot;Built on the HTML audio element. Replaced
+ * by a native audio module; transport controls and progress bar keep the same product
+ * surface.&quot; The transport controls and progress bar ARE this component. The audio
+ * module is the CALLER&#39;S: expo-audio, a native player, or an &lt;audio&gt; element on web —
+ * the seam is state-in/callbacks-out (isPlaying/positionMs/durationMs/volume in;
+ * onPlay/onPause/onSeek/onMuteToggle/onVolumeChange out), the speech-input precedent
+ * exactly. NO audio dependency enters anyone&#39;s install graph, and the registry stays
+ * Expo Go-clean. This verdict does NOT prescribe a module the way web-preview&#39;s did
+ * (&quot;declares react-native-webview as a peer dependency&quot;) — nothing here names one, so
+ * nothing here is a STOP.
+ *
+ * AC-3 (&quot;continue playback while scrolling without audio restarting&quot;) is free BY
+ * CONSTRUCTION: the component holds no playback to restart — it renders the state
+ * the caller reports, and a scroll of the transcript does not touch it.
+ *
+ * THE UPSTREAM PART SET, from the KB (media-chrome composition), ported part for
+ * part: Play, SeekBackward/Forward (seekOffset 10 → seekOffsetMs 10000), TimeDisplay,
+ * TimeRange, DurationDisplay, Mute, VolumeRange, ControlBar. DROPPED ON THE RECORD:
+ * AudioPlayerElement — the HTML &lt;audio&gt;/data-URI half is the verdict&#39;s substitution
+ * itself; there is no media surface to render, only controls. The default composition
+ * re-lays the web&#39;s single control row into three rows a phone thumb can actually
+ * serve (scrub · transport · volume); ControlBar remains exported for custom rows.
+ *
+ * EVERY UNWIRED SEAM DISABLES ITS CONTROL — never pretends (speech-input law: a
+ * control that fakes working is the lie). Volume seam unwired → VolumeRange renders
+ * at its reported value but inert, MuteButton disabled.
+ *
+ * Composition (default):
+ *   &lt;AudioPlayer isPlaying={p} positionMs={t} durationMs={d}
+ *                onPlay={play} onPause={pause} onSeek={seek} /&gt;
+ * Composition (custom, upstream shape):
+ *   &lt;AudioPlayer {...seam}&gt;
+ *     &lt;AudioPlayerControlBar&gt;
+ *       &lt;AudioPlayerPlayButton /&gt;
+ *       &lt;AudioPlayerSeekBackwardButton seekOffsetMs={15000} /&gt;
+ *       &lt;AudioPlayerTimeDisplay /&gt;
+ *     &lt;/AudioPlayerControlBar&gt;
+ *   &lt;/AudioPlayer&gt;
+ */
+
+type AudioPlayerContextValue = {
+  isPlaying: boolean;
+  positionMs: number;
+  durationMs: number;
+  muted: boolean;
+  /** 0..1 — the caller-reported engine volume. */
+  volume: number;
+  play: (() =&gt; void) | undefined;
+  pause: (() =&gt; void) | undefined;
+  /** Seek to an absolute position. Undefined → every seek control is disabled. */
+  seek: ((positionMs: number) =&gt; void) | undefined;
+  toggleMute: (() =&gt; void) | undefined;
+  changeVolume: ((volume: number) =&gt; void) | undefined;
+};
+
+const AudioPlayerContext = React.createContext&lt;AudioPlayerContextValue | null&gt;(null);
+
+/**
+ * The web&#39;s context hook. Byte-trap parity with the house selectors: parts used
+ * outside the root throw with the upstream message shape.
+ */
+function useAudioPlayer(): AudioPlayerContextValue {
+  const ctx = React.useContext(AudioPlayerContext);
+  if (!ctx) {
+    throw new Error(&#39;AudioPlayer components must be used within AudioPlayer&#39;);
+  }
+  return ctx;
+}
+
+export type AudioPlayerProps = {
+  /** The caller&#39;s engine state, reported back on every change. */
+  isPlaying?: boolean;
+  positionMs?: number;
+  /** 0 until the engine knows the length — time displays hold at 0:00, never NaN. */
+  durationMs?: number;
+  muted?: boolean;
+  /** 0..1. Reported volumes are clamped; garbage reads as muted-silent. */
+  volume?: number;
+  onPlay?: () =&gt; void;
+  onPause?: () =&gt; void;
+  /** Absolute seek in ms — from the scrubber AND the ±offset buttons (they clamp). */
+  onSeek?: (positionMs: number) =&gt; void;
+  onMuteToggle?: () =&gt; void;
+  onVolumeChange?: (volume: number) =&gt; void;
+  /** Omit for the default three-row layout; supply for the upstream composition. */
+  children?: React.ReactNode;
+  className?: string;
+};
+
+function AudioPlayer({
+  isPlaying = false,
+  positionMs = 0,
+  durationMs = 0,
+  muted = false,
+  volume = 1,
+  onPlay,
+  onPause,
+  onSeek,
+  onMuteToggle,
+  onVolumeChange,
+  children,
+  className,
+}: AudioPlayerProps) {
+  const contextValue = React.useMemo&lt;AudioPlayerContextValue&gt;(
+    () =&gt; ({
+      isPlaying,
+      positionMs,
+      durationMs,
+      muted,
+      volume: clampVolume(volume),
+      play: onPlay,
+      pause: onPause,
+      seek: onSeek,
+      toggleMute: onMuteToggle,
+      changeVolume: onVolumeChange,
+    }),
+    [isPlaying, positionMs, durationMs, muted, volume, onPlay, onPause, onSeek, onMuteToggle, onVolumeChange],
+  );
+
+  return (
+    &lt;AudioPlayerContext.Provider value={contextValue}&gt;
+      {children ?? (
+        &lt;View className={cn(&#39;gap-4&#39;, className)}&gt;
+          &lt;View className=&quot;flex-row items-center gap-3&quot;&gt;
+            &lt;AudioPlayerTimeDisplay className=&quot;shrink-0&quot; /&gt;
+            &lt;View className=&quot;min-w-0 flex-1&quot;&gt;
+              &lt;AudioPlayerTimeRange /&gt;
+            &lt;/View&gt;
+            &lt;AudioPlayerDurationDisplay className=&quot;shrink-0&quot; /&gt;
+          &lt;/View&gt;
+          &lt;AudioPlayerControlBar className=&quot;justify-center&quot;&gt;
+            &lt;AudioPlayerSeekBackwardButton /&gt;
+            &lt;AudioPlayerPlayButton /&gt;
+            &lt;AudioPlayerSeekForwardButton /&gt;
+          &lt;/AudioPlayerControlBar&gt;
+          &lt;View className=&quot;flex-row items-center gap-3&quot;&gt;
+            &lt;AudioPlayerMuteButton /&gt;
+            &lt;View className=&quot;min-w-0 flex-1&quot;&gt;
+              &lt;AudioPlayerVolumeRange /&gt;
+            &lt;/View&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
+      )}
+    &lt;/AudioPlayerContext.Provider&gt;
+  );
+}
+
+type AudioPlayerControlBarProps = ViewProps;
+
+/**
+ * The web&#39;s control row — the registered ButtonGroup atom (the upstream composition
+ * also styles its controls as one ButtonGroup). A toolbar role wraps it; children
+ * compose any AudioPlayer control parts.
+ */
+/**
+ * The transport row. DECLARED DIVERGENCE from upstream: the web&#39;s control bar is one
+ * segmented ButtonGroup row; here the three controls render as independent rounded
+ * ghost-icon buttons (ButtonGroup wraps for a11y grouping, but its segmented
+ * corner-rounding machinery is intentionally NOT applied — icon buttons read better
+ * as distinct 44pt targets at phone width than as one fused pill).
+ */
+function AudioPlayerControlBar({ className, ...props }: AudioPlayerControlBarProps) {
+  return &lt;ButtonGroup className={cn(&#39;gap-1&#39;, className)} {...props} /&gt;;
+}
+
+type AudioPlayerPlayButtonProps = {
+  className?: string;
+};
+
+/**
+ * Play/pause — one control, two states (the web&#39;s MediaPlayButton). Unwired engine →
+ * DISABLED, never a button that fakes playing.
+ */
+function AudioPlayerPlayButton({ className }: AudioPlayerPlayButtonProps) {
+  const { isPlaying, play, pause } = useAudioPlayer();
+  const toggle = isPlaying ? pause : play;
+  const label = isPlaying ? &#39;Pause audio&#39; : &#39;Play audio&#39;;
+
+  return (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      size=&quot;icon&quot;
+      disabled={!toggle}
+      onPress={toggle}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: !toggle, busy: isPlaying }}
+      // House formula: h-10 control + hitSlop 2/side = the 44pt minimum, zero pixels.
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={cn(className)}
+    &gt;
+      &lt;Icon as={isPlaying ? PauseIcon : PlayIcon} size={20} className=&quot;text-foreground&quot; /&gt;
+    &lt;/Button&gt;
+  );
+}
+
+type AudioPlayerSeekButtonProps = {
+  /** Milliseconds (the upstream part&#39;s seekOffset is seconds, default 10 — kept in ms
+   * here because positionMs/durationMs are ms throughout; default 10_000 = 10s). */
+  seekOffsetMs?: number;
+  className?: string;
+};
+
+/** Seek back by seekOffsetMs — media-chrome&#39;s clamp, computed from reported state.
+ * The magnitude rides beside the icon (the web&#39;s −10/+10) so the offset is visible,
+ * not just spoken in the a11y label. */
+function AudioPlayerSeekBackwardButton({ seekOffsetMs = 10_000, className }: AudioPlayerSeekButtonProps) {
+  const { positionMs, durationMs, seek } = useAudioPlayer();
+  const label = `Back ${Math.round(seekOffsetMs / 1000)} seconds`;
+  const seconds = Math.round(seekOffsetMs / 1000);
+
+  return (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      // Not size=&quot;icon&quot; — the magnitude label widens the pill past a square.
+      disabled={!seek}
+      onPress={seek ? () =&gt; seek(seekTarget(positionMs, -seekOffsetMs, durationMs)) : undefined}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: !seek }}
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={cn(&#39;h-10 px-3&#39;, className)}
+    &gt;
+      &lt;Icon as={RotateCcwIcon} size={18} className=&quot;text-muted-foreground&quot; /&gt;
+      &lt;Text className=&quot;text-sm font-medium tabular-nums text-muted-foreground&quot;&gt;{seconds}&lt;/Text&gt;
+    &lt;/Button&gt;
+  );
+}
+
+/** Seek forward by seekOffsetMs — clamps to the duration when one is known. The
+ * magnitude rides beside the icon, mirroring SeekBackward. */
+function AudioPlayerSeekForwardButton({ seekOffsetMs = 10_000, className }: AudioPlayerSeekButtonProps) {
+  const { positionMs, durationMs, seek } = useAudioPlayer();
+  const label = `Forward ${Math.round(seekOffsetMs / 1000)} seconds`;
+  const seconds = Math.round(seekOffsetMs / 1000);
+
+  return (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      disabled={!seek}
+      onPress={seek ? () =&gt; seek(seekTarget(positionMs, seekOffsetMs, durationMs)) : undefined}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: !seek }}
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={cn(&#39;h-10 px-3&#39;, className)}
+    &gt;
+      &lt;Icon as={RotateCwIcon} size={18} className=&quot;text-muted-foreground&quot; /&gt;
+      &lt;Text className=&quot;text-sm font-medium tabular-nums text-muted-foreground&quot;&gt;{seconds}&lt;/Text&gt;
+    &lt;/Button&gt;
+  );
+}
+
+type AudioPlayerTimeDisplayProps = {
+  className?: string;
+};
+
+/** Elapsed time — tabular so digits do not jitter the row as the clock ticks. */
+function AudioPlayerTimeDisplay({ className }: AudioPlayerTimeDisplayProps) {
+  const { positionMs } = useAudioPlayer();
+  return (
+    &lt;Text
+      accessibilityLabel={`Elapsed ${formatPlaybackTime(positionMs)}`}
+      className={cn(&#39;text-xs tabular-nums text-muted-foreground&#39;, className)}
+    &gt;
+      {formatPlaybackTime(positionMs)}
+    &lt;/Text&gt;
+  );
+}
+
+type AudioPlayerDurationDisplayProps = {
+  className?: string;
+};
+
+/** Total duration — 0:00 until the engine knows the length. */
+function AudioPlayerDurationDisplay({ className }: AudioPlayerDurationDisplayProps) {
+  const { durationMs } = useAudioPlayer();
+  return (
+    &lt;Text
+      accessibilityLabel={`Duration ${formatPlaybackTime(durationMs)}`}
+      className={cn(&#39;text-xs tabular-nums text-muted-foreground&#39;, className)}
+    &gt;
+      {formatPlaybackTime(durationMs)}
+    &lt;/Text&gt;
+  );
+}
+
+type AudioPlayerTimeRangeProps = {
+  className?: string;
+};
+
+/**
+ * The scrubber — the registered slider atom wearing the playback contract. The atom&#39;s
+ * value is normalized 0..1 (the wave-4 contract); the primitive reports its drags back
+ * in its own 0..100 scale as an ARRAY, so this part converts before seeking. Unwired
+ * onSeek → the slider renders its position, disabled — visible progress, no fake drag.
+ */
+function AudioPlayerTimeRange({ className }: AudioPlayerTimeRangeProps) {
+  const { positionMs, durationMs, seek } = useAudioPlayer();
+  return (
+    &lt;Slider
+      value={playbackProgress(positionMs, durationMs)}
+      onValueChange={
+        seek
+          ? (values) =&gt; {
+              const next = Array.isArray(values) ? values[0] : values;
+              const pct = clampVolume(Number(next) / 100);
+              seek(pct * durationMs);
+            }
+          : undefined
+      }
+      disabled={!seek}
+      accessibilityLabel=&quot;Audio position&quot;
+      className={cn(className)}
+    /&gt;
+  );
+}
+
+type AudioPlayerMuteButtonProps = {
+  className?: string;
+};
+
+/** Mute toggle — the reported muted state with the web&#39;s volume-mark ladder. */
+function AudioPlayerMuteButton({ className }: AudioPlayerMuteButtonProps) {
+  const { muted, volume, toggleMute } = useAudioPlayer();
+  const icon = muted ? VolumeXIcon : volume &gt; 0.5 ? Volume2Icon : Volume1Icon;
+  const label = muted ? &#39;Unmute audio&#39; : &#39;Mute audio&#39;;
+
+  return (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      size=&quot;icon&quot;
+      disabled={!toggleMute}
+      onPress={toggleMute}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: !toggleMute, checked: muted }}
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={cn(className)}
+    &gt;
+      &lt;Icon as={icon} size={16} className=&quot;text-muted-foreground&quot; /&gt;
+    &lt;/Button&gt;
+  );
+}
+
+type AudioPlayerVolumeRangeProps = {
+  className?: string;
+};
+
+/** The volume slider — 0..1 caller seam over the same slider atom as the scrubber. */
+function AudioPlayerVolumeRange({ className }: AudioPlayerVolumeRangeProps) {
+  const { volume, changeVolume } = useAudioPlayer();
+  return (
+    &lt;Slider
+      value={volume}
+      onValueChange={
+        changeVolume
+          ? (values) =&gt; {
+              const next = Array.isArray(values) ? values[0] : values;
+              changeVolume(clampVolume(Number(next) / 100));
+            }
+          : undefined
+      }
+      disabled={!changeVolume}
+      accessibilityLabel=&quot;Volume&quot;
+      className={cn(&#39;max-w-xs&#39;, className)}
+    /&gt;
+  );
+}
+
+export {
+  AudioPlayer,
+  AudioPlayerControlBar,
+  AudioPlayerDurationDisplay,
+  AudioPlayerMuteButton,
+  AudioPlayerPlayButton,
+  AudioPlayerSeekBackwardButton,
+  AudioPlayerSeekForwardButton,
+  AudioPlayerTimeDisplay,
+  AudioPlayerTimeRange,
+  AudioPlayerVolumeRange,
+  useAudioPlayer,
+};
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy audio-player.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>audio-player.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * AudioPlayer — pure logic. Zero react-native imports, so the Vitest tier owns it (see
+ * the header of sources.logic.ts for why component files themselves cannot load under
+ * Node).
+ *
+ * THE PRD VERDICT IS NATIVE-SUBSTITUTE: &quot;Built on the HTML audio element. Replaced by a
+ * native audio module; transport controls and progress bar keep the same product
+ * surface.&quot; The substitution lands in the CONTRACT, not in a dependency — the audio
+ * module is the CALLER&#39;S (expo-audio, a native player, a howler on web), the component
+ * renders transport controls and progress over state the caller reports back. That is
+ * the speech-input precedent (its verdict also demanded native modules; the port ships
+ * the caller seam), and unlike web-preview — whose verdict explicitly prescribed
+ * react-native-webview as a shipped peer dependency — nothing here names a module, so
+ * nothing here is a STOP.
+ *
+ * Time units are MILLISECONDS at this component&#39;s surface (the RN-native clock the
+ * caller&#39;s engine reports), and SECONDS only inside seekOffsetMs naming and the
+ * upstream part names (seekOffset 10, currentTime). The conversions live here so the
+ * component and its tests share one arithmetic.
+ */
+
+/**
+ * The transport clock: m:ss under an hour, h:mm:ss past it — the media element&#39;s own
+ * display convention the web original renders via media-chrome&#39;s time displays.
+ * Minutes are unpadded (&quot;0:05&quot;, never &quot;00:05&quot;); seconds and minutes past the hour are
+ * padded. Garbage in, &quot;0:00&quot; out — a missing duration must never render as NaN.
+ */
+export function formatPlaybackTime(ms: number): string {
+  if (!Number.isFinite(ms) || ms &lt;= 0) return &#39;0:00&#39;;
+  const totalSeconds = Math.floor(ms / 1000);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60) % 60;
+  const hours = Math.floor(totalSeconds / 3600);
+  const ss = String(seconds).padStart(2, &#39;0&#39;);
+  if (hours === 0) return `${minutes}:${ss}`;
+  return `${hours}:${String(minutes).padStart(2, &#39;0&#39;)}:${ss}`;
+}
+
+/**
+ * The target the seek buttons land on: position + delta, clamped into [0, duration]
+ * exactly as media-chrome clamps a seek past either end. Without a known duration the
+ * forward clamp is unbounded — a live stream has no end to clamp to, and inventing one
+ * would be the lie. No-throw on garbage input: both anchors fall back to 0.
+ */
+export function seekTarget(positionMs: number, deltaMs: number, durationMs?: number): number {
+  const from = Number.isFinite(positionMs) ? Math.max(0, positionMs) : 0;
+  const delta = Number.isFinite(deltaMs) ? deltaMs : 0;
+  const target = from + delta;
+  if (durationMs === undefined || !Number.isFinite(durationMs)) return Math.max(0, target);
+  return Math.min(Math.max(0, target), Math.max(0, durationMs));
+}
+
+/**
+ * The scrubber&#39;s normalized value for the slider atom — the wave-4 slider value
+ * contract is 0..1, and playback progress is where that contract earns its keep.
+ * No duration (0, negative, NaN) means nothing has loaded: progress 0, never NaN —
+ * a NaN width/percent renders as nothing with no error.
+ */
+export function playbackProgress(positionMs: number, durationMs: number): number {
+  if (!Number.isFinite(positionMs) || !Number.isFinite(durationMs) || durationMs &lt;= 0) return 0;
+  const pct = positionMs / durationMs;
+  return Math.min(1, Math.max(0, pct));
+}
+
+/** Volume lives in 0..1; callers report engine sliders and OS faders — clamp, no-throw. */
+export function clampVolume(volume: number): number {
+  if (!Number.isFinite(volume)) return 0;
+  return Math.min(1, Math.max(0, volume));
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy audio-player.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>isPlaying</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The caller&#39;s engine state, reported back on every change.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>positionMs</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>number | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>0</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>durationMs</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>number | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>0</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>0 until the engine knows the length — time displays hold at 0:00, never NaN.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>muted</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>volume</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>number | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>1</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>0..1. Reported volumes are clamped; garbage reads as muted-silent.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onPlay</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>(() =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onPause</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>(() =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onSeek</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((positionMs: number) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Absolute seek in ms — from the scrubber AND the ±offset buttons (they clamp).</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onMuteToggle</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>(() =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onVolumeChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((volume: number) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Omit for the default three-row layout; supply for the upstream composition.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>className</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>text-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>() =&gt; (
+      &lt;AudioPlayer isPlaying={false} positionMs={41_200} durationMs={187_000} volume={0.8}&gt;
+        &lt;AudioPlayerControlBar&gt;
+          &lt;AudioPlayerSeekBackwardButton /&gt;
+          &lt;AudioPlayerPlayButton /&gt;
+          &lt;AudioPlayerSeekForwardButton /&gt;
+          &lt;AudioPlayerMuteButton /&gt;
+          &lt;AudioPlayerTimeDisplay /&gt;
+          &lt;AudioPlayerDurationDisplay /&gt;
+        &lt;/AudioPlayerControlBar&gt;
+        &lt;AudioPlayerTimeRange /&gt;
+        &lt;AudioPlayerVolumeRange /&gt;
+      &lt;/AudioPlayer&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the audio-player gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h2m1 0h4m2 0h3m1 0h7M4 5.5h1m5 0h1m2 0h1m1 0h1m1 0h4m3 0h1m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h4m2 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h6m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m2 0h1m6 0h1m1 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m2 0h1m2 0h1m1 0h1M4 12.5h1m1 0h5m3 0h1m5 0h2m4 0h5M7 13.5h1m3 0h1m1 0h1m1 0h5m1 0h9m1 0h2M4 14.5h1m4 0h2m1 0h1m1 0h8m2 0h1m2 0h3M4 15.5h3m2 0h1m1 0h2m1 0h2m1 0h1m1 0h1m3 0h2m2 0h1m1 0h1M9 16.5h8m1 0h2m1 0h3m6 0h1m1 0h1M4 17.5h1m1 0h1m5 0h1m3 0h1m2 0h5m2 0h1m1 0h5M8 18.5h4m12 0h4m3 0h1M4 19.5h1m6 0h3m4 0h1m1 0h1m3 0h2m2 0h2M8 20.5h1m1 0h1m1 0h1m2 0h1m5 0h1m5 0h1m2 0h3M4 21.5h1m1 0h1m1 0h2m1 0h3m3 0h3m3 0h7m1 0h2M4 22.5h1m3 0h1m1 0h1m5 0h4m2 0h1m2 0h1m2 0h2M4 23.5h1m1 0h3m5 0h1m1 0h2m4 0h1m1 0h1m2 0h3M4 24.5h1m1 0h9m3 0h4m1 0h6m1 0h2M12 25.5h1m3 0h1m3 0h3m1 0h1m3 0h5M4 26.5h7m8 0h2m2 0h2m1 0h1m1 0h2M4 27.5h1m5 0h1m1 0h1m2 0h2m1 0h3m1 0h3m3 0h2m1 0h1M4 28.5h1m1 0h3m1 0h1m1 0h2m1 0h1m3 0h1m1 0h1m2 0h5m1 0h2M4 29.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h1m4 0h1m1 0h1m1 0h2M4 30.5h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h2m1 0h1m2 0h5m1 0h1M4 31.5h1m5 0h1m5 0h4m3 0h2m1 0h1m2 0h1m1 0h1M4 32.5h7m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m3 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/inline-citation" data-astro-cid-ziig2kl5>← inline-citation</a><a rel="next" href="/components/web-preview" data-astro-cid-ziig2kl5>web-preview →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

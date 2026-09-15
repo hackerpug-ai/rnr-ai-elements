@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Chain of Thought — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Chain of Thought — The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Reasoning</p><h1 data-astro-cid-ziig2kl5>Chain of Thought</h1><p class="item-description" data-astro-cid-ziig2kl5>The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with per-step status joined by a rail; the disclosure reuses the reasoning lifecycle (auto-open on stream, auto-close after, user toggle stands it down) rather than forking it. The collapsed badge counts steps from data — the collapsed content is unmounted, so the count must not live in the tree.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/chain-of-thought.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/chain-of-thought.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><ul class="deps-packages" data-deps-packages data-astro-cid-fdx2nnaa><li data-astro-cid-fdx2nnaa><code data-astro-cid-fdx2nnaa>react-native-reanimated</code></li></ul><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/badge.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/native-only-animated-view.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/reasoning-lifecycle.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/status.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/badge.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/native-only-animated-view.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/reasoning-lifecycle.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/status.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>chain-of-thought.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Badge } from &#39;@/registry/nativewind/components/ui/badge&#39;;
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from &#39;@/registry/nativewind/components/ui/collapsible&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { NativeOnlyAnimatedView } from &#39;@/registry/nativewind/components/ui/native-only-animated-view&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import {
+  initReasoningLifecycle,
+  reasoningLifecycleReducer,
+  REASONING_AUTO_CLOSE_DELAY,
+  shouldAutoClose,
+} from &#39;@/registry/nativewind/lib/reasoning-lifecycle&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  ChevronDownIcon,
+  CircleCheckIcon,
+  CircleIcon,
+  GlobeIcon,
+  LoaderCircleIcon,
+  ListOrderedIcon,
+  type LucideIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { Image, Platform, View, type ViewProps } from &#39;react-native&#39;;
+import Animated, {
+  FadeIn,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from &#39;react-native-reanimated&#39;;
+import {
+  chainOfThoughtProgress,
+  chainOfThoughtProgressLabel,
+  chainOfThoughtStepMeta,
+  type ChainOfThoughtStepIconName,
+  type ChainOfThoughtStepStatus,
+} from &#39;./chain-of-thought.logic&#39;;
+
+/**
+ * ChainOfThought — the multi-step reasoning list.
+ *
+ * DISTINCT FROM `reasoning`, WHICH STAYS THE SINGLE COLLAPSIBLE TRACE. Reasoning streams
+ * one text body; this renders ordered steps, each with its own status, joined by a rail.
+ * The web original&#39;s shape is preserved: a collapsible whose header carries the label
+ * and a collapsed summary, with steps inside.
+ *
+ * THE DISCLOSURE LIFECYCLE IS REUSED, NOT FORKED. lib/reasoning-lifecycle.ts is the one
+ * lifecycle for thinking disclosures, and this wires it exactly as reasoning.tsx does:
+ * stream-start auto-opens, stream-end auto-closes after 1000ms, defaultOpen pins it
+ * open forever, and any user toggle stands the automation down. The only difference is
+ * the collapsed summary: reasoning freezes a duration, this shows the step progress
+ * (UC-AGENT-02 AC-4&#39;s &quot;follow a multi-step chain with per-step status&quot; at a glance) —
+ * which is also why the count comes in as data (the collapsed content is UNMOUNTED, so
+ * a count derived from the tree would forget itself the moment it closed).
+ *
+ * THE RAIL. The web draws a connected vertical line between steps with CSS borders; a
+ * React Native step draws its own segment — icon on top, `w-px flex-1 bg-border` below —
+ * and the LAST step hides its segment via `isLast`, because React Native has no
+ * :last-child selector.
+ *
+ * Icons arrive with a 200ms fade on status change (task.tsx&#39;s animated-completion beat,
+ * ReduceMotion.System chained, bare children on web). No looping animation: the active
+ * step&#39;s loader mark is static, same reasoning as task — motion that never ends chatters.
+ */
+
+type ChainOfThoughtContextValue = {
+  open: boolean;
+  streaming: boolean;
+};
+
+const ChainOfThoughtContext = React.createContext&lt;ChainOfThoughtContextValue | null&gt;(null);
+
+function useChainOfThought() {
+  const ctx = React.useContext(ChainOfThoughtContext);
+  if (!ctx) throw new Error(&#39;ChainOfThought sub-components must be used within &lt;ChainOfThought&gt;&#39;);
+  return ctx;
+}
+
+type ChainOfThoughtProps = Omit&lt;ViewProps, &#39;children&#39;&gt; &amp; {
+  isStreaming?: boolean;
+  /** Pinned open. Never auto-closes, and suppresses the auto-open timer entirely. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) =&gt; void;
+  children?: React.ReactNode;
+};
+
+function ChainOfThought({
+  isStreaming = false,
+  defaultOpen = false,
+  onOpenChange,
+  className,
+  children,
+  ...props
+}: ChainOfThoughtProps) {
+  const [lifecycle, dispatch] = React.useReducer(
+    reasoningLifecycleReducer,
+    defaultOpen,
+    initReasoningLifecycle,
+  );
+  // null = not yet observed, so mounting with isStreaming=true still opens the chain.
+  const prevStreaming = React.useRef&lt;boolean | null&gt;(null);
+
+  React.useEffect(() =&gt; {
+    if (prevStreaming.current !== null &amp;&amp; isStreaming === prevStreaming.current) return;
+    if (isStreaming) dispatch({ type: &#39;stream-start&#39;, at: Date.now() });
+    else if (prevStreaming.current !== null) dispatch({ type: &#39;stream-end&#39;, at: Date.now() });
+    prevStreaming.current = isStreaming;
+  }, [isStreaming]);
+
+  React.useEffect(() =&gt; {
+    if (!shouldAutoClose(lifecycle)) return;
+    const timer = setTimeout(() =&gt; dispatch({ type: &#39;auto-close&#39; }), REASONING_AUTO_CLOSE_DELAY);
+    return () =&gt; clearTimeout(timer);
+  }, [lifecycle]);
+
+  return (
+    &lt;ChainOfThoughtContext.Provider value={{ open: lifecycle.open, streaming: isStreaming }}&gt;
+      &lt;Collapsible
+        open={lifecycle.open}
+        onOpenChange={(open) =&gt; {
+          dispatch({ type: &#39;user-toggle&#39;, open });
+          onOpenChange?.(open);
+        }}
+        className={cn(&#39;w-full&#39;, className)}
+        {...props}
+      &gt;
+        {children}
+      &lt;/Collapsible&gt;
+    &lt;/ChainOfThoughtContext.Provider&gt;
+  );
+}
+
+/** House motion scale for the chevron: 250ms open, 200ms close, system-reduced. */
+function Chevron({ open }: { open: boolean }) {
+  const rotation = useSharedValue(open ? 1 : 0);
+
+  React.useEffect(() =&gt; {
+    rotation.value = withTiming(open ? 1 : 0, {
+      duration: open ? 250 : 200,
+      reduceMotion: ReduceMotion.System,
+    });
+  }, [open, rotation]);
+
+  const style = useAnimatedStyle(() =&gt; ({
+    transform: [{ rotate: `${rotation.value * 180}deg` }],
+  }));
+
+  return (
+    &lt;Animated.View style={style}&gt;
+      &lt;Icon as={ChevronDownIcon} size={14} className=&quot;text-muted-foreground&quot; /&gt;
+    &lt;/Animated.View&gt;
+  );
+}
+
+type ChainOfThoughtHeaderProps = {
+  /** The header label. Defaults to &quot;Thinking…&quot; mid-stream, &quot;Chain of thought&quot; at rest. */
+  label?: string;
+  /**
+   * The same steps array the content renders — the collapsed badge&#39;s count. The collapsed
+   * disclosure unmounts its content, so this cannot be derived from the tree.
+   */
+  steps?: ReadonlyArray&lt;{ status?: ChainOfThoughtStepStatus }&gt;;
+  className?: string;
+};
+
+function ChainOfThoughtHeader({ label, steps, className }: ChainOfThoughtHeaderProps) {
+  const { open, streaming } = useChainOfThought();
+  const progress = steps ? chainOfThoughtProgress(steps) : null;
+
+  return (
+    &lt;CollapsibleTrigger
+      accessibilityState={{ busy: streaming, expanded: open }}
+      className={cn(
+        &#39;flex-row items-center gap-2 rounded-md py-1.5 active:bg-accent&#39;,
+        Platform.select({ web: &#39;transition-colors hover:bg-accent/50&#39; }),
+        className,
+      )}
+    &gt;
+      &lt;Icon
+        as={ListOrderedIcon}
+        size={14}
+        className={cn(streaming ? &#39;text-foreground&#39; : &#39;text-muted-foreground&#39;)}
+      /&gt;
+      &lt;Text numberOfLines={1} className=&quot;flex-1 text-left text-sm font-medium text-foreground&quot;&gt;
+        {label ?? (streaming ? &#39;Thinking…&#39; : &#39;Chain of thought&#39;)}
+      &lt;/Text&gt;
+      {progress ? (
+        &lt;Badge
+          variant=&quot;outline&quot;
+          accessibilityLabel={`${chainOfThoughtProgressLabel(progress)}, ${progress.total} steps`}
+          accessibilityLiveRegion=&quot;polite&quot;
+        &gt;
+          &lt;Text className=&quot;text-xs text-muted-foreground&quot;&gt;
+            {chainOfThoughtProgressLabel(progress)}
+          &lt;/Text&gt;
+        &lt;/Badge&gt;
+      ) : null}
+      &lt;Chevron open={open} /&gt;
+    &lt;/CollapsibleTrigger&gt;
+  );
+}
+
+function ChainOfThoughtContent({ className, children, ...props }: ViewProps &amp; { children?: React.ReactNode }) {
+  return (
+    &lt;CollapsibleContent className={cn(&#39;pt-1 pb-1&#39;, className)} {...props}&gt;
+      &lt;View className=&quot;gap-1&quot;&gt;{children}&lt;/View&gt;
+    &lt;/CollapsibleContent&gt;
+  );
+}
+
+/** iconName (from chain-of-thought.logic.ts) → Lucide component. Exhaustive by type. */
+const STEP_ICONS: Record&lt;ChainOfThoughtStepIconName, LucideIcon&gt; = {
+  circle: CircleIcon,
+  &#39;loader-circle&#39;: LoaderCircleIcon,
+  &#39;circle-check&#39;: CircleCheckIcon,
+};
+
+/**
+ * The step&#39;s status icon, keyed by status so a change remounts and the 200ms fade plays —
+ * task.tsx&#39;s animated-completion beat, static under reduced motion, bare on web.
+ */
+function StepStatusIcon({ status }: { status: ChainOfThoughtStepStatus }) {
+  const meta = chainOfThoughtStepMeta(status);
+
+  return (
+    &lt;NativeOnlyAnimatedView
+      key={status}
+      entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
+      accessible
+      accessibilityLabel={`Status: ${meta.label}`}
+    &gt;
+      &lt;Icon as={STEP_ICONS[meta.iconName]} size={14} className={cn(meta.className)} /&gt;
+    &lt;/NativeOnlyAnimatedView&gt;
+  );
+}
+
+type ChainOfThoughtStepProps = ViewProps &amp; {
+  /** The step&#39;s label — what the model is doing. */
+  label: string;
+  /** One line of detail under the label. */
+  description?: string;
+  /** Defaults to &#39;pending&#39; — a step that has not started is pending, not absent. */
+  status?: ChainOfThoughtStepStatus;
+  /**
+   * The last step draws no rail segment below its icon — React Native has no
+   * :last-child, so the consumer says it.
+   */
+  isLast?: boolean;
+  children?: React.ReactNode;
+};
+
+function ChainOfThoughtStep({
+  label,
+  description,
+  status = &#39;pending&#39;,
+  isLast = false,
+  className,
+  children,
+  ...props
+}: ChainOfThoughtStepProps) {
+  return (
+    &lt;View className={cn(&#39;flex-row gap-2.5&#39;, className)} {...props}&gt;
+      &lt;View className=&quot;items-center gap-1&quot;&gt;
+        &lt;StepStatusIcon status={status} /&gt;
+        {/* width in plain style: `w-px` rides uniwind&#39;s compiled stylesheet, whose
+            candidate extraction has been observed on device to drop classes from newly
+            added files between incremental rebuilds — a dropped `w-px` collapses the
+            rail to zero width and the line silently vanishes. */}
+        {!isLast ? &lt;View className=&quot;w-px flex-1 bg-border&quot; style={{ width: 1 }} /&gt; : null}
+      &lt;/View&gt;
+      &lt;View className=&quot;min-w-0 flex-1 gap-0.5 pb-2&quot;&gt;
+        &lt;Text numberOfLines={1} className=&quot;text-sm font-medium text-foreground&quot;&gt;
+          {label}
+        &lt;/Text&gt;
+        {description ? (
+          &lt;Text className=&quot;text-xs leading-4 text-muted-foreground&quot;&gt;{description}&lt;/Text&gt;
+        ) : null}
+        {children}
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+/** Sources a step consulted, as wrapping chips — task.tsx&#39;s chips-flow-beside rule. */
+function ChainOfThoughtSearchResults({ className, ...props }: ViewProps) {
+  return &lt;View className={cn(&#39;flex-row flex-wrap gap-1 pt-1&#39;, className)} {...props} /&gt;;
+}
+
+function ChainOfThoughtSearchResult({ children, className }: { children: string; className?: string }) {
+  return (
+    &lt;View
+      className={cn(
+        &#39;flex-row items-center gap-1 self-start rounded-full border border-border bg-background px-2 py-0.5 max-w-full&#39;,
+        className,
+      )}
+    &gt;
+      &lt;Icon as={GlobeIcon} size={12} className=&quot;text-muted-foreground&quot; /&gt;
+      {/* shrink + numberOfLines: a long title truncates instead of stretching the row.
+          max-w-full (not an arbitrary width): the default Tailwind v3 max-w scale that
+          the nativewind emit resolves has no numeric steps. */}
+      &lt;Text numberOfLines={1} className=&quot;shrink text-xs text-muted-foreground&quot;&gt;
+        {children}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+type ChainOfThoughtImageProps = {
+  /** RN Image source — a generated image, usually a data URI from the model result. */
+  source: { uri: string };
+  caption?: string;
+  className?: string;
+};
+
+function ChainOfThoughtImage({ source, caption, className }: ChainOfThoughtImageProps) {
+  return (
+    &lt;View className={cn(&#39;gap-1 pt-1.5&#39;, className)}&gt;
+      &lt;Image
+        source={source}
+        resizeMode=&quot;cover&quot;
+        accessibilityLabel={caption}
+        className=&quot;aspect-video w-full rounded-md border border-border bg-muted/50&quot;
+      /&gt;
+      {caption ? (
+        &lt;Text numberOfLines={1} className=&quot;text-xs text-muted-foreground&quot;&gt;
+          {caption}
+        &lt;/Text&gt;
+      ) : null}
+    &lt;/View&gt;
+  );
+}
+
+export {
+  ChainOfThought,
+  ChainOfThoughtContent,
+  ChainOfThoughtHeader,
+  ChainOfThoughtImage,
+  ChainOfThoughtSearchResult,
+  ChainOfThoughtSearchResults,
+  ChainOfThoughtStep,
+  useChainOfThought,
+};
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy chain-of-thought.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>chain-of-thought.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * ChainOfThought — pure logic. Zero react-native imports, so the Vitest tier owns the
+ * step map and the progress counter; chain-of-thought.tsx holds only the static
+ * iconName → Lucide table, typed exhaustively against `iconName` (see tool.logic.ts for
+ * the full rationale).
+ *
+ * THE STEP STATUS UNION IS DECLARED LOCALLY, not imported from `ai` — message.tsx&#39;s
+ * precedent: the registry is stateless about the model and takes no runtime dependency
+ * on any SDK. The three states are the web original&#39;s step states (pending / active /
+ * complete); an errored chain step is a tool concern and belongs to Tool&#39;s own state
+ * machine, which is why no `error` state exists here.
+ *
+ * The disclosure lifecycle is NOT redefined here — lib/reasoning-lifecycle.ts is THE
+ * lifecycle for both thinking disclosures, and chain-of-thought.tsx wires it unchanged.
+ */
+
+import { statusColor, type StatusTone } from &#39;@/registry/nativewind/lib/status&#39;;
+
+export type ChainOfThoughtStepStatus = &#39;pending&#39; | &#39;active&#39; | &#39;complete&#39;;
+
+export const CHAIN_OF_THOUGHT_STEP_STATUS_KEYS = [
+  &#39;pending&#39;,
+  &#39;active&#39;,
+  &#39;complete&#39;,
+] as const satisfies readonly ChainOfThoughtStepStatus[];
+
+/** Lucide icon NAME (kebab-case); the component resolves the component. */
+export type ChainOfThoughtStepIconName = &#39;circle&#39; | &#39;loader-circle&#39; | &#39;circle-check&#39;;
+
+export type ChainOfThoughtStepMeta = {
+  /** Badge/label text. House vocabulary: in-flight reads &quot;Running&quot;, everywhere. */
+  label: string;
+  tone: StatusTone;
+  iconName: ChainOfThoughtStepIconName;
+  /** Precomposed text class from the shared statusColor map. */
+  className: string;
+};
+
+export const CHAIN_OF_THOUGHT_STEP_META: Record&lt;ChainOfThoughtStepStatus, ChainOfThoughtStepMeta&gt; = {
+  pending: { label: &#39;Pending&#39;, tone: &#39;pending&#39;, iconName: &#39;circle&#39;, className: statusColor.pending },
+  active: { label: &#39;Running&#39;, tone: &#39;running&#39;, iconName: &#39;loader-circle&#39;, className: statusColor.running },
+  complete: { label: &#39;Completed&#39;, tone: &#39;success&#39;, iconName: &#39;circle-check&#39;, className: statusColor.success },
+};
+
+export function chainOfThoughtStepMeta(status: ChainOfThoughtStepStatus): ChainOfThoughtStepMeta {
+  return CHAIN_OF_THOUGHT_STEP_META[status];
+}
+
+export type ChainOfThoughtProgress = {
+  complete: number;
+  total: number;
+};
+
+/**
+ * The collapsed header&#39;s glanceable count. Steps are declarative children, so the count
+ * cannot be derived from the tree — the collapsed disclosure UNMOUNTS its content, and
+ * a header that forgets the count the moment it closes is useless. The consumer passes
+ * the same steps array it renders; this counts what it is given. A step with no status
+ * yet is not complete, and never inflates the denominator&#39;s honesty: total is the
+ * array&#39;s length.
+ */
+export function chainOfThoughtProgress(
+  steps: ReadonlyArray&lt;{ status?: ChainOfThoughtStepStatus }&gt;,
+): ChainOfThoughtProgress {
+  let complete = 0;
+  for (const step of steps) {
+    if (step.status === &#39;complete&#39;) complete++;
+  }
+  return { complete, total: steps.length };
+}
+
+/** The header badge&#39;s text. Noun-free so the singular never reads wrong. */
+export function chainOfThoughtProgressLabel(progress: ChainOfThoughtProgress): string {
+  if (progress.total === 0) return &#39;No steps yet&#39;;
+  return `${progress.complete} of ${progress.total} complete`;
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy chain-of-thought.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>isStreaming</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>defaultOpen</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Pinned open. Never auto-closes, and suppresses the auto-open timer entirely.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onOpenChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((open: boolean) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-border</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-accent</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>border-border</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-background</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-muted</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>(o) =&gt; (
+      &lt;ChainOfThought defaultOpen={o.defaultOpen === true} isStreaming={o.isStreaming === true}&gt;
+        &lt;ChainOfThoughtHeader
+          label=&quot;Porting web-preview&quot;
+          steps={[{ status: &#39;completed&#39; }, { status: &#39;running&#39; }, { status: &#39;pending&#39; }]}
+        /&gt;
+        &lt;ChainOfThoughtContent&gt;
+          &lt;ChainOfThoughtStep label=&quot;Read the web original&quot; description=&quot;web-preview.tsx:1-260&quot; status=&quot;completed&quot; /&gt;
+          &lt;ChainOfThoughtStep label=&quot;Swap the iframe&quot; description=&quot;react-native-webview with the scheme allowlist&quot; status=&quot;running&quot; /&gt;
+          &lt;ChainOfThoughtStep label=&quot;Declare the peer&quot; description=&quot;react-native-webview in registry.json&quot; status=&quot;pending&quot; isLast /&gt;
+        &lt;/ChainOfThoughtContent&gt;
+      &lt;/ChainOfThought&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the chain-of-thought gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m1 0h1m1 0h1m3 0h5m3 0h7M4 5.5h1m5 0h1m2 0h1m1 0h1m1 0h2m7 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h4m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m3 0h1m2 0h2m3 0h1m3 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m11 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M14 11.5h2m2 0h1m3 0h2M4 12.5h1m1 0h1m3 0h2m2 0h5m1 0h1m2 0h2m2 0h1m2 0h1m1 0h1M4 13.5h4m3 0h3m2 0h6m1 0h2m1 0h2m1 0h1m2 0h1M5 14.5h2m1 0h1m1 0h2m1 0h4m2 0h1m3 0h1m2 0h1m1 0h1m1 0h1m1 0h1M4 15.5h1m1 0h4m2 0h3m2 0h1m1 0h2m2 0h3m1 0h3m1 0h1M4 16.5h4m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1M7 17.5h1m8 0h1m2 0h3m1 0h1m1 0h2m2 0h2m1 0h1M4 18.5h2m2 0h5m1 0h6m1 0h1m1 0h1m1 0h1m3 0h4M4 19.5h1m1 0h2m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m1 0h1m1 0h1m4 0h1m1 0h1M5 20.5h2m3 0h1m2 0h1m3 0h3m3 0h2m1 0h1m2 0h1m1 0h1M7 21.5h1m4 0h2m2 0h6m1 0h2m1 0h2m1 0h1m2 0h1M4 22.5h2m4 0h1m2 0h1m1 0h2m2 0h1m3 0h6m1 0h1m1 0h1M6 23.5h1m5 0h1m2 0h3m1 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1M4 24.5h7m2 0h2m1 0h2m2 0h1m3 0h6m1 0h2M12 25.5h1m1 0h3m2 0h2m3 0h1m3 0h3m1 0h1M4 26.5h7m1 0h3m1 0h5m3 0h1m1 0h1m1 0h1m1 0h1m1 0h1M4 27.5h1m5 0h1m4 0h1m2 0h1m4 0h2m3 0h2M4 28.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h1m1 0h8m2 0h1M4 29.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h5m3 0h1m1 0h3m2 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h3m1 0h3m2 0h1m1 0h3M4 31.5h1m5 0h1m3 0h2m2 0h1m1 0h1m1 0h5m1 0h2M4 32.5h7m1 0h1m1 0h4m1 0h1m4 0h1m1 0h1m2 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/agent" data-astro-cid-ziig2kl5>← agent</a><a rel="next" href="/components/plan" data-astro-cid-ziig2kl5>plan →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

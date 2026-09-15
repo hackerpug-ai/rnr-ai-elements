@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Task — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Task — What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Reasoning</p><h1 data-astro-cid-ziig2kl5>Task</h1><p class="item-description" data-astro-cid-ziig2kl5>What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by default on a phone — status stays glanceable on the trigger row — the one divergence from the web original, which opens by default.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/task.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/task.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><ul class="deps-packages" data-deps-packages data-astro-cid-fdx2nnaa><li data-astro-cid-fdx2nnaa><code data-astro-cid-fdx2nnaa>react-native-reanimated</code></li></ul><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/badge.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/native-only-animated-view.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/status.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/badge.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/native-only-animated-view.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/status.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>task.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Badge } from &#39;@/registry/nativewind/components/ui/badge&#39;;
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from &#39;@/registry/nativewind/components/ui/collapsible&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { NativeOnlyAnimatedView } from &#39;@/registry/nativewind/components/ui/native-only-animated-view&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  ChevronDownIcon,
+  CircleCheckIcon,
+  CircleIcon,
+  CircleXIcon,
+  FileIcon,
+  LoaderCircleIcon,
+  type LucideIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { Platform, View, type ViewProps } from &#39;react-native&#39;;
+import Animated, {
+  FadeIn,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from &#39;react-native-reanimated&#39;;
+import { taskStatusMeta, type TaskStatus, type TaskStatusIconName } from &#39;./task.logic&#39;;
+
+/**
+ * Task — what the agent did or is doing, with a status per row and the files it
+ * touched. The web original is a collapsible checklist driven by a streamed object
+ * (title before items, so the trigger tolerates a missing title with &quot;Loading...&quot;).
+ *
+ * ONE DELIBERATE DIVERGENCE FROM THE WEB: it does NOT defaultOpen. The web&#39;s open-by-
+ * default rule loses to the design contract&#39;s phone-density rule — a transcript that
+ * auto-unrolls every task list stops being scannable — because status is still
+ * glanceable while collapsed: the trigger row carries a status badge, and each row&#39;s
+ * icon carries its own after that. Details are one tap away, which is the disclosure&#39;s
+ * whole job. Like the web original, the trigger tolerates a missing title (&quot;Loading…&quot;)
+ * because titles arrive before items mid-stream.
+ *
+ * THE STATUS MAP IS PURE (task.logic.ts, Vitest-owned); this file holds only the static
+ * iconName → Lucide table, exhaustive by type. Status swaps animate through
+ * NativeOnlyAnimatedView&#39;s FadeIn (200ms — the house layout-transition duration,
+ * ReduceMotion.System chained, bare children on web), so a task completing reads as the
+ * check arriving rather than a flicker. No looping animation here: a spinning loader is
+ * motion that never ends, and per-second ticks chatter to screen readers — the loader
+ * mark is static by design.
+ *
+ * FILE CHIPS. The web flows a chip inline INSIDE the sentence via inline-flex, which
+ * React Native cannot do (no View inside a Text run). The port advice is followed: a
+ * Text run for the sentence plus chips that flow and wrap beside it
+ * (flex-row + flex-wrap), never a nested View-in-Text.
+ */
+
+type TaskContextValue = { open: boolean };
+
+const TaskContext = React.createContext&lt;TaskContextValue | null&gt;(null);
+
+function useTask() {
+  const ctx = React.useContext(TaskContext);
+  if (!ctx) throw new Error(&#39;Task sub-components must be used within &lt;Task&gt;&#39;);
+  return ctx;
+}
+
+type TaskProps = Omit&lt;ViewProps, &#39;children&#39;&gt; &amp; {
+  /** Collapsed by default on a phone — see the divergence note above. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) =&gt; void;
+  children?: React.ReactNode;
+};
+
+function Task({ defaultOpen = false, onOpenChange, className, children, ...props }: TaskProps) {
+  const [open, setOpen] = React.useState(defaultOpen);
+
+  function handleOpenChange(next: boolean) {
+    setOpen(next);
+    onOpenChange?.(next);
+  }
+
+  return (
+    &lt;TaskContext.Provider value={{ open }}&gt;
+      &lt;Collapsible
+        open={open}
+        onOpenChange={handleOpenChange}
+        className={cn(&#39;rounded-md border border-border bg-muted/50&#39;, className)}
+        {...props}
+      &gt;
+        {children}
+      &lt;/Collapsible&gt;
+    &lt;/TaskContext.Provider&gt;
+  );
+}
+
+/** iconName (from task.logic.ts) → Lucide component. Static and exhaustive by type. */
+const STATUS_ICONS: Record&lt;TaskStatusIconName, LucideIcon&gt; = {
+  circle: CircleIcon,
+  &#39;loader-circle&#39;: LoaderCircleIcon,
+  &#39;circle-check&#39;: CircleCheckIcon,
+  &#39;circle-x&#39;: CircleXIcon,
+};
+
+/**
+ * The status icon, keyed by status so a change remounts and the entering animation
+ * plays — the &quot;animated completion&quot; beat. Static under reduced motion (FadeIn chains
+ * ReduceMotion.System) and bare on web (NativeOnlyAnimatedView).
+ */
+function TaskStatusIcon({ status }: { status: TaskStatus }) {
+  const meta = taskStatusMeta(status);
+
+  return (
+    &lt;NativeOnlyAnimatedView
+      key={status}
+      entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
+      className=&quot;pt-0.5&quot;
+    &gt;
+      &lt;Icon as={STATUS_ICONS[meta.iconName]} size={14} className={cn(meta.className)} /&gt;
+    &lt;/NativeOnlyAnimatedView&gt;
+  );
+}
+
+/** House motion scale for the chevron: 250ms open, 200ms close, system-reduced. */
+function Chevron({ open }: { open: boolean }) {
+  const rotation = useSharedValue(open ? 1 : 0);
+
+  React.useEffect(() =&gt; {
+    rotation.value = withTiming(open ? 1 : 0, {
+      duration: open ? 250 : 200,
+      reduceMotion: ReduceMotion.System,
+    });
+  }, [open, rotation]);
+
+  const style = useAnimatedStyle(() =&gt; ({
+    transform: [{ rotate: `${rotation.value * 180}deg` }],
+  }));
+
+  return (
+    &lt;Animated.View style={style}&gt;
+      &lt;Icon as={ChevronDownIcon} size={14} className=&quot;text-muted-foreground&quot; /&gt;
+    &lt;/Animated.View&gt;
+  );
+}
+
+type TaskTriggerProps = {
+  /** The collapsed summary line. Tolerates a missing title mid-stream. */
+  title?: string;
+  /** The group&#39;s current status, glanceable while collapsed. */
+  status?: TaskStatus;
+  className?: string;
+};
+
+function TaskTrigger({ title, status, className }: TaskTriggerProps) {
+  const { open } = useTask();
+  const meta = status ? taskStatusMeta(status) : null;
+
+  return (
+    &lt;CollapsibleTrigger
+      className={cn(
+        &#39;flex-row items-center gap-2 rounded-md p-3 active:bg-accent&#39;,
+        Platform.select({ web: &#39;transition-colors hover:bg-accent/50&#39; }),
+        className,
+      )}
+    &gt;
+      &lt;Text numberOfLines={1} className=&quot;flex-1 text-sm font-medium text-foreground&quot;&gt;
+        {title || &#39;Loading…&#39;}
+      &lt;/Text&gt;
+      {meta ? (
+        &lt;Badge variant=&quot;outline&quot; accessibilityLabel={`Status: ${meta.label}`} className=&quot;gap-1&quot;&gt;
+          &lt;Icon as={STATUS_ICONS[meta.iconName]} size={12} className={cn(meta.className)} /&gt;
+          &lt;Text className={cn(&#39;text-xs&#39;, meta.className)}&gt;{meta.label}&lt;/Text&gt;
+        &lt;/Badge&gt;
+      ) : null}
+      &lt;Chevron open={open} /&gt;
+    &lt;/CollapsibleTrigger&gt;
+  );
+}
+
+function TaskContent({ className, children, ...props }: ViewProps &amp; { children?: React.ReactNode }) {
+  return (
+    &lt;CollapsibleContent className={cn(&#39;px-3 pb-3&#39;, className)} {...props}&gt;
+      &lt;View className=&quot;gap-1.5&quot;&gt;{children}&lt;/View&gt;
+    &lt;/CollapsibleContent&gt;
+  );
+}
+
+type TaskItemProps = ViewProps &amp; {
+  /** This row&#39;s status — icon and color from the pure map, animated on change. */
+  status?: TaskStatus;
+  children?: React.ReactNode;
+};
+
+function TaskItem({ status, className, children, ...props }: TaskItemProps) {
+  return (
+    &lt;View className={cn(&#39;flex-row items-start gap-2 py-0.5&#39;, className)} {...props}&gt;
+      {status ? &lt;TaskStatusIcon status={status} /&gt; : null}
+      {/* Chips flow and wrap beside the sentence; they never nest inside a Text run. */}
+      &lt;View className=&quot;flex-1 flex-row flex-wrap items-center gap-x-1.5 gap-y-1&quot;&gt;{children}&lt;/View&gt;
+    &lt;/View&gt;
+  );
+}
+
+/** A file the task touched, as a chip. Sits in the item&#39;s wrap row, never inside a Text run. */
+function TaskItemFile({ children, className }: { children: string; className?: string }) {
+  return (
+    &lt;View
+      className={cn(
+        &#39;flex-row items-center gap-1 self-start rounded-sm border border-border bg-background px-1.5 py-0.5&#39;,
+        className,
+      )}
+    &gt;
+      &lt;Icon as={FileIcon} size={12} className=&quot;text-muted-foreground&quot; /&gt;
+      &lt;Text numberOfLines={1} className=&quot;text-xs text-muted-foreground&quot;&gt;
+        {children}
+      &lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+export { Task, TaskContent, TaskItem, TaskItemFile, TaskTrigger, useTask };
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy task.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>task.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Task — pure logic. Zero react-native imports, so the Vitest tier owns the
+ * status→label/icon/color map; task.tsx holds only the static iconName → Lucide table,
+ * typed exhaustively against `iconName` (see tool.logic.ts for the full rationale).
+ *
+ * The status union is the web original&#39;s gen-ui task schema (`pending` | `in_progress` |
+ * `completed`) widened by this port&#39;s two additions: `running` (the PRD&#39;s own word for
+ * the in-flight state — UC-AGENT-03: &quot;pending to running to complete&quot;) and `rejected`
+ * (an agent plan step the user declined). `in_progress` is kept as an accepted alias so
+ * a consumer feeding the web schema verbatim still typechecks; it renders identically
+ * to `running`.
+ *
+ * Color is never the sole channel: every status carries a distinct icon and a text
+ * label, and the label is what a screen reader announces.
+ */
+
+import { statusColor, type StatusTone } from &#39;@/registry/nativewind/lib/status&#39;;
+
+export type TaskStatus = &#39;pending&#39; | &#39;in_progress&#39; | &#39;running&#39; | &#39;completed&#39; | &#39;rejected&#39;;
+
+export const TASK_STATUS_KEYS = [
+  &#39;pending&#39;,
+  &#39;in_progress&#39;,
+  &#39;running&#39;,
+  &#39;completed&#39;,
+  &#39;rejected&#39;,
+] as const satisfies readonly TaskStatus[];
+
+/** Lucide icon NAME (kebab-case); the component resolves the component. */
+export type TaskStatusIconName = &#39;circle&#39; | &#39;loader-circle&#39; | &#39;circle-check&#39; | &#39;circle-x&#39;;
+
+export type TaskStatusMeta = {
+  /** Badge text. `in_progress` borrows the PRD&#39;s word, &quot;Running&quot;. */
+  label: string;
+  tone: StatusTone;
+  iconName: TaskStatusIconName;
+  /** Precomposed text class from the shared statusColor map. */
+  className: string;
+};
+
+export const TASK_STATUS_META: Record&lt;TaskStatus, TaskStatusMeta&gt; = {
+  pending: { label: &#39;Pending&#39;, tone: &#39;pending&#39;, iconName: &#39;circle&#39;, className: statusColor.pending },
+  in_progress: { label: &#39;Running&#39;, tone: &#39;running&#39;, iconName: &#39;loader-circle&#39;, className: statusColor.running },
+  running: { label: &#39;Running&#39;, tone: &#39;running&#39;, iconName: &#39;loader-circle&#39;, className: statusColor.running },
+  completed: { label: &#39;Completed&#39;, tone: &#39;success&#39;, iconName: &#39;circle-check&#39;, className: statusColor.success },
+  rejected: { label: &#39;Rejected&#39;, tone: &#39;denied&#39;, iconName: &#39;circle-x&#39;, className: statusColor.denied },
+};
+
+export function taskStatusMeta(status: TaskStatus): TaskStatusMeta {
+  return TASK_STATUS_META[status];
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy task.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>defaultOpen</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Collapsed by default on a phone — see the divergence note above.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onOpenChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((open: boolean) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>border-border</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-muted</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-accent</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-background</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>(o) =&gt; (
+      &lt;TaskList&gt;
+        &lt;TaskTrigger /&gt;
+        &lt;TaskContent&gt;
+          &lt;TaskItem status={(o.status as &#39;completed&#39;) ?? &#39;completed&#39;}&gt;
+            &lt;Text className=&quot;text-sm text-foreground&quot;&gt;Install 56 items via the RNR CLI&lt;/Text&gt;
+          &lt;/TaskItem&gt;
+          &lt;TaskItem status=&quot;running&quot;&gt;
+            &lt;Text className=&quot;text-sm text-foreground&quot;&gt;Verify the Expo Go dependency graph&lt;/Text&gt;
+          &lt;/TaskItem&gt;
+          &lt;TaskItem status=&quot;pending&quot;&gt;
+            &lt;Text className=&quot;text-sm text-foreground&quot;&gt;Cut the v0.2.0 release tag&lt;/Text&gt;
+          &lt;/TaskItem&gt;
+          &lt;TaskItem status=&quot;failed&quot;&gt;
+            &lt;Text className=&quot;text-sm text-foreground&quot;&gt;Boot the gallery on a physical device&lt;/Text&gt;
+          &lt;/TaskItem&gt;
+        &lt;/TaskContent&gt;
+      &lt;/TaskList&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the task gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h33v33H0z"/><path stroke="#000000" d="M4 4.5h7m5 0h2m2 0h1m1 0h7M4 5.5h1m5 0h1m5 0h1m1 0h2m2 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h4m3 0h1m2 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h4m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m7 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h1m3 0h3m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h4m2 0h3M4 12.5h1m1 0h5m2 0h1m1 0h1m1 0h1m4 0h5M4 13.5h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m2 0h2m1 0h1m2 0h1M7 14.5h2m1 0h5m2 0h6m1 0h1m3 0h1M4 15.5h1m6 0h1m4 0h1m1 0h2m2 0h3m2 0h2M5 16.5h2m3 0h6m1 0h3m1 0h2m1 0h3M4 17.5h3m1 0h1m7 0h1m1 0h1m1 0h2m1 0h1M4 18.5h1m3 0h1m1 0h1m1 0h2m4 0h2m2 0h2m3 0h2M4 19.5h1m1 0h1m2 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h1m3 0h2M4 20.5h1m3 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h7m1 0h1M12 21.5h3m5 0h1m3 0h1m1 0h1M4 22.5h7m4 0h2m3 0h1m1 0h1m1 0h2m1 0h2M4 23.5h1m5 0h1m1 0h4m2 0h1m1 0h1m3 0h1m3 0h1M4 24.5h1m1 0h3m1 0h1m1 0h2m1 0h12M4 25.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m1 0h1m2 0h2M4 26.5h1m1 0h3m1 0h1m1 0h1m4 0h1m5 0h1m4 0h1M4 27.5h1m5 0h1m4 0h2m1 0h4m1 0h1m4 0h1M4 28.5h7m1 0h7m2 0h8"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/reasoning" data-astro-cid-ziig2kl5>← reasoning</a><a rel="next" href="/components/agent" data-astro-cid-ziig2kl5>agent →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Mic Selector — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Mic Selector — The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Prompt Input</p><h1 data-astro-cid-ziig2kl5>Mic Selector</h1><p class="item-description" data-astro-cid-ziig2kl5>The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio routes, not an enumerable input device list, so the route list is CALLER-SUPPLIED — the web&#39;s useAudioDevices (getUserMedia) does not port, and an empty list renders an honest empty state the consumer can point at permission denial. Composed on the command atom with the route-kind marks (built-in, wired, bluetooth, other); routes order built-in first, caller order preserved within a kind.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mic-selector.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mic-selector.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><p class="deps-empty" data-deps-empty data-astro-cid-fdx2nnaa>No required npm packages — this item installs through the registry dependencies below.</p><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/command.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/item.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/command.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/item.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>mic-selector.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Button } from &#39;@/registry/nativewind/components/ui/button&#39;;
+import { Command } from &#39;@/registry/nativewind/components/ui/command&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from &#39;@/registry/nativewind/components/ui/item&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  AudioLinesIcon,
+  BluetoothIcon,
+  ChevronsUpDownIcon,
+  HeadphonesIcon,
+  MicIcon,
+  type LucideIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import {
+  findMicRoute,
+  orderMicRoutes,
+  type MicRoute,
+  type MicRouteKind,
+} from &#39;./mic-selector.logic&#39;;
+import type { CommandItem } from &#39;../ui/command.logic&#39;;
+
+/**
+ * MicSelector — the audio input route picker (UC-VOICE-01 AC-3: &quot;choose an audio
+ * input route such as built-in microphone, wired headset, or Bluetooth from a native
+ * route picker&quot;).
+ *
+ * THE PRD VERDICT IS NATIVE-SUBSTITUTE, PURE-RNR: &quot;Web enumerates input devices
+ * through the media devices API. iOS and Android do not expose an enumerable input
+ * device list; they expose audio routes. Ships as a route picker (built-in, wired,
+ * Bluetooth) with the same product job.&quot; The substitution lands in the CONTRACT, not
+ * the component: the route list is CALLER-SUPPLIED, because enumeration is the one
+ * part with no honest registry implementation — AVAudioSession inputs on iOS and
+ * Android&#39;s audio routing live behind platform APIs (and outside Expo Go), and
+ * guessing routes would ship a lie. The web&#39;s useAudioDevices hook (getUserMedia)
+ * does NOT port; there is no hook here.
+ *
+ * PERMISSION IS THE CALLER&#39;S TOO (speech-input&#39;s framing). The web original requests
+ * microphone permission on open and shows an empty list until it is granted; here an
+ * empty route list renders the empty state, and `emptyTitle`/`emptyDescription` exist
+ * so a consumer can say &quot;Microphone access denied&quot; when that is WHY the list is
+ * empty. The component cannot know why its list is empty, and pretending otherwise
+ * would be the lie.
+ *
+ * THE SURFACE IS THE COMMAND ATOM per the build plan (&quot;command backs model-selector,
+ * voice-selector and mic-selector&quot;) — the same sheet+filter+list muscle memory as the
+ * other two selectors, with the filter carrying route labels and kinds. The web&#39;s
+ * Input/List/Item/Empty parts are absorbed into that substrate; MicSelectorLabel
+ * (Chrome&#39;s &quot;(XXXX:XXXX)&quot; hardware-ID stripper) is dead code natively per the KB.
+ *
+ * Composition:
+ *   &lt;MicSelector routes={routes} value={value} onValueChange={setValue}&gt;
+ *     &lt;MicSelectorTrigger /&gt;
+ *   &lt;/MicSelector&gt;
+ */
+
+/** The route-kind → mark map. Kind is identity, never the sole channel — the label carries it too. */
+const routeKindIcons: Record&lt;MicRouteKind, LucideIcon&gt; = {
+  &#39;built-in&#39;: MicIcon,
+  wired: HeadphonesIcon,
+  bluetooth: BluetoothIcon,
+  other: AudioLinesIcon,
+};
+
+type MicSelectorContextValue = {
+  routes: readonly MicRoute[];
+  value: string | undefined;
+  open: boolean;
+  setOpen: (open: boolean) =&gt; void;
+};
+
+const MicSelectorContext = React.createContext&lt;MicSelectorContextValue | null&gt;(null);
+
+function useMicSelectorContext(): MicSelectorContextValue {
+  const ctx = React.useContext(MicSelectorContext);
+  if (!ctx) throw new Error(&#39;MicSelector components must be used within MicSelector&#39;);
+  return ctx;
+}
+
+type MicSelectorProps = {
+  /** The routes YOUR platform exposes — the registry cannot enumerate them for you. */
+  routes: readonly MicRoute[];
+  value: string | undefined;
+  onValueChange: (value: string) =&gt; void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) =&gt; void;
+  placeholder?: string;
+  emptyTitle?: string;
+  /** Say WHY the list is empty when you know — &quot;Microphone access denied&quot;, not &quot;None&quot;. */
+  emptyDescription?: string;
+  /** The sheet&#39;s screen-reader title. Defaults to &quot;Choose an input route&quot;. */
+  title?: string;
+  /** Passed to the sheet content — height and padding adjustments. */
+  className?: string;
+  children?: React.ReactNode;
+};
+
+function MicSelector({
+  routes,
+  value,
+  onValueChange,
+  open: openProp,
+  onOpenChange,
+  placeholder = &#39;Filter routes…&#39;,
+  emptyTitle = &#39;No input routes&#39;,
+  emptyDescription = &#39;No audio input routes are available right now.&#39;,
+  title = &#39;Choose an input route&#39;,
+  className,
+  children,
+}: MicSelectorProps) {
+  const [internalOpen, setInternalOpen] = React.useState(false);
+  const open = openProp ?? internalOpen;
+  const setOpen = React.useCallback(
+    (next: boolean) =&gt; {
+      if (openProp === undefined) setInternalOpen(next);
+      onOpenChange?.(next);
+    },
+    [openProp, onOpenChange],
+  );
+
+  // Built-in first, wired, bluetooth, other — caller order kept within a kind.
+  const ordered = React.useMemo(() =&gt; orderMicRoutes(routes), [routes]);
+  const items = React.useMemo(
+    () =&gt;
+      ordered.map((r) =&gt; ({
+        value: r.id,
+        label: r.label,
+        description: r.kind &amp;&amp; r.kind !== &#39;other&#39; ? r.kind : undefined,
+        keywords: r.kind,
+        group: undefined,
+      })),
+    [ordered],
+  );
+
+  const contextValue = React.useMemo&lt;MicSelectorContextValue&gt;(
+    () =&gt; ({ routes, value, open, setOpen }),
+    [routes, value, open, setOpen],
+  );
+
+  function renderRow({ item, selected }: { item: CommandItem; selected: boolean }) {
+    // kind rides `keywords` (set when the rows were built); &#39;other&#39; and absent fall
+    // to the generic mark. The label still carries the kind — the icon is never the
+    // sole channel.
+    const kind = (routeKindIcons as Record&lt;string, LucideIcon&gt;)[item.keywords ?? &#39;&#39;]
+      ? (item.keywords as MicRouteKind)
+      : &#39;other&#39;;
+    return (
+      &lt;Item
+        variant={selected ? &#39;muted&#39; : &#39;default&#39;}
+        onPress={() =&gt; {
+          onValueChange(item.value);
+          setOpen(false);
+        }}
+      &gt;
+        &lt;ItemMedia&gt;
+          &lt;Icon as={routeKindIcons[kind]} size={16} className=&quot;text-muted-foreground&quot; /&gt;
+        &lt;/ItemMedia&gt;
+        &lt;ItemContent&gt;
+          &lt;ItemTitle&gt;{item.label}&lt;/ItemTitle&gt;
+          {/* The kind is ANNOUNCED, not just iconized (review M2) — the icon alone
+              can&#39;t tell a screen reader &quot;Car Stereo&quot; is a Bluetooth route. */}
+          &lt;ItemDescription&gt;{item.description}&lt;/ItemDescription&gt;
+        &lt;/ItemContent&gt;
+      &lt;/Item&gt;
+    );
+  }
+
+  return (
+    &lt;MicSelectorContext.Provider value={contextValue}&gt;
+      &lt;Command
+        open={open}
+        onOpenChange={setOpen}
+        items={items}
+        value={value}
+        onSelect={(next) =&gt; {
+          onValueChange(next);
+          setOpen(false);
+        }}
+        renderItem={renderRow}
+        placeholder={placeholder}
+        emptyTitle={emptyTitle}
+        emptyDescription={emptyDescription}
+        title={title}
+        className={className}
+      &gt;
+        {children}
+      &lt;/Command&gt;
+    &lt;/MicSelectorContext.Provider&gt;
+  );
+}
+
+type MicSelectorTriggerProps = {
+  /** Overrides the default outline button (web: children on the trigger). */
+  children?: React.ReactNode;
+  className?: string;
+};
+
+function MicSelectorTrigger({ children, className }: MicSelectorTriggerProps) {
+  const { routes, value, setOpen, open } = useMicSelectorContext();
+  const selected = findMicRoute(routes, value);
+  const label = selected?.label ?? &#39;Input&#39;;
+
+  return (
+    children ?? (
+      &lt;Button
+        variant=&quot;outline&quot;
+        onPress={() =&gt; setOpen(!open)}
+        accessibilityLabel={`Choose input route, current: ${label}`}
+        accessibilityState={{ expanded: open }}
+        className={cn(&#39;justify-between gap-2&#39;, className)}
+      &gt;
+        &lt;Icon as={MicIcon} size={16} className=&quot;text-muted-foreground&quot; /&gt;
+        &lt;Text numberOfLines={1} className=&quot;flex-1 text-left&quot;&gt;
+          {label}
+        &lt;/Text&gt;
+        {/* The web trigger&#39;s up-down mark (mic-selector.tsx:18,241), aligned with the
+            model/voice triggers&#39; affordance. */}
+        &lt;Icon as={ChevronsUpDownIcon} size={16} className=&quot;shrink-0 text-muted-foreground&quot; /&gt;
+      &lt;/Button&gt;
+    )
+  );
+}
+
+type MicSelectorValueProps = {
+  /** The placeholder when nothing is selected — the web part&#39;s own fallback text. */
+  placeholder?: string;
+  className?: string;
+};
+
+/**
+ * The selected route&#39;s label, for consumers composing a custom trigger — the web
+ * part-set&#39;s MicSelectorValue. Renders the placeholder when the value matches
+ * nothing, because a disconnected route should read as unselected, not as a lie.
+ */
+function MicSelectorValue({ placeholder = &#39;Input&#39;, className }: MicSelectorValueProps) {
+  const { routes, value } = useMicSelectorContext();
+  const selected = findMicRoute(routes, value);
+  return (
+    &lt;Text numberOfLines={1} className={className}&gt;
+      {selected?.label ?? placeholder}
+    &lt;/Text&gt;
+  );
+}
+
+export { MicSelector, MicSelectorTrigger, MicSelectorValue, routeKindIcons };
+export type { MicRoute, MicRouteKind };
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy mic-selector.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>mic-selector.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * MicSelector — pure logic. Zero react-native imports, so the Vitest tier owns it (see
+ * the header of sources.logic.ts for why component files themselves cannot load under
+ * Node).
+ *
+ * The web original lists devices from navigator.mediaDevices.enumerateDevices() — an
+ * API React Native does not have, and the PRD verdict (native-substitute) is explicit
+ * that iOS and Android expose audio ROUTES, not an enumerable input device list. So
+ * the list here is caller-supplied, and the only logic this file owns is the route
+ * vocabulary and the display order of a list the caller built.
+ */
+
+/** The route kinds the mobile OS actually exposes (the PRD verdict&#39;s own list, plus a catch-all). */
+export const MIC_ROUTE_KINDS = [&#39;built-in&#39;, &#39;wired&#39;, &#39;bluetooth&#39;, &#39;other&#39;] as const;
+
+export type MicRouteKind = (typeof MIC_ROUTE_KINDS)[number];
+
+/** One audio input route the caller enumerated on their platform. */
+export type MicRoute = {
+  id: string;
+  label: string;
+  /** Optional — an unknown or unspecified kind falls to &#39;other&#39; for ordering and icon. */
+  kind?: MicRouteKind;
+};
+
+/** Display rank: built-in first (the sane default), then wired, bluetooth, other. */
+const KIND_RANK: Record&lt;MicRouteKind, number&gt; = {
+  &#39;built-in&#39;: 0,
+  wired: 1,
+  bluetooth: 2,
+  other: 3,
+};
+
+function rankOf(route: MicRoute): number {
+  const kind = route.kind ?? &#39;other&#39;;
+  return KIND_RANK[kind] ?? KIND_RANK.other;
+}
+
+/**
+ * Deterministic display order for a list the caller supplied: stable-sorted by kind
+ * rank, caller order preserved within a kind (Array.prototype.sort is stable per
+ * spec). Never throws on a malformed entry — an unsortable route lands with &#39;other&#39;.
+ */
+export function orderMicRoutes(routes: readonly MicRoute[]): MicRoute[] {
+  return [...routes].sort((a, b) =&gt; rankOf(a) - rankOf(b));
+}
+
+/**
+ * The trigger&#39;s label: the selected route&#39;s label, the caller&#39;s fallback (or &quot;Input&quot;)
+ * when the value matches nothing. No-throw — a stale route id degrades to the
+ * placeholder, the way a disconnected device should read.
+ */
+export function findMicRoute(
+  routes: readonly MicRoute[],
+  value: string | undefined,
+): MicRoute | undefined {
+  if (!value) return undefined;
+  return routes.find((r) =&gt; r.id === value);
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy mic-selector.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>command.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Command — pure logic. Zero react-native imports, so the Vitest tier owns it (see the
+ * header of sources.logic.ts for why component files themselves cannot load under
+ * Node).
+ *
+ * Extracted when model-selector needed provider grouping and voice-selector needed
+ * custom rows: the palette&#39;s filter and its flat-item → render-rows transform are the
+ * two behaviors those selectors build on, and both are data-in/data-out. The component
+ * file consumes them; tests pin them.
+ */
+
+/** One selectable entry in the palette. `group` names the section heading it sits under. */
+export type CommandItem = {
+  value: string;
+  label: string;
+  description?: string;
+  /** Extra match terms beyond label and description — model-selector puts the provider here. */
+  keywords?: string;
+  /** Section heading. Ungrouped items render without a header, in list order. */
+  group?: string;
+};
+
+/** A row of the palette&#39;s list: either a section heading or a selectable item. */
+export type CommandRow =
+  | { kind: &#39;header&#39;; key: string; label: string }
+  | { kind: &#39;item&#39;; key: string; item: CommandItem; selected: boolean };
+
+/**
+ * The palette filter — the web original&#39;s cmdk match (case-insensitive substring
+ * across label, description and keywords). A blank query matches everything; a
+ * whitespace query is blank. Order is preserved — the caller&#39;s list order IS the
+ * display order.
+ */
+export function filterCommandItems&lt;T extends CommandItem&gt;(
+  items: readonly T[],
+  query: string,
+): T[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [...items];
+  return items.filter((i) =&gt;
+    `${i.label} ${i.description ?? &#39;&#39;} ${i.keywords ?? &#39;&#39;}`.toLowerCase().includes(q),
+  );
+}
+
+/**
+ * Interleave section headings into the flat item list: a group&#39;s heading renders the
+ * first time one of its items appears, so groups keep the caller&#39;s first-appearance
+ * order and interleaved groups each get exactly one header. Runs AFTER filtering, so
+ * a group whose items all failed the filter renders no header at all.
+ *
+ * `selected` is resolved here, not at render time, so the memoized row array changes
+ * identity when the selection changes — the FlatList&#39;s re-render trigger.
+ */
+export function buildCommandRows(
+  items: readonly CommandItem[],
+  value?: string,
+): CommandRow[] {
+  const rows: CommandRow[] = [];
+  const seen = new Set&lt;string&gt;();
+  for (const item of items) {
+    const group = item.group?.trim();
+    if (group &amp;&amp; !seen.has(group)) {
+      seen.add(group);
+      rows.push({ kind: &#39;header&#39;, key: `header:${group}`, label: group });
+    }
+    rows.push({ kind: &#39;item&#39;, key: item.value, item, selected: item.value === value });
+  }
+  return rows;
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy command.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>routes</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>readonly MicRoute[]</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The routes YOUR platform exposes — the registry cannot enumerate them for you.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>value</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onValueChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>(value: string) =&gt; void</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>open</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onOpenChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((open: boolean) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>placeholder</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;Filter routes…&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>emptyTitle</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;No input routes&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>emptyDescription</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;No audio input routes are available right now.&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Say WHY the list is empty when you know — &quot;Microphone access denied&quot;, not &quot;None&quot;.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>title</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;Choose an input route&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The sheet&#39;s screen-reader title. Defaults to &quot;Choose an input route&quot;.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>className</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>string | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>Passed to the sheet content — height and padding adjustments.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>() =&gt; (
+      &lt;MicSelector
+        routes={[
+          { id: &#39;builtin&#39;, label: &#39;MacBook Pro Microphone&#39;, kind: &#39;builtin&#39; },
+          { id: &#39;airpods&#39;, label: &#39;Justin’s AirPods Pro&#39;, kind: &#39;bluetooth&#39; },
+          { id: &#39;studio&#39;, label: &#39;Mac mini Studio Display&#39;, kind: &#39;other&#39; },
+        ]}
+        value=&quot;airpods&quot;
+        onValueChange={() =&gt; {}}
+      &gt;
+        &lt;MicSelectorTrigger /&gt;
+        &lt;MicSelectorValue placeholder=&quot;Pick an input…&quot; /&gt;
+      &lt;/MicSelector&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the mic-selector gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m1 0h1m1 0h2m3 0h4m3 0h7M4 5.5h1m5 0h1m3 0h1m2 0h2m1 0h2m2 0h1m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h2m4 0h4m1 0h2m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m3 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m3 0h1m2 0h3m2 0h1m3 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M13 11.5h2m1 0h1m1 0h3m1 0h1m1 0h1M4 12.5h1m1 0h1m3 0h2m1 0h1m1 0h4m5 0h1m2 0h1m2 0h1m1 0h1M6 13.5h3m3 0h2m2 0h3m3 0h3m1 0h2m1 0h1m2 0h1M4 14.5h1m5 0h1m2 0h4m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1M4 15.5h1m2 0h3m2 0h1m1 0h2m1 0h1m4 0h4m1 0h3m1 0h1M5 16.5h1m1 0h1m2 0h1m6 0h1m1 0h2m3 0h1m1 0h2m1 0h1M4 17.5h2m1 0h1m3 0h1m8 0h1m2 0h1m1 0h2m2 0h2m1 0h1M5 18.5h1m2 0h1m1 0h1m1 0h2m2 0h3m1 0h2m1 0h1m1 0h1m3 0h4M4 19.5h1m2 0h3m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h1M5 20.5h1m1 0h12m1 0h1m2 0h2m1 0h1m2 0h1m1 0h1M7 21.5h2m2 0h1m1 0h1m1 0h4m2 0h1m1 0h2m1 0h2m1 0h1m2 0h1M4 22.5h4m1 0h2m1 0h1m1 0h1m4 0h3m1 0h6m1 0h1m1 0h1M8 23.5h1m2 0h2m1 0h1m2 0h1m1 0h1m4 0h2m1 0h1m1 0h1m1 0h1M4 24.5h2m1 0h2m1 0h1m3 0h1m2 0h1m1 0h1m4 0h6m1 0h2M12 25.5h5m2 0h2m3 0h1m3 0h3m1 0h1M4 26.5h7m1 0h1m1 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1M4 27.5h1m5 0h1m3 0h2m2 0h3m1 0h3m3 0h2M4 28.5h1m1 0h3m1 0h1m2 0h1m3 0h2m1 0h1m2 0h7m1 0h2M4 29.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h3m4 0h1m1 0h3m2 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h4m2 0h1m1 0h3M4 31.5h1m5 0h1m3 0h1m5 0h1m1 0h5m1 0h2M4 32.5h7m1 0h1m2 0h2m1 0h2m4 0h1m1 0h1m2 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/model-selector" data-astro-cid-ziig2kl5>← model-selector</a><a rel="next" href="/components/voice-selector" data-astro-cid-ziig2kl5>voice-selector →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

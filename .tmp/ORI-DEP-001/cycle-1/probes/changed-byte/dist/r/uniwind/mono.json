@@ -1,0 +1,15 @@
+{
+  "name": "mono",
+  "type": "registry:lib",
+  "title": "Mono font",
+  "description": "One monospace family for every mono surface. Delete once font-mono is proven to resolve under the styling engine.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/registry/src/lib/mono.ts",
+      "type": "registry:lib",
+      "target": "lib/mono.ts",
+      "content": "import { Platform } from 'react-native';\n\n/**\n * One monospace family, one file, used by every mono surface — code-block, terminal,\n * stack-trace, snippet, schema-display, tool-input.\n *\n * Tailwind's `font-mono` is a CSS font STACK; React Native needs a single resolvable\n * family name, and whether Uniwind resolves `font-mono` to a working native family is\n * unverified. Six components each picking their own family is guaranteed drift, so the\n * decision lives here.\n *\n * DELETE THIS FILE the moment a device test proves `font-mono` resolves — inheriting\n * whatever RNR's `Text variant=\"code\"` renders is strictly better parity than any family\n * we pick ourselves.\n */\nexport const MONO_FAMILY = Platform.select({\n  ios: 'Menlo',\n  android: 'monospace',\n  default: 'monospace',\n}) as string;\n\nexport const monoStyle = { fontFamily: MONO_FAMILY } as const;\n"
+    }
+  ]
+}

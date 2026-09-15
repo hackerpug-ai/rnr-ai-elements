@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Sources — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Sources — The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Sources</p><h1 data-astro-cid-ziig2kl5>Sources</h1><p class="item-description" data-astro-cid-ziig2kl5>The grouped sources behind an answer: a collapsible whose trigger reads the web original&#39;s Used N sources and whose rows compose the item primitive — title AND domain (UC-CHAT-05 AC-1), an optional caller-supplied favicon in the icon slot (RN has no favicon service without a new dep; the web row is a book icon anyway), and the platform link handler behind the scheme allowlist where the web anchor had target=_blank (AC-3). The PRD verdict is a collapsible list, not a table — there is no SourcesTable upstream.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sources.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sources.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><ul class="deps-packages" data-deps-packages data-astro-cid-fdx2nnaa><li data-astro-cid-fdx2nnaa><code data-astro-cid-fdx2nnaa>react-native-reanimated</code></li></ul><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/item.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/url.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/collapsible.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/item.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/url.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>sources.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Collapsible, CollapsibleContent, CollapsibleTrigger } from &#39;@/registry/nativewind/components/ui/collapsible&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from &#39;@/registry/nativewind/components/ui/item&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { hostnameOf, isSafeOpenUrl } from &#39;@/registry/nativewind/lib/url&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import { BookIcon, ChevronDownIcon, type LucideIcon } from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { Image, Linking, Platform, View, type ViewProps } from &#39;react-native&#39;;
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from &#39;react-native-reanimated&#39;;
+import { usedSourcesLabel, type SourceLike } from &#39;./sources.logic&#39;;
+
+/**
+ * Sources — the grouped sources behind an answer (UC web original: a Collapsible whose
+ * trigger reads &quot;Used N sources&quot; and whose rows are anchors).
+ *
+ * THE PRD VERDICT IS A COLLAPSIBLE LIST OF SOURCE ROWS — &quot;RNR collapsible, separator,
+ * and text&quot; — NOT a table, and the current web original agrees (Sources/SourcesTrigger/
+ * SourcesContent/Source; there is no SourcesTable upstream). Rows compose the `item`
+ * primitive, the house list row (queue.tsx precedent), which is where the separator and
+ * text rules live.
+ *
+ * UC-CHAT-05, AC BY AC:
+ *  - AC-1: expanding the list shows each source&#39;s TITLE AND DOMAIN — so each row carries
+ *    a second line with the hostname (lib/url&#39;s no-throw extractor), which the web gets
+ *    from the same value its favicon pipeline would use. No favicon fetch ships: RN has
+ *    no favicon service without a new dependency, and the web row&#39;s icon is a book, not
+ *    a favicon. A caller-supplied `faviconUri` (SourceData&#39;s own optional field) renders
+ *    in the icon slot instead — declared, opt-in.
+ *  - AC-2 belongs to inline-citation (press, not hover) — this list is the detail
+ *    surface the citation chip&#39;s callback composes into a popover/sheet.
+ *  - AC-3: the web row is an anchor (target=&quot;_blank&quot; rel=&quot;noreferrer&quot;). RN&#39;s platform
+ *    link handler is Linking.openURL, guarded by lib/url&#39;s http/https allowlist — the
+ *    data-schema doc&#39;s security-review surface. `rel` has no RN equivalent; the
+ *    allowlist is the whole guard. A caller-supplied `onOpen` REPLACES the hop —
+ *    re-apply `isSafeOpenUrl` in your handler if you open URLs yourself, or you
+ *    reintroduce the javascript:/file: footgun the default path guards against.
+ *    (speech-input precedent: caller-supplied contract).
+ *
+ * The web&#39;s data-[state] slide on the content is the collapsible&#39;s own motion on
+ * native; the chevron carries the house rotation (queue/task precedent,
+ * ReduceMotion.System).
+ */
+
+type SourcesContextValue = { open: boolean };
+
+const SourcesContext = React.createContext&lt;SourcesContextValue | null&gt;(null);
+
+function useSources() {
+  const ctx = React.useContext(SourcesContext);
+  if (!ctx) throw new Error(&#39;Sources sub-components must be used within &lt;Sources&gt;&#39;);
+  return ctx;
+}
+
+type SourcesProps = Omit&lt;ViewProps, &#39;children&#39;&gt; &amp; {
+  /** The web Collapsible&#39;s default: closed. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) =&gt; void;
+  children?: React.ReactNode;
+};
+
+function Sources({ defaultOpen = false, onOpenChange, className, children, ...props }: SourcesProps) {
+  const [open, setOpen] = React.useState(defaultOpen);
+
+  function handleOpenChange(next: boolean) {
+    setOpen(next);
+    onOpenChange?.(next);
+  }
+
+  return (
+    &lt;SourcesContext.Provider value={{ open }}&gt;
+      &lt;Collapsible open={open} onOpenChange={handleOpenChange} className={className} {...props}&gt;
+        {children}
+      &lt;/Collapsible&gt;
+    &lt;/SourcesContext.Provider&gt;
+  );
+}
+
+type SourcesTriggerProps = {
+  /** The count the web trigger reads: &quot;Used N sources&quot;. */
+  count: number;
+  /** Overrides the default label, exactly as the web trigger&#39;s children do. */
+  children?: React.ReactNode;
+  className?: string;
+};
+
+function SourcesTrigger({ count, children, className }: SourcesTriggerProps) {
+  const { open } = useSources();
+  const rotation = useSharedValue(open ? 1 : 0);
+
+  React.useEffect(() =&gt; {
+    rotation.value = withTiming(open ? 1 : 0, {
+      duration: open ? 250 : 200,
+      reduceMotion: ReduceMotion.System,
+    });
+  }, [open, rotation]);
+
+  const style = useAnimatedStyle(() =&gt; ({
+    transform: [{ rotate: `${rotation.value * 180}deg` }],
+  }));
+
+  return (
+    &lt;CollapsibleTrigger
+      className={cn(
+        &#39;flex-row items-center gap-2 rounded-md py-1 active:bg-accent&#39;,
+        Platform.select({ web: &#39;transition-colors hover:bg-accent/50&#39; }),
+        className,
+      )}
+    &gt;
+      {children ?? (
+        &lt;Text className=&quot;flex-1 text-left text-sm font-medium text-primary&quot;&gt;
+          {usedSourcesLabel(count)}
+        &lt;/Text&gt;
+      )}
+      &lt;Animated.View style={style}&gt;
+        &lt;Icon as={ChevronDownIcon} size={14} className=&quot;text-primary&quot; /&gt;
+      &lt;/Animated.View&gt;
+    &lt;/CollapsibleTrigger&gt;
+  );
+}
+
+function SourcesContent({ className, children, ...props }: ViewProps &amp; { children?: React.ReactNode }) {
+  return (
+    &lt;CollapsibleContent className={cn(&#39;mt-3 gap-2&#39;, className)} {...props}&gt;
+      {children}
+    &lt;/CollapsibleContent&gt;
+  );
+}
+
+/** The row&#39;s leading mark: the caller&#39;s favicon when supplied, the web&#39;s book otherwise. */
+function SourceMedia({ source }: { source: SourceLike }) {
+  if (source.faviconUri) {
+    // Numeric style sizing alongside the class (persona.tsx&#39;s hardening rule): an
+    // inline image whose one size class drops on a stale stylesheet rebuild would
+    // otherwise lay out at its intrinsic pixel size mid-transcript.
+    return (
+      &lt;Image
+        source={{ uri: source.faviconUri }}
+        resizeMode=&quot;contain&quot;
+        className=&quot;size-4 rounded-sm bg-muted/50&quot;
+        style={{ width: 16, height: 16 }}
+      /&gt;
+    );
+  }
+  return &lt;Icon as={BookIcon} size={16} className=&quot;text-muted-foreground&quot; /&gt;;
+}
+
+type SourceProps = {
+  /** Where the row opens — the platform link handler, behind the scheme allowlist. */
+  href: string;
+  /** The source title (the web anchor&#39;s visible text). */
+  title: string;
+  /** Opt-in favicon for the icon slot. RN has no favicon service without a new dep. */
+  faviconUri?: string;
+  /** Replaces the default Linking hop (caller-supplied contract, speech-input precedent). */
+  onOpen?: (href: string) =&gt; void;
+  /** Fires when the allowlist refuses the URL or the platform open fails. Never silent. */
+  onOpenError?: (error: Error) =&gt; void;
+  className?: string;
+};
+
+function Source({ href, title, faviconUri, onOpen, onOpenError, className }: SourceProps) {
+  const domain = hostnameOf(href);
+
+  function handlePress() {
+    if (onOpen) {
+      onOpen(href);
+      return;
+    }
+    if (!isSafeOpenUrl(href)) {
+      onOpenError?.(new Error(`Refused to open a non-http(s) URL: ${href}`));
+      return;
+    }
+    Linking.openURL(href).catch((error: Error) =&gt; onOpenError?.(error));
+  }
+
+  return (
+    &lt;Item
+      onPress={handlePress}
+      // The web row is an anchor — announce &quot;link&quot;, not &quot;button&quot; (Item&#39;s default).
+      accessibilityRole=&quot;link&quot;
+      accessibilityLabel={`${title}, ${domain}`}
+      className={cn(&#39;py-2&#39;, className)}
+    &gt;
+      &lt;ItemMedia&gt;
+        &lt;SourceMedia source={{ title, url: href, faviconUri }} /&gt;
+      &lt;/ItemMedia&gt;
+      &lt;ItemContent&gt;
+        &lt;ItemTitle&gt;{title}&lt;/ItemTitle&gt;
+        &lt;ItemDescription&gt;{domain}&lt;/ItemDescription&gt;
+      &lt;/ItemContent&gt;
+    &lt;/Item&gt;
+  );
+}
+
+export { Sources, SourcesContent, SourcesTrigger, Source, useSources };
+export type { SourceLike };
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy sources.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>sources.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Sources — pure logic. Zero react-native imports, so the Vitest tier owns it (see the
+ * header of lib/reasoning-lifecycle.ts for why component files themselves cannot load
+ * under Node).
+ *
+ * SourceData is the data-schema doc&#39;s own shape, declared locally per message.tsx
+ * precedent — the registry is stateless about the model and takes no runtime dependency
+ * on any SDK. `snippet` and `faviconUri` are optional affordances: the web original
+ * renders neither (an anchor with a book icon and the title), so the component ignores
+ * them unless the caller passes faviconUri to the row explicitly.
+ *
+ * The trigger label is the web original&#39;s template, byte-verbatim — including the
+ * plural on `1` (&quot;Used 1 sources&quot;), which the web ships and its test corpus asserts.
+ * Parity here is deliberate; localizing the plural is a consumer-level edit.
+ */
+
+/** The data-schema doc&#39;s source shape — what `sources` and `inline-citation` exchange. */
+export type SourceData = {
+  id: string;
+  title: string;
+  url: string;
+  snippet?: string;
+  faviconUri?: string;
+};
+
+/** The one field the row composition asks for, whatever else the caller carries. */
+export type SourceLike = Pick&lt;SourceData, &#39;title&#39; | &#39;url&#39;&gt; &amp; Partial&lt;Pick&lt;SourceData, &#39;faviconUri&#39;&gt;&gt;;
+
+/** The web original&#39;s trigger text, verbatim: `Used {count} sources`. */
+export function usedSourcesLabel(count: number): string {
+  return `Used ${count} sources`;
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy sources.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>defaultOpen</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>boolean | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>false</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>The web Collapsible&#39;s default: closed.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>onOpenChange</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>((open: boolean) =&gt; void) | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-accent</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-primary</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-muted</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>() =&gt; (
+      &lt;Sources&gt;
+        &lt;SourcesTrigger /&gt;
+        &lt;SourcesContent&gt;
+          &lt;Source
+            href=&quot;https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.0/public/r/uniwind/conversation.json&quot;
+            title=&quot;rnr-ai-elements registry — conversation.json&quot;
+          /&gt;
+          &lt;Source
+            href=&quot;https://reactnativereusables.com/r/uniwind/text.json&quot;
+            title=&quot;React Native Reusables — text&quot;
+          /&gt;
+        &lt;/SourcesContent&gt;
+      &lt;/Sources&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the sources gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m1 0h5m2 0h2m2 0h2m1 0h7M4 5.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2m3 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h3m1 0h3m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h2m1 0h1m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m4 0h1m1 0h1m3 0h3m2 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m3 0h1m3 0h1m2 0h1m1 0h2m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m1 0h2m1 0h2m2 0h1m1 0h2M4 12.5h1m1 0h2m1 0h3m1 0h1m1 0h4m1 0h5m1 0h1m2 0h1m1 0h2M4 13.5h1m2 0h1m3 0h1m4 0h1m2 0h2m1 0h8m1 0h2M5 14.5h2m1 0h1m1 0h1m4 0h1m2 0h2m5 0h1m3 0h3M4 15.5h1m3 0h1m3 0h1m3 0h4m2 0h1m1 0h5m2 0h2M4 16.5h1m3 0h4m1 0h1m1 0h2m3 0h2m1 0h1m6 0h1m1 0h1M4 17.5h1m2 0h2m6 0h1m1 0h1m3 0h1m1 0h5m1 0h1m2 0h1M4 18.5h2m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m3 0h3m2 0h3m2 0h1M4 19.5h1m3 0h2m2 0h1m1 0h4m1 0h1m4 0h2m2 0h2M6 20.5h3m1 0h1m2 0h1m8 0h1m1 0h2m2 0h1m3 0h1M6 21.5h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h1m4 0h1m1 0h1m2 0h1M4 22.5h1m3 0h1m1 0h1m1 0h1m1 0h3m4 0h2m2 0h1m2 0h2M6 23.5h3m2 0h3m1 0h1m3 0h4m2 0h1m3 0h3M5 24.5h1m2 0h1m1 0h1m3 0h1m2 0h1m1 0h1m4 0h7m1 0h1M12 25.5h1m4 0h3m1 0h2m1 0h1m3 0h5M4 26.5h7m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3m1 0h1m1 0h4M4 27.5h1m5 0h1m1 0h1m1 0h3m3 0h2m2 0h1m3 0h1m2 0h1M4 28.5h1m1 0h3m1 0h1m3 0h1m3 0h2m4 0h5m1 0h3M4 29.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m1 0h2m2 0h2m2 0h4M4 30.5h1m1 0h3m1 0h1m1 0h9m2 0h1m3 0h1m4 0h1M4 31.5h1m5 0h1m2 0h1m1 0h3m2 0h1m2 0h2m1 0h1m2 0h1m1 0h1M4 32.5h7m1 0h1m2 0h1m1 0h1m1 0h3m1 0h3m2 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/web-preview" data-astro-cid-ziig2kl5>← web-preview</a><a rel="next" href="/components/inline-citation" data-astro-cid-ziig2kl5>inline-citation →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>

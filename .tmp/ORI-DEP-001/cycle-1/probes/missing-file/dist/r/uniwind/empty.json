@@ -1,0 +1,18 @@
+{
+  "name": "empty",
+  "type": "registry:ui",
+  "title": "Empty",
+  "description": "Icon, title, description and an optional action slot. The fallback surface for conversation, file-tree, sources, attachments and test-results.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/uniwind/text.json",
+    "https://reactnativereusables.com/r/uniwind/icon.json"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ui/empty.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/empty.tsx",
+      "content": "import { Text, TextClassContext } from '@/registry/uniwind/components/ui/text';\nimport { cn } from '@/registry/uniwind/lib/utils';\nimport type { LucideIcon } from 'lucide-react-native';\nimport { Icon } from '@/registry/uniwind/components/ui/icon';\nimport { View, type ViewProps } from 'react-native';\n\n/**\n * Empty — icon + title + description + optional action.\n *\n * RNR ships no `empty`. This is AI Elements' ConversationEmptyState generalised: the same\n * surface is the fallback for file-tree, sources, attachments and test-results, so it is\n * built once and reused rather than re-invented per component.\n *\n * Declares no token. Every value is an RNR role.\n */\n\nfunction Empty({ className, ...props }: ViewProps) {\n  return (\n    <View\n      className={cn('flex-1 items-center justify-center gap-3 p-8', className)}\n      accessibilityRole=\"summary\"\n      {...props}\n    />\n  );\n}\n\nfunction EmptyIcon({ as, className }: { as: LucideIcon; className?: string }) {\n  // Via RNR's Icon wrapper — a raw Lucide element silently ignores className.\n  return <Icon as={as} size={32} className={cn('text-muted-foreground', className)} />;\n}\n\nfunction EmptyTitle({ className, ...props }: React.ComponentProps<typeof Text>) {\n  return <Text className={cn('text-center text-base font-medium text-foreground', className)} {...props} />;\n}\n\nfunction EmptyDescription({ className, ...props }: React.ComponentProps<typeof Text>) {\n  return (\n    <Text className={cn('max-w-sm text-center text-sm text-muted-foreground', className)} {...props} />\n  );\n}\n\n/** Action slot. TextClassContext so a Button's label inherits without per-call classes. */\nfunction EmptyActions({ className, ...props }: ViewProps) {\n  return (\n    <TextClassContext.Provider value=\"text-sm font-medium\">\n      <View className={cn('flex-row items-center gap-2 pt-1', className)} {...props} />\n    </TextClassContext.Provider>\n  );\n}\n\nexport { Empty, EmptyActions, EmptyDescription, EmptyIcon, EmptyTitle };\n"
+    }
+  ]
+}

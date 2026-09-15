@@ -1,0 +1,15 @@
+{
+  "name": "image",
+  "type": "registry:component",
+  "title": "Image",
+  "description": "A model-generated image. Takes the AI SDK result object and builds the data URI internally, preserving the web prop shape. alt becomes accessibilityLabel.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ai/image.tsx",
+      "type": "registry:component",
+      "target": "components/ai/image.tsx",
+      "content": "import { cn } from '@/registry/nativewind/lib/utils';\nimport * as React from 'react';\nimport { Image as RNImage, View, type ImageProps as RNImageProps } from 'react-native';\n\n/**\n * Image — a model-generated image.\n *\n * The caller passes the AI SDK result object, not a `src`: the web original builds\n * `data:{mediaType};base64,{base64}` internally, and that prop shape is preserved so\n * callers do not change.\n *\n * `alt` is a real prop, not decoration — it becomes accessibilityLabel.\n *\n * NOTE ON LARGE IMAGES: React Native accepts a data URI, but a multi-megabyte base64\n * string crosses the bridge as a string and is a real memory and jank cost. For anything\n * large, write it to cache with expo-file-system and pass `uri` instead. That is left to\n * the caller rather than pulled in here, so the component stays dependency-free.\n */\n\ntype GeneratedImage = { base64?: string; mediaType?: string; uri?: string };\n\ntype ImageProps = Omit<RNImageProps, 'source'> & {\n  /** AI SDK Experimental_GeneratedImage, or anything with base64 + mediaType, or a uri. */\n  image?: GeneratedImage;\n  base64?: string;\n  mediaType?: string;\n  uri?: string;\n  alt: string;\n  /** width / height. Generated images usually know theirs from the request. */\n  aspectRatio?: number;\n  className?: string;\n};\n\nfunction Image({\n  image,\n  base64,\n  mediaType = 'image/png',\n  uri,\n  alt,\n  aspectRatio = 1,\n  className,\n  ...props\n}: ImageProps) {\n  const src = React.useMemo(() => {\n    const u = uri ?? image?.uri;\n    if (u) return u;\n    const b = base64 ?? image?.base64;\n    if (!b) return undefined;\n    return `data:${image?.mediaType ?? mediaType};base64,${b}`;\n  }, [uri, image, base64, mediaType]);\n\n  if (!src) return null;\n\n  return (\n    <View className={cn('overflow-hidden rounded-md bg-muted', className)} style={{ aspectRatio }}>\n      <RNImage\n        source={{ uri: src }}\n        accessibilityLabel={alt}\n        accessible\n        resizeMode=\"cover\"\n        className=\"h-full w-full\"\n        {...props}\n      />\n    </View>\n  );\n}\n\nexport { Image };\n"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "Keyboard-shortcut hint. Renders null where there is no hardware keyboard, which on a phone is always — correct, not a compromise.",
+  "registryDependencies": [
+    "https://reactnativereusables.com/r/uniwind/text.json"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/src/components/ui/kbd.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/kbd.tsx",
+      "content": "import { Text } from '@/registry/uniwind/components/ui/text';\nimport { cn } from '@/registry/uniwind/lib/utils';\nimport { Platform, View, type ViewProps } from 'react-native';\n\n/**\n * Kbd — a keyboard-shortcut hint.\n *\n * Renders NULL where there is no hardware keyboard, which on a phone is always. That is\n * correct rather than a compromise: a \"⌘K\" hint on a touch device is noise. Its consumer\n * is prompt-input's submit hint, which is meaningful on web and on an iPad with a Magic\n * Keyboard and meaningless otherwise.\n *\n * `always` is the escape hatch for a surface that knows it has a keyboard.\n */\ntype KbdProps = ViewProps & { always?: boolean };\n\nfunction Kbd({ className, children, always = false, ...props }: KbdProps) {\n  if (!always && Platform.OS !== 'web') return null;\n  return (\n    <View\n      className={cn('rounded-sm border border-border bg-muted px-1.5 py-0.5', className)}\n      {...props}\n    >\n      <Text className=\"text-xs text-muted-foreground\">{children}</Text>\n    </View>\n  );\n}\n\nexport { Kbd };\n"
+    }
+  ]
+}

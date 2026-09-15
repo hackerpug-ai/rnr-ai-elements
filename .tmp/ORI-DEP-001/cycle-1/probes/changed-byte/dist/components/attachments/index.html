@@ -1,0 +1,569 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-ccykbmgk><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.3.2"><title>Attachments — RNR AI Elements</title><script data-astro-rerun>
+      (() => {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('rnr-theme');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark resolution.
+        }
+        var light =
+          stored === 'light' ||
+          (stored !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        document.documentElement.classList.toggle('light', light);
+      })();
+    </script><meta name="description" content="Attachments — The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants,… for React Native, installable via the nativewind/uniwind registry tree"><link rel="stylesheet" href="/_astro/registry-items.DmVUNA8J.css"><link rel="stylesheet" href="/_astro/_item_.BUeFOhfQ.css"><link rel="stylesheet" href="/_astro/DataTable.DiFJSrs2.css"><link rel="stylesheet" href="/_astro/families.BnJpu9Md.css"><link rel="stylesheet" href="/_astro/CopyButton.0kR_jAs7.css"><link rel="stylesheet" href="/_astro/DocsLayout.HBa-Sdj8.css"></head><body data-layout="docs" data-astro-cid-ccykbmgk><header class="site-header" data-astro-cid-nen7h5rs><div class="site-header__row" data-astro-cid-nen7h5rs><a class="site-header__wordmark" href="/" data-astro-cid-nen7h5rs>RNR</a><nav class="site-header__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-header__nav-link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-header__nav-link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav><div class="site-header__actions" data-astro-cid-nen7h5rs><!-- Inert seams: the search trigger stays hidden and the theme slot empty
+           until their islands land. Neither is a fake control. --><span class="site-header__search-slot" data-search-slot hidden data-astro-cid-nen7h5rs></span><span class="site-header__theme-slot" data-theme-slot data-astro-cid-nen7h5rs></span></div><details class="site-drawer" data-astro-cid-nen7h5rs><summary class="site-drawer__toggle" aria-label="Toggle navigation menu" data-astro-cid-nen7h5rs><span aria-hidden="true" data-astro-cid-nen7h5rs>Menu</span></summary><nav class="site-drawer__nav" aria-label="Primary" data-astro-cid-nen7h5rs><a class="site-drawer__link" href="/components" data-astro-cid-nen7h5rs>Components</a><a class="site-drawer__link" href="/registry" data-astro-cid-nen7h5rs>Registry</a></nav></details></div></header><rnr-theme-toggle class="theme-toggle" data-astro-cid-y2qjsdut="true"><button type="button" class="theme-toggle__trigger" aria-pressed="false" aria-label="Toggle dark and light theme" data-astro-cid-y2qjsdut>Theme</button></rnr-theme-toggle><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=document.querySelector(`[data-theme-slot]`);e&&this.parentElement!==e&&e.appendChild(this);let t=this.querySelector(`button`);!t||t.dataset.themeBound===`true`||(t.dataset.themeBound=`true`,this.syncTrigger(t),t.addEventListener(`click`,()=>{let e=document.documentElement,n=e.classList.contains(`light`)?`dark`:`light`;e.classList.toggle(`light`,n===`light`);try{localStorage.setItem(`rnr-theme`,n)}catch{}this.syncTrigger(t)}))}syncTrigger(e){e.setAttribute(`aria-pressed`,document.documentElement.classList.contains(`light`)?`true`:`false`)}};function t(){window.__rnrThemeToggleRegistered||customElements.get(`rnr-theme-toggle`)||(window.__rnrThemeToggleRegistered=!0,customElements.define(`rnr-theme-toggle`,e))}t();</script><main class="component-page" data-pagefind-body data-pagefind-meta="category:components" data-astro-cid-ziig2kl5><header class="page-header" data-astro-cid-ziig2kl5><p class="breadcrumb" data-astro-cid-ziig2kl5><a href="/components" data-astro-cid-ziig2kl5>Components</a> <span aria-hidden="true" data-astro-cid-ziig2kl5>/</span> Message</p><h1 data-astro-cid-ziig2kl5>Attachments</h1><p class="item-description" data-astro-cid-ziig2kl5>The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original&#39;s grid/inline/list variants, with list rows composed on the item primitive. File acquisition does NOT port — the PRD verdict replaces drag-and-drop and the file input with the caller&#39;s native pickers and their permission contracts. Remove is always visible (the web&#39;s hover-reveal is dead on touch) and DISABLES rather than disappears without onRemove; per-file upload state (&#39;uploading&#39; | &#39;done&#39; | &#39;error&#39;) is the display seam for the caller-owned lifecycle. The hover preview card and the &lt;video&gt; thumbnail do not ship — hover is unreachable under a thumb and a media dependency for one tile is out of contract.</p><ul class="chips" aria-label="Item facts" data-astro-cid-ziig2kl5><li data-chip="version" data-astro-cid-ziig2kl5>v0.2.1</li><li data-chip="category" data-astro-cid-ziig2kl5>component</li><li data-chip="engine" data-astro-cid-ziig2kl5>nativewind</li><li data-chip="engine" data-astro-cid-ziig2kl5>uniwind</li><li data-chip="expo" data-astro-cid-ziig2kl5><span class="badge badge--expo-go" data-astro-cid-o3c3tdmk>runs in Expo Go</span></li></ul></header><section data-section="install" aria-labelledby="install-heading" data-astro-cid-ziig2kl5><h2 id="install-heading" data-astro-cid-ziig2kl5>Install</h2><script type="module">var e=class extends HTMLElement{connectedCallback(){let e=this.querySelector(`button`),t=this.querySelector(`code`);!e||!t||e.dataset.copyBound===`true`||(e.dataset.copyBound=`true`,e.dataset.copyLabel=(e.textContent??`Copy`).trim(),e.addEventListener(`click`,()=>{this.copy(e,t)}))}async copy(e,t){let n=(t.textContent??``).trim();try{await navigator.clipboard.writeText(n),this.setState(e,`copied`,`Copied`)}catch{this.setState(e,`error`,`Copy failed — select the command and copy it manually.`)}window.setTimeout(()=>{e.dataset.state!==`idle`&&this.setState(e,`idle`,``)},2e3)}setState(e,t,n){e.dataset.state=t,e.textContent=n||e.dataset.copyLabel||`Copy`;let r=this.querySelector(`.copy-button__status`);r&&(r.textContent=n)}};function t(){window.__rnrCopyButtonRegistered||customElements.get(`rnr-copy-button`)||(window.__rnrCopyButtonRegistered=!0,customElements.define(`rnr-copy-button`,e))}t();</script><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/attachments.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy nativewind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/attachments.json</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy uniwind install command" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></rnr-tab-group><script type="module">var e=class extends HTMLElement{storageKey=`rnr-engine`;tabs=[];panels=[];connectedCallback(){if(this.tabs=[...this.querySelectorAll(`[role="tab"]`)],this.panels=[...this.querySelectorAll(`[role="tabpanel"]`)],this.tabs.length!==0&&this.panels.length!==0&&this.dataset.tabGroupBound!==`true`){this.dataset.tabGroupBound=`true`,this.storageKey=this.getAttribute(`storage-key`)??`rnr-engine`;for(let e of this.tabs)e.addEventListener(`click`,()=>this.activate(e.dataset.engine)),e.addEventListener(`keydown`,e=>this.onKeydown(e));this.activate(this.persistedEngine()??this.tabs[0]?.dataset.engine)}}onKeydown(e){if(e.key!==`ArrowLeft`&&e.key!==`ArrowRight`)return;e.preventDefault();let t=this.tabs.indexOf(e.currentTarget),n=e.key===`ArrowRight`?1:-1,r=this.tabs[(t+n+this.tabs.length)%this.tabs.length];r?.focus(),this.activate(r?.dataset.engine)}persistedEngine(){try{return localStorage.getItem(this.storageKey)}catch{return null}}activate(e){if(!(!e||!this.tabs.some(t=>t.dataset.engine===e))){for(let t of this.tabs){let n=t.dataset.engine===e;t.setAttribute(`aria-selected`,String(n)),t.tabIndex=n?0:-1}for(let t of this.panels)t.hidden=t.dataset.engine!==e;try{localStorage.setItem(this.storageKey,e)}catch{}}}};function t(){window.__rnrTabGroupRegistered||customElements.get(`rnr-tab-group`)||(window.__rnrTabGroupRegistered=!0,customElements.define(`rnr-tab-group`,e))}t();</script></section><section data-section="dependencies" aria-labelledby="dependencies-heading" data-astro-cid-ziig2kl5><h2 id="dependencies-heading" data-astro-cid-ziig2kl5>Dependencies</h2><p class="deps-empty" data-deps-empty data-astro-cid-fdx2nnaa>No required npm packages — this item installs through the registry dependencies below.</p><rnr-tab-group class="tab-group" storage-key="rnr-engine" data-astro-cid-teel6a2y="true"><div class="tab-group__tabs" role="tablist" data-astro-cid-teel6a2y><button type="button" role="tab" id="tab-nativewind" data-engine="nativewind" aria-controls="panel-nativewind" aria-selected="true" aria-label="nativewind engine" tabindex="0" data-astro-cid-teel6a2y>nativewind</button><button type="button" role="tab" id="tab-uniwind" data-engine="uniwind" aria-controls="panel-uniwind" aria-selected="false" aria-label="uniwind engine" tabindex="-1" data-astro-cid-teel6a2y>uniwind</button></div><div class="tab-group__panel" role="tabpanel" id="panel-nativewind" data-engine="nativewind" aria-labelledby="tab-nativewind" tabindex="0" data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="nativewind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/nativewind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/empty.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/item.json</code></td></tr></tbody></table></div></div><div class="tab-group__panel" role="tabpanel" id="panel-uniwind" data-engine="uniwind" aria-labelledby="tab-uniwind" tabindex="0" hidden data-astro-cid-teel6a2y><div class="data-table__scroll" data-astro-cid-3jeeeo45><table class="data-table" data-astro-cid-3jeeeo45><tbody data-engine-urls="uniwind" class="astro-3jeeeo45" data-astro-cid-3jeeeo45><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/button.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/icon.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://reactnativereusables.com/r/uniwind/text.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/empty.json</code></td></tr><tr data-astro-cid-3jeeeo45><td data-astro-cid-3jeeeo45><code data-astro-cid-3jeeeo45>https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/uniwind/item.json</code></td></tr></tbody></table></div></div></rnr-tab-group><p class="deps-peers" data-deps-peers data-astro-cid-fdx2nnaa><span data-astro-cid-fdx2nnaa>AI SDK peers:</span><code data-astro-cid-fdx2nnaa>ai@^7.0.89</code></p><footer class="deps-footer" data-astro-cid-fdx2nnaa><aside class="callout callout--info" data-astro-cid-q2ml7llr><p class="callout__title" data-astro-cid-q2ml7llr>A dependency URL not resolving?</p><div class="callout__link" data-astro-cid-q2ml7llr><a href="/registry" data-astro-cid-fdx2nnaa>Open the registry ledger</a></div></aside></footer></section><section data-section="source" aria-labelledby="source-heading" data-astro-cid-ziig2kl5><h2 id="source-heading" data-astro-cid-ziig2kl5>Source</h2><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>attachments.tsx</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>import { Button } from &#39;@/registry/nativewind/components/ui/button&#39;;
+import { Empty, EmptyTitle } from &#39;@/registry/nativewind/components/ui/empty&#39;;
+import { Icon } from &#39;@/registry/nativewind/components/ui/icon&#39;;
+import { Item, ItemActions, ItemContent, ItemMedia } from &#39;@/registry/nativewind/components/ui/item&#39;;
+import { Text } from &#39;@/registry/nativewind/components/ui/text&#39;;
+import { cn } from &#39;@/registry/nativewind/lib/utils&#39;;
+import {
+  CircleAlertIcon,
+  FileTextIcon,
+  ImageIcon,
+  LoaderCircleIcon,
+  Music2Icon,
+  PaperclipIcon,
+  VideoIcon,
+  XIcon,
+  type LucideIcon,
+} from &#39;lucide-react-native&#39;;
+import * as React from &#39;react&#39;;
+import { Image, Platform, View, type ViewProps } from &#39;react-native&#39;;
+import {
+  attachmentStateLabel,
+  formatAttachmentSize,
+  getAttachmentLabel,
+  getMediaCategory,
+  type AttachmentData,
+  type AttachmentMediaCategory,
+  type AttachmentState,
+  type AttachmentVariant,
+} from &#39;./attachments.logic&#39;;
+
+/**
+ * Attachments — the pending-attachment chips above the composer (UC-CHAT-03 AC-3: a
+ * removable chip per attached file, before sending).
+ *
+ * THE CHIP ROW PORTS AT PARITY; FILE ACQUISITION DOES NOT — the PRD verdict
+ * (native-substitute, pure-rnr) is explicit: drag-and-drop and the file input are
+ * replaced by the native image and document pickers, which is the CALLER&#39;s wiring
+ * (expo-image-picker / expo-document-picker land in the consumer&#39;s app, with their
+ * permission contracts — none of it ships here). The component renders the list the
+ * caller owns; there is no picker, no hook, no useAttachments state — queue precedent
+ * (the component NEVER owns the queue).
+ *
+ * Composition is the web original&#39;s, flat and context-driven:
+ *   &lt;Attachments variant=&quot;…&quot;&gt; &lt;Attachment data={file} onRemove={…}&gt;
+ *     &lt;AttachmentPreview /&gt; &lt;AttachmentInfo /&gt; &lt;AttachmentRemove label=&quot;…&quot; /&gt;
+ *   &lt;/Attachment&gt; &lt;/Attachments&gt;
+ * Each sub-part reads the row context, so order is the caller&#39;s. Rows (the list
+ * variant) compose the `item` primitive — the PRD&#39;s own reuse ledger (&quot;sources,
+ * file-tree, attachments, … all render lists of these&quot;).
+ *
+ * FOUR TOUCH-ADAPTATIONS, each the web original&#39;s hover/pointer machinery dying on a
+ * thumb:
+ *  1. The remove control is ALWAYS VISIBLE (the web reveals it on group-hover — queue
+ *     and message-actions precedent).
+ *  2. With no onRemove wired it DISABLES rather than disappears — a control vanishing
+ *     mid-press is the failure queue.tsx&#39;s shape prevents (upstream returns null).
+ *  3. The inline chip ships at h-10, not the web&#39;s h-8: the house standard (queue.tsx)
+ *     rejects a sub-40pt visual control, and RNR&#39;s size=&quot;icon&quot; Button is exactly
+ *     h-10 — the chip is control-height because a compliant remove control lives in it.
+ *  4. AttachmentHoverCard/Trigger/Content do NOT ship — a hover preview is unreachable
+ *     under a thumb (inline-citation precedent). The row itself carries preview + name;
+ *     the detail surface, where wanted, is the consumer&#39;s composition.
+ *
+ * THE UPLOAD STATE IS DECLARED, NOT UPSTREAM: &#39;uploading&#39; | &#39;done&#39; | &#39;error&#39; per the
+ * wave brief, rendered as icon + label + accessibility (never color alone). The
+ * lifecycle is the caller&#39;s; the state is only the display seam. `done` renders no
+ * extra chrome — the chip is the proof.
+ *
+ * The web &lt;video&gt; preview does NOT ship (a media dependency for one thumbnail);
+ * video chips fall to the category icon like every other non-image type, which is the
+ * web original&#39;s own fallback affordance.
+ */
+
+const mediaCategoryIcons: Record&lt;AttachmentMediaCategory, LucideIcon&gt; = {
+  image: ImageIcon,
+  video: VideoIcon,
+  audio: Music2Icon,
+  document: FileTextIcon,
+  unknown: PaperclipIcon,
+};
+
+type AttachmentsContextValue = { variant: AttachmentVariant };
+
+const AttachmentsContext = React.createContext&lt;AttachmentsContextValue | null&gt;(null);
+
+function useAttachmentsContext(): AttachmentsContextValue {
+  // The web original defaults a stray part to &quot;grid&quot;; parity, including the leniency.
+  return React.useContext(AttachmentsContext) ?? { variant: &#39;grid&#39; };
+}
+
+type AttachmentContextValue = {
+  data: AttachmentData;
+  mediaCategory: AttachmentMediaCategory;
+  state: AttachmentState;
+  removable: boolean;
+  remove: () =&gt; void;
+  variant: AttachmentVariant;
+};
+
+const AttachmentContext = React.createContext&lt;AttachmentContextValue | null&gt;(null);
+
+function useAttachmentContext(): AttachmentContextValue {
+  const ctx = React.useContext(AttachmentContext);
+  if (!ctx) throw new Error(&#39;Attachment components must be used within &lt;Attachment&gt;&#39;);
+  return ctx;
+}
+
+type AttachmentsProps = Omit&lt;ViewProps, &#39;children&#39;&gt; &amp; {
+  /** grid: right-aligned thumbnails · inline: compact chips · list: full-width rows. */
+  variant?: AttachmentVariant;
+  children?: React.ReactNode;
+};
+
+function Attachments({ variant = &#39;grid&#39;, className, children, ...props }: AttachmentsProps) {
+  return (
+    &lt;AttachmentsContext.Provider value={{ variant }}&gt;
+      &lt;View
+        className={cn(
+          &#39;items-start gap-2&#39;,
+          variant === &#39;list&#39; ? &#39;flex-col&#39; : &#39;flex-row flex-wrap&#39;,
+          // The web grid container is ml-auto + w-fit: a right-aligned block. React
+          // Native has auto margins too, but justify-end right-aligns every WRAPPED
+          // line, which is what a chip grid in a column host actually needs.
+          variant === &#39;grid&#39; &amp;&amp; &#39;justify-end self-end&#39;,
+          className,
+        )}
+        {...props}
+      &gt;
+        {children}
+      &lt;/View&gt;
+    &lt;/AttachmentsContext.Provider&gt;
+  );
+}
+
+type AttachmentProps = Omit&lt;ViewProps, &#39;children&#39;&gt; &amp; {
+  data: AttachmentData;
+  /** The caller-owned transport lifecycle; defaults to `done` (no extra chrome). */
+  state?: AttachmentState;
+  /** Omit it and every remove control on this row DISABLES rather than disappears. */
+  onRemove?: () =&gt; void;
+  children?: React.ReactNode;
+};
+
+function Attachment({ data, state = &#39;done&#39;, onRemove, className, children, ...props }: AttachmentProps) {
+  const { variant } = useAttachmentsContext();
+  const mediaCategory = getMediaCategory(data.mimeType);
+  const removable = typeof onRemove === &#39;function&#39;;
+  const remove = React.useCallback(() =&gt; {
+    onRemove?.();
+  }, [onRemove]);
+  const stateText = attachmentStateLabel(state);
+  const label = getAttachmentLabel(data);
+
+  const contextValue = React.useMemo&lt;AttachmentContextValue&gt;(
+    () =&gt; ({ data, mediaCategory, state, removable, remove, variant }),
+    [data, mediaCategory, state, removable, remove, variant],
+  );
+
+  return (
+    &lt;AttachmentContext.Provider value={contextValue}&gt;
+      {variant === &#39;list&#39; ? (
+        &lt;Item
+          variant=&quot;outline&quot;
+          className={cn(&#39;w-full rounded-lg p-3&#39;, className)}
+          {...props}
+        &gt;
+          {children}
+        &lt;/Item&gt;
+      ) : (
+        &lt;View
+          className={cn(
+            variant === &#39;grid&#39; &amp;&amp; &#39;size-24 overflow-hidden rounded-lg&#39;,
+            variant === &#39;inline&#39; &amp;&amp;
+              &#39;h-10 flex-row items-center gap-1.5 rounded-md border border-border px-1.5&#39;,
+            className,
+          )}
+          // Belt-and-braces (persona.tsx hardening rule): if the size class drops
+          // from a stale stylesheet rebuild, an unsized tile fills all available
+          // space — the wave-7 avatar balloon, exactly.
+          style={
+            variant === &#39;grid&#39;
+              ? { width: 96, height: 96 }
+              : // The inline chip needs a BOUNDED width: Yoga gives a flex-1 child
+                // zero basis inside a shrink-wrapping row (CSS min-content sizing,
+                // which the web relies on, does not apply), so the filename Text
+                // would measure zero and vanish. 240 caps the chip; numberOfLines
+                // truncates the name inside it.
+                { maxWidth: 240 }
+          }
+          {...props}
+        &gt;
+          {children}
+        &lt;/View&gt;
+      )}
+    &lt;/AttachmentContext.Provider&gt;
+  );
+}
+
+/**
+ * The media slot: the picked image when there is one, otherwise the category icon —
+ * with the upload state taking the slot while a file is in flight or failed (an
+ * uploading image has no meaningful preview yet, and the state is what the user needs
+ * to see).
+ */
+function AttachmentPreview({ className }: { className?: string }) {
+  const { data, mediaCategory, state, variant } = useAttachmentContext();
+
+  // The grid tile is the one variant with no text inside. Scope the a11y grouping to
+  // the PREVIEW leaf — announcing label + upload state — never the tile itself: an
+  // `accessible` tile flattens the nested remove Button out of the a11y tree, and a
+  // VoiceOver user could not remove an attachment (queue.tsx&#39;s QueueItemIndicator
+  // established the leaf-scoping pattern for exactly this reason).
+  const previewAccessibility =
+    variant === &#39;grid&#39;
+      ? {
+          accessible: true,
+          accessibilityLabel: [getAttachmentLabel(data), attachmentStateLabel(state)]
+            .filter(Boolean)
+            .join(&#39;, &#39;),
+          accessibilityRole: &#39;image&#39; as const,
+        }
+      : {};
+
+  const wrapperClasses = cn(
+    &#39;items-center justify-center overflow-hidden&#39;,
+    variant === &#39;grid&#39; &amp;&amp; &#39;size-full bg-muted&#39;,
+    variant === &#39;inline&#39; &amp;&amp; &#39;size-5 rounded bg-background&#39;,
+    variant === &#39;list&#39; &amp;&amp; &#39;size-12 rounded bg-muted&#39;,
+    className,
+  );
+  // Belt-and-braces numeric sizing (persona.tsx hardening rule) — the class-based
+  // sizes are new-file classes the engine has dropped before on stale rebuilds.
+  const previewSize =
+    variant === &#39;inline&#39;
+      ? { width: 20, height: 20 }
+      : variant === &#39;list&#39;
+        ? { width: 48, height: 48 }
+        : undefined;
+
+  if (state !== &#39;done&#39;) {
+    return (
+      &lt;View className={wrapperClasses} style={previewSize} {...previewAccessibility}&gt;
+        &lt;Icon
+          as={state === &#39;error&#39; ? CircleAlertIcon : LoaderCircleIcon}
+          size={variant === &#39;inline&#39; ? 12 : 16}
+          className={cn(
+            variant === &#39;inline&#39; ? &#39;size-3&#39; : &#39;size-4&#39;,
+            state === &#39;error&#39; ? &#39;text-destructive&#39; : &#39;text-muted-foreground&#39;,
+          )}
+        /&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  if (mediaCategory === &#39;image&#39; &amp;&amp; data.uri) {
+    // Belt-and-braces numeric sizing (persona.tsx&#39;s hardening rule): an inline image
+    // whose one size class drops on a stale stylesheet rebuild would otherwise lay
+    // out at its intrinsic pixel size mid-composer.
+    const size = variant === &#39;inline&#39; ? 20 : variant === &#39;list&#39; ? 48 : 96;
+    return (
+      &lt;View className={wrapperClasses} style={previewSize} {...previewAccessibility}&gt;
+        &lt;Image
+          source={{ uri: data.uri }}
+          resizeMode=&quot;cover&quot;
+          className=&quot;size-full&quot;
+          style={{ width: size, height: size }}
+        /&gt;
+      &lt;/View&gt;
+    );
+  }
+
+  // (continued previewAccessibility — applied on the done-state surface below too)
+
+  return (
+    &lt;View className={wrapperClasses} style={previewSize} {...previewAccessibility}&gt;
+      &lt;Icon
+        as={mediaCategoryIcons[mediaCategory]}
+        size={variant === &#39;inline&#39; ? 12 : 16}
+        className={cn(variant === &#39;inline&#39; ? &#39;size-3&#39; : &#39;size-4&#39;, &#39;text-muted-foreground&#39;)}
+      /&gt;
+    &lt;/View&gt;
+  );
+}
+
+type AttachmentInfoProps = {
+  /** The mimeType under the name — the web original&#39;s default-off `showMediaType`. */
+  showMediaType?: boolean;
+  className?: string;
+};
+
+/**
+ * Name and meta. Renders nothing on grid (a thumbnail needs no caption — the web
+ * original returns null there too). The meta line carries the mimeType (opt-in) and
+ * the formatted byte size (when the caller supplied sizeBytes — the data-schema shape
+ * carries it for exactly this display; the web shows neither).
+ */
+function AttachmentInfo({ showMediaType = false, className }: AttachmentInfoProps) {
+  const { data, state, variant } = useAttachmentContext();
+
+  if (variant === &#39;grid&#39;) return null;
+
+  const label = getAttachmentLabel(data);
+  const stateText = attachmentStateLabel(state);
+  const metaParts = [
+    showMediaType ? data.mimeType : undefined,
+    formatAttachmentSize(data.sizeBytes),
+  ].filter((part): part is string =&gt; Boolean(part));
+
+  const name = (
+    &lt;Text numberOfLines={1} className=&quot;text-sm font-medium text-foreground&quot;&gt;
+      {label}
+    &lt;/Text&gt;
+  );
+  const meta = metaParts.length &gt; 0 &amp;&amp; state === &#39;done&#39;
+    ? (
+      &lt;Text numberOfLines={1} className=&quot;text-xs text-muted-foreground&quot;&gt;
+        {metaParts.join(&#39; · &#39;)}
+      &lt;/Text&gt;
+    )
+    : null;
+  const stateLine = stateText ? (
+    &lt;Text
+      numberOfLines={1}
+      className={cn(&#39;text-xs&#39;, state === &#39;error&#39; ? &#39;text-destructive&#39; : &#39;text-muted-foreground&#39;)}
+    &gt;
+      {stateText}
+    &lt;/Text&gt;
+  ) : null;
+
+  if (variant === &#39;list&#39;) {
+    return (
+      &lt;ItemContent className={className}&gt;
+        {name}
+        {meta}
+        {stateLine}
+      &lt;/ItemContent&gt;
+    );
+  }
+  return (
+    &lt;View
+      className={cn(
+        // flex-1 only OUTSIDE the inline chip: the className&#39;s flexBasis:0 defeats
+        // the content basis the shrink-wrapping chip needs (see style below).
+        variant === &#39;inline&#39; ? &#39;min-w-0&#39; : &#39;min-w-0 flex-1&#39;,
+        className,
+      )}
+      // In the inline chip the parent shrink-wraps, and Yoga gives a flexBasis-0
+      // child ZERO width in that context (CSS min-content sizing does not apply) —
+      // the filename would measure zero and vanish. Content basis + grow lets the
+      // chip wrap to the name up to its 240 cap, then truncate.
+      style={
+        variant === &#39;inline&#39; ? { flexGrow: 1, flexShrink: 1, flexBasis: &#39;auto&#39; } : undefined
+      }
+    &gt;
+      {name}
+      {meta}
+      {stateLine}
+    &lt;/View&gt;
+  );
+}
+
+type AttachmentRemoveProps = {
+  /** The accessibility label — the web original&#39;s default is &quot;Remove&quot;. */
+  label?: string;
+  className?: string;
+};
+
+/**
+ * The remove control. ALWAYS VISIBLE, and DISABLED — not absent — when the row has no
+ * onRemove (upstream hides it; queue.tsx documents why a vanishing control is worse).
+ * The web&#39;s group-hover reveal and backdrop-blur are pointer machinery with no thumb.
+ */
+function AttachmentRemove({ label = &#39;Remove&#39;, className }: AttachmentRemoveProps) {
+  const { removable, remove, variant } = useAttachmentContext();
+
+  const button = (
+    &lt;Button
+      variant=&quot;ghost&quot;
+      size=&quot;icon&quot;
+      disabled={!removable}
+      onPress={remove}
+      accessibilityLabel={label}
+      accessibilityState={{ disabled: !removable }}
+      // House formula (queue/artifact precedent): RNR&#39;s h-10 + hitSlop 2/side = the
+      // 44pt platform minimum, with no pixel of extra chrome.
+      hitSlop={{ top: 2, bottom: 2, left: 2, right: 2 }}
+      className={cn(
+        &#39;rounded-full&#39;,
+        variant === &#39;grid&#39; &amp;&amp; &#39;absolute right-2 top-2 bg-background/80&#39;,
+        className,
+      )}
+    &gt;
+      &lt;Icon as={XIcon} size={16} className=&quot;text-muted-foreground&quot; /&gt;
+    &lt;/Button&gt;
+  );
+
+  if (variant === &#39;list&#39;) {
+    return &lt;ItemActions&gt;{button}&lt;/ItemActions&gt;;
+  }
+  return button;
+}
+
+type AttachmentEmptyProps = {
+  /** Overrides the web original&#39;s default &quot;No attachments&quot;. */
+  children?: string;
+  className?: string;
+};
+
+/**
+ * The empty state, composed on the shared `empty` primitive (the PRD&#39;s build-once
+ * reuse ledger names attachments as one of its consumers) — tuned down from the
+ * full-surface paddings to a composer strip.
+ */
+function AttachmentEmpty({ children, className }: AttachmentEmptyProps) {
+  return (
+    &lt;Empty className={cn(&#39;flex-none gap-1 p-4&#39;, className)}&gt;
+      &lt;EmptyTitle className=&quot;text-sm font-normal text-muted-foreground&quot;&gt;
+        {children ?? &#39;No attachments&#39;}
+      &lt;/EmptyTitle&gt;
+    &lt;/Empty&gt;
+  );
+}
+
+export {
+  Attachment,
+  AttachmentEmpty,
+  AttachmentInfo,
+  AttachmentPreview,
+  AttachmentRemove,
+  Attachments,
+  useAttachmentContext,
+  useAttachmentsContext,
+};
+export type { AttachmentData, AttachmentState, AttachmentVariant };
+export type { AttachmentMediaCategory };
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy attachments.tsx" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure><figure class="source-file" data-astro-cid-ziig2kl5><figcaption data-astro-cid-ziig2kl5>attachments.logic.ts</figcaption><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>/**
+ * Attachments — pure logic. Zero react-native imports, so the Vitest tier owns it (see
+ * the header of sources.logic.ts for why component files themselves cannot load under
+ * Node).
+ *
+ * AttachmentData is the data-schema doc&#39;s own shape (11-technical-requirements/
+ * 03-data-schema.md), declared locally per message.tsx precedent — the registry is
+ * stateless about the model and takes no runtime dependency on any SDK. It is
+ * deliberately narrower than the web original&#39;s FileUIPart | SourceDocumentUIPart
+ * union: `sources` are their own component in this registry, so the source-document
+ * variant (and upstream&#39;s `source` media category, which exists only to serve it) has
+ * no carrier here.
+ *
+ * The per-file upload state is an RN ADDITION over the web original, declared: a
+ * desktop drag-and-drop lands instantly, but a phone upload takes visible seconds, and
+ * a chip that looks complete while its bytes are still in flight is lying. UC-CHAT-03
+ * AC-3 makes the chip removable &quot;before sending&quot;, which is exactly the uploading window.
+ * The caller owns the lifecycle (queue precedent — caller state, caller mutations);
+ * this is only the display seam for it.
+ */
+
+/** The data-schema doc&#39;s attachment shape — what prompt-input and attachments exchange. */
+export type AttachmentData = {
+  id: string;
+  name: string;
+  mimeType: string;
+  uri?: string;
+  sizeBytes?: number;
+};
+
+/** The caller-owned transport lifecycle of one file, rendered by the chip. */
+export type AttachmentState = &#39;uploading&#39; | &#39;done&#39; | &#39;error&#39;;
+
+/** Upstream&#39;s media categories minus `source` — no source-document variant exists here. */
+export type AttachmentMediaCategory = &#39;image&#39; | &#39;video&#39; | &#39;audio&#39; | &#39;document&#39; | &#39;unknown&#39;;
+
+export const ATTACHMENT_VARIANTS = [&#39;grid&#39;, &#39;inline&#39;, &#39;list&#39;] as const;
+
+export type AttachmentVariant = (typeof ATTACHMENT_VARIANTS)[number];
+
+/**
+ * The preview affordance for a mimeType — the data-schema doc names this exact
+ * function, pure and Vitest-testable. Same prefix ladder as the web original&#39;s
+ * getMediaCategory, reading `mimeType` directly instead of a part object.
+ * No-throw: an empty or unrecognized type degrades to `unknown` (the paperclip),
+ * which is the web original&#39;s own fallback.
+ */
+export function getMediaCategory(mimeType: string): AttachmentMediaCategory {
+  if (mimeType.startsWith(&#39;image/&#39;)) return &#39;image&#39;;
+  if (mimeType.startsWith(&#39;video/&#39;)) return &#39;video&#39;;
+  if (mimeType.startsWith(&#39;audio/&#39;)) return &#39;audio&#39;;
+  if (mimeType.startsWith(&#39;application/&#39;) || mimeType.startsWith(&#39;text/&#39;)) return &#39;document&#39;;
+  return &#39;unknown&#39;;
+}
+
+/**
+ * The chip&#39;s display label — the web original&#39;s getAttachmentLabel with the field
+ * renames the data-schema shape dictates (`name` for `filename`). A file with no name
+ * falls back to &quot;Image&quot; when it is one, &quot;Attachment&quot; otherwise, byte-verbatim.
+ */
+export function getAttachmentLabel(
+  data: Pick&lt;AttachmentData, &#39;name&#39; | &#39;mimeType&#39;&gt;,
+): string {
+  if (data.name) return data.name;
+  return getMediaCategory(data.mimeType) === &#39;image&#39; ? &#39;Image&#39; : &#39;Attachment&#39;;
+}
+
+/**
+ * The one-line state label, or undefined for `done` — a finished upload needs no
+ * announcement; the chip itself is the proof. Uploading and failing DO (color is never
+ * the sole channel — lib/status.ts rule 1).
+ */
+export function attachmentStateLabel(state: AttachmentState): string | undefined {
+  if (state === &#39;uploading&#39;) return &#39;Uploading&#39;;
+  if (state === &#39;error&#39;) return &#39;Upload failed&#39;;
+  return undefined;
+}
+
+/**
+ * A human byte size for the chip&#39;s meta line — the data-schema shape carries
+ * `sizeBytes` and a file chip without its size is opaque on a phone. 1024-based, one
+ * decimal under 10 of a unit, none above. Undefined when the caller supplied no size:
+ * a missing measurement renders as nothing, never as &quot;0 B&quot;.
+ */
+export function formatAttachmentSize(sizeBytes: number | undefined): string | undefined {
+  if (sizeBytes === undefined || Number.isNaN(sizeBytes)) return undefined;
+  if (sizeBytes &lt; 1024) return `${Math.round(sizeBytes)} B`;
+  if (sizeBytes &lt; 1024 ** 2) {
+    const kb = sizeBytes / 1024;
+    return `${kb &lt; 10 ? Math.round(kb * 10) / 10 : Math.round(kb)} KB`;
+  }
+  const mb = sizeBytes / 1024 ** 2;
+  return `${mb &lt; 10 ? Math.round(mb * 10) / 10 : Math.round(mb)} MB`;
+}
+</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy attachments.logic.ts" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></figure></section><section data-section="props" aria-labelledby="props-heading" data-astro-cid-ziig2kl5><h2 id="props-heading" data-astro-cid-ziig2kl5>Props</h2><table class="props-table" data-astro-cid-ogedjwls><thead data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><th scope="col" data-astro-cid-ogedjwls>Name</th><th scope="col" data-astro-cid-ogedjwls>Type</th><th scope="col" data-astro-cid-ogedjwls>Default</th><th scope="col" data-astro-cid-ogedjwls>Description</th></tr></thead><tbody data-astro-cid-ogedjwls><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>variant</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>&quot;grid&quot; | &quot;inline&quot; | &quot;list&quot; | undefined</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>&#39;grid&#39;</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>grid: right-aligned thumbnails · inline: compact chips · list: full-width rows.</td></tr><tr data-astro-cid-ogedjwls><td class="props-table__name" data-label="Name" data-astro-cid-ogedjwls>children</td><td class="props-table__type" data-label="Type" data-astro-cid-ogedjwls>React.ReactNode</td><td class="props-table__default" data-label="Default" data-astro-cid-ogedjwls>—</td><td class="props-table__description" data-label="Description" data-astro-cid-ogedjwls>—</td></tr></tbody></table></section><section data-section="theming" aria-labelledby="theming-heading" data-astro-cid-ziig2kl5><h2 id="theming-heading" data-astro-cid-ziig2kl5>Theming</h2><p class="theming-note" data-astro-cid-syvkvssh>Themed via <span class="chip chip__value" data-astro-cid-k2qn5omv>border-border</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-muted</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>bg-background</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-destructive</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-muted-foreground</span>, <span class="chip chip__value" data-astro-cid-k2qn5omv>text-foreground</span>.</p></section><section data-section="usage" aria-labelledby="usage-heading" data-astro-cid-ziig2kl5><h2 id="usage-heading" data-astro-cid-ziig2kl5>Usage</h2><div class="code-block" data-astro-cid-c6nuo4je><rnr-copy-button class="copy-button" data-astro-cid-d4l6eyi2="true"><code class="copy-button__command" data-astro-cid-d4l6eyi2>() =&gt; (
+      &lt;Attachments variant=&quot;list&quot;&gt;
+        &lt;Attachment
+          data={{
+            id: &#39;att-1&#39;,
+            name: &#39;registry-manifest.pdf&#39;,
+            mimeType: &#39;application/pdf&#39;,
+            sizeBytes: 48213,
+          }}
+          state=&quot;done&quot;
+          onRemove={() =&gt; {}}
+        &gt;
+          &lt;AttachmentInfo showMediaType /&gt;
+          &lt;AttachmentInfo /&gt;
+        &lt;/Attachment&gt;
+        &lt;Attachment
+          data={{ id: &#39;att-2&#39;, name: &#39;cold-boot.png&#39;, mimeType: &#39;image/png&#39;, sizeBytes: 118_402 }}
+          state=&quot;uploading&quot;
+        &gt;
+          &lt;AttachmentInfo /&gt;
+        &lt;/Attachment&gt;
+      &lt;/Attachments&gt;
+    )</code><button type="button" class="copy-button__trigger" data-state="idle" aria-label="Copy code" data-astro-cid-d4l6eyi2>Copy</button><span class="copy-button__status" role="status" aria-live="polite" data-astro-cid-d4l6eyi2></span></rnr-copy-button></div></section><aside data-qr-panel data-astro-cid-qxxde7kp><div role="img" aria-label="Open the attachments gallery screen in Expo Go" data-astro-cid-qxxde7kp><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h37v37H0z"/><path stroke="#000000" d="M4 4.5h7m2 0h2m4 0h2m2 0h2m1 0h7M4 5.5h1m5 0h1m2 0h1m1 0h2m9 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h2m1 0h2m3 0h2m2 0h1m1 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h4m1 0h3m2 0h3m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h2m3 0h4m1 0h1m1 0h1m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h1m2 0h1m1 0h1m1 0h1M4 12.5h1m1 0h5m4 0h1m2 0h2m1 0h1m4 0h5M7 13.5h1m1 0h1m2 0h2m1 0h2m2 0h2m1 0h8m1 0h2M7 14.5h2m1 0h1m1 0h1m1 0h3m4 0h2m1 0h1m2 0h3M4 15.5h2m1 0h1m7 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h1M5 16.5h3m1 0h2m2 0h2m5 0h2m1 0h1m6 0h1m1 0h1M6 17.5h2m1 0h1m1 0h2m4 0h3m1 0h3m2 0h1m1 0h5M10 18.5h2m1 0h1m3 0h4m1 0h1m1 0h4m3 0h1M4 19.5h2m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h2m2 0h2M6 20.5h1m3 0h2m4 0h1m1 0h2m1 0h1m5 0h1m2 0h3M4 21.5h4m3 0h4m1 0h1m2 0h11m1 0h2M4 22.5h1m2 0h1m1 0h3m1 0h2m10 0h1m2 0h2M4 23.5h1m1 0h1m1 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1m2 0h3M4 24.5h1m2 0h1m2 0h2m1 0h2m1 0h1m4 0h1m1 0h6m1 0h2M12 25.5h2m1 0h1m1 0h3m2 0h1m1 0h1m3 0h5M4 26.5h7m3 0h7m2 0h2m1 0h1m1 0h2M4 27.5h1m5 0h1m1 0h1m1 0h1m2 0h1m5 0h2m3 0h2m2 0h1M4 28.5h1m1 0h3m1 0h1m1 0h2m4 0h4m2 0h5m1 0h1m1 0h1M4 29.5h1m1 0h3m1 0h1m1 0h5m3 0h3m4 0h1m1 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h1m1 0h1m3 0h5m1 0h1M4 31.5h1m5 0h1m2 0h2m1 0h1m1 0h3m1 0h3m1 0h1m2 0h1m1 0h1M4 32.5h7m1 0h1m1 0h2m3 0h3m1 0h1m3 0h1m2 0h1"/></svg>
+</div></aside><nav class="pager" aria-label="Family pager" data-astro-cid-ziig2kl5><a rel="prev" href="/components/queue" data-astro-cid-ziig2kl5>← queue</a><a rel="next" href="/components/shimmer" data-astro-cid-ziig2kl5>shimmer →</a></nav></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="site-footer__inner" data-astro-cid-jo6i4kqk><p class="site-footer__brand" data-astro-cid-jo6i4kqk>RNR AI Elements</p><nav class="site-footer__nav" aria-label="Footer" data-astro-cid-jo6i4kqk><a href="/components" data-astro-cid-jo6i4kqk>Components</a><a href="/registry" data-astro-cid-jo6i4kqk>Registry</a></nav><p class="site-footer__note" data-astro-cid-jo6i4kqk>Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.</p></div></footer></body></html>
