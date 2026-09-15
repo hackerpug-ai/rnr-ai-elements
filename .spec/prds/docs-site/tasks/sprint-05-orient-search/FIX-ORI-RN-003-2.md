@@ -54,19 +54,20 @@ this FIX resolves the *runtime* failure that the now-successful bundle exposed.
 
 **RED (the observed nativewind native runtime failure — replay, not a source-absence statement):**
 
-Serve a PRE-FIX snapshot of `public/r/nativewind` from this commit (or the pre-fix commit) on a local
-port — `python3 -m http.server <port>` from `public/r/` or `npx http-server public/r` — then prepare a
-clean nativewind consumer (copy `packages/docs-snippets/nativewind/` outside the monorepo, run the
-committed recipe `bash packages/docs-snippets/commands/nativewind.sh` with cwd = the copy, but install
-from `http://localhost:<port>/nativewind/…` instead of the live `rnraielements.com/r/nativewind/…`
-host — substitute the host in a scratch copy of the recipe, never the committed file). Open it in Expo
-Go on a reserved iOS simulator / Android emulator, focus the composer, and attempt Send. Expected
-(RED): `Couldn't find a navigation context` in the Metro log and the `Send message` button absent from
-the accessibility hierarchy. Pinning the RED to a locally-served pre-fix snapshot keeps it reproducible
-after this FIX's fixed `public/r` is deployed — the live registry will then serve the FIXED item, so a
-live-host replay would no longer fail. This is the exact failure ORI-RN-003 recorded in
-`.tmp/ORI-RN-003/cycle-2/` on `kb-run-sprint/sprint-05-orient-search/ORI-RN-003`; the authoritative
-replay is ORI-RN-003's own harness
+Prepare a clean nativewind consumer (copy `packages/docs-snippets/nativewind/` outside the monorepo, run
+the committed recipe `bash packages/docs-snippets/commands/nativewind.sh` with cwd = the copy — the
+recipe installs the five top-level items `conversation`/`message`/`prompt-input`/`item`/`sheet` from
+`rnraielements.com/r/nativewind/…`), then OVERWRITE the consumer's `components/ui/input-group.tsx` with
+the PRE-FIX source (this commit's `packages/registry/src/components/ui/input-group.tsx`, alias
+`@/registry/{engine}/` rewritten to `@/components/ui/…`). Do NOT rely on a localhost host substitution:
+`input-group` is not a top-level recipe item — it arrives transitively via `prompt-input.json`'s
+`registryDependencies`, pinned to the immutable `…/v0.2.1/public/r/nativewind/input-group.json` git-tag
+URL, so substituting the top-level install host does not change where `input-group` is fetched. Overwrite
+the installed file instead. Open the consumer in Expo Go on a reserved iOS simulator / Android emulator,
+focus the composer, and attempt Send. Expected (RED): `Couldn't find a navigation context` in the Metro
+log and the `Send message` button absent from the accessibility hierarchy. This is the exact failure
+ORI-RN-003 recorded in `.tmp/ORI-RN-003/cycle-2/` on `kb-run-sprint/sprint-05-orient-search/ORI-RN-003`;
+the authoritative replay is ORI-RN-003's own harness
 (`tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind
 --platforms ios,android,web`, on ORI-RN-003's branch) — run only its nativewind native legs.
 
@@ -78,9 +79,10 @@ replay is ORI-RN-003's own harness
    with NO regression on uniwind iOS/Android and nativewind/uniwind web. Prove it with the harness
    sign-off gate (`pnpm --filter harness storybook:device` for uniwind device; `pnpm --filter
    harness-nativewind storybook:device` for nativewind device; `pnpm storybook:web` for uniwind web; and
-   `pnpm --filter harness storybook:web:nativewind` for nativewind web) after the harness/example copies
-   below are updated in lockstep, plus the disposable-consumer replay above now passing (no
-   `Couldn't find a navigation context`, `Send message` present and tappable).
+    `pnpm --filter harness storybook:web:nativewind` for nativewind web) after the harness/example copies
+    below are updated in lockstep, plus the disposable-consumer replay above now passing — overwrite the
+    consumer's `components/ui/input-group.tsx` with the FIXED source (post `pnpm registry:build`) instead
+    of the pre-fix source (no `Couldn't find a navigation context`, `Send message` present and tappable).
 3. `pnpm typecheck` clean and `pnpm lint` clean.
 
 ## Scope
@@ -116,12 +118,19 @@ replay is ORI-RN-003's own harness
   `cssInterop`/`withUniwind` call, no engine-only prop (the `placeholderTextColor` comment at line 55
   documents why engine-only props are banned here). Use the plain RN `style` prop + `useColorScheme()`
   (the file's own precedent at line 65) or a named theme token — NOT an engine wrapper.
-- The replacement literal MUST be `hsl(...)` / `hsla(...)` form ONLY. `scripts/check-tokens.ts` (CI
-  `pnpm check:tokens`) grants this file exactly one exception —
-  `TOKEN_EXCEPTIONS` for `input-group.tsx` carries `['#737373', '#a3a3a3', 'hsl(']` — so an `hsl(...)`
-  literal passes, but `rgb(...)`, `rgba(...)`, `oklch(...)`, and any hex OTHER than the two placeholder
-  parity values `#737373`/`#a3a3a3` FAIL the gate. The gate scans COMMENTS too, so do not name a hex /
-  rgb / oklch value in a comment (a comment must use `hsl(...)` or the two sanctioned hex values only).
+- The replacement literal MUST be `hsl(...)` / `hsla(...)` form ONLY, in the COMMA alpha form
+  (`hsla(0, 0%, 14.9%, 0.3)`, `hsla(300, 0%, 45%, 0.5)`) or the no-alpha space form
+  (`hsl(0 0% 63.9%)`, matching line 65). FORBIDDEN: the CSS Color 4 slash-alpha form
+  (`hsl(0 0% 14.9% / 0.3)`) — `@react-native/normalize-colors@0.86.3` returns `null` for it and
+  `processColor.js` then drops the value, so the color silently does NOT render on device. The slash
+  form also passes `check:tokens` (the `hsla?\(` → `hsl(` normalization covers it), so the gates cannot
+  catch it — the implementer must not write it.
+- `scripts/check-tokens.ts` (CI `pnpm check:tokens`) grants this file exactly one exception —
+  `TOKEN_EXCEPTIONS` for `input-group.tsx` carries `['#737373', '#a3a3a3', 'hsl(']` — so an
+  `hsl(...)`/`hsla(...)` literal passes, but `rgb(...)`, `rgba(...)`, `oklch(...)`, and any hex OTHER
+  than the two placeholder parity values `#737373`/`#a3a3a3` FAIL the gate. The gate scans COMMENTS too,
+  so do not name a hex / rgb / oklch value in a comment (a comment must use `hsl(...)` or the two
+  sanctioned hex values only).
 - The replacement style MUST be a HOISTED object or hoisted ternary, NOT an inline literal.
   `scripts/check-contract.ts` (CI `pnpm check:contract`) runs the styling contract's
   `inline-static-style-literal` rule, which globs `packages/registry/src/**/*.tsx` (no exclude) and
@@ -189,17 +198,24 @@ replay is ORI-RN-003's own harness
 
   GIVEN the fixed source, rebuilt registry and synced copies WHEN the harness sign-off runs on
   nativewind and uniwind (device + web) AND a disposable nativewind consumer (prepared via the committed
-  recipe, then its `components/ui/input-group.tsx` overwritten with the fixed source, or the fixed
-  `public/r/nativewind` served locally and installed) is opened in Expo Go on iOS and Android and the
-  composer is focused and submitted THEN the composer renders and `Send message` is present and tappable
-  on nativewind iOS + Android in light and dark (no `Couldn't find a navigation context` in the Metro
-  log), and uniwind iOS/Android + nativewind/uniwind web still render the composer identically (no
-  regression). RED before the fix: the same nativewind native replay throws
-  `Couldn't find a navigation context` and the send button is absent.
+  recipe, then its `components/ui/input-group.tsx` overwritten with the fixed source) is opened in Expo
+  Go on iOS and Android and the composer is focused and submitted THEN the composer renders and
+  `Send message` is present and tappable on nativewind iOS + Android in light and dark (no
+  `Couldn't find a navigation context` in the Metro log), and uniwind iOS/Android + nativewind/uniwind
+  web still render the composer identically (no regression). RED before the fix: the same nativewind
+  native replay throws `Couldn't find a navigation context` and the send button is absent.
+
+  EVIDENCE — the pinned 30% dark-input background and 50% ring opacity are NOT assertable by the
+  scripted gates (the gates catch the literal FORM — `check:tokens` — and the inline-style FORM —
+  `check:contract` — but not whether the color actually renders at the right alpha). Capture a dark-mode
+  on-device screenshot of the FOCUSED composer on nativewind iOS AND Android (the focus ring visible at
+  50% and the input background translucent at 30%), plus one light-mode focused screenshot each, under
+  `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`. The 30%/50% appearance is confirmed ONLY
+  by this on-device visual sign-off, never by the scripted gates.
 
   FLOW_REF: None · TEST_TIER: e2e · verification_service: real Expo Go (iOS + Android) via the harness sign-off and/or ORI-RN-003's on-branch proof harness
   VERIFY: `pnpm --filter harness storybook:device` + `pnpm --filter harness-nativewind storybook:device` + `pnpm storybook:web` (uniwind web) + `pnpm --filter harness storybook:web:nativewind` (nativewind web); the authoritative 6-leg proof is `tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind --platforms ios,android,web` (ORI-RN-003's branch), re-run by ORI-RN-003 after this FIX's `public/r` is deployed
-  TEST_FILE: (real-device Maestro/Storybook session) · TEST_FUNCTION: (composer render + send tap, documented in evidence)
+  TEST_FILE: (real-device Maestro/Storybook session + dark/light focused-composer screenshots) · TEST_FUNCTION: (composer render + send tap + appearance, documented in evidence)
 
 ### TEST CRITERIA
 
@@ -216,8 +232,10 @@ replay is ORI-RN-003's own harness
   source (byte-identical); `git diff --name-only` lists only the allowed paths.
 - TC-5 → AC-3: the nativewind native replay shows the composer + tappable `Send message` in light and
   dark on iOS and Android with no navigation-context error; the uniwind + web replays are unchanged.
-  RED (pre-fix) and GREEN (post-fix) evidence saved under
-  `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`.
+  A dark-mode FOCUSED-composer screenshot on nativewind iOS and Android (and a light-mode one each) is
+  saved, showing the 50% focus ring and 30% translucent dark background — the only proof of the pinned
+  appearance, since the gates assert form, not rendered alpha. RED (pre-fix) and GREEN (post-fix)
+  evidence saved under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`.
 
 ### SCOPE (file-level write permissions)
 
@@ -260,16 +278,25 @@ replay is ORI-RN-003's own harness
 ### CODING STANDARDS
 
 Keep the existing `cn(...)` composition and `useColorScheme()` idiom already in the file. Compute the
-wrapper style OUTSIDE the JSX as a hoisted object/ternary (`const wrapperStyle = scheme === 'dark' ?
-{ backgroundColor: 'hsl(0 0% 14.9% / 0.3)' } : undefined;` … then `style={wrapperStyle}`) — never an
-inline `style={{ backgroundColor: … }}`, which trips the styling contract's
-`inline-static-style-literal` rule. Express every raw color as `hsl(...)`/`hsla(...)` (the sole form
-`check:tokens` permits for this file); do NOT write `#hex`, `rgb(...)`, `rgba(...)` or `oklch(...)` —
-not even in a comment (the token gate scans comments). The literals are the `--color-input` /
-`--color-ring` token values at 30% / 50% opacity and change together with the theme; state that in a
-comment that itself uses only `hsl(...)` / the two sanctioned hex values. Do not introduce a new
-dependency, a new hook file, or an engine wrapper, and leave the `placeholderTextColor` line 65
-byte-exact.
+wrapper style OUTSIDE the JSX as a hoisted object/ternary — for example, with `const scheme =
+useColorScheme()`:
+```
+const wrapperStyle =
+  scheme === 'dark' ? { backgroundColor: 'hsla(0, 0%, 14.9%, 0.3)' } : undefined;
+const focusedStyle = focused
+  ? { borderColor: scheme === 'dark' ? 'hsla(300, 0%, 45%, 0.5)' : 'hsla(0, 0%, 63%, 0.5)', borderWidth: 2 }
+  : undefined;
+```
+(comma-form `hsla(...)`, which RN 0.86.3 parses; `--color-ring` light = `0 0% 63%`, dark = `300 0% 45%`,
+`--color-input` dark = `0 0% 14.9%`) then `style={[wrapperStyle, focusedStyle]}` — never an inline
+`style={{ backgroundColor: … }}`, which trips the styling contract's `inline-static-style-literal` rule.
+Express every raw color as comma-form `hsla(...)` or no-alpha `hsl(...)` (the sole forms `check:tokens`
+permits AND RN 0.86.3 parses); do NOT write the CSS Color 4 slash-alpha form `hsl(… / …)` (RN drops it),
+and do NOT write `#hex`, `rgb(...)`, `rgba(...)` or `oklch(...)` — not even in a comment (the token gate
+scans comments). The literals are the `--color-input` / `--color-ring` token values at 30% / 50% opacity
+and change together with the theme; state that in a comment that itself uses only `hsl(...)` / the two
+sanctioned hex values. Do not introduce a new dependency, a new hook file, or an engine wrapper, and
+leave the `placeholderTextColor` line 65 byte-exact.
 
 ## OPEN QUESTIONS (stated, not resolved here)
 
@@ -305,3 +332,18 @@ byte-exact.
     `public/r/nativewind` (install from `http://localhost:<port>/nativewind/…`) instead of the live
     `rnraielements.com` host, so the RED remains reproducible after the fixed `public/r` is deployed.
   - The verified defect location, diagnosis, honest scoping, and WRITE-ALLOWED are otherwise unchanged.
+
+- Cycle-3 remediation (independent reviewer NEEDS_FIXES, DOC-5/DOC-6):
+  - DOC-5 (RN-parseable literal) — the cycle-2 example used the CSS Color 4 slash-alpha form
+    `hsl(0 0% 14.9% / 0.3)`, which `@react-native/normalize-colors@0.86.3` returns `null` for
+    (verified: `normalize-colors` → `null`; `processColor.js` then drops it). Replaced the example with
+    the comma form `hsla(0, 0%, 14.9%, 0.3)` / `hsla(300, 0%, 45%, 0.5)` (both parse), added an explicit
+    rule forbidding the slash-alpha syntax (the gates cannot catch it — `check:tokens`'s `hsla?\(` → `hsl(`
+    normalization covers it), and made the 30%/50% appearance observable via a dark-mode FOCUSED-composer
+    on-device screenshot on nativewind iOS + Android (gates assert form, not rendered alpha).
+  - DOC-6 (RED replay mechanism) — `input-group` is NOT a top-level recipe item; it arrives transitively
+    via `prompt-input.json`'s `registryDependencies`, pinned to the immutable
+    `…/v0.2.1/public/r/nativewind/input-group.json` git-tag URL, so the localhost host substitution did
+    not change where `input-group` is fetched. Dropped the localhost mechanism: the RED/GREEN replay now
+    overwrites the consumer's `components/ui/input-group.tsx` with the pre-fix / fixed source respectively.
+  - The verified defect location, diagnosis, scoping, and the DOC-1..DOC-4 fixes are otherwise unchanged.
