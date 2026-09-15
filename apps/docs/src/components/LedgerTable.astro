@@ -1,0 +1,145 @@
+---
+/**
+ * LedgerTable (ORI-AST-007) — the generated registry ledger's row surface,
+ * composed through the shared DataTable rich-cell slot (one table
+ * implementation, no duplicated chrome). Every row derives from the build-time
+ * registry-items.json dataset (FUSE-05) — never hand-authored — and renders:
+ *
+ * - the item slug (row header),
+ * - its stripped category (`component` | `ui` | `lib`),
+ * - both engine labels,
+ * - the Expo Go verdict Badge,
+ * - BOTH labeled engine install commands, each with the existing CopyButton
+ *   island reused verbatim (the copied text IS the displayed command, so
+ *   display and clipboard cannot drift), and
+ * - a real Docs link to the item's ORI-AST-008 reference destination.
+ *
+ * Engine visibility joins ORI-AST-002's shared contract: the root
+ * `data-engine` attribute (set pre-paint and on every engine-tab activation by
+ * the TabGroup island) drives which command block is on screen. With
+ * JavaScript disabled the root attribute is never written, so BOTH labeled
+ * commands stay visible — the no-JS table is exactly 56 rows, one per item,
+ * never duplicated per engine.
+ *
+ * Category/text filtering is the LedgerFilter island's job: each row carries
+ * `data-filter-text` (name + title + one-liner + category) and `data-category`
+ * (the stripped type) for the island to match against, plus the stable
+ * `id="row-{name}"` anchor the link-checker fragments resolve against.
+ */
+import Badge from './Badge.astro';
+import CopyButton from './islands/CopyButton.astro';
+import DataTable from './DataTable.astro';
+import { oneLineDescription } from '../lib/one-line-description';
+
+interface LedgerItem {
+  name: string;
+  title: string;
+  description: string;
+  type: string;
+  engines: string[];
+  expoGo: boolean;
+}
+
+interface Props {
+  items: LedgerItem[];
+}
+
+const { items } = Astro.props;
+
+const COLUMNS = ['Item', 'Category', 'Engines', 'Expo Go', 'Install', 'Docs'];
+
+const installCommand = (engine: string, name: string): string =>
+  `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/${engine}/${name}.json`;
+
+const categoryOf = (type: string): string => type.replace('registry:', '');
+
+const filterTextFor = (item: LedgerItem): string =>
+  [item.name, item.title, oneLineDescription(item.description), categoryOf(item.type)].join(' ');
+---
+
+<DataTable
+  columns={COLUMNS}
+  caption={`Generated registry ledger — ${items.length} items, every one with both engine install commands.`}
+  bodyAttrs={{ 'data-ledger': 'true' }}
+>
+  <Fragment>
+    {items.map((item) => (
+      <tr
+        id={`row-${item.name}`}
+        data-filter-text={filterTextFor(item)}
+        data-category={categoryOf(item.type)}
+      >
+        <th scope="row">{item.name}</th>
+        <td>{categoryOf(item.type)}</td>
+        <td>
+          <ul class="ledger-engines">
+            {item.engines.map((engine) => (
+              <li class="ledger-engine">{engine}</li>
+            ))}
+          </ul>
+        </td>
+        <td>
+          <Badge tone={item.expoGo ? 'expo-go' : 'dev-client'} />
+        </td>
+        <td class="ledger-install">
+          <div class="ledger-command" data-engine-command="nativewind">
+            <span class="ledger-command__label">nativewind</span>
+            <CopyButton
+              command={installCommand('nativewind', item.name)}
+              label={`Copy the nativewind install command for ${item.name}`}
+            />
+          </div>
+          <div class="ledger-command" data-engine-command="uniwind">
+            <span class="ledger-command__label">uniwind</span>
+            <CopyButton
+              command={installCommand('uniwind', item.name)}
+              label={`Copy the uniwind install command for ${item.name}`}
+            />
+          </div>
+        </td>
+        <td>
+          <a href={`/components/${item.name}`} data-docs-link>
+            Docs
+          </a>
+        </td>
+      </tr>
+    ))}
+  </Fragment>
+</DataTable>
+
+<style>
+  .ledger-engines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.25rem;
+  }
+  .ledger-engine {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .ledger-install {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .ledger-command {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .ledger-command__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  /* The ONE engine contract: the root data-engine attribute (written pre-paint
+     and on every engine-tab activation) selects which command block is shown.
+     With no JavaScript the attribute is absent, so both blocks stay visible —
+     the no-JS ledger reads every item's two commands. */
+  :global(html[data-engine='uniwind']) [data-engine-command='nativewind'] {
+    display: none;
+  }
+  :global(html[data-engine='nativewind']) [data-engine-command='uniwind'] {
+    display: none;
+  }
+</style>

@@ -1,17 +1,33 @@
 /**
- * `rnr-ledger-filter` — vanilla custom element, island 4/5 (FAM-004).
+ * `rnr-ledger-filter` — vanilla custom element, island 4/5 (FAM-004; extended
+ * by ORI-AST-007).
  *
- * A WAI-ARIA search box over server-rendered cards. The whole grid — every
- * card carrying data-filter-text — is authored by the page's static template;
- * this element ONLY toggles the hidden attribute on cards, on the sections
- * they empty, and on the one muted no-results row. It never builds DOM, never
+ * A WAI-ARIA search box over server-rendered rows/cards. The whole set — every
+ * row carrying data-filter-text — is authored by the page's static template;
+ * this element ONLY toggles the hidden attribute on rows, on the sections they
+ * empty, and on the one muted no-results row. It never builds DOM, never
  * fetches, and filter state never reaches the URL (TR-10): no history writes,
  * no query params, no hash.
  *
- * Inputs arrive via attributes so a later sprint can remount the SAME element
- * over a different ledger: `target` is the selector of the container whose
- * [data-filter-text] cards are filtered. No tab machinery, no facets — free
- * text over the attribute, case-insensitive substring.
+ * Two independent narrowing controls, each optional by construction:
+ * - CATEGORY: the optional `[data-category-filter]` buttons select a category
+ *   id; a row matches when its `data-category` equals the selection (or the
+ *   selection is "all"). Only the ledger carries these buttons and row
+ *   attributes; the /components grid has neither, so the category term is a
+ *   no-op there.
+ * - TEXT: the input narrows by case-insensitive substring over each row's
+ *   `data-filter-text`.
+ *
+ * Empty-state detection is ROW-BASED: the no-results row shows when zero rows
+ * match the combined category + text filter, independently of any containing
+ * section. Section hiding (a family section whose cards all hide, hides with
+ * its header) is retained for the grid and is a separate, optional concern —
+ * rows that carry no `closest('section')` (the ledger's <tr>) never trigger it.
+ *
+ * Inputs arrive via attributes so the SAME element mounts over a different
+ * target: `target` is the selector of the container whose [data-filter-text]
+ * rows are filtered. No engine machinery here — engine choice rides the shared
+ * TabGroup island and the root data-engine contract (ORI-AST-002).
  *
  * Loaded as a processed (bundled) module script — executes once per full page
  * load. The registration guard keeps the define idempotent across
@@ -28,8 +44,15 @@ declare global {
 class RnrLedgerFilter extends HTMLElement {
   private input: HTMLInputElement | null = null;
   private noResults: HTMLElement | null = null;
-  /** The <li> (or card itself when bare) whose hidden attribute we toggle. */
-  private items: { root: HTMLElement; text: string; section: HTMLElement | null }[] = [];
+  private categoryButtons: HTMLButtonElement[] = [];
+  /** The <li> (or row itself when bare) whose hidden attribute we toggle. */
+  private items: {
+    root: HTMLElement;
+    text: string;
+    category: string;
+    section: HTMLElement | null;
+  }[] = [];
+  private category = 'all';
 
   connectedCallback(): void {
     const target = this.getAttribute('target');
@@ -39,6 +62,7 @@ class RnrLedgerFilter extends HTMLElement {
     this.items = [...container.querySelectorAll<HTMLElement>('[data-filter-text]')].map((card) => ({
       root: card.closest('li') ?? card,
       text: (card.getAttribute('data-filter-text') ?? '').toLowerCase(),
+      category: card.getAttribute('data-category') ?? '',
       section: card.closest('section'),
     }));
     if (this.items.length === 0) return;
@@ -48,36 +72,55 @@ class RnrLedgerFilter extends HTMLElement {
     // control); upgrading it is what makes the filter live.
     this.input = this.querySelector<HTMLInputElement>('input');
     this.noResults = this.querySelector<HTMLElement>('[data-no-results]');
+
+    this.categoryButtons = [...this.querySelectorAll<HTMLButtonElement>('[data-category-filter]')];
+    for (const button of this.categoryButtons) {
+      button.addEventListener('click', () => {
+        this.setCategory(button.getAttribute('data-category-filter') ?? 'all');
+      });
+    }
+
     if (!this.input) return;
     this.input.disabled = false;
-    this.input.addEventListener('input', () => this.apply(this.input?.value ?? ''));
+    this.input.addEventListener('input', () => this.apply());
+  }
+
+  /** Select a category facet and re-apply. The "all" selection matches every
+   * row regardless of its data-category. */
+  private setCategory(id: string): void {
+    this.category = id;
+    for (const button of this.categoryButtons) {
+      const selected = button.getAttribute('data-category-filter') === id;
+      button.setAttribute('aria-pressed', String(selected));
+    }
+    this.apply();
   }
 
   /**
-   * The ONE state mutation: hidden on every non-matching card, on every
-   * section whose cards all hid, and on the no-results row whenever anything
-   * matches. An empty query is the clear path — everything comes back.
+   * The ONE state mutation: hidden on every non-matching row, on every
+   * section whose rows all hid, and on the no-results row whenever anything
+   * matches. An empty query + "all" category is the clear path — everything
+   * comes back. Empty detection counts matching ROWS, never sections.
    */
-  private apply(raw: string): void {
-    if (!this.input) return;
-    const query = raw.trim().toLowerCase();
-    if (query === '') {
-      for (const item of this.items) item.root.hidden = false;
-      for (const section of this.sections()) section.hidden = false;
-      if (this.noResults) this.noResults.hidden = true;
-      return;
-    }
-    const visible = new Set<HTMLElement>();
+  private apply(): void {
+    const query = (this.input?.value ?? '').trim().toLowerCase();
+    let matchCount = 0;
     for (const item of this.items) {
-      const match = item.text.includes(query);
+      const categoryMatch = this.category === 'all' || item.category === this.category;
+      const textMatch = query === '' || item.text.includes(query);
+      const match = categoryMatch && textMatch;
       item.root.hidden = !match;
-      if (match && item.section) visible.add(item.section);
+      if (match) matchCount += 1;
     }
-    for (const section of this.sections()) section.hidden = !visible.has(section);
-    if (this.noResults) this.noResults.hidden = visible.size > 0;
+    for (const section of this.sections()) {
+      const hasVisible = this.items.some((item) => item.section === section && !item.root.hidden);
+      section.hidden = !hasVisible;
+    }
+    if (this.noResults) this.noResults.hidden = matchCount > 0;
   }
 
-  /** The card sections, in DOM order, deduplicated. */
+  /** The row sections, in DOM order, deduplicated (grid-only; the ledger's
+   * rows carry no section and never appear here). */
   private sections(): HTMLElement[] {
     return [...new Set(this.items.map((item) => item.section).filter(Boolean))] as HTMLElement[];
   }

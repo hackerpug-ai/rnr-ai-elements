@@ -1,0 +1,7 @@
+@@RUN-FLOW flow=FLOW-GEND-07-registry-ledger-controls sprint=sprint-05-orient-search expect=green cmd_sha=a51ac13a11013e42adc731169e29700201c0fde1b2053faf80f2c35e24d815dd head=4e1b2093044ee1d296f7ac5c29c6fdfae56d90e2+dirty at=2026-09-15T17:34:36Z@@
++ pnpm exec playwright test tests/sprint-05-orient-search/registry-ledger-controls.spec.ts --grep FLOW-GEND-07-registry-ledger-controls
+
+Running 12 tests using 1 worker
+············
+  12 passed (27.6s)
+@@GATE-EXIT=0@@

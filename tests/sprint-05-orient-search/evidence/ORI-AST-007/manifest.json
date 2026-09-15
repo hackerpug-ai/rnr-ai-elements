@@ -1,0 +1,134 @@
+{
+  "task_id": "ORI-AST-007",
+  "title": "Filter the registry ledger and copy commands for the selected engine",
+  "status": "completed",
+  "captured_at": "2026-09-15T17:40:00Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-007",
+  "run": {
+    "run_id": "cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "browser": {
+      "engine": "chromium",
+      "projects": ["chromium-desktop", "chromium-mobile", "chromium-nojs"],
+      "clipboard_permissions": ["clipboard-read", "clipboard-write"]
+    },
+    "hashes": {
+      "source_commit": "4e1b2093044ee1d296f7ac5c29c6fdfae56d90e2",
+      "lockfile_sha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+      "test_spec_sha256": "a747fb576878c4e613e8c7666776fd31a436c2090ae417f2fa5a433bdc779ace",
+      "surface_policy_sha256": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+      "coldboot_policy_sha256": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+      "docs_package_json_sha256": "d9d4c4ef3fa468381a7ce47822c7cb797174850d40ff9a5fc44aa141409daa9b"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 63,
+        "note": "real docs build over the 56-item generated dataset; the registry page emits 56 data-filter-text rows (39 component / 11 ui / 6 lib), both labeled engine commands per row, the 4 category facet buttons, and no <a href> wrapper around the engine base URLs."
+      },
+      "typecheck": {
+        "command": "pnpm typecheck",
+        "exit_code": 0,
+        "note": "root tsc --noEmit (tests/**/*.ts included) + registry typecheck both exit 0."
+      },
+      "lint": {
+        "command": "pnpm lint",
+        "exit_code": 0,
+        "note": "0 errors, 0 warnings; 4 pre-existing info-level useTemplate hints (untouched by this task)."
+      },
+      "task_test": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/registry-ledger-controls.spec.ts --grep FLOW-GEND-07-registry-ledger-controls",
+        "exit_code": 0,
+        "result": "12 passed (4 ACs x chromium-desktop/mobile/nojs), 0 failed, 0 skipped",
+        "red": ".tmp/ORI-AST-007/cycle-1/red/run.txt",
+        "green": ".tmp/ORI-AST-007/cycle-1/green/run.txt",
+        "flow_red_proof": "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/proof.red",
+        "flow_run": "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/run.json"
+      },
+      "existing_consumers": {
+        "command": "pnpm exec playwright test tests/sprint-02-shell-hero/dependency-panels.spec.ts tests/sprint-03-family-browse/ledger-filter-island.spec.ts",
+        "exit_code": 0,
+        "result": "12 passed, 3 skipped (the FAM-004 typing tests skip under chromium-nojs, as designed)"
+      }
+    },
+    "scenario_validation": {
+      "command": "python3 /Users/justinrich/Projects/brain/tools/validate-scenario/validate_scenario.py (piped normalized {fixtures, requirements})",
+      "exit_code": 0,
+      "scenario_count": 4,
+      "violations": 0
+    }
+  },
+  "acceptance": {
+    "AC-1": {
+      "test_function": "FLOW-GEND-07-registry-ledger-controls AC-1",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/red/run.txt",
+        "observed": "the pre-implementation ledger exposed 0 category controls (expected 4); the ui/lib Docs links self-anchored and no row carried data-filter-text, so the no-JS row count read 0 (expected 56)."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/green/run.txt",
+        "observed": "category totals read All=56, component=39, ui=11, lib=6 before text filtering; selecting component shows 39 rows; the conversation query narrows to the dataset-derived match set (conversation included, at least one component excluded); clearing restores 39; a no-match query shows 0 rows + 1 empty-result message; clearing restores 56 rows and hides the message; the /components grid still filters conversation, shows 0 cards on no-match, and restores 39 on clear."
+      }
+    },
+    "AC-2": {
+      "test_function": "FLOW-GEND-07-registry-ledger-controls AC-2",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/red/run.txt",
+        "observed": "the pre-implementation ledger exposed 0 engine tabs (expected 2) and carried only a single nativewind command per row."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/green/run.txt",
+        "observed": "selecting component then uniwind keeps 39 rows; the conversation row displays npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json and its CopyButton lands the identical value on the real clipboard; switching to nativewind keeps the matching-row count, displays the nativewind command, and copies it; after selecting uniwind on the authored /components/conversation panel and returning to Registry, root data-engine and rnr-engine both read uniwind and the ledger engine control shows aria-selected=true."
+      }
+    },
+    "AC-3": {
+      "test_function": "FLOW-GEND-07-registry-ledger-controls AC-3",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/red/run.txt",
+        "observed": "the item Docs link read null (no data-docs-link; the ui/lib rows self-anchored at #row-item instead of /components/item)."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/green/run.txt",
+        "observed": "conversation, item and stack-trace-parser Docs links each point at /components/{name} and return HTTP 200; each destination renders its exact dataset title and description and carries both complete absolute install commands."
+      }
+    },
+    "AC-4": {
+      "test_function": "FLOW-GEND-07-registry-ledger-controls AC-4",
+      "status": "green",
+      "red": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/red/run.txt",
+        "observed": "the pre-implementation no-JS table exposed 0 data-filter-text rows (expected 56) and no per-row engine command blocks."
+      },
+      "green": {
+        "captured_at": ".tmp/ORI-AST-007/cycle-1/green/run.txt",
+        "observed": "with JavaScript disabled the table exposes exactly 56 rows, every row carrying both labeled nativewind and uniwind command blocks (0 rows omitting either); conversation renders both complete commands readably; the un-upgraded ledger-filter stays off-screen (not visible, input disabled — 0 inert controls exposed); conversation, item and stack-trace-parser Docs links reach HTTP 200 destinations."
+      }
+    }
+  },
+  "files_changed": [
+    "apps/docs/src/components/DataTable.astro",
+    "apps/docs/src/components/LedgerTable.astro",
+    "apps/docs/src/pages/registry.astro",
+    "apps/docs/src/components/islands/LedgerFilter.astro",
+    "apps/docs/src/scripts/ledger-filter.ts",
+    "tests/sprint-05-orient-search/registry-ledger-controls.spec.ts",
+    "tests/sprint-05-orient-search/evidence/ORI-AST-007/manifest.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/run.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/run.red",
+    "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/proof.red"
+  ],
+  "design_notes": {
+    "rich_cell_composition": "DataTable gained an additive default-slot rich-body form: when callers pass Astro markup as the default slot, it renders inside the shared <tbody> in place of the text/mono rows. The cell/row chrome (padding, border, zebra, sticky pin) is :global scoped to the `.data-table` class namespace so slotted rows — authored in LedgerTable and carrying LedgerTable's scope hash, never DataTable's — still inherit the one shared table implementation. Existing text/mono callers (DependencyPanel, PropsTable) are untouched.",
+    "engine_visibility_contract": "LedgerTable renders BOTH labeled engine commands per row; the root `data-engine` attribute (ORI-AST-002's shared contract, written pre-paint and on every engine-tab activation) drives which block is on screen via two :global(html[data-engine=...]) CSS rules. With JavaScript disabled the attribute is never written, so both commands stay visible — the no-JS ledger is exactly 56 rows, never duplicated per engine. No new engine state, no fork.",
+    "row_based_empty_detection": "ledger-filter.ts now counts matching ROWS (not containing sections) for the no-results row; section hiding is a separate, optional concern that only the /components grid triggers (its cards carry a closest('section'); the ledger's <tr> do not). Category facets + text filter combine as independent narrowing terms.",
+    "bare_base_url_repair": "the bulk-add section dropped the <a href> wrapper around the engine base URLs (now plain <code> + CopyButton): a bare engine base URL has no resolvable destination (public/r is a directory of item JSON, not an index page), so the link-checker (ORI-AST-006) correctly rejected the emitted 404 target."
+  },
+  "blockers": []
+}
