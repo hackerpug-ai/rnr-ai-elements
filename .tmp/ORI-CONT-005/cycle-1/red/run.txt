@@ -1,0 +1,268 @@
+
+Running 12 tests using 1 worker
+
+[1/12] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1
+  1) [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1 
+
+    Error: /docs/owns-vs-does-not-own must return HTTP 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      89 | test('ORI-CONT-005-AC-1', async ({ page }, testInfo) => {
+      90 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 91 |   expect(response?.status(), `${BOUNDARY_ROUTE} must return HTTP 200`).toBe(200);
+         |                                                                        ^
+      92 |   await pageLoad(page, testInfo);
+      93 |
+      94 |   const main = page.locator('main');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:91:72
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-1-chromium-desktop/error-context.md
+
+
+[2/12] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2
+  2) [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      149 |   // Browser leg: the built boundary route explains the choice in prose.
+      150 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 151 |   expect(response?.status()).toBe(200);
+          |                              ^
+      152 |   await pageLoad(page, testInfo);
+      153 |   const main = page.locator('main');
+      154 |   const body = (await main.innerText()).replace(/\s+/g, ' ');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:151:30
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-2-chromium-desktop/error-context.md
+
+
+[3/12] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3
+  3) [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      194 | test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
+      195 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 196 |   expect(response?.status()).toBe(200);
+          |                              ^
+      197 |   await pageLoad(page, testInfo);
+      198 |   const main = page.locator('main');
+      199 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:196:30
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-3-chromium-desktop/error-context.md
+
+
+[4/12] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4
+  4) [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4 
+
+    Error: apps/docs/src/content/system/not-found.md must exist as a real file
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      267 |   // this Node worker — never a substituted fixture string.
+      268 |   const recoveryPath = repoFile(RECOVERY_SOURCE);
+    > 269 |   expect(existsSync(recoveryPath), `${RECOVERY_SOURCE} must exist as a real file`).toBe(true);
+          |                                                                                    ^
+      270 |
+      271 |   // It lives OUTSIDE the docs collection: no path under src/content/docs, and
+      272 |   // no collection copy that would double-publish it.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:269:84
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-4-chromium-desktop/error-context.md
+
+
+[5/12] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1
+  5) [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1 
+
+    Error: /docs/owns-vs-does-not-own must return HTTP 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      89 | test('ORI-CONT-005-AC-1', async ({ page }, testInfo) => {
+      90 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 91 |   expect(response?.status(), `${BOUNDARY_ROUTE} must return HTTP 200`).toBe(200);
+         |                                                                        ^
+      92 |   await pageLoad(page, testInfo);
+      93 |
+      94 |   const main = page.locator('main');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:91:72
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-1-chromium-mobile/error-context.md
+
+
+[6/12] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2
+  6) [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      149 |   // Browser leg: the built boundary route explains the choice in prose.
+      150 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 151 |   expect(response?.status()).toBe(200);
+          |                              ^
+      152 |   await pageLoad(page, testInfo);
+      153 |   const main = page.locator('main');
+      154 |   const body = (await main.innerText()).replace(/\s+/g, ' ');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:151:30
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-2-chromium-mobile/error-context.md
+
+
+[7/12] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3
+  7) [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      194 | test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
+      195 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 196 |   expect(response?.status()).toBe(200);
+          |                              ^
+      197 |   await pageLoad(page, testInfo);
+      198 |   const main = page.locator('main');
+      199 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:196:30
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-3-chromium-mobile/error-context.md
+
+
+[8/12] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4
+  8) [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4 
+
+    Error: apps/docs/src/content/system/not-found.md must exist as a real file
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      267 |   // this Node worker — never a substituted fixture string.
+      268 |   const recoveryPath = repoFile(RECOVERY_SOURCE);
+    > 269 |   expect(existsSync(recoveryPath), `${RECOVERY_SOURCE} must exist as a real file`).toBe(true);
+          |                                                                                    ^
+      270 |
+      271 |   // It lives OUTSIDE the docs collection: no path under src/content/docs, and
+      272 |   // no collection copy that would double-publish it.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:269:84
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-4-chromium-mobile/error-context.md
+
+
+[9/12] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1
+  9) [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1 
+
+    Error: /docs/owns-vs-does-not-own must return HTTP 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      89 | test('ORI-CONT-005-AC-1', async ({ page }, testInfo) => {
+      90 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 91 |   expect(response?.status(), `${BOUNDARY_ROUTE} must return HTTP 200`).toBe(200);
+         |                                                                        ^
+      92 |   await pageLoad(page, testInfo);
+      93 |
+      94 |   const main = page.locator('main');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:91:72
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-1-chromium-nojs/error-context.md
+
+
+[10/12] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2
+  10) [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      149 |   // Browser leg: the built boundary route explains the choice in prose.
+      150 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 151 |   expect(response?.status()).toBe(200);
+          |                              ^
+      152 |   await pageLoad(page, testInfo);
+      153 |   const main = page.locator('main');
+      154 |   const body = (await main.innerText()).replace(/\s+/g, ' ');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:151:30
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-2-chromium-nojs/error-context.md
+
+
+[11/12] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3
+  11) [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      194 | test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
+      195 |   const response = await navigateLocalhost(page, BOUNDARY_ROUTE);
+    > 196 |   expect(response?.status()).toBe(200);
+          |                              ^
+      197 |   await pageLoad(page, testInfo);
+      198 |   const main = page.locator('main');
+      199 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:196:30
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-3-chromium-nojs/error-context.md
+
+
+[12/12] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4
+  12) [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4 
+
+    Error: apps/docs/src/content/system/not-found.md must exist as a real file
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      267 |   // this Node worker — never a substituted fixture string.
+      268 |   const recoveryPath = repoFile(RECOVERY_SOURCE);
+    > 269 |   expect(existsSync(recoveryPath), `${RECOVERY_SOURCE} must exist as a real file`).toBe(true);
+          |                                                                                    ^
+      270 |
+      271 |   // It lives OUTSIDE the docs collection: no path under src/content/docs, and
+      272 |   // no collection copy that would double-publish it.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005/tests/sprint-05-orient-search/boundary-content.spec.ts:269:84
+
+    Error Context: test-results/sprint-05-orient-search-boundary-content-ORI-CONT-005-AC-4-chromium-nojs/error-context.md
+
+
+  12 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1 
+    [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2 
+    [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3 
+    [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4 
+    [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1 
+    [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2 
+    [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3 
+    [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4 
+    [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:89:1 › ORI-CONT-005-AC-1 
+    [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:121:1 › ORI-CONT-005-AC-2 
+    [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:194:1 › ORI-CONT-005-AC-3 
+    [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:265:1 › ORI-CONT-005-AC-4 
