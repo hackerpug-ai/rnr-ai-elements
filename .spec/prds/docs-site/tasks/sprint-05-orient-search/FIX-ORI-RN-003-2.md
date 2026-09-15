@@ -1,6 +1,6 @@
 <!-- Version: TASK-TEMPLATE v5.2 · sprint-05-orient-search · orchestrator-authored follow-up 2026-09-15 -->
 
-# FIX-ORI-RN-003-2: replace input-group opacity-shorthand classes that race nativewind's css-interop and break navigation context
+# FIX-ORI-RN-003-2: remove ring-* utilities from InputGroup's focused conditional className (nativewind css-interop navigation race)
 
 > Status: Backlog
 
@@ -14,27 +14,31 @@
 
 ## What this does
 
-Removes the two opacity-shorthand utility classes from `InputGroup`'s wrapper and replaces them
-with an engine-safe equivalent that renders identically under both NativeWind and Uniwind on
-iOS/Android/Web:
+Removes the `ring-*` utility family from `InputGroup`'s focused conditional `className` and expresses
+the focus ring through a hoisted plain-RN `style` object instead. The trigger is NOT the opacity
+shorthand — a real on-device bisection (nativewind iOS 26.3, Expo Go, Maestro 2.5.1; see probe matrix in
+"Why") proved the `ring-*` width utility alone reproduces the crash while every opacity-shorthand class
+is clean:
 
-- `packages/registry/src/components/ui/input-group.tsx:34` → `'dark:bg-input/30'`
 - `packages/registry/src/components/ui/input-group.tsx:35` → `focused && 'border-ring ring-2 ring-ring/50'`
+  is the offending line: `ring-2` (the `ring-*` width utility on the conditional `className`) is the
+  trigger; `border-ring` and `ring-ring/50` are NOT.
 
-The `bg-input/30` (background-color/opacity shorthand) and `ring-ring/50` (ring-color/opacity
-shorthand) are the class family that NativeWind v4's css-interop parses at render time, which races
-Expo Router's NavigationContainer initialization (nativewind/nativewind#1536). On a re-render — when
-the composer gains focus and the `focused && …` branch first attaches `ring-ring/50` — css-interop
-throws `Couldn't find a navigation context`, the `PromptInputSubmit` button disappears from the tree,
-and "Tap on Send message" fails. Uniwind renders the identical source without the error (its engine has
-no css-interop jsx-runtime), so the defect is nativewind-specific and lives in this one registry source.
+The fix changes line 35 to drop `ring-2 ring-ring/50` and express the 2px ring as a hoisted
+`focusedStyle = { borderWidth: 2, borderColor: <ring at 0.5 alpha> }` (comma-form `hsla(...)`, driven by
+`useColorScheme()`). `border-ring` (border color = the `ring` token, full opacity) is proven clean and may
+stay on the conditional `className` — it is overridden by `focusedStyle.borderColor` at render, so it is
+cosmetic and harmless. `dark:bg-input/30` (line 34) is proven clean and may stay as a class (the minimal
+change leaves it untouched). On re-render when the composer gains focus, css-interop throws
+`Couldn't find a navigation context` only when a `ring-*` utility is present in the conditional
+`className`; the `PromptInputSubmit` button disappears from the tree and "Tap on Send message" fails.
+Uniwind renders the identical source without the error (its engine has no css-interop jsx-runtime), so
+the defect is nativewind-specific and lives in this one registry source.
 
-The fix preserves the *visual* (a translucent dark input background at 30% and a 50%-opacity focus
-ring) while expressing it through a channel neither engine's css layer re-parses at runtime: a plain
-RN `style` object driven by `useColorScheme()` (the same engine-safe idiom already in this file for the
-placeholder color at line 65), or a named theme token with the opacity baked in. The layout/geometry
-classes (`border`, `border-input`, `border-ring`, `ring-2`, `bg-background`, `rounded-md`, `gap-2`,
-`px-3`) are NOT opacity shorthand and stay in `className` unchanged.
+The fix preserves the *intent* — a visible focused ring — but NOT byte-identical rendering: `ring-2` is
+an outer box-shadow ring, whereas `borderWidth: 2` is a 2px in-box border. The focused state must be
+device-verified to show a visible 2px ring-colored border; this is the accepted engine-safe
+approximation, stated here rather than claimed as byte-identical.
 
 ## Why
 
@@ -45,10 +49,31 @@ ORI-RN-003's cycle-2 real-device run (post FIX-ORI-RN-003-1 / 54ac507) recorded:
   `input-group.tsx` (`<View>` at line 31) on re-render when the composer gains focus; the send button
   vanishes, so `Tap on Send message` fails.
 
-The class pattern at lines 34–35 is the trigger, and the same file is the only registry component that
-uses `ring-ring/` or `bg-input/`. `packages/**` is writeProhibited for ORI-RN-003, so this is a
-registry-owner FIX. FIX-ORI-RN-003-1 already resolved the bundle failure (css-interop not resolvable);
-this FIX resolves the *runtime* failure that the now-successful bundle exposed.
+The class pattern at line 35 is the trigger, and the same file is the only registry component that uses
+`ring-*` (grep: `ring-` appears only in `input-group.tsx`). `packages/**` is writeProhibited for
+ORI-RN-003, so this is a registry-owner FIX. FIX-ORI-RN-003-1 already resolved the bundle failure
+(css-interop not resolvable); this FIX resolves the *runtime* failure that the now-successful bundle
+exposed.
+
+**The trigger was isolated by a real on-device probe bisection** (implementer branch
+`kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-2-impl`, commit `2ce0997`; probes under
+`.tmp/FIX-ORI-RN-003-2/probe-*.tsx` + their `metro.log`). Every probe moved `dark:bg-input/30` →
+`wrapperStyle = { backgroundColor: 'hsla(0, 0%, 14.9%, 0.3)' }` and the ring →
+`focusedStyle = { borderColor: <ring at 0.5>, borderWidth: 2 }`, differing ONLY in the conditional
+`className` term (nativewind iOS 26.3, Expo Go, Maestro 2.5.1):
+
+| conditional `className` term | result |
+|---|---|
+| `focused && 'ring-2'` | **FAIL** — `Couldn't find a navigation context` at the `<View>` |
+| `focused && 'border-ring'` | PASS |
+| `focused && 'bg-primary'` | PASS |
+| (no conditional — ring fully in `style`) | PASS |
+| `dark:bg-input/30` in dark mode, no ring utilities | PASS |
+
+`ring-2` (the `ring-*` width utility) alone reproduces the crash; the opacity shorthands
+(`bg-input/30`, `ring-ring/50`) do NOT. The prior cycles' "opacity-shorthand" diagnosis was therefore
+wrong — this charter's original CRITICAL CONSTRAINT that "`ring-2` stays byte-identical" forbade the only
+fix that works.
 
 ## How to verify
 
@@ -98,26 +123,30 @@ the authoritative replay is ORI-RN-003's own harness
   - .tmp/FIX-ORI-RN-003-2/** (owned scratch)
 
 - writeProhibited (explicit):
-  - packages/registry/src/components/** EXCEPT input-group.tsx (this FIX owns one component, not the registry-wide opacity-shorthand audit — see OPEN QUESTION)
+  - packages/registry/src/components/** EXCEPT input-group.tsx (this FIX owns one component; `ring-*` is unique to input-group.tsx, so no wider registry audit is needed)
   - packages/registry/src/global.css, apps/**/global.css, apps/**/tailwind.config.js, lib/theme.ts, packages/registry/registry.json (the per-engine `registry.json` index carries only name/type/title and is unaffected by a content change)
   - packages/docs-snippets/** (the consumer templates — owned by ORI-RN-001 / FIX-ORI-RN-003-1)
   - .spec/**, .github/**, playwright.config.ts
 
 ### 🚫 CRITICAL CONSTRAINTS (Never tier — read before acting)
 
-- The ONLY semantic change is to the two opacity-shorthand classes at lines 34–35 of
-  `packages/registry/src/components/ui/input-group.tsx`. Every other class on the wrapper
-  (`flex-row items-center gap-2 rounded-md border border-input bg-background px-3`, `border-ring`,
-  `ring-2`), every sub-component (`InputGroupInput`, `InputGroupAddon`, `InputGroupActions`,
+- The ONLY semantic change is to the focused conditional `className` term at line 35 of
+  `packages/registry/src/components/ui/input-group.tsx`: REMOVE `ring-2` and `ring-ring/50` (the
+  `ring-*` utility family — the proven crash trigger), and express the 2px ring through a hoisted
+  `focusedStyle = { borderWidth: 2, borderColor: <ring at 0.5 alpha> }`. `border-ring` on that same
+  conditional term is PROVEN CLEAN and may stay (it is overridden by `focusedStyle.borderColor`, so it
+  is cosmetic). Every other class on the wrapper (`flex-row items-center gap-2 rounded-md border
+  border-input bg-background px-3`), the `dark:bg-input/30` class (line 34, PROVEN CLEAN — leave it as
+  a class), every sub-component (`InputGroupInput`, `InputGroupAddon`, `InputGroupActions`,
   `InputGroupText`), every import, and every line of logic stays byte-identical.
-- The replacement MUST render identically under BOTH engines on iOS/Android/Web. Do NOT silently
-  change the visual (e.g. dropping the `/50` to a full-opacity ring or the `/30` to a full-opacity
-  background is a visual regression). The 30% dark-input background and 50% ring opacity are the
-  pinned appearance.
+- The focused state is an APPROXIMATION, not byte-identical: `ring-2` is an outer box-shadow ring, while
+  `borderWidth: 2` is a 2px in-box border. The focused state must be device-verified to show a VISIBLE
+  2px ring-colored border (50% alpha). Do NOT reintroduce any `ring-*` utility on the conditional
+  `className` — that is the crash, not a cosmetic choice.
 - The replacement MUST stay engine-agnostic: no `uniwind` import, no `nativewind` import, no
   `cssInterop`/`withUniwind` call, no engine-only prop (the `placeholderTextColor` comment at line 55
   documents why engine-only props are banned here). Use the plain RN `style` prop + `useColorScheme()`
-  (the file's own precedent at line 65) or a named theme token — NOT an engine wrapper.
+  (the file's own precedent at line 65) — NOT an engine wrapper.
 - The replacement literal MUST be `hsl(...)` / `hsla(...)` form ONLY, in the COMMA alpha form
   (`hsla(0, 0%, 14.9%, 0.3)`, `hsla(300, 0%, 45%, 0.5)`) or the no-alpha space form
   (`hsl(0 0% 63.9%)`, matching line 65). FORBIDDEN: the CSS Color 4 slash-alpha form
@@ -154,9 +183,10 @@ the authoritative replay is ORI-RN-003's own harness
 
 ### DONE WHEN
 
-- AC-1: the two opacity-shorthand classes at `input-group.tsx:34-35` are replaced with an engine-safe
-  equivalent; `git diff` shows no other semantic change to the component; `pnpm typecheck` + `pnpm lint`
-  clean.
+- AC-1: `ring-2` and `ring-ring/50` are removed from the focused conditional `className` at
+  `input-group.tsx:35` and the 2px ring is expressed via a hoisted `focusedStyle`; `git diff` shows no
+  other semantic change to the component; `pnpm typecheck` + `pnpm lint` + `pnpm check:tokens` +
+  `pnpm check:contract` clean.
 - AC-2: `pnpm registry:build` regenerates `public/r/{nativewind,uniwind}/input-group.json` and
   `pnpm check:registry` exits 0; the three harness/example copies are byte-identical to the registry
   source after the alias rewrite.
@@ -167,15 +197,15 @@ the authoritative replay is ORI-RN-003's own harness
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
-**AC-1: the two opacity-shorthand classes are removed and replaced engine-safe, with no other change**
+**AC-1: the `ring-*` utility family is removed from the conditional className and the ring is a hoisted style**
 
-  GIVEN `packages/registry/src/components/ui/input-group.tsx` (lines 34–35 carrying
-  `'dark:bg-input/30'` and `focused && 'border-ring ring-2 ring-ring/50'`) WHEN those two classes are
-  replaced with a hoisted `style`-driven equivalent (a `const` object / ternary passed as
-  `style={wrapperStyle}`, computed from `useColorScheme()` + `focused`, using `hsl(...)` literals only)
-  — or a named theme token — preserving the 30% dark-input background and 50% ring opacity THEN
-  `git diff packages/registry/src/components/ui/input-group.tsx` shows only that change, the wrapper no
-  longer contains any `*-color/opacity` shorthand, and `pnpm typecheck` + `pnpm lint` +
+  GIVEN `packages/registry/src/components/ui/input-group.tsx` (line 35 carrying
+  `focused && 'border-ring ring-2 ring-ring/50'`) WHEN `ring-2` and `ring-ring/50` are removed from that
+  conditional term and the 2px ring is expressed as a hoisted `focusedStyle = { borderWidth: 2,
+  borderColor: <ring at 0.5 alpha> }` (comma-form `hsla(...)`, computed from `useColorScheme()` +
+  `focused`, `border-ring` retained as a clean cosmetic term) THEN `git diff
+  packages/registry/src/components/ui/input-group.tsx` shows only that change, the conditional
+  `className` no longer contains any `ring-*` utility, and `pnpm typecheck` + `pnpm lint` +
   `pnpm check:tokens` + `pnpm check:contract` all exit 0.
 
   FLOW_REF: None · TEST_TIER: integration · verification_service: real `git diff` + tsc + biome + token gate + contract gate
@@ -205,13 +235,14 @@ the authoritative replay is ORI-RN-003's own harness
   web still render the composer identically (no regression). RED before the fix: the same nativewind
   native replay throws `Couldn't find a navigation context` and the send button is absent.
 
-  EVIDENCE — the pinned 30% dark-input background and 50% ring opacity are NOT assertable by the
-  scripted gates (the gates catch the literal FORM — `check:tokens` — and the inline-style FORM —
-  `check:contract` — but not whether the color actually renders at the right alpha). Capture a dark-mode
-  on-device screenshot of the FOCUSED composer on nativewind iOS AND Android (the focus ring visible at
-  50% and the input background translucent at 30%), plus one light-mode focused screenshot each, under
-  `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`. The 30%/50% appearance is confirmed ONLY
-  by this on-device visual sign-off, never by the scripted gates.
+  EVIDENCE — the accepted approximation (a visible 2px ring-colored border at 50% alpha in place of the
+  outer box-shadow `ring-2`) is NOT assertable by the scripted gates (they catch the literal FORM —
+  `check:tokens` — and the inline-style FORM — `check:contract` — but not whether the border actually
+  renders). Capture a dark-mode on-device screenshot of the FOCUSED composer on nativewind iOS AND
+  Android, plus one light-mode focused screenshot each, under
+  `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`. The focused ring appearance is confirmed
+  ONLY by this on-device visual sign-off, never by the scripted gates. NOTE: the implementer's probe
+  bisection covered iOS only — the GREEN must run nativewind Android (light+dark) too.
 
   FLOW_REF: None · TEST_TIER: e2e · verification_service: real Expo Go (iOS + Android) via the harness sign-off and/or ORI-RN-003's on-branch proof harness
   VERIFY: `pnpm --filter harness storybook:device` + `pnpm --filter harness-nativewind storybook:device` + `pnpm storybook:web` (uniwind web) + `pnpm --filter harness storybook:web:nativewind` (nativewind web); the authoritative 6-leg proof is `tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind --platforms ios,android,web` (ORI-RN-003's branch), re-run by ORI-RN-003 after this FIX's `public/r` is deployed
@@ -219,23 +250,25 @@ the authoritative replay is ORI-RN-003's own harness
 
 ### TEST CRITERIA
 
-- TC-1 → AC-1: `git diff packages/registry/src/components/ui/input-group.tsx` touches only lines 34–35
-  (plus any adjacent hoisted `style`/`useColorScheme` wiring the replacement requires); no `bg-input/`, no
-  `ring-ring/` remain; no other component file changes.
+- TC-1 → AC-1: `git diff packages/registry/src/components/ui/input-group.tsx` touches only line 35
+  (plus any adjacent hoisted `focusedStyle`/`useColorScheme` wiring the replacement requires); no
+  `ring-*` utility remains on the conditional `className` (the `ring-2`/`ring-ring/50` are gone);
+  `dark:bg-input/30` (line 34) is unchanged; no other component file changes.
 - TC-2 → AC-1: `pnpm typecheck` exits 0; `pnpm lint` (biome) exits 0; `pnpm check:tokens` exits 0 (the
-  replacement literal is `hsl(...)` only, no hex/rgb/oklch even in comments); `pnpm check:contract`
-  exits 0 (the replacement is a hoisted object/ternary, not an inline `style={{ … color }}`, and the
-  `input-group-placeholder-parity` line 65 is untouched).
+  replacement literal is `hsl(...)`/`hsla(...)` only, no hex/rgb/oklch even in comments); `pnpm
+  check:contract` exits 0 (the replacement is a hoisted object/ternary, not an inline `style={{ … color
+  }}`, and the `input-group-placeholder-parity` line 65 is untouched).
 - TC-3 → AC-2: `pnpm registry:build && pnpm check:registry` exits 0; the two `input-group.json` differ
   from HEAD only in the embedded `content` of the `input-group.tsx` file (no manifest metadata drift).
 - TC-4 → AC-2: each of the three harness/example copies equals `sed 's|@/registry/{engine}/|@/|g'` of the
   source (byte-identical); `git diff --name-only` lists only the allowed paths.
 - TC-5 → AC-3: the nativewind native replay shows the composer + tappable `Send message` in light and
-  dark on iOS and Android with no navigation-context error; the uniwind + web replays are unchanged.
-  A dark-mode FOCUSED-composer screenshot on nativewind iOS and Android (and a light-mode one each) is
-  saved, showing the 50% focus ring and 30% translucent dark background — the only proof of the pinned
-  appearance, since the gates assert form, not rendered alpha. RED (pre-fix) and GREEN (post-fix)
-  evidence saved under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`.
+  dark on iOS AND Android with no navigation-context error (the implementer's probes covered iOS only —
+  Android must be run); the uniwind + web replays are unchanged. A dark-mode FOCUSED-composer screenshot
+  on nativewind iOS and Android (and a light-mode one each) is saved, showing the visible 2px
+  ring-colored border (50% alpha) — the only proof of the accepted approximation, since the gates assert
+  form, not rendered border. RED (pre-fix) and GREEN (post-fix) evidence saved under
+  `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-003-2/`.
 
 ### SCOPE (file-level write permissions)
 
@@ -265,11 +298,11 @@ the authoritative replay is ORI-RN-003's own harness
 
 ### READING LIST (max 5)
 
-- packages/registry/src/components/ui/input-group.tsx (the defect at lines 34–35 + the engine-safe `useColorScheme()` + literal precedent at line 65)
+- packages/registry/src/components/ui/input-group.tsx (the defect at line 35 + the engine-safe `useColorScheme()` + literal precedent at line 65)
 - packages/registry/scripts/build-registry.ts (the fan-out: one source → `public/r/{engine}/*.json` by alias rewrite)
-- packages/registry/src/components/ui/sheet.tsx:81 and item.tsx:22 (the wider `bg-*/NN` opacity-shorthand usage — out of scope here, but the systemic context)
-- apps/harness-nativewind/global.css + apps/harness/src/global.css (the `--ring` / `--input` tokens the fix must match at 50% / 30% opacity)
+- apps/harness-nativewind/global.css + apps/harness/src/global.css (the `--ring` token the fix must match at 50% opacity)
 - nativewind/nativewind#1536 (the upstream css-interop race condition this FIX works around)
+- the implementer's probe evidence on `kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-2-impl` (`2ce0997`): `.tmp/FIX-ORI-RN-003-2/probe-{a,b,c,d,e}-*.tsx` + their `metro.log` — the bisection that isolated `ring-2` as the trigger
 
 > Note: ORI-RN-003's proof evidence lives on `kb-run-sprint/sprint-05-orient-search/ORI-RN-003`
 > (`.tmp/ORI-RN-003/cycle-2/`), not this trunk; the RED is reproduced from the disposable-consumer
@@ -277,40 +310,39 @@ the authoritative replay is ORI-RN-003's own harness
 
 ### CODING STANDARDS
 
-Keep the existing `cn(...)` composition and `useColorScheme()` idiom already in the file. Compute the
-wrapper style OUTSIDE the JSX as a hoisted object/ternary — for example, with `const scheme =
-useColorScheme()`:
+Keep the existing `cn(...)` composition and `useColorScheme()` idiom already in the file. The minimal
+change leaves `dark:bg-input/30` (line 34) as a class and keeps `border-ring` (clean) on the conditional
+term, removing only `ring-2 ring-ring/50` and hoisting the ring into a style object — for example, with
+`const scheme = useColorScheme()`:
 ```
-const wrapperStyle =
-  scheme === 'dark' ? { backgroundColor: 'hsla(0, 0%, 14.9%, 0.3)' } : undefined;
 const focusedStyle = focused
   ? { borderColor: scheme === 'dark' ? 'hsla(300, 0%, 45%, 0.5)' : 'hsla(0, 0%, 63%, 0.5)', borderWidth: 2 }
   : undefined;
+// className: 'flex-row items-center gap-2 rounded-md border border-input bg-background px-3',
+//            'dark:bg-input/30',          ← stays a class (proven clean)
+//            focused && 'border-ring',    ← ring-2 / ring-ring/50 REMOVED; border-ring stays
+// then style={focusedStyle}
 ```
-(comma-form `hsla(...)`, which RN 0.86.3 parses; `--color-ring` light = `0 0% 63%`, dark = `300 0% 45%`,
-`--color-input` dark = `0 0% 14.9%`) then `style={[wrapperStyle, focusedStyle]}` — never an inline
-`style={{ backgroundColor: … }}`, which trips the styling contract's `inline-static-style-literal` rule.
-Express every raw color as comma-form `hsla(...)` or no-alpha `hsl(...)` (the sole forms `check:tokens`
-permits AND RN 0.86.3 parses); do NOT write the CSS Color 4 slash-alpha form `hsl(… / …)` (RN drops it),
-and do NOT write `#hex`, `rgb(...)`, `rgba(...)` or `oklch(...)` — not even in a comment (the token gate
-scans comments). The literals are the `--color-input` / `--color-ring` token values at 30% / 50% opacity
-and change together with the theme; state that in a comment that itself uses only `hsl(...)` / the two
+(comma-form `hsla(...)`, which RN 0.86.3 parses; `--color-ring` light = `0 0% 63%`, dark = `300 0% 45%`)
+— never an inline `style={{ borderColor: … }}`, which trips the styling contract's
+`inline-static-style-literal` rule, and never a `ring-*` utility on the conditional `className` (that is
+the crash). Express every raw color as comma-form `hsla(...)` or no-alpha `hsl(...)` (the sole forms
+`check:tokens` permits AND RN 0.86.3 parses); do NOT write the CSS Color 4 slash-alpha form `hsl(… / …)`
+(RN drops it), and do NOT write `#hex`, `rgb(...)`, `rgba(...)` or `oklch(...)` — not even in a comment
+(the token gate scans comments). The ring literal is the `--color-ring` token value at 50% opacity and
+changes together with the theme; state that in a comment that itself uses only `hsl(...)` / the two
 sanctioned hex values. Do not introduce a new dependency, a new hook file, or an engine wrapper, and
 leave the `placeholderTextColor` line 65 byte-exact.
 
 ## OPEN QUESTIONS (stated, not resolved here)
 
-- **Systemic opacity-shorthand usage**: `sheet.tsx` (`bg-black/50`, `bg-muted-foreground/40`),
-  `item.tsx` (`bg-muted/50`), `slider.tsx` (`bg-primary/20`), `code-block.tsx`, `sources.tsx`,
-  `tool.tsx`, `stack-trace.tsx`, `schema-display.tsx`, `inline-citation.tsx` all use `bg-*/NN` or
-  `text-*/NN` shorthand. The quickstart screen exercises only `input-group.tsx`, so only that file is
-  OBSERVED to fail on nativewind native. A registry-wide audit of opacity-shorthand classes is a
-  separate follow-up, NOT this FIX — but if the reviewer confirms other components also break on
-  nativewind native, that becomes a sibling FIX.
-- **Upstream race mechanism**: the precise reason css-interop's render-time parse races
-  NavigationContainer is an upstream nativewind bug, not explainable from this repo. The RED is scoped
-  to the OBSERVED runtime failure + class pattern; the causal mechanism is cited from
-  nativewind/nativewind#1536, not re-derived here.
+- **Upstream race mechanism**: the precise reason css-interop's render-time handling of the `ring-*`
+  utility family races NavigationContainer is an upstream nativewind bug, not explainable from this repo.
+  The trigger (`ring-2` on the conditional `className`) is OBSERVED by the probe bisection; the causal
+  mechanism is cited from nativewind/nativewind#1536, not re-derived here.
+- **`ring-*` uniqueness**: `ring-*` appears only in `input-group.tsx` (grep across `packages/registry/src`),
+  so no sibling FIX is needed for the ring family. (The earlier "systemic opacity-shorthand" concern is
+  DISPROVEN — opacity shorthands are clean; see the probe matrix in "Why".)
 
 ## Amendments
 
@@ -347,3 +379,24 @@ leave the `placeholderTextColor` line 65 byte-exact.
     not change where `input-group` is fetched. Dropped the localhost mechanism: the RED/GREEN replay now
     overwrites the consumer's `components/ui/input-group.tsx` with the pre-fix / fixed source respectively.
   - The verified defect location, diagnosis, scoping, and the DOC-1..DOC-4 fixes are otherwise unchanged.
+
+- Cycle-4 remediation (implementer's real-device probe bisection disproved the diagnosis):
+  - Corrected the diagnosis across What this does / Why / CRITICAL CONSTRAINTS / AC-1 / AC-3 / TEST
+    CRITERIA / CODING STANDARDS / OPEN QUESTIONS. The trigger is the `ring-*` utility family on the
+    conditional `className` (`ring-2` width alone reproduces `Couldn't find a navigation context`), NOT
+    the opacity shorthands (`bg-input/30`, `ring-ring/50`) — which are proven clean. Evidence:
+    implementer branch `kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-2-impl` (`2ce0997`), probes
+    `.tmp/FIX-ORI-RN-003-2/probe-{a,b,c,d,e}-*.tsx` + `metro.log`: `ring-2` → FAIL; `border-ring`,
+    `bg-primary`, no-conditional, and `dark:bg-input/30`-in-dark → PASS.
+  - Relaxed the offending CRITICAL CONSTRAINT ("`ring-2` stays byte-identical"): the fix MUST remove
+    `ring-2` and `ring-ring/50` from the conditional `className` and express the 2px ring as a hoisted
+    `focusedStyle = { borderWidth: 2, borderColor: <ring at 0.5 alpha> }`; `border-ring` and `bg-primary`
+    are proven clean and may stay; `dark:bg-input/30` is proven clean and stays as a class (minimal change).
+  - Stated the visual consequence honestly: `ring-2` is an outer box-shadow ring; `borderWidth: 2` is a
+    2px in-box border — the accepted engine-safe APPROXIMATION, device-verified to show a visible 2px
+    ring-colored border, not byte-identical rendering.
+  - Updated AC-1 / AC-3 / DONE WHEN / TEST CRITERIA / CODING STANDARDS to the corrected fix; AC-3's GREEN
+    now requires nativewind iOS AND Android (light+dark) — the implementer's probes covered iOS only —
+    plus no uniwind/web regression.
+  - Kept every DOC-1..DOC-7 fix (token/contract gates, comma-form `hsla(...)`, slash-alpha-forbidden,
+    hoisted-style, placeholder parity, storybook:web:nativewind, overwrite-based RED/GREEN pinning).
