@@ -79,17 +79,23 @@
     },
     "AC-4": {
       "test_function": "ORI-AST-001-mdx-code-copy",
-      "status": "green-partial",
+      "status": "green",
       "red": {
-        "captured_at": ".tmp/ORI-AST-001/cycle-1/red/ORI-AST-001-mdx-code-copy.txt",
-        "observed": "clipboard lost the terminal U+000A (the existing .trim() stripped boundary whitespace) — clipboard `...useConversation };` vs displayed `...useConversation };\n`."
+        "captured_at": ".tmp/ORI-AST-001/cycle-2/red/ORI-AST-001-mdx-code-copy.txt",
+        "observed": "cycle-2 mutation RED: with the .trim() re-introduced, `clipboard equals displayed source (terminal newline preserved)` fails — clipboard `...useConversation };` vs displayed `...useConversation };\n`, proving the new served-oracle/multiline/install assertions catch the boundary-whitespace loss."
       },
       "green": {
-        "captured_at": ".tmp/ORI-AST-001/cycle-1/green/ORI-AST-001-mdx-code-copy.txt",
-        "observed": "real clipboard equals the unnormalized displayed conversation source byte-for-byte (SHA-256 identical, terminal U+000A preserved); copy control reaches the copied state by value."
+        "captured_at": ".tmp/ORI-AST-001/cycle-2/green/ORI-AST-001-mdx-code-copy.txt",
+        "observed": "displayed source and clipboard byte-equal the served conversation content (unnormalized, SHA-256 identical, terminal U+000A preserved); a scratch collection-reference MDX entry importing CodeBlock carries leading indentation + terminal newline and its displayed/clipboard byte-equal the source oracle (SHA-256 identical); the ordinary install command copies untrimmed and its control returns from 'copied' to the idle label."
       },
-      "blocked_note": "the authored-MDX themed-code portion of AC-4 requires the actual manuscripts (same ORI-CONT-001/002/003/005 dependency as AC-3)."
+      "blocked_note": "the authored-MDX themed-code rendering portion of AC-4 (per-manuscript Expressive Code theme verification) still requires the actual manuscripts — same ORI-CONT-001/002/003/005 dependency as AC-3."
     }
+  },
+  "cycle_2": {
+    "summary": "remediation for reviewer AC-4 gaps: served-oracle equality (displayed + clipboard vs served content), multiline boundary-whitespace input through the normal CodeBlock copy path, and ordinary install-command idle reset were added to the test. Test-only change; no product code changed (copy-button.ts verified unchanged).",
+    "red": ".tmp/ORI-AST-001/cycle-2/red/",
+    "green": ".tmp/ORI-AST-001/cycle-2/green/",
+    "commits": ["bf40899", "89d4fc5"]
   },
   "expressive_code_theme_mapping": {
     "themes": ["github-dark", "github-light"],
