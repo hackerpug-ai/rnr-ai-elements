@@ -1,39 +1,54 @@
 ---
-import Badge from '../components/Badge.astro';
 import CopyButton from '../components/islands/CopyButton.astro';
 import Layout from '../layouts/DocsLayout.astro';
+import LedgerFilter from '../components/islands/LedgerFilter.astro';
+import LedgerTable from '../components/LedgerTable.astro';
 import items from '../data/registry-items.json';
 
 /**
- * FUSE-06 — the generated /registry ledger. Every row derives from the FUSE-05
- * artifact at build time; there is no hand-editable ledger source under
- * apps/docs src (T-GEND-031), and per-row commands come from the same dataset
- * the component pages use — never a second source.
+ * FUSE-06 + ORI-AST-007 — the generated /registry ledger. Every row derives
+ * from the FUSE-05 artifact at build time; there is no hand-editable ledger
+ * source under apps/docs src (T-GEND-031), and per-row commands come from the
+ * same dataset the component pages use — never a second source.
  *
- * Sprint-01 subset: the full unfiltered table plus both engine base URLs and
- * the generated-at-build note, all zero-JS (the LedgerFilter island — tabs,
- * engine toggle, text filter — lands in Sprint 05 and supersedes this spec).
- *
- * Docs-page links: component rows get /components/{item}; every other row
- * anchors itself in-page (#row-{item.name}), so each link resolves without
- * one page per non-component item.
+ * The table itself composes through LedgerTable (rich cells over the shared
+ * DataTable); the LedgerFilter island supplies the category + engine + text
+ * controls. The engine base URLs are copyable text (no <a href> wrapper): a
+ * bare engine base URL has no resolvable destination on the deployed site
+ * (public/r is a directory of item JSON, not an index page), so wrapping it
+ * in a link would emit a 404 target the link-checker correctly rejects.
  */
 type LedgerItem = {
   name: string;
+  title: string;
+  description: string;
   type: string;
   engines: string[];
   expoGo: boolean;
-  family: string;
 };
 
 const ledger = items as LedgerItem[];
 
 const NATIVEWIND_BASE = 'https://rnraielements.com/r/nativewind';
 const UNIWIND_BASE = 'https://rnraielements.com/r/uniwind';
-const installCommand = (name: string): string =>
-  `npx @react-native-reusables/cli@latest add ${NATIVEWIND_BASE}/${name}.json`;
-const docsHref = (item: LedgerItem): string =>
-  item.type === 'registry:component' ? `/components/${item.name}` : `#row-${item.name}`;
+
+const categories = [
+  {
+    id: 'component',
+    label: 'component',
+    count: ledger.filter((item) => item.type === 'registry:component').length,
+  },
+  {
+    id: 'ui',
+    label: 'ui',
+    count: ledger.filter((item) => item.type === 'registry:ui').length,
+  },
+  {
+    id: 'lib',
+    label: 'lib',
+    count: ledger.filter((item) => item.type === 'registry:lib').length,
+  },
+];
 ---
 
 <Layout title="Registry ledger — RNR AI Elements">
@@ -52,57 +67,19 @@ const docsHref = (item: LedgerItem): string =>
       </p>
       <ul class="ledger__bases">
         <li>
-          <a href={NATIVEWIND_BASE}>{NATIVEWIND_BASE}</a>
+          <code>{NATIVEWIND_BASE}</code>
           <CopyButton command={NATIVEWIND_BASE} label="Copy the nativewind base URL" />
         </li>
         <li>
-          <a href={UNIWIND_BASE}>{UNIWIND_BASE}</a>
+          <code>{UNIWIND_BASE}</code>
           <CopyButton command={UNIWIND_BASE} label="Copy the uniwind base URL" />
         </li>
       </ul>
     </section>
 
-    <div class="ledger__table-scroll">
-      <table class="ledger__table">
-        <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Category</th>
-            <th scope="col">Engines</th>
-            <th scope="col">Expo Go</th>
-            <th scope="col">Install (nativewind)</th>
-            <th scope="col">Docs</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-          ledger.map((item) => (
-            <tr id={`row-${item.name}`}>
-              <th scope="row">{item.name}</th>
-              <td class="ledger-type">{item.type}</td>
-              <td class="ledger-engines">
-                {item.engines.map((engine) => (
-                  <span class="ledger-engine">{engine}</span>
-                ))}
-              </td>
-              <td class="ledger-verdict">
-                <Badge tone={item.expoGo ? 'expo-go' : 'dev-client'} />
-              </td>
-              <td class="ledger-install">
-                <CopyButton
-                  command={installCommand(item.name)}
-                  label={`Copy the install command for ${item.name}`}
-                />
-              </td>
-              <td class="ledger-docs">
-                <a href={docsHref(item)}>Docs</a>
-              </td>
-            </tr>
-          ))
-        }
-        </tbody>
-      </table>
-    </div>
+    <LedgerFilter target=".ledger" categories={categories} engine />
+
+    <LedgerTable items={ledger} />
   </main>
 </Layout>
 
@@ -128,27 +105,7 @@ const docsHref = (item: LedgerItem): string =>
     align-items: center;
     gap: 0.75rem;
   }
-  .ledger__table-scroll {
-    overflow-x: auto;
-  }
-  .ledger__table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 0.875rem;
-  }
-  .ledger__table th,
-  .ledger__table td {
-    border-bottom: 1px solid currentColor;
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-    vertical-align: top;
-  }
-  .ledger-engines {
-    display: grid;
-    gap: 0.25rem;
-  }
-  .ledger-engine {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.75rem;
+  .ledger__bases code {
+    overflow-wrap: anywhere;
   }
 </style>
