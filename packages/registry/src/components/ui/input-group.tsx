@@ -26,15 +26,30 @@ function useInputGroup() {
 
 function InputGroup({ className, ...props }: ViewProps) {
   const [focused, setFocused] = React.useState(false);
+  const scheme = useColorScheme();
+  // The `ring-*` utility family (ring-2 width, ring-ring/50 color) is parsed by
+  // NativeWind v4's css-interop at render time, which races Expo Router's
+  // NavigationContainer init (the upstream nativewind css-interop race): on focus the
+  // conditional `ring-*` term first attaches and the re-render throws "Couldn't find a
+  // navigation context". The 2px focus ring therefore goes through the plain RN `style`
+  // prop — the engine-safe channel the placeholder color below already uses — as a 2px
+  // in-box border in the `--color-ring` token value at 50% opacity (ring light
+  // hsl(0 0% 63%), dark hsl(300 0% 45%)). If the theme tokens change, these literals
+  // change with them. border-ring (full ring color) stays on the className but is
+  // overridden by this borderColor, so it is cosmetic.
+  const focusedStyle = focused
+    ? { borderColor: scheme === 'dark' ? 'hsla(300, 0%, 45%, 0.5)' : 'hsla(0, 0%, 63%, 0.5)', borderWidth: 2 }
+    : undefined;
   return (
     <InputGroupContext.Provider value={{ focused, setFocused }}>
       <View
         className={cn(
           'flex-row items-center gap-2 rounded-md border border-input bg-background px-3',
           'dark:bg-input/30',
-          focused && 'border-ring ring-2 ring-ring/50',
+          focused && 'border-ring',
           className,
         )}
+        style={focusedStyle}
         {...props}
       />
     </InputGroupContext.Provider>
