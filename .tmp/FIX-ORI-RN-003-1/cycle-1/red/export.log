@@ -1,0 +1,18 @@
+Starting Metro Bundler
+
+Static rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/
+λ Bundling failed 7414ms node_modules/.pnpm/@expo+router-server@57.0.10_@expo+metro-runtime@57.0.15_expo-constants@57.0.18_expo-fon_e507fc3e00b1aafa01f09b38929289ff/node_modules/@expo/router-server/node/render.js (805 modules)
+Error: Unable to resolve module react-native-css-interop/jsx-runtime from /Users/justinrich/.cache/agent-scratch/fix-nw-red-qFghbv/app/index.tsx: react-native-css-interop/jsx-runtime could not be found within the project or in these directories:
+  node_modules
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { [33mQuickstartScreen[39m } [36mfrom[39m [32m'@/shared/quickstart-screen'[39m[33m;[39m
+ [90m 2 |[39m
+ [90m 3 |[39m [90m/**[39m
+ [90m 4 |[39m [90m * The nativewind consumer's thin entrypoint — the seed-data chat screen, nothing else.[39m[0m
+
+Import stack:
+
+ app/index.tsx
+ | import "react-native-css-interop/jsx-runtime"
+
+ app (require.context)
+
