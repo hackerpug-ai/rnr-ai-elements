@@ -146,14 +146,14 @@ function verifySource(source: string, evidence: string): void {
       `correction mismatch: HEAD does not contain the reviewed ORI-RN-000 correction ${CORRECTION_COMMIT}`,
     );
   }
-  // Tracked changes only: the evidence directory is generated output (regenerated
-  // each run, re-frozen on a legit config change), so it must not count against a
-  // clean source tree. Exclude it explicitly via pathspec; everything else dirty
-  // (uncommitted source / WIP) still refuses.
+  // Tracked changes only: the evidence directory and .tmp scratch are generated
+  // output (regenerated each run, re-frozen on a legit config change), so they must
+  // not count against a clean SOURCE tree. Exclude both via pathspec; everything
+  // else dirty (uncommitted source / WIP) still refuses.
   const evidenceRel = relative(REPO_ROOT, resolve(evidence)).split(sep).join('/');
   const status = run(
-    'git status --porcelain --untracked-files=no (excluding evidence)',
-    `git status --porcelain --untracked-files=no -- . ":(exclude)${evidenceRel}"`,
+    'git status --porcelain --untracked-files=no (excluding evidence + .tmp)',
+    `git status --porcelain --untracked-files=no -- . ":(exclude)${evidenceRel}" ":(exclude).tmp"`,
   );
   if (status.output && status.output.trim().length > 0) {
     fail(`dirty working tree (tracked changes present):\n${status.output.trim()}`);
