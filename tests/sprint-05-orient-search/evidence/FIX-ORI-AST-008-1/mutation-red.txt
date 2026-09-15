@@ -4,8 +4,8 @@ Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
 
  RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-AST-008-1-impl
 
- ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts (4 tests | 1 failed) 211ms
-   × REF-009-spec-repins: GEND-14/15 bodies assert the five-region anatomy, legacy anchors retained, sha256 pins fresh, re-pins share the commit 182ms
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts (4 tests | 1 failed) 304ms
+   × REF-009-spec-repins: GEND-14/15 bodies assert the five-region anatomy, legacy anchors retained, sha256 pins fresh, re-pins share the commit 272ms
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -21,23 +21,23 @@ AssertionError: the re-pins share the page commit: expected [ …(3) ] to deeply
 -   "f05d82c86de19891b3b2b5920d3f5831d06dd5b1",
 +   "b70a5c454a029a2b7c01b7af5539f9cecbcf0036",
 +   "b70a5c454a029a2b7c01b7af5539f9cecbcf0036",
-+   "b70a5c454a029a2b7c01b7af5539f9cecbcf0036",
++   "2d3931378f9eb07ef197e549aec8f6d08364a093",
   ]
 
- ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:346:89
-    344|   );
-    345|   expect(pageCommit, 'the page change is committed').not.toBe('');
-    346|   expect([specCommit, contractCommit, laneCommit], 'the re-pins share …
+ ❯ tests/sprint-04-generated-reference/item-page-contract.test.ts:349:89
+    347|   );
+    348|   expect(pageCommit, 'the page change is committed').not.toBe('');
+    349|   expect([specCommit, contractCommit, laneCommit], 'the re-pins share …
        |                                                                                         ^
-    347|     pageCommit,
-    348|     pageCommit,
+    350|     pageCommit,
+    351|     pageCommit,
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 
 
  Test Files  1 failed (1)
       Tests  1 failed | 3 passed (4)
-   Start at  19:00:27
-   Duration  375ms (transform 32ms, setup 0ms, import 38ms, tests 211ms, environment 0ms)
+   Start at  19:25:31
+   Duration  542ms (transform 40ms, setup 0ms, import 46ms, tests 304ms, environment 0ms)
 
 MUTATION_EXIT=1
