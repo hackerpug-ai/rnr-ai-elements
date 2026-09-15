@@ -1,0 +1,15 @@
+{
+  "task": "ORI-DEP-001",
+  "generated_at": "2026-09-15T00:40:28Z",
+  "worker_name": "rnr-ai-elements-docs",
+  "account_id": "d5110b1895ee190e145c0c8756f49879",
+  "observation": {
+    "command": "pnpm --dir apps/docs exec wrangler deployments list --config wrangler.jsonc --json",
+    "exit_code": 1,
+    "api_code": 10007,
+    "message": "This Worker does not exist on your account.",
+    "interpretation": "Confirmed absent Worker — a valid first-release state. Distinguished from an authentication/authorization/network failure because the request reached the account API and returned the script-not-found code (10007) rather than a 401/403/network error."
+  },
+  "deployments": [],
+  "conflicting_ownership": null
+}
