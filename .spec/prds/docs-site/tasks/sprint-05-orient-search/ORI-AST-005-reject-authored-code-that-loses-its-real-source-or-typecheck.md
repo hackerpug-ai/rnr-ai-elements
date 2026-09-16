@@ -26,7 +26,7 @@ Run `pnpm exec vitest run tests/sprint-05-orient-search/authored-snippet-gate.te
 
 > Status: Backlog
 > Assignee: astro-implementer · Reviewer: astro-reviewer
-> Priority: P1 · Points: 5 · Type: BUILD · Dependency phase: After ORI-AST-001
+> Priority: P1 · Points: 5 · Type: BUILD · Dependency phase: After ORI-AST-001, ORI-CONT-001, ORI-CONT-003
 > Proposed By: astro-planner · Co-authored By: none
 > TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
 > Sprint: [SPRINT.md](./SPRINT.md) · Planned date: 2026-09-14
@@ -330,9 +330,9 @@ Verdict: Pending independent review. Return APPROVED or NEEDS_FIXES only after i
 
 ### DEPENDENCIES
 
-Depends on: ORI-AST-001.
+Depends on: ORI-AST-001, ORI-CONT-001, ORI-CONT-003.
 
-Blocks: no downstream IDs supplied. Only ORI-AST-001 is a declared dependency. Source-owner handoffs are execution prerequisites, not invented dependency edges. No downstream task IDs are declared in the compact input; CI owns wiring outside this allowlist.
+Blocks: no downstream IDs supplied. Declared dependencies are ORI-AST-001, ORI-CONT-001 and ORI-CONT-003; the gate runs after the authored corpus exists. No downstream task IDs are declared in the compact input; CI owns wiring outside this allowlist.
 
 Provides:
 

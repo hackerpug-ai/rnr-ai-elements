@@ -10,7 +10,7 @@ planned_at: 2026-09-14
 
 # Sprint 05: orient-search
 
-**Status:** planned  
+**Status:** in_progress  
 **Sequence:** 5  
 **Timeline:** Phase 2
 
@@ -125,17 +125,17 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-CONT-002 | Author Theming and Dark mode manuscripts for the real route adapter | techwriting-implementer | 3 | 4 | ORI-AST-001 |
 | ORI-AST-003 | Make the Theming token table demonstrate the live site theme | astro-implementer | 3 | 5 | ORI-AST-001, ORI-AST-002, ORI-CONT-002 |
 | ORI-AST-008 | Publish reference destinations for the remaining 17 UI and library items | astro-implementer | 3 | 1 | None |
-| ORI-AST-005 | Reject authored code that loses its real source or typecheck | astro-implementer | 5 | 4 | ORI-AST-001 |
+| ORI-AST-005 | Reject authored code that loses its real source or typecheck | astro-implementer | 5 | 10 | ORI-AST-001, ORI-CONT-001, ORI-CONT-003 |
 | ORI-RN-001 | Provide complete source-backed setup for both clean Expo consumers | react-native-reusables-implementer | 5 | 3 | ORI-RN-000, ORI-DEP-001 |
 | ORI-CONT-005 | Author the real boundary explanation and missing-page recovery copy | techwriting-implementer | 2 | 4 | ORI-AST-001 |
-| ORI-CONT-001 | Author Introduction, Installation, and registry-specific CLI content | techwriting-implementer | 5 | 6 | ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-001, ORI-CONT-005, ORI-CONT-002, ORI-AST-003 |
+| ORI-CONT-001 | Author Introduction, Installation, and registry-specific CLI content | techwriting-implementer | 5 | 6 | ORI-AST-001, ORI-AST-002, ORI-RN-001, ORI-CONT-005, ORI-CONT-002, ORI-AST-003 |
 | ORI-RN-002 | Provide the single source-backed seed-data chat screen | react-native-reusables-implementer | 3 | 4 | ORI-RN-001 |
 | ORI-AI-001 | Implement the worked example's useChat hook and real OpenAI streaming route | aisdk-implementer | 5 | 4 | ORI-AST-001 |
 | ORI-RN-003 | Execute the copied quickstart on both native platforms and Web | react-native-reusables-implementer | 5 | 5 | ORI-RN-001, ORI-RN-002 |
 | ORI-RN-004 | Compose and verify the separate live chat screen in apps/example | react-native-reusables-implementer | 5 | 6 | ORI-RN-000, ORI-RN-003, ORI-AI-001 |
 | ORI-RN-005 | Run the real worked-example source in an independent NativeWind consumer | react-native-reusables-implementer | 3 | 7 | ORI-RN-001, ORI-RN-004, ORI-AI-001 |
 | ORI-AI-002 | Prove the composed worked example against the real provider | aisdk-implementer | 5 | 8 | ORI-AI-001, ORI-RN-004, ORI-RN-005 |
-| ORI-CONT-003 | Author the single seed-data quickstart and its live-example run handoff | techwriting-implementer | 5 | 9 | ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-002, ORI-AI-002 |
+| ORI-CONT-003 | Author the single seed-data quickstart and its live-example run handoff | techwriting-implementer | 5 | 9 | ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002 |
 | ORI-AST-004 | Navigate the built docs through a lazily loaded Pagefind dialog | astro-implementer | 5 | 10 | ORI-AST-001, ORI-AST-002, ORI-AST-003, ORI-AST-008, ORI-CONT-001, ORI-CONT-003, ORI-CONT-005 |
 | ORI-AST-006 | Reject broken links in the built documentation | astro-implementer | 3 | 4 | ORI-AST-001 |
 | ORI-AST-007 | Filter the registry ledger and copy commands for the selected engine | astro-implementer | 3 | 5 | ORI-AST-002, ORI-AST-008 |
@@ -166,13 +166,13 @@ The following waves are the longest dependency depth of each task. They summariz
 | 1 | ORI-RN-000, ORI-AST-008 |
 | 2 | ORI-DEP-001 |
 | 3 | ORI-AST-001, ORI-RN-001 |
-| 4 | ORI-AST-002, ORI-CONT-002, ORI-AST-005, ORI-CONT-005, ORI-RN-002, ORI-AI-001, ORI-AST-006 |
+| 4 | ORI-AST-002, ORI-CONT-002, ORI-CONT-005, ORI-RN-002, ORI-AI-001, ORI-AST-006 |
 | 5 | ORI-AST-003, ORI-RN-003, ORI-AST-007 |
 | 6 | ORI-CONT-001, ORI-RN-004 |
 | 7 | ORI-RN-005 |
 | 8 | ORI-AI-002 |
 | 9 | ORI-CONT-003 |
-| 10 | ORI-AST-004, ORI-CI-001 |
+| 10 | ORI-AST-005, ORI-AST-004, ORI-CI-001 |
 | 11 | ORI-AST-009 |
 | 12 | ORI-CI-002, ORI-VIS-001 |
 | 13 | ORI-CONT-006, ORI-VIS-002, ORI-VIS-003 |
