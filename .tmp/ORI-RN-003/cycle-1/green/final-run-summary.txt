@@ -1,0 +1,26 @@
+ORI-RN-003 cycle-1 GREEN — final authoritative run (runQuickstartProof, real devices)
+
+Run: ORI-RN-003-2026-09-15T18-00-06-026Z · wall 748s · candidate 4e1b209
+Devices: iOS simulator 81487B1E-A4D1-45AE-9BCE-D675802BACD1 (iPhone 17, Expo Go 57.0.9),
+         Android emulator emulator-5554 (Pixel_7_API_34, Expo Go 57.0.9).
+
+Six engine/platform legs (engine×platform, native legs = light+dark):
+  uniwind/ios     PASSED (light + dark)  — olderSeed reachable, marker submitted,
+                                           input cleared, marker reachable at bottom
+  uniwind/android PASSED (light + dark)  — same
+  uniwind/web     PASSED                 — seed visible, olderSeed reached, marker
+                                           submitted, input cleared (Chromium)
+  nativewind/ios  FAILED (light + dark)  — Metro bundle: unable to resolve
+                                           react-native-css-interop/jsx-runtime
+  nativewind/android FAILED (light + dark) — same
+  nativewind/web  BLOCKED                — expo export fails: react-native-css-interop
+
+Negative control (AC-4, disposable uniwind consumer, Web leg):
+  baseline (connected callback)          passed  → marker visible
+  disconnected callback (onSubmit={() => {}}) FAILED → marker visible = false
+  restored exact bytes (hash identical)  passed  → marker visible = true
+  mutation changed ONLY the callback connection (onSubmit={handleSubmit} → ()=>{}).
+
+passed_legs = 3 (uniwind). completed = false: the nativewind legs are BLOCKED by a
+source defect in packages/docs-snippets/nativewind/package.json (missing
+react-native-css-interop direct dependency — writeProhibited for ORI-RN-003).

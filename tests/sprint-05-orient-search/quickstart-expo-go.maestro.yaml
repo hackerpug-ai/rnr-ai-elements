@@ -1,0 +1,66 @@
+# ORI-RN-003 — Expo Go native proof flow.
+#
+# Drives the ORI-RN-002 seed-data quickstart screen on a REAL Expo Go session
+# (appId host.exp.Exponent), on whichever engine/platform Metro is serving:
+#
+#   1. seed canary        — the newest authored turn renders at the bottom on load;
+#   2. olderSeed reach    — scroll UP (inverted FlatList) to the oldest authored turn;
+#   3. scroll affordance  — the ConversationScrollButton appears once off the bottom;
+#   4. submit             — focus the real composer, type a fresh marker, tap Send;
+#   5. cleared input      — PromptInput's own success path empties the composer;
+#   6. new turn           — scroll DOWN to the newest turn and confirm the marker.
+#
+# The marker and the older-seed literal arrive as env vars so one flow file serves
+# both engines, both platforms and both appearances without mutation. Every selector
+# is a REAL accessibility text the app exposes — no ids, no test seams, no text that
+# the app does not already read to a screen reader.
+#
+# Invoked by support/native-session.ts with:
+#   -e MARKER="ORI-RN-003:<runId>:<engine>:<platform>:<appearance>:<seq>"
+#   -e OLDER_SEED="Seed turn 01: Plan a weekend walk."
+appId: host.exp.Exponent
+# MARKER and OLDER_SEED arrive via `-e` from support/native-session.ts — no env: defaults
+# here, because a default `MARKER: ""` silently wins over the CLI override on iOS and
+# empties the new-message assertion.
+---
+# First launch of a new project in Expo Go shows its developer-menu onboarding, then the
+# dev menu itself; dismiss both when present. Optional so a warm session is unaffected.
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- extendedWaitUntil:
+    visible: "Seed turn 24: Ready for your message."
+    timeout: 60000
+- assertVisible: "Seed turn 24: Ready for your message."
+- assertVisible: "Send message"
+# Inverted FlatList: the oldest authored turn is above the viewport. Scrolling UP
+# (toward the top) reveals it; the web-equivalent rule is "scroll up to see history".
+- scrollUntilVisible:
+    element:
+      text: ${OLDER_SEED}
+    direction: UP
+    timeout: 30000
+- assertVisible: ${OLDER_SEED}
+# Scrolling off the bottom releases stick-to-bottom and reveals the scroll affordance.
+- assertVisible: "Scroll to latest message"
+# Return to the bottom before composing (the button dismisses any keyboard and jumps to
+# the newest turn), so the submitted marker lands within one swipe of the viewport.
+- tapOn: "Scroll to latest message"
+- assertVisible: "Seed turn 24: Ready for your message."
+# Focus the composer (accessibility label "Message"; iOS appends the placeholder, Android
+# does not, so "Message.*" matches both), type the fresh marker, submit via the send button.
+- tapOn: "Message.*"
+- inputText: ${MARKER}
+- tapOn: "Send message"
+# PromptInput clears its own field only after a successful onSubmit.
+- assertVisible: "Message.*"
+# The new user turn lands at the newest (bottom) position, one swipe away.
+- scrollUntilVisible:
+    element:
+      text: ${MARKER}
+    direction: DOWN
+    timeout: 20000
+- assertVisible: ${MARKER}

@@ -1,0 +1,29 @@
+ORI-RN-003 cycle-2 GREEN (post FIX-ORI-RN-003-1 / 54ac507) — run ORI-RN-003-2026-09-15T19-07-07-536Z
+
+Six engine/platform legs (native legs = light+dark):
+  uniwind/ios      PASSED (light+dark)
+  uniwind/android  PASSED (light+dark)
+  uniwind/web      PASSED
+  nativewind/web   PASSED            ← FIX-ORI-RN-003-1 resolved the bundle failure
+  nativewind/ios   FAILED (light+dark)
+  nativewind/android FAILED (light+dark)
+
+Nativewind native legs now BUNDLE (css-interop jsx-runtime resolves), but fail at RUNTIME
+with a SECOND, known defect (nativewind/nativewind#1536 "CSS Interop Race Condition"):
+
+  ERROR [Error: Couldn't find a navigation context. ...]  at input-group.tsx:31 (the <View>),
+  thrown on RE-RENDER when the composer gains focus — the focused branch adds the
+  opacity-shorthand class `ring-ring/50` (and the base carries `dark:bg-input/30`), which
+  are exactly the classes NativeWind v4's css-interop parses at render time and that race
+  Expo Router's NavigationContainer initialization. The composer's send button disappears,
+  so "Tap on Send message" fails.
+
+Root cause (registry source, writeProhibited for ORI-RN-003):
+  packages/registry/src/components/ui/input-group.tsx:34  'dark:bg-input/30'
+  packages/registry/src/components/ui/input-group.tsx:35  focused && 'border-ring ring-2 ring-ring/50'
+
+The uniwind engine renders the SAME source fine (its engine does not have the css-interop
+race). The fix belongs to the registry owner (replace the opacity-shorthand classes with
+named color tokens or inline styles) or to nativewind v5 — not this task.
+
+Negative control still green (disconnected callback fails, byte-exact restore passes).
