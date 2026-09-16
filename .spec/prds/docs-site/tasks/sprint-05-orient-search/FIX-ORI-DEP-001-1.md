@@ -2,7 +2,9 @@
 
 # FIX-ORI-DEP-001-1: resolve self-referential registryDependencies from the canonical unversioned host (rnraielements.com) instead of immutable git tags
 
-> Status: Backlog
+> Status: ✅ Completed
+
+Commit: 6fd19559a813874558b90bb6ecfa3bd45eec1047
 
 > Assignee: react-native-reusables-implementer (implementer) · react-native-reusables-reviewer (reviewer)
 > Priority: P1 · Points: 3 · Type: FIX · Wave: C (unblocks the ORI-RN-003 commit)
@@ -479,3 +481,63 @@ pass unchanged and stay.
   - Everything else remains as confirmed by the reviewer (className-level oracle, supersession/handoff,
     scoped vitest gate, two-regex split, `<item-name>`, allowlist, ordered build, no-repeat-bypass, RNR
     wording).
+
+## Handoff
+
+```json
+{
+  "task": "FIX-ORI-DEP-001-1",
+  "commit_sha": "6fd19559a813874558b90bb6ecfa3bd45eec1047",
+  "done": "Rewrote the 64 self-referential registryDependencies in packages/registry/registry.json from the immutable GitHub-tag template to https://rnraielements.com/r/{engine}/<item>.json and deleted the {version} machinery (VERSION_TOKEN, currentVersion(), and the version parameter of resolveEngine/buildItem) from packages/registry/scripts/build-registry.ts, then regenerated public/r/{nativewind,uniwind}/** (32 item files per engine changed) and updated the live assertions in tests/build-registry.test.ts, tests/sprint-02-shell-hero/resolve-deps.test.ts, tests/sprint-02-shell-hero/dependency-panels.spec.ts, scripts/docs-data/prebuild.ts, and tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts; AC-3 ran the full deterministic chain (rm frozen manifest+build.json -> prepare.ts --phase bootstrap -> wrangler deploy version bb65ae86 -> re-record release.json -> public-http.test.ts --phase bootstrap) and the live proof confirmed prompt-input.json now resolves input-group to https://rnraielements.com/r/nativewind/input-group.json whose files[].content carries focusedStyle + borderWidth:2 with the pre-fix 'border-ring ring-2 ring-ring/50' token absent, all committed in two commits (ad650d3 + 6fd1955) over trunk d93cb32.",
+  "deviations": [
+    "tests/build-registry.test.ts asserts 64 self-dep occurrences per engine (nativewind=64, uniwind=64) rather than the charter's TC-2 wording of \"64 (32 items x 2 engines)\", because registry.json's 64 token-form URLs fan out to 64 per engine (128 total) - the charter's count conflates the token-form count with the substituted-form count.",
+    "The implementation landed in two commits (source+RED then evidence+GREEN) instead of one, because prepare.ts verifySource requires HEAD == --source with a clean tree, so source had to be committed before the fresh bootstrap could run.",
+    "tests/build-registry.test.ts:78-84 'accepts an intra-registry absolute URL' was rewritten to a same-host unversioned URL instead of only being left untouched, since the old fixture used the now-forbidden /main/ segment."
+  ],
+  "concerns": [
+    "The resolve-deps.test.ts SHELL-006-site-facts-derived-peers assertion (tests/sprint-02-shell-hero/resolve-deps.test.ts:154) is a time bomb: it hardcodes expected=[{ai}] while deriveAiSdkPeers correctly returns both ai and @ai-sdk/react, so any CI run of the full scoped gate stays red until someone syncs the expectation.",
+    "The fresh asset-manifest now inventories 193 dist assets (was 186) and 66 r/ assets changed - this is the accepted new baseline but ORI-DEP-002/ORI-DEP-003/ORI-CI-004 must be re-seeded against it or their hash comparisons will fail against the 10d7f1de numbers.",
+    "The righthook pre-commit on the evidence commit emitted a stray 'wrangler application detection' warning from fallow reading build.json command strings; it did not fail the commit but suggests fallow may mis-parse the evidence JSON in future commits."
+  ],
+  "findings": [
+    "tests/sprint-02-shell-hero/resolve-deps.test.ts:154 fails pre-existing because deriveAiSdkPeers returns [{ai,^7.0.89},{@ai-sdk/react,^4.0.92}] while the test hardcodes one peer - the expectation went stale when ORI-AI-001 (an ancestor of base 38034e97) added the @ai-sdk/react pin, and this is out of the FIX's WRITE-ALLOWED scope because apps/docs/src/lib/resolve-deps.ts is writeProhibited.",
+    "pnpm e2e:docs exits 1 lane-wide from the destructive deliv-03 spec clobbering apps/docs/src/data plus pre-existing sprint-01 failures, while the only spec this task touched (dependency-panels.spec.ts) passes 3/3 in isolation.",
+    "tests/sprint-05-orient-search/public-http.test.ts is a tsx script (not a vitest suite) with zero describe/it and an import.meta.url guard, so a full pnpm test collects it as (0 test) and fails 'No test suite found in file' - this is the documented pre-existing no-suite failure that a follow-up should exclude in vitest.config.ts (out of this FIX's WRITE-ALLOWED).",
+    "The two pre-existing failures (SHELL-006-site-facts-derived-peers and public-http.test.ts no-suite) were each proven pre-existing with git stash && rerun (both fail identically on clean trunk d93cb32), but neither commit body records that proof - only the evidence READMEs and the RED/GREEN captures under tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/.",
+    "prepare.ts's verifySource excludes tests/sprint-05-orient-search/evidence and .tmp from both the clean-tree and diff gates, which is why the destructive rm of the frozen manifest+build.json did not trip the gate - the charter's DOC-F10 assumed this but it is only true because those two paths are hardcoded exclusions, not because the rm is exempt."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-DEP-002",
+      "found": "its must_observe requires bytes whose SHA-256 match both the prerequisite release and the accepted manifest, but the accepted manifest is now this FIX's 193-asset output (release ad650d3/9de4a41), not 10d7f1de",
+      "change": "re-seed against the new asset-manifest.json (manifest_sha256 00af4d7f...) and release.json (version bb65ae86) rather than the 10d7f1de baseline"
+    },
+    {
+      "target": "ORI-DEP-003",
+      "found": "its AC-4 requires all 112 public registry item hashes and both index hashes to equal the accepted prepublication manifest, but 66 r/ assets changed under this FIX",
+      "change": "re-baseline the accepted prepublication manifest to this FIX's fresh asset-manifest.json before asserting item-hash equality"
+    },
+    {
+      "target": "ORI-CI-004",
+      "found": "it consumes the accepted asset-manifest.json/release.json baseline",
+      "change": "point it at the new ad650d3/9de4a41 baseline and the new conversation_assets hashes (c84d855d..., 2b701801...)"
+    },
+    {
+      "target": "GATE:test (resolve-deps.test.ts SHELL-006-site-facts-derived-peers)",
+      "found": "the scoped vitest gate stays red on the pre-existing AI-SDK-peers assertion unrelated to this FIX",
+      "change": "a follow-up should sync tests/sprint-02-shell-hero/resolve-deps.test.ts:154 expected to deriveAiSdkPeers(exampleDependencies()) or otherwise account for the @ai-sdk/react peer"
+    },
+    {
+      "target": "GATE:e2e:docs",
+      "found": "pnpm e2e:docs fails lane-wide on the destructive deliv-03 spec and sprint-01 specs, not on this FIX's spec",
+      "change": "scope the e2e lane or exclude deliv-03/sprint-01 so the dependency-panels.spec.ts result (3/3 in isolation) is not masked"
+    }
+  ],
+  "feedback": [
+    "The TC-2 substituted-form count ('64 (32 items x 2 engines)') is wrong - registry.json holds 64 token-form self-dep URLs which fan out to 64 per engine, so either drop the count or write '64 per engine'; the token-form 64 in TC-1 is correct and unambiguous.",
+    "AC-2's VERIFY and step-4 both name pnpm e2e:docs as a required gate, but e2e:docs is known lane-red from pre-existing specs; the charter should scope the playwright gate to tests/sprint-02-shell-hero/dependency-panels.spec.ts (the only spec in WRITE-ALLOWED) rather than the full lane.",
+    "The AC-3 VERIFY chain is correct but its initial 'pnpm registry:build && ... && astro build' is redundant with prepare.ts's own fresh-mode build commands and, if run before committing source, would dirty the tree and fail verifySource - the charter should say 'commit source first, then run prepare.ts' to avoid that trap.",
+    "The pre-commit righthook runs check:fallow which, on the evidence JSON, prints a wrangler application-detection warning; note in the charter that evidence-only commits still execute the full hook so implementers do not misread that noise as a failure."
+  ]
+}
+```
