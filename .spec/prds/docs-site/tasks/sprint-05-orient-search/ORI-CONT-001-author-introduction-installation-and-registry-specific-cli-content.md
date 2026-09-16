@@ -288,7 +288,7 @@ Should verify:
 Verdict: APPROVED or NEEDS_FIXES after independent execution; not yet reviewed. NEEDS_FIXES feedback identifies the failed AC, actual observed value and corrective file/line.
 
 ### DEPENDENCIES
-Depends on: ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-001, ORI-CONT-005, ORI-CONT-002, ORI-AST-003.
+Depends on: ORI-AST-001, ORI-AST-002, ORI-RN-001, ORI-CONT-005, ORI-CONT-002, ORI-AST-003.
 
 Blocks: no additional dependency edges declared by this rendering.
 

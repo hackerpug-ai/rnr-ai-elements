@@ -370,13 +370,13 @@ Agent rationale: techwriting-planner owns page jobs and the Diataxis split; tech
 
 ### DEPENDENCIES / CAPABILITIES
 
-Depends on: ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-002, ORI-AI-002.
+Depends on: ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002.
 
 Blocks: ORI-CONT-004 through the content handoff for integrated proof.
 
 Provides: the single source-backed tutorial; focused live-example run guide and README link; scoped browser spec and content-review report.
 
-Consumes: reviewed content, docs composition, engine-selection and snippet contracts from the six dependencies; RN-owned executable commands/screen/data; the implemented useChat hook, backend configuration and real-provider proof through ORI-AI-002. ORI-CONT-004 owns final native/Web acceptance.
+Consumes: reviewed content, docs composition, engine-selection and snippet contracts from the five dependencies; RN-owned executable commands/screen/data; the implemented useChat hook, backend configuration and real-provider proof through ORI-AI-002. ORI-CONT-004 owns final native/Web acceptance.
 
 Capability: CAP-DOCS-01.
 
