@@ -86,8 +86,13 @@ are ABSENT from the trunk tip (`cffcdb9`): the proof driver
 `tests/sprint-05-orient-search/live-example.maestro.yaml`, and the ORI-RN-004 revision of
 `apps/example/tsconfig.live-chat.json` (which adds `expo-env.d.ts`, the two components, `app/live-chat.tsx`,
 and `types: ['uniwind/types']` — trunk's version includes only `lib/live-chat-config.ts` +
-`lib/use-live-chat.ts` and would report a FALSE GREEN for the scoped gate). Do NOT create these ORI-RN-004-owned
-files yourself — they are not in WRITE-ALLOWED; they must arrive via the base branch.
+`lib/use-live-chat.ts` and would report a FALSE GREEN for the scoped gate). Do NOT create the
+ORI-RN-004-owned ROUTE/SCREEN/CONFIG files yourself — `app/live-chat.tsx`,
+`components/live-chat-screen.tsx`, `components/live-chat-message.tsx`, and
+`tsconfig.live-chat.json` must arrive via the base branch. EXCEPTION (cycle-2): the proof driver
+`tests/sprint-05-orient-search/support/live-example-proof.test.ts` and the Maestro flow
+`tests/sprint-05-orient-search/live-example.maestro.yaml` are now WRITE-ALLOWED (see the cycle-2
+amendment, F-7), so the implementer MAY modify them for the Android text-input path.
 
 **RED (replay the observed failure, before the fix):**
 
@@ -268,13 +273,16 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
 
 ### DEPENDENCIES
 
-- Depends on: ORI-RN-004 (owns the `/live-chat` screen, the proof driver, and the AC-5 compiler case this
-  FIX re-runs — its deliverable commit `001488c` is the implementation BASE, since none of those files exist
-  on trunk `cffcdb9`), ORI-AI-001 (owns the `use-live-chat` hook, the `/api/chat` backend, and
-  `resolveLiveChatConfig` — this FIX only reads `process.env` directly and must not change their transport /
-  abort / retry / throttle semantics)
+- Depends on: ORI-RN-004 (owns the `/live-chat` route, the screen/message components, the proof driver, and the
+  AC-5 compiler case this FIX re-runs — its deliverable commit `001488c` is the implementation BASE, since none
+  of those files exist on trunk `cffcdb9`; cycle-2 takes MODIFY on the proof driver and the Maestro flow for the
+  Android text-input path — see the cycle-2 amendment, F-7), ORI-AI-001 (owns the `use-live-chat` hook, the
+  `/api/chat` backend, and `resolveLiveChatConfig` — this FIX only reads `process.env` directly and must not
+  change their transport / abort / retry / throttle semantics)
 - Blocks: ORI-RN-004 (its web and Android legs cannot pass until these two defects are fixed)
-- Parallel: none (one lane, one config file)
+- Parallel: none (one lane; cycle-2 writes `apps/example/lib/live-chat-config.ts`,
+  `tests/sprint-05-orient-search/live-example.maestro.yaml`, and
+  `tests/sprint-05-orient-search/support/live-example-proof.test.ts`, plus evidence/scratch)
 
 ### READING LIST (max 5)
 
@@ -373,3 +381,19 @@ wrappers. Record every RED/GREEN run under `tests/sprint-05-orient-search/eviden
     removed/marked DISPROVEN.
   - The CRITICAL CONSTRAINTS (credential server-side only; the `resolveLiveChatConfig(env)` seam preserved;
     no mocks; no skipped platform) and the confirmed Defect A diagnosis are unchanged.
+
+- Cycle-3 remediation (reviewer NEEDS_FIXES, F-1/F-2/F-3/F-4):
+  - F-9 (evidence gaps) — captured the previously-missing artifacts. F-1: the adb-vs-Maestro isolation is now
+    captured under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/android-input-isolation/` —
+    `dumpsys-input-method.txt` (IME not shown: `mInputShown=false`, `mIsImeShowing=false`, `mImeHeight=0`),
+    `adb-input-text-hierarchy.json` (`adb shell input text` → field `text: "hello test"`, `Send message
+    enabled: true`), and `maestro-inputtext-red.txt` + `maestro-inputtext-hierarchy.json` (Maestro `inputText`
+    reports COMPLETED but the field reverts and `Send message` stays `enabled: false`). F-2: the web GREEN pair
+    is now committed — `web-green-manifest.json` + `web-green-provider-correlation.json` (2 completed
+    `gpt-4.1-mini-2025-04-14` provider records; the per-leg `assistantResponded` flag is false because the
+    model's seed response did not literally contain "rain", but the round-trip is proven by the completed
+    records). F-3: the bisect OFF run is committed — `bisect-reactcompiler-off-manifest.json` +
+    `bisect-reactcompiler-off-metro.log` (no "state update" error, android legs still FAIL).
+  - F-10 (stale prose + write-access transfer) — corrected the BASE paragraph (the proof driver + Maestro flow
+    are now WRITE-ALLOWED exceptions), the DEPENDENCIES attribution (cycle-2 takes MODIFY on the proof driver
+    and Maestro flow), and the `Parallel:` line (the lane now writes three files, not "one config file").

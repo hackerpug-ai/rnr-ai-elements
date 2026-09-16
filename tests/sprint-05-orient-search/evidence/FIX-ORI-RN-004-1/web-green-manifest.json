@@ -1,0 +1,73 @@
+{
+  "task": "ORI-RN-004",
+  "run_id": "ORI-RN-004-1789545535437",
+  "candidate_head_sha": "b41201f3315fe697981199f6805773ef174e49ea",
+  "generated_at": "2026-09-16T07:59:36.852Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios,android,web"
+  ],
+  "source_sha": {
+    "app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4000,
+    "record_count": 2
+  },
+  "passed_platforms": 0,
+  "completed": false,
+  "legs": [
+    {
+      "platform": "web",
+      "status": "failed",
+      "diagnostic": "{\"emptyStateVisible\":true,\"markerSubmitted\":true,\"inputCleared\":true,\"assistantResponded\":false,\"stopControlVisible\":true,\"followUpRecallVisible\":true}",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789545535437:web",
+        "url": "http://127.0.0.1:8406",
+        "drive_result": {
+          "emptyStateVisible": true,
+          "markerSubmitted": true,
+          "inputCleared": true,
+          "assistantResponded": false,
+          "stopControlVisible": true,
+          "followUpRecallVisible": true
+        },
+        "backend_records": [
+          {
+            "requestId": "eNeeBMSC4R7La7EV",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_025a3116bcb2fedb006aaa4c44210487d0ac16cc46d371537f",
+            "callId": "call-hTwwx9UdIlMSC3kK3WanQYhR",
+            "outcome": "completed",
+            "deltaCount": 28,
+            "inputTokens": 58,
+            "outputTokens": 29,
+            "totalTokens": 87,
+            "textHash": "108b8fa8b9805c0434620038c5afbdc0deecb2c6f80bffddad4939920bc75e15",
+            "durationMs": 1294,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "eNeeBMSC4R7La7EV",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_025a3116bcb2fedb006aaa4c62375887d08f9e7483e9a72bd4",
+            "callId": "call-5TtVsWvXrfYTTGVVmZLCPO5g",
+            "outcome": "completed",
+            "deltaCount": 27,
+            "inputTokens": 103,
+            "outputTokens": 28,
+            "totalTokens": 131,
+            "textHash": "634339fd0a998c22f838f7a44d58aa5aed85be5de3300fe7689b6430c34a85e8",
+            "durationMs": 1580,
+            "errorText": null,
+            "activeGenerations": 0
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -20,38 +20,49 @@ alias). The pure `resolveLiveChatConfig(env)` seam is byte-identical.
  }
 ```
 
-Post-fix `--platforms web` run (`green/web-green.out`):
+Post-fix `--platforms web` run (re-run 2026-09-16, run_id `ORI-RN-004-1789545535437`):
 - `emptyStateVisible: true` — the composer renders, NOT "not configured".
 - `markerSubmitted: true`, `inputCleared: true` — a real user message round-trips.
 - 2 completed OpenAI provider records via the same-origin proxy
   (`provider: openai`, `providerModel: gpt-4.1-mini-2025-04-14`, `outcome:
-  completed`) — see `green/web-green-provider-correlation.json`.
+  completed`) — see `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/
+  web-green-provider-correlation.json` (and `web-green-manifest.json` for the
+  per-leg `drive_result`).
 - `followUpRecallVisible: true`, `stopControlVisible: true` — follow-up and stop
   control both exercised.
 
-`assistantResponded` (a driver flag asserting the seed response's literal text
-contains "rain") is model-dependent and flaky; a separate manual probe (export →
-serve → Chromium → submit, `investigate/web-inspect.mjs`) confirmed the assistant
-response DOES render on web with no #418 and no console errors. This flakiness is
-unrelated to Defect A (endpoint inlining) — the round-trip (composer renders +
-completed provider records) is fully green.
+Per-leg status (honest): the driver's web leg reports `status: failed` because the
+`assistantResponded` flag (asserting the seed response's literal text contains
+"rain") is false — the model's terse response did not contain the word "rain" this
+run, so the six-flag `passed` conjunction is false. The round-trip itself is proven
+by the two `outcome: completed` provider records and the composer-render/follow-up/
+stop flags. `assistantResponded` is model-dependent flakiness, unrelated to Defect A
+(endpoint inlining) — the round-trip (composer renders + completed provider records)
+is green.
 
 ## Defect B — root cause DETERMINED to be a Maestro-input artifact (not a code bug)
 
 The charter's bisect gate was run and recorded (see RED.md): disabling
 `experiments.reactCompiler` removes the "state update before mount" error but does
-NOT enable the button, so React Compiler is NOT the cause. Further on-device
-investigation (`investigate/`) isolated the true cause:
+NOT enable the button, so React Compiler is NOT the cause. The captured evidence
+lives under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/
+android-input-isolation/` (README.md describes each artifact):
 
-1. `adb -s emulator-5554 shell input text "hello"` → the `Message` field holds
-   `text: "hello"` and the `Send message` button flips to `enabled: true`. The app
-   is NOT broken on Android.
-2. Maestro `inputText "abc"` (the driver's mechanism) → the field reverts to the
-   placeholder and `Send message` stays `enabled: false`. Maestro reports
-   `Input text abc COMPLETED` but no text is retained.
-3. The emulator's soft keyboard is not shown (`dumpsys input_method` →
-   `mIsImeShowing=false`, `mImeHeight=0`), so Maestro's IME-based `inputText`
-   silently fails while `adb input text` (direct key events) works.
+1. `adb-input-text-hierarchy.json` — `adb -s emulator-5554 shell input text
+   "hello test"` → the `Message` field holds `text: "hello test"` and the
+   `Send message` button flips to `enabled: true`. The app is NOT broken on Android.
+2. `maestro-inputtext-red.txt` + `maestro-inputtext-hierarchy.json` — Maestro
+   `inputText "hello test"` reports COMPLETED but the field reverts to the
+   placeholder and `Send message` stays `enabled: false` (the `enabled: true`
+   assertion FAILS).
+3. `dumpsys-input-method.txt` — the emulator's soft keyboard is not shown
+   (`mInputShown=false`, `mIsInputViewShown=false`, `mIsImeShowing=false`,
+   `mImeHeight=0`), so Maestro's IME-based `inputText` silently fails while
+   `adb input text` (direct key events) works.
+4. `bisect-reactcompiler-off-manifest.json` + `bisect-reactcompiler-off-metro.log` —
+   the `reactCompiler` OFF re-run: no "state update" error in the metro log, yet the
+   android light + dark legs still FAIL (`hierarchy_has_marker: false`,
+   `latest_backend_record: null`) — the button stays disabled.
 
 Conclusion: the Android composer is functional; the Android leg's RED is a
 Maestro/emulator input artifact, NOT a defect in `app.json` or `use-live-chat.ts`.

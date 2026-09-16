@@ -31,9 +31,25 @@ un-block the Android composer. Branch base:
 ## GREEN (post-fix)
 
 - web: composer renders, 2 completed provider records, follow-up + stop legs pass
-  (see `.tmp/FIX-ORI-RN-004-1/cycle-1/green/`).
+  — see `web-green-manifest.json` + `web-green-provider-correlation.json` (the
+  per-leg `assistantResponded` flag is false because the model's seed response did
+  not literally contain "rain"; the round-trip is proven by the 2 completed
+  records).
 - ios: light + dark PASS (maestro exit 0, marker visible, 8 provider records incl.
   aborted Stop legs). No regression.
+
+## Android text-input isolation (Defect B, cycle-3 evidence)
+
+Captured under `android-input-isolation/` (see its README.md):
+- `dumpsys-input-method.txt` — emulator soft keyboard NOT shown
+  (`mInputShown=false`, `mIsImeShowing=false`, `mImeHeight=0`).
+- `adb-input-text-hierarchy.json` — `adb shell input text "hello test"` → field
+  holds the text and `Send message` is `enabled: true` (the app works).
+- `maestro-inputtext-red.txt` + `maestro-inputtext-hierarchy.json` — Maestro
+  `inputText` reports COMPLETED but the field reverts and `Send message` stays
+  `enabled: false`.
+- `bisect-reactcompiler-off-manifest.json` + `bisect-reactcompiler-off-metro.log` —
+  the `reactCompiler` OFF re-run (no "state update" error, android legs still FAIL).
 
 ## Bisect (Defect B)
 
