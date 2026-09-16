@@ -1,0 +1,20 @@
+appId: host.exp.Exponent
+---
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Dismiss"
+    optional: true
+- tapOn:
+    text: "Minimize"
+    optional: true
+- extendedWaitUntil:
+    visible: "Live chat"
+    timeout: 60000
+- tapOn: "Message.*"
+- inputText: "abc"
+- extendedWaitUntil:
+    visible: "abc"
+    timeout: 10000
+- assertVisible: "abc"

@@ -67,8 +67,7 @@ export function resolveLiveChatConfig(env: {
 
 /** Reads the ambient Expo environment (inlined `EXPO_PUBLIC_*` value). */
 export function getLiveChatConfig(): LiveChatConfig {
-  const env = process.env;
   return resolveLiveChatConfig({
-    EXPO_PUBLIC_API_BASE_URL: env.EXPO_PUBLIC_API_BASE_URL,
+    EXPO_PUBLIC_API_BASE_URL: process.env.EXPO_PUBLIC_API_BASE_URL,
   });
 }
