@@ -68,7 +68,7 @@ function caretRange(pin: string): string {
   return /^[\^~><=]/.test(pin) ? pin : `^${pin}`;
 }
 
-it('SHELL-006-resolver-substitution: {engine} and {version} resolve per engine over the real 56-item dataset', () => {
+it('SHELL-006-resolver-substitution: {engine} resolves per engine over the real 56-item dataset', () => {
   const items = dataset();
   expect(items).toHaveLength(56);
   const rootVersion = (readJson(ROOT_PKG) as { version: string }).version;
@@ -84,7 +84,7 @@ it('SHELL-006-resolver-substitution: {engine} and {version} resolve per engine o
     'https://reactnativereusables.com/r/{engine}/text.json',
   ]);
   expect(conversation.registryDependencies).toContain(
-    'https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/empty.json',
+    'https://rnraielements.com/r/{engine}/empty.json',
   );
 
   // Shimmer under both engine segments.
@@ -102,9 +102,7 @@ it('SHELL-006-resolver-substitution: {engine} and {version} resolve per engine o
       engine,
       rootVersion,
     );
-    expect(resolved).toContain(
-      `https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v${rootVersion}/public/r/${engine}/empty.json`,
-    );
+    expect(resolved).toContain(`https://rnraielements.com/r/${engine}/empty.json`);
   }
 
   // Whole dataset x both engines: zero residual templates, and byte-parity

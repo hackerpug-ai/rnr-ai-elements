@@ -252,14 +252,15 @@ function main(): void {
   // GateError naming every offending item BEFORE a single output byte.
   runAllGates(dataset, familiesExpectation(families), project);
 
-  // SHELL-006 gate: every {engine}/{version} template in the dataset must
-  // resolve to a concrete URL for BOTH engines through the one resolver
-  // (resolve-deps.ts) — the same module the item panels resolve with, so the
-  // emitted dataset and the rendered URLs can never drift. The version is the
-  // ROOT package.json's (the sprint-01 chip's version), read here at build.
+  // SHELL-006 gate: every {engine} template in the dataset must resolve to a
+  // concrete URL for BOTH engines through the one resolver (resolve-deps.ts) —
+  // the same module the item panels resolve with, so the emitted dataset and the
+  // rendered URLs can never drift. Self-deps are same-host and unversioned
+  // (rnraielements.com) after FIX-ORI-DEP-001-1; the ROOT package.json version is
+  // still passed to the resolver, whose fail-closed semver guard stays exercised.
   const version = readJson<{ version: string }>(
     ROOT_PKG,
-    'the root package.json names the release the v{version} URLs pin to',
+    'the root package.json version feeds the resolver semver guard (self-deps are unversioned same-host)',
   ).version;
   for (const item of dataset) {
     for (const engine of ENGINES) {
