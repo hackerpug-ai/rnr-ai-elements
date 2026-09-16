@@ -1,4 +1,4 @@
-<!-- Version: TASK-TEMPLATE v5.2 · sprint-05-orient-search · human-authored FIX charter 2026-09-15 -->
+<!-- Version: TASK-TEMPLATE v5.2 · sprint-05-orient-search · human-authored FIX charter 2026-09-15 (cycle-2 remediated) -->
 
 # FIX-ORI-DEP-001-1: resolve self-referential registryDependencies from the canonical unversioned host (rnraielements.com) instead of immutable git tags
 
@@ -19,18 +19,22 @@ same-host, unversioned canonical URLs, and deletes the `{version}` substitution 
 them. Concretely, every self-dependency template changes from
 
 ```
-https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/{item}.json
+https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/<item-name>.json
 ```
 
 to
 
 ```
-https://rnraielements.com/r/{engine}/{item}.json
+https://rnraielements.com/r/{engine}/<item-name>.json
 ```
 
-This is exactly RNR's own distribution shape: one canonical host (`rnraielements.com`), unversioned
-`/r/{engine}/{item}.json` paths, no `{version}` token, no versioned paths, no registry index. RNR's
-dependencies (which we already reference as `https://reactnativereusables.com/r/{engine}/…`) stay
+(where `<item-name>` is the literal dependency name, e.g. `input-group`; `{engine}` is the only real
+substitution token in `registry.json`, and it stays).
+
+This mirrors RNR's own distribution convention — a same-host, unversioned `/r/{engine}/<item>.json` path
+per dependency, with fixes propagating by deploying the host rather than by cutting a tag. `rnraielements.com`
+is OUR canonical host (not RNR's), and we KEEP our per-engine `registry.json` index (name/type/title only).
+RNR's dependencies (which we already reference as `https://reactnativereusables.com/r/{engine}/…`) stay
 untouched — they were always unversioned same-host and remain so.
 
 The verified live defect: the deployed canonical registry at
@@ -75,27 +79,40 @@ is dropped).
 
 **RED (replay the live defect before touching source):**
 
-Fetch the live canonical registry and confirm the stale pin and the pre-fix bytes:
+Fetch the live canonical registry and confirm the stale pin and the pre-fix className token. The
+discriminator is the `files[].content` className, NOT a bare `ring-2` count — the fixed source still
+contains the literal `ring-2` once, inside a `//` comment, so a token count cannot distinguish broken from
+fixed:
 
 ```bash
 curl -s https://rnraielements.com/r/nativewind/prompt-input.json | python3 -c 'import sys,json; print(json.load(sys.stdin)["registryDependencies"])'
-# expected: ["…/reactnativereusables.com/r/nativewind/button.json", "…/reactnativereusables.com/r/nativewind/icon.json",
-#            "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/input-group.json"]
-curl -s https://rnraielements.com/r/nativewind/input-group.json | grep -c 'ring-2'
-# expected: a non-zero count (the served input-group source still carries the ring-2 crash trigger)
+# RED: ["…/reactnativereusables.com/r/nativewind/button.json", "…/reactnativereusables.com/r/nativewind/icon.json",
+#       "https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/input-group.json"]
+
+curl -s https://rnraielements.com/r/nativewind/input-group.json | python3 -c '
+import sys, json
+p = json.load(sys.stdin)
+content = "\n".join(f["content"] for f in p["files"])
+print("pre-fix className token present:", "focused && \u0027border-ring ring-2 ring-ring/50\u0027" in content)
+print("focusedStyle present:", "focusedStyle" in content)
+'
+# RED: pre-fix className token present: True ; focusedStyle present: False
 ```
 
 Record the raw response bytes (or `sha256`) of both endpoints under
 `tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/red/`. The RED is the live URL serving the
-`v0.2.1`-pinned, `ring-2`-bearing item.
+`v0.2.1`-pinned self-dep and the `ring-2`-bearing className.
 
-**GREEN (after the change, rebuild, and redeploy):**
+**GREEN (after the change, deterministic prepare, and redeploy):**
 
 1. `pnpm registry:build` regenerates `public/r/{nativewind,uniwind}/*.json` with every self-dependency as
-   `https://rnraielements.com/r/{engine}/{item}.json`; `pnpm check:registry` exits 0.
-2. The updated test suite passes — `pnpm test` (vitest logic tier) and `pnpm e2e:docs` (Playwright lane);
+   `https://rnraielements.com/r/{engine}/<item-name>.json`; `pnpm check:registry` exits 0.
+2. The scoped vitest gate (`pnpm exec vitest run tests/build-registry.test.ts
+   tests/sprint-02-shell-hero/resolve-deps.test.ts`) and the Playwright lane (`pnpm e2e:docs`) pass;
    `pnpm typecheck`, `pnpm lint`, `pnpm check:tokens`, `pnpm check:contract` all exit 0.
-3. Build the docs, redeploy the already-configured assets-only Worker, and fetch the live URL (AC-3).
+3. Build the docs, re-baseline through `scripts/docs-deploy/prepare.ts --phase bootstrap`, redeploy the
+   already-configured assets-only Worker, and fetch the live URL with the className-level discriminator
+   (AC-3).
 
 ## Scope
 
@@ -107,8 +124,12 @@ Record the raw response bytes (or `sha256`) of both endpoints under
   - tests/build-registry.test.ts (MODIFY — live assertions)
   - tests/sprint-02-shell-hero/resolve-deps.test.ts (MODIFY — live assertions)
   - tests/sprint-02-shell-hero/dependency-panels.spec.ts (MODIFY — live assertions)
-  - scripts/docs-data/prebuild.ts (MODIFY — comment-only: the SHELL-006 gate comment and the
-    `v{version}` pin comment)
+  - scripts/docs-data/prebuild.ts (MODIFY — the SHELL-006 gate comment block L255–259 AND the `readJson`
+    error-label string at L262, which is a string argument, not a comment)
+  - tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts (MODIFY — comment-only at L258, the
+    stale "check-registry-fresh reads cwd/package.json for the {version} URL substitution" line)
+  - tests/sprint-05-orient-search/evidence/ORI-DEP-001/** (RE-BASELINED by
+    `scripts/docs-deploy/prepare.ts --phase bootstrap` — see CRITICAL CONSTRAINTS and DEPENDENCIES)
   - tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/** (evidence — RED/GREEN)
   - .tmp/FIX-ORI-DEP-001-1/** (owned scratch)
 
@@ -130,8 +151,8 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 ### 🚫 CRITICAL CONSTRAINTS (Never tier — read before acting)
 
 - **The ONLY semantic change is the self-dependency host/version shape.** Self-referential
-  `registryDependencies` become `https://rnraielements.com/r/{engine}/{item}.json` — same-host, unversioned,
-  canonical. No other field, component, or behavior changes.
+  `registryDependencies` become `https://rnraielements.com/r/{engine}/<item-name>.json` — same-host,
+  unversioned, canonical. No other field, component, or behavior changes.
 - **RNR's own dependencies are untouched.** `https://reactnativereusables.com/r/{engine}/{item}.json`
   entries (146 occurrences, 14 distinct names) must remain byte-identical. The TC-6 distinct-name count
   (14) must not move.
@@ -152,6 +173,16 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 - **Keep the RNR CLI install contract working.** `registryDependencies` remain absolute `https://` URLs
   (the short-name → shadcn-web-DOM trap stays rejected). The `buildItem` absolute-URL guard (throws on a
   non-`https://` dep) is unchanged and must still fire for a bare short name.
+- **This FIX supersedes ORI-DEP-001's frozen manifest and receipt.** ORI-DEP-001 (✅ Completed) froze
+  `tests/sprint-05-orient-search/evidence/ORI-DEP-001/asset-manifest.json` (186 dist assets, 114 under
+  `r/`, `release_sha` 10d7f1de) and `release.json.conversation_assets` (sha256 of the two conversation
+  endpoints). `scripts/docs-deploy/prepare.ts` re-verify mode refuses any changed byte (`asset hash
+  mismatch`), and `conversation.json`/`message.json`/`prompt-input.json` each carry a self-dep, so this
+  FIX's registry-wide byte change moves 64 of the 114 `r/` assets and both frozen conversation hashes. The
+  new release's `asset-manifest.json` + `release.json` (produced by a fresh
+  `prepare.ts --phase bootstrap` run plus the attended `wrangler deploy`) become the accepted baseline
+  consumed by ORI-DEP-002, ORI-DEP-003, and ORI-CI-004. The deploy MUST go through the deterministic
+  prepare chain — never a bare `wrangler deploy` over a stale dist.
 - **The deploy is an assets-only publish of the already-configured Worker** `rnr-ai-elements-docs`
   (`apps/docs/wrangler.jsonc`): assets directory `./dist`, apex route `rnraielements.com`, no application
   entrypoint, no bindings, no new routes, no cache policy, no Pages config. Do NOT edit `wrangler.jsonc`.
@@ -162,89 +193,100 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 
 ### DONE WHEN
 
-- AC-1: every self-referential `registryDependencies` in `registry.json` and in the regenerated
-  `public/r/**` is `https://rnraielements.com/r/{engine}/{item}.json`; no `raw.githubusercontent.com` and no
-  `v{version}` remain in self-deps; RNR's own deps are unchanged.
-- AC-2: the repo is consistent — `pnpm registry:build && pnpm check:registry` exit 0; `pnpm test`
-  (vitest logic tier) and `pnpm e2e:docs` (Playwright lane) pass with the updated assertions;
-  `pnpm typecheck`, `pnpm lint`, `pnpm check:tokens`, `pnpm check:contract` pass; `git diff --name-only`
-  lists only the allowed paths.
-- AC-3: after the docs build and an assets-only `wrangler deploy`, a real public HTTPS fetch of
+- AC-1: every self-referential `registryDependencies` in `registry.json` is
+  `https://rnraielements.com/r/{engine}/<item-name>.json` (token form) and in the regenerated
+  `public/r/**` is `https://rnraielements.com/r/{engine}/<item-name>.json` (substituted form); no
+  `raw.githubusercontent.com` and no `v{version}` remain in self-deps; RNR's own deps are unchanged.
+- AC-2: the repo is consistent — `pnpm registry:build && pnpm check:registry` exit 0; the scoped vitest
+  gate and `pnpm e2e:docs` pass with the updated assertions; `pnpm typecheck`, `pnpm lint`,
+  `pnpm check:tokens`, `pnpm check:contract` pass; `git diff --name-only` lists only the allowed paths.
+- AC-3: after the deterministic prepare + assets-only `wrangler deploy`, a real public HTTPS fetch of
   `https://rnraielements.com/r/nativewind/prompt-input.json` shows its `input-group` dependency resolving to
-  `https://rnraielements.com/r/nativewind/input-group.json`, and that URL returns the FIXED source (no
-  `ring-2`).
+  `https://rnraielements.com/r/nativewind/input-group.json`, and that URL's `files[].content` carries
+  `focusedStyle` + `borderWidth: 2` and NO `'border-ring ring-2 ring-ring/50'` className token.
 
 ### ACCEPTANCE CRITERIA (TDD beads — happy-path first)
 
 **AC-1: every self-dependency resolves from the canonical unversioned host; RNR deps untouched**
 
   GIVEN `packages/registry/registry.json` carrying 64 self-dependency URLs of the form
-  `https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/{item}.json`
-  WHEN each is rewritten to `https://rnraielements.com/r/{engine}/{item}.json` and `pnpm registry:build`
-  runs THEN every self-dependency in `registry.json` and in every regenerated `public/r/{nativewind,uniwind}/*.json`
-  matches `^https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[\w.-]+\.json$`; no self-dependency
-  contains `raw.githubusercontent.com`, `v{version}`, or `/main/`; and every
-  `https://reactnativereusables.com/r/{engine}/{item}.json` entry is byte-identical to before (14 distinct
-  names, 146 occurrences unchanged).
+  `https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/<item-name>.json`
+  WHEN each is rewritten to `https://rnraielements.com/r/{engine}/<item-name>.json` and `pnpm registry:build`
+  runs THEN:
+  (a) every self-dependency in `registry.json` (the TOKEN form) matches
+  `^https:\/\/rnraielements\.com\/r\/\{engine\}\/[\w.-]+\.json$` and contains no `raw.githubusercontent.com`,
+  no `v{version}`, no `/main/`; and
+  (b) every self-dependency in every regenerated `public/r/{nativewind,uniwind}/*.json` (the SUBSTITUTED
+  form) matches `^https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[\w.-]+\.json$`; and
+  (c) every `https://reactnativereusables.com/r/{engine}/{item}.json` entry is byte-identical to before
+  (14 distinct names, 146 occurrences unchanged).
 
   FLOW_REF: None · TEST_TIER: integration · verification_service: real `git diff` + `pnpm registry:build` over the real registry.json
-  VERIFY: `git diff packages/registry/registry.json && pnpm registry:build && node -e '…count self vs RNR deps…'`
-  TEST_FILE: packages/registry/registry.json + public/r/{nativewind,uniwind}/** · TEST_FUNCTION: (self-dep host/version shape; RNR deps unchanged)
+  VERIFY: `git diff packages/registry/registry.json && pnpm registry:build && node -e '…count self vs RNR deps, assert the token form in registry.json and the substituted form in public/r…'`
+  TEST_FILE: packages/registry/registry.json + public/r/{nativewind,uniwind}/** · TEST_FUNCTION: (self-dep host/version shape, token vs substituted form; RNR deps unchanged)
 
-**AC-2: the repo is consistent — freshness, tests, and allowed-path diff**
+**AC-2: the repo is consistent — freshness, scoped tests, and allowed-path diff**
 
   GIVEN the rewritten registry and the removed `{version}` machinery WHEN `pnpm registry:build && pnpm check:registry`
-  run THEN both exit 0 (the shipped `public/r/**` matches a fresh in-memory build), and the updated logic-tier
-  suite `pnpm test` (vitest `tests/**/*.test.ts` — covers `build-registry.test.ts` and
-  `resolve-deps.test.ts`), the Playwright lane `pnpm e2e:docs` (covers `dependency-panels.spec.ts`), plus
-  `pnpm typecheck`, `pnpm lint`, `pnpm check:tokens`, `pnpm check:contract` all exit 0 with the updated
-  assertions, and `git diff --name-only` lists only the WRITE-ALLOWED paths.
+  run THEN both exit 0 (the shipped `public/r/**` matches a fresh in-memory build), and the scoped
+  logic-tier gate `pnpm exec vitest run tests/build-registry.test.ts tests/sprint-02-shell-hero/resolve-deps.test.ts`
+  (covers the two modified `.test.ts` files; the Playwright `dependency-panels.spec.ts` is covered by
+  `pnpm e2e:docs`) plus `pnpm typecheck`, `pnpm lint`, `pnpm check:tokens`, `pnpm check:contract` all exit 0
+  with the updated assertions, and `git diff --name-only` lists only the WRITE-ALLOWED paths.
 
-  FLOW_REF: None · TEST_TIER: integration · verification_service: real `pnpm registry:build` + `pnpm check:registry` + vitest + playwright + tsc + biome + token/contract gates
-  VERIFY: `pnpm registry:build && pnpm check:registry && pnpm test && pnpm e2e:docs && pnpm typecheck && pnpm lint && pnpm check:tokens && pnpm check:contract && git diff --name-only`
+  FLOW_REF: None · TEST_TIER: integration · verification_service: real `pnpm registry:build` + `pnpm check:registry` + scoped vitest + playwright + tsc + biome + token/contract gates
+  VERIFY: `pnpm registry:build && pnpm check:registry && pnpm exec vitest run tests/build-registry.test.ts tests/sprint-02-shell-hero/resolve-deps.test.ts && pnpm e2e:docs && pnpm typecheck && pnpm lint && pnpm check:tokens && pnpm check:contract && git diff --name-only`
   TEST_FILE: public/r/** + the modified tests · TEST_FUNCTION: (freshness + the updated assertions)
 
 **AC-3: the live canonical registry serves the unversioned self-dep and the fixed source (the real proof)**
 
-  GIVEN the docs built and the already-configured assets-only Worker redeployed WHEN a real public HTTPS
-  fetch hits `https://rnraielements.com/r/nativewind/prompt-input.json` THEN its `registryDependencies`
-  contains `https://rnraielements.com/r/nativewind/input-group.json` (no `raw.githubusercontent.com`, no
-  `v0.2.1`), and a fetch of `https://rnraielements.com/r/nativewind/input-group.json` returns the FIXED
-  source (0 occurrences of `ring-2`). RED before the change: the live `prompt-input.json` pins
-  `…/v0.2.1/public/r/nativewind/input-group.json` and the served `input-group.json` carries `ring-2`.
-  Capture the raw response bytes/hashes for both RED and GREEN under
+  GIVEN the docs built through the deterministic prepare chain and the already-configured assets-only
+  Worker redeployed WHEN a real public HTTPS fetch hits `https://rnraielements.com/r/nativewind/prompt-input.json`
+  THEN its `registryDependencies` contains `https://rnraielements.com/r/nativewind/input-group.json` (no
+  `raw.githubusercontent.com`, no `v0.2.1`), and a fetch of
+  `https://rnraielements.com/r/nativewind/input-group.json` returns `files[].content` whose className
+  contains `focusedStyle` AND `borderWidth: 2` AND does NOT contain the pre-fix className token
+  `'border-ring ring-2 ring-ring/50'` (nor any `ring-2` in a `focused && '…'` className position). The bare
+  `ring-2` token count is reported only as a DIAGNOSTIC — the fixed source still contains `ring-2` once, in
+  a `//` comment, so the count is 1 before and 1 after and cannot be the oracle. RED before the change: the
+  live `prompt-input.json` pins `…/v0.2.1/public/r/nativewind/input-group.json`, and the served
+  `input-group.json` `files[].content` contains `'border-ring ring-2 ring-ring/50'` with `focusedStyle`
+  absent. Capture the raw response bytes/hashes for both RED and GREEN under
   `tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/`.
 
-  EVIDENCE — the deploy proof must be a REAL public fetch, not a canned receipt and not mocked HTTP. Record
-  the `wrangler whoami` account, the `wrangler deploy` output (version ID), and the `curl` response bodies
-  (with `sha256`) for both endpoints. No stub, no localhost host substitution, no simulated deployment.
+  EVIDENCE — the deploy proof must be a REAL public fetch, not a canned receipt and not mocked HTTP, and
+  the deploy must run through the deterministic prepare chain (not a bare `wrangler deploy` over a stale
+  dist). Record the `wrangler whoami` account, the `wrangler deploy` output (version ID), and the `curl`
+  response bodies (with `sha256`) for both endpoints. No stub, no localhost host substitution, no simulated
+  deployment.
 
-  FLOW_REF: None · TEST_TIER: e2e · verification_service: real Cloudflare account + `wrangler deploy` of the configured Worker + public HTTPS fetch of rnraielements.com
-  VERIFY: `pnpm --dir apps/docs exec wrangler whoami && pnpm --dir apps/docs exec wrangler deploy --config wrangler.jsonc && curl -s https://rnraielements.com/r/nativewind/prompt-input.json && curl -s https://rnraielements.com/r/nativewind/input-group.json | grep -c ring-2`
-  TEST_FILE: (live public HTTP responses, byte/hash-captured under evidence) · TEST_FUNCTION: (unversioned self-dep + fixed source, documented in evidence)
+  FLOW_REF: None · TEST_TIER: e2e · verification_service: real Cloudflare account + deterministic `prepare.ts --phase bootstrap` + `wrangler deploy` of the configured Worker + public HTTPS fetch of rnraielements.com
+  VERIFY: `pnpm registry:build && pnpm gallery:manifest && pnpm --dir apps/docs run prebuild && pnpm typecheck && pnpm lint && pnpm check:tokens && pnpm check:contract && pnpm check:registry && pnpm --dir apps/docs exec astro build && pnpm exec tsx scripts/docs-deploy/prepare.ts --phase bootstrap --source <NEW_HEAD_SHA> --evidence tests/sprint-05-orient-search/evidence/ORI-DEP-001 && pnpm --dir apps/docs exec wrangler whoami && pnpm --dir apps/docs exec wrangler deploy --config wrangler.jsonc && pnpm exec tsx tests/sprint-05-orient-search/public-http.test.ts --phase bootstrap --origin https://rnraielements.com --receipt tests/sprint-05-orient-search/evidence/ORI-DEP-001/release.json && curl -s https://rnraielements.com/r/nativewind/prompt-input.json && curl -s https://rnraielements.com/r/nativewind/input-group.json | python3 -c '…className-level discriminator…'`
+  TEST_FILE: (live public HTTP responses, byte/hash-captured under evidence) · TEST_FUNCTION: (unversioned self-dep + className-level fixed-source discriminator, documented in evidence)
 
 ### TEST CRITERIA
 
 - TC-1 → AC-1: `git diff packages/registry/registry.json` shows only the 64 self-dependency lines changing
-  from the `v{version}` GitHub template to `https://rnraielements.com/r/{engine}/{item}.json`; every RNR
-  `reactnativereusables.com` line is untouched; no `raw.githubusercontent.com` or `v{version}` remains in
-  `registry.json`.
+  from the `v{version}` GitHub template to `https://rnraielements.com/r/{engine}/<item-name>.json` (the
+  literal dependency name, no `{item}` token); every RNR `reactnativereusables.com` line is untouched; no
+  `raw.githubusercontent.com` or `v{version}` remains in `registry.json`.
 - TC-2 → AC-1: after `pnpm registry:build`, a scan of `public/r/{nativewind,uniwind}/*.json` finds 0
   self-deps containing `raw.githubusercontent.com`, `v{version}`, or `/main/`, and 64 (32 items × 2 engines)
   self-deps matching `https://rnraielements.com/r/(nativewind|uniwind)/[\\w.-]+.json`; the 14 distinct RNR
-  dep names are unchanged (146 occurrences, 48 items).
+  dep names are unchanged (146 occurrences, 48 items). (Token form in `registry.json` is asserted
+  separately in TC-1, not by this substituted-form regex.)
 - TC-3 → AC-2: `pnpm registry:build && pnpm check:registry` exits 0; the regenerated `public/r` differs
   from HEAD only in the `registryDependencies` arrays (no component `content` or manifest metadata drift).
-- TC-4 → AC-2: the updated `tests/build-registry.test.ts` and `tests/sprint-02-shell-hero/resolve-deps.test.ts`
-  pass under `pnpm test` (vitest `tests/**/*.test.ts`), and `tests/sprint-02-shell-hero/dependency-panels.spec.ts`
-  passes under `pnpm e2e:docs` (Playwright `tests/**/*.spec.ts`); `pnpm typecheck`, `pnpm lint`,
+- TC-4 → AC-2: `pnpm exec vitest run tests/build-registry.test.ts tests/sprint-02-shell-hero/resolve-deps.test.ts`
+  passes and `pnpm e2e:docs` (Playwright `dependency-panels.spec.ts`) passes; `pnpm typecheck`, `pnpm lint`,
   `pnpm check:tokens`, `pnpm check:contract` exit 0; `git diff --name-only` lists only the WRITE-ALLOWED
   paths (not `.tmp/`, not `design/goldens/`, not `.spec/`, not `tests/sprint-01/install-evidence.test.ts`).
 - TC-5 → AC-3: RED (pre-change) evidence shows the live `prompt-input.json` pinning
-  `…/v0.2.1/…/input-group.json` and the live `input-group.json` carrying `ring-2`; GREEN (post-deploy)
-  evidence shows `prompt-input.json`'s `input-group` dependency as
-  `https://rnraielements.com/r/nativewind/input-group.json` and that URL serving 0 `ring-2` occurrences,
-  with the raw response bytes/hashes captured under
+  `…/v0.2.1/…/input-group.json` and the live `input-group.json` `files[].content` carrying
+  `'border-ring ring-2 ring-ring/50'` with `focusedStyle` absent; GREEN (post-deploy) evidence shows
+  `prompt-input.json`'s `input-group` dependency as `https://rnraielements.com/r/nativewind/input-group.json`
+  and that URL's `files[].content` carrying `focusedStyle` + `borderWidth: 2` and NOT carrying
+  `'border-ring ring-2 ring-ring/50'`, with the raw response bytes/hashes captured under
   `tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/`.
 
 ### SCOPE (file-level write permissions)
@@ -256,7 +298,9 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 - tests/build-registry.test.ts (MODIFY)
 - tests/sprint-02-shell-hero/resolve-deps.test.ts (MODIFY)
 - tests/sprint-02-shell-hero/dependency-panels.spec.ts (MODIFY)
-- scripts/docs-data/prebuild.ts (MODIFY — comment-only)
+- scripts/docs-data/prebuild.ts (MODIFY — SHELL-006 gate comment L255–259 + readJson error-label string L262)
+- tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts (MODIFY — comment-only L258)
+- tests/sprint-05-orient-search/evidence/ORI-DEP-001/** (RE-BASELINED by prepare.ts --phase bootstrap)
 - tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/** (evidence)
 - .tmp/FIX-ORI-DEP-001-1/** (owned scratch)
 
@@ -267,17 +311,24 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 - tokens: `pnpm check:tokens`
 - contract: `pnpm check:contract`
 - registry: `pnpm registry:build && pnpm check:registry`
-- test (logic tier): `pnpm test` — covers `tests/**/*.test.ts` (`build-registry.test.ts`, `resolve-deps.test.ts`)
+- test (logic tier, SCOPED): `pnpm exec vitest run tests/build-registry.test.ts tests/sprint-02-shell-hero/resolve-deps.test.ts`
 - test (playwright lane): `pnpm e2e:docs` — covers `tests/**/*.spec.ts` (`dependency-panels.spec.ts`)
+- deploy (deterministic): `pnpm exec tsx scripts/docs-deploy/prepare.ts --phase bootstrap --source <NEW_HEAD_SHA> --evidence tests/sprint-05-orient-search/evidence/ORI-DEP-001` then the attended `wrangler deploy`
 
 ### DEPENDENCIES
 
 - Depends on: ORI-DEP-001 (the initial Workers deployment + canonical registry prerequisite — the
-  already-configured `rnr-ai-elements-docs` Worker and `rnraielements.com` route this FIX redeploys),
-  FIX-ORI-RN-003-2 (the `input-group` `ring-2` fix whose propagation this FIX unblocks — the fixed source
-  is the GREEN signal)
+  already-configured `rnr-ai-elements-docs` Worker and `rnraielements.com` route this FIX redeploys, and the
+  frozen manifest/receipt this FIX supersedes), FIX-ORI-RN-003-2 (the `input-group` `ring-2` className fix
+  whose propagation this FIX unblocks — the fixed `files[].content` is the GREEN signal)
 - Blocks: ORI-RN-003 (its quickstart cannot consume the fixed `input-group` until the canonical host serves
   it unversioned)
+- Supersedes (re-baseline handoff): ORI-DEP-002, ORI-DEP-003, ORI-CI-004 consume the accepted
+  `asset-manifest.json`/`release.json` baseline. This FIX produces that new baseline; those Backlog tasks
+  MUST be re-seeded against the NEW release rather than ORI-DEP-001's `10d7f1de` manifest. (ORI-DEP-002
+  `must_observe` "bytes whose SHA-256 match both the prerequisite release and the accepted manifest";
+  ORI-DEP-003 AC-4 requires "all 112 public registry item hashes and both index hashes equal the accepted
+  prepublication manifest" — that accepted manifest is now THIS FIX's output, not 10d7f1de.)
 - Parallel: none (registry-wide edit; do not race other registry edits)
 
 ### READING LIST (max 5)
@@ -285,8 +336,8 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 - packages/registry/scripts/build-registry.ts (the `{version}`/`VERSION_TOKEN`/`currentVersion()` machinery and the header comment on RNR's never-version-substituted deps)
 - packages/registry/registry.json (the 64 self-dependency URLs to rewrite)
 - tests/build-registry.test.ts (the TC-3/TC-4/TC-5 assertions pinning the old `v{version}` shape)
-- apps/docs/wrangler.jsonc + scripts/docs-deploy/prepare.ts (the assets-only Worker config and the deterministic deploy-prep chain this FIX redeploys)
-- ORI-DEP-001 charter (the verified account `d5110b1895ee190e145c0c8756f49879`, zone, and the `wrangler deploy` authority/proof discipline)
+- scripts/docs-deploy/prepare.ts (the deterministic deploy-prep chain this FIX re-runs to re-baseline the ORI-DEP-001 manifest) + tests/sprint-05-orient-search/public-http.test.ts (the preparation/public-HTTP proof, `--phase bootstrap`)
+- ORI-DEP-001 charter + `tests/sprint-05-orient-search/evidence/ORI-DEP-001/` (the verified account `d5110b1895ee190e145c0c8756f49879`, zone, frozen manifest/receipt this FIX supersedes)
 
 ### CODING STANDARDS
 
@@ -297,9 +348,14 @@ shown in the gallery demo snippet (`apps/example/gallery/cells/ui.tsx` documents
 — so the real function and its public documentation agree. Delete `VERSION_TOKEN` and `currentVersion()`
 and the `version` parameter rather than leaving them inert; update the file header and the `buildItem`
 doc comment to say the only substitutions are the alias segment and the `{engine}` token. In the tests,
-assert the NEW invariants: self-deps match `^https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[\w.-]+\.json$`,
-RNR deps keep their 14 distinct names, and no emitted item carries a residual `{engine}` token or a
-`/main/` segment. Do not weaken the distinct-RNR-name count (14) or the absolute-URL guard.
+assert the NEW invariants: the TOKEN form `^https:\/\/rnraielements\.com\/r\/\{engine\}\/[\w.-]+\.json$` in
+`registry.json` and the SUBSTITUTED form `^https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[\w.-]+\.json$`
+in `public/r/**` (two distinct checks — do not apply one engine-substituted regex to both), RNR deps keep
+their 14 distinct names, and no emitted item carries a residual `{engine}` token or a `/main/` segment. Do
+not weaken the distinct-RNR-name count (14) or the absolute-URL guard. The implementation commit runs the
+REAL gates (typecheck/lint/tokens/contract/registry + scoped vitest) with no hook bypass — the authoring
+commit's `core.hooksPath=/dev/null` bypass was a one-off for a markdown spec, not a license for the code
+commit.
 
 ## OPEN QUESTIONS (stated, not resolved here)
 
@@ -326,6 +382,15 @@ RNR deps keep their 14 distinct names, and no emitted item carries a residual `{
   (observed 2026-09-14/15), but the implementer must re-run
   `pnpm --dir apps/docs exec wrangler whoami` before deploying to confirm live authority — it cannot be
   re-confirmed from the repo alone in this authoring session.
+- **`tests/sprint-05-orient-search/public-http.test.ts` is a script, not a vitest suite.** It matches
+  vitest's `include` glob (`tests/**/*.test.ts`; `exclude` only adds `**/node_modules/**` and `apps/**`),
+  contains zero `describe`/`it`, and its `main()` is guarded by `import.meta.url === process.argv[1]`, so
+  `vitest run` collects it as `(0 test)` and fails `No test suite found in file` — a PRE-EXISTING failure
+  in `pnpm test` and CI (`ci.yml` `pnpm exec vitest run`) unrelated to this FIX. AC-2 therefore scopes its
+  vitest gate to the two affected files and does NOT assert a full `pnpm test` green. The implementer must
+  record the pre-existing failure with the AGENTS.md `git stash && rerun` proof before dismissing it. A
+  follow-up FIX may add a vitest `exclude` for this script-style file (out of this FIX's scope — it would
+  touch `vitest.config.ts`, which is not in WRITE-ALLOWED).
 
 ## Behavior change to an accepted earlier sprint
 
@@ -337,3 +402,41 @@ the panel will now show `https://rnraielements.com/r/{engine}/{item}.json`. The 
 unversioned same-host form — not weakened, and not deleted. The residual-token guards
 (`not.toContain('{version}')` in `item-pages-build.test.ts` and `item-install-copy.spec.ts`) continue to
 pass unchanged and stay.
+
+## Amendments
+
+- Cycle-2 remediation (independent reviewer NEEDS_FIXES, DOC-F1..DOC-F9):
+  - DOC-F1 (non-discriminating AC-3/TC-5 oracle) — replaced the bare `grep -c ring-2` discriminator with a
+    className-level assertion on the served `files[].content`: GREEN requires PRESENCE of `focusedStyle` +
+    `borderWidth: 2` and ABSENCE of the pre-fix className token `'border-ring ring-2 ring-ring/50'` (the
+    fixed source still contains `ring-2` once, inside a `//` comment, so the token count is 1 before and 1
+    after); the bare count is now diagnostic-only, and the RED expected value is the pre-fix className token
+    present + `focusedStyle` absent (not "a non-zero count").
+  - DOC-F2 (supersedes ORI-DEP-001 frozen manifest/receipt) — added
+    `tests/sprint-05-orient-search/evidence/ORI-DEP-001/**` to WRITE-ALLOWED (re-baselined by
+    `prepare.ts --phase bootstrap` fresh + the attended `wrangler deploy`), added a CRITICAL CONSTRAINT
+    stating this FIX supersedes the `10d7f1de` manifest/receipt and that the new baseline is consumed by
+    ORI-DEP-002/ORI-DEP-003/ORI-CI-004, and extended DEPENDENCIES with a "Supersedes" handoff naming all
+    three Backlog tasks.
+  - DOC-F3 (unachievable `pnpm test` gate) — scoped AC-2's vitest gate to
+    `pnpm exec vitest run tests/build-registry.test.ts tests/sprint-02-shell-hero/resolve-deps.test.ts`,
+    added an OPEN QUESTION recording the pre-existing `public-http.test.ts` (0-test) failure with the
+    `git stash && rerun` proof requirement, and updated the VERIFICATION GATES accordingly.
+  - DOC-F4 (one regex applied to two shapes) — split AC-1 into two checks: the `{engine}` token form in
+    `registry.json` vs the engine-substituted form in `public/r/**`.
+  - DOC-F5 (`{item}` is not a token) — rewrote the template as
+    `…/public/r/{engine}/<item-name>.json` (literal dependency name), and corrected the code blocks.
+  - DOC-F6 (prebuild.ts L262 is a string, not a comment; stale sdk57 comment) — corrected the
+    `prebuild.ts` label to "SHELL-006 gate comment L255–259 + readJson error-label string L262", and added
+    `tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts` (comment-only L258) to WRITE-ALLOWED.
+  - DOC-F7 (AC-3 VERIFY had no build step) — embedded the ordered build + `prepare.ts --phase bootstrap` +
+    `wrangler deploy` + `public-http.test.ts --phase bootstrap` into AC-3's VERIFY, and reconciled the
+    READING LIST to name `prepare.ts` and `public-http.test.ts`.
+  - DOC-F8 (hook bypass) — added a CODING STANDARDS sentence stating the implementation commit runs the
+    real gates with no repeat bypass; the authoring commit's `core.hooksPath=/dev/null` was a one-off for a
+    markdown spec.
+  - DOC-F9 (wording overstatement) — reworded "This is exactly RNR's own distribution shape" to state
+    `rnraielements.com` is OUR host and we KEEP the per-engine `registry.json` index.
+  - The verified diagnosis, counts (56 items / 32 self-dep items / 64 self-dep URLs / 19 distinct names /
+    146 RNR URLs / 14 distinct RNR names), and the `{version}`-machinery-removal decision are otherwise
+    unchanged.
