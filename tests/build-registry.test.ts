@@ -6,6 +6,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import {
   buildItem,
   ENGINES,
+  type Registry,
   type RegistryItem,
   resolveEngine,
   rewriteSource,
@@ -75,12 +76,12 @@ describe('engine fan-out', () => {
     );
   });
 
-  it('accepts an intra-registry absolute URL', () => {
-    const deps = [
-      'https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/main/public/r/{engine}/message.json',
-    ];
+  it('accepts a same-host unversioned self-dependency URL', () => {
+    const deps = ['https://rnraielements.com/r/{engine}/message.json'];
     const built = buildItem(item({ registryDependencies: deps }), 'nativewind', () => '');
-    expect(built.registryDependencies?.[0]).toContain('/nativewind/message.json');
+    expect(built.registryDependencies?.[0]).toBe(
+      'https://rnraielements.com/r/nativewind/message.json',
+    );
   });
 });
 
@@ -107,9 +108,10 @@ describe('UC-REG-01/edge-a-short-name-registry-dependency', () => {
 
   const itemFiles = () => emitted.filter(({ file }) => !file.endsWith('registry.json'));
 
-  it('keeps package.json, the release tag and the emitted URLs on one version', () => {
-    // AC-2 GIVEN. Version-agnostic since v0.2.0: the emitted URLs below must pin
-    // whatever package.json carries, so a release bump needs no test edit.
+  it('package.json still carries a semver version (release receipts and the docs resolver guard)', () => {
+    // Version is no longer substituted into self-deps (they are same-host and
+    // unversioned after FIX-ORI-DEP-001-1), but the repo still versions package.json
+    // for releases and the attended-deploy receipts.
     expect(PKG_VERSION, 'package.json version').toMatch(/^\d+\.\d+\.\d+$/);
   });
 
@@ -132,38 +134,51 @@ describe('UC-REG-01/edge-a-short-name-registry-dependency', () => {
     );
   });
 
-  it('substitutes {version} and {engine} in one resolveEngine pass (TC-3)', () => {
-    const out = resolveEngine(
-      'https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v{version}/public/r/{engine}/message.json',
-      'nativewind',
-      PKG_VERSION,
+  it('every self-dependency in registry.json is the unversioned same-host token form (TC-3)', () => {
+    const registry = JSON.parse(
+      readFileSync(join(ROOT, 'packages/registry/registry.json'), 'utf8'),
+    ) as Registry;
+    const selfDeps = registry.items.flatMap(
+      (i) =>
+        i.registryDependencies?.filter((d) => !d.startsWith('https://reactnativereusables.com/')) ??
+        [],
     );
-    expect(out).toBe(
-      `https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v${PKG_VERSION}/public/r/nativewind/message.json`,
-    );
+    expect(selfDeps.length, 'self-dependency URLs in registry.json').toBe(64);
+    for (const dep of selfDeps) {
+      expect(dep, 'self-dep token form').toMatch(
+        /^https:\/\/rnraielements\.com\/r\/\{engine\}\/[\w.-]+\.json$/,
+      );
+      expect(dep).not.toContain('raw.githubusercontent.com');
+      expect(dep).not.toContain('v{version}');
+      expect(dep).not.toContain('/main/');
+    }
   });
 
-  it('pins every self-referencing URL to v0.1.0 with no /main/ and no leftover token (TC-4/TC-5)', () => {
-    let selfUrls = 0;
+  it('emits every self-dependency as the unversioned same-host substituted form (TC-4/TC-5)', () => {
+    const selfUrlRe = /^https:\/\/rnraielements\.com\/r\/(nativewind|uniwind)\/[\w.-]+\.json$/;
+    const counts = { nativewind: 0, uniwind: 0 };
     for (const { file, text } of emitted) {
       if (!file.endsWith('registry.json')) {
         for (const dep of (JSON.parse(text) as RegistryItem).registryDependencies ?? []) {
-          if (!dep.startsWith('https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/')) {
+          if (!dep.startsWith('https://rnraielements.com/')) {
             continue;
           }
-          selfUrls++;
-          expect(dep, `${file}: self URL not tag-pinned`).toMatch(
-            new RegExp(
-              `^https:\\/\\/raw\\.githubusercontent\\.com\\/hackerpug-ai\\/rnr-ai-elements\\/v${PKG_VERSION.replace(/\./g, '\\.')}\\/public\\/r\\/(nativewind|uniwind)\\/[\\w.-]+\\.json$`,
-            ),
-          );
+          expect(dep, `${file}: self-dep substituted form`).toMatch(selfUrlRe);
+          const engine = file.startsWith('nativewind/') ? 'nativewind' : 'uniwind';
+          counts[engine]++;
         }
       }
       expect(text.includes('/main/public/r/'), `${file}: mutable /main/ segment`).toBe(false);
+      expect(
+        text.includes('raw.githubusercontent.com'),
+        `${file}: immutable-tag self-dep remains`,
+      ).toBe(false);
       expect(text.includes('{version}'), `${file}: unsubstituted {version} token`).toBe(false);
       expect(text.includes('{engine}'), `${file}: unsubstituted {engine} token`).toBe(false);
     }
-    expect(selfUrls, 'self-referencing URLs checked').toBeGreaterThan(0);
+    // The 64 self-dep URLs in registry.json fan out per engine: 64 nativewind + 64 uniwind.
+    expect(counts.nativewind, 'self-dep occurrences in the nativewind tree').toBe(64);
+    expect(counts.uniwind, 'self-dep occurrences in the uniwind tree').toBe(64);
   });
 
   it('leaves all 14 distinct RNR dependencies unpinned on reactnativereusables.com (TC-6)', () => {

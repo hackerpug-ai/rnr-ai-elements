@@ -255,7 +255,9 @@ export function staleRejectionCheck(): RunResult {
   const version = (
     JSON.parse(readFileSync(join(REPO_ROOT, 'package.json'), 'utf8')) as { version: string }
   ).version;
-  // check-registry-fresh reads cwd/package.json for the {version} URL substitution.
+  // check-registry-fresh compares the copied public/r against a fresh in-memory
+  // build — self-deps are unversioned same-host after FIX-ORI-DEP-001-1, so it
+  // no longer reads package.json for a {version} substitution.
   writeFileSync(
     join(STALE_WS, 'package.json'),
     `${JSON.stringify({ name: 'ori-rn-000-stale-check', private: true, version }, null, 2)}\n`,
