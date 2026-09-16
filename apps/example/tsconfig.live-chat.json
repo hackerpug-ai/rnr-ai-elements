@@ -1,7 +1,15 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    "types": ["uniwind/types"]
   },
-  "include": ["lib/live-chat-config.ts", "lib/use-live-chat.ts"]
+  "include": [
+    "expo-env.d.ts",
+    "lib/live-chat-config.ts",
+    "lib/use-live-chat.ts",
+    "components/live-chat-message.tsx",
+    "components/live-chat-screen.tsx",
+    "app/live-chat.tsx"
+  ]
 }
