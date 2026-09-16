@@ -1,0 +1,20 @@
+ORI-RN-003 cycle-3 GREEN — run ORI-RN-003-2026-09-16T02-26-26-076Z (both FIXes landed)
+
+Six engine/platform legs (native legs = light+dark), all PASS:
+  nativewind/ios     PASSED (light + dark) — composer renders, send tappable, no navigation-context error
+  nativewind/android PASSED (light + dark)
+  nativewind/web     PASSED
+  uniwind/ios        PASSED (light + dark)
+  uniwind/android    PASSED (light + dark)
+  uniwind/web        PASSED
+
+passed_legs = 6, completed = true. The cycle-2 blocker is resolved: FIX-ORI-RN-003-2 removed the
+`ring-*` utilities from InputGroup's focused className (the `Couldn't find a navigation context`
+trigger) and FIX-ORI-DEP-001-1 redeployed the registry so a fresh recipe install receives the fixed
+input-group (live-verified: `'border-ring ring-2 ring-ring/50'` ABSENT, `focusedStyle`/`borderWidth: 2`
+PRESENT). nativewind metro.log has ZERO 'navigation context' errors this cycle (cycle-2 had four).
+
+Negative control (AC-4) green: disconnected callback fails (marker count 0), byte-exact restore passes.
+
+Evidence: run-manifest.json, 8 native screenshots, metro logs, per-leg session.json, negative-control.json
+under tests/sprint-05-orient-search/evidence/ORI-RN-003/.
