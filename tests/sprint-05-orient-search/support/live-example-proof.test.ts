@@ -223,6 +223,24 @@ function runLiveMaestro(deviceId: string, env: Record<string, string>): MaestroR
   return { exit: res.status ?? -1, output: `${res.stdout ?? ''}${res.stderr ?? ''}` };
 }
 
+/**
+ * Taps an element via Maestro's accessibility-based `tapOn` (which dispatches to the
+ * element's accessibility node, so it lands even when a raw `adb input tap` at the
+ * same coordinates is intercepted by the RN LogBox overlay). `selector` is a Maestro
+ * text regex, e.g. `Message.*`, `Send message`, `Stop generating`, `Dismiss`.
+ * Writes a one-off flow to a temp file and runs it. Returns true on success.
+ */
+function maestroTap(deviceId: string, selector: string): boolean {
+  const flowPath = join(tmpdir(), `ori-rn-004-tap-${process.pid}-${Date.now()}.yaml`);
+  writeFileSync(flowPath, `appId: host.exp.Exponent\n---\n- tapOn: ${JSON.stringify(selector)}\n`);
+  const res = spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
+    encoding: 'utf8',
+    timeout: 60_000,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  return res.status === 0;
+}
+
 /* --------------------------------------------- android adb-driven input -- */
 
 /**
@@ -248,17 +266,44 @@ function adbTypeText(serial: string, text: string): void {
   adbExec(serial, ['shell', 'input', 'text', encoded]);
 }
 
-/** Dismisses the soft keyboard (KEYCODE_BACK) so the send control is reachable. */
+/** Whether the soft keyboard (IME) is currently shown. Reads `dumpsys input_method`
+ * (mInputShown) and `dumpsys window` (mIsImeShowing) — both must agree the IME is up. */
+function imeShown(serial: string): boolean {
+  const inputMethod = adbExec(serial, ['shell', 'dumpsys', 'input_method']);
+  const windowDump = adbExec(serial, ['shell', 'dumpsys', 'window']);
+  return /\bmInputShown=true\b/.test(inputMethod) || /\bmIsImeShowing=true\b/.test(windowDump);
+}
+
+/** Dismisses the soft keyboard ONLY when an IME is actually shown. Sending BACK
+ * with no IME up propagates to the Activity and navigates away from /live-chat. */
 function hideKeyboard(serial: string): void {
+  if (!imeShown(serial)) return;
   adbExec(serial, ['shell', 'input', 'keyevent', '4']);
   spawnSync('sleep', ['1']);
 }
 
-/** Taps the composer field and waits for it to gain focus (keyboard settle). */
+/** Whether the `Message` field currently reports `focused=true`. */
+function fieldFocused(serial: string): boolean {
+  const els = parseUiHierarchy(captureHierarchy(serial));
+  const field = els.find((e) => e.accessibilityText === 'Message');
+  return field?.focused === 'true';
+}
+
+/** Taps the composer field, then polls until it actually reports `focused=true`
+ * (re-dismissing the LogBox and re-tapping a bounded number of times). Returns
+ * false with no focus after the retries — an intercepted tap is then a hard fail,
+ * not an indistinguishable "typed text reverted". */
 function focusField(serial: string): boolean {
-  if (!dismissThenTap(serial, 'Message')) return false;
-  spawnSync('sleep', ['1']);
-  return true;
+  // Tap-first: tap the field via Maestro accessibility, settle, then assert focus.
+  // A raw `adb input tap` is intercepted by the LogBox overlay, so the tap goes
+  // through Maestro's accessibility `tapOn` instead.
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    dismissLogBox(serial);
+    maestroTap(serial, 'Message.*');
+    spawnSync('sleep', ['2']);
+    if (fieldFocused(serial)) return true;
+  }
+  return false;
 }
 
 type UiElement = {
@@ -266,6 +311,7 @@ type UiElement = {
   text: string;
   bounds: string;
   enabled: string;
+  focused: string;
 };
 
 /** Flattens a `maestro hierarchy` JSON dump into its leaf attributes. */
@@ -287,6 +333,7 @@ function parseUiHierarchy(raw: string): UiElement[] {
       text: String(attrs.text ?? ''),
       bounds: String(attrs.bounds ?? ''),
       enabled: String(attrs.enabled ?? ''),
+      focused: String(attrs.focused ?? ''),
     });
     const kids = record.children;
     if (Array.isArray(kids)) for (const kid of kids) walk(kid);
@@ -295,12 +342,9 @@ function parseUiHierarchy(raw: string): UiElement[] {
   return out;
 }
 
-function elementCenter(serial: string, accessibilityText: string): { x: number; y: number } | null {
-  const el = parseUiHierarchy(captureHierarchy(serial)).find(
-    (e) => e.accessibilityText === accessibilityText,
-  );
-  if (!el) return null;
-  const m = el.bounds.match(/\[(\d+),(\d+)\]\[(\d+),(\d+)\]/);
+/** Center of a `[x1,y1][x2,y2]` bounds string, or null if unparseable. */
+function centerOfBounds(bounds: string): { x: number; y: number } | null {
+  const m = bounds.match(/\[(\d+),(\d+)\]\[(\d+),(\d+)\]/);
   if (!m) return null;
   return {
     x: Math.round((Number(m[1]) + Number(m[3])) / 2),
@@ -308,18 +352,11 @@ function elementCenter(serial: string, accessibilityText: string): { x: number; 
   };
 }
 
-function tapByText(serial: string, accessibilityText: string): boolean {
-  const center = elementCenter(serial, accessibilityText);
-  if (!center) return false;
-  adbExec(serial, ['shell', 'input', 'tap', String(center.x), String(center.y)]);
-  return true;
-}
-
-/** Dismisses the LogBox overlay, then taps the element by accessibility text. */
-function dismissThenTap(serial: string, accessibilityText: string): boolean {
+/** Dismisses the LogBox overlay, then taps the element via Maestro accessibility. */
+function dismissThenTap(serial: string, selector: string): boolean {
   dismissLogBox(serial);
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    if (tapByText(serial, accessibilityText)) return true;
+    if (maestroTap(serial, selector)) return true;
     dismissLogBox(serial);
     spawnSync('sleep', ['1']);
   }
@@ -362,16 +399,30 @@ function stateSummary(serial: string): string {
 }
 
 /** Dismisses the RN LogBox dev overlay (require-cycle / state-update warnings)
- * that can cover the composer, by tapping "Dismiss" until it is gone. */
+ * that can cover the composer. Handles BOTH the full overlay (tap "Dismiss") and
+ * the MINIMIZED banner (a clickable "!" badge — tap it to expand, then "Dismiss"). */
 function dismissLogBox(serial: string): void {
-  for (let i = 0; i < 8; i += 1) {
-    const raw = captureHierarchy(serial);
-    if (raw.includes('Console Warning') || raw.includes('Console Error')) {
-      if (!tapByText(serial, 'Dismiss')) break;
+  for (let i = 0; i < 12; i += 1) {
+    const els = parseUiHierarchy(captureHierarchy(serial));
+    const hasDismiss = els.some((e) => e.accessibilityText === 'Dismiss');
+    const hasFullOverlay = els.some(
+      (e) => e.text === 'Console Warning' || e.text === 'Console Error',
+    );
+    const banner = els.find((e) => e.accessibilityText.startsWith('!') || e.text === '!');
+    if (hasFullOverlay || hasDismiss) {
+      if (!maestroTap(serial, 'Dismiss')) break;
       spawnSync('sleep', ['1']);
-    } else {
-      break;
+      continue;
     }
+    if (banner) {
+      // Minimized badge: tap it to expand the LogBox, then dismiss on the next pass.
+      const center = centerOfBounds(banner.bounds);
+      if (!center) break;
+      adbExec(serial, ['shell', 'input', 'tap', String(center.x), String(center.y)]);
+      spawnSync('sleep', ['1']);
+      continue;
+    }
+    break;
   }
 }
 
@@ -410,7 +461,8 @@ function runAndroidInputFlow(
   logs.push('OK: composer ready');
 
   // Turn 1 — marker (empty state → exactly one user message).
-  if (!focusField(serial)) return fail('could not tap "Message" (marker)');
+  if (!focusField(serial))
+    return fail(`could not focus "Message" (marker) ${stateSummary(serial)}`);
   adbTypeText(serial, marker);
   spawnSync('sleep', ['1']);
   hideKeyboard(serial);
@@ -424,7 +476,7 @@ function runAndroidInputFlow(
   logs.push('OK: marker submitted and echoed');
 
   // Turn 2 — seed prompt (a real streamed reply must complete).
-  if (!focusField(serial)) return fail('could not tap "Message" (seed)');
+  if (!focusField(serial)) return fail(`could not focus "Message" (seed) ${stateSummary(serial)}`);
   adbTypeText(serial, seedPrompt);
   spawnSync('sleep', ['1']);
   hideKeyboard(serial);
@@ -434,7 +486,8 @@ function runAndroidInputFlow(
   logs.push('OK: seed reply streamed');
 
   // Turn 3 — contextual follow-up (the marker is NOT repeated in the prompt).
-  if (!focusField(serial)) return fail('could not tap "Message" (follow-up)');
+  if (!focusField(serial))
+    return fail(`could not focus "Message" (follow-up) ${stateSummary(serial)}`);
   adbTypeText(serial, followUp);
   spawnSync('sleep', ['1']);
   hideKeyboard(serial);
@@ -446,13 +499,14 @@ function runAndroidInputFlow(
   logs.push('OK: follow-up streamed');
 
   // Turn 4 — active Stop: submit a long prompt and stop mid-stream.
-  if (!focusField(serial)) return fail('could not tap "Message" (long)');
+  if (!focusField(serial)) return fail(`could not focus "Message" (long) ${stateSummary(serial)}`);
   adbTypeText(serial, longPrompt);
   spawnSync('sleep', ['1']);
   hideKeyboard(serial);
   dismissLogBox(serial);
   if (!dismissThenTap(serial, 'Send message')) return fail('could not tap "Send message" (long)');
-  if (!waitForText(serial, 'Stop generating', 30_000)) return fail('stop control never appeared');
+  if (!waitForText(serial, 'Stop generating', 30_000))
+    return fail(`stop control never appeared ${stateSummary(serial)}`);
   if (!dismissThenTap(serial, 'Stop generating')) return fail('could not tap "Stop generating"');
   if (!waitForText(serial, 'Send message', 30_000)) return fail('stop did not return to Send');
   logs.push('OK: active stop exercised');
