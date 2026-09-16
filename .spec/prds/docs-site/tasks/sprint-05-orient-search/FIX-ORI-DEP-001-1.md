@@ -128,8 +128,9 @@ Record the raw response bytes (or `sha256`) of both endpoints under
     error-label string at L262, which is a string argument, not a comment)
   - tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts (MODIFY — comment-only at L258, the
     stale "check-registry-fresh reads cwd/package.json for the {version} URL substitution" line)
-  - tests/sprint-05-orient-search/evidence/ORI-DEP-001/** (RE-BASELINED by
-    `scripts/docs-deploy/prepare.ts --phase bootstrap` — see CRITICAL CONSTRAINTS and DEPENDENCIES)
+  - tests/sprint-05-orient-search/evidence/ORI-DEP-001/** (RE-BASELINED — remove the committed
+    `asset-manifest.json` + `build.json`, then `scripts/docs-deploy/prepare.ts --phase bootstrap` fresh;
+    see CRITICAL CONSTRAINTS and DEPENDENCIES)
   - tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/** (evidence — RED/GREEN)
   - .tmp/FIX-ORI-DEP-001-1/** (owned scratch)
 
@@ -178,11 +179,21 @@ Record the raw response bytes (or `sha256`) of both endpoints under
   `r/`, `release_sha` 10d7f1de) and `release.json.conversation_assets` (sha256 of the two conversation
   endpoints). `scripts/docs-deploy/prepare.ts` re-verify mode refuses any changed byte (`asset hash
   mismatch`), and `conversation.json`/`message.json`/`prompt-input.json` each carry a self-dep, so this
-  FIX's registry-wide byte change moves 64 of the 114 `r/` assets and both frozen conversation hashes. The
-  new release's `asset-manifest.json` + `release.json` (produced by a fresh
-  `prepare.ts --phase bootstrap` run plus the attended `wrangler deploy`) become the accepted baseline
-  consumed by ORI-DEP-002, ORI-DEP-003, and ORI-CI-004. The deploy MUST go through the deterministic
-  prepare chain — never a bare `wrangler deploy` over a stale dist.
+  FIX's registry-wide byte change moves 64 of the 114 `r/` assets and both frozen conversation hashes.
+  The deploy MUST go through the deterministic prepare chain — never a bare `wrangler deploy` over a
+  stale dist. **Mechanism (verified):** `prepare.ts` selects fresh-vs-re-verify purely by
+  `existsSync(<evidence>/asset-manifest.json)` (L235-236) and has NO `--force`/`--fresh` flag (its only
+  flags are `--phase`, `--source`, `--evidence`, `--dist`; anything else hits `fail('unknown argument')`).
+  Therefore the committed `10d7f1de` manifest MUST be removed first so the fresh branch is taken:
+  `rm tests/sprint-05-orient-search/evidence/ORI-DEP-001/asset-manifest.json
+  tests/sprint-05-orient-search/evidence/ORI-DEP-001/build.json` immediately before the fresh
+  `prepare.ts --phase bootstrap` run. `prepare.ts` fresh mode writes ONLY `asset-manifest.json` +
+  `build.json` (`grep -c 'release.json' scripts/docs-deploy/prepare.ts` = 0); `release.json` is NOT
+  written by `prepare.ts` — it is the attended-deploy receipt, re-recorded after `wrangler deploy` (new
+  `initial_version_id`/`deployment_id`/`deployed_at`/`attended_provenance`) and updated with the NEW
+  `conversation_assets` hashes read from the fresh `asset-manifest.json.conversation_assets`. The new
+  `asset-manifest.json` + `release.json` become the accepted baseline consumed by ORI-DEP-002, ORI-DEP-003,
+  and ORI-CI-004.
 - **The deploy is an assets-only publish of the already-configured Worker** `rnr-ai-elements-docs`
   (`apps/docs/wrangler.jsonc`): assets directory `./dist`, apex route `rnraielements.com`, no application
   entrypoint, no bindings, no new routes, no cache policy, no Pages config. Do NOT edit `wrangler.jsonc`.
@@ -195,7 +206,7 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 
 - AC-1: every self-referential `registryDependencies` in `registry.json` is
   `https://rnraielements.com/r/{engine}/<item-name>.json` (token form) and in the regenerated
-  `public/r/**` is `https://rnraielements.com/r/{engine}/<item-name>.json` (substituted form); no
+  `public/r/**` is `https://rnraielements.com/r/<engine>/<item-name>.json` (substituted form); no
   `raw.githubusercontent.com` and no `v{version}` remain in self-deps; RNR's own deps are unchanged.
 - AC-2: the repo is consistent — `pnpm registry:build && pnpm check:registry` exit 0; the scoped vitest
   gate and `pnpm e2e:docs` pass with the updated assertions; `pnpm typecheck`, `pnpm lint`,
@@ -256,12 +267,18 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 
   EVIDENCE — the deploy proof must be a REAL public fetch, not a canned receipt and not mocked HTTP, and
   the deploy must run through the deterministic prepare chain (not a bare `wrangler deploy` over a stale
-  dist). Record the `wrangler whoami` account, the `wrangler deploy` output (version ID), and the `curl`
-  response bodies (with `sha256`) for both endpoints. No stub, no localhost host substitution, no simulated
-  deployment.
+  dist). The chain is: (1) the ordered build; (2) remove the committed `asset-manifest.json` + `build.json`
+  so the fresh `prepare.ts --phase bootstrap` branch runs (no `--force` flag exists); (3) the fresh
+  `prepare.ts` writes the new `asset-manifest.json` + `build.json`; (4) the attended `wrangler deploy`;
+  (5) re-record `release.json` from the deploy output and set its `conversation_assets` to the fresh
+  `asset-manifest.json.conversation_assets` values (no repo script writes `release.json` — it is an
+  attended receipt); (6) `public-http.test.ts --phase bootstrap` against that updated receipt; (7) the
+  className-level discriminator fetch. Record the `wrangler whoami` account, the `wrangler deploy` output
+  (version ID), and the `curl` response bodies (with `sha256`) for both endpoints. No stub, no localhost
+  host substitution, no simulated deployment.
 
-  FLOW_REF: None · TEST_TIER: e2e · verification_service: real Cloudflare account + deterministic `prepare.ts --phase bootstrap` + `wrangler deploy` of the configured Worker + public HTTPS fetch of rnraielements.com
-  VERIFY: `pnpm registry:build && pnpm gallery:manifest && pnpm --dir apps/docs run prebuild && pnpm typecheck && pnpm lint && pnpm check:tokens && pnpm check:contract && pnpm check:registry && pnpm --dir apps/docs exec astro build && pnpm exec tsx scripts/docs-deploy/prepare.ts --phase bootstrap --source <NEW_HEAD_SHA> --evidence tests/sprint-05-orient-search/evidence/ORI-DEP-001 && pnpm --dir apps/docs exec wrangler whoami && pnpm --dir apps/docs exec wrangler deploy --config wrangler.jsonc && pnpm exec tsx tests/sprint-05-orient-search/public-http.test.ts --phase bootstrap --origin https://rnraielements.com --receipt tests/sprint-05-orient-search/evidence/ORI-DEP-001/release.json && curl -s https://rnraielements.com/r/nativewind/prompt-input.json && curl -s https://rnraielements.com/r/nativewind/input-group.json | python3 -c '…className-level discriminator…'`
+  FLOW_REF: None · TEST_TIER: e2e · verification_service: real Cloudflare account + deterministic `prepare.ts --phase bootstrap` (after removing the frozen manifest) + `wrangler deploy` of the configured Worker + public HTTPS fetch of rnraielements.com
+  VERIFY: `pnpm registry:build && pnpm gallery:manifest && pnpm --dir apps/docs run prebuild && pnpm typecheck && pnpm lint && pnpm check:tokens && pnpm check:contract && pnpm check:registry && pnpm --dir apps/docs exec astro build && rm tests/sprint-05-orient-search/evidence/ORI-DEP-001/asset-manifest.json tests/sprint-05-orient-search/evidence/ORI-DEP-001/build.json && pnpm exec tsx scripts/docs-deploy/prepare.ts --phase bootstrap --source <NEW_HEAD_SHA> --evidence tests/sprint-05-orient-search/evidence/ORI-DEP-001 && pnpm --dir apps/docs exec wrangler whoami && pnpm --dir apps/docs exec wrangler deploy --config wrangler.jsonc && <re-record release.json: set initial_version_id/deployment_id/deployed_at/attended_provenance from the deploy output, and conversation_assets := the fresh asset-manifest.json.conversation_assets> && pnpm exec tsx tests/sprint-05-orient-search/public-http.test.ts --phase bootstrap --origin https://rnraielements.com --receipt tests/sprint-05-orient-search/evidence/ORI-DEP-001/release.json && curl -s https://rnraielements.com/r/nativewind/prompt-input.json && curl -s https://rnraielements.com/r/nativewind/input-group.json | python3 -c '…className-level discriminator…'`
   TEST_FILE: (live public HTTP responses, byte/hash-captured under evidence) · TEST_FUNCTION: (unversioned self-dep + className-level fixed-source discriminator, documented in evidence)
 
 ### TEST CRITERIA
@@ -300,7 +317,7 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 - tests/sprint-02-shell-hero/dependency-panels.spec.ts (MODIFY)
 - scripts/docs-data/prebuild.ts (MODIFY — SHELL-006 gate comment L255–259 + readJson error-label string L262)
 - tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts (MODIFY — comment-only L258)
-- tests/sprint-05-orient-search/evidence/ORI-DEP-001/** (RE-BASELINED by prepare.ts --phase bootstrap)
+- tests/sprint-05-orient-search/evidence/ORI-DEP-001/** (RE-BASELINED — remove the committed manifest + build.json, then prepare.ts --phase bootstrap fresh)
 - tests/sprint-05-orient-search/evidence/FIX-ORI-DEP-001-1/** (evidence)
 - .tmp/FIX-ORI-DEP-001-1/** (owned scratch)
 
@@ -313,7 +330,7 @@ Record the raw response bytes (or `sha256`) of both endpoints under
 - registry: `pnpm registry:build && pnpm check:registry`
 - test (logic tier, SCOPED): `pnpm exec vitest run tests/build-registry.test.ts tests/sprint-02-shell-hero/resolve-deps.test.ts`
 - test (playwright lane): `pnpm e2e:docs` — covers `tests/**/*.spec.ts` (`dependency-panels.spec.ts`)
-- deploy (deterministic): `pnpm exec tsx scripts/docs-deploy/prepare.ts --phase bootstrap --source <NEW_HEAD_SHA> --evidence tests/sprint-05-orient-search/evidence/ORI-DEP-001` then the attended `wrangler deploy`
+- deploy (deterministic): `rm tests/sprint-05-orient-search/evidence/ORI-DEP-001/asset-manifest.json tests/sprint-05-orient-search/evidence/ORI-DEP-001/build.json && pnpm exec tsx scripts/docs-deploy/prepare.ts --phase bootstrap --source <NEW_HEAD_SHA> --evidence tests/sprint-05-orient-search/evidence/ORI-DEP-001` then the attended `wrangler deploy` + re-record `release.json` (new `conversation_assets` from the fresh manifest)
 
 ### DEPENDENCIES
 
@@ -440,3 +457,25 @@ pass unchanged and stay.
   - The verified diagnosis, counts (56 items / 32 self-dep items / 64 self-dep URLs / 19 distinct names /
     146 RNR URLs / 14 distinct RNR names), and the `{version}`-machinery-removal decision are otherwise
     unchanged.
+
+- Cycle-3 remediation (independent reviewer NEEDS_FIXES, DOC-F10/DOC-F11/DOC-F12):
+  - DOC-F10 (re-baseline command cannot reach the fresh branch) — `prepare.ts` selects fresh-vs-re-verify
+    purely by `existsSync(<evidence>/asset-manifest.json)` and has no `--force`/`--fresh` flag, so the
+    committed `10d7f1de` manifest forces the re-verify branch and fails at `release mismatch` before the
+    fresh path is reachable. Added the explicit destructive pre-step
+    `rm …/evidence/ORI-DEP-001/asset-manifest.json …/build.json` immediately before the fresh
+    `prepare.ts --phase bootstrap` run to AC-3's VERIFY, the CRITICAL CONSTRAINT, and the VERIFICATION
+    GATES deploy line.
+  - DOC-F11 (stale release.json receipt consumed) — corrected the false claim that `prepare.ts` "produces"
+    `release.json` (`grep -c 'release.json' scripts/docs-deploy/prepare.ts` = 0; fresh mode writes only
+    `asset-manifest.json` + `build.json`). Stated the real mechanism: `release.json` is the attended-deploy
+    receipt, re-recorded after `wrangler deploy` (new `initial_version_id`/`deployment_id`/`deployed_at`/
+    `attended_provenance`) and updated with the NEW `conversation_assets` hashes read from the fresh
+    `asset-manifest.json.conversation_assets`. Inserted that re-record step into AC-3's VERIFY between
+    `wrangler deploy` and the `--receipt` invocation.
+  - DOC-F12 (substituted-form wording) — fixed the DONE WHEN AC-1 second clause to print the substituted
+    engine form `https://rnraielements.com/r/<engine>/<item-name>.json` (was incorrectly the `{engine}`
+    token form).
+  - Everything else remains as confirmed by the reviewer (className-level oracle, supersession/handoff,
+    scoped vitest gate, two-regex split, `<item-name>`, allowlist, ordered build, no-repeat-bypass, RNR
+    wording).
