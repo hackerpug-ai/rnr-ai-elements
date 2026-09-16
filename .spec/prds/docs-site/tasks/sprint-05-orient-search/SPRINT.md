@@ -10,7 +10,7 @@ planned_at: 2026-09-14
 
 # Sprint 05: orient-search
 
-**Status:** planned  
+**Status:** in_progress  
 **Sequence:** 5  
 **Timeline:** Phase 2
 
