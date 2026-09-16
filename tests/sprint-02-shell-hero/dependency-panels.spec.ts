@@ -17,7 +17,7 @@ import { navigateLocalhost } from '../harness/docs-preview';
  * - shimmer: dependencies[] [react-native-reanimated] + the templated
  *   {engine}/text.json URL resolving to both engine twins.
  * - conversation: dependencies[] [react-native-safe-area-context] + three
- *   URLs including the v{version} raw.githubusercontent form.
+ *   URLs including the unversioned rnraielements.com self-dep form.
  * - message: dependencies[] empty — the explicit empty-deps state — while its
  *   registryDependencies[] still resolve per engine.
  * - The peers line names `ai` at the range derived at run time from
@@ -156,12 +156,12 @@ test('FLOW-GEND-21-dependency-panel-peers', async ({ page }, testInfo) => {
 
   // Fixture sanity, dataset-derived (the AC's named shapes must still exist in
   // the dataset for the probe set to mean what it claims): conversation's
-  // v{version} raw.githubusercontent URL and shimmer's templated text.json.
+  // unversioned rnraielements.com self-dep and shimmer's templated text.json.
   const conversation = components.find((entry) => entry.name === 'conversation');
   const shimmer = components.find((entry) => entry.name === 'shimmer');
   expect(
-    conversation?.registryDependencies.some((url) => url.includes('v{version}/')),
-    'conversation dataset entry carries the v{version} URL form',
+    conversation?.registryDependencies.some((url) => url.includes('rnraielements.com/r/{engine}/')),
+    'conversation dataset entry carries the unversioned same-host self-dep URL form',
   ).toBe(true);
   expect(
     shimmer?.registryDependencies.some((url) => url.includes('{engine}/text.json')),
