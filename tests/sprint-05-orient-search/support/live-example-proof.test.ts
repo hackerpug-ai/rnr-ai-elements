@@ -223,6 +223,243 @@ function runLiveMaestro(deviceId: string, env: Record<string, string>): MaestroR
   return { exit: res.status ?? -1, output: `${res.stdout ?? ''}${res.stderr ?? ''}` };
 }
 
+/* --------------------------------------------- android adb-driven input -- */
+
+/**
+ * The Android leg drives text through `adb shell input text` — real key events to
+ * the focused EditText — instead of Maestro's IME-based `inputText`, which silently
+ * fails on this emulator because its soft keyboard is not shown (`dumpsys
+ * input_method` → `mIsImeShowing=false`, `mImeHeight=0`). Maestro's `inputText`
+ * reports COMPLETED but the controlled TextInput reverts (no `onChangeText`), so
+ * `Send message` stays `enabled: false`. adb key events DO fire `onChangeText`.
+ */
+
+function adbExec(serial: string, args: string[]): string {
+  const res = spawnSync(ADB, ['-s', serial, ...args], {
+    encoding: 'utf8',
+    timeout: 30_000,
+  });
+  return `${res.stdout ?? ''}${res.stderr ?? ''}`;
+}
+
+/** Types into the focused field via real key events. `input text` uses `%s` for a space. */
+function adbTypeText(serial: string, text: string): void {
+  const encoded = text.replace(/%/g, '%25').replace(/ /g, '%s');
+  adbExec(serial, ['shell', 'input', 'text', encoded]);
+}
+
+/** Dismisses the soft keyboard (KEYCODE_BACK) so the send control is reachable. */
+function hideKeyboard(serial: string): void {
+  adbExec(serial, ['shell', 'input', 'keyevent', '4']);
+  spawnSync('sleep', ['1']);
+}
+
+/** Taps the composer field and waits for it to gain focus (keyboard settle). */
+function focusField(serial: string): boolean {
+  if (!dismissThenTap(serial, 'Message')) return false;
+  spawnSync('sleep', ['1']);
+  return true;
+}
+
+type UiElement = {
+  accessibilityText: string;
+  text: string;
+  bounds: string;
+  enabled: string;
+};
+
+/** Flattens a `maestro hierarchy` JSON dump into its leaf attributes. */
+function parseUiHierarchy(raw: string): UiElement[] {
+  const out: UiElement[] = [];
+  let data: unknown;
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    return out;
+  }
+  // fallow-ignore-next-line complexity
+  const walk = (node: unknown): void => {
+    if (typeof node !== 'object' || node === null) return;
+    const record = node as Record<string, unknown>;
+    const attrs = (record.attributes ?? {}) as Record<string, unknown>;
+    out.push({
+      accessibilityText: String(attrs.accessibilityText ?? ''),
+      text: String(attrs.text ?? ''),
+      bounds: String(attrs.bounds ?? ''),
+      enabled: String(attrs.enabled ?? ''),
+    });
+    const kids = record.children;
+    if (Array.isArray(kids)) for (const kid of kids) walk(kid);
+  };
+  walk(data);
+  return out;
+}
+
+function elementCenter(serial: string, accessibilityText: string): { x: number; y: number } | null {
+  const el = parseUiHierarchy(captureHierarchy(serial)).find(
+    (e) => e.accessibilityText === accessibilityText,
+  );
+  if (!el) return null;
+  const m = el.bounds.match(/\[(\d+),(\d+)\]\[(\d+),(\d+)\]/);
+  if (!m) return null;
+  return {
+    x: Math.round((Number(m[1]) + Number(m[3])) / 2),
+    y: Math.round((Number(m[2]) + Number(m[4])) / 2),
+  };
+}
+
+function tapByText(serial: string, accessibilityText: string): boolean {
+  const center = elementCenter(serial, accessibilityText);
+  if (!center) return false;
+  adbExec(serial, ['shell', 'input', 'tap', String(center.x), String(center.y)]);
+  return true;
+}
+
+/** Dismisses the LogBox overlay, then taps the element by accessibility text. */
+function dismissThenTap(serial: string, accessibilityText: string): boolean {
+  dismissLogBox(serial);
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    if (tapByText(serial, accessibilityText)) return true;
+    dismissLogBox(serial);
+    spawnSync('sleep', ['1']);
+  }
+  return false;
+}
+
+function hierarchyContains(serial: string, needle: string): boolean {
+  return captureHierarchy(serial).includes(needle);
+}
+
+function waitForText(serial: string, needle: string, timeoutMs: number): boolean {
+  const deadline = Date.now() + timeoutMs;
+  let found = hierarchyContains(serial, needle);
+  while (!found && Date.now() < deadline) {
+    spawnSync('sleep', ['1']);
+    dismissLogBox(serial);
+    found = hierarchyContains(serial, needle);
+  }
+  return found;
+}
+
+/** One-line diagnostic of the composer state for a failed turn. */
+function stateSummary(serial: string): string {
+  const els = parseUiHierarchy(captureHierarchy(serial));
+  const field = els.find((e) => e.accessibilityText === 'Message');
+  const send = els.find((e) => e.accessibilityText === 'Send message');
+  const stop = els.find((e) => e.accessibilityText === 'Stop generating');
+  const texts = els
+    .filter((e) => e.text.length > 0 || e.accessibilityText.length > 0)
+    .slice(0, 12)
+    .map((e) => (e.accessibilityText ? `${e.accessibilityText}` : e.text.slice(0, 40)))
+    .join(' | ');
+  return JSON.stringify({
+    fieldText: field?.text ?? null,
+    sendEnabled: send?.enabled ?? null,
+    sendPresent: send !== undefined,
+    stopPresent: stop !== undefined,
+    screenTexts: texts,
+  });
+}
+
+/** Dismisses the RN LogBox dev overlay (require-cycle / state-update warnings)
+ * that can cover the composer, by tapping "Dismiss" until it is gone. */
+function dismissLogBox(serial: string): void {
+  for (let i = 0; i < 8; i += 1) {
+    const raw = captureHierarchy(serial);
+    if (raw.includes('Console Warning') || raw.includes('Console Error')) {
+      if (!tapByText(serial, 'Dismiss')) break;
+      spawnSync('sleep', ['1']);
+    } else {
+      break;
+    }
+  }
+}
+
+/**
+ * Drives the whole Android turn sequence with real adb input + hierarchy asserts:
+ * empty state → marker → real streamed seed reply → contextual follow-up → active
+ * Stop. Returns the maestro-style `{ exit, output }` result so the leg outcome
+ * shape is unchanged.
+ */
+// fallow-ignore-next-line complexity
+function runAndroidInputFlow(
+  serial: string,
+  marker: string,
+  seedPrompt: string,
+  followUp: string,
+  longPrompt: string,
+): MaestroResult {
+  const logs: string[] = [];
+  const fail = (msg: string): MaestroResult => {
+    logs.push(`FAIL: ${msg}`);
+    return { exit: 1, output: logs.join('\n') };
+  };
+
+  // Wait for the composer (dismissing the LogBox overlay as needed).
+  const composerDeadline = Date.now() + 60_000;
+  let ready = false;
+  while (Date.now() < composerDeadline) {
+    dismissLogBox(serial);
+    if (hierarchyContains(serial, 'Live chat')) {
+      ready = true;
+      break;
+    }
+    spawnSync('sleep', ['1']);
+  }
+  if (!ready) return fail('"Live chat" never appeared (60s)');
+  logs.push('OK: composer ready');
+
+  // Turn 1 — marker (empty state → exactly one user message).
+  if (!focusField(serial)) return fail('could not tap "Message" (marker)');
+  adbTypeText(serial, marker);
+  spawnSync('sleep', ['1']);
+  hideKeyboard(serial);
+  dismissLogBox(serial);
+  if (!dismissThenTap(serial, 'Send message')) {
+    return fail(`could not tap "Send message" (marker) ${stateSummary(serial)}`);
+  }
+  if (!waitForText(serial, marker, 30_000)) {
+    return fail(`marker did not land in the transcript ${stateSummary(serial)}`);
+  }
+  logs.push('OK: marker submitted and echoed');
+
+  // Turn 2 — seed prompt (a real streamed reply must complete).
+  if (!focusField(serial)) return fail('could not tap "Message" (seed)');
+  adbTypeText(serial, seedPrompt);
+  spawnSync('sleep', ['1']);
+  hideKeyboard(serial);
+  dismissLogBox(serial);
+  if (!dismissThenTap(serial, 'Send message')) return fail('could not tap "Send message" (seed)');
+  if (!waitForText(serial, 'Send message', 120_000)) return fail('seed stream never completed');
+  logs.push('OK: seed reply streamed');
+
+  // Turn 3 — contextual follow-up (the marker is NOT repeated in the prompt).
+  if (!focusField(serial)) return fail('could not tap "Message" (follow-up)');
+  adbTypeText(serial, followUp);
+  spawnSync('sleep', ['1']);
+  hideKeyboard(serial);
+  dismissLogBox(serial);
+  if (!dismissThenTap(serial, 'Send message'))
+    return fail('could not tap "Send message" (follow-up)');
+  if (!waitForText(serial, 'Send message', 120_000))
+    return fail('follow-up stream never completed');
+  logs.push('OK: follow-up streamed');
+
+  // Turn 4 — active Stop: submit a long prompt and stop mid-stream.
+  if (!focusField(serial)) return fail('could not tap "Message" (long)');
+  adbTypeText(serial, longPrompt);
+  spawnSync('sleep', ['1']);
+  hideKeyboard(serial);
+  dismissLogBox(serial);
+  if (!dismissThenTap(serial, 'Send message')) return fail('could not tap "Send message" (long)');
+  if (!waitForText(serial, 'Stop generating', 30_000)) return fail('stop control never appeared');
+  if (!dismissThenTap(serial, 'Stop generating')) return fail('could not tap "Stop generating"');
+  if (!waitForText(serial, 'Send message', 30_000)) return fail('stop did not return to Send');
+  logs.push('OK: active stop exercised');
+
+  return { exit: 0, output: logs.join('\n') };
+}
+
 /* ------------------------------------------------------------ web export -- */
 
 function exportExampleWeb(): { exit: number; output: string; distDir: string } {
@@ -457,6 +694,7 @@ async function runNativeLeg(
   return outcomes;
 }
 
+// fallow-ignore-next-line complexity
 async function runNativeAppearance(
   platform: 'ios' | 'android',
   deviceId: string,
@@ -476,12 +714,21 @@ async function runNativeAppearance(
       dismissAndroidSystemDialogs();
     }
 
-    const flow = runLiveMaestro(deviceId, {
-      MARKER: marker,
-      SEED_PROMPT: seedPromptFor(marker),
-      FOLLOW_UP_PROMPT: FOLLOW_UP_PROMPT,
-      LONG_PROMPT,
-    });
+    const flow =
+      platform === 'android'
+        ? runAndroidInputFlow(
+            deviceId,
+            marker,
+            seedPromptFor(marker),
+            FOLLOW_UP_PROMPT,
+            LONG_PROMPT,
+          )
+        : runLiveMaestro(deviceId, {
+            MARKER: marker,
+            SEED_PROMPT: seedPromptFor(marker),
+            FOLLOW_UP_PROMPT: FOLLOW_UP_PROMPT,
+            LONG_PROMPT,
+          });
     const screenshotPath = join(legDir, 'screenshot.png');
     captureScreenshot(platform, deviceId, screenshotPath);
     const hierarchy = captureHierarchy(deviceId);

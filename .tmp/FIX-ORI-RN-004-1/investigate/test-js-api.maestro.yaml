@@ -1,0 +1,4 @@
+appId: host.exp.Exponent
+---
+- evalScript: ${output.maestro = Object.keys(maestro).sort().join(',')}
+- evalScript: ${console.log('MAESTRO_KEYS=' + maestro)}
