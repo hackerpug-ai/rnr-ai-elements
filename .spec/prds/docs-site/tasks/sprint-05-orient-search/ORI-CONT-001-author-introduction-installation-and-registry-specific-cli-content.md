@@ -19,7 +19,7 @@ Author Introduction, Installation and CLI, plus the task-owned content spec and 
 > Status: Backlog
 > Assignee: techwriting-implementer
 > Priority: P1 · Points: 5 · Type: DOCS
-> Dependency phase: After all seven depends_on contracts are delivered.
+> Dependency phase: After all six depends_on contracts are delivered.
 > Proposed By: techwriting-planner · Co-authored By: none
 > TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
 > Sprint: [SPRINT.md](./SPRINT.md) · Planned date: 2026-09-14
@@ -198,7 +198,7 @@ Author the three orientation pages using the implemented collection and snippet 
 - Do not insert links to the unimplemented Sprint 06 troubleshooting guide. Link to the real installation matrix, item pages, and boundary explanation available in this sprint.
 
 ### AGENT INSTRUCTIONS
-1. Read the core references and source material. Confirm the seven dependency contracts and exact command-install evidence. Use the delivered interfaces; report missing capabilities without widening this task.
+1. Read the core references and source material. Confirm the six dependency contracts and exact command-install evidence. Use the delivered interfaces; report missing capabilities without widening this task.
 2. RED: add one named AC test to the allowed spec. Build the real pre-change candidate, run its exact VERIFY and capture an observed content assertion failure. Missing test registration, build errors and authored success flags do not prove RED.
 3. GREEN: author only the corresponding content, rebuild through the production gates and rerun the same test. Capture the asserted values through the real browser, including each required target.
 4. REFACTOR: edit only for the assigned page job and clarity; keep the same tests green. Run the full task command, typecheck and lint after the four ACs.
@@ -236,7 +236,7 @@ Use existing docs typography and components. Introduction stays explanation, Ins
 Agent rationale: techwriting-planner defines each page's quadrant, audience and scope; techwriting-implementer authors verified prose; techwriting-reviewer checks source accuracy, editorial quality and real browser evidence.
 
 ### VERIFICATION GATES
-1. **Dependency and identity readiness.** All seven prerequisite contracts and real command-install evidence are available; record candidate identity and verify ownership of localhost:4321.
+1. **Dependency and identity readiness.** All six prerequisite contracts and real command-install evidence are available; record candidate identity and verify ownership of localhost:4321.
 2. **Ordered production build** — `pnpm --filter @rnr-ai-elements/docs build`. Require exit 0 through the delivered registry/gallery/docs-data, snippet, Astro, Pagefind and link gates; serve that exact dist.
 3. **RED-first per acceptance criterion.** Run each AC's exact VERIFY before its prose change and capture an actual content assertion failure; rebuild and rerun after each change.
 4. **Task content proof** — `pnpm exec playwright test tests/sprint-05-orient-search/orientation-content.spec.ts`. Require exit 0 with all four named tests and desktop, mobile and JavaScript-disabled behavior exercised; capture values and images.

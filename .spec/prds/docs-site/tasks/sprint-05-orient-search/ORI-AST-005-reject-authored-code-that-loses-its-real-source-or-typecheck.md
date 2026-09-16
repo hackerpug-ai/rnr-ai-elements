@@ -26,7 +26,7 @@ Run `pnpm exec vitest run tests/sprint-05-orient-search/authored-snippet-gate.te
 
 > Status: Backlog
 > Assignee: astro-implementer · Reviewer: astro-reviewer
-> Priority: P1 · Points: 5 · Type: BUILD · Dependency phase: After ORI-AST-001
+> Priority: P1 · Points: 5 · Type: BUILD · Dependency phase: After ORI-AST-001, ORI-CONT-001, ORI-CONT-003
 > Proposed By: astro-planner · Co-authored By: none
 > TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
 > Sprint: [SPRINT.md](./SPRINT.md) · Planned date: 2026-09-14
