@@ -10,6 +10,7 @@
 > Repo: rnr-ai-elements
 > Sprint: [SPRINT.md](./SPRINT.md) · proposed 2026-09-16
 > AGENT: planner=react-native-reusables-planner | implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
+> Base: implement on `kb-run-sprint/sprint-05-orient-search/ORI-RN-004` @ `001488c` (or merge that branch into the FIX branch first)
 
 ## What this does
 
@@ -70,6 +71,19 @@ ORI-RN-004's recorded RED evidence (`.tmp/ORI-RN-004/cycle-1/red/RED.md`, on
   `ERROR Can't perform a React state update on a component that hasn't mounted yet.`
 
 ## How to verify
+
+**BASE (prerequisite — not a gate, but a precondition):** implement on a branch based on
+`kb-run-sprint/sprint-05-orient-search/ORI-RN-004` @ `001488c` (the ORI-RN-004 deliverable commit), or merge
+that branch into the FIX branch before implementing. Every proof below depends on ORI-RN-004's files, which
+are ABSENT from the trunk tip (`cffcdb9`): the proof driver
+`tests/sprint-05-orient-search/support/live-example-proof.test.ts`, the `/live-chat` route
+`apps/example/app/live-chat.tsx`, the screen/message components
+`apps/example/components/live-chat-screen.tsx` + `live-chat-message.tsx`, the Maestro flow
+`tests/sprint-05-orient-search/live-example.maestro.yaml`, and the ORI-RN-004 revision of
+`apps/example/tsconfig.live-chat.json` (which adds `expo-env.d.ts`, the two components, `app/live-chat.tsx`,
+and `types: ['uniwind/types']` — trunk's version includes only `lib/live-chat-config.ts` +
+`lib/use-live-chat.ts` and would report a FALSE GREEN for the scoped gate). Do NOT create these ORI-RN-004-owned
+files yourself — they are not in WRITE-ALLOWED; they must arrive via the base branch.
 
 **RED (replay the observed failure, before the fix):**
 
@@ -141,7 +155,8 @@ ORI-RN-004's recorded RED evidence (`.tmp/ORI-RN-004/cycle-1/red/RED.md`, on
 ### DONE WHEN
 
 - AC-1: `getLiveChatConfig` reads `process.env.EXPO_PUBLIC_API_BASE_URL` directly; the web export no longer
-  renders `not configured` and a real message round-trips; `resolveLiveChatConfig` behavior is unchanged.
+  renders `not configured` and a real message round-trips through the driver's same-origin reverse proxy
+  (cross-origin CORS is out of scope, see OPEN QUESTIONS); `resolveLiveChatConfig` behavior is unchanged.
 - AC-2: on the real Android emulator the composer accepts typed text (`Send message` becomes enabled) and a
   real streamed reply arrives; the root cause (React Compiler vs. hook init) is recorded.
 - AC-3: the iOS leg and the AC-5 compiler gate still pass; `pnpm typecheck`, `pnpm lint`, and
@@ -175,7 +190,9 @@ ORI-RN-004's recorded RED evidence (`.tmp/ORI-RN-004/cycle-1/red/RED.md`, on
   minimal fix in the confirmed location (`app.json` or `use-live-chat.ts`) THEN on the real Android
   emulator the composer accepts Maestro-typed text, `Send message` becomes enabled, and a real streamed
   reply arrives (a completed provider record), with the follow-up + active Stop legs passing in light and
-  dark.
+  dark. If the bisect implicates a file OUTSIDE the two allowlisted fix locations (`app.json` /
+  `use-live-chat.ts`) — e.g. the ORI-RN-004-owned `live-chat-screen.tsx` composition or the PromptInput submit
+  path — stop and report for a scope amendment; do NOT expand the diff beyond WRITE-ALLOWED.
 
   FLOW_REF: None · TEST_TIER: e2e · verification_service: real Expo Go (Android emulator) + ORI-AI-001 backend + OpenAI Responses
   VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms android`
@@ -243,7 +260,8 @@ ORI-RN-004's recorded RED evidence (`.tmp/ORI-RN-004/cycle-1/red/RED.md`, on
 ### DEPENDENCIES
 
 - Depends on: ORI-RN-004 (owns the `/live-chat` screen, the proof driver, and the AC-5 compiler case this
-  FIX re-runs), ORI-AI-001 (owns the `use-live-chat` hook, the `/api/chat` backend, and
+  FIX re-runs — its deliverable commit `001488c` is the implementation BASE, since none of those files exist
+  on trunk `cffcdb9`), ORI-AI-001 (owns the `use-live-chat` hook, the `/api/chat` backend, and
   `resolveLiveChatConfig` — this FIX only reads `process.env` directly and must not change their transport /
   abort / retry / throttle semantics)
 - Blocks: ORI-RN-004 (its web and Android legs cannot pass until these two defects are fixed)
@@ -288,8 +306,31 @@ engine wrappers. Record every RED/GREEN run under `tests/sprint-05-orient-search
   confirmed. The charter therefore scopes the RED to the OBSERVED failure (button disabled) and requires the
   implementer to bisect (`reactCompiler` off → re-run) before choosing the fix; if the React Compiler is not
   the cause, the fix belongs in `use-live-chat.ts` (initialization) instead, and `app.json` stays untouched.
+  If the bisect instead implicates an ORI-RN-004-owned file (e.g. the `live-chat-screen.tsx` composition or
+  the PromptInput submit path), stop and report for a scope amendment — do not expand the diff.
 - **CORS (out of scope)**: the ORI-AI-001 backend emits no CORS headers, so the web leg uses the driver's
   same-origin reverse proxy (real forwarding, never a mock). This FIX does not add CORS — a real learner
   browser hitting the backend cross-origin would still need it, and that remains ORI-AI-001's (or a
   dedicated FIX's) concern. The AC-1 proof therefore exercises the proxy-served export, which is the
   driver's existing mechanism.
+
+## Amendments
+
+- Cycle-1 remediation (reviewer NEEDS_FIXES, F-1/F-2/F-3):
+  - F-1 (base — blocking) — added an explicit implementation BASE. The branch this charter was handed
+    (trunk `cffcdb9`) does NOT contain ORI-RN-004's deliverable commit `001488c`, so the proof driver
+    (`tests/sprint-05-orient-search/support/live-example-proof.test.ts`), the `/live-chat` route
+    (`apps/example/app/live-chat.tsx`), the screen/message components
+    (`apps/example/components/live-chat-screen.tsx` + `live-chat-message.tsx`), the Maestro flow
+    (`tests/sprint-05-orient-search/live-example.maestro.yaml`), and the ORI-RN-004 `tsconfig.live-chat.json`
+    revision are all absent (verified: `git merge-base --is-ancestor 001488c HEAD` → not an ancestor; the six
+    named files absent at HEAD; trunk's `tsconfig.live-chat.json` includes only `lib/live-chat-config.ts` +
+    `lib/use-live-chat.ts`). Added a `> Base:` frontmatter line, a BASE paragraph in How-to-verify (with the
+    FALSE-GREEN warning for the stale `tsconfig.live-chat.json`), and a base clause in DEPENDENCIES.
+  - F-2 (escalation) — added the escalation rule to AC-2 and to the Defect B OPEN QUESTION: if the bisect
+    implicates a file outside the two allowlisted fix locations (`app.json` / `use-live-chat.ts`), stop and
+    report for a scope amendment rather than expanding the diff.
+  - F-3 (CORS qualifier) — repeated the same-origin reverse-proxy qualifier in AC-1's DONE WHEN (cross-origin
+    CORS is out of scope, see OPEN QUESTIONS).
+  - The confirmed Defect A diagnosis, the honestly-scoped Defect B hypothesis, the WRITE-ALLOWED content, and
+    the CRITICAL CONSTRAINTS are otherwise unchanged.
