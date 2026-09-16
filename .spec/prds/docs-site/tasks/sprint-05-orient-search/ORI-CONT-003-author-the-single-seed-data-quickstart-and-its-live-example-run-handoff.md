@@ -22,7 +22,7 @@ Author the single Quickstart, the live-example run how-to, and the README handof
 > Status: Backlog
 > Assignee: techwriting-implementer · Reviewer: techwriting-reviewer
 > Priority: P1 · Points: 5 · Type: DOCS
-> Dependency phase: after ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-002, ORI-AI-002
+> Dependency phase: after ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002
 > Proposed By: techwriting-planner · Co-authored By: []
 > TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
 > Sprint: [SPRINT.md](./SPRINT.md) · Planned date: 2026-09-14
@@ -325,7 +325,7 @@ Preserve FLOW-SHELL-13-engine-tab-persists-across-pages as the fused capability 
 
 ### VERIFICATION PRECONDITIONS
 
-- All six dependencies provide reviewed source, snippet, app, endpoint and package contracts. Missing inputs block acceptance.
+- All five dependencies provide reviewed source, snippet, app, endpoint and package contracts. Missing inputs block acceptance.
 - Reserve localhost:4321 and owned consumer/backend ports. Identify listeners, refuse unowned processes, and clean up only recorded children and scratch roots.
 - Normal DNS and trusted HTTPS serve the corrected canonical registry. Do not rewrite hostnames, substitute preview URLs or disable certificate checks.
 - Only the real backend receives credentials. Use the selected official OpenAI Responses contract with gpt-4.1-mini-2025-04-14; record sanitized failures without substituting a model or canned answer.
@@ -370,13 +370,13 @@ Agent rationale: techwriting-planner owns page jobs and the Diataxis split; tech
 
 ### DEPENDENCIES / CAPABILITIES
 
-Depends on: ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-002, ORI-AI-002.
+Depends on: ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002.
 
 Blocks: ORI-CONT-004 through the content handoff for integrated proof.
 
 Provides: the single source-backed tutorial; focused live-example run guide and README link; scoped browser spec and content-review report.
 
-Consumes: reviewed content, docs composition, engine-selection and snippet contracts from the six dependencies; RN-owned executable commands/screen/data; the implemented useChat hook, backend configuration and real-provider proof through ORI-AI-002. ORI-CONT-004 owns final native/Web acceptance.
+Consumes: reviewed content, docs composition, engine-selection and snippet contracts from the five dependencies; RN-owned executable commands/screen/data; the implemented useChat hook, backend configuration and real-provider proof through ORI-AI-002. ORI-CONT-004 owns final native/Web acceptance.
 
 Capability: CAP-DOCS-01.
 
