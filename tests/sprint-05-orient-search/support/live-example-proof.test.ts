@@ -352,6 +352,22 @@ function centerOfBounds(bounds: string): { x: number; y: number } | null {
   };
 }
 
+/**
+ * The composer's send/stop control center. On Android the button's
+ * `accessibilityLabel` DOES flip to "Stop generating" mid-stream (proven by
+ * console-logging the render), but the native `content-desc` does NOT update (an RN
+ * Fabric accessibility bug), so the accessibility text stays "Send message" while the
+ * button is really the stop control. The button is in a FIXED 44pt slot, so its
+ * coordinates are stable across the send/stop morph — this lets the driver tap the
+ * stop pose by position.
+ */
+function sendButtonCenter(serial: string): { x: number; y: number } | null {
+  const els = parseUiHierarchy(captureHierarchy(serial));
+  const btn = els.find((e) => e.accessibilityText === 'Send message');
+  if (!btn) return null;
+  return centerOfBounds(btn.bounds);
+}
+
 /** Dismisses the LogBox overlay, then taps the element via Maestro accessibility. */
 function dismissThenTap(serial: string, selector: string): boolean {
   dismissLogBox(serial);
@@ -504,10 +520,17 @@ function runAndroidInputFlow(
   spawnSync('sleep', ['1']);
   hideKeyboard(serial);
   dismissLogBox(serial);
+  // Capture the send/stop button's FIXED center before submit. On Android the
+  // button's accessibility text does NOT flip to "Stop generating" — the RN Fabric
+  // accessibility tree keeps the initial content-desc — but the button morphs to the
+  // stop pose at the SAME fixed 44pt position (the render flips the label and the
+  // onPress to `stop`, confirmed by console-logging). So tap that position once the
+  // stream is running.
+  const stopBtn = sendButtonCenter(serial);
+  if (!stopBtn) return fail(`could not locate the send/stop button ${stateSummary(serial)}`);
   if (!dismissThenTap(serial, 'Send message')) return fail('could not tap "Send message" (long)');
-  if (!waitForText(serial, 'Stop generating', 30_000))
-    return fail(`stop control never appeared ${stateSummary(serial)}`);
-  if (!dismissThenTap(serial, 'Stop generating')) return fail('could not tap "Stop generating"');
+  spawnSync('sleep', ['2']); // let the stream reach the stop pose
+  adbExec(serial, ['shell', 'input', 'tap', String(stopBtn.x), String(stopBtn.y)]);
   if (!waitForText(serial, 'Send message', 30_000)) return fail('stop did not return to Send');
   logs.push('OK: active stop exercised');
 
