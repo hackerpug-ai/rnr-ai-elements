@@ -104,8 +104,11 @@ function seedPromptFor(marker: string): string {
 }
 
 const FOLLOW_UP_PROMPT = 'What marker did I ask you to remember?';
+// The explicit length demand matters: with only "ten substantial paragraphs" the
+// model occasionally answered in ~400 tokens (~5s), finishing the stream before the
+// stop control could be exercised (cycle-4 attempt 4: a 14-delta "essay").
 const LONG_PROMPT =
-  'Write a detailed essay on the history of computing, from the abacus to modern machine learning, in at least ten substantial paragraphs.';
+  'Write a detailed essay on the history of computing, from the abacus to modern machine learning. The essay must be at least 1200 words across at least ten substantial paragraphs. Do not summarize, do not decline, and do not stop early.';
 
 function readSourceSha(): string {
   return sha256(readFileSync(join(EXAMPLE_ROOT, 'app/live-chat.tsx'), 'utf8'));
@@ -119,7 +122,16 @@ function run(cmd: string, cwd: string, timeoutMs = 600_000): { exit: number; out
 
 async function ensureBackend(options: ProofOptions): Promise<OwnedBackendHandle> {
   if (options.backend) return options.backend;
-  return launchOwnedBackend({ host: BACKEND_HOST, port: BACKEND_PORT, model: DEFAULT_MODEL });
+  // The server's default maxOutputTokens (1024) lets the essay prompt hit the token
+  // cap in ~2s, so the stop tap races an already-finished stream (cycle-4 RED: two
+  // "passed" android legs with zero aborted records). 4096 keeps the essay alive
+  // well past the +2s stop tap on every platform leg.
+  return launchOwnedBackend({
+    host: BACKEND_HOST,
+    port: BACKEND_PORT,
+    model: DEFAULT_MODEL,
+    maxOutputTokens: 4096,
+  });
 }
 
 function assertBackendReady(backend: OwnedBackendHandle): void {
@@ -289,6 +301,44 @@ function fieldFocused(serial: string): boolean {
   return field?.focused === 'true';
 }
 
+/** Whether the `Send message` control currently reports `enabled=true` — AC-2's
+ * literal "the typed text flips Send message to enabled" observation. */
+function sendEnabled(serial: string): boolean {
+  const els = parseUiHierarchy(captureHierarchy(serial));
+  return els.find((e) => e.accessibilityText === 'Send message')?.enabled === 'true';
+}
+
+/**
+ * Polls the live backend records until the record BEYOND `baseline` (the one this
+ * turn's send produced) reaches `outcome`. This is the only reliable Android
+ * stream-completion signal: the button's `content-desc` never flips during streaming
+ * (RN Fabric accessibility bug, cycle-3), so any hierarchy-text wait is vacuous, and
+ * the next turn's send tap must not race an in-flight stream — while generating the
+ * same button is the (always-enabled) Stop control, so an early tap ABORTS the
+ * previous reply instead of sending.
+ *
+ * The poll MUST be async: the backend handle parses the server child's stdout via
+ * 'data' events, so a fully synchronous poll loop starves the event loop and the
+ * record set never updates (proven on-emulator: both marker turns failed a sync
+ * gate while their completed records sat unread in the pipe).
+ */
+async function waitForRecordOutcome(
+  backend: OwnedBackendHandle,
+  baseline: number,
+  outcome: 'completed' | 'aborted',
+  timeoutMs: number,
+): Promise<boolean> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const records = backend.records();
+    if (records.length > baseline && records[records.length - 1].outcome === outcome) {
+      return true;
+    }
+    await new Promise((resolveTick) => setTimeout(resolveTick, 1000));
+  }
+  return false;
+}
+
 /** Taps the composer field, then polls until it actually reports `focused=true`
  * (re-dismissing the LogBox and re-tapping a bounded number of times). Returns
  * false with no focus after the retries — an intercepted tap is then a hard fail,
@@ -353,13 +403,15 @@ function centerOfBounds(bounds: string): { x: number; y: number } | null {
 }
 
 /**
- * The composer's send/stop control center. On Android the button's
- * `accessibilityLabel` DOES flip to "Stop generating" mid-stream (proven by
- * console-logging the render), but the native `content-desc` does NOT update (an RN
- * Fabric accessibility bug), so the accessibility text stays "Send message" while the
- * button is really the stop control. The button is in a FIXED 44pt slot, so its
- * coordinates are stable across the send/stop morph — this lets the driver tap the
- * stop pose by position.
+ * The composer's send/stop control center, read while the app is IDLE. On Android
+ * the accessibility tree's geometry goes STALE during streaming (cycle-3 proved the
+ * content-desc never flips; the cycle-4 probe additionally caught bounds collapsed
+ * to a 27px sliver mid-screen while the real button sat elsewhere), so any
+ * tree-derived tap issued mid-stream lands at the wrong coordinates. Reading the
+ * center while idle is valid, and the composer is layout-STABLE while the
+ * transcript grows (Conversation renders `{body}{children}` — the composer is a
+ * sibling BELOW the scroll body, not inside it), so the idle position equals the
+ * mid-stream stop position.
  */
 function sendButtonCenter(serial: string): { x: number; y: number } | null {
   const els = parseUiHierarchy(captureHierarchy(serial));
@@ -414,19 +466,34 @@ function stateSummary(serial: string): string {
   });
 }
 
-/** Dismisses the RN LogBox dev overlay (require-cycle / state-update warnings)
- * that can cover the composer. Handles BOTH the full overlay (tap "Dismiss") and
- * the MINIMIZED banner (a clickable "!" badge — tap it to expand, then "Dismiss"). */
+/** Dismisses whatever dev/system overlay covers the composer, in priority order:
+ *  1. the RN LogBox (require-cycle / state-update warnings) in BOTH forms — the full
+ *     overlay (tap "Dismiss"; one warning often reveals the next, hence the loop)
+ *     and the MINIMIZED banner (a clickable "!" badge — tap it to expand, then
+ *     "Dismiss");
+ *  2. an expanded notification shade — a mid-run system notification ("Set a screen
+ *     lock" etc.) can leave the shade covering the app, and its "Clear all" footer
+ *     is the one marker that never appears in an app dump. BACK collapses it
+ *     (live-proven); gated on that marker, the BACK can never reach the activity.
+ * systemui nodes and heads-up notification texts DO appear in ordinary app dumps —
+ * never key the shade branch on their presence. */
+// fallow-ignore-next-line complexity
 function dismissLogBox(serial: string): void {
   for (let i = 0; i < 12; i += 1) {
-    const els = parseUiHierarchy(captureHierarchy(serial));
+    const raw = captureHierarchy(serial);
+    const els = parseUiHierarchy(raw);
     const hasDismiss = els.some((e) => e.accessibilityText === 'Dismiss');
+    const hasMinimize = els.some((e) => e.accessibilityText === 'Minimize');
     const hasFullOverlay = els.some(
       (e) => e.text === 'Console Warning' || e.text === 'Console Error',
     );
     const banner = els.find((e) => e.accessibilityText.startsWith('!') || e.text === '!');
     if (hasFullOverlay || hasDismiss) {
-      if (!maestroTap(serial, 'Dismiss')) break;
+      // The warning LIST view has "Dismiss"; the expanded DETAIL view only has
+      // "Minimize" — collapse that back to the banner first, never break out
+      // leaving the overlay up (a break strands every later tap on the overlay).
+      const tapped = hasDismiss ? maestroTap(serial, 'Dismiss') : maestroTap(serial, 'Minimize');
+      if (!tapped && !hasMinimize) break;
       spawnSync('sleep', ['1']);
       continue;
     }
@@ -438,6 +505,11 @@ function dismissLogBox(serial: string): void {
       spawnSync('sleep', ['1']);
       continue;
     }
+    if (raw.includes('Clear all')) {
+      adbExec(serial, ['shell', 'input', 'keyevent', '4']);
+      spawnSync('sleep', ['1']);
+      continue;
+    }
     break;
   }
 }
@@ -445,21 +517,62 @@ function dismissLogBox(serial: string): void {
 /**
  * Drives the whole Android turn sequence with real adb input + hierarchy asserts:
  * empty state → marker → real streamed seed reply → contextual follow-up → active
- * Stop. Returns the maestro-style `{ exit, output }` result so the leg outcome
- * shape is unchanged.
+ * Stop. EVERY turn gates on a NEW backend provider record (`completed` for the
+ * three conversational turns, `aborted` for the stop turn) — the only non-vacuous
+ * stream signal on Android, because the button's `content-desc` never flips during
+ * streaming, and because while generating the same button is the always-enabled
+ * Stop control, so a next-turn send tap that races an in-flight stream ABORTS it
+ * instead of sending. Returns the maestro-style `{ exit, output }` result so the
+ * leg outcome shape is unchanged.
  */
 // fallow-ignore-next-line complexity
-function runAndroidInputFlow(
+async function runAndroidInputFlow(
   serial: string,
+  backend: OwnedBackendHandle,
   marker: string,
   seedPrompt: string,
   followUp: string,
   longPrompt: string,
-): MaestroResult {
+): Promise<MaestroResult> {
   const logs: string[] = [];
   const fail = (msg: string): MaestroResult => {
     logs.push(`FAIL: ${msg}`);
     return { exit: 1, output: logs.join('\n') };
+  };
+  // Prepares one turn: focus → type → assert "Send message" enabled (AC-2's
+  // literal observation) → hide the keyboard → dismiss overlays. Returns null on
+  // success, or the failure result. Sending is the caller's job — the stop turn
+  // must control exactly how and when the send happens.
+  const prepareTurn = (label: string, text: string): MaestroResult | null => {
+    if (!focusField(serial))
+      return fail(`could not focus "Message" (${label}) ${stateSummary(serial)}`);
+    adbTypeText(serial, text);
+    spawnSync('sleep', ['1']);
+    if (!sendEnabled(serial)) {
+      return fail(`"Send message" not enabled after typing (${label}) ${stateSummary(serial)}`);
+    }
+    hideKeyboard(serial);
+    dismissLogBox(serial);
+    return null;
+  };
+
+  // One conversational turn: prepare → baseline the records → send → gate on the
+  // turn's record outcome. Returns null on success, or the failure result.
+  const runTurn = async (
+    label: string,
+    text: string,
+    gate: { outcome: 'completed' | 'aborted'; timeoutMs: number } | null,
+  ): Promise<MaestroResult | null> => {
+    const prep = prepareTurn(label, text);
+    if (prep) return prep;
+    const baseline = backend.records().length;
+    if (!dismissThenTap(serial, 'Send message')) {
+      return fail(`could not tap "Send message" (${label}) ${stateSummary(serial)}`);
+    }
+    if (gate && !(await waitForRecordOutcome(backend, baseline, gate.outcome, gate.timeoutMs))) {
+      return fail(`${label} turn never produced a ${gate.outcome} provider record`);
+    }
+    return null;
   };
 
   // Wait for the composer (dismissing the LogBox overlay as needed).
@@ -476,63 +589,92 @@ function runAndroidInputFlow(
   if (!ready) return fail('"Live chat" never appeared (60s)');
   logs.push('OK: composer ready');
 
-  // Turn 1 — marker (empty state → exactly one user message).
-  if (!focusField(serial))
-    return fail(`could not focus "Message" (marker) ${stateSummary(serial)}`);
-  adbTypeText(serial, marker);
-  spawnSync('sleep', ['1']);
-  hideKeyboard(serial);
-  dismissLogBox(serial);
-  if (!dismissThenTap(serial, 'Send message')) {
-    return fail(`could not tap "Send message" (marker) ${stateSummary(serial)}`);
-  }
+  // Turn 1 — marker (empty state → exactly one user message, echoed in the transcript).
+  let turn = await runTurn('marker', marker, { outcome: 'completed', timeoutMs: 90_000 });
+  if (turn) return turn;
   if (!waitForText(serial, marker, 30_000)) {
     return fail(`marker did not land in the transcript ${stateSummary(serial)}`);
   }
-  logs.push('OK: marker submitted and echoed');
+  logs.push('OK: marker submitted, echoed, and its reply completed');
 
   // Turn 2 — seed prompt (a real streamed reply must complete).
-  if (!focusField(serial)) return fail(`could not focus "Message" (seed) ${stateSummary(serial)}`);
-  adbTypeText(serial, seedPrompt);
-  spawnSync('sleep', ['1']);
-  hideKeyboard(serial);
-  dismissLogBox(serial);
-  if (!dismissThenTap(serial, 'Send message')) return fail('could not tap "Send message" (seed)');
-  if (!waitForText(serial, 'Send message', 120_000)) return fail('seed stream never completed');
-  logs.push('OK: seed reply streamed');
+  turn = await runTurn('seed', seedPrompt, { outcome: 'completed', timeoutMs: 120_000 });
+  if (turn) return turn;
+  logs.push('OK: seed reply streamed to a completed provider record');
 
   // Turn 3 — contextual follow-up (the marker is NOT repeated in the prompt).
-  if (!focusField(serial))
-    return fail(`could not focus "Message" (follow-up) ${stateSummary(serial)}`);
-  adbTypeText(serial, followUp);
-  spawnSync('sleep', ['1']);
-  hideKeyboard(serial);
-  dismissLogBox(serial);
-  if (!dismissThenTap(serial, 'Send message'))
-    return fail('could not tap "Send message" (follow-up)');
-  if (!waitForText(serial, 'Send message', 120_000))
-    return fail('follow-up stream never completed');
-  logs.push('OK: follow-up streamed');
+  turn = await runTurn('follow-up', followUp, { outcome: 'completed', timeoutMs: 120_000 });
+  if (turn) return turn;
+  logs.push('OK: follow-up streamed to a completed provider record');
 
-  // Turn 4 — active Stop: submit a long prompt and stop mid-stream.
-  if (!focusField(serial)) return fail(`could not focus "Message" (long) ${stateSummary(serial)}`);
-  adbTypeText(serial, longPrompt);
-  spawnSync('sleep', ['1']);
-  hideKeyboard(serial);
-  dismissLogBox(serial);
-  // Capture the send/stop button's FIXED center before submit. On Android the
-  // button's accessibility text does NOT flip to "Stop generating" — the RN Fabric
-  // accessibility tree keeps the initial content-desc — but the button morphs to the
-  // stop pose at the SAME fixed 44pt position (the render flips the label and the
-  // onPress to `stop`, confirmed by console-logging). So tap that position once the
-  // stream is running.
-  const stopBtn = sendButtonCenter(serial);
-  if (!stopBtn) return fail(`could not locate the send/stop button ${stateSummary(serial)}`);
-  if (!dismissThenTap(serial, 'Send message')) return fail('could not tap "Send message" (long)');
-  spawnSync('sleep', ['2']); // let the stream reach the stop pose
-  adbExec(serial, ['shell', 'input', 'tap', String(stopBtn.x), String(stopBtn.y)]);
-  if (!waitForText(serial, 'Send message', 30_000)) return fail('stop did not return to Send');
-  logs.push('OK: active stop exercised');
+  // Turn 4 — active Stop: submit a long prompt and stop mid-stream. On Android the
+  // button's accessibility text does NOT flip to "Stop generating" (RN Fabric
+  // accessibility bug, cycle-3), but the SAME fixed slot morphs from Send to Stop
+  // the moment the hook's status leaves 'ready' — the render flips onPress to
+  // `stop`. A coordinate tap on that slot is therefore the stop control whenever
+  // a stream is running, and a harmless no-op on the disabled Send pose otherwise
+  // (the field self-clears on submit).
+  //
+  // TIMING is the whole game (cycles 4-5 lost here): the essay (maxOutputTokens
+  // 4096 + a 1200-word demand) streams for well over 20 s, but ONE maestro
+  // hierarchy capture costs ~9 s and ONE maestro accessibility tap ~8 s — the
+  // committed driver's send-then-verify-then-tap sequence put the first stop tap
+  // ~25 s after the send, exactly at the essay's natural end (cycle-6 attempt 1:
+  // both stop attempts watched 1138/1495-delta essays complete untapped). So the
+  // hot path does the send AND the stop tap by coordinate with ZERO device reads
+  // in between (~2 s send-to-stop), and only falls back to the slow verified
+  // rounds (dismiss overlays, check whether the send even landed, maestro re-send)
+  // when the fast taps produce no aborted record.
+  let stopExercised = false;
+  for (let stopAttempt = 0; stopAttempt < 2 && !stopExercised; stopAttempt += 1) {
+    const prep = prepareTurn('long', longPrompt);
+    if (prep) return prep;
+    // Read the control's center in the EXACT state the coordinate send will happen
+    // from: prompt typed, keyboard hidden, overlays dismissed. This is the state
+    // the committed driver read its winning coordinate from (cycle-6 RED run:
+    // both appearances aborted at 530/491 deltas).
+    dismissLogBox(serial);
+    const stopCenter = sendButtonCenter(serial);
+    if (!stopCenter) return fail(`could not locate the send/stop button ${stateSummary(serial)}`);
+    const baseline = backend.records().length;
+    // HOT PATH — coordinate send, then coordinate stop tap, nothing in between.
+    adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
+    spawnSync('sleep', ['2']); // let the status flip morph the control into Stop
+    adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
+    logs.push(`OK: coordinate send + stop tap at ${stopCenter.x},${stopCenter.y}`);
+    stopExercised = await waitForRecordOutcome(backend, baseline, 'aborted', 8_000);
+    // SLOW VERIFIED FALLBACK — only when the fast taps failed to abort anything.
+    for (let tapAttempt = 0; tapAttempt < 3 && !stopExercised; tapAttempt += 1) {
+      const records = backend.records();
+      // A terminal record that is not aborted means the essay ended (completed or
+      // errored) before any stop landed — retry the whole turn with a fresh send.
+      if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') {
+        break;
+      }
+      // No terminal record at all: either the stream is still running (tap again)
+      // or the coordinate send was eaten by an overlay (field still holds the
+      // prompt). One capture distinguishes them; the prompt is ~240 chars, the
+      // empty field shows a short placeholder.
+      dismissLogBox(serial);
+      const fieldTextNow = parseUiHierarchy(captureHierarchy(serial)).find(
+        (e) => e.accessibilityText === 'Message',
+      )?.text;
+      if (fieldTextNow !== undefined && fieldTextNow.length > 60) {
+        logs.push('WARN: coordinate send never landed (field holds the prompt) — maestro resend');
+        if (!dismissThenTap(serial, 'Send message')) {
+          return fail(`could not tap "Send message" (long resend) ${stateSummary(serial)}`);
+        }
+        spawnSync('sleep', ['2']);
+      }
+      adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
+      logs.push(`OK: fallback stop tap ${tapAttempt + 1} at ${stopCenter.x},${stopCenter.y}`);
+      stopExercised = await waitForRecordOutcome(backend, baseline, 'aborted', 8_000);
+    }
+  }
+  if (!stopExercised) {
+    return fail(`active stop did not abort the stream ${stateSummary(serial)}`);
+  }
+  logs.push('OK: active stop aborted the stream (aborted provider record)');
 
   return { exit: 0, output: logs.join('\n') };
 }
@@ -658,14 +800,16 @@ async function launchChromiumBrowser(): Promise<Browser> {
 
 /**
  * Drives the served web export through the real live-chat flow: empty state, submit a
- * marker, observe a real streamed assistant reply, submit a contextual follow-up, then
- * activate Stop during an active request. Returns discrete booleans for the driver to
- * turn into a pass/fail verdict (never an authored success flag).
+ * marker, submit the seed prompt and observe its real streamed assistant reply (the
+ * seed asks for rain facts, so the reply must mention rain), submit a contextual
+ * follow-up, then activate Stop during an active request. Returns discrete booleans
+ * for the driver to turn into a pass/fail verdict (never an authored success flag).
  */
 async function driveLiveWeb(
   browser: Browser,
   url: string,
   marker: string,
+  seedPrompt: string,
   followUp: string,
 ): Promise<WebLegResult> {
   const result: WebLegResult = {
@@ -707,8 +851,18 @@ async function driveLiveWeb(
       .isVisible()
       .catch(() => false);
 
-    // Await a real assistant reply (the seed prompt asks for "three short facts about
-    // rain", so the completion must mention rain).
+    // Seed turn: submit the SAME seed prompt the native legs submit (it asks for
+    // "three short facts about rain"), then await its real streamed reply. The old
+    // driver asserted rain from a reply to a prompt it never sent — the model's
+    // answer to a bare marker does not mention rain, so assistantResponded was
+    // deterministically false (the documented cycle-2/3 web false-negative).
+    await textarea.fill(seedPrompt);
+    await send.click().catch(() => {});
+    await page
+      .waitForFunction(`document.querySelector('textarea[aria-label="Message"]')?.value === ''`, {
+        timeout: 15_000,
+      })
+      .catch(() => {});
     await page
       .waitForFunction(
         `[...document.querySelectorAll('div')].some(d => d.textContent && d.textContent.includes('rain'))`,
@@ -793,8 +947,9 @@ async function runNativeAppearance(
 
     const flow =
       platform === 'android'
-        ? runAndroidInputFlow(
+        ? await runAndroidInputFlow(
             deviceId,
+            backend,
             marker,
             seedPromptFor(marker),
             FOLLOW_UP_PROMPT,
@@ -935,7 +1090,13 @@ async function runWebLeg(backend: OwnedBackendHandle, runId: string): Promise<Le
   try {
     const browser = await launchChromiumBrowser();
     try {
-      const result = await driveLiveWeb(browser, served.url, marker, FOLLOW_UP_PROMPT);
+      const result = await driveLiveWeb(
+        browser,
+        served.url,
+        marker,
+        seedPromptFor(marker),
+        FOLLOW_UP_PROMPT,
+      );
       const passed =
         result.emptyStateVisible &&
         result.markerSubmitted &&

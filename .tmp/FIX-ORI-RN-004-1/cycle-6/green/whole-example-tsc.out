@@ -1,0 +1,100 @@
+app/index.tsx(159,20): error TS2322: Type '(text: string) => void' is not assignable to type '(message: PromptInputMessage) => void | Promise<void>'.
+  Types of parameters 'text' and 'message' are incompatible.
+    Type 'PromptInputMessage' is not assignable to type 'string'.
+app/index.tsx(179,15): error TS2322: Type '{ children: Element[]; side: "top"; contentInsets: { top: number; bottom: number; left: number; right: number; }; testID: "context-popover-content"; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { asChild?: boolean | undefined; } & PositionedContentProps & { onOpenAutoFocus?: ((event: Event) => void) | undefined; } & RefAttributes<...> & { ...; } & { ...; }'.
+  Property 'contentInsets' does not exist on type 'IntrinsicAttributes & ViewProps & { asChild?: boolean | undefined; } & PositionedContentProps & { onOpenAutoFocus?: ((event: Event) => void) | undefined; } & RefAttributes<...> & { ...; } & { ...; }'.
+components/ai/stack-trace.tsx(6,3): error TS2303: Circular definition of import alias 'frameFallbackText'.
+components/ai/stack-trace.tsx(6,3): error TS2459: Module '"@/components/ai/stack-trace"' declares 'frameFallbackText' locally, but it is not exported.
+components/ai/stack-trace.tsx(7,3): error TS2303: Circular definition of import alias 'frameLocation'.
+components/ai/stack-trace.tsx(7,3): error TS2459: Module '"@/components/ai/stack-trace"' declares 'frameLocation' locally, but it is not exported.
+components/ai/stack-trace.tsx(8,3): error TS2724: '"@/components/ai/stack-trace"' has no exported member named 'parseStackTrace'. Did you mean 'useStackTrace'?
+components/ai/stack-trace.tsx(9,8): error TS2724: '"@/components/ai/stack-trace"' has no exported member named 'ParsedStackTrace'. Did you mean 'useStackTrace'?
+components/ai/stack-trace.tsx(10,8): error TS2724: '"@/components/ai/stack-trace"' has no exported member named 'StackFrame'. Did you mean 'StackTrace'?
+components/ai/stack-trace.tsx(317,75): error TS7006: Parameter 'f' implicitly has an 'any' type.
+components/ai/stack-trace.tsx(329,20): error TS7006: Parameter 'frame' implicitly has an 'any' type.
+components/ai/voice-selector.tsx(411,6): error TS2322: Type '{ children: string; hitSlop?: number | Insets | null | undefined; id?: string | undefined; needsOffscreenAlphaCompositing?: boolean | undefined; onLayout?: ((event: LayoutChangeEvent) => void) | undefined; ... 85 more ...; className: string; }' is not assignable to type 'TextProps'.
+  Types of property 'style' are incompatible.
+    Type 'StyleProp<ViewStyle>' is not assignable to type 'StyleProp<TextStyle>'.
+      Type 'ViewStyle' is not assignable to type 'StyleProp<TextStyle>'.
+        Type 'ViewStyle' is not assignable to type 'TextStyle'.
+          Types of property 'userSelect' are incompatible.
+            Type 'string | undefined' is not assignable to type '"text" | "none" | "auto" | "contain" | "all" | undefined'.
+              Type 'string' is not assignable to type '"text" | "none" | "auto" | "contain" | "all" | undefined'.
+components/ui/input.tsx(6,3): error TS2339: Property 'placeholderClassName' does not exist on type 'TextInputProps & RefAttributes<TextInput>'.
+gallery/cells/ai-agent.tsx(281,21): error TS2820: Type '"completed"' is not assignable to type 'ChainOfThoughtStepStatus | undefined'. Did you mean '"complete"'?
+gallery/cells/ai-agent.tsx(281,46): error TS2322: Type '"running"' is not assignable to type 'ChainOfThoughtStepStatus | undefined'.
+gallery/cells/ai-agent.tsx(284,97): error TS2820: Type '"completed"' is not assignable to type 'ChainOfThoughtStepStatus | undefined'. Did you mean '"complete"'?
+gallery/cells/ai-agent.tsx(285,116): error TS2322: Type '"running"' is not assignable to type 'ChainOfThoughtStepStatus | undefined'.
+gallery/cells/ai-agent.tsx(302,63): error TS2322: Type '"running"' is not assignable to type 'ChainOfThoughtStepStatus | undefined'.
+gallery/cells/ai-agent.tsx(325,12): error TS2559: Type '{ children: Element[]; }' has no properties in common with type 'IntrinsicAttributes & { className?: string | undefined; }'.
+gallery/cells/ai-agent.tsx(326,33): error TS2322: Type '{ children: string; action: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+  Property 'action' does not exist on type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+gallery/cells/ai-agent.tsx(327,33): error TS2322: Type '{ children: string; action: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+  Property 'action' does not exist on type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+gallery/cells/ai-agent.tsx(352,12): error TS2559: Type '{ children: Element[]; }' has no properties in common with type 'IntrinsicAttributes & { className?: string | undefined; }'.
+gallery/cells/ai-agent.tsx(353,33): error TS2322: Type '{ children: string; action: string; disabled: true; }' is not assignable to type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+  Property 'action' does not exist on type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+gallery/cells/ai-agent.tsx(356,33): error TS2322: Type '{ children: string; action: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+  Property 'action' does not exist on type 'IntrinsicAttributes & Omit<PressableProps & RefAttributes<View> & RefAttributes<ForwardRefExoticComponent<PressableProps & RefAttributes<View>>> & VariantProps<...>, "children" | "onPress"> & { ...; }'.
+gallery/cells/ai-agent.tsx(421,61): error TS2820: Type '"builtin"' is not assignable to type '"built-in" | "wired" | "bluetooth" | "other" | undefined'. Did you mean '"built-in"'?
+gallery/cells/ai-agent.tsx(590,32): error TS2322: Type '{ label: string; }' is not assignable to type 'IntrinsicAttributes & { className?: string | undefined; }'.
+  Property 'label' does not exist on type 'IntrinsicAttributes & { className?: string | undefined; }'.
+gallery/cells/ai-chat.tsx(43,23): error TS2741: Property 'renderItem' is missing in type '{ data: UIMessage<unknown, UIDataTypes, UITools>[]; }' but required in type 'Omit<FlatListProps<UIMessage<unknown, UIDataTypes, UITools>>, "data" | "inverted">'.
+gallery/cells/ai-chat.tsx(44,19): error TS2741: Property 'renderItem' is missing in type '{ data: never[]; }' but required in type 'Omit<FlatListProps<never>, "data" | "inverted">'.
+gallery/cells/ai-chat.tsx(46,8): error TS2741: Property 'renderItem' is missing in type '{ data: UIMessage<unknown, UIDataTypes, UITools>[]; }' but required in type 'Omit<FlatListProps<UIMessage<unknown, UIDataTypes, UITools> | { id: string; role: string; parts: { type: string; text: string; }[]; }>, "data" | "inverted">'.
+gallery/cells/ai-chat.tsx(58,8): error TS2741: Property 'renderItem' is missing in type '{ data: UIMessage<unknown, UIDataTypes, UITools>[]; }' but required in type 'Omit<FlatListProps<UIMessage<unknown, UIDataTypes, UITools> | { id: string; role: string; parts: { type: string; text: string; }[]; }>, "data" | "inverted">'.
+gallery/cells/ai-chat.tsx(161,10): error TS2745: This JSX tag's 'children' prop expects type 'string' which requires multiple children, but only a single child was provided.
+gallery/cells/ai-chat.tsx(170,10): error TS2745: This JSX tag's 'children' prop expects type 'string' which requires multiple children, but only a single child was provided.
+gallery/cells/ai-chat.tsx(177,10): error TS2745: This JSX tag's 'children' prop expects type 'string' which requires multiple children, but only a single child was provided.
+gallery/cells/ai-chat.tsx(186,10): error TS2745: This JSX tag's 'children' prop expects type 'string' which requires multiple children, but only a single child was provided.
+gallery/cells/ai-chat.tsx(208,21): error TS2322: Type '"failed"' is not assignable to type 'TaskStatus | undefined'.
+gallery/cells/ai-chat.tsx(240,21): error TS2322: Type '"failed"' is not assignable to type 'TaskStatus | undefined'.
+gallery/cells/ai-chat.tsx(290,10): error TS2741: Property 'count' is missing in type '{}' but required in type 'SourcesTriggerProps'.
+gallery/cells/ai-chat.tsx(305,10): error TS2741: Property 'count' is missing in type '{}' but required in type 'SourcesTriggerProps'.
+gallery/cells/ai-chat.tsx(311,10): error TS2741: Property 'count' is missing in type '{}' but required in type 'SourcesTriggerProps'.
+gallery/cells/ai-chat.tsx(321,10): error TS2741: Property 'count' is missing in type '{}' but required in type 'SourcesTriggerProps'.
+gallery/cells/ai-code.tsx(14,3): error TS2305: Module '"@/components/ai/commit"' has no exported member 'CommitDescription'.
+gallery/cells/ai-code.tsx(19,3): error TS2724: '"@/components/ai/commit"' has no exported member named 'CommitTitle'. Did you mean 'CommitFile'?
+gallery/cells/ai-code.tsx(36,3): error TS2724: '"@/components/ai/package-info"' has no exported member named 'PackageInfoTitle'. Did you mean 'PackageInfo'?
+gallery/cells/ai-code.tsx(110,23): error TS2322: Type '{ children: Element; path: string; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+  Property 'path' does not exist on type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(111,32): error TS2322: Type '{ additions: number; deletions: number; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+  Property 'additions' does not exist on type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(113,23): error TS2322: Type '{ children: Element; path: string; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+  Property 'path' does not exist on type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(114,32): error TS2322: Type '{ additions: number; deletions: number; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+  Property 'additions' does not exist on type 'IntrinsicAttributes & ViewProps & { children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(117,10): error TS2304: Cannot find name 'CommitActions'.
+gallery/cells/ai-code.tsx(119,11): error TS2304: Cannot find name 'CommitActions'.
+gallery/cells/ai-code.tsx(151,12): error TS2559: Type '{ children: Element; }' has no properties in common with type 'IntrinsicAttributes & { className?: string | undefined; }'.
+gallery/cells/ai-code.tsx(320,12): error TS2741: Property 'open' is missing in type '{}' but required in type '{ open: boolean; className?: string | undefined; }'.
+gallery/cells/ai-code.tsx(392,12): error TS2741: Property 'status' is missing in type '{ children: Element; name: string; }' but required in type '{ name: string; status: TestStatusType; defaultOpen?: boolean | undefined; onOpenChange?: ((open: boolean) => void) | undefined; children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(394,16): error TS2741: Property 'status' is missing in type '{ children: Element[]; name: string; }' but required in type '{ name: string; status: TestStatusType; duration?: number | undefined; children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(418,12): error TS2741: Property 'status' is missing in type '{ children: Element; name: string; }' but required in type '{ name: string; status: TestStatusType; defaultOpen?: boolean | undefined; onOpenChange?: ((open: boolean) => void) | undefined; children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(420,16): error TS2741: Property 'status' is missing in type '{ children: Element; name: string; }' but required in type '{ name: string; status: TestStatusType; duration?: number | undefined; children?: ReactNode; }'.
+gallery/cells/ai-code.tsx(431,8): error TS2746: This JSX tag's 'children' prop expects a single child of type '((segment: TranscriptionSegmentData, index: number) => ReactNode) | undefined', but multiple children were provided.
+gallery/cells/ai-code.tsx(442,63): error TS2322: Type 'null' is not assignable to type '((segment: TranscriptionSegmentData, index: number) => ReactNode) | undefined'.
+gallery/cells/ai-code.tsx(450,9): error TS2322: Type 'Element' is not assignable to type '(segment: TranscriptionSegmentData, index: number) => ReactNode'.
+  Type 'ReactElement<any, any>' provides no match for the signature '(segment: TranscriptionSegmentData, index: number): ReactNode'.
+gallery/cells/ui.tsx(217,20): error TS2322: Type '{ icon: LucideIcon; }' is not assignable to type 'IntrinsicAttributes & { as: LucideIcon; className?: string | undefined; }'.
+  Property 'icon' does not exist on type 'IntrinsicAttributes & { as: LucideIcon; className?: string | undefined; }'.
+gallery/cells/ui.tsx(244,20): error TS2322: Type '{ icon: LucideIcon; }' is not assignable to type 'IntrinsicAttributes & { as: LucideIcon; className?: string | undefined; }'.
+  Property 'icon' does not exist on type 'IntrinsicAttributes & { as: LucideIcon; className?: string | undefined; }'.
+gallery/chrome.tsx(31,31): error TS2345: Argument of type '"light" | "dark" | null' is not assignable to parameter of type 'ColorSchemeName'.
+  Type 'null' is not assignable to type 'ColorSchemeName'.
+server/chat.ts(2,28): error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/chat.ts(3,37): error TS2591: Cannot find name 'node:http'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(2,73): error TS2591: Cannot find name 'node:http'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(23,23): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(31,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(32,17): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(35,16): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(35,25): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(35,58): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(42,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(45,32): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(66,30): error TS7006: Parameter 'request' implicitly has an 'any' type.
+server/index.ts(66,39): error TS7006: Parameter 'response' implicitly has an 'any' type.
+server/index.ts(78,43): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(142,37): error TS2694: Namespace 'NodeJS' has no exported member 'ErrnoException'.
+EXIT=2

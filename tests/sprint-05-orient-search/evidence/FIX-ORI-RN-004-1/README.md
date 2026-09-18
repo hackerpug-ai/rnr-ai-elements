@@ -13,13 +13,23 @@ un-block the Android composer. Branch base:
   `getByLabel('Message')`; post-fix the composer renders (`emptyStateVisible:
   true`), a real message round-trips (2 completed OpenAI provider records via the
   same-origin proxy), and iOS shows no regression.
-- **Defect B (HYPOTHESIS) — root cause determined, NOT a code bug, NOT in scope.**
-  The bisect (reactCompiler OFF) removes the "state update before mount" error but
-  does NOT enable the button. Direct `adb shell input text` DOES enable the button
-  on Android; Maestro's `inputText` silently fails to type (emulator soft keyboard
-  not shown). The Android composer is functional; the Android leg's RED is a
-  Maestro/emulator input artifact. Per the charter escalation rule, reported for a
-  scope amendment (do not expand the diff beyond WRITE-ALLOWED).
+- **Defect B (HYPOTHESIS) — root cause determined, NOT a code bug. FIXED IN THE
+  DRIVER (cycle 2-6 scope amendments moved the fix into the WRITE-ALLOWED proof
+  driver).** The bisect (reactCompiler OFF) removes the "state update before
+  mount" error but does NOT enable the button. Direct `adb shell input text`
+  DOES enable the button on Android; Maestro's `inputText` silently fails to
+  type (emulator soft keyboard not shown). The Android composer is functional;
+  the Android leg's failures were driver-side: LogBox-jailed taps, no focus
+  assertion, an ungated BACK keypress, a vacuous stop wait, and — cycle 6's
+  finding — a stop-tap path slow enough (~25 s of maestro ceremony between send
+  and stop) to race a 4096-token essay to its natural end. Cycle 6's driver
+  passes the Android leg for real on emulator-5554: every turn hard-gated on a
+  NEW terminal provider record, `Send message` enable asserted after typing,
+  focus asserted before typing, and the stop turn sends + stops by coordinate
+  with zero device reads between (abort landed 193/231 deltas into a ~1500-delta
+  stream, both appearances). iOS and web re-run green with no regression; web
+  additionally fixed the seed-prompt false negative (`assistantResponded:
+  true` now). Evidence: `.tmp/FIX-ORI-RN-004-1/cycle-6/` (red/ and green/).
 
 ## RED (pre-fix)
 
@@ -30,13 +40,18 @@ un-block the Android composer. Branch base:
 
 ## GREEN (post-fix)
 
-- web: composer renders, 2 completed provider records, follow-up + stop legs pass
-  — see `web-green-manifest.json` + `web-green-provider-correlation.json` (the
-  per-leg `assistantResponded` flag is false because the model's seed response did
-  not literally contain "rain"; the round-trip is proven by the 2 completed
-  records).
+- web: composer renders, real round-trips, follow-up + stop legs pass — see
+  `web-green-manifest.json` + `web-green-provider-correlation.json`. (Cycle 6
+  additionally fixed the seed-prompt false negative noted in earlier cycles: the
+  driver now submits the seed prompt before asserting the rain reply, so
+  `assistantResponded` is true. See `.tmp/FIX-ORI-RN-004-1/cycle-6/green/web/`.)
 - ios: light + dark PASS (maestro exit 0, marker visible, 8 provider records incl.
-  aborted Stop legs). No regression.
+  aborted Stop legs). No regression — re-confirmed in cycle 6
+  (`.tmp/FIX-ORI-RN-004-1/cycle-6/green/ios/`).
+- android: light + dark PASS with per-turn provider-record gates — 3 `completed`
+  + 1 mid-stream `aborted` record per appearance, `Send message` enable asserted,
+  focus asserted, stop exercised via the coordinate fast path
+  (`.tmp/FIX-ORI-RN-004-1/cycle-6/green/attempt2/`).
 
 ## Android text-input isolation (Defect B, cycle-3 evidence)
 
