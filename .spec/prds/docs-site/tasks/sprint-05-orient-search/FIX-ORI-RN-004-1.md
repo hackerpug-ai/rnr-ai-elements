@@ -2,7 +2,9 @@
 
 # FIX-ORI-RN-004-1: read the live-chat endpoint via direct `process.env` access (web) and un-block the Android composer
 
-> Status: Backlog
+> Status: ✅ Completed
+
+Commit: 0b9cd49adcd816aeff53b8838de92f8320818155
 > Assignee: react-native-reusables-implementer (implementer) · react-native-reusables-reviewer (reviewer)
 > Priority: P1 · Points: 2 · Type: FIX · Wave: C (unblocks the ORI-RN-004 commit)
 > Proposed By: orchestrator (ORI-RN-004 out-of-scope blockers, real-device + web runs, 2026-09-16)
@@ -474,3 +476,52 @@ wrappers. Record every RED/GREEN run under `tests/sprint-05-orient-search/eviden
     location" framing) and added the supersession markers on cycle-2 F-5/F-8 and cycle-4 F-12.
   - AC-2's real-device requirements, the confirmed Defect A fix and proofs, the credential/no-mocks/
     no-skipped-platform constraints, and the adb input path are unchanged.
+
+## Handoff
+
+```json
+{
+  "task": "FIX-ORI-RN-004-1",
+  "commit_sha": "0b9cd49adcd816aeff53b8838de92f8320818155",
+  "done": "Landed entirely in the WRITE-ALLOWED proof driver (tests/sprint-05-orient-search/support/live-example-proof.test.ts) plus evidence (tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/README.md and .tmp/FIX-ORI-RN-004-1/cycle-6/): every Android turn now hard-gates on a NEW terminal provider record via an async waitForRecordOutcome (completed x3, aborted x1), sendEnabled asserts the Send control flips enabled after typing, focusField asserts focused=true before typing, dismissLogBox handles all LogBox forms plus the notification shade, hideKeyboard's BACK is IME-gated, the stop turn sends and stops by coordinate with zero device reads between (live-example-proof.test.ts:622-680) with slow verified fallback, the backend launches with maxOutputTokens 4096 and a 1200-word essay demand, and driveLiveWeb submits the seed prompt fixing the assistantResponded false negative; android light+dark passed on emulator-5554 with a mid-stream abort at 193/231 deltas, iOS and web re-ran green, the AC-5 compiler case passed, and typecheck/lint/fallow exited 0 through the righthook gates.",
+  "deviations": [
+    "app.json and lib/use-live-chat.ts are untouched at HEAD because the cycle-2/3 bisects disproved the reactCompiler hypothesis, so the charter's conditional write permission for them was never exercised.",
+    "The driver self-launches the backend with maxOutputTokens 4096 (live-example-proof.test.ts:124-135), a documented server env knob set driver-side rather than any change to ORI-AI-001's transport/abort/retry/throttle semantics.",
+    "The fresh RED evidence is a passing run of the committed driver paired with cycle-4's recorded false green of the same driver, not a newly captured failing run, because a flaky driver's pre-fix run can win its race by luck \u2014 documented in .tmp/FIX-ORI-RN-004-1/cycle-6/red/README.md."
+  ],
+  "concerns": [
+    "The stop fast path depends on two invariants the code comments state but nothing enforces: the composer button's coordinate is stable from the idle-read state through streaming, and the 2s sleep outlasts the Send-to-Stop morph \u2014 a PromptInput layout change or a very slow emulator breaks it (the fallback then fails honestly, but slowly).",
+    "Any future edit that inserts a maestro hierarchy capture (~9s) or accessibility tap (~8s) between the send and the stop tap re-creates the cycle-4/5 race, so the hot path's zero-device-reads rule is load-bearing, not stylistic.",
+    "A future 'long turn never produced an aborted provider record' leg failure most likely means emulator slowness or an overlay regression, not an app bug \u2014 check dismissLogBox behavior and device speed before touching app code.",
+    "dismissLogBox carries a fallow-ignore-next-line complexity pragma (live-example-proof.test.ts:480) matching the file's existing convention; a reviewer may reasonably ask for extraction instead."
+  ],
+  "findings": [
+    "The Android app was never broken: Maestro's IME-based inputText silently fails on this emulator (soft keyboard never shows, mIsImeShowing=false) while adb shell input text works, so all native typing must go through adb (live-example-proof.test.ts:258-279).",
+    "The server emits sanitized records only at stream termination (apps/example/server/chat.ts finally block), so backend.records() cannot observe in-flight streams and every gate must be written against terminal outcomes.",
+    "maestro hierarchy costs ~9s per capture while adb uiautomator dump costs ~2s for the same tree \u2014 a large untapped speedup if the driver ever needs cheaper reads.",
+    "Direct pnpm lint / biome invocations from an agent shell exit 254 with 'Linter process terminated abnormally' because the shell's shimmed PATH (cmux-cli-shims/rtk) breaks biome's child process; the righthook pre-commit and clean-env invocations work fine, so agent-side lint failures of this shape are environmental.",
+    "reserveDevices requires both RNR_S05_IOS_UDID and RNR_S05_ANDROID_SERIAL even for a single-platform android run (tests/sprint-05-orient-search/support/native-session.ts:225-231).",
+    "The driver unconditionally writes run-manifest.json, provider-correlation.json, metro.log, and per-leg screenshots into ORI-RN-004's evidence directory (EVIDENCE_ROOT at live-example-proof.test.ts:51), so any task re-running it must git-restore those ORI-RN-004-owned paths before committing.",
+    "Whole-example tsc exits 2 on pre-existing errors in apps/example gallery/server files (including NodeJS.ErrnoException at apps/example/server/index.ts:142) unrelated to any sprint-05 diff; the scoped tsconfig.live-chat.json gate is the meaningful signal.",
+    "The stale-accessibility behavior (content-desc never flipping mid-stream, collapsed bounds) is Android Fabric only \u2014 iOS flips to 'Stop generating' correctly and its Maestro flow needs none of this machinery."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-RN-004",
+      "found": "Its three-platform proof driver is now genuinely green (android gated on provider records, web seed-submit fixed, iOS unchanged) and its commit can land; its own evidence README still describes the web assistantResponded false negative this fix removed.",
+      "change": "Update ORI-RN-004's evidence README web note when it lands, and treat .tmp/FIX-ORI-RN-004-1/cycle-6/ as the canonical android proof record."
+    },
+    {
+      "target": "ORI-CONT-004",
+      "found": "The locked Quickstart gate calls runLiveExampleProof, whose web leg now submits the seed prompt (3 completed records, assistantResponded true) and whose backend launches with maxOutputTokens 4096.",
+      "change": "Refresh any recorded expected outputs for that gate (older captures show 2 web records and a false assistantResponded) before replaying or locking new evidence."
+    }
+  ],
+  "feedback": [
+    "The task file's Defect B framed the reactCompiler hypothesis as the primary suspect and gated app.json writes on a bisect; two remediation cycles were spent disproving it before the scope amendments moved the fix to the driver \u2014 write FIX charters from the observed artifact (button disabled + adb input works) rather than the suspected mechanism.",
+    "The RED contract is ill-defined for flaky-driver defects: 'replay the observed failure' can pass by luck, as my fresh pre-fix run did; define RED for driver fixes as a demonstration of the vacuous assertion (record-based false green) instead of a full failing rerun.",
+    "The VERIFY commands are correct but the task file never states that both RNR_S05_IOS_UDID and RNR_S05_ANDROID_SERIAL must be set even for an android-only run.",
+    "WRITE-ALLOWED should either cover the ORI-RN-004 evidence paths the driver mutates as a side effect or require an explicit restore step, since every run dirties files outside the FIX task's scope."
+  ]
+}
+```
