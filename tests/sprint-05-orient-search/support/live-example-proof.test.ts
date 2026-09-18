@@ -15,6 +15,12 @@
  * OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14). No mocked HTTP, no stub hook,
  * no injected messages, no canned streams, no test-only app routes.
  *
+ * Every platform leg drives, on the real public controls: send, contextual
+ * follow-up, active Stop, and AC-3 case 2's endpoint-loss + Retry (the owned
+ * backend is stopped through its lifecycle handle, the retained turn surfaces a
+ * sanitized error with an accessible Retry, and a restart + Retry completes a NEW
+ * provider record without duplicating the failed user turn).
+ *
  * Web reachability: the owned backend does not emit CORS headers, so the web leg
  * serves the static export AND forwards `/api/chat` to the real backend from the same
  * origin (a reverse proxy in the serving layer — real forwarding, never a mock).
@@ -28,7 +34,12 @@ import { Readable } from 'node:stream';
 import { fileURLToPath } from 'node:url';
 
 import { type Browser, chromium } from '@playwright/test';
-import { DEFAULT_MODEL, launchOwnedBackend, type OwnedBackendHandle } from './live-backend';
+import {
+  type BackendRecord,
+  DEFAULT_MODEL,
+  launchOwnedBackend,
+  type OwnedBackendHandle,
+} from './live-backend';
 import {
   type Appearance,
   captureHierarchy,
@@ -140,6 +151,48 @@ function assertBackendReady(backend: OwnedBackendHandle): void {
   }
 }
 
+/**
+ * Tracks the owned backend across the endpoint-loss/restart cycles the AC-3 retry
+ * leg drives. `OwnedBackendHandle.restart()` returns a NEW handle (the old child is
+ * gone, and its parsed records with it), so the session keeps every handle so the
+ * manifest/correlation retain the full sanitized record set, and exposes the live
+ * handle the legs should talk to.
+ */
+class BackendSession {
+  private readonly handles: OwnedBackendHandle[];
+  private currentHandle: OwnedBackendHandle;
+
+  constructor(initial: OwnedBackendHandle) {
+    this.currentHandle = initial;
+    this.handles = [initial];
+  }
+
+  get current(): OwnedBackendHandle {
+    return this.currentHandle;
+  }
+
+  /** The initial handle a caller may own (the CLI's self-launched one is ours). */
+  get initial(): OwnedBackendHandle {
+    return this.handles[0];
+  }
+
+  async stop(): Promise<void> {
+    await this.currentHandle.stop();
+  }
+
+  async restart(): Promise<void> {
+    this.currentHandle = await this.currentHandle.restart();
+    this.handles.push(this.currentHandle);
+  }
+
+  allRecords(): BackendRecord[] {
+    return this.handles.flatMap((handle) => handle.records());
+  }
+}
+
+/** The fresh nonsecret probe turn the endpoint-loss/retry leg submits (AC-3). */
+const RETRY_PROBE_PROMPT = 'Reply with the single word pineapple.';
+
 /* ------------------------------------------------------- android reverse -- */
 
 function reverseBackendPort(backendPort: number): void {
@@ -248,6 +301,32 @@ function maestroTap(deviceId: string, selector: string): boolean {
   const res = spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
     encoding: 'utf8',
     timeout: 60_000,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  return res.status === 0;
+}
+
+/**
+ * Types one turn into the composer and sends it through a one-off Maestro flow (iOS
+ * IME input works; only the Android emulator's soft keyboard is absent). Used by the
+ * endpoint-loss leg, which must submit AFTER the owned backend is stopped — the main
+ * flow yaml cannot sequence a backend stop mid-flow.
+ */
+function maestroTypeAndSend(deviceId: string, text: string): boolean {
+  const flowPath = join(tmpdir(), `ori-rn-004-type-${process.pid}-${Date.now()}.yaml`);
+  writeFileSync(
+    flowPath,
+    [
+      'appId: host.exp.Exponent',
+      '---',
+      '- tapOn: "Message.*"',
+      `- inputText: ${JSON.stringify(text)}`,
+      '- tapOn: "Send message"',
+    ].join('\n'),
+  );
+  const res = spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
+    encoding: 'utf8',
+    timeout: 120_000,
     maxBuffer: 64 * 1024 * 1024,
   });
   return res.status === 0;
@@ -435,6 +514,19 @@ function hierarchyContains(serial: string, needle: string): boolean {
   return captureHierarchy(serial).includes(needle);
 }
 
+/** Occurrences of `needle` in the raw hierarchy dump — the "exactly 1 user turn"
+ * oracle for the retry probe (the transcript renders the retained user Text once). */
+function hierarchyCount(deviceId: string, needle: string): number {
+  const raw = captureHierarchy(deviceId);
+  let count = 0;
+  let index = raw.indexOf(needle);
+  while (index !== -1) {
+    count += 1;
+    index = raw.indexOf(needle, index + needle.length);
+  }
+  return count;
+}
+
 function waitForText(serial: string, needle: string, timeoutMs: number): boolean {
   const deadline = Date.now() + timeoutMs;
   let found = hierarchyContains(serial, needle);
@@ -528,7 +620,7 @@ function dismissLogBox(serial: string): void {
 // fallow-ignore-next-line complexity
 async function runAndroidInputFlow(
   serial: string,
-  backend: OwnedBackendHandle,
+  session: BackendSession,
   marker: string,
   seedPrompt: string,
   followUp: string,
@@ -565,11 +657,14 @@ async function runAndroidInputFlow(
   ): Promise<MaestroResult | null> => {
     const prep = prepareTurn(label, text);
     if (prep) return prep;
-    const baseline = backend.records().length;
+    const baseline = session.current.records().length;
     if (!dismissThenTap(serial, 'Send message')) {
       return fail(`could not tap "Send message" (${label}) ${stateSummary(serial)}`);
     }
-    if (gate && !(await waitForRecordOutcome(backend, baseline, gate.outcome, gate.timeoutMs))) {
+    if (
+      gate &&
+      !(await waitForRecordOutcome(session.current, baseline, gate.outcome, gate.timeoutMs))
+    ) {
       return fail(`${label} turn never produced a ${gate.outcome} provider record`);
     }
     return null;
@@ -636,16 +731,16 @@ async function runAndroidInputFlow(
     dismissLogBox(serial);
     const stopCenter = sendButtonCenter(serial);
     if (!stopCenter) return fail(`could not locate the send/stop button ${stateSummary(serial)}`);
-    const baseline = backend.records().length;
+    const baseline = session.current.records().length;
     // HOT PATH — coordinate send, then coordinate stop tap, nothing in between.
     adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
     spawnSync('sleep', ['2']); // let the status flip morph the control into Stop
     adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
     logs.push(`OK: coordinate send + stop tap at ${stopCenter.x},${stopCenter.y}`);
-    stopExercised = await waitForRecordOutcome(backend, baseline, 'aborted', 8_000);
+    stopExercised = await waitForRecordOutcome(session.current, baseline, 'aborted', 8_000);
     // SLOW VERIFIED FALLBACK — only when the fast taps failed to abort anything.
     for (let tapAttempt = 0; tapAttempt < 3 && !stopExercised; tapAttempt += 1) {
-      const records = backend.records();
+      const records = session.current.records();
       // A terminal record that is not aborted means the essay ended (completed or
       // errored) before any stop landed — retry the whole turn with a fresh send.
       if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') {
@@ -668,13 +763,54 @@ async function runAndroidInputFlow(
       }
       adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
       logs.push(`OK: fallback stop tap ${tapAttempt + 1} at ${stopCenter.x},${stopCenter.y}`);
-      stopExercised = await waitForRecordOutcome(backend, baseline, 'aborted', 8_000);
+      stopExercised = await waitForRecordOutcome(session.current, baseline, 'aborted', 8_000);
     }
   }
   if (!stopExercised) {
     return fail(`active stop did not abort the stream ${stateSummary(serial)}`);
   }
   logs.push('OK: active stop aborted the stream (aborted provider record)');
+
+  // Turn 5 — endpoint loss + retry (AC-3 case 2). Stop the OWNED backend through
+  // its lifecycle handle, submit a fresh nonsecret probe turn (which must land as
+  // the retained user turn alongside a sanitized error and an accessible Retry
+  // control), restart the same owned endpoint, retry the retained turn, and gate
+  // on a NEW completed provider record — leaving exactly ONE user turn for the
+  // failed submission (regenerate resends the history, it does not duplicate it).
+  const retryPrep = prepareTurn('retry probe', RETRY_PROBE_PROMPT);
+  if (retryPrep) return retryPrep;
+  await session.stop();
+  if (!dismissThenTap(serial, 'Send message')) {
+    return fail(`could not tap "Send message" (retry probe) ${stateSummary(serial)}`);
+  }
+  if (!waitForText(serial, 'Retry', 60_000)) {
+    return fail(`no accessible Retry control after endpoint loss ${stateSummary(serial)}`);
+  }
+  if (hierarchyContains(serial, 'sk-') || hierarchyContains(serial, 'OPENAI_API_KEY')) {
+    return fail('endpoint-loss error surface leaked credential material');
+  }
+  logs.push('OK: endpoint loss surfaced a sanitized error with an accessible Retry');
+  await session.restart();
+  assertBackendReady(session.current);
+  if (!dismissThenTap(serial, 'Retry')) {
+    return fail(`could not tap "Retry" ${stateSummary(serial)}`);
+  }
+  if (!(await waitForRecordOutcome(session.current, 0, 'completed', 120_000))) {
+    return fail(
+      `retry never produced a completed provider record — observed: ${JSON.stringify(
+        session.current.records(),
+      )} stderr: ${session.current.stderrText().slice(-1000)}`,
+    );
+  }
+  const probeOccurrences = hierarchyCount(serial, RETRY_PROBE_PROMPT);
+  if (probeOccurrences !== 1) {
+    return fail(
+      `retry probe appears ${probeOccurrences}x in the transcript (expected exactly 1) ${stateSummary(serial)}`,
+    );
+  }
+  logs.push(
+    `OK: retry completed on a new request (${session.current.records()[0]?.requestId ?? 'n/a'}) with exactly 1 retained user turn`,
+  );
 
   return { exit: 0, output: logs.join('\n') };
 }
@@ -725,7 +861,7 @@ const MIME: Record<string, string> = {
 function serveWithChatProxy(
   distDir: string,
   port: number,
-  backend: OwnedBackendHandle,
+  session: BackendSession,
 ): Promise<{ server: Server; url: string; port: number }> {
   return new Promise((resolveServe, reject) => {
     // fallow-ignore-next-line complexity
@@ -737,11 +873,16 @@ function serveWithChatProxy(
           for await (const chunk of req) {
             chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk)));
           }
-          const upstream = await fetch(`http://${backend.host}:${backend.port}/api/chat`, {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: Buffer.concat(chunks),
-          });
+          // Read the CURRENT handle per request: the retry leg restarts the owned
+          // backend (same host:port), and the proxy must forward to the new child.
+          const upstream = await fetch(
+            `http://${session.current.host}:${session.current.port}/api/chat`,
+            {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: Buffer.concat(chunks),
+            },
+          );
           res.writeHead(upstream.status, {
             'content-type': upstream.headers.get('content-type') ?? 'text/event-stream',
           });
@@ -791,6 +932,10 @@ type WebLegResult = {
   assistantResponded: boolean;
   stopControlVisible: boolean;
   followUpRecallVisible: boolean;
+  retryControlVisible: boolean;
+  retryErrorSanitized: boolean;
+  retryCompleted: boolean;
+  retrySingleUserTurn: boolean;
   error?: string;
 };
 
@@ -811,6 +956,7 @@ async function driveLiveWeb(
   marker: string,
   seedPrompt: string,
   followUp: string,
+  session: BackendSession,
 ): Promise<WebLegResult> {
   const result: WebLegResult = {
     emptyStateVisible: false,
@@ -819,6 +965,10 @@ async function driveLiveWeb(
     assistantResponded: false,
     stopControlVisible: false,
     followUpRecallVisible: false,
+    retryControlVisible: false,
+    retryErrorSanitized: false,
+    retryCompleted: false,
+    retrySingleUserTurn: false,
   };
 
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
@@ -899,6 +1049,41 @@ async function driveLiveWeb(
     await stop.waitFor({ timeout: 30_000 }).catch(() => {});
     result.stopControlVisible = await stop.isVisible().catch(() => false);
     await stop.click().catch(() => {});
+    // The aborted essay settles back to the idle composer before the retry probe.
+    await page
+      .getByLabel('Send message', { exact: true })
+      .waitFor({ timeout: 30_000 })
+      .catch(() => {});
+
+    // Endpoint loss + retry (AC-3 case 2): stop the OWNED backend, submit a fresh
+    // probe turn, observe the sanitized alert + accessible Retry, restart the same
+    // owned endpoint, retry the retained turn, and gate on a NEW completed provider
+    // record — the probe text must appear exactly once (regenerate does not
+    // duplicate the retained user turn).
+    await session.stop();
+    await textarea.fill(RETRY_PROBE_PROMPT);
+    await send.click().catch(() => {});
+    const retry = page.getByLabel('Retry', { exact: true });
+    await retry.waitFor({ timeout: 30_000 }).catch(() => {});
+    result.retryControlVisible = await retry.isVisible().catch(() => false);
+    const alertText = await page
+      .getByRole('alert')
+      .first()
+      .textContent()
+      .catch(() => null);
+    result.retryErrorSanitized =
+      alertText !== null &&
+      alertText.length > 0 &&
+      !alertText.includes('sk-') &&
+      !alertText.includes('OPENAI_API_KEY');
+    await session.restart();
+    await retry.click().catch(() => {});
+    result.retryCompleted = await waitForRecordOutcome(session.current, 0, 'completed', 120_000);
+    result.retrySingleUserTurn =
+      (await page
+        .getByText(RETRY_PROBE_PROMPT, { exact: true })
+        .count()
+        .catch(() => 0)) === 1;
   } catch (e) {
     result.error = e instanceof Error ? e.message : String(e);
   } finally {
@@ -909,17 +1094,66 @@ async function driveLiveWeb(
 
 /* ---------------------------------------------------------- native leg -- */
 
+/**
+ * iOS endpoint-loss + retry phase (AC-3 case 2) — the Android equivalent lives at
+ * the end of runAndroidInputFlow. Stops the OWNED backend, submits the probe turn
+ * through a real composer flow, observes the sanitized error + accessible Retry,
+ * restarts the endpoint, retries, and gates on a NEW completed provider record with
+ * exactly one retained user turn.
+ */
+// fallow-ignore-next-line complexity
+async function runIosEndpointLossRetry(
+  deviceId: string,
+  session: BackendSession,
+): Promise<{ ok: boolean; log: string }> {
+  dismissLogBox(deviceId);
+  await session.stop();
+  if (!maestroTypeAndSend(deviceId, RETRY_PROBE_PROMPT)) {
+    return { ok: false, log: 'could not type + send the retry probe (maestro flow failed)' };
+  }
+  if (!waitForText(deviceId, 'Retry', 60_000)) {
+    return { ok: false, log: 'no accessible Retry control after endpoint loss' };
+  }
+  if (hierarchyContains(deviceId, 'sk-') || hierarchyContains(deviceId, 'OPENAI_API_KEY')) {
+    return { ok: false, log: 'endpoint-loss error surface leaked credential material' };
+  }
+  await session.restart();
+  assertBackendReady(session.current);
+  if (!dismissThenTap(deviceId, 'Retry')) {
+    return { ok: false, log: 'could not tap "Retry"' };
+  }
+  if (!(await waitForRecordOutcome(session.current, 0, 'completed', 120_000))) {
+    return {
+      ok: false,
+      log: `retry never produced a completed provider record — observed: ${JSON.stringify(
+        session.current.records(),
+      )} stderr: ${session.current.stderrText().slice(-1000)}`,
+    };
+  }
+  const occurrences = hierarchyCount(deviceId, RETRY_PROBE_PROMPT);
+  if (occurrences !== 1) {
+    return {
+      ok: false,
+      log: `retry probe appears ${occurrences}x in the transcript (expected exactly 1)`,
+    };
+  }
+  return {
+    ok: true,
+    log: `endpoint loss + retry OK (new request ${session.current.records()[0]?.requestId ?? 'n/a'}, exactly 1 retained user turn)`,
+  };
+}
+
 async function runNativeLeg(
   platform: 'ios' | 'android',
   reservation: { id: string },
   metro: MetroHandle,
-  backend: OwnedBackendHandle,
+  session: BackendSession,
   runId: string,
 ): Promise<LegOutcome[]> {
   const outcomes: LegOutcome[] = [];
   for (const appearance of ['light', 'dark'] as Appearance[]) {
     outcomes.push(
-      await runNativeAppearance(platform, reservation.id, appearance, metro, backend, runId),
+      await runNativeAppearance(platform, reservation.id, appearance, metro, session, runId),
     );
   }
   return outcomes;
@@ -931,7 +1165,7 @@ async function runNativeAppearance(
   deviceId: string,
   appearance: Appearance,
   metro: MetroHandle,
-  backend: OwnedBackendHandle,
+  session: BackendSession,
   runId: string,
 ): Promise<LegOutcome> {
   const marker = markerFor(runId, platform);
@@ -949,7 +1183,7 @@ async function runNativeAppearance(
       platform === 'android'
         ? await runAndroidInputFlow(
             deviceId,
-            backend,
+            session,
             marker,
             seedPromptFor(marker),
             FOLLOW_UP_PROMPT,
@@ -961,11 +1195,39 @@ async function runNativeAppearance(
             FOLLOW_UP_PROMPT: FOLLOW_UP_PROMPT,
             LONG_PROMPT,
           });
+    // iOS: the endpoint-loss + retry phase runs around the main flow (the Android
+    // flow drives its own — its input path is adb-based, not the yaml).
+    let retryLog: string | null = null;
+    let retryFailed = false;
+    if (platform === 'ios' && flow.exit === 0) {
+      const retry = await runIosEndpointLossRetry(deviceId, session);
+      retryLog = retry.log;
+      retryFailed = !retry.ok;
+    }
+    // Capture the observed UI state in BOTH outcomes — a failed retry phase must
+    // still leave this run's screenshot/hierarchy, not a stale earlier run's.
     const screenshotPath = join(legDir, 'screenshot.png');
     captureScreenshot(platform, deviceId, screenshotPath);
     const hierarchy = captureHierarchy(deviceId);
+    if (retryFailed) {
+      return {
+        platform,
+        status: 'failed',
+        diagnostic: `endpoint-loss/retry phase failed: ${retryLog}`,
+        evidence: {
+          marker,
+          appearance,
+          maestro_exit: flow.exit,
+          maestro_output: flow.output.slice(-4000),
+          retry_log: retryLog,
+          screenshot: screenshotPath,
+          hierarchy: hierarchy.slice(0, 4000),
+          hierarchy_has_marker: hierarchy.includes(marker),
+        },
+      };
+    }
 
-    const records = backend.records();
+    const records = session.allRecords();
     const latestRecord = records[records.length - 1] ?? null;
 
     return {
@@ -977,6 +1239,7 @@ async function runNativeAppearance(
         appearance,
         maestro_exit: flow.exit,
         maestro_output: flow.output.slice(-4000),
+        retry_log: retryLog,
         screenshot: screenshotPath,
         hierarchy: hierarchy.slice(0, 4000),
         hierarchy_has_marker: hierarchy.includes(marker),
@@ -1011,10 +1274,7 @@ function validateOptions(options: ProofOptions): void {
 }
 
 // fallow-ignore-next-line complexity
-async function runAllLegs(
-  options: ProofOptions,
-  backend: OwnedBackendHandle,
-): Promise<LegOutcome[]> {
+async function runAllLegs(options: ProofOptions, session: BackendSession): Promise<LegOutcome[]> {
   const { platforms, runId } = options;
   const legs: LegOutcome[] = [];
   const hasNative = platforms.includes('ios') || platforms.includes('android');
@@ -1044,11 +1304,11 @@ async function runAllLegs(
 
     for (const platform of platforms) {
       if (platform === 'web') {
-        legs.push(await runWebLeg(backend, runId));
+        legs.push(await runWebLeg(session, runId));
       } else if (platform === 'ios') {
         if (!reservations) throw new Error('no iOS reservation');
         legs.push(
-          ...(await runNativeLeg(platform, reservations.ios, metro as MetroHandle, backend, runId)),
+          ...(await runNativeLeg(platform, reservations.ios, metro as MetroHandle, session, runId)),
         );
       } else {
         if (!reservations) throw new Error('no Android reservation');
@@ -1057,7 +1317,7 @@ async function runAllLegs(
             platform,
             reservations.android,
             metro as MetroHandle,
-            backend,
+            session,
             runId,
           )),
         );
@@ -1071,7 +1331,25 @@ async function runAllLegs(
   return legs;
 }
 
-async function runWebLeg(backend: OwnedBackendHandle, runId: string): Promise<LegOutcome> {
+/** Every observed web-drive flag except `error` (a diagnostic, not an oracle). */
+const WEB_LEG_FLAGS: (keyof WebLegResult)[] = [
+  'emptyStateVisible',
+  'markerSubmitted',
+  'inputCleared',
+  'assistantResponded',
+  'followUpRecallVisible',
+  'stopControlVisible',
+  'retryControlVisible',
+  'retryErrorSanitized',
+  'retryCompleted',
+  'retrySingleUserTurn',
+];
+
+function webLegPassed(result: WebLegResult): boolean {
+  return WEB_LEG_FLAGS.every((key) => result[key] === true);
+}
+
+async function runWebLeg(session: BackendSession, runId: string): Promise<LegOutcome> {
   const marker = markerFor(runId, 'web');
   const legDir = join(EVIDENCE_ROOT, 'web');
   mkdirSync(legDir, { recursive: true });
@@ -1086,7 +1364,7 @@ async function runWebLeg(backend: OwnedBackendHandle, runId: string): Promise<Le
     };
   }
 
-  const served = await serveWithChatProxy(exported.distDir, WEB_PORT, backend);
+  const served = await serveWithChatProxy(exported.distDir, WEB_PORT, session);
   try {
     const browser = await launchChromiumBrowser();
     try {
@@ -1096,14 +1374,9 @@ async function runWebLeg(backend: OwnedBackendHandle, runId: string): Promise<Le
         marker,
         seedPromptFor(marker),
         FOLLOW_UP_PROMPT,
+        session,
       );
-      const passed =
-        result.emptyStateVisible &&
-        result.markerSubmitted &&
-        result.inputCleared &&
-        result.assistantResponded &&
-        result.followUpRecallVisible &&
-        result.stopControlVisible;
+      const passed = webLegPassed(result);
       return {
         platform: 'web',
         status: passed ? 'passed' : 'failed',
@@ -1112,7 +1385,8 @@ async function runWebLeg(backend: OwnedBackendHandle, runId: string): Promise<Le
           marker,
           url: served.url,
           drive_result: result,
-          backend_records: backend.records().slice(-5),
+          backend_records: session.allRecords().slice(-5),
+          retry_request_id: session.current.records()[0]?.requestId ?? null,
         },
       };
     } finally {
@@ -1144,18 +1418,20 @@ async function runLiveExampleProof(options: ProofOptions): Promise<ProofResult> 
 
   const backend = await ensureBackend(options);
   assertBackendReady(backend);
+  const session = new BackendSession(backend);
 
   let legs: LegOutcome[];
   try {
-    legs = await runAllLegs(options, backend);
+    legs = await runAllLegs(options, session);
   } finally {
-    if (!options.backend) {
-      await backend.stop();
+    // Stop what we own: a caller-passed handle we never replaced stays theirs.
+    if (!options.backend || session.current !== session.initial) {
+      await session.stop();
     }
   }
 
   const { passed, completed } = countPlatformsPassed(legs);
-  writeManifest(runId, legs, passed, completed, backend);
+  writeManifest(runId, legs, passed, completed, session);
 
   return { runId, legs, completed };
 }
@@ -1165,7 +1441,7 @@ function writeManifest(
   legs: LegOutcome[],
   passed: number,
   completed: boolean,
-  backend: OwnedBackendHandle,
+  session: BackendSession,
 ): void {
   const manifest = {
     task: 'ORI-RN-004',
@@ -1177,10 +1453,10 @@ function writeManifest(
     ],
     source_sha: { 'app/live-chat.tsx': readSourceSha() },
     backend: {
-      model: backend.model,
-      host: backend.host,
-      port: backend.port,
-      record_count: backend.records().length,
+      model: session.current.model,
+      host: session.current.host,
+      port: session.current.port,
+      record_count: session.allRecords().length,
     },
     passed_platforms: passed,
     completed,
@@ -1191,7 +1467,7 @@ function writeManifest(
 
   const correlation = {
     run_id: runId,
-    backend_records: backend.records().map((record) => ({
+    backend_records: session.allRecords().map((record) => ({
       requestId: record.requestId,
       provider: record.provider,
       providerModel: record.providerModel,
