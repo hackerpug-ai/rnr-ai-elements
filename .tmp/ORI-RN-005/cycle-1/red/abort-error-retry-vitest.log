@@ -1,0 +1,40 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts (4 tests | 1 failed | 3 skipped) 29231ms
+   × ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets 29231ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/nativewind-live-example.test.ts > ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets
+AssertionError: all three platforms must pass in one run — first leg diagnostic:
+the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):
+components/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.
+components/live-chat-screen.tsx(21,10): error TS2459: Module '"@/lib/theme"' declares 'THEME' locally, but it is not exported.
+: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts:177:5
+    175|     manifest.completed,
+    176|     `all three platforms must pass in one run — first leg diagnostic:\…
+    177|   ).toBe(true);
+       |     ^
+    178|
+    179|   // The interaction log of every native leg must record the active st…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  11:47:56
+   Duration  29.31s (transform 11ms, setup 0ms, import 17ms, tests 29.23s, environment 0ms)
+

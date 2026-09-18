@@ -1,0 +1,53 @@
+{
+  "task": "ORI-RN-005",
+  "engine": "nativewind",
+  "description": "Exact source-to-target mappings for the canonical live-chat worked example, copied byte-identical into the independent NativeWind consumer. Sources are read-only inputs owned by apps/example (ORI-RN-004/ORI-AI-001); targets are relative to the fresh consumer root created outside the monorepo by support/nativewind-live-example.ts.",
+  "consumer": {
+    "template": "packages/docs-snippets/nativewind",
+    "recipe": "packages/docs-snippets/commands/nativewind.sh",
+    "recipe_sha256": "5812581f66e98faac75bf7caf6a88fd7a5f3d93a3505cdaf103a73ebda7c3e5c",
+    "root_lockfile_sha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "hook_pins": {
+      "ai": "7.0.89",
+      "@ai-sdk/react": "4.0.92"
+    },
+    "registry_items": [
+      "https://rnraielements.com/r/nativewind/conversation.json",
+      "https://rnraielements.com/r/nativewind/message.json",
+      "https://rnraielements.com/r/nativewind/prompt-input.json",
+      "https://rnraielements.com/r/nativewind/item.json",
+      "https://rnraielements.com/r/nativewind/sheet.json"
+    ]
+  },
+  "mappings": [
+    {
+      "source": "apps/example/app/live-chat.tsx",
+      "target": "app/live-chat.tsx",
+      "expected_source_sha256": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+    },
+    {
+      "source": "apps/example/components/live-chat-screen.tsx",
+      "target": "components/live-chat-screen.tsx",
+      "expected_source_sha256": "0990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473"
+    },
+    {
+      "source": "apps/example/components/live-chat-message.tsx",
+      "target": "components/live-chat-message.tsx",
+      "expected_source_sha256": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b"
+    },
+    {
+      "source": "apps/example/lib/live-chat-config.ts",
+      "target": "lib/live-chat-config.ts",
+      "expected_source_sha256": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297"
+    },
+    {
+      "source": "apps/example/lib/use-live-chat.ts",
+      "target": "lib/use-live-chat.ts",
+      "expected_source_sha256": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87"
+    }
+  ],
+  "known_source_graph_gaps": [
+    "components/live-chat-screen.tsx line 5 imports { useUniwind } from 'uniwind' — the canonical screen is authored against the Uniwind engine's theme hook. The task contract forbids adding Uniwind to the NativeWind consumer, so this import cannot resolve there without an upstream (ORI-RN-004-owned) engine-neutral source change.",
+    "components/live-chat-screen.tsx line 21 imports { THEME } from '@/lib/theme' — the ORI-RN-001 NativeWind template's lib/theme.ts declares THEME locally without exporting it (apps/example's own lib/theme.ts exports it). Resolving requires a one-word export change in the ORI-RN-001-owned template."
+  ]
+}

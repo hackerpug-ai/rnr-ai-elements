@@ -1,0 +1,228 @@
+{
+  "task": "ORI-RN-005",
+  "engine": "nativewind",
+  "run_id": "ORI-RN-005-1789753646976",
+  "candidate_head_sha": "5a8ce9e2bb60f424e07ef42665d0a719da92c100",
+  "generated_at": "2026-09-18T17:47:52.693Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/nativewind-live-example.ts --platforms ios,android,web"
+  ],
+  "source_manifest": "tests/sprint-05-orient-search/nativewind-live-source-manifest.json",
+  "source_sha": {
+    "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+    "apps/example/components/live-chat-screen.tsx": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+    "apps/example/components/live-chat-message.tsx": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+    "apps/example/lib/live-chat-config.ts": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+    "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87"
+  },
+  "copy_pairs": [
+    {
+      "source": "apps/example/app/live-chat.tsx",
+      "target": "app/live-chat.tsx",
+      "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "match": true
+    },
+    {
+      "source": "apps/example/components/live-chat-screen.tsx",
+      "target": "components/live-chat-screen.tsx",
+      "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+      "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+      "match": true
+    },
+    {
+      "source": "apps/example/components/live-chat-message.tsx",
+      "target": "components/live-chat-message.tsx",
+      "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+      "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+      "match": true
+    },
+    {
+      "source": "apps/example/lib/live-chat-config.ts",
+      "target": "lib/live-chat-config.ts",
+      "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+      "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+      "match": true
+    },
+    {
+      "source": "apps/example/lib/use-live-chat.ts",
+      "target": "lib/use-live-chat.ts",
+      "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "match": true
+    }
+  ],
+  "consumer": {
+    "root_existed_outside_monorepo": true,
+    "script_exit": 2,
+    "cli_version": "1.0.0",
+    "resolved_versions": {
+      "expo": "57.0.24",
+      "react-native": "0.86.3",
+      "react": "19.2.3",
+      "typescript": "6.0.3",
+      "nativewind": "4.2.6",
+      "uniwind": "missing",
+      "tailwindcss": "3.4.19",
+      "@rn-primitives/dialog": "1.5.2",
+      "react-native-safe-area-context": "5.7.0"
+    },
+    "tsc_exit": 2,
+    "expo_doctor_exit": 0,
+    "public_registry_hashes": {
+      "https://rnraielements.com/r/nativewind/conversation.json": "c84d855da4e4e557705d5b93727f5fda186b177b1071bf0a3dc374575b43576f",
+      "https://rnraielements.com/r/nativewind/message.json": "c2faccb66abd23eb8d840805886ff02eeabbd3d13d9fd54de63ec1a9bc45943d",
+      "https://rnraielements.com/r/nativewind/prompt-input.json": "dc64dfbce4e8e284f19d18446756707972ab197b6c431755ec14ef9b2ece8246",
+      "https://rnraielements.com/r/nativewind/item.json": "a0d2c46de0ec000123387c5ee15b20977ee85cfbe5fc095bd9e38230508dcaed",
+      "https://rnraielements.com/r/nativewind/sheet.json": "b39706723eec6acfad5a3cf87d026bf1ee33c9784f48ef23e11518865495fb14"
+    }
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4010,
+    "record_count": 0
+  },
+  "passed_platforms": 0,
+  "completed": false,
+  "legs": [
+    {
+      "platform": "ios",
+      "status": "blocked",
+      "diagnostic": "the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):\ncomponents/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.\ncomponents/live-chat-screen.tsx(21,10): error TS2459: Module '\"@/lib/theme\"' declares 'THEME' locally, but it is not exported.\n",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789753646976:ios",
+        "script_exit": 2,
+        "copy_pairs": [
+          {
+            "source": "apps/example/app/live-chat.tsx",
+            "target": "app/live-chat.tsx",
+            "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+            "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+            "match": true
+          },
+          {
+            "source": "apps/example/components/live-chat-screen.tsx",
+            "target": "components/live-chat-screen.tsx",
+            "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+            "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+            "match": true
+          },
+          {
+            "source": "apps/example/components/live-chat-message.tsx",
+            "target": "components/live-chat-message.tsx",
+            "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+            "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+            "match": true
+          },
+          {
+            "source": "apps/example/lib/live-chat-config.ts",
+            "target": "lib/live-chat-config.ts",
+            "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+            "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+            "match": true
+          },
+          {
+            "source": "apps/example/lib/use-live-chat.ts",
+            "target": "lib/use-live-chat.ts",
+            "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+            "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+            "match": true
+          }
+        ]
+      }
+    },
+    {
+      "platform": "android",
+      "status": "blocked",
+      "diagnostic": "the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):\ncomponents/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.\ncomponents/live-chat-screen.tsx(21,10): error TS2459: Module '\"@/lib/theme\"' declares 'THEME' locally, but it is not exported.\n",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789753646976:android",
+        "script_exit": 2,
+        "copy_pairs": [
+          {
+            "source": "apps/example/app/live-chat.tsx",
+            "target": "app/live-chat.tsx",
+            "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+            "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+            "match": true
+          },
+          {
+            "source": "apps/example/components/live-chat-screen.tsx",
+            "target": "components/live-chat-screen.tsx",
+            "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+            "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+            "match": true
+          },
+          {
+            "source": "apps/example/components/live-chat-message.tsx",
+            "target": "components/live-chat-message.tsx",
+            "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+            "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+            "match": true
+          },
+          {
+            "source": "apps/example/lib/live-chat-config.ts",
+            "target": "lib/live-chat-config.ts",
+            "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+            "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+            "match": true
+          },
+          {
+            "source": "apps/example/lib/use-live-chat.ts",
+            "target": "lib/use-live-chat.ts",
+            "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+            "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+            "match": true
+          }
+        ]
+      }
+    },
+    {
+      "platform": "web",
+      "status": "blocked",
+      "diagnostic": "the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):\ncomponents/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.\ncomponents/live-chat-screen.tsx(21,10): error TS2459: Module '\"@/lib/theme\"' declares 'THEME' locally, but it is not exported.\n",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789753646976:web",
+        "script_exit": 2,
+        "copy_pairs": [
+          {
+            "source": "apps/example/app/live-chat.tsx",
+            "target": "app/live-chat.tsx",
+            "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+            "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+            "match": true
+          },
+          {
+            "source": "apps/example/components/live-chat-screen.tsx",
+            "target": "components/live-chat-screen.tsx",
+            "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+            "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+            "match": true
+          },
+          {
+            "source": "apps/example/components/live-chat-message.tsx",
+            "target": "components/live-chat-message.tsx",
+            "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+            "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+            "match": true
+          },
+          {
+            "source": "apps/example/lib/live-chat-config.ts",
+            "target": "lib/live-chat-config.ts",
+            "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+            "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+            "match": true
+          },
+          {
+            "source": "apps/example/lib/use-live-chat.ts",
+            "target": "lib/use-live-chat.ts",
+            "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+            "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+            "match": true
+          }
+        ]
+      }
+    }
+  ]
+}
