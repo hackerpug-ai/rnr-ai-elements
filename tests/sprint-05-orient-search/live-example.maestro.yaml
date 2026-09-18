@@ -1,0 +1,90 @@
+# ORI-RN-004 — Expo Go live chat proof flow.
+#
+# Drives the separate /live-chat route in the REAL apps/example app (appId
+# host.exp.Exponent) against the ORI-AI-001 owned backend and the official OpenAI
+# Responses endpoint. Markers and prompts arrive via `-e` from
+# support/live-example-proof.test.ts; every selector is a real accessibility text the
+# app reads to a screen reader — no ids, no test seams, no text the app does not read.
+#
+# Covered here:
+#   AC-1  empty transcript ("Start a conversation") -> submit a fresh marker -> exactly
+#         one user turn + cleared composer;
+#   AC-2  seed a real exchange (marker + "three short facts about rain"), await the
+#         streamed completion, then a contextual follow-up that omits the marker;
+#   AC-3  active Stop: submit a long prompt, tap "Stop generating" mid-stream, await
+#         the send control's return.
+#
+# The apps/example bundle surfaces a pre-existing "require cycle" LogBox warning (from
+# the installed stack-trace.tsx) and an async-update warning from the hook's useChat;
+# both are dev-only overlays that would not appear in a production build. They are
+# dismissed with optional taps so they never cover the composer. The soft keyboard is
+# dismissed before each send so the composer's send control is always reachable.
+# Endpoint-loss + Retry recovery is orchestrated by the driver around this flow.
+appId: host.exp.Exponent
+# MARKER / SEED_PROMPT / FOLLOW_UP_PROMPT / LONG_PROMPT arrive via `-e` — no env:
+# defaults here, because a default would silently win over the CLI override on iOS.
+---
+# First launch of a project in Expo Go shows its developer-menu onboarding, then the
+# dev menu; the apps/example bundle also surfaces LogBox warnings. Dismiss each when
+# present. Optional so a warm session is unaffected.
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- tapOn:
+    text: "Dismiss"
+    optional: true
+- tapOn:
+    text: "Minimize"
+    optional: true
+- extendedWaitUntil:
+    visible: "Live chat"
+    timeout: 60000
+- assertVisible: "Live chat"
+- assertVisible: "Send message"
+# AC-1: the initial transcript has 0 turns — the empty state renders instead of a list.
+- assertVisible: "Start a conversation"
+# AC-1: submit the fresh marker through the real composer.
+- tapOn: "Message.*"
+- inputText: ${MARKER}
+- tapOn:
+    text: "Dismiss"
+    optional: true
+- tapOn:
+    text: "Minimize"
+    optional: true
+- tapOn: "Send message"
+# The accepted turn lands as exactly one user message; PromptInput clears its own field.
+- extendedWaitUntil:
+    visible: ${MARKER}
+    timeout: 30000
+- assertVisible: ${MARKER}
+# AC-2: seed the real exchange. The prompt asks the model to repeat the marker and give
+# three short facts about rain.
+- tapOn: "Message.*"
+- inputText: ${SEED_PROMPT}
+- tapOn: "Send message"
+# Streaming holds the control in the Stop pose; completion returns it to Send message.
+- extendedWaitUntil:
+    visible: "Send message"
+    timeout: 120000
+# AC-2: contextual follow-up that does NOT repeat the marker.
+- tapOn: "Message.*"
+- inputText: ${FOLLOW_UP_PROMPT}
+- tapOn: "Send message"
+- extendedWaitUntil:
+    visible: "Send message"
+    timeout: 120000
+# AC-3: active stop — submit a bounded long-answer prompt and stop mid-stream.
+- tapOn: "Message.*"
+- inputText: ${LONG_PROMPT}
+- tapOn: "Send message"
+- extendedWaitUntil:
+    visible: "Stop generating"
+    timeout: 30000
+- tapOn: "Stop generating"
+- extendedWaitUntil:
+    visible: "Send message"
+    timeout: 30000

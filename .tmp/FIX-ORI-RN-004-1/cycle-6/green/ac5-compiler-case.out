@@ -1,0 +1,38 @@
+{
+  "task": "ORI-RN-004",
+  "case": "ORI-RN-004-AC-5-live-import-graph-compiler",
+  "candidate_head_sha": "61e56f559fa5e866231697c49bd898c3bfe913d3",
+  "generated_at": "2026-09-18T04:33:16.238Z",
+  "source_sha": {
+    "app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  },
+  "scoped": {
+    "command": "pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json",
+    "exit": 0,
+    "program_includes": {
+      "app/live-chat.tsx": true,
+      "components/live-chat-screen.tsx": true,
+      "components/live-chat-message.tsx": true,
+      "components/ai/conversation.tsx": true,
+      "components/ai/message.tsx": true,
+      "components/ai/prompt-input.tsx": true
+    }
+  },
+  "whole_example": {
+    "command": "pnpm --dir apps/example exec tsc --noEmit",
+    "exit": 2
+  },
+  "negative_control": {
+    "route_absent_from_omit_config": true
+  },
+  "assertions": {
+    "scoped_compiler_exit_zero": true,
+    "live_route_in_program": true,
+    "screen_in_program": true,
+    "message_in_program": true,
+    "conversation_in_program": true,
+    "negative_control_holds": true
+  },
+  "passed": true
+}
+EXIT=0

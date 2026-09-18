@@ -1,0 +1,41 @@
+{
+  "task": "ORI-RN-004",
+  "run_id": "ORI-RN-004-1789541352359",
+  "candidate_head_sha": "1c4dbdf386be3bef0ef2792d4a867713da8dacda",
+  "generated_at": "2026-09-16T06:50:29.430Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios,android,web"
+  ],
+  "source_sha": {
+    "app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4000,
+    "record_count": 0
+  },
+  "passed_platforms": 0,
+  "completed": false,
+  "legs": [
+    {
+      "platform": "web",
+      "status": "failed",
+      "diagnostic": "{\"emptyStateVisible\":false,\"markerSubmitted\":false,\"inputCleared\":false,\"assistantResponded\":false,\"stopControlVisible\":false,\"followUpRecallVisible\":false,\"error\":\"locator.fill: Timeout 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - waiting for getByLabel('Message', { exact: true })\\u001b[22m\\n\"}",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789541352359:web",
+        "url": "http://127.0.0.1:8406",
+        "drive_result": {
+          "emptyStateVisible": false,
+          "markerSubmitted": false,
+          "inputCleared": false,
+          "assistantResponded": false,
+          "stopControlVisible": false,
+          "followUpRecallVisible": false,
+          "error": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Message', { exact: true })\u001b[22m\n"
+        },
+        "backend_records": []
+      }
+    }
+  ]
+}

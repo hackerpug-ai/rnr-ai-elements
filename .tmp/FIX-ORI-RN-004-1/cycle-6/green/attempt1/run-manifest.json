@@ -1,0 +1,82 @@
+{
+  "task": "ORI-RN-004",
+  "run_id": "FIX-ORI-RN-004-1-C6G1",
+  "candidate_head_sha": "61e56f559fa5e866231697c49bd898c3bfe913d3",
+  "generated_at": "2026-09-18T04:00:21.593Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios,android,web"
+  ],
+  "source_sha": {
+    "app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4000,
+    "record_count": 10
+  },
+  "passed_platforms": 0,
+  "completed": false,
+  "legs": [
+    {
+      "platform": "android",
+      "status": "failed",
+      "diagnostic": "OK: composer ready\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record\nOK: follow-up streamed to a completed provider record\nOK: stop tap 1 at 954,2232\nOK: stop tap 1 at 954,2232\nFAIL: active stop did not abort the stream {\"fieldText\":\"What would you like to know?\",\"sendEnabled\":\"false\",\"sendPresent\":true,\"stopPresent\":false,\"screenTexts\":\"Tools | Live chat | AI | AI | You asked me to remember the marker ORI- | What marker did I ask you to remember? | AI | AI | ORI-RN-004:FIX-ORI-RN-004-1-C6G1:android | Remember the marker ORI-RN-004:FIX-ORI-R | AI | AI\"}",
+      "evidence": {
+        "marker": "ORI-RN-004:FIX-ORI-RN-004-1-C6G1:android",
+        "appearance": "light",
+        "maestro_exit": 1,
+        "maestro_output": "OK: composer ready\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record\nOK: follow-up streamed to a completed provider record\nOK: stop tap 1 at 954,2232\nOK: stop tap 1 at 954,2232\nFAIL: active stop did not abort the stream {\"fieldText\":\"What would you like to know?\",\"sendEnabled\":\"false\",\"sendPresent\":true,\"stopPresent\":false,\"screenTexts\":\"Tools | Live chat | AI | AI | You asked me to remember the marker ORI- | What marker did I ask you to remember? | AI | AI | ORI-RN-004:FIX-ORI-RN-004-1-C6G1:android | Remember the marker ORI-RN-004:FIX-ORI-R | AI | AI\"}",
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-1-impl/tests/sprint-05-orient-search/evidence/ORI-RN-004/android/light/screenshot.png",
+        "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,2400]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,2337]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.LinearLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,136][1080,2337]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"false\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"host.exp.exponent:id/action_bar_root\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[0,136][1080,2337]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"android:id/content\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[0,136][1080,2337]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"android.widget.FrameLayout\",\n                \"important-for-accessibility\" : \"false\",\n                \"error\" : \"\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"text\" : \"\",\n                  \"accessibilityText\" : \"\",\n                  \"hintText\" : \"\",\n                  \"ignoreBoundsFiltering\" : \"false\",\n                  \"resource-id\" : \"\",\n                  \"clickable\" : \"false\",\n                  \"bounds\" : \"[0,136][1080,2337]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"checked\" : \"false\",\n                  \"scrollable\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"class\" : \"android.widget.FrameLayout\",\n                  \"important-for-accessibility\" : \"false\",\n                  \"error\" : \"\"\n                },\n                \"children\" : [ {\n             ",
+        "hierarchy_has_marker": true,
+        "latest_backend_record": {
+          "requestId": "3nTF5w0mZw8lLlwS",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0e9d42d64d6d34b2006aacb531ca8887d0a1357ea42609f20f",
+          "callId": "call-DYwT9X1CBGR1iFH7be6W3w2Z",
+          "outcome": "completed",
+          "deltaCount": 1495,
+          "inputTokens": 1520,
+          "outputTokens": 1496,
+          "totalTokens": 3016,
+          "textHash": "0217db9e2d57fea3bda36feaec41159bb2023c6e189d94c6fbe6294b18da3d74",
+          "durationMs": 11380,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "android",
+      "status": "failed",
+      "diagnostic": "OK: composer ready\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record\nOK: follow-up streamed to a completed provider record\nOK: stop tap 1 at 954,2232\nOK: stop tap 1 at 954,2232\nFAIL: active stop did not abort the stream {\"fieldText\":\"What would you like to know?\",\"sendEnabled\":\"false\",\"sendPresent\":true,\"stopPresent\":false,\"screenTexts\":\"10:00 PM | Security & privacy notification: Set a screen lock | Android System notification: Serial console enabled | Wifi signal full. | Phone signal full. | Battery 100 percent. | Tools | Live chat | What marker did I ask you to remember? | AI | AI | Marker: ORI-RN-004:FIX-ORI-RN-004-1-C6G1\"}",
+      "evidence": {
+        "marker": "ORI-RN-004:FIX-ORI-RN-004-1-C6G1:android",
+        "appearance": "dark",
+        "maestro_exit": 1,
+        "maestro_output": "OK: composer ready\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record\nOK: follow-up streamed to a completed provider record\nOK: stop tap 1 at 954,2232\nOK: stop tap 1 at 954,2232\nFAIL: active stop did not abort the stream {\"fieldText\":\"What would you like to know?\",\"sendEnabled\":\"false\",\"sendPresent\":true,\"stopPresent\":false,\"screenTexts\":\"10:00 PM | Security & privacy notification: Set a screen lock | Android System notification: Serial console enabled | Wifi signal full. | Phone signal full. | Battery 100 percent. | Tools | Live chat | What marker did I ask you to remember? | AI | AI | Marker: ORI-RN-004:FIX-ORI-RN-004-1-C6G1\"}",
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-1-impl/tests/sprint-05-orient-search/evidence/ORI-RN-004/android/dark/screenshot.png",
+        "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,136]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_launch_animation_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ ],\n        \"clickable\" : false,\n        \"enabled\" : true,\n        \"focused\" : false,\n        \"checked\" : false,\n        \"selected\" : false\n      }, {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"com.android.systemui:id/status_bar\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,0][1080,136]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"true\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"com.android.systemui:id/status_bar_contents\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[47,0][1027,136]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"com.android.systemui:id/status_bar_start_side_container\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[47,1][454,136]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"andr",
+        "hierarchy_has_marker": true,
+        "latest_backend_record": {
+          "requestId": "bsMH6DHWnKMehpBP",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_02d36cda1cdd5d8b006aacb72be47887d0aceaaa06571e33dd",
+          "callId": "call-uiglAcPpCyfXAwDay3BidQaD",
+          "outcome": "completed",
+          "deltaCount": 1609,
+          "inputTokens": 1843,
+          "outputTokens": 1610,
+          "totalTokens": 3453,
+          "textHash": "e5386d55334545041d6bf937386749d4e36de587bacae493f48222d396de7e6a",
+          "durationMs": 11982,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    }
+  ]
+}

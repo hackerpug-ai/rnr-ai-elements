@@ -40,27 +40,41 @@ The fix: read `process.env.EXPO_PUBLIC_API_BASE_URL` directly inside `getLiveCha
 pure `resolveLiveChatConfig(env)` seam (which takes an explicit env object) byte-identical — that seam is
 what ORI-AI-001's unit test and this FIX's unit test exercise, and it must not change.
 
-**Defect B — the Android leg cannot type (ROOT CAUSE IS AN OPEN QUESTION, NOT CONFIRMED).** The
-ORI-RN-004 Android run recorded an Android-only `Can't perform a React state update on a component that
+**Defect B — the Android leg cannot type (two causes, both in the input path, NOT a production-code bug).**
+The ORI-RN-004 Android run recorded an Android-only `Can't perform a React state update on a component that
 hasn't mounted yet` error (metro.log) correlated with the composer's `Send message` button staying
 `enabled=false` (Maestro element dump `accessibilityText='Send message'` `enabled=false`); the
 React-controlled `TextInput` never registered the typed marker, so no message round-trips. iOS does NOT
-exhibit it. The `useChat` hook (`@ai-sdk/react@4.0.92`) reads state through `useSyncExternalStore` whose
-subscribe callbacks call `update()` — the classic trigger for "state update before mount" — and
-`apps/example/app.json` sets `experiments.reactCompiler: true`, which memoizes `useLiveChat` /
-`live-chat-screen` and is the primary suspect for changing the mount/subscribe timing on Android only.
-This charter **does not enshrine that theory as fact**: the implementer must first bisect (disable
-`reactCompiler` and re-run the Android leg) to confirm the root cause before choosing the fix, and must
-record which hypothesis proved correct.
+exhibit it. On-device isolation resolved TWO causes, both in the input path:
+
+1. **Maestro input path** — Maestro's IME-based `inputText` silently fails to type because the emulator's
+   soft keyboard is not shown (`dumpsys input_method` → `mIsImeShowing=false`, `mImeHeight=0`), while
+   `adb shell input text` (direct key events) types and ENABLES the button. The cycle-1 bisect showed
+   React Compiler is NOT the cause of THIS path (button stays `enabled: false` with reactCompiler OFF via
+   Maestro `inputText`).
+2. **adb input path** — the driver's `adb input tap` is intercepted by the RN LogBox dev overlay, so the
+   tap never lands on the field. The reactCompiler-induced "state update before mount" warning re-fires on
+   re-renders and re-expands the LogBox; the driver's `dismissLogBox` only acts on a FULL "Console
+   Warning"/"Console Error" overlay, so a MINIMIZED banner (which has neither string and no `Dismiss`
+   element) is never dismissed, and the next adb tap lands on the overlay. The text itself DOES stick when
+   the tap lands — a live re-test (reactCompiler ON, LogBox cleared, tap `Message`, `adb shell input text
+   "PROBE4"`) returned `text='PROBE4'` with `Send message enabled: true`. The earlier "reactCompiler drops
+   the `setText`" theory is REFUTED by this.
+
+The fix is therefore in the proof driver (WRITE-ALLOWED): make `dismissLogBox` handle the minimized
+banner, make `focusField` assert the field gained focus (so an intercepted tap is distinguishable from any
+other failure), and avoid the `hideKeyboard` BACK-key propagation when no IME is shown.
 
 ## Why
 
 ORI-RN-004's three-platform proof (`tests/sprint-05-orient-search/support/live-example-proof.test.ts
 --platforms ios,android,web`) passed the iOS leg (real streamed replies + active abort in light and
 dark) and the AC-5 compiler gate, but the web and Android legs were blocked by defects outside
-ORI-RN-004's write allowlist (`apps/example/lib/live-chat-config.ts` and `apps/example/lib/use-live-chat.ts`
-and `apps/example/app.json` were all absent from that task's WRITE-ALLOWED). This FIX takes those files
-over so the full three-platform proof can pass and ORI-RN-004's commit can land.
+ORI-RN-004's write allowlist (`apps/example/lib/live-chat-config.ts` was absent from that task's
+WRITE-ALLOWED; the Android blocker turned out to be a Maestro/emulator text-input artifact outside any
+code file). Cycle 1 fixed Defect A (commit `51487c1`) and this cycle re-scopes Defect B to the Android
+input path (`tests/sprint-05-orient-search/live-example.maestro.yaml` + the proof driver), so the full
+three-platform proof can pass and ORI-RN-004's commit can land.
 
 ORI-RN-004's recorded RED evidence (`.tmp/ORI-RN-004/cycle-1/red/RED.md`, on
 `kb-run-sprint/sprint-05-orient-search/ORI-RN-004`):
@@ -82,8 +96,13 @@ are ABSENT from the trunk tip (`cffcdb9`): the proof driver
 `tests/sprint-05-orient-search/live-example.maestro.yaml`, and the ORI-RN-004 revision of
 `apps/example/tsconfig.live-chat.json` (which adds `expo-env.d.ts`, the two components, `app/live-chat.tsx`,
 and `types: ['uniwind/types']` — trunk's version includes only `lib/live-chat-config.ts` +
-`lib/use-live-chat.ts` and would report a FALSE GREEN for the scoped gate). Do NOT create these ORI-RN-004-owned
-files yourself — they are not in WRITE-ALLOWED; they must arrive via the base branch.
+`lib/use-live-chat.ts` and would report a FALSE GREEN for the scoped gate). Do NOT create the
+ORI-RN-004-owned ROUTE/SCREEN/CONFIG files yourself — `app/live-chat.tsx`,
+`components/live-chat-screen.tsx`, `components/live-chat-message.tsx`, and
+`tsconfig.live-chat.json` must arrive via the base branch. EXCEPTION (cycle-2): the proof driver
+`tests/sprint-05-orient-search/support/live-example-proof.test.ts` and the Maestro flow
+`tests/sprint-05-orient-search/live-example.maestro.yaml` are now WRITE-ALLOWED (see the cycle-2
+amendment, F-7), so the implementer MAY modify them for the Android text-input path.
 
 **RED (replay the observed failure, before the fix):**
 
@@ -102,32 +121,38 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
 1. Web — the same `--platforms web` run now reaches the real backend: the static `/live-chat` renders
    the composer (no `not configured`), the browser hydrates without #418, and a real message round-trips
    to the ORI-AI-001 backend and OpenAI Responses (a completed provider record appears).
-2. Android — the same `--platforms android` run now accepts typed text (`Send message` flips to enabled),
-   a real streamed reply arrives (a completed provider record appears), and the follow-up + active Stop
-   legs pass in light and dark.
+2. Android — the same `--platforms android` run now delivers real device text input (e.g. `adb shell input
+   text` or an explicitly-shown IME) so `Send message` flips to enabled, a real streamed reply arrives (a
+   completed provider record appears), and the follow-up + active Stop legs pass in light and dark.
 3. No regression — the iOS leg (`--platforms ios`) still passes, and the AC-5 compiler case
    (`--case ORI-RN-004-AC-5-live-import-graph-compiler`) still passes.
 
 ## Scope
 
 - WRITE-ALLOWED:
-  - `apps/example/lib/live-chat-config.ts` (MODIFY — Defect A, direct `process.env` read only)
-  - `apps/example/lib/use-live-chat.ts` (MODIFY — Defect B, ONLY the mount-time-update / initialization;
-    transport, abort/retry, throttling, `createRetry`, and the `UseLiveChatResult` shape stay with ORI-AI-001)
-  - `apps/example/app.json` (MODIFY — ONLY if Defect B's root cause is confirmed to be the React Compiler;
-    justify in the commit body with the bisect evidence)
-  - `tests/sprint-05-orient-search/support/live-example-proof.test.ts` (MODIFY — the ORI-RN-004 driver's
-    web/Android legs only, if a proof assertion must change; the driver already sets
-    `EXPO_PUBLIC_API_BASE_URL` before export)
+  - `apps/example/lib/live-chat-config.ts` (MODIFY — Defect A, direct `process.env` read only; FIXED in
+    cycle 1, commit `51487c1`)
+  - `tests/sprint-05-orient-search/support/live-example-proof.test.ts` (MODIFY — Defect B, the PRIMARY fix
+    location: make `dismissLogBox` handle the LogBox MINIMIZED banner, make `focusField` assert the field
+    gained focus, and avoid the `hideKeyboard` BACK-key propagation when no IME is shown; plus the existing
+    web assertions / Android adb text-input driving; the driver already sets `EXPO_PUBLIC_API_BASE_URL`
+    before export)
+  - `tests/sprint-05-orient-search/live-example.maestro.yaml` (MODIFY — Defect B, the Android text-input
+    path: replace Maestro's IME-based `inputText` with a real device input step, e.g. an explicit emulator
+    IME show before typing, or a driver-driven `adb shell input text` / key-event step)
+  - `apps/example/lib/use-live-chat.ts` (MODIFY — Defect B FALLBACK ONLY, and only if the driver fix above
+    is proven insufficient on the real emulator: guard the pre-mount state update; transport, abort/retry,
+    throttling, `createRetry`, and the `UseLiveChatResult` shape stay with ORI-AI-001)
+  - `apps/example/app.json` (MODIFY — Defect B FALLBACK ONLY, and only if the driver fix above is proven
+    insufficient on the real emulator: disable `experiments.reactCompiler`; justify in the commit body)
   - `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/**` (evidence — RED/GREEN)
   - `.tmp/FIX-ORI-RN-004-1/**` (owned scratch)
 
 - writeProhibited (explicit):
-  - `apps/example/server/**`, `apps/example/lib/use-live-chat.ts` beyond the Defect B initialization,
-    `apps/example/lib/theme.ts`, `apps/example/lib/nav-theme.ts`, `apps/example/app/_layout.tsx`,
-    `apps/example/app/index.tsx`, `apps/example/gallery/**`, `apps/example/global.css`,
-    `apps/example/package.json`, `packages/registry/**`, `pnpm-lock.yaml`, `apps/docs/**`, `.github/**`,
-    `.spec/**`
+  - `apps/example/server/**`, `apps/example/lib/theme.ts`, `apps/example/lib/nav-theme.ts`,
+    `apps/example/app/_layout.tsx`, `apps/example/app/index.tsx`, `apps/example/gallery/**`,
+    `apps/example/global.css`, `apps/example/package.json`, `packages/registry/**`, `pnpm-lock.yaml`,
+    `apps/docs/**`, `.github/**`, `.spec/**`
   - the hook's transport / abort / retry / throttle semantics, and the `resolveLiveChatConfig(env)` seam
     behavior (both owned by ORI-AI-001)
 
@@ -145,20 +170,28 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
 - Keep the installed Uniwind engine, the Expo Go default `Text` markdown renderer, and the existing root
   providers — no engine change, no new portal host, no token migration.
 - Do NOT change abort/retry semantics, the transport construction, the 50 ms throttle, or `createRetry`
-  ordering (ORI-AI-001 owns those). A `use-live-chat.ts` change is permitted only to resolve the Defect B
-  mount-time update.
-- `app.json` is write-allowed ONLY if the React Compiler is confirmed as Defect B's root cause by the
-  bisect; otherwise leave `reactCompiler` untouched and fix the hook instead. The bisect (disable
-  `reactCompiler` → re-run the Android leg → does `Send message` enable?) is the gate on that decision and
-  must be recorded in evidence.
+  ordering (ORI-AI-001 owns those). A `use-live-chat.ts` change is FALLBACK-ONLY (see WRITE-ALLOWED) and
+  must never touch the transport / abort / retry / throttle semantics.
+- The React Compiler finding, corrected: `experiments.reactCompiler` is NOT the cause of the Maestro
+  `inputText` button-disabled state (cycle-1 bisect: button stays `enabled: false` with reactCompiler OFF
+  via Maestro). The earlier "reactCompiler drops the `setText` on the adb path" claim (cycle-4) is REFUTED
+  by a live re-test: with `reactCompiler: true` the "state update before mount" warning fires, but once the
+  LogBox is cleared and the tap actually lands, `adb shell input text` sticks (`text='PROBE4'`,
+  `Send message enabled: true`). The real adb-path blocker is the RN LogBox overlay intercepting the adb
+  tap (the driver's `dismissLogBox` does not dismiss a MINIMIZED banner, and `focusField` does not assert
+  focus). The implementer must fix the DRIVER first; a production-code change (app.json / use-live-chat.ts)
+  is only authorized if the driver fix is proven insufficient on the real emulator.
 
 ### DONE WHEN
 
 - AC-1: `getLiveChatConfig` reads `process.env.EXPO_PUBLIC_API_BASE_URL` directly; the web export no longer
   renders `not configured` and a real message round-trips through the driver's same-origin reverse proxy
   (cross-origin CORS is out of scope, see OPEN QUESTIONS); `resolveLiveChatConfig` behavior is unchanged.
-- AC-2: on the real Android emulator the composer accepts typed text (`Send message` becomes enabled) and a
-  real streamed reply arrives; the root cause (React Compiler vs. hook init) is recorded.
+- AC-2: on the real Android emulator the composer receives real device text input (`Send message` becomes
+  enabled) and a real streamed reply arrives; the Android leg no longer relies on Maestro's IME-based
+  `inputText`, AND the RN LogBox overlay no longer intercepts the adb tap (the driver's `dismissLogBox` /
+  `focusField` / `hideKeyboard` weaknesses are fixed). The root cause (two-fold: the Maestro-input artifact
+  AND the LogBox/tap-interception on the adb path) is recorded in the commit body.
 - AC-3: the iOS leg and the AC-5 compiler gate still pass; `pnpm typecheck`, `pnpm lint`, and
   `pnpm --dir apps/example exec tsc --noEmit` behave as the charter's gates specify (pre-existing failures
   recorded with the AGENTS.md `git stash && rerun` proof).
@@ -182,24 +215,26 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
   TEST_FUNCTION: `runLiveExampleProof` (web leg)
   RED before: the same run renders `not configured` and `driveLiveWeb` fails at `getByLabel('Message')`.
 
-**AC-2: the Android composer accepts typed text and a real streamed reply arrives (Defect B)**
+**AC-2: the Android composer accepts real device text input and a real streamed reply arrives (Defect B)**
 
-  GIVEN the Android-only `Can't perform a React state update on a component that hasn't mounted yet`
-  error and the `Send message` button stuck at `enabled=false` WHEN the implementer bisects to the true
-  root cause (disable `experiments.reactCompiler` → re-run → does the button enable?) and applies the
-  minimal fix in the confirmed location (`app.json` or `use-live-chat.ts`) THEN on the real Android
-  emulator the composer accepts Maestro-typed text, `Send message` becomes enabled, and a real streamed
-  reply arrives (a completed provider record), with the follow-up + active Stop legs passing in light and
-  dark. If the bisect implicates a file OUTSIDE the two allowlisted fix locations (`app.json` /
-  `use-live-chat.ts`) — e.g. the ORI-RN-004-owned `live-chat-screen.tsx` composition or the PromptInput submit
-  path — stop and report for a scope amendment; do NOT expand the diff beyond WRITE-ALLOWED.
+  GIVEN two causes — (a) Maestro's IME-based `inputText` silently fails (soft keyboard not shown), and
+  (b) the driver's `adb input tap` is intercepted by the RN LogBox overlay (the reactCompiler-ON "state
+  update before mount" warning re-expands the LogBox; `dismissLogBox` does not handle the MINIMIZED banner,
+  and `focusField` never asserts focus) — WHEN the implementer drives the Android leg with REAL device
+  input (`adb shell input text` / key events from the proof driver, or an explicitly-shown IME) AND fixes
+  the driver's LogBox dismissal + focus assertion (primary; a production-code change to `app.json` /
+  `use-live-chat.ts` is authorized only if the driver fix is proven insufficient) THEN on the real Android
+  emulator the composer receives the typed text, `Send message` becomes enabled, and a real streamed reply
+  arrives (a completed provider record), with the follow-up + active Stop legs passing in light and dark.
 
   FLOW_REF: None · TEST_TIER: e2e · verification_service: real Expo Go (Android emulator) + ORI-AI-001 backend + OpenAI Responses
   VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms android`
-  TEST_FILE: `apps/example/lib/use-live-chat.ts` (or `apps/example/app.json`, per the bisect) +
-  `tests/sprint-05-orient-search/support/live-example-proof.test.ts`
+  TEST_FILE: `tests/sprint-05-orient-search/support/live-example-proof.test.ts` (primary) +
+  `tests/sprint-05-orient-search/live-example.maestro.yaml` (+ `apps/example/app.json` / `apps/example/lib/use-live-chat.ts`
+  only if the driver fix is proven insufficient)
   TEST_FUNCTION: `runLiveExampleProof` (android leg)
-  RED before: Maestro types the marker but `Send message` stays `enabled=false` and no backend record is produced.
+  RED before: Maestro `inputText` reports COMPLETED but the typed marker does not stick; `Send message`
+  stays `enabled: false` and no backend record is produced.
 
 **AC-3: no regression — iOS leg, the AC-5 compiler gate, and the static gates hold**
 
@@ -225,9 +260,11 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
   produced, the static `/live-chat` HTML no longer contains `not configured`, and the browser logs no
   React #418. RED (pre-fix) and GREEN (post-fix) saved under
   `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/`.
-- TC-3 → AC-2: the real `--platforms android` run accepts typed text — `Send message` flips to enabled and
-  a completed provider record is produced; the bisect evidence (reactCompiler on/off) names the confirmed
-  root cause. RED and GREEN saved under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/`.
+- TC-3 → AC-2: the real `--platforms android` run delivers real device text input — `Send message` flips to
+  enabled and a completed provider record is produced; the commit body records BOTH root causes (the
+  Maestro-input artifact AND the LogBox/tap-interception on the adb path) and the driver fix (LogBox
+  dismissal + focus assertion), with any production-code change justified only if the driver fix was
+  insufficient. RED and GREEN saved under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/`.
 - TC-4 → AC-3: the `--platforms ios` run and the `--case ORI-RN-004-AC-5-live-import-graph-compiler` run
   both pass; `git diff --name-only` lists only WRITE-ALLOWED paths.
 - TC-5 → AC-3: `pnpm typecheck` and `pnpm lint` are clean; `pnpm --dir apps/example exec tsc --noEmit`
@@ -239,10 +276,11 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
 
 ### SCOPE (file-level write permissions)
 
-- apps/example/lib/live-chat-config.ts (MODIFY)
-- apps/example/lib/use-live-chat.ts (MODIFY — Defect B initialization only)
-- apps/example/app.json (MODIFY — only if the React Compiler bisect confirms it; justify)
-- tests/sprint-05-orient-search/support/live-example-proof.test.ts (MODIFY — web/Android leg assertions)
+- apps/example/lib/live-chat-config.ts (MODIFY — FIXED in cycle 1, commit `51487c1`)
+- apps/example/lib/use-live-chat.ts (MODIFY — Defect B pre-mount state-update guard only)
+- apps/example/app.json (MODIFY — Defect B, disable `experiments.reactCompiler`; justify)
+- tests/sprint-05-orient-search/live-example.maestro.yaml (MODIFY — Android text-input path)
+- tests/sprint-05-orient-search/support/live-example-proof.test.ts (MODIFY — web/Android legs: assertions + Android input driving)
 - tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/** (evidence)
 - .tmp/FIX-ORI-RN-004-1/** (owned scratch)
 
@@ -259,21 +297,24 @@ files yourself — they are not in WRITE-ALLOWED; they must arrive via the base 
 
 ### DEPENDENCIES
 
-- Depends on: ORI-RN-004 (owns the `/live-chat` screen, the proof driver, and the AC-5 compiler case this
-  FIX re-runs — its deliverable commit `001488c` is the implementation BASE, since none of those files exist
-  on trunk `cffcdb9`), ORI-AI-001 (owns the `use-live-chat` hook, the `/api/chat` backend, and
-  `resolveLiveChatConfig` — this FIX only reads `process.env` directly and must not change their transport /
-  abort / retry / throttle semantics)
+- Depends on: ORI-RN-004 (owns the `/live-chat` route, the screen/message components, the proof driver, and the
+  AC-5 compiler case this FIX re-runs — its deliverable commit `001488c` is the implementation BASE, since none
+  of those files exist on trunk `cffcdb9`; cycle-2 takes MODIFY on the proof driver and the Maestro flow for the
+  Android text-input path — see the cycle-2 amendment, F-7), ORI-AI-001 (owns the `use-live-chat` hook, the
+  `/api/chat` backend, and `resolveLiveChatConfig` — this FIX only reads `process.env` directly and must not
+  change their transport / abort / retry / throttle semantics)
 - Blocks: ORI-RN-004 (its web and Android legs cannot pass until these two defects are fixed)
-- Parallel: none (one lane, one config file)
+- Parallel: none (one lane; cycle-2 writes `apps/example/lib/live-chat-config.ts`,
+  `tests/sprint-05-orient-search/live-example.maestro.yaml`, and
+  `tests/sprint-05-orient-search/support/live-example-proof.test.ts`, plus evidence/scratch)
 
 ### READING LIST (max 5)
 
-- apps/example/lib/live-chat-config.ts (the indirect `const env = process.env` at line 70 + the pure `resolveLiveChatConfig` seam)
-- apps/example/lib/use-live-chat.ts (the `useMemo` transport + `useChat` initialization that the React Compiler memoizes)
-- apps/example/app.json (the `experiments.reactCompiler: true` experiment, the Defect B primary suspect)
-- babel-preset-expo build/plugins/inline-env-vars.js (`isProcessEnv` — why only the DIRECT `process.env.EXPO_PUBLIC_*` access inlines)
-- tests/sprint-05-orient-search/support/live-example-proof.test.ts (the ORI-RN-004 web/android leg drivers this FIX re-runs)
+- apps/example/lib/live-chat-config.ts (Defect A: the direct `process.env` read — FIXED in cycle 1, commit `51487c1`)
+- tests/sprint-05-orient-search/support/live-example-proof.test.ts (Defect B PRIMARY fix: the already-committed `runAndroidInputFlow` / `adbTypeText` / `dismissLogBox` / `hideKeyboard` / `focusField` — commit `7dbcdd6` — whose LogBox-dismissal + focus-assertion weaknesses to fix)
+- tests/sprint-05-orient-search/live-example.maestro.yaml (Defect B: the Android `inputText` step to replace with a real device input, or an explicit IME show)
+- apps/example/lib/use-live-chat.ts + apps/example/app.json (Defect B FALLBACK only, read if the driver fix proves insufficient on the real emulator)
+- `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/cycle-2-red/` + `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/android-input-isolation/` (the committed cycle-2/3 evidence: the failed driver run + the reactCompiler-OFF adb success)
 
 > Note: ORI-RN-004's evidence lives on `kb-run-sprint/sprint-05-orient-search/ORI-RN-004`
 > (`tests/sprint-05-orient-search/evidence/ORI-RN-004/` and `.tmp/ORI-RN-004/cycle-1/red/RED.md`), not this
@@ -290,24 +331,31 @@ export function getLiveChatConfig(): LiveChatConfig {
 }
 ```
 `resolveLiveChatConfig` and its ORI-AI-001 test stay byte-identical; the direct member access is exactly
-what `inline-env-vars` inlines. For Defect B, after the bisect, apply the smallest change in the confirmed
-location — either set `experiments.reactCompiler` off in `app.json` (with the bisect evidence in the commit
-body, and a note that this affects the whole example app), or restructure `useLiveChat`'s initialization so
-the `useChat` store update does not fire before mount (e.g. lazy-init the chat or move a callback into
-`useEffect`) — without touching `createRetry`, the transport, the throttle, or the returned shape. Follow
-AGENTS.md TypeScript strictness and Biome; use actual installed types, no `any`, no declaration stubs, no
-engine wrappers. Record every RED/GREEN run under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/`.
+what `inline-env-vars` inlines. For Defect B, the PRIMARY fix is in the proof driver: (1) drive the Android
+text input via `adb shell input text` / key events (real key events to the real focused EditText, never a
+mock) or add a step to `live-example.maestro.yaml` that explicitly shows the emulator IME before Maestro's
+`inputText`; AND (2) fix the LogBox/tap interception — make `dismissLogBox` dismiss the MINIMIZED banner
+(not only a full "Console Warning"/"Console Error" overlay), make `focusField` assert the field actually
+gained focus after tapping, and avoid the `hideKeyboard` BACK-key propagating to the Activity when no IME
+is shown. A production-code change (`app.json` reactCompiler off, or a `use-live-chat.ts` pre-mount guard)
+is authorized ONLY if this driver fix is proven insufficient on the real emulator, and must not touch
+`createRetry`, the transport, the throttle, or the returned shape. The composer must receive the real typed
+text, `Send message` must flip to enabled, and a real streamed reply must arrive. Follow AGENTS.md
+TypeScript strictness and Biome; use actual installed types, no `any`, no declaration stubs, no engine
+wrappers. Record every RED/GREEN run under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/`.
 
 ## OPEN QUESTIONS (stated, not resolved here)
 
-- **Defect B root cause**: the causal link from the Android-only `Can't perform a React state update on a
-  component that hasn't mounted yet` warning to the `Send message` `enabled=false` state is a HYPOTHESIS
-  (React Compiler memoizing `useLiveChat`/`live-chat-screen` around `useChat`'s `useSyncExternalStore`), not
-  confirmed. The charter therefore scopes the RED to the OBSERVED failure (button disabled) and requires the
-  implementer to bisect (`reactCompiler` off → re-run) before choosing the fix; if the React Compiler is not
-  the cause, the fix belongs in `use-live-chat.ts` (initialization) instead, and `app.json` stays untouched.
-  If the bisect instead implicates an ORI-RN-004-owned file (e.g. the `live-chat-screen.tsx` composition or
-  the PromptInput submit path), stop and report for a scope amendment — do not expand the diff.
+- **Defect B root cause (TWO causes, both in the input path)**: (a) the Maestro input path — the emulator's
+  soft keyboard is not shown (`dumpsys input_method` → `mIsImeShowing=false`, `mImeHeight=0`), so Maestro's
+  IME-based `inputText` silently fails while `adb shell input text` (direct key events) types and ENABLES the
+  button; the cycle-1 bisect showed React Compiler is NOT the cause of THIS path (button stays `enabled:
+  false` with reactCompiler OFF via Maestro). (b) the adb input path — the driver's `adb input tap` is
+  intercepted by the RN LogBox overlay (the reactCompiler-ON "state update before mount" warning re-expands
+  it; `dismissLogBox` does not dismiss a MINIMIZED banner, and `focusField` does not assert focus). The text
+  itself sticks when the tap lands (live re-test: `text='PROBE4'`, `Send message enabled: true`), so the
+  earlier "reactCompiler drops `setText`" claim is REFUTED. The fix is in the driver (primary), with a
+  production-code change authorized only if the driver fix is insufficient.
 - **CORS (out of scope)**: the ORI-AI-001 backend emits no CORS headers, so the web leg uses the driver's
   same-origin reverse proxy (real forwarding, never a mock). This FIX does not add CORS — a real learner
   browser hitting the backend cross-origin would still need it, and that remains ORI-AI-001's (or a
@@ -334,3 +382,95 @@ engine wrappers. Record every RED/GREEN run under `tests/sprint-05-orient-search
     CORS is out of scope, see OPEN QUESTIONS).
   - The confirmed Defect A diagnosis, the honestly-scoped Defect B hypothesis, the WRITE-ALLOWED content, and
     the CRITICAL CONSTRAINTS are otherwise unchanged.
+
+- Cycle-2 remediation (escalation rule fired during cycle-1 implementation):
+  - F-4 (Defect A — RECORDED AS FIXED) — cycle-1 commit `51487c1162ace2b6c21632f0b045ec3ce20e1f1a` fixed
+    Defect A: `apps/example/lib/live-chat-config.ts` `getLiveChatConfig` now reads
+    `process.env.EXPO_PUBLIC_API_BASE_URL` directly; the pure `resolveLiveChatConfig(env)` seam is
+    byte-identical (verified by `git diff` + a seam-assertion re-run). Real web RED→GREEN — pre-fix the
+    exported client bundle contained "not configured" and `driveLiveWeb` failed at `getByLabel('Message')`;
+    post-fix the composer renders (`emptyStateVisible: true`), a real message round-trips (2 completed
+    `gpt-4.1-mini-2025-04-14` provider records via the same-origin proxy), no React #418 — and the iOS leg
+    re-passed light + dark. The only remaining work is the Android input path.
+  - F-5 (Defect B root cause — DISPROVEN code-bug hypothesis) [SUPERSEDED by cycle-5 F-14] — the charter's
+    `reactCompiler` on/off bisect
+    was RUN: disabling `experiments.reactCompiler` removed the "state update before mount" metro error but
+    `Send message` stayed `enabled: false`, so React Compiler is NOT the cause. On-device isolation
+    (`.tmp/FIX-ORI-RN-004-1/investigate/`) showed the true cause is a Maestro/emulator text-input artifact:
+    `adb shell input text` types and ENABLES the button, while Maestro's IME-based `inputText` silently fails
+    because the emulator's soft keyboard is not shown (`dumpsys input_method` → `mIsImeShowing=false`,
+    `mImeHeight=0`). The Android composer is functional — this is NOT a code bug.
+  - F-6 (re-scope AC-2 / Defect B) — AC-2 no longer asks to bisect-and-fix a code bug in `app.json` or
+    `use-live-chat.ts`. It now requires the Android leg to deliver REAL device text input (drive `adb shell
+    input text` / key events from the proof driver, or explicitly show the emulator IME before Maestro types),
+    with the composer receiving the text, `Send message` becoming enabled, and a real streamed reply arriving.
+  - F-7 (WRITE-ALLOWED) — added `tests/sprint-05-orient-search/live-example.maestro.yaml` (MODIFY, the
+    Android text-input path) and broadened the proof driver allowance to include Android text-input driving.
+    Removed `apps/example/app.json` (reverted; React Compiler hypothesis disproven) and
+    `apps/example/lib/use-live-chat.ts` (hook-init disproven as the cause) from WRITE-ALLOWED; both are now
+    fully writeProhibited.
+  - F-8 (OPEN QUESTIONS) [SUPERSEDED by cycle-5 F-14] — the Defect B root cause is marked RESOLVED; the React
+    Compiler hypothesis is removed/marked DISPROVEN.
+  - The CRITICAL CONSTRAINTS (credential server-side only; the `resolveLiveChatConfig(env)` seam preserved;
+    no mocks; no skipped platform) and the confirmed Defect A diagnosis are unchanged.
+
+- Cycle-3 remediation (reviewer NEEDS_FIXES, F-1/F-2/F-3/F-4):
+  - F-9 (evidence gaps) — captured the previously-missing artifacts. F-1: the adb-vs-Maestro isolation is now
+    captured under `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/android-input-isolation/` —
+    `dumpsys-input-method.txt` (IME not shown: `mInputShown=false`, `mIsImeShowing=false`, `mImeHeight=0`),
+    `adb-input-text-hierarchy.json` (`adb shell input text` → field `text: "hello test"`, `Send message
+    enabled: true`), and `maestro-inputtext-red.txt` + `maestro-inputtext-hierarchy.json` (Maestro `inputText`
+    reports COMPLETED but the field reverts and `Send message` stays `enabled: false`). F-2: the web GREEN pair
+    is now committed — `web-green-manifest.json` + `web-green-provider-correlation.json` (2 completed
+    `gpt-4.1-mini-2025-04-14` provider records; the per-leg `assistantResponded` flag is false because the
+    model's seed response did not literally contain "rain", but the round-trip is proven by the completed
+    records). F-3: the bisect OFF run is committed — `bisect-reactcompiler-off-manifest.json` +
+    `bisect-reactcompiler-off-metro.log` (no "state update" error, android legs still FAIL).
+  - F-10 (stale prose + write-access transfer) — corrected the BASE paragraph (the proof driver + Maestro flow
+    are now WRITE-ALLOWED exceptions), the DEPENDENCIES attribution (cycle-2 takes MODIFY on the proof driver
+    and Maestro flow), and the `Parallel:` line (the lane now writes three files, not "one config file").
+
+- Cycle-4 remediation (reviewer NEEDS_FIXES — the cycle-2 React-Compiler conclusion was only half-right):
+  - F-11 (re-open fix locations) — re-added `apps/example/app.json` (MODIFY, disable
+    `experiments.reactCompiler`) and `apps/example/lib/use-live-chat.ts` (MODIFY, ONLY the pre-mount
+    state-update guard) to WRITE-ALLOWED; removed them from writeProhibited (the hook's transport / abort /
+    retry / throttle semantics stay prohibited). The implementer must determine and justify the MINIMAL fix,
+    preferring the config change only if the hook cannot be made mount-safe without touching ORI-AI-001's
+    transport/abort/retry semantics.
+  - F-12 (correct the React Compiler finding) [SUPERSEDED by cycle-5 F-14 — the "dropped setText" half of this
+    bullet is refuted] — it is NOT disproven. The cycle-1 bisect only showed it is not
+    the cause of the Maestro-`inputText` button-disabled state (button stays `enabled: false` with
+    reactCompiler OFF via Maestro). The cycle-2 run showed it IS the cause of the dropped `setText` on the
+    real `adb shell input text` path: with `experiments.reactCompiler: true` the "state update before mount"
+    error drops the controlled `TextInput`'s `setText`, reverting the adb-typed text. Both facts are now
+    recorded in the Defect B paragraph, AC-2, CRITICAL CONSTRAINTS, CODING STANDARDS, and OPEN QUESTIONS so
+    the charter is no longer self-contradictory.
+  - F-13 (keep AC-2 + the adb path) — AC-2 still requires real Android device input (composer receives text,
+    `Send message` enables, real streamed reply, light+dark, follow-up + active Stop); the proof driver
+    `tests/sprint-05-orient-search/support/live-example-proof.test.ts` (adb path) and
+    `tests/sprint-05-orient-search/live-example.maestro.yaml` stay WRITE-ALLOWED.
+  - The confirmed Defect A fix (commit `51487c1`) and its real web/iOS proof, the credential server-side-only
+    constraint, the no-mocks constraint, and the no-skipped-platform constraint are unchanged.
+
+- Cycle-5 remediation (reviewer REFUTED the cycle-4 "reactCompiler drops setText" claim):
+  - F-14 (correct the cause — LogBox/tap interception, not setText-drop) — the reviewer's live re-test refuted
+    the cycle-4 claim: with the unchanged `reactCompiler: true` app.json and the bundle firing the
+    "state update before mount" warning, clearing the LogBox and tapping `Message` then
+    `adb shell input text "PROBE4"` returned `text='PROBE4' focused=true` + `Send message enabled: true` —
+    the text stuck, so reactCompiler does NOT drop the `setText`. The better-supported adb-path cause is the
+    RN LogBox overlay intercepting the driver's `adb input tap` (the driver's `dismissLogBox` only acts on a
+    full "Console Warning"/"Console Error" overlay and misses the MINIMIZED banner; `focusField` sleeps but
+    never asserts focus; `hideKeyboard`'s `keyevent 4` propagates BACK when no IME is shown). Rewrote the
+    Defect B paragraph, AC-2, CRITICAL CONSTRAINTS, DONE WHEN, CODING STANDARDS, OPEN QUESTIONS, and TC-3 to
+    name the LogBox/tap-interception cause and the driver's dismissal/focus weaknesses.
+  - F-15 (re-scope WRITE-ALLOWED to the driver) — `tests/sprint-05-orient-search/support/live-example-proof.test.ts`
+    is now the PRIMARY fix location (LogBox dismissal + focus assertion + BACK-key fix); `apps/example/app.json`
+    and `apps/example/lib/use-live-chat.ts` remain WRITE-ALLOWED only as FALLBACK, and the charter no longer
+    directs a production-code change unless the driver fix is proven insufficient on the real emulator.
+  - F-16 (fix citations) — corrected the READING LIST (the `.tmp/.../cycle-2-red/` path → the real
+    `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/cycle-2-red/` path; the proof-driver line now
+    names the already-implemented `runAndroidInputFlow`/`adbTypeText`/`dismissLogBox`/`focusField`, commit
+    `7dbcdd6`, rather than "to extend"; the `use-live-chat.ts` line dropped the refuted "setText-drop fix
+    location" framing) and added the supersession markers on cycle-2 F-5/F-8 and cycle-4 F-12.
+  - AC-2's real-device requirements, the confirmed Defect A fix and proofs, the credential/no-mocks/
+    no-skipped-platform constraints, and the adb input path are unchanged.
