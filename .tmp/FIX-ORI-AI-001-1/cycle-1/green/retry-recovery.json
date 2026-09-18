@@ -1,0 +1,79 @@
+{
+  "runId": "fix-ori-ai-001-1-mu6r6pq5",
+  "startedAt": "2026-09-18T09:25:39.901Z",
+  "nonce": "FIX-ORI-AI-001-1:12c746454d01",
+  "backendPort": 4021,
+  "sourceSha256": {
+    "hook": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+    "driver": "36a7a8132c18a0710314099923bc4dc9a25082e90d5e9d178cddf0abd2701268"
+  },
+  "sanitizedTransportSeamActive": true,
+  "leg": "endpoint-loss-retry",
+  "endpointLoss": {
+    "clientStatus": "error",
+    "clientErrorText": "fetch failed"
+  },
+  "retry": {
+    "retryOrder": [
+      "clearError",
+      "regenerate"
+    ],
+    "terminalStatus": "ready",
+    "record": {
+      "requestId": "bxS3blKKVoDjtOiR",
+      "outcome": "completed",
+      "responseId": "resp_06dc3d0b4779767f006aad0397a05087d0870737ca1609e618",
+      "deltaCount": 2,
+      "inputTokens": 341,
+      "outputTokens": 3,
+      "totalTokens": 344,
+      "durationMs": 1695,
+      "errorText": null
+    },
+    "regenerateBody": {
+      "trigger": "regenerate-message",
+      "requestId": "bxS3blKKVoDjtOiR",
+      "messages": [
+        {
+          "id": "CA4YaXxOM55qoj5N",
+          "role": "user",
+          "itemIds": [],
+          "textLength": 98,
+          "textPreview": "Remember the nonce FIX-ORI-AI-001-1:12c746454d01. Repeat it "
+        },
+        {
+          "id": "Krz0Om82ZhBYZpWq",
+          "role": "assistant",
+          "itemIds": [
+            "msg_06dc3d0b4779767f006aad039498d087d0be71e425c3e11b51"
+          ],
+          "textLength": 243,
+          "textPreview": "Nonce FIX-ORI-AI-001-1:12c746454d01\n\n1. Rain forms when wate"
+        },
+        {
+          "id": "I7eT2eGtdspb49bJ",
+          "role": "user",
+          "itemIds": [],
+          "textLength": 234,
+          "textPreview": "Write a detailed essay on the history of computing, from the"
+        },
+        {
+          "id": "4S251CcAUSDBQbxM",
+          "role": "assistant",
+          "itemIds": [],
+          "textLength": 732,
+          "textPreview": "Nonce FIX-ORI-AI-001-1:12c746454d01\n\nThe history of computin"
+        },
+        {
+          "id": "2zSLjiH2OOqf37hI",
+          "role": "user",
+          "itemIds": [],
+          "textLength": 37,
+          "textPreview": "Reply with the single word pineapple."
+        }
+      ]
+    },
+    "duplicatedItemIds": [],
+    "probeUserTurns": 1
+  }
+}
