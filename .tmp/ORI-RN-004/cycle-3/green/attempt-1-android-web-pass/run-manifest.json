@@ -1,0 +1,173 @@
+{
+  "task": "ORI-RN-004",
+  "run_id": "ORI-RN-004-1789737152282",
+  "candidate_head_sha": "96948accfd5d26604e74dd4c4686cb2d537229d6",
+  "generated_at": "2026-09-18T13:16:02.127Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios,android,web"
+  ],
+  "source_sha": {
+    "app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4000,
+    "record_count": 4
+  },
+  "passed_platforms": 1,
+  "completed": false,
+  "legs": [
+    {
+      "platform": "ios",
+      "status": "failed",
+      "diagnostic": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"...\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-18_071237\n",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789737152282:ios",
+        "appearance": "light",
+        "maestro_exit": 1,
+        "maestro_output": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"...\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-18_071237\n",
+        "retry_log": null,
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-004/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/light/screenshot.png",
+        "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+        "hierarchy_has_marker": true,
+        "latest_backend_record": null
+      }
+    },
+    {
+      "platform": "ios",
+      "status": "failed",
+      "diagnostic": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"...\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-18_071311\n",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789737152282:ios",
+        "appearance": "dark",
+        "maestro_exit": 1,
+        "maestro_output": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"...\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-18_071311\n",
+        "retry_log": null,
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-004/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/dark/screenshot.png",
+        "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": null
+      }
+    },
+    {
+      "platform": "android",
+      "status": "failed",
+      "diagnostic": "FAIL: \"Live chat\" never appeared (60s)",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789737152282:android",
+        "appearance": "light",
+        "maestro_exit": 1,
+        "maestro_output": "FAIL: \"Live chat\" never appeared (60s)",
+        "retry_log": null,
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-004/tests/sprint-05-orient-search/evidence/ORI-RN-004/android/light/screenshot.png",
+        "hierarchy": "\nUNAVAILABLE\n\nThe stack trace was:\nio.grpc.StatusRuntimeException: UNAVAILABLE\n\tat io.grpc.stub.ClientCalls.toStatusRuntimeException(ClientCalls.java:275)\n\tat io.grpc.stub.ClientCalls.getUnchecked(ClientCalls.java:256)\n\tat io.grpc.stub.ClientCalls.blockingUnaryCall(ClientCalls.java:169)\n\tat maestro_android.MaestroDriverGrpc$MaestroDriverBlockingStub.deviceInfo(MaestroDriverGrpc.java:740)\n\tat maestro.drivers.AndroidDriver.deviceInfo$lambda$5(AndroidDriver.kt:201)\n\tat maestro.drivers.AndroidDriver.runDeviceCall(AndroidDriver.kt:1273)\n\tat maestro.drivers.AndroidDriver.deviceInfo(AndroidDriver.kt:200)\n\tat maestro.ViewHierarchy$Companion.from-8JJjmZI(ViewHierarchy.kt:28)\n\tat maestro.Maestro$viewHierarchy$2.invoke-prqvCes(Maestro.kt:429)\n\tat maestro.Maestro$viewHierarchy$2.invoke(Maestro.kt:428)\n\tat kotlinx.coroutines.InterruptibleKt.runInterruptibleInExpectedContext(Interruptible.kt:48)\n\tat kotlinx.coroutines.InterruptibleKt.access$runInterruptibleInExpectedContext(Interruptible.kt:1)\n\tat kotlinx.coroutines.InterruptibleKt$runInterruptible$2.invokeSuspend(Interruptible.kt:40)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)\n\tat kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:820)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)\nCaused by: java.io.IOException: Command failed (tcp:7001): closed\n\tat dadb.adbserver.AdbServer.send$dadb(AdbServer.kt:103)\n\tat dadb.adbserver.AdbServerDadb.open(AdbServer.kt:149)\n\tat maestro.drivers.AndroidDriver.channel$lambda$0(AndroidDriver.kt:81)\n\tat maestro.android.AdbSocket.connect(AdbSocketFactory.kt:40)\n\tat maestro.android.AdbSocket.connect(AdbSocketFactory.kt:44)\n\tat maestro.android.AdbSocketFactory.createSocket(AdbSocketFactory.kt:19)\n\tat maestro.android.AdbSocketFactory.createSocket(AdbSocketFactory.kt:25)\n\tat io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:535)\n\tat io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n\n",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": null
+      }
+    },
+    {
+      "platform": "android",
+      "status": "failed",
+      "diagnostic": "FAIL: \"Live chat\" never appeared (60s)",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789737152282:android",
+        "appearance": "dark",
+        "maestro_exit": 1,
+        "maestro_output": "FAIL: \"Live chat\" never appeared (60s)",
+        "retry_log": null,
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-004/tests/sprint-05-orient-search/evidence/ORI-RN-004/android/dark/screenshot.png",
+        "hierarchy": "\nUNAVAILABLE\n\nThe stack trace was:\nio.grpc.StatusRuntimeException: UNAVAILABLE\n\tat io.grpc.stub.ClientCalls.toStatusRuntimeException(ClientCalls.java:275)\n\tat io.grpc.stub.ClientCalls.getUnchecked(ClientCalls.java:256)\n\tat io.grpc.stub.ClientCalls.blockingUnaryCall(ClientCalls.java:169)\n\tat maestro_android.MaestroDriverGrpc$MaestroDriverBlockingStub.deviceInfo(MaestroDriverGrpc.java:740)\n\tat maestro.drivers.AndroidDriver.deviceInfo$lambda$5(AndroidDriver.kt:201)\n\tat maestro.drivers.AndroidDriver.runDeviceCall(AndroidDriver.kt:1273)\n\tat maestro.drivers.AndroidDriver.deviceInfo(AndroidDriver.kt:200)\n\tat maestro.ViewHierarchy$Companion.from-8JJjmZI(ViewHierarchy.kt:28)\n\tat maestro.Maestro$viewHierarchy$2.invoke-prqvCes(Maestro.kt:429)\n\tat maestro.Maestro$viewHierarchy$2.invoke(Maestro.kt:428)\n\tat kotlinx.coroutines.InterruptibleKt.runInterruptibleInExpectedContext(Interruptible.kt:48)\n\tat kotlinx.coroutines.InterruptibleKt.access$runInterruptibleInExpectedContext(Interruptible.kt:1)\n\tat kotlinx.coroutines.InterruptibleKt$runInterruptible$2.invokeSuspend(Interruptible.kt:40)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:124)\n\tat kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:89)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:586)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:820)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:717)\n\tat kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:704)\nCaused by: java.io.IOException: Command failed (tcp:7001): closed\n\tat dadb.adbserver.AdbServer.send$dadb(AdbServer.kt:103)\n\tat dadb.adbserver.AdbServerDadb.open(AdbServer.kt:149)\n\tat maestro.drivers.AndroidDriver.channel$lambda$0(AndroidDriver.kt:81)\n\tat maestro.android.AdbSocket.connect(AdbSocketFactory.kt:40)\n\tat maestro.android.AdbSocket.connect(AdbSocketFactory.kt:44)\n\tat maestro.android.AdbSocketFactory.createSocket(AdbSocketFactory.kt:19)\n\tat maestro.android.AdbSocketFactory.createSocket(AdbSocketFactory.kt:25)\n\tat io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:535)\n\tat io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n\n",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": null
+      }
+    },
+    {
+      "platform": "web",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-004:ORI-RN-004-1789737152282:web",
+        "url": "http://127.0.0.1:8406",
+        "drive_result": {
+          "emptyStateVisible": true,
+          "markerSubmitted": true,
+          "inputCleared": true,
+          "assistantResponded": true,
+          "stopControlVisible": true,
+          "followUpRecallVisible": true,
+          "retryControlVisible": true,
+          "retryErrorSanitized": true,
+          "retryCompleted": true,
+          "retrySingleUserTurn": true
+        },
+        "backend_records": [
+          {
+            "requestId": "tppJKaBcYS7tpcx5",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_018437a6e2418ec0006aad3985106887d0b19f9ceb07a58abc",
+            "callId": "call-oBm5ECXs86GwNpejuApv1kCr",
+            "outcome": "completed",
+            "deltaCount": 33,
+            "inputTokens": 58,
+            "outputTokens": 34,
+            "totalTokens": 92,
+            "textHash": "62421914a81963c7b616b4a178410ba6465b0011312949d6bc7cbb3da74dfb3b",
+            "durationMs": 2172,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "tppJKaBcYS7tpcx5",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_018437a6e2418ec0006aad39872ab087d083950cf036053177",
+            "callId": "call-N826oQMIrG0AICmCfSuShPyz",
+            "outcome": "completed",
+            "deltaCount": 59,
+            "inputTokens": 132,
+            "outputTokens": 60,
+            "totalTokens": 192,
+            "textHash": "61538c8e18f6e753dd0ee85adfb0a90841d7d9bae04a1ca572f25ac38f2df4f2",
+            "durationMs": 1490,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "tppJKaBcYS7tpcx5",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_018437a6e2418ec0006aad3988faf487d09fbe47e4c4425ad1",
+            "callId": "call-QPkBJ7UdckQ9Ob4EcmMtpMwM",
+            "outcome": "completed",
+            "deltaCount": 27,
+            "inputTokens": 208,
+            "outputTokens": 28,
+            "totalTokens": 236,
+            "textHash": "91136d4948ea7ed34b4738cf056a582930f36c26233f997daea0a8d3e1ee277d",
+            "durationMs": 1326,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "tppJKaBcYS7tpcx5",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_018437a6e2418ec0006aad399041e087d0849c937a39f529e5",
+            "callId": "call-tk9Sm5pvPtov8vwVeeaMVLct",
+            "outcome": "completed",
+            "deltaCount": 2,
+            "inputTokens": 304,
+            "outputTokens": 3,
+            "totalTokens": 307,
+            "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+            "durationMs": 1002,
+            "errorText": null,
+            "activeGenerations": 0
+          }
+        ],
+        "retry_request_id": "tppJKaBcYS7tpcx5"
+      }
+    }
+  ]
+}
