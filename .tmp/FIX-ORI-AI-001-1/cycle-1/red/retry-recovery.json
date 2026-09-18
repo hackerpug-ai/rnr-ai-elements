@@ -1,0 +1,78 @@
+{
+  "runId": "fix-ori-ai-001-1-mu6r6d4j",
+  "startedAt": "2026-09-18T09:25:23.541Z",
+  "nonce": "FIX-ORI-AI-001-1:bbd41be9cca9",
+  "backendPort": 4021,
+  "sourceSha256": {
+    "hook": "6c2e8f6a7d7691148e9bebe9c702ac7d1b976d1b285205dde67fbf90704665ae",
+    "driver": "36a7a8132c18a0710314099923bc4dc9a25082e90d5e9d178cddf0abd2701268"
+  },
+  "sanitizedTransportSeamActive": false,
+  "leg": "endpoint-loss-retry",
+  "endpointLoss": {
+    "clientStatus": "error",
+    "clientErrorText": "fetch failed"
+  },
+  "retry": {
+    "retryOrder": [
+      "clearError",
+      "regenerate"
+    ],
+    "terminalStatus": "error",
+    "record": {
+      "requestId": "Ae87fQp8SU2EWXM8",
+      "outcome": "error",
+      "responseId": null,
+      "deltaCount": 0,
+      "durationMs": 380,
+      "errorText": "An error occurred while generating the response."
+    },
+    "regenerateBody": {
+      "trigger": "regenerate-message",
+      "requestId": "Ae87fQp8SU2EWXM8",
+      "messages": [
+        {
+          "id": "SFK9W6wpWoY127tK",
+          "role": "user",
+          "itemIds": [],
+          "textLength": 98,
+          "textPreview": "Remember the nonce FIX-ORI-AI-001-1:bbd41be9cca9. Repeat it "
+        },
+        {
+          "id": "08t6qWslSYB4Yu3t",
+          "role": "assistant",
+          "itemIds": [
+            "msg_031b91c4355e9c66006aad0384ad3887d0beb60c7ee88198e1"
+          ],
+          "textLength": 244,
+          "textPreview": "Nonce FIX-ORI-AI-001-1:bbd41be9cca9\n\nThree short facts about"
+        },
+        {
+          "id": "v8Iukgh61U8TeF7t",
+          "role": "user",
+          "itemIds": [],
+          "textLength": 234,
+          "textPreview": "Write a detailed essay on the history of computing, from the"
+        },
+        {
+          "id": "Nkka7Q2tqpWcQW1w",
+          "role": "assistant",
+          "itemIds": [
+            "msg_031b91c4355e9c66006aad038633d087d0ba1a476855117aa6"
+          ],
+          "textLength": 624,
+          "textPreview": "Nonce FIX-ORI-AI-001-1:bbd41be9cca9\n\nThe History of Computin"
+        },
+        {
+          "id": "hCfSG1beQv80UUPz",
+          "role": "user",
+          "itemIds": [],
+          "textLength": 37,
+          "textPreview": "Reply with the single word pineapple."
+        }
+      ]
+    },
+    "duplicatedItemIds": [],
+    "probeUserTurns": 1
+  }
+}
