@@ -135,6 +135,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-RN-003 | Execute the copied quickstart on both native platforms and Web | react-native-reusables-implementer | 5 | 5 | ORI-RN-001, ORI-RN-002 |
 | ORI-RN-004 | Compose and verify the separate live chat screen in apps/example | react-native-reusables-implementer | 5 | 6 | ORI-RN-000, ORI-RN-003, ORI-AI-001 |
 | ORI-RN-005 | Run the real worked-example source in an independent NativeWind consumer | react-native-reusables-implementer | 3 | 7 | ORI-RN-001, ORI-RN-004, ORI-AI-001 |
+| FIX-ORI-RN-005-1 | Make the canonical live-chat sources compile in the independent NativeWind consumer | react-native-reusables-implementer | 2 | 7 | ORI-RN-001, ORI-RN-004, ORI-AI-001 |
 | ORI-AI-002 | Prove the composed worked example against the real provider | aisdk-implementer | 5 | 8 | ORI-AI-001, ORI-RN-004, ORI-RN-005 |
 | ORI-CONT-003 | Author the single seed-data quickstart and its live-example run handoff | techwriting-implementer | 5 | 9 | ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002 |
 | ORI-AST-004 | Navigate the built docs through a lazily loaded Pagefind dialog | astro-implementer | 5 | 10 | ORI-AST-001, ORI-AST-002, ORI-AST-003, ORI-AST-008, ORI-CONT-001, ORI-CONT-003, ORI-CONT-005 |
@@ -156,7 +157,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-DEP-002 | Verify the accepted candidate's real Cloudflare version and 404 recovery | cloudflare-workers-implementer | 2 | 19 | ORI-DEP-001, ORI-CI-004, ORI-AST-009, ORI-VIS-005 |
 | ORI-DEP-003 | Publish and verify the completed Sprint 05 docs at the apex | cloudflare-workers-implementer | 3 | 20 | ORI-DEP-001, ORI-DEP-002, ORI-CI-004 |
 
-**Total: 37 tasks / 133 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, added in flight by planner ask ask-wave8-add-payload-retry-fix). Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 38 tasks / 135 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1 and FIX-ORI-RN-005-1, added in flight by planner asks ask-wave8-add-payload-retry-fix and ask-wave9-add-nativewind-compile-fix). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -274,6 +275,8 @@ The following filenames are derived from each exact task ID and title. Each char
 - [ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md](./ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md)
 
 - [ORI-RN-005-run-the-real-worked-example-source-in-an-independent-nativewind-consumer.md](./ORI-RN-005-run-the-real-worked-example-source-in-an-independent-nativewind-consumer.md)
+
+- [TASK-FIX-ORI-RN-005-1.md](./TASK-FIX-ORI-RN-005-1.md)
 
 - [ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md](./ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md)
 
