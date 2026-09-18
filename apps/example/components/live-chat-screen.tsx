@@ -1,8 +1,7 @@
 import { SparklesIcon } from 'lucide-react-native';
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, useColorScheme, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useUniwind } from 'uniwind';
 
 import {
   Conversation,
@@ -76,9 +75,10 @@ function ErrorBanner({ message, onRetry }: { message: string; onRetry: () => voi
 // fallow-ignore-next-line complexity
 export function LiveChatScreen() {
   const chat = useLiveChat();
-  const { theme } = useUniwind();
-  // useUniwind's theme is a widened string, so narrow it before indexing the token map.
-  const mode = theme === 'dark' ? 'dark' : 'light';
+  const colorScheme = useColorScheme();
+  // useColorScheme returns null before hydration and on no-preference; narrow it
+  // before indexing the token map.
+  const mode = colorScheme === 'dark' ? 'dark' : 'light';
 
   return (
     <SafeAreaView

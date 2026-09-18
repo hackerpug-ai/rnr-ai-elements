@@ -5,7 +5,7 @@ import { DarkTheme, DefaultTheme, type Theme } from 'expo-router/react-navigatio
  * the :root / .dark:root blocks exactly, or the navigation chrome disagrees with the app
  * body. NAV_THEME derives the navigation colors from THEME so both move together.
  */
-const THEME = {
+export const THEME = {
   light: {
     background: 'hsl(0 0% 100%)',
     foreground: 'hsl(0 0% 3.9%)',
