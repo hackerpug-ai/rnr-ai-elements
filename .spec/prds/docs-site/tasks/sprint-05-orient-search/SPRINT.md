@@ -131,6 +131,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-CONT-001 | Author Introduction, Installation, and registry-specific CLI content | techwriting-implementer | 5 | 6 | ORI-AST-001, ORI-AST-002, ORI-RN-001, ORI-CONT-005, ORI-CONT-002, ORI-AST-003 |
 | ORI-RN-002 | Provide the single source-backed seed-data chat screen | react-native-reusables-implementer | 3 | 4 | ORI-RN-001 |
 | ORI-AI-001 | Implement the worked example's useChat hook and real OpenAI streaming route | aisdk-implementer | 5 | 4 | ORI-AST-001 |
+| FIX-ORI-AI-001-1 | Keep the worked example hook's regenerate payload itemIds unique | aisdk-implementer | 2 | 5 | ORI-AI-001 |
 | ORI-RN-003 | Execute the copied quickstart on both native platforms and Web | react-native-reusables-implementer | 5 | 5 | ORI-RN-001, ORI-RN-002 |
 | ORI-RN-004 | Compose and verify the separate live chat screen in apps/example | react-native-reusables-implementer | 5 | 6 | ORI-RN-000, ORI-RN-003, ORI-AI-001 |
 | ORI-RN-005 | Run the real worked-example source in an independent NativeWind consumer | react-native-reusables-implementer | 3 | 7 | ORI-RN-001, ORI-RN-004, ORI-AI-001 |
@@ -155,7 +156,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-DEP-002 | Verify the accepted candidate's real Cloudflare version and 404 recovery | cloudflare-workers-implementer | 2 | 19 | ORI-DEP-001, ORI-CI-004, ORI-AST-009, ORI-VIS-005 |
 | ORI-DEP-003 | Publish and verify the completed Sprint 05 docs at the apex | cloudflare-workers-implementer | 3 | 20 | ORI-DEP-001, ORI-DEP-002, ORI-CI-004 |
 
-**Total: 36 tasks / 131 points.** Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 37 tasks / 133 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, added in flight by planner ask ask-wave8-add-payload-retry-fix). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -265,6 +266,8 @@ The following filenames are derived from each exact task ID and title. Each char
 - [ORI-RN-002-provide-the-single-source-backed-seed-data-chat-screen.md](./ORI-RN-002-provide-the-single-source-backed-seed-data-chat-screen.md)
 
 - [ORI-AI-001-implement-the-worked-examples-usechat-hook-and-real-openai-streaming-route.md](./ORI-AI-001-implement-the-worked-examples-usechat-hook-and-real-openai-streaming-route.md)
+
+- [TASK-FIX-ORI-AI-001-1.md](./TASK-FIX-ORI-AI-001-1.md)
 
 - [ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md](./ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md)
 
