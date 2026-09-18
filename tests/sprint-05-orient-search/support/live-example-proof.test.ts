@@ -247,6 +247,40 @@ function dismissAndroidSystemDialogs(): void {
 /* -------------------------------------------------------- metro + env -- */
 
 /**
+ * Provider credentials must never reach Metro, the compiler, or the browser
+ * (CRITICAL CONSTRAINT). `startMetro` (native-session.ts), the `expo export`
+ * child spawned through `run`/`runShell` (quickstart-consumer.ts) and
+ * `chromium.launch()` (Playwright) all default to `process.env` because none
+ * of those spawn calls is given an explicit `env` — and the two support files
+ * that own those spawn call sites are outside this task's WRITE-ALLOWED list,
+ * so they cannot be edited here (see the task handoff's blockers). Node takes
+ * a fresh snapshot of `process.env` at the moment each spawn() actually
+ * executes, so removing credential-shaped keys immediately before the call
+ * and restoring them immediately after keeps every other child unaffected —
+ * in particular the trusted backend, which is always launched (and so has
+ * already captured its own env snapshot) before this window ever opens. Same
+ * temporary-mutation pattern already used below for EXPO_PUBLIC_API_BASE_URL.
+ */
+const CREDENTIAL_ENV_PATTERN = /(API_KEY|SECRET|TOKEN|PASSWORD|CREDENTIAL)/i;
+
+function stripCredentialEnv(): Record<string, string> {
+  const removed: Record<string, string> = {};
+  for (const key of Object.keys(process.env)) {
+    if (CREDENTIAL_ENV_PATTERN.test(key) && !key.startsWith('EXPO_PUBLIC_')) {
+      removed[key] = process.env[key] as string;
+      delete process.env[key];
+    }
+  }
+  return removed;
+}
+
+function restoreCredentialEnv(removed: Record<string, string>): void {
+  for (const [key, value] of Object.entries(removed)) {
+    process.env[key] = value;
+  }
+}
+
+/**
  * Starts Metro for the in-monorepo apps/example with the backend reachable at
  * `EXPO_PUBLIC_API_BASE_URL`. EXPO_PUBLIC_* is inlined at bundle time, so the value
  * is placed in the Metro child's inherited environment before it starts.
@@ -254,9 +288,11 @@ function dismissAndroidSystemDialogs(): void {
 function startLiveMetro(apiBaseUrl: string, logPath: string): MetroHandle {
   const previous = process.env.EXPO_PUBLIC_API_BASE_URL;
   process.env.EXPO_PUBLIC_API_BASE_URL = apiBaseUrl;
+  const removedCreds = stripCredentialEnv();
   try {
     return startMetro(EXAMPLE_ROOT, METRO_PORT, logPath);
   } finally {
+    restoreCredentialEnv(removedCreds);
     if (previous === undefined) {
       delete process.env.EXPO_PUBLIC_API_BASE_URL;
     } else {
@@ -443,12 +479,17 @@ type UiElement = {
   focused: string;
 };
 
-/** Flattens a `maestro hierarchy` JSON dump into its leaf attributes. */
+/** Flattens a `maestro hierarchy` JSON dump into its leaf attributes. The dump can
+ * carry a non-JSON preamble (an iOS `None:` line from maestro's own logging), so the
+ * parse targets the outermost JSON object rather than the whole stream. */
 function parseUiHierarchy(raw: string): UiElement[] {
   const out: UiElement[] = [];
+  const start = raw.indexOf('{');
+  const end = raw.lastIndexOf('}');
+  if (start === -1 || end <= start) return out;
   let data: unknown;
   try {
-    data = JSON.parse(raw);
+    data = JSON.parse(raw.slice(start, end + 1));
   } catch {
     return out;
   }
@@ -514,16 +555,59 @@ function hierarchyContains(serial: string, needle: string): boolean {
   return captureHierarchy(serial).includes(needle);
 }
 
-/** Occurrences of `needle` in the raw hierarchy dump — the "exactly 1 user turn"
- * oracle for the retry probe (the transcript renders the retained user Text once). */
-function hierarchyCount(deviceId: string, needle: string): number {
-  const raw = captureHierarchy(deviceId);
+/** Occurrences of `needle` in a raw string, non-overlapping. */
+function countOccurrences(raw: string, needle: string): number {
   let count = 0;
   let index = raw.indexOf(needle);
   while (index !== -1) {
     count += 1;
     index = raw.indexOf(needle, index + needle.length);
   }
+  return count;
+}
+
+/** Number of rendered occurrences of `needle` in a hierarchy dump — the "exactly 1
+ * user turn" oracle for the retry probe. Counts INNERMOST matches: RN aggregates
+ * descendant labels onto container elements, so one rendered bubble can expose the
+ * string at BOTH the list-cell wrapper and the inner Text (observed on iOS:
+ * element-flat counting read 2 while the captured screen shows one bubble); a
+ * nested aggregation collapses to 1, while two genuinely separate duplicate
+ * bubbles are disjoint subtrees and still count 2. */
+function hierarchyElementCount(raw: string, needle: string): number {
+  const start = raw.indexOf('{');
+  const end = raw.lastIndexOf('}');
+  if (start === -1 || end <= start) return 0;
+  let data: unknown;
+  try {
+    data = JSON.parse(raw.slice(start, end + 1));
+  } catch {
+    return 0;
+  }
+  let count = 0;
+  const exposesText = (record: Record<string, unknown>): boolean => {
+    const attrs = (record.attributes ?? {}) as Record<string, unknown>;
+    return (
+      String(attrs.accessibilityText ?? '').includes(needle) ||
+      String(attrs.text ?? '').includes(needle)
+    );
+  };
+  // Returns whether the subtree contains a match; counts only innermost matches.
+  const visit = (node: unknown): boolean => {
+    if (typeof node !== 'object' || node === null) return false;
+    const record = node as Record<string, unknown>;
+    const kids = Array.isArray(record.children) ? (record.children as unknown[]) : [];
+    let childMatched = false;
+    for (const kid of kids) {
+      if (visit(kid)) childMatched = true;
+    }
+    if (childMatched) return true;
+    if (exposesText(record)) {
+      count += 1;
+      return true;
+    }
+    return false;
+  };
+  visit(data);
   return count;
 }
 
@@ -536,6 +620,304 @@ function waitForText(serial: string, needle: string, timeoutMs: number): boolean
     found = hierarchyContains(serial, needle);
   }
   return found;
+}
+
+/**
+ * Dismisses the iOS soft keyboard with a coordinate tap on the transcript region.
+ * The composer keeps focus — and the keyboard — after the failed probe send (and
+ * Maestro's own `hideKeyboard` command does NOT dismiss it; live-proven with
+ * pixel-verified captures). With the keyboard up the transcript viewport shrinks
+ * behind the IME, every later scroll gesture starting below ~60% of the screen is
+ * eaten by the keyboard, and the `Scroll to latest message` affordance's tap
+ * target is covered. A tap at 30% height lands on the transcript where no child
+ * handles it, and the Conversation's `keyboardShouldPersistTaps="handled"` then
+ * resigns the responder — pixel-verified on the reserved simulator (keyboard key
+ * rows vanish from the capture, full transcript exposed).
+ */
+function dismissIosKeyboardByTap(deviceId: string): void {
+  const flowPath = join(tmpdir(), `ori-rn-004-kbtap-${process.pid}-${Date.now()}.yaml`);
+  writeFileSync(
+    flowPath,
+    ['appId: host.exp.Exponent', '---', '- tapOn:', '    point: "50%, 30%"'].join('\n'),
+  );
+  spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
+    encoding: 'utf8',
+    timeout: 60_000,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+}
+
+/**
+ * Maestro's own verified scroll: repeats real scroll gestures (direction DOWN =
+ * toward the visually-lower, newer turns) until the element matching `text` is
+ * visible, re-resolving the accessibility tree between gestures, so lazily
+ * mounted virtualized items are found the moment they render. Returns true when
+ * the element became visible within the timeout. Works on the reserved Android
+ * emulator for this app (both cycle-3 GREEN android legs won their probe count
+ * through this channel); on iOS it cannot match the transcript's RN Fabric Text
+ * nodes (verified on-device: `assertVisible` fails for text plainly on screen
+ * while the hierarchy dump carries it — see transcriptProbeCount channel notes).
+ */
+function maestroScrollUntilVisible(deviceId: string, text: string, timeoutMs = 90_000): boolean {
+  const flowPath = join(tmpdir(), `ori-rn-004-scroll-${process.pid}-${Date.now()}.yaml`);
+  writeFileSync(
+    flowPath,
+    [
+      'appId: host.exp.Exponent',
+      '---',
+      '- scrollUntilVisible:',
+      '    element:',
+      `      text: ${JSON.stringify(text)}`,
+      // `direction` names the CONTENT direction (Maestro docs: DOWN "scrolls down
+      // until an element ... is visible" — lower parts of the page come into
+      // view), not the finger's physical swipe. DOWN therefore reveals the newer,
+      // visually-lower turns — proven by both attempt-1 Android legs winning their
+      // probe count through exactly this command. (A mid-session edit flipped this
+      // to UP "because the finger swipes up"; that regression is what broke the
+      // attempt-4 Android legs — reverted with the docs and the passing run.)
+      '    direction: DOWN',
+      `    timeout: ${timeoutMs}`,
+      '    visibilityPercentage: 40',
+    ].join('\n'),
+  );
+  const res = spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
+    encoding: 'utf8',
+    timeout: timeoutMs + 90_000,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  return res.status === 0;
+}
+
+/** Full-height finger-up swipe inside the transcript region (reveals the newest
+ * turns below the fold). Starts at 65% height — above the composer, inside the
+ * list — never on the composer itself (a drag there is a text-selection gesture,
+ * not a scroll) and never below ~60% when a keyboard is up (that region is IME). */
+function swipeTowardLatest(platform: 'ios' | 'android', deviceId: string): void {
+  if (platform === 'android') {
+    adbExec(deviceId, ['shell', 'input', 'swipe', '540', '1600', '540', '500', '250']);
+    return;
+  }
+  const flowPath = join(tmpdir(), `ori-rn-004-swipe-${process.pid}-${Date.now()}.yaml`);
+  writeFileSync(
+    flowPath,
+    [
+      'appId: host.exp.Exponent',
+      '---',
+      '- swipe:',
+      '    start: "50%, 65%"',
+      '    end: "50%, 15%"',
+    ].join('\n'),
+  );
+  spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
+    encoding: 'utf8',
+    timeout: 60_000,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+}
+
+/** Short finger-up swipe: keeps the element just revealed mounted while the
+ * content just below it (where a duplicate would render) also mounts. */
+function nudgeSwipe(platform: 'ios' | 'android', deviceId: string): void {
+  if (platform === 'android') {
+    adbExec(deviceId, ['shell', 'input', 'swipe', '540', '1500', '540', '1150', '200']);
+    return;
+  }
+  const flowPath = join(tmpdir(), `ori-rn-004-nudge-${process.pid}-${Date.now()}.yaml`);
+  writeFileSync(
+    flowPath,
+    [
+      'appId: host.exp.Exponent',
+      '---',
+      '- swipe:',
+      '    start: "50%, 45%"',
+      '    end: "50%, 32%"',
+    ].join('\n'),
+  );
+  spawnSync(MAESTRO_BIN, ['--udid', deviceId, 'test', '--no-ansi', flowPath], {
+    encoding: 'utf8',
+    timeout: 60_000,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+}
+
+/**
+ * macOS Vision OCR of a screenshot — the pixel channel. Whitespace/case-normalized
+ * substring count over the recognized lines. Used only as the documented fallback
+ * when the accessibility tree reads 0 after verified scrolling; the screenshot and
+ * the final hierarchy dump are both retained beside the count so the channel switch
+ * is provable evidence, not an assertion.
+ */
+function ocrCount(screenshotPath: string, needle: string): number {
+  const scriptPath = join(tmpdir(), `ori-rn-004-ocr-${process.pid}.swift`);
+  writeFileSync(
+    scriptPath,
+    [
+      'import Vision',
+      'import AppKit',
+      '',
+      'let path = CommandLine.arguments[1]',
+      'guard let img = NSImage(contentsOfFile: path),',
+      '      let cg = img.cgImage(forProposedRect: nil, context: nil, hints: nil) else {',
+      '    FileHandle.standardError.write("cannot load image\\n".data(using: .utf8)!); exit(2)',
+      '}',
+      'let req = VNRecognizeTextRequest()',
+      'req.recognitionLevel = .accurate',
+      'req.usesLanguageCorrection = false',
+      'let handler = VNImageRequestHandler(cgImage: cg, options: [:])',
+      'try handler.perform([req])',
+      'let lines = (req.results ?? []).compactMap { $0.topCandidates(1).first?.string }',
+      'print(lines.joined(separator: "\\n"))',
+    ].join('\n'),
+  );
+  const res = spawnSync('swift', [scriptPath, screenshotPath], {
+    encoding: 'utf8',
+    timeout: 180_000,
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  if (res.status !== 0) {
+    throw new Error(`Vision OCR failed (exit ${res.status}): ${(res.stderr ?? '').slice(0, 300)}`);
+  }
+  const normalize = (s: string): string => s.toLowerCase().replace(/\s+/g, ' ').trim();
+  return countOccurrences(normalize(res.stdout ?? ''), normalize(needle));
+}
+
+/**
+ * The AC-3 case-2 "exactly 1 user turn" transcript oracle, hardened for the
+ * virtualized Conversation. Why driving the list is mandatory: the inverted
+ * FlatList's stickiness releases on the first scroll-up and is never
+ * auto-reclaimed, and by the retry phase the transcript spans several screens
+ * (the aborted essay alone covers ~3), so a hierarchy count read wherever the
+ * viewport happens to sit counts the WRONG window — cycle-3 RED: both native
+ * platforms read the probe 0x with the viewport parked mid-transcript (iOS
+ * showed the essay turn, Android the seed turns) while the backend already
+ * held each leg's completed retry record.
+ *
+ * Channels, in order — every one only REVEALS occurrences, never hides them,
+ * so the count stays a strengthening oracle:
+ *  1. Maestro `scrollUntilVisible` to the probe turn (Android's proven channel)
+ *     + a short nudge past it, then the accessibility-tree count.
+ *  2. Swipe crawl — batches of full-height finger-up swipes inside the
+ *     transcript with a count after each batch (iOS's proven driver; the
+ *     transcript spans ~6 pages by this point).
+ *  3. The app's own public `Scroll to latest message` affordance
+ *     (scrollToOffset(0)), kept LAST because a mis-aimed tap can re-focus the
+ *     composer and re-raise the keyboard the pre-step just cleared.
+ *  4. Pixels: the retained capture, Vision OCR, and the final hierarchy dump
+ *     (`retry-state-hierarchy.txt`) beside it.
+ *
+ * Pre-step (both platforms): clear the screen-level obstructions first — iOS's
+ * still-focused composer keyboard (dismissed by an unhandled tap through
+ * `keyboardShouldPersistTaps="handled"`; Maestro's own `hideKeyboard` command
+ * does NOT dismiss it) and Android's notification shade.
+ */
+// fallow-ignore-next-line complexity
+function transcriptProbeCount(
+  platform: 'ios' | 'android',
+  deviceId: string,
+  needle: string,
+  legDir: string,
+): { count: number; channel: string; artifacts: string[] } {
+  const artifacts: string[] = [];
+  // An expanded notification shade ("Set a screen lock" etc.) swallows every app
+  // gesture and read. `cmd statusbar collapse` is a no-op when already collapsed
+  // and, unlike BACK, can never navigate the activity off /live-chat.
+  const collapseShade = (): void => {
+    if (platform !== 'android') return;
+    adbExec(deviceId, ['shell', 'cmd', 'statusbar', 'collapse']);
+    adbExec(deviceId, [
+      'shell',
+      'am',
+      'broadcast',
+      '-a',
+      'android.intent.action.CLOSE_SYSTEM_DIALOGS',
+    ]);
+  };
+
+  // PRE-STEP — clear the screen-level obstructions before ANY transcript driving.
+  // On iOS the composer keeps focus (and its keyboard) after the failed probe
+  // send: with the keyboard up the transcript viewport shrinks behind the IME,
+  // gestures starting below ~60% of the screen are eaten, and the scroll
+  // affordance's tap target is covered — pixel-proven on the reserved simulator
+  // (see dismissIosKeyboardByTap). On Android an expanded notification shade
+  // swallows gestures the same way.
+  const screenshotPath = join(legDir, 'retry-state.png');
+  spawnSync('sleep', ['2']); // let the post-retry layout settle first
+  if (platform === 'ios') dismissIosKeyboardByTap(deviceId);
+  collapseShade();
+  dismissLogBox(deviceId);
+
+  // Channel 1 — Maestro's verified scroll to the probe turn (the channel both
+  // attempt-1 Android legs won through), then a short nudge past it, then the
+  // accessibility-tree count. The nudge matters for duplication detection: a
+  // duplicated retained turn renders immediately after the original, and the
+  // count must see that region mounted too. iOS note: Maestro's text matcher
+  // cannot see RN Fabric Text nodes without explicit labels (verified on-device:
+  // assertVisible fails for text plainly on screen while the hierarchy dump
+  // carries it), so on iOS this channel no-ops and channel 2 does the driving.
+  if (maestroScrollUntilVisible(deviceId, needle)) {
+    nudgeSwipe(platform, deviceId);
+    spawnSync('sleep', ['2']);
+    dismissLogBox(deviceId);
+    const count = hierarchyElementCount(captureHierarchy(deviceId), needle);
+    if (count > 0) {
+      captureScreenshot(platform, deviceId, screenshotPath);
+      artifacts.push(screenshotPath);
+      return { count, channel: 'hierarchy-after-scrollUntilVisible', artifacts };
+    }
+  }
+
+  // Channel 2 — swipe crawl: full-height finger-up swipes inside the transcript
+  // region, in batches with a count after each batch. This is iOS's proven
+  // driver (pixel-verified on the reserved simulator: keyboard dismissed, five
+  // swipes traverse the multi-page transcript, probe turn + its answer land in
+  // frame). 5 swipes per batch x 4 batches covers the ~6-page transcript.
+  for (let round = 0; round < 4; round += 1) {
+    collapseShade();
+    dismissLogBox(deviceId);
+    for (let swipe = 0; swipe < 5; swipe += 1) swipeTowardLatest(platform, deviceId);
+    spawnSync('sleep', ['2']);
+    dismissLogBox(deviceId);
+    const count = hierarchyElementCount(captureHierarchy(deviceId), needle);
+    if (count > 0) {
+      captureScreenshot(platform, deviceId, screenshotPath);
+      artifacts.push(screenshotPath);
+      return { count, channel: 'hierarchy-after-swipe-crawl', artifacts };
+    }
+  }
+
+  // Channel 3 — the app's own `Scroll to latest message` affordance (a labeled
+  // Button whose onPress runs Keyboard.dismiss + scrollToOffset(0)). Kept LAST:
+  // a tap dispatched at stale tree geometry can land on the composer and
+  // re-focus it (observed in the attempt-4 captures — the keyboard returned
+  // mid-channel), which is exactly the obstruction the pre-step cleared, so
+  // tapping earlier would poison the channels that follow.
+  if (hierarchyContains(deviceId, 'Scroll to latest message')) {
+    dismissThenTap(deviceId, 'Scroll to latest message');
+    captureScreenshot(platform, deviceId, screenshotPath);
+    spawnSync('sleep', ['2']);
+    dismissLogBox(deviceId);
+    const count = hierarchyElementCount(captureHierarchy(deviceId), needle);
+    if (count > 0) {
+      artifacts.push(screenshotPath);
+      return { count, channel: 'hierarchy-after-affordance', artifacts };
+    }
+  }
+
+  // Channel 4 — pixels: the last capture (channel 3's instant post-tap shot when
+  // one exists — it outruns any re-park race by construction; fresh otherwise),
+  // Vision OCR, and the final tree dump retained beside it. OCR only ever READS
+  // pixels; it cannot fabricate a match.
+  if (!existsSync(screenshotPath)) captureScreenshot(platform, deviceId, screenshotPath);
+  artifacts.push(screenshotPath);
+  const hierarchyDumpPath = join(legDir, 'retry-state-hierarchy.txt');
+  const finalHierarchy = captureHierarchy(deviceId);
+  writeFileSync(hierarchyDumpPath, finalHierarchy);
+  artifacts.push(hierarchyDumpPath);
+  const fromDump = hierarchyElementCount(finalHierarchy, needle);
+  if (fromDump > 0) return { count: fromDump, channel: 'hierarchy-final-dump', artifacts };
+  const fromOcr = ocrCount(screenshotPath, needle);
+  if (fromOcr > 0) return { count: fromOcr, channel: 'vision-ocr', artifacts };
+  return { count: 0, channel: 'exhausted', artifacts };
 }
 
 /** One-line diagnostic of the composer state for a failed turn. */
@@ -625,6 +1007,7 @@ async function runAndroidInputFlow(
   seedPrompt: string,
   followUp: string,
   longPrompt: string,
+  legDir: string,
 ): Promise<MaestroResult> {
   const logs: string[] = [];
   const fail = (msg: string): MaestroResult => {
@@ -802,14 +1185,14 @@ async function runAndroidInputFlow(
       )} stderr: ${session.current.stderrText().slice(-1000)}`,
     );
   }
-  const probeOccurrences = hierarchyCount(serial, RETRY_PROBE_PROMPT);
-  if (probeOccurrences !== 1) {
+  const probe = transcriptProbeCount('android', serial, RETRY_PROBE_PROMPT, legDir);
+  if (probe.count !== 1) {
     return fail(
-      `retry probe appears ${probeOccurrences}x in the transcript (expected exactly 1) ${stateSummary(serial)}`,
+      `retry probe appears ${probe.count}x in the transcript (expected exactly 1; oracle channel: ${probe.channel}${probe.artifacts.length > 0 ? `; artifacts: ${probe.artifacts.join(', ')}` : ''}) ${stateSummary(serial)}`,
     );
   }
   logs.push(
-    `OK: retry completed on a new request (${session.current.records()[0]?.requestId ?? 'n/a'}) with exactly 1 retained user turn`,
+    `OK: retry completed on a new request (${session.current.records()[0]?.requestId ?? 'n/a'}) with exactly 1 retained user turn (oracle channel: ${probe.channel})`,
   );
 
   return { exit: 0, output: logs.join('\n') };
@@ -823,6 +1206,7 @@ function exportExampleWeb(): { exit: number; output: string; distDir: string } {
   const previous = process.env.EXPO_PUBLIC_API_BASE_URL;
   // Same-origin: the browser fetches the proxy origin, not the backend directly.
   process.env.EXPO_PUBLIC_API_BASE_URL = `http://127.0.0.1:${WEB_PORT}`;
+  const removedCreds = stripCredentialEnv();
   try {
     const res = runShell(
       `npx expo export --platform web --output-dir "${distDir}"`,
@@ -831,6 +1215,7 @@ function exportExampleWeb(): { exit: number; output: string; distDir: string } {
     );
     return { exit: res.exit, output: res.output, distDir };
   } finally {
+    restoreCredentialEnv(removedCreds);
     if (previous === undefined) {
       delete process.env.EXPO_PUBLIC_API_BASE_URL;
     } else {
@@ -940,7 +1325,12 @@ type WebLegResult = {
 };
 
 async function launchChromiumBrowser(): Promise<Browser> {
-  return chromium.launch({ headless: true });
+  const removedCreds = stripCredentialEnv();
+  try {
+    return await chromium.launch({ headless: true });
+  } finally {
+    restoreCredentialEnv(removedCreds);
+  }
 }
 
 /**
@@ -1099,12 +1489,14 @@ async function driveLiveWeb(
  * the end of runAndroidInputFlow. Stops the OWNED backend, submits the probe turn
  * through a real composer flow, observes the sanitized error + accessible Retry,
  * restarts the endpoint, retries, and gates on a NEW completed provider record with
- * exactly one retained user turn.
+ * exactly one retained user turn, counted by the hardened transcript oracle
+ * (see transcriptProbeCount).
  */
 // fallow-ignore-next-line complexity
 async function runIosEndpointLossRetry(
   deviceId: string,
   session: BackendSession,
+  legDir: string,
 ): Promise<{ ok: boolean; log: string }> {
   dismissLogBox(deviceId);
   await session.stop();
@@ -1130,16 +1522,24 @@ async function runIosEndpointLossRetry(
       )} stderr: ${session.current.stderrText().slice(-1000)}`,
     };
   }
-  const occurrences = hierarchyCount(deviceId, RETRY_PROBE_PROMPT);
-  if (occurrences !== 1) {
+  let probe: { count: number; channel: string; artifacts: string[] };
+  try {
+    probe = transcriptProbeCount('ios', deviceId, RETRY_PROBE_PROMPT, legDir);
+  } catch (e) {
     return {
       ok: false,
-      log: `retry probe appears ${occurrences}x in the transcript (expected exactly 1)`,
+      log: `retry-state pixel oracle failed: ${e instanceof Error ? e.message : String(e)}`,
+    };
+  }
+  if (probe.count !== 1) {
+    return {
+      ok: false,
+      log: `retry probe appears ${probe.count}x in the transcript (expected exactly 1; oracle channel: ${probe.channel}${probe.artifacts.length > 0 ? `; artifacts: ${probe.artifacts.join(', ')}` : ''})`,
     };
   }
   return {
     ok: true,
-    log: `endpoint loss + retry OK (new request ${session.current.records()[0]?.requestId ?? 'n/a'}, exactly 1 retained user turn)`,
+    log: `endpoint loss + retry OK (new request ${session.current.records()[0]?.requestId ?? 'n/a'}, exactly 1 retained user turn — oracle channel: ${probe.channel})`,
   };
 }
 
@@ -1188,6 +1588,7 @@ async function runNativeAppearance(
             seedPromptFor(marker),
             FOLLOW_UP_PROMPT,
             LONG_PROMPT,
+            legDir,
           )
         : runLiveMaestro(deviceId, {
             MARKER: marker,
@@ -1200,7 +1601,7 @@ async function runNativeAppearance(
     let retryLog: string | null = null;
     let retryFailed = false;
     if (platform === 'ios' && flow.exit === 0) {
-      const retry = await runIosEndpointLossRetry(deviceId, session);
+      const retry = await runIosEndpointLossRetry(deviceId, session, legDir);
       retryLog = retry.log;
       retryFailed = !retry.ok;
     }
@@ -1497,34 +1898,42 @@ export async function runLiveImportGraphCompiler(
 ): Promise<Record<string, unknown>> {
   mkdirSync(outputDir, { recursive: true });
 
-  const scoped = run(
-    `pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json`,
-    REPO_ROOT,
-  );
-  const files = run(
-    `pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json --listFilesOnly`,
-    REPO_ROOT,
-  );
-  const whole = run(`pnpm --dir apps/example exec tsc --noEmit`, REPO_ROOT);
+  // The compiler must never see provider credentials (CRITICAL CONSTRAINT); see
+  // stripCredentialEnv's doc comment above startLiveMetro.
+  const removedCreds = stripCredentialEnv();
+  let scoped: { exit: number; output: string };
+  let files: { exit: number; output: string };
+  let whole: { exit: number; output: string };
+  let negativeFiles: { exit: number; output: string };
+  try {
+    scoped = run(`pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json`, REPO_ROOT);
+    files = run(
+      `pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json --listFilesOnly`,
+      REPO_ROOT,
+    );
+    whole = run(`pnpm --dir apps/example exec tsc --noEmit`, REPO_ROOT);
 
-  // Negative control: a scoped config that omits the route must NOT list it. This
-  // proves the program-includes assertion reads the real compiler program.
-  const negativeConfig = join(tmpdir(), `ori-rn-004-negative-${Date.now()}.json`);
-  writeFileSync(
-    negativeConfig,
-    JSON.stringify(
-      {
-        extends: join(EXAMPLE_ROOT, 'tsconfig.live-chat.json'),
-        include: ['expo-env.d.ts', 'lib/live-chat-config.ts'],
-      },
-      null,
-      2,
-    ),
-  );
-  const negativeFiles = run(
-    `pnpm --dir apps/example exec tsc --noEmit -p ${negativeConfig} --listFilesOnly`,
-    REPO_ROOT,
-  );
+    // Negative control: a scoped config that omits the route must NOT list it. This
+    // proves the program-includes assertion reads the real compiler program.
+    const negativeConfig = join(tmpdir(), `ori-rn-004-negative-${Date.now()}.json`);
+    writeFileSync(
+      negativeConfig,
+      JSON.stringify(
+        {
+          extends: join(EXAMPLE_ROOT, 'tsconfig.live-chat.json'),
+          include: ['expo-env.d.ts', 'lib/live-chat-config.ts'],
+        },
+        null,
+        2,
+      ),
+    );
+    negativeFiles = run(
+      `pnpm --dir apps/example exec tsc --noEmit -p ${negativeConfig} --listFilesOnly`,
+      REPO_ROOT,
+    );
+  } finally {
+    restoreCredentialEnv(removedCreds);
+  }
   const routeAbsentFromNegative = !negativeFiles.output.includes('app/live-chat.tsx');
 
   const program = files.output;
