@@ -1358,7 +1358,10 @@ async function runAndroidInputFlow(
   // and every decision writes its discriminating record query to the leg log
   // (STOP-RETRY-EVIDENCE / STOP-RETRY-EXHAUSTED). Bound: 3 drives per leg.
   let stopExercised = false;
-  const maxStopDrives = 3;
+  // Cycle-5: 6 drives per leg — the provider intermittently serves the essay prompt
+  // as ~1.5s/<=68-delta completions (cycle-4 evidence); each re-drive is a fresh draw
+  // at a long-form stream, re-gated by the same record-proven condition.
+  const maxStopDrives = 6;
   for (let stopDrive = 1; stopDrive <= maxStopDrives && !stopExercised; stopDrive += 1) {
     const prep = prepareTurn('long', longPrompt);
     if (prep) return { result: prep, growth };
@@ -1669,7 +1672,7 @@ async function runIosInputFlow(
   // control could appear (a fast essay). Every decision writes its record query to
   // the leg log. Bound: 3 drives per leg.
   let stopDone = false;
-  const maxIosStopDrives = 3;
+  const maxIosStopDrives = 6;
   for (let stopDrive = 1; stopDrive <= maxIosStopDrives && !stopDone; stopDrive += 1) {
     const baseline = session.current.records().length;
     const stopFlow = runOneOffMaestroFlow(
