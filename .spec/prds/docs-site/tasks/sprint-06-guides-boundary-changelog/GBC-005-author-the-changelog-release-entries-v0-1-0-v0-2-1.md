@@ -18,6 +18,7 @@ MUST:
 - Author three entry files under apps/docs/src/content/changelog/ — 0.1.0.md (2026-09-07), 0.2.0.md (2026-09-08), 0.2.1.md (2026-09-08) — one per git tag through v0.2.1.
 - Give each entry a version, a date, and a body with Added / Changed / Fixed headings (empty lists render 'none', headings never absent).
 - Derive the added/changed/fixed content from the real tag history (git log v0.1.0, v0.1.0..v0.2.0, v0.2.0..v0.2.1), never invented.
+- Cite the deriving commit range in each entry (a footnote or HTML comment naming the range) so GBC-006's review can reconcile every body line against git log.
 - Link each touched component to its /components/[item] page by its real registry slug so every release link resolves.
 NEVER:
 - Never invent a release note, a touched component, or a date not present in git history.
@@ -108,7 +109,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
           MUST_NOT_OBSERVE: ['a dead link', 'a target slug absent from the 56 items']
 
 ### AC-5: empty list renders explicit none, absent field fails
-  GIVEN: a changelog entry whose Changed list is empty
+  GIVEN: 0.2.1's entry with its Added list empty (the v0.2.0..v0.2.1 range carries only fix/style/example commits — no registry additions; the author verifies against git log before relying on it)
   WHEN:  the page renders
   THEN:  the empty list renders an explicit 'none' rather than an absent heading
   FLOW_REF: FLOW-DOCS-06-changelog-release-pages
@@ -121,7 +122,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a heading is absent rather than rendered with an explicit none']
         EVIDENCE: file_artifact
-        - ACTION: ['Inspect a release page whose Changed list is empty']
+        - ACTION: ["Inspect /changelog/0.2.1 whose Added list is empty"]
           MUST_OBSERVE: ["an explicit 'none' or empty section under the heading"]
           MUST_NOT_OBSERVE: ['an absent heading']
 
@@ -251,7 +252,7 @@ Blocks:     none
       "id": "AC-5",
       "type": "acceptance_criterion",
       "primary": false,
-      "description": "GIVEN a changelog entry whose Changed list is empty WHEN the page renders THEN the empty list renders an explicit 'none' rather than an absent heading",
+      "description": "GIVEN 0.2.1's entry with its Added list empty (v0.2.0..v0.2.1 carries only fix/style/example commits) WHEN the page renders THEN the empty list renders an explicit 'none' rather than an absent heading",
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",

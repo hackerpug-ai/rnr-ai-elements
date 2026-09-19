@@ -18,15 +18,16 @@ MUST:
 - Reconcile the boundary page's gaps list, the 56-item ledger, and the /porting not-ported list so the cross-check yields zero contradictions and zero known omissions.
 - Enforce TR-12: active voice, second person, the terminology lock (engine, engine tree, registry item, family, verdict, peers, dev client), the Guide and Troubleshooting templates, and the single-canonical-page rule.
 - Fix any contradiction or omission by editing the owning file in write_allowed.
+- Record the per-entry git-log reconciliation for GBC-005 (each entry's body lines checked against its cited commit range) as review evidence.
 - Leave the tree green for the stranger's cross-check.
 NEVER:
 - Never ship a gap that names a shipped registry item or omits a known missing element.
 - Never introduce a second boundary page or a boundary-table copy on /porting.
 - Never edit packages/registry/**, pages/**, components/**, content.config.ts, or generated data.
 - Never substitute a mock or canned answer for the real built-preview cross-check.
-- Never author the automated e2e specs (those are the astro lens's GBC-014 deliverable).
+- Never author the automated e2e specs (route-owning tasks and GBC-014 own them per the locked flows).
 STRICTLY:
-- Strictly read the ledger from apps/docs/src/data/registry-items.json (read-only).
+- Strictly read the ledger from the rendered /registry page or the tracked packages/registry/registry.json (read-only — never depend on gitignored generated files existing before a build).
 - Strictly keep the cross-check a reconciliation over real rendered content.
 - Strictly confirm every gap is a consumer-owned responsibility or a named not-ported element.
 
@@ -56,7 +57,7 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
 ### AC-2: TR-12 terminology and voice conformance
   GIVEN: all sprint-06 authored content
   WHEN:  a reviewer reads for terminology and voice
-  THEN:  the canonical terms and active-voice second-person prose hold with no forbidden term
+  THEN:  the canonical terms and active-voice second-person prose hold with no forbidden term, recorded as a per-page checklist verdict file (review artifact)
   FLOW_REF: FLOW-DOCS-04-boundary-ownership-tables
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview at http://localhost:4321
@@ -65,10 +66,10 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
-        NEGATIVE_CONTROL: would fail if ['forbidden terms (styling engine, flavor, registry variant, component, group, flag, support level, deps, dev build) appear in authored prose']
+        NEGATIVE_CONTROL: would fail if ['forbidden terms (styling engine, flavor, registry variant, group, flag, support level, deps, dev build) appear in authored prose', "'component' used as a synonym for a shippable unit — legal only as the registry:component schema type or quoted code", 'an authored page with no checklist verdict recorded']
         EVIDENCE: file_artifact
-        - ACTION: ['Scan the authored prose for the terminology lock']
-          MUST_OBSERVE: ["'engine' for the styling backend", "'engine tree' for the per-engine artifact set", "'registry item' for a shippable unit", "'dev client' for the runtime requiring a dev build"]
+        - ACTION: ['Scan the authored prose for the terminology lock', 'Record a per-page checklist verdict (term scan + voice) as the review artifact']
+          MUST_OBSERVE: ["'engine' for the styling backend", "'engine tree' for the per-engine artifact set", "'registry item' for a shippable unit", "'dev client' for the runtime requiring a dev build", "a per-page checklist verdict file exists"]
           MUST_NOT_OBSERVE: ["'styling engine'", "'flavor'", "'registry variant'", "'support level'", "'dev build'"]
 
 ### AC-3: single-canonical boundary holds after reconciliation
@@ -90,9 +91,9 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
           MUST_NOT_OBSERVE: ['a boundary-table copy on /porting']
 
 ### AC-4: a planted contradiction is caught
-  GIVEN: a reconciliation that leaves a gap naming a shipped item
-  WHEN:  the cross-check runs
-  THEN:  the check fails naming the contradiction rather than passing
+  GIVEN: GBC-012's planted-contradiction RED drill (a fixture gap naming a shipped item)
+  WHEN:  the drill runs
+  THEN:  it fails naming the contradiction rather than passing, and this review records the drill's red/green output as evidence
   FLOW_REF: FLOW-DOCS-04-boundary-ownership-tables
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview at http://localhost:4321
@@ -103,15 +104,15 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a contradiction is silently tolerated']
         EVIDENCE: file_artifact
-        - ACTION: ['Cross-check the gaps list against the 56 ledger rows']
-          MUST_OBSERVE: ['zero contradictions']
-          MUST_NOT_OBSERVE: ['a gap naming a shipped registry item']
+        - ACTION: ["Inspect GBC-012's planted-contradiction drill output (fixture gap naming a shipped item)"]
+          MUST_OBSERVE: ['the drill fails naming the gap that names a shipped item', 'the red/green output recorded as review evidence']
+          MUST_NOT_OBSERVE: ['a contradiction silently tolerated', 'a drill output that exits 0 on the planted gap']
 
 ## Test Criteria
 - TC-1: The boundary gaps list, the 56-item ledger, and the not-ported list reconcile with zero contradictions and zero omissions.  (maps_to: AC-1)
 - TC-2: The terminology lock holds with no forbidden term in authored prose.  (maps_to: AC-2)
 - TC-3: The boundary tables remain canonical to one page with no /porting copy.  (maps_to: AC-3)
-- TC-4: A planted contradiction (gap naming a shipped item) fails the cross-check.  (maps_to: AC-4)
+- TC-4: GBC-012's planted-contradiction drill fails naming a gap that names a shipped item; the red/green output is recorded as review evidence.  (maps_to: AC-4)
 
 ## Reading List
 - .spec/prds/docs-site/11-technical-requirements/12-content-standards.md [PRIMARY PATTERN] — terminology lock and content gates
@@ -192,7 +193,7 @@ Blocks:     none
       "id": "AC-2",
       "type": "acceptance_criterion",
       "primary": false,
-      "description": "GIVEN all sprint-06 authored content WHEN a reviewer reads for terminology and voice THEN the canonical terms and active-voice second-person prose hold with no forbidden term",
+      "description": "GIVEN all sprint-06 authored content WHEN a reviewer reads for terminology and voice THEN the canonical terms and active-voice second-person prose hold with no forbidden term, recorded as a per-page checklist verdict file (review artifact)",
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
@@ -248,7 +249,7 @@ Blocks:     none
       "id": "TC-2",
       "type": "test_criterion",
       "primary": false,
-      "description": "The terminology lock holds with no forbidden term in authored prose.",
+      "description": "The terminology lock holds with no forbidden term in authored prose, recorded as a per-page checklist verdict file.",
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
@@ -276,7 +277,7 @@ Blocks:     none
       "id": "TC-4",
       "type": "test_criterion",
       "primary": false,
-      "description": "A planted contradiction (gap naming a shipped item) fails the cross-check.",
+      "description": "GBC-012's planted-contradiction drill fails naming a gap that names a shipped item; the red/green output is recorded as review evidence.",
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
