@@ -84,13 +84,13 @@ describe('FUSE-01', () => {
     const astroDone = build.stdout.indexOf('Complete!');
     expect(
       registryDone,
-      'registry:build produced no completion output\n' + evidence,
+      `registry:build produced no completion output\n${evidence}`,
     ).toBeGreaterThan(-1);
     expect(
       galleryDone,
-      'gallery:manifest produced no completion output\n' + evidence,
+      `gallery:manifest produced no completion output\n${evidence}`,
     ).toBeGreaterThan(-1);
-    expect(astroDone, 'astro build produced no completion output\n' + evidence).toBeGreaterThan(-1);
+    expect(astroDone, `astro build produced no completion output\n${evidence}`).toBeGreaterThan(-1);
     expect(registryDone, 'registry:build must complete before gallery:manifest').toBeLessThan(
       galleryDone,
     );

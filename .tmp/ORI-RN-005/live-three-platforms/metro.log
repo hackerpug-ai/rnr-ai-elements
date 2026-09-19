@@ -1,0 +1,86 @@
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+Starting project at /Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau
+/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@expo+cli@57.0.26_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_expo-constants@5_7676c9b523b43a208fed49e4b2781a11/node_modules/@expo/cli/build/src/utils/errors.js:130
+    throw error;
+    ^
+
+Error: DefaultToolLauncher must be mocked or overridden in tests. Add jest.mock('../utils/DefaultAppLauncher') to test setup.
+    at assertMockedInTests (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@react-native+dev-middleware@0.86.3/node_modules/@react-native/dev-middleware/dist/utils/DefaultToolLauncher.js:68:11)
+    at Object.prepareDebuggerShell (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@react-native+dev-middleware@0.86.3/node_modules/@react-native/dev-middleware/dist/utils/DefaultToolLauncher.js:61:7)
+    at openDebuggerMiddleware (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@react-native+dev-middleware@0.86.3/node_modules/@react-native/dev-middleware/dist/middleware/openDebuggerMiddleware.js:27:43)
+    at createDevMiddleware (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@react-native+dev-middleware@0.86.3/node_modules/@react-native/dev-middleware/dist/createDevMiddleware.js:52:43)
+    at createDebugMiddleware (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@expo+cli@57.0.26_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_expo-constants@5_7676c9b523b43a208fed49e4b2781a11/node_modules/@expo/cli/build/src/start/server/metro/debugging/createDebugMiddleware.js:27:48)
+    at instantiateMetroAsync (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@expo+cli@57.0.26_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_expo-constants@5_7676c9b523b43a208fed49e4b2781a11/node_modules/@expo/cli/build/src/start/server/metro/instantiateMetro.js:343:111)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async MetroBundlerDevServer.startImplementationAsync (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@expo+cli@57.0.26_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_expo-constants@5_7676c9b523b43a208fed49e4b2781a11/node_modules/@expo/cli/build/src/start/server/metro/MetroBundlerDevServer.js:930:82)
+    at async MetroBundlerDevServer.startAsync (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@expo+cli@57.0.26_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_expo-constants@5_7676c9b523b43a208fed49e4b2781a11/node_modules/@expo/cli/build/src/start/server/BundlerDevServer.js:124:24)
+    at async DevServerManager.startAsync (/Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789770504988-nuzfau/node_modules/.pnpm/@expo+cli@57.0.26_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_expo-constants@5_7676c9b523b43a208fed49e4b2781a11/node_modules/@expo/cli/build/src/start/server/DevServerManager.js:213:13)
+
+Node.js v24.14.0
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+Starting project at /Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789771232400-mqpg11
+Starting Metro Bundler
+
+Waiting on http://localhost:8097
+
+Logs for your project will appear below.
+TypeScript: The tsconfig.json#include property has been updated
+iOS Bundled 6409ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3692 modules)
+iOS Bundled 299ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (836 modules)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 1664, "dt": 38908.91729199886, "prevDt": 33465.34375}
+iOS Bundled 93ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (1 module)
+iOS Bundled 51ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1 module)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 1832, "dt": 44130.045666992664, "prevDt": 33050.92137503624}
+Android Bundled 5670ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3789 modules)
+Android Bundled 252ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1040 modules)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 4544, "dt": 2717, "prevDt": 1480}
+Android Bundled 61ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (1 module)
+Android Bundled 24ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1 module)
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+Starting project at /Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789774046022-xh9nhy
+Starting Metro Bundler
+
+Waiting on http://localhost:8097
+
+Logs for your project will appear below.
+TypeScript: The tsconfig.json#include property has been updated
+iOS Bundled 21031ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3692 modules)
+iOS Bundled 540ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (908 modules)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 2816, "dt": 89629.37966704369, "prevDt": 64253.05641698837}
+iOS Bundled 424ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (1 module)
+iOS Bundled 135ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1 module)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 3176, "dt": 124826.90779101849, "prevDt": 117457.98550003767}
+Android Bundled 14871ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3789 modules)
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+Starting project at /Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789775894036-x17i7b
+Starting Metro Bundler
+
+Waiting on http://localhost:8097
+
+Logs for your project will appear below.
+TypeScript: The tsconfig.json#include property has been updated
+iOS Bundled 28801ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3692 modules)
+iOS Bundled 876ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (972 modules)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 3128, "dt": 93732.65966701508, "prevDt": 76110.80199998617}
+iOS Bundled 262ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (1 module)
+iOS Bundled 179ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1 module)
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+Starting project at /Users/justinrich/.cache/agent-scratch/ori-rn-005-nativewind-1789778784164-3oescy
+Starting Metro Bundler
+
+Waiting on http://localhost:8097
+
+Logs for your project will appear below.
+TypeScript: The tsconfig.json#include property has been updated
+iOS Bundled 6210ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3692 modules)
+iOS Bundled 235ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (534 modules)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 1808, "dt": 36576.762667000294, "prevDt": 31413.956542015076}
+iOS Bundled 81ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (1 module)
+iOS Bundled 37ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1 module)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 2048, "dt": 32509.20916700363, "prevDt": 30129.189417004585}
+Android Bundled 3515ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (3789 modules)
+Android Bundled 151ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (870 modules)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 5624, "dt": 32782, "prevDt": 56051}
+Android Bundled 60ms node_modules/.pnpm/expo-router@57.0.22_0a026e8c043781c218ed0fe8fbcfe4fc/node_modules/expo-router/entry.js (1 module)
+Android Bundled 23ms node_modules/.pnpm/expo@57.0.24_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_e63dd45d66b0c6f0ac4eb0c944666605/node_modules/expo/fetch.js (1 module)
+ LOG  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 5120, "dt": 33130, "prevDt": 57937}

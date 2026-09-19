@@ -187,11 +187,14 @@ function markerFor(runId: string, platform: Platform): string {
   return `ORI-RN-005:${runId}:${platform}`;
 }
 
+/** The task fixture's literal seed turn (nonce substituted): a numbered 1..12 count
+ * whose reply streams for several seconds — long enough to sample mid-stream growth. */
 function seedPromptFor(marker: string): string {
-  return `Remember the marker ${marker}. Repeat it and give three short facts about rain.`;
+  return `Remember marker ${marker} and count from 1 to 12.`;
 }
 
-const FOLLOW_UP_PROMPT = 'What marker did I ask you to remember?';
+/** The task fixture's literal follow-up (the marker is NOT repeated in it). */
+const FOLLOW_UP_PROMPT = 'What marker did I give you?';
 // The explicit length demand matters: with only "ten substantial paragraphs" the
 // model occasionally answered in ~400 tokens (~5s), finishing the stream before the
 // stop control could be exercised (ORI-RN-004 cycle-4 finding).
@@ -405,6 +408,41 @@ class BackendSession {
   allRecords(): BackendRecord[] {
     return this.handles.flatMap((handle) => handle.records());
   }
+}
+
+/**
+ * Reaps OWNED orphans on this task's fixed ports: a driver killed mid-run (e.g. a test
+ * harness's spawnSync timeout SIGTERMs the parent without propagating) leaves its
+ * Metro/backend children behind, and the NEXT run then dies on "port already in use"
+ * (cycle-2, twice). Identity is VERIFIED before any kill — the port alone is never
+ * enough: the listener's command line must carry this proof's own markers (the
+ * worked-example server entry for the backend port; `expo ... --port <n>` for Metro).
+ * Unrecognized listeners are left alone and reported by the normal startup failure.
+ */
+function reapOwnedOrphans(): void {
+  const owned: Record<number, (command: string) => boolean> = {
+    [BACKEND_PORT]: (cmd) => cmd.includes('server/index.ts'),
+    [METRO_PORT]: (cmd) => cmd.includes('expo') && cmd.includes(`--port ${METRO_PORT}`),
+    [WEB_PORT]: () => false, // the web proxy lives in-process; nothing legitimate to reap
+  };
+  for (const [portRaw, isOwned] of Object.entries(owned)) {
+    const port = Number(portRaw);
+    const pids = spawnSync('lsof', ['-nP', `-iTCP:${port}`, '-sTCP:LISTEN', '-t'], {
+      encoding: 'utf8',
+      timeout: 15_000,
+    });
+    for (const pid of `${pids.stdout ?? ''}`.split('\n').filter((p) => p.trim() !== '')) {
+      const ps = spawnSync('ps', ['-p', pid.trim(), '-o', 'command='], {
+        encoding: 'utf8',
+        timeout: 15_000,
+      });
+      const command = `${ps.stdout ?? ''}`;
+      if (!isOwned(command)) continue;
+      spawnSync('kill', [pid.trim()], { timeout: 15_000 });
+    }
+  }
+  // Give the kernel a beat to release the sockets.
+  spawnSync('sleep', ['1']);
 }
 
 async function ensureBackend(options: ProofOptions): Promise<OwnedBackendHandle> {
@@ -716,6 +754,65 @@ function waitForText(deviceId: string, needle: string, timeoutMs: number): boole
   return found;
 }
 
+/**
+ * The LEAF texts that carry `needle` in the current hierarchy dump.
+ * The follow-up recall oracle compares marker-bearing TEXT SETS, not counts: the
+ * virtualized inverted transcript keeps a bounded mounted window, so the follow-up
+ * answer ADDS a marker-bearing text while the oldest turns EVICT one — a count-above
+ * -baseline read stays flat at exactly the moment the answer is on screen (cycle-2
+ * attempt F, android/dark: 4 -> 4 with the answer plainly visible). A marker-bearing
+ * text that was not in the post-seed baseline can only be the new answer.
+ */
+function markerTexts(deviceId: string, needle: string): string[] {
+  const raw = captureHierarchy(deviceId);
+  const start = raw.indexOf('{');
+  const end = raw.lastIndexOf('}');
+  if (start === -1 || end <= start) return [];
+  let data: unknown;
+  try {
+    data = JSON.parse(raw.slice(start, end + 1));
+  } catch {
+    return [];
+  }
+  const texts: string[] = [];
+  // fallow-ignore-next-line complexity
+  const visit = (node: unknown): boolean => {
+    if (typeof node !== 'object' || node === null) return false;
+    const record = node as Record<string, unknown>;
+    const kids = Array.isArray(record.children) ? (record.children as unknown[]) : [];
+    let childMatched = false;
+    for (const kid of kids) {
+      if (visit(kid)) childMatched = true;
+    }
+    if (childMatched) return true;
+    const attrs = (record.attributes ?? {}) as Record<string, unknown>;
+    const text = `${String(attrs.text ?? '')}${String(attrs.accessibilityText ?? '')}`;
+    if (text.includes(needle)) {
+      texts.push(text);
+      return true;
+    }
+    return false;
+  };
+  visit(data);
+  return texts;
+}
+
+function waitForNewMarkerText(
+  deviceId: string,
+  needle: string,
+  baselineTexts: string[],
+  timeoutMs: number,
+): boolean {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    dismissLogBox(deviceId);
+    const fresh = markerTexts(deviceId, needle).filter((t) => !baselineTexts.includes(t));
+    if (fresh.length > 0) return true;
+    spawnSync('sleep', ['2']);
+  }
+  return false;
+}
+
 /** Dismisses whatever dev/system overlay covers the composer, in priority order: the
  * RN LogBox in BOTH forms (full overlay with "Dismiss", minimized "!" badge), then an
  * expanded notification shade (gated on its "Clear all" footer marker so the BACK can
@@ -821,36 +918,85 @@ async function waitForRecordOutcome(
 }
 
 /**
+ * Waits for the turn's record to reach ANY terminal outcome. `error` is terminal too:
+ * transient provider failures (cycle-2 saw two, on different turns across attempts)
+ * must surface immediately so the caller can drive the app's own Retry control — a
+ * completed-only gate just burns its whole timeout against a dead turn.
+ */
+async function awaitTerminalRecord(
+  backend: OwnedBackendHandle,
+  baseline: number,
+  timeoutMs: number,
+): Promise<'completed' | 'aborted' | 'error' | null> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const records = backend.records();
+    if (records.length > baseline) {
+      const outcome = records[records.length - 1].outcome;
+      if (outcome === 'completed' || outcome === 'aborted' || outcome === 'error') {
+        return outcome;
+      }
+    }
+    await new Promise((resolveTick) => setTimeout(resolveTick, 1000));
+  }
+  return null;
+}
+
+/**
  * AC-2 growth sampler: while a turn streams, samples the longest visible text in the
- * accessibility tree (the growing assistant bubble) every ~1.5s until the backend
- * record reaches a terminal outcome. Retains every distinct nonempty length — the
- * "at least 2 distinct nonempty assistant text lengths before completion" oracle.
+ * accessibility tree (the growing assistant bubble) until the backend record reaches a
+ * terminal outcome — completed, aborted, OR errored (a provider error record is a real
+ * terminal state the caller must handle, not spin on: cycle-2's android/dark leg
+ * burned its whole 120s window waiting on an `error` record). Retains every distinct
+ * nonempty length — the "at least 2 distinct nonempty assistant text lengths before
+ * completion" oracle.
  */
 async function sampleAssistantTextGrowth(
   deviceId: string,
   backend: OwnedBackendHandle,
   baseline: number,
   timeoutMs: number,
-): Promise<{ lengths: number[]; terminalSeen: boolean }> {
+): Promise<{ lengths: number[]; terminal: 'completed' | 'aborted' | 'error' | null }> {
   const lengths: number[] = [];
   const deadline = Date.now() + timeoutMs;
-  let terminalSeen = false;
+  let terminal: 'completed' | 'aborted' | 'error' | null = null;
   while (Date.now() < deadline) {
     const records = backend.records();
     const record = records.length > baseline ? records[records.length - 1] : null;
-    if (record && (record.outcome === 'completed' || record.outcome === 'aborted')) {
-      terminalSeen = true;
+    if (record && record.outcome !== undefined) {
+      terminal = record.outcome;
     }
-    const els = parseUiHierarchy(captureHierarchy(deviceId));
-    const maxText = els.reduce(
-      (max, e) => Math.max(max, e.text.length, e.accessibilityText.length),
-      0,
-    );
-    if (maxText > 0 && lengths[lengths.length - 1] !== maxText) lengths.push(maxText);
-    if (terminalSeen) break;
+    for (const n of currentTextLengths(deviceId)) {
+      if (!lengths.includes(n)) lengths.push(n);
+    }
+    if (terminal !== null) break;
     await new Promise((resolveTick) => setTimeout(resolveTick, 1500));
   }
-  return { lengths, terminalSeen };
+  return { lengths, terminal };
+}
+
+/**
+ * Every distinct assistant-bubble text length visible in one hierarchy dump.
+ * The floor (40 chars) skips control labels and chrome ("Send message", "Live chat")
+ * so only transcript text counts. The AC-2 oracle reads DISTINCT lengths — a max-only
+ * reader goes blind the moment a later reply is shorter than an earlier one (cycle-2
+ * attempt C: three turns all read the same 285-char seed answer).
+ */
+function currentTextLengths(deviceId: string): number[] {
+  const lengths = new Set<number>();
+  for (const e of parseUiHierarchy(captureHierarchy(deviceId))) {
+    for (const text of [e.text, e.accessibilityText]) {
+      if (text.length > 40) lengths.add(text.length);
+    }
+  }
+  return [...lengths];
+}
+
+/** Adds every currently-visible assistant text length to the observed set. */
+function noteVisibleGrowth(growth: number[], deviceId: string): void {
+  for (const n of currentTextLengths(deviceId)) {
+    if (!growth.includes(n)) growth.push(n);
+  }
 }
 
 /**
@@ -1013,12 +1159,23 @@ async function runAndroidInputFlow(
   legDir: string,
 ): Promise<{ result: MaestroResult; growth: number[] }> {
   const logs: string[] = [];
-  let growth: number[] = [];
+  const growth: number[] = [];
   const fail = (msg: string): MaestroResult => {
     logs.push(`FAIL: ${msg}`);
     return { exit: 1, output: logs.join('\n') };
   };
   const prepareTurn = (label: string, text: string): MaestroResult | null => {
+    // A system notification can expand the shade over the app at ANY time (cycle-2
+    // attempt C: "Set a screen lock" swallowed the mid-essay stop taps) — collapse it
+    // before every turn's focus/type/send sequence, not just at leg start.
+    adbExec(serial, ['shell', 'cmd', 'statusbar', 'collapse']);
+    adbExec(serial, [
+      'shell',
+      'am',
+      'broadcast',
+      '-a',
+      'android.intent.action.CLOSE_SYSTEM_DIALOGS',
+    ]);
     if (!focusField(serial))
       return fail(`could not focus "Message" (${label}) ${stateSummary(serial)}`);
     adbTypeText(serial, text);
@@ -1030,6 +1187,7 @@ async function runAndroidInputFlow(
     dismissLogBox(serial);
     return null;
   };
+  // fallow-ignore-next-line complexity
   const runTurn = async (
     label: string,
     text: string,
@@ -1044,15 +1202,96 @@ async function runAndroidInputFlow(
     }
     if (sample) {
       const sampled = await sampleAssistantTextGrowth(serial, session.current, baseline, 120_000);
-      growth = sampled.lengths;
-      if (!sampled.terminalSeen) return fail(`${label} turn never reached a terminal record`);
+      for (const n of sampled.lengths) {
+        if (!growth.includes(n)) growth.push(n);
+      }
+      if (sampled.terminal === null) {
+        return fail(
+          `${label} turn never reached a terminal record — observed: ${JSON.stringify(session.current.records())}`,
+        );
+      }
+      if (sampled.terminal === 'error') {
+        // A real provider error on a conversational turn: recover through the app's own
+        // public Retry control (the same control the endpoint-loss phase uses) and gate
+        // on a NEW completed record.
+        logs.push(`WARN: ${label} turn errored at the provider — driving the app's Retry`);
+        let recovered = false;
+        for (let retryAttempt = 0; retryAttempt < 2 && !recovered; retryAttempt += 1) {
+          if (!waitForText(serial, 'Retry', 60_000)) {
+            return fail(`no accessible Retry after the ${label} provider error`);
+          }
+          if (!dismissThenTap(serial, 'Retry')) {
+            return fail(`could not tap "Retry" after the ${label} provider error`);
+          }
+          const retryBaseline = session.current.records().length;
+          const retryOutcome = await awaitTerminalRecord(session.current, retryBaseline, 120_000);
+          if (retryOutcome === 'completed') {
+            recovered = true;
+            break;
+          }
+          // Provider errors arrive in bursts (rate-limit windows); a bounded backoff
+          // before the second attempt lets the window clear.
+          spawnSync('sleep', ['10']);
+        }
+        if (!recovered) {
+          return fail(
+            `${label} retry never produced a completed provider record — observed: ${JSON.stringify(session.current.records())}`,
+          );
+        }
+      }
       return null;
     }
-    if (
-      gate &&
-      !(await waitForRecordOutcome(session.current, baseline, gate.outcome, gate.timeoutMs))
-    ) {
-      return fail(`${label} turn never produced a ${gate.outcome} provider record`);
+    if (gate && gate.outcome === 'completed') {
+      const outcome = await awaitTerminalRecord(session.current, baseline, gate.timeoutMs);
+      if (outcome === 'error') {
+        logs.push(`WARN: ${label} turn errored at the provider — driving the app's Retry`);
+        let recovered = false;
+        for (let retryAttempt = 0; retryAttempt < 2 && !recovered; retryAttempt += 1) {
+          if (!waitForText(serial, 'Retry', 60_000)) {
+            return fail(`no accessible Retry after the ${label} provider error`);
+          }
+          if (!dismissThenTap(serial, 'Retry')) {
+            return fail(`could not tap "Retry" after the ${label} provider error`);
+          }
+          const retryBaseline = session.current.records().length;
+          const retryOutcome = await awaitTerminalRecord(session.current, retryBaseline, 120_000);
+          if (retryOutcome === 'completed') {
+            recovered = true;
+            break;
+          }
+          // Provider errors arrive in bursts (rate-limit windows); a bounded backoff
+          // before the second attempt lets the window clear.
+          spawnSync('sleep', ['10']);
+        }
+        if (!recovered) {
+          return fail(
+            `${label} retry never produced a completed provider record — observed: ${JSON.stringify(session.current.records())}`,
+          );
+        }
+        return null;
+      }
+      if (outcome !== 'completed') {
+        // null = NO record ever arrived: the send tap may have been eaten by an overlay
+        // while the composer still holds the prompt. One precise re-send — only when
+        // the field still carries the text (a dispatched turn clears it).
+        if (outcome === null) {
+          dismissLogBox(serial);
+          const fieldText = parseUiHierarchy(captureHierarchy(serial)).find(
+            (e) => e.accessibilityText === 'Message',
+          )?.text;
+          if (fieldText !== undefined && fieldText.length > 20) {
+            logs.push(`WARN: ${label} send never dispatched (field holds the prompt) — resending`);
+            if (!dismissThenTap(serial, 'Send message')) {
+              return fail(`could not re-tap "Send message" (${label}) ${stateSummary(serial)}`);
+            }
+            const resendOutcome = await awaitTerminalRecord(session.current, baseline, 120_000);
+            if (resendOutcome === 'completed') return null;
+          }
+        }
+        return fail(
+          `${label} turn never produced a completed provider record (${outcome}) — observed: ${JSON.stringify(session.current.records())}`,
+        );
+      }
     }
     return null;
   };
@@ -1088,16 +1327,22 @@ async function runAndroidInputFlow(
   logs.push(
     `OK: seed reply streamed to a completed provider record (growth samples: ${growth.join(', ') || 'none'})`,
   );
+  const recallBaselineTexts = markerTexts(serial, marker);
 
   turn = await runTurn('follow-up', followUp, { outcome: 'completed', timeoutMs: 120_000 });
   if (turn) return { result: turn, growth };
-  if (!waitForText(serial, marker, 60_000)) {
+  if (!waitForNewMarkerText(serial, marker, recallBaselineTexts, 120_000)) {
     return {
-      result: fail(`follow-up answer never recalled the marker ${stateSummary(serial)}`),
+      result: fail(
+        `follow-up answer never added a new marker-bearing text (baseline ${recallBaselineTexts.length} texts) ${stateSummary(serial)} — records: ${JSON.stringify(session.current.records().slice(-3))}`,
+      ),
       growth,
     };
   }
-  logs.push('OK: follow-up streamed and recalled the marker');
+  logs.push(
+    `OK: follow-up streamed and recalled the marker (new marker-bearing text beyond the ${recallBaselineTexts.length}-text baseline)`,
+  );
+  noteVisibleGrowth(growth, serial);
 
   // Turn 4 — active Stop: submit a long prompt and stop mid-stream. On Android the
   // button's accessibility text does NOT flip to "Stop generating" (RN Fabric bug),
@@ -1116,17 +1361,41 @@ async function runAndroidInputFlow(
         growth,
       };
     const baseline = session.current.records().length;
-    // HOT PATH — coordinate send, then coordinate stop tap, nothing in between.
+    // Coordinate send, then ONE mid-essay growth capture, then the stop tap. The essay
+    // (maxOutputTokens 4096 + a 1200-word demand) streams for well over 20s, so a
+    // single ~9s capture plus a 3s settle still lands the stop safely mid-stream —
+    // and the capture yields REAL mid-stream text lengths for AC-2 (the seed turn
+    // is shorter than one capture, so it can never show intra-stream growth here).
     adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
     spawnSync('sleep', ['2']); // let the status flip morph the control into Stop
+    noteVisibleGrowth(growth, serial);
+    spawnSync('sleep', ['3']); // the stream keeps growing past the captured lengths
+    // A heads-up system notification can re-expand the shade over the composer inside
+    // this widened window (twice in cycle-2: "Set a screen lock" ate the stop taps) —
+    // collapse it in the instant before the tap. A no-op when already collapsed.
+    adbExec(serial, ['shell', 'cmd', 'statusbar', 'collapse']);
     adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
     logs.push(`OK: coordinate send + stop tap at ${stopCenter.x},${stopCenter.y}`);
     stopExercised = await waitForRecordOutcome(session.current, baseline, 'aborted', 8_000);
+    if (stopExercised) {
+      // The retained partial after the abort adds its distinct observed length(s).
+      noteVisibleGrowth(growth, serial);
+    }
     for (let tapAttempt = 0; tapAttempt < 3 && !stopExercised; tapAttempt += 1) {
       const records = session.current.records();
       if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') {
         break; // the essay ended before any stop landed — retry the whole turn
       }
+      // A mid-run notification can expand the shade over the composer between the send
+      // and the fallback stop taps (cycle-2 attempt C) — collapse it before re-tapping.
+      adbExec(serial, ['shell', 'cmd', 'statusbar', 'collapse']);
+      adbExec(serial, [
+        'shell',
+        'am',
+        'broadcast',
+        '-a',
+        'android.intent.action.CLOSE_SYSTEM_DIALOGS',
+      ]);
       dismissLogBox(serial);
       const fieldTextNow = parseUiHierarchy(captureHierarchy(serial)).find(
         (e) => e.accessibilityText === 'Message',
@@ -1223,7 +1492,7 @@ async function runIosInputFlow(
   legDir: string,
 ): Promise<{ result: MaestroResult; growth: number[] }> {
   const logs: string[] = [];
-  let growth: number[] = [];
+  const growth: number[] = [];
   const fail = (msg: string): MaestroResult => {
     logs.push(`FAIL: ${msg}`);
     return { exit: 1, output: logs.join('\n') };
@@ -1256,20 +1525,58 @@ async function runIosInputFlow(
     const baseline = session.current.records().length;
     if (sample) {
       const sampled = await sampleAssistantTextGrowth(deviceId, session.current, baseline, 120_000);
-      growth = sampled.lengths;
-      if (!sampled.terminalSeen) return fail(`${label} turn never reached a terminal record`);
-      return null;
+      for (const n of sampled.lengths) {
+        if (!growth.includes(n)) growth.push(n);
+      }
+      return handleTerminal(label, sampled.terminal);
     }
-    if (!(await waitForRecordOutcome(session.current, baseline, 'completed', 120_000))) {
-      return fail(`${label} turn never produced a completed provider record`);
+    const outcome = await awaitTerminalRecord(session.current, baseline, 120_000);
+    return handleTerminal(label, outcome);
+  };
+  /**
+   * Shared terminal handling: completed passes (null), anything but a provider `error`
+   * fails with the observed records, and a provider `error` recovers ONCE through the
+   * app's own public Retry control (the same control the endpoint-loss phase uses)
+   * gated on a NEW completed record.
+   */
+  const handleTerminal = async (
+    label: string,
+    outcome: 'completed' | 'aborted' | 'error' | null,
+  ): Promise<MaestroResult | null> => {
+    if (outcome === 'completed') return null;
+    if (outcome !== 'error') {
+      return fail(
+        `${label} turn ended as ${outcome ?? 'no terminal record'} — observed: ${JSON.stringify(session.current.records())}`,
+      );
     }
-    return null;
+    logs.push(`WARN: ${label} turn errored at the provider — driving the app's Retry`);
+    for (let retryAttempt = 0; retryAttempt < 2; retryAttempt += 1) {
+      if (!waitForText(deviceId, 'Retry', 60_000)) {
+        return fail(`no accessible Retry after the ${label} provider error`);
+      }
+      if (!dismissThenTap(deviceId, 'Retry')) {
+        return fail(`could not tap "Retry" after the ${label} provider error`);
+      }
+      const retryBaseline = session.current.records().length;
+      const retryOutcome = await awaitTerminalRecord(session.current, retryBaseline, 120_000);
+      if (retryOutcome === 'completed') return null;
+      // Provider errors arrive in bursts (rate-limit windows); a bounded backoff
+      // before the second attempt lets the window clear.
+      spawnSync('sleep', ['10']);
+    }
+    return fail(
+      `${label} retry never produced a completed provider record — observed: ${JSON.stringify(session.current.records())}`,
+    );
   };
 
   let turn = await sendTurn('marker', marker);
   if (turn) return { result: turn, growth };
   turn = await awaitTurn('marker', false);
   if (turn) return { result: turn, growth };
+  // Dismiss the composer's keyboard BEFORE reading the transcript: with the IME up the
+  // viewport shrinks and the inverted list's virtualization window shifts, which can
+  // unmount the marker bubble the echo wait reads (cycle-2 attempt C, ios/dark).
+  dismissIosKeyboardByTap(deviceId);
   if (!waitForText(deviceId, marker, 30_000)) {
     return { result: fail('marker did not land in the transcript'), growth };
   }
@@ -1282,39 +1589,59 @@ async function runIosInputFlow(
   logs.push(
     `OK: seed reply streamed to a completed provider record (growth samples: ${growth.join(', ') || 'none'})`,
   );
+  dismissIosKeyboardByTap(deviceId);
+  const recallBaselineTexts = markerTexts(deviceId, marker);
 
   turn = await sendTurn('follow-up', followUp);
   if (turn) return { result: turn, growth };
   turn = await awaitTurn('follow-up', false);
   if (turn) return { result: turn, growth };
-  if (!waitForText(deviceId, marker, 60_000)) {
-    return { result: fail('follow-up answer never recalled the marker'), growth };
+  dismissIosKeyboardByTap(deviceId);
+  if (!waitForNewMarkerText(deviceId, marker, recallBaselineTexts, 120_000)) {
+    return {
+      result: fail(
+        `follow-up answer never added a new marker-bearing text (baseline ${recallBaselineTexts.length} texts)`,
+      ),
+      growth,
+    };
   }
-  logs.push('OK: follow-up streamed and recalled the marker');
+  logs.push(
+    `OK: follow-up streamed and recalled the marker (new marker-bearing text beyond the ${recallBaselineTexts.length}-text baseline)`,
+  );
+  noteVisibleGrowth(growth, deviceId);
 
-  // Active Stop: send the long prompt, poll for the Stop control while the stream is
-  // live, tap it, and gate on an aborted provider record.
-  turn = await sendTurn('long', LONG_PROMPT);
-  if (turn) return { result: turn, growth };
+  // Active Stop — ONE combined Maestro flow, exactly ORI-RN-004's proven iOS shape:
+  // type the essay prompt, send, wait for the Stop control, tap it, with NO gap between
+  // the send and the wait (cycle-2 attempt B lost the race by splitting these into
+  // separate flows: the ~9s mid-flow hierarchy capture plus flow startup let the essay
+  // finish before the stop tap could land). Growth is harvested from the seed sampler
+  // plus the retained post-abort partial instead of a mid-essay capture.
   const baseline = session.current.records().length;
-  let stopSeen = false;
-  const stopDeadline = Date.now() + 30_000;
-  while (Date.now() < stopDeadline) {
-    const records = session.current.records();
-    if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') break;
-    if (hierarchyContains(deviceId, 'Stop generating')) {
-      stopSeen = true;
-      break;
-    }
-    await new Promise((resolveTick) => setTimeout(resolveTick, 1000));
-  }
-  if (!stopSeen) return { result: fail('"Stop generating" never appeared mid-stream'), growth };
-  if (!dismissThenTap(deviceId, 'Stop generating')) {
-    return { result: fail('could not tap "Stop generating"'), growth };
+  const stopFlow = runOneOffMaestroFlow(
+    deviceId,
+    [
+      '- tapOn: "Message.*"',
+      `- inputText: ${JSON.stringify(LONG_PROMPT)}`,
+      '- tapOn: "Send message"',
+      '- extendedWaitUntil:',
+      '    visible: "Stop generating"',
+      '    timeout: 30000',
+      '- tapOn: "Stop generating"',
+    ].join('\n'),
+    300_000,
+  );
+  if (stopFlow.exit !== 0) {
+    return {
+      result: fail(
+        `the Stop control never became tappable mid-stream (maestro flow output: ${stopFlow.output.slice(-800)})`,
+      ),
+      growth,
+    };
   }
   if (!(await waitForRecordOutcome(session.current, baseline, 'aborted', 30_000))) {
     return { result: fail('active stop did not abort the stream'), growth };
   }
+  noteVisibleGrowth(growth, deviceId);
   logs.push('OK: active stop aborted the stream (aborted provider record)');
 
   // Endpoint loss + retry (AC-3 case 2).
@@ -1384,7 +1711,9 @@ function exportConsumerWeb(consumerRoot: string): {
   const distDir = join(tmpdir(), `ori-rn-005-web-dist-${Date.now()}`);
   mkdirSync(distDir, { recursive: true });
   const previous = process.env.EXPO_PUBLIC_API_BASE_URL;
+  const previousNodeEnv = process.env.NODE_ENV;
   process.env.EXPO_PUBLIC_API_BASE_URL = `http://127.0.0.1:${WEB_PORT}`;
+  if (previousNodeEnv === 'test') delete process.env.NODE_ENV;
   const removedCreds = stripCredentialEnv();
   try {
     const res = runShell(
@@ -1399,6 +1728,11 @@ function exportConsumerWeb(consumerRoot: string): {
       delete process.env.EXPO_PUBLIC_API_BASE_URL;
     } else {
       process.env.EXPO_PUBLIC_API_BASE_URL = previous;
+    }
+    if (previousNodeEnv === undefined) {
+      delete process.env.NODE_ENV;
+    } else {
+      process.env.NODE_ENV = previousNodeEnv;
     }
   }
 }
@@ -1543,10 +1877,21 @@ async function driveLiveWeb(
     retrySingleUserTurn: false,
   };
 
-  const transcriptLength = `(() => {
-    const texts = [...document.querySelectorAll('div,span,p')].map((n) => n.textContent ?? '');
-    return texts.reduce((max, t) => Math.max(max, t.length), 0);
-  })()`;
+  /** Every distinct leaf text length > 40 chars (assistant bubbles; controls and chrome
+   * stay below the floor) — the same length-SET oracle the native legs use. */
+  const leafLengths = `[...new Set(
+    [...document.querySelectorAll('div,span,p')]
+      .filter((n) => n.children.length === 0)
+      .map((n) => (n.textContent ?? '').length)
+      .filter((len) => len > 40)
+  )]`;
+
+  const noteWebGrowth = async (): Promise<void> => {
+    const lengths = (await page.evaluate(leafLengths).catch(() => [])) as number[];
+    for (const n of lengths) {
+      if (!result.growthSamples.includes(n)) result.growthSamples.push(n);
+    }
+  };
 
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
@@ -1575,47 +1920,90 @@ async function driveLiveWeb(
       .isVisible()
       .catch(() => false);
 
-    // Seed turn — submit the SAME seed prompt the native legs submit, sample the
-    // transcript's text growth while it streams, then await the rain reply.
+    // Seed turn — submit the SAME seed prompt the native legs submit (the fixture's
+    // count-from-1-to-12), sample the transcript's text growth while it streams (a
+    // 250ms DOM poll; the count reply streams for seconds, so multiple distinct
+    // lengths are observable), then await the completed count reply. A transient
+    // provider error recovers ONCE through the app's own Retry control.
     const baseline = session.current.records().length;
     await textarea.fill(seedPrompt);
     await send.click().catch(() => {});
+    let seedOutcome: 'completed' | 'aborted' | 'error' | null = null;
     const sampleDeadline = Date.now() + 90_000;
     while (Date.now() < sampleDeadline) {
       const records = session.current.records();
       const record = records.length > baseline ? records[records.length - 1] : null;
-      const length = (await page.evaluate(transcriptLength).catch(() => 0)) as number;
-      if (length > 0 && result.growthSamples[result.growthSamples.length - 1] !== length) {
-        result.growthSamples.push(length);
+      await noteWebGrowth();
+      if (record && record.outcome !== undefined) {
+        seedOutcome = record.outcome;
+        break;
       }
-      if (record && record.outcome !== undefined && record.outcome !== 'aborted') break;
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(250);
     }
+    if (seedOutcome === 'error') {
+      const retry = page.getByLabel('Retry', { exact: true });
+      for (let retryAttempt = 0; retryAttempt < 2; retryAttempt += 1) {
+        await retry.waitFor({ timeout: 30_000 }).catch(() => {});
+        await retry.click().catch(() => {});
+        const retryBaseline = session.current.records().length;
+        const retryDeadline = Date.now() + 120_000;
+        while (Date.now() < retryDeadline) {
+          const records = session.current.records();
+          if (records.length > retryBaseline) {
+            await noteWebGrowth();
+            if (records[records.length - 1].outcome !== undefined) break;
+          }
+          await page.waitForTimeout(250);
+        }
+        const after = session.current.records();
+        if (after.length > retryBaseline && after[after.length - 1].outcome === 'completed') {
+          break;
+        }
+        // Provider errors arrive in bursts (rate-limit windows); a bounded backoff
+        // before the second attempt lets the window clear.
+        await page.waitForTimeout(10_000).catch(() => {});
+      }
+    }
+    // The count reply must reach 12 — the seeded turn's real streamed content.
     result.assistantResponded = await page
-      .getByText(/rain/i)
-      .first()
-      .isVisible()
-      .catch(() => false);
-
-    // Contextual follow-up (marker is NOT repeated in the prompt).
-    await textarea.fill(followUp);
-    await send.click().catch(() => {});
-    await page.waitForFunction(cleared, { timeout: 15_000 }).catch(() => {});
-    result.followUpRecallVisible = await page
       .waitForFunction(
-        `[...document.querySelectorAll('div')].some(d => d.textContent && d.textContent.includes(${JSON.stringify(marker)}))`,
-        { timeout: 90_000 },
+        `[...document.querySelectorAll('div')].some(d => d.textContent && /(^|[^0-9])12([^0-9]|$)/.test(d.textContent))`,
+        { timeout: 30_000 },
       )
       .then(() => true)
       .catch(() => false);
 
-    // Active stop: submit a long prompt and catch the stop control mid-stream.
+    // Contextual follow-up (marker is NOT repeated in the prompt). The recall oracle
+    // counts LEAF-node occurrences: the user's own marker turn already carries the
+    // string, so the ANSWER must add an occurrence beyond the post-seed baseline.
+    const markerLeafCount = `[...document.querySelectorAll('div,span,p')]
+      .filter((n) => n.children.length === 0)
+      .filter((n) => (n.textContent ?? '').includes(${JSON.stringify(marker)}))
+      .length`;
+    const recallBaseline = (await page.evaluate(markerLeafCount).catch(() => 0)) as number;
+    await textarea.fill(followUp);
+    await send.click().catch(() => {});
+    await page.waitForFunction(cleared, { timeout: 15_000 }).catch(() => {});
+    result.followUpRecallVisible = await page
+      .waitForFunction(`${markerLeafCount} > ${recallBaseline}`, { timeout: 90_000 })
+      .then(() => true)
+      .catch(() => false);
+
+    // Active stop: submit a long prompt, sample the essay's intra-stream growth while
+    // the Stop control appears (a 20s+ stream — the one web turn where multiple
+    // distinct lengths are guaranteed observable), then catch and tap the control.
     await textarea.fill(LONG_PROMPT);
     await send.click().catch(() => {});
     const stop = page.getByLabel('Stop generating', { exact: true });
-    await stop.waitFor({ timeout: 30_000 }).catch(() => {});
+    const essaySampleDeadline = Date.now() + 30_000;
+    while (Date.now() < essaySampleDeadline) {
+      await noteWebGrowth();
+      if (await stop.isVisible().catch(() => false)) break;
+      await page.waitForTimeout(250);
+    }
     result.stopControlVisible = await stop.isVisible().catch(() => false);
     await stop.click().catch(() => {});
+    await noteWebGrowth();
     await page
       .getByLabel('Send message', { exact: true })
       .waitFor({ timeout: 30_000 })
@@ -1736,11 +2124,16 @@ async function runWebLeg(
  * Starts Metro for the independent consumer with the backend reachable at
  * `EXPO_PUBLIC_API_BASE_URL` (inlined at bundle time, so the value is placed in the
  * Metro child's inherited environment before it starts). Credentials stay out of the
- * Metro child (CRITICAL CONSTRAINT).
+ * Metro child (CRITICAL CONSTRAINT), and NODE_ENV=test is stripped for the spawn
+ * window: RN's dev-middleware refuses to boot Metro under it ("DefaultToolLauncher
+ * must be mocked or overridden in tests") — a caller running this driver from a test
+ * harness (Vitest exports NODE_ENV=test) would otherwise leak it into the child.
  */
 function startLiveMetro(consumerRoot: string, apiBaseUrl: string, logPath: string): MetroHandle {
   const previous = process.env.EXPO_PUBLIC_API_BASE_URL;
+  const previousNodeEnv = process.env.NODE_ENV;
   process.env.EXPO_PUBLIC_API_BASE_URL = apiBaseUrl;
+  if (previousNodeEnv === 'test') delete process.env.NODE_ENV;
   const removedCreds = stripCredentialEnv();
   try {
     return startMetro(consumerRoot, METRO_PORT, logPath);
@@ -1750,6 +2143,11 @@ function startLiveMetro(consumerRoot: string, apiBaseUrl: string, logPath: strin
       delete process.env.EXPO_PUBLIC_API_BASE_URL;
     } else {
       process.env.EXPO_PUBLIC_API_BASE_URL = previous;
+    }
+    if (previousNodeEnv === undefined) {
+      delete process.env.NODE_ENV;
+    } else {
+      process.env.NODE_ENV = previousNodeEnv;
     }
   }
 }
@@ -1794,29 +2192,58 @@ async function runNativeAppearance(
 
   try {
     setAppearance(platform, deviceId, appearance);
+    // Android: suppress heads-up system notifications for the leg's duration — a
+    // "Set a screen lock"/"Serial console enabled" banner re-expanding over the
+    // composer ate the mid-essay stop taps twice in cycle-2. DND is an owned device
+    // setting, captured and restored like the appearance.
+    let priorZenMode = '';
+    if (platform === 'android') {
+      priorZenMode = adbExec(deviceId, ['shell', 'settings', 'get', 'global', 'zen_mode']).trim();
+      adbExec(deviceId, ['shell', 'cmd', 'notification', 'set_dnd', 'on']);
+      dismissAndroidSystemDialogs(deviceId);
+    }
     openExpoGo(platform, deviceId, liveChatOpenUrl(metro));
-    if (platform === 'android') dismissAndroidSystemDialogs(deviceId);
 
-    const flow =
-      platform === 'android'
-        ? await runAndroidInputFlow(
-            deviceId,
-            session,
-            marker,
-            seedPromptFor(marker),
-            FOLLOW_UP_PROMPT,
-            LONG_PROMPT,
-            legDir,
-          )
-        : await runIosInputFlow(
-            deviceId,
-            session,
-            marker,
-            seedPromptFor(marker),
-            FOLLOW_UP_PROMPT,
-            legDir,
-          );
+    let flow:
+      | Awaited<ReturnType<typeof runAndroidInputFlow>>
+      | Awaited<ReturnType<typeof runIosInputFlow>>;
+    try {
+      flow =
+        platform === 'android'
+          ? await runAndroidInputFlow(
+              deviceId,
+              session,
+              marker,
+              seedPromptFor(marker),
+              FOLLOW_UP_PROMPT,
+              LONG_PROMPT,
+              legDir,
+            )
+          : await runIosInputFlow(
+              deviceId,
+              session,
+              marker,
+              seedPromptFor(marker),
+              FOLLOW_UP_PROMPT,
+              legDir,
+            );
+    } finally {
+      if (platform === 'android') {
+        adbExec(deviceId, [
+          'shell',
+          'settings',
+          'put',
+          'global',
+          'zen_mode',
+          priorZenMode === '' ? '0' : priorZenMode,
+        ]);
+      }
+    }
     const screenshotPath = join(legDir, 'screenshot.png');
+    // Persist the interaction log IMMEDIATELY (crash-resilient evidence: a driver kill
+    // mid-run must not erase this leg's diagnostics — cycle-2 attempt B lost exactly
+    // this to a silent process kill).
+    writeFileSync(join(legDir, 'flow.log'), `${flow.result.output}\n`);
     captureScreenshot(platform, deviceId, screenshotPath);
     const hierarchy = captureHierarchy(deviceId);
     const growthOk = flow.growth.filter((n) => n > 0).length >= 2;
@@ -1937,6 +2364,8 @@ export async function runNativewindLiveExampleProof(options: ProofOptions): Prom
   const outputDir = options.outputDir ?? EVIDENCE_ROOT;
   mkdirSync(outputDir, { recursive: true });
 
+  // Reap identity-verified orphans from a previously killed run before binding.
+  reapOwnedOrphans();
   const backend = await ensureBackend(options);
   assertBackendReady(backend);
   const session = new BackendSession(backend);
@@ -2037,6 +2466,18 @@ export async function runNativewindLiveExampleProof(options: ProofOptions): Prom
           )),
         );
       }
+      // Incremental evidence: rewrite the manifest after every leg so a mid-run driver
+      // kill retains all completed legs (cycle-2 attempt B was killed silently during
+      // the android/dark leg and its whole run record was lost without this).
+      writeManifest(
+        runId,
+        legs,
+        countPlatformsPassed(legs).passed,
+        false,
+        session,
+        consumer,
+        outputDir,
+      );
     }
   } finally {
     // Teardown — every exit path. Stop only recorded owned children; remove only the
@@ -2246,7 +2687,20 @@ const isMain =
 
 if (isMain) {
   main().catch((e) => {
-    console.error(e instanceof Error ? e.stack : String(e));
+    const stack = e instanceof Error ? e.stack : String(e);
+    console.error(stack);
+    // Persist the crash beside the run's evidence — a test harness captures stderr but
+    // only surfaces it through assertion messages, so an exception that ends a
+    // 30-minute run must survive on disk to be diagnosable at all.
+    try {
+      const argv = process.argv.slice(2);
+      const outIdx = argv.indexOf('--out');
+      const outDir = outIdx >= 0 ? argv[outIdx + 1] : EVIDENCE_ROOT;
+      mkdirSync(outDir, { recursive: true });
+      writeFileSync(join(outDir, 'driver-error.log'), `${nowIso()}\n${stack}\n`);
+    } catch {
+      /* best-effort */
+    }
     process.exit(2);
   });
 }

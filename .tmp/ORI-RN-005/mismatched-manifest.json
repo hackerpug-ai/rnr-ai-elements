@@ -28,7 +28,7 @@
     {
       "source": "apps/example/components/live-chat-screen.tsx",
       "target": "components/live-chat-screen.tsx",
-      "expected_source_sha256": "0990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473"
+      "expected_source_sha256": "04af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73"
     },
     {
       "source": "apps/example/components/live-chat-message.tsx",
@@ -46,8 +46,7 @@
       "expected_source_sha256": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87"
     }
   ],
-  "known_source_graph_gaps": [
-    "components/live-chat-screen.tsx line 5 imports { useUniwind } from 'uniwind' — the canonical screen is authored against the Uniwind engine's theme hook. The task contract forbids adding Uniwind to the NativeWind consumer, so this import cannot resolve there without an upstream (ORI-RN-004-owned) engine-neutral source change.",
-    "components/live-chat-screen.tsx line 21 imports { THEME } from '@/lib/theme' — the ORI-RN-001 NativeWind template's lib/theme.ts declares THEME locally without exporting it (apps/example's own lib/theme.ts exports it). Resolving requires a one-word export change in the ORI-RN-001-owned template."
+  "resolved_source_graph_gaps": [
+    "FIX-ORI-RN-005-1 (merged as de21fa6c/4be2db3f) replaced the screen's `useUniwind` import with React Native's `useColorScheme` and exported THEME from packages/docs-snippets/nativewind/lib/theme.ts; the consumer compile gate is green (tsc 0, expo-doctor 0) and the screen mapping hash was updated to the fixed source (34af5832…, was 8990ade6…)."
   ]
 }

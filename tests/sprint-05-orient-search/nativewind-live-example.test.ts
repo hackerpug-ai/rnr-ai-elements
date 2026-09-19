@@ -20,6 +20,7 @@
  * proofs over the real devices and the real provider.
  */
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -33,12 +34,17 @@ const MANIFEST = join(
 );
 const SCRATCH = join(REPO_ROOT, '.tmp/ORI-RN-005');
 
-/** The reserved proof-owned device selectors (validated by the driver itself). */
-const RESERVED_ENV = {
+/** The reserved proof-owned device selectors (validated by the driver itself). NODE_ENV
+ * is explicitly cleared: Vitest exports NODE_ENV=test into this process, RN's
+ * dev-middleware refuses to boot Metro under it ("DefaultToolLauncher must be mocked
+ * or overridden in tests"), and the inherited value silently killed the spawned
+ * driver's Metro before any leg could run (cycle-2 AC-2 verify). */
+const RESERVED_ENV: NodeJS.ProcessEnv = {
   ...process.env,
   RNR_S05_IOS_UDID: '81487B1E-A4D1-45AE-9BCE-D675802BACD1',
   RNR_S05_ANDROID_SERIAL: 'emulator-5554',
 };
+delete RESERVED_ENV.NODE_ENV;
 
 /** The first leg diagnostic of a manifest — the "why" for a failed run. */
 function firstDiagnostic(manifest: Record<string, unknown>): string {
@@ -48,11 +54,14 @@ function firstDiagnostic(manifest: Record<string, unknown>): string {
 
 type DriverRun = { exit: number; stdout: string; stderr: string };
 
-/** Spawns the real driver CLI. Real exit code, real output — never an interpretation. */
+/** Spawns the real driver CLI. Real exit code, real output — never an interpretation.
+ * The default timeout (60 min) must exceed a FULL three-platform live proof (~30-35
+ * min): at exactly 30 min spawnSync SIGTERMs the child mid-leg, which presents as a
+ * silent kill with no teardown (cycle-2's AC-2 verify lost two runs to this). */
 function runDriver(
   args: string[],
   env: NodeJS.ProcessEnv = RESERVED_ENV,
-  timeoutMs: number = 30 * 60_000,
+  timeoutMs: number = 60 * 60_000,
 ): DriverRun {
   const res = spawnSync('pnpm', ['exec', 'tsx', DRIVER, ...args], {
     cwd: REPO_ROOT,
@@ -70,6 +79,35 @@ function runDriver(
 
 function outputOf(run: DriverRun): string {
   return `${run.stdout}${run.stderr}`;
+}
+
+/**
+ * Runs the driver, retrying ONCE when the attempt was killed externally. The driver
+ * writes teardown.json on EVERY concluded path (success, assertion-failing leg, and
+ * even a thrown crash through its finally) — so a teardown whose finished_at predates
+ * the attempt start (or no teardown at all) is the signature of an external kill
+ * (cycle-2 lost several 30-minute runs this way: harness/API drops mid-web-leg leave
+ * no output, no teardown, and orphaned children the next run reaps). A CONCLUDED
+ * failed run never retries — a real red stays red.
+ */
+function runDriverWithKillRetry(args: string[], outDir: string): DriverRun {
+  let last: DriverRun = { exit: -1, stdout: '', stderr: '' };
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const startedAt = Date.now();
+    last = runDriver([...args, '--out', outDir]);
+    const teardownPath = join(outDir, 'teardown.json');
+    if (!existsSync(teardownPath)) continue; // killed before ANY teardown could exist
+    let finishedAt = 0;
+    try {
+      finishedAt = new Date(
+        (JSON.parse(readFileSync(teardownPath, 'utf8')) as { finished_at: string }).finished_at,
+      ).getTime();
+    } catch {
+      continue; // unreadable = do not trust; retry
+    }
+    if (Number.isFinite(finishedAt) && finishedAt >= startedAt - 2000) break; // concluded
+  }
+  return last;
 }
 
 it('ORI-RN-005-install-exact-source: five source pairs match and the clean Expo 57 consumer compiles', {
@@ -110,10 +148,10 @@ it('ORI-RN-005-install-exact-source: five source pairs match and the clean Expo 
 });
 
 it('ORI-RN-005-live-three-platforms: iOS, Android and Web show incremental correlated nonce-preserving replies', {
-  timeout: 45 * 60_000,
+  timeout: 75 * 60_000,
 }, () => {
   const out = join(SCRATCH, 'live-three-platforms');
-  const run = runDriver(['--platforms', 'ios,android,web', '--out', out]);
+  const run = runDriverWithKillRetry(['--platforms', 'ios,android,web'], out);
   const manifestPath = join(out, 'manifest.json');
   expect(
     existsSync(manifestPath),
@@ -161,10 +199,10 @@ it('ORI-RN-005-live-three-platforms: iOS, Android and Web show incremental corre
 });
 
 it('ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets', {
-  timeout: 45 * 60_000,
+  timeout: 75 * 60_000,
 }, () => {
   const out = join(SCRATCH, 'abort-error-retry');
-  const run = runDriver(['--platforms', 'ios,android,web', '--out', out]);
+  const run = runDriverWithKillRetry(['--platforms', 'ios,android,web'], out);
   const manifestPath = join(out, 'manifest.json');
   expect(
     existsSync(manifestPath),
@@ -222,7 +260,7 @@ it('ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recov
 });
 
 it('ORI-RN-005-fail-closed-cleanup: invalid inputs fail explicitly and owned resources are released', {
-  timeout: 45 * 60_000,
+  timeout: 75 * 60_000,
 }, () => {
   // Case 1 — one mismatched source hash in an isolated manifest copy: the run must
   // exit nonzero BEFORE any target launch, naming the mapped path and both hashes.
@@ -251,7 +289,12 @@ it('ORI-RN-005-fail-closed-cleanup: invalid inputs fail explicitly and owned res
   expect(mismatchOut, 'the failure must name the expected hash').toContain(
     tampered.mappings[1].expected_source_sha256,
   );
-  expect(mismatchOut, 'the failure must name the actual hash').toMatch(/hash mismatch.*8990ade6/);
+  // The ACTUAL hash is the real file's current digest (never a hardcoded value — the
+  // source legitimately changed once already when FIX-ORI-RN-005-1 landed).
+  const actualHash = createHash('sha256')
+    .update(readFileSync(join(REPO_ROOT, 'apps/example/components/live-chat-screen.tsx')))
+    .digest('hex');
+  expect(mismatchOut, 'the failure must name the actual hash').toContain(`but found ${actualHash}`);
   expect(
     existsSync(join(SCRATCH, 'fail-closed-hash-mismatch', 'install-log.txt')),
     'no consumer may be built for a hash-mismatched run',
@@ -279,14 +322,18 @@ it('ORI-RN-005-fail-closed-cleanup: invalid inputs fail explicitly and owned res
     true,
   );
 
-  // Case 3 — after a real (here compile-blocked) run and the negative runs above,
-  // teardown.json records appearances restored and reservations released, and no
-  // owned listener or adb reverse mapping remains.
+  // Case 3 — after a REAL full run and the negative runs above, teardown.json records
+  // appearances restored and reservations released, and no owned listener or adb
+  // reverse mapping remains. The teardown must be THIS test's run (freshness pinned by
+  // the recorded finished_at), never a stale earlier artifact.
   const out = join(SCRATCH, 'fail-closed-cleanup');
-  runDriver(['--platforms', 'ios,android,web', '--out', out]);
+  const case3StartedAt = new Date();
+  runDriverWithKillRetry(['--platforms', 'ios,android,web'], out);
   const teardownPath = join(out, 'teardown.json');
   expect(existsSync(teardownPath), 'the run writes its teardown record').toBe(true);
   const teardown = JSON.parse(readFileSync(teardownPath, 'utf8')) as {
+    run_id: string;
+    finished_at: string;
     backend_stopped: boolean;
     metro_stopped: boolean;
     consumer_removed: boolean;
@@ -295,6 +342,10 @@ it('ORI-RN-005-fail-closed-cleanup: invalid inputs fail explicitly and owned res
     appearances_restored: { platform: string; from: string; to: string }[];
     reservations_released: boolean;
   };
+  expect(
+    new Date(teardown.finished_at).getTime(),
+    'teardown must come from THIS test run, not a stale artifact',
+  ).toBeGreaterThan(case3StartedAt.getTime() - 1000);
   expect(teardown.backend_stopped, 'owned backend stopped').toBe(true);
   expect(teardown.consumer_removed, 'owned consumer removed').toBe(true);
   expect(teardown.consumer_root, 'consumer lived outside the monorepo').not.toContain(

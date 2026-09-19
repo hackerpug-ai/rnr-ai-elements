@@ -1,16 +1,16 @@
 {
   "task": "ORI-RN-005",
   "engine": "nativewind",
-  "run_id": "ORI-RN-005-C1-FINAL",
-  "candidate_head_sha": "5a8ce9e2bb60f424e07ef42665d0a719da92c100",
-  "generated_at": "2026-09-18T17:46:19.634Z",
+  "run_id": "ORI-RN-005-1789778781976",
+  "candidate_head_sha": "aad45cdc1e3caedd7c03949ace719eac2df2947f",
+  "generated_at": "2026-09-19T01:15:38.800Z",
   "commands": [
     "pnpm exec tsx tests/sprint-05-orient-search/support/nativewind-live-example.ts --platforms ios,android,web"
   ],
   "source_manifest": "tests/sprint-05-orient-search/nativewind-live-source-manifest.json",
   "source_sha": {
     "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-    "apps/example/components/live-chat-screen.tsx": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+    "apps/example/components/live-chat-screen.tsx": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
     "apps/example/components/live-chat-message.tsx": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
     "apps/example/lib/live-chat-config.ts": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
     "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87"
@@ -26,8 +26,8 @@
     {
       "source": "apps/example/components/live-chat-screen.tsx",
       "target": "components/live-chat-screen.tsx",
-      "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-      "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
+      "sourceSha": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+      "targetSha": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
       "match": true
     },
     {
@@ -54,7 +54,7 @@
   ],
   "consumer": {
     "root_existed_outside_monorepo": true,
-    "script_exit": 2,
+    "script_exit": 0,
     "cli_version": "1.0.0",
     "resolved_versions": {
       "expo": "57.0.24",
@@ -67,7 +67,7 @@
       "@rn-primitives/dialog": "1.5.2",
       "react-native-safe-area-context": "5.7.0"
     },
-    "tsc_exit": 2,
+    "tsc_exit": 0,
     "expo_doctor_exit": 0,
     "public_registry_hashes": {
       "https://rnraielements.com/r/nativewind/conversation.json": "c84d855da4e4e557705d5b93727f5fda186b177b1071bf0a3dc374575b43576f",
@@ -81,147 +81,271 @@
     "model": "gpt-4.1-mini-2025-04-14",
     "host": "127.0.0.1",
     "port": 4010,
-    "record_count": 0
+    "record_count": 24
   },
-  "passed_platforms": 0,
-  "completed": false,
+  "passed_platforms": 3,
+  "completed": true,
   "legs": [
     {
       "platform": "ios",
-      "status": "blocked",
-      "diagnostic": "the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):\ncomponents/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.\ncomponents/live-chat-screen.tsx(21,10): error TS2459: Module '\"@/lib/theme\"' declares 'THEME' locally, but it is not exported.\n",
+      "status": "passed",
       "evidence": {
-        "marker": "ORI-RN-005:ORI-RN-005-C1-FINAL:ios",
-        "script_exit": 2,
-        "copy_pairs": [
-          {
-            "source": "apps/example/app/live-chat.tsx",
-            "target": "app/live-chat.tsx",
-            "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-            "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-            "match": true
-          },
-          {
-            "source": "apps/example/components/live-chat-screen.tsx",
-            "target": "components/live-chat-screen.tsx",
-            "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-            "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-            "match": true
-          },
-          {
-            "source": "apps/example/components/live-chat-message.tsx",
-            "target": "components/live-chat-message.tsx",
-            "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
-            "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
-            "match": true
-          },
-          {
-            "source": "apps/example/lib/live-chat-config.ts",
-            "target": "lib/live-chat-config.ts",
-            "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
-            "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
-            "match": true
-          },
-          {
-            "source": "apps/example/lib/use-live-chat.ts",
-            "target": "lib/use-live-chat.ts",
-            "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
-            "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
-            "match": true
-          }
-        ]
+        "marker": "ORI-RN-005:ORI-RN-005-1789778781976:ios",
+        "appearance": "light",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 113, 79, 116)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (R2S9H6YucU0twCY7) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          113,
+          79,
+          116,
+          66,
+          234,
+          973
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/live-three-platforms/ios/light/screenshot.png",
+        "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "R2S9H6YucU0twCY7",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0e75ac4d27aec430006aaddcbae56c87d0896fef0e9979e2af",
+          "callId": "call-NXDMFvrNqq7vuB6vp78WOxsc",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 497,
+          "outputTokens": 3,
+          "totalTokens": 500,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 1032,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "ios",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789778781976:ios",
+        "appearance": "dark",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 101, 79, 123)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (mJ4pclThh2Vx2ktu) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          101,
+          79,
+          123,
+          66,
+          234,
+          1238
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/live-three-platforms/ios/dark/screenshot.png",
+        "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "mJ4pclThh2Vx2ktu",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0e46879b7086ff99006aadde21d4dc87d0abc2a850a087895f",
+          "callId": "call-SvHOPRzuN1Rk8WXN7X9JKH0k",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 536,
+          "outputTokens": 3,
+          "totalTokens": 539,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 924,
+          "errorText": null,
+          "activeGenerations": 0
+        }
       }
     },
     {
       "platform": "android",
-      "status": "blocked",
-      "diagnostic": "the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):\ncomponents/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.\ncomponents/live-chat-screen.tsx(21,10): error TS2459: Module '\"@/lib/theme\"' declares 'THEME' locally, but it is not exported.\n",
+      "status": "passed",
       "evidence": {
-        "marker": "ORI-RN-005:ORI-RN-005-C1-FINAL:android",
-        "script_exit": 2,
-        "copy_pairs": [
-          {
-            "source": "apps/example/app/live-chat.tsx",
-            "target": "app/live-chat.tsx",
-            "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-            "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-            "match": true
-          },
-          {
-            "source": "apps/example/components/live-chat-screen.tsx",
-            "target": "components/live-chat-screen.tsx",
-            "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-            "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-            "match": true
-          },
-          {
-            "source": "apps/example/components/live-chat-message.tsx",
-            "target": "components/live-chat-message.tsx",
-            "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
-            "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
-            "match": true
-          },
-          {
-            "source": "apps/example/lib/live-chat-config.ts",
-            "target": "lib/live-chat-config.ts",
-            "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
-            "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
-            "match": true
-          },
-          {
-            "source": "apps/example/lib/use-live-chat.ts",
-            "target": "lib/use-live-chat.ts",
-            "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
-            "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
-            "match": true
-          }
-        ]
+        "marker": "ORI-RN-005:ORI-RN-005-1789778781976:android",
+        "appearance": "light",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 50, 51, 124, 83, 132, 43)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)\nOK: coordinate send + stop tap at 954,2232\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (vIca3HPTxaU38umh) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          50,
+          51,
+          124,
+          83,
+          132,
+          43,
+          67,
+          234
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/live-three-platforms/android/light/screenshot.png",
+        "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,136]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_launch_animation_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ ],\n        \"clickable\" : false,\n        \"enabled\" : true,\n        \"focused\" : false,\n        \"checked\" : false,\n        \"selected\" : false\n      }, {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"com.android.systemui:id/status_bar\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,0][1080,136]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"true\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"com.android.systemui:id/status_bar_contents\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[47,0][1027,136]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"com.android.systemui:id/status_bar_start_side_container\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[47,1][454,136]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"andr",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "vIca3HPTxaU38umh",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0f2c03325534ab60006aade00cf5c487d194b2feef8a86cf86",
+          "callId": "call-QPJehhdPWy07XS27mrLxt8Xw",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 1629,
+          "outputTokens": 3,
+          "totalTokens": 1632,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 1393,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "android",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789778781976:android",
+        "appearance": "dark",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 128, 83, 132, 43, 50, 51)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 3-text baseline)\nOK: coordinate send + stop tap at 954,2232\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (bTPPaioNVAkjkCZ9) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          128,
+          83,
+          132,
+          43,
+          50,
+          51,
+          70,
+          234
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/live-three-platforms/android/dark/screenshot.png",
+        "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,136]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_launch_animation_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ ],\n        \"clickable\" : false,\n        \"enabled\" : true,\n        \"focused\" : false,\n        \"checked\" : false,\n        \"selected\" : false\n      }, {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"com.android.systemui:id/status_bar\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,0][1080,136]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"true\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"com.android.systemui:id/status_bar_contents\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[47,0][1027,136]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"com.android.systemui:id/status_bar_start_side_container\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[47,1][454,136]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"andr",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "bTPPaioNVAkjkCZ9",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_01705c327f5dbf5d006aade1d8aef087d0b8a28bea80099aab",
+          "callId": "call-YxFME7m34Ugf1QADQZmhao9a",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 1466,
+          "outputTokens": 3,
+          "totalTokens": 1469,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 857,
+          "errorText": null,
+          "activeGenerations": 0
+        }
       }
     },
     {
       "platform": "web",
-      "status": "blocked",
-      "diagnostic": "the NativeWind consumer's compiler rejected the copied /live-chat graph (exit 2):\ncomponents/live-chat-screen.tsx(5,28): error TS2307: Cannot find module 'uniwind' or its corresponding type declarations.\ncomponents/live-chat-screen.tsx(21,10): error TS2459: Module '\"@/lib/theme\"' declares 'THEME' locally, but it is not exported.\n",
+      "status": "passed",
       "evidence": {
-        "marker": "ORI-RN-005:ORI-RN-005-C1-FINAL:web",
-        "script_exit": 2,
-        "copy_pairs": [
+        "marker": "ORI-RN-005:ORI-RN-005-1789778781976:web",
+        "url": "http://127.0.0.1:8408",
+        "drive_result": {
+          "emptyStateVisible": true,
+          "markerSubmitted": true,
+          "inputCleared": true,
+          "assistantResponded": true,
+          "growthSamples": [
+            79,
+            76,
+            234,
+            63,
+            123
+          ],
+          "followUpRecallVisible": true,
+          "stopControlVisible": true,
+          "retryControlVisible": true,
+          "retryErrorSanitized": true,
+          "retryCompleted": true,
+          "retrySingleUserTurn": true
+        },
+        "backend_records": [
           {
-            "source": "apps/example/app/live-chat.tsx",
-            "target": "app/live-chat.tsx",
-            "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-            "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
-            "match": true
+            "requestId": "bTPPaioNVAkjkCZ9",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_01705c327f5dbf5d006aade1d8aef087d0b8a28bea80099aab",
+            "callId": "call-YxFME7m34Ugf1QADQZmhao9a",
+            "outcome": "completed",
+            "deltaCount": 2,
+            "inputTokens": 1466,
+            "outputTokens": 3,
+            "totalTokens": 1469,
+            "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+            "durationMs": 857,
+            "errorText": null,
+            "activeGenerations": 0
           },
           {
-            "source": "apps/example/components/live-chat-screen.tsx",
-            "target": "components/live-chat-screen.tsx",
-            "sourceSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-            "targetSha": "8990ade6a4df2370fea0d07a2fcc48f3ff00da1eeae0759b0139e239bacc5473",
-            "match": true
+            "requestId": "CDfW7YyF4nWtoY90",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0cb578a406764462006aade228e16487d1bd15d92a7b4e3ac0",
+            "callId": "call-085wzfUzmDpwBuMk0155dVkr",
+            "outcome": "completed",
+            "deltaCount": 28,
+            "inputTokens": 58,
+            "outputTokens": 29,
+            "totalTokens": 87,
+            "textHash": "8be5a329f85532335b7683d882e2800a5c4eb96b62bbc3e323353a7a4ce5ec6a",
+            "durationMs": 1435,
+            "errorText": null,
+            "activeGenerations": 0
           },
           {
-            "source": "apps/example/components/live-chat-message.tsx",
-            "target": "components/live-chat-message.tsx",
-            "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
-            "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
-            "match": true
+            "requestId": "CDfW7YyF4nWtoY90",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0cb578a406764462006aade22abed487d1bb6f03e7cf00389f",
+            "callId": "call-zbndo427TJLtPxjXHe3r1TU5",
+            "outcome": "completed",
+            "deltaCount": 66,
+            "inputTokens": 124,
+            "outputTokens": 67,
+            "totalTokens": 191,
+            "textHash": "6c6d4610ff0565b28b060381767e3b192f8f3b75adb0ee02293c6f26e392ba7b",
+            "durationMs": 1756,
+            "errorText": null,
+            "activeGenerations": 0
           },
           {
-            "source": "apps/example/lib/live-chat-config.ts",
-            "target": "lib/live-chat-config.ts",
-            "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
-            "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
-            "match": true
+            "requestId": "CDfW7YyF4nWtoY90",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0cb578a406764462006aade22c3f1087d1aa60a98d4bb92d92",
+            "callId": "call-RKn6ja5B4z7XjfkEZZSjm8s2",
+            "outcome": "completed",
+            "deltaCount": 25,
+            "inputTokens": 205,
+            "outputTokens": 26,
+            "totalTokens": 231,
+            "textHash": "e10320e017c61f3c4eed3c55683a15d6cc14cfc8bfc6ed907c119dd78fc10669",
+            "durationMs": 1166,
+            "errorText": null,
+            "activeGenerations": 0
           },
           {
-            "source": "apps/example/lib/use-live-chat.ts",
-            "target": "lib/use-live-chat.ts",
-            "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
-            "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
-            "match": true
+            "requestId": "CDfW7YyF4nWtoY90",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0cb578a406764462006aade232ff2887d19ce4ed76d3316922",
+            "callId": "call-DHs48H9Oswn6ivJqNYpGR5kD",
+            "outcome": "completed",
+            "deltaCount": 2,
+            "inputTokens": 299,
+            "outputTokens": 3,
+            "totalTokens": 302,
+            "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+            "durationMs": 1076,
+            "errorText": null,
+            "activeGenerations": 0
           }
-        ]
+        ],
+        "retry_request_id": "CDfW7YyF4nWtoY90"
       }
     }
   ]
