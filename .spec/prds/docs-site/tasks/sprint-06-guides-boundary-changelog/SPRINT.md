@@ -42,9 +42,9 @@ All implementation, functional RED, and product verification are future work. Th
 
 *(each stranger-runnable verbatim)*
 
-1. Run `pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` — exits 0 naming nothing; stdout carries `[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological` and `[docs-data] guides: 5 guides — cap satisfied`; then `pnpm --filter @rnr-ai-elements/docs preview --port 4321` serves http://localhost:4321.   `exercises: GBC-005, GBC-007, GBC-011, GBC-012`
+1. Check the port is free first (`lsof -nP -iTCP:4321 -sTCP:LISTEN` must be empty — Astro silently hops ports when squatted, and you would be judging the wrong site); then run `pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` — exits 0 naming no violation offenders; stdout carries `[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological` and `[docs-data] guides: 5 guides — cap satisfied`; then `pnpm --filter @rnr-ai-elements/docs preview --port 4321` serves http://localhost:4321.   `exercises: GBC-005, GBC-007, GBC-011, GBC-012`
 2. Open http://localhost:4321/docs/owns-vs-does-not-own, http://localhost:4321/porting, and http://localhost:4321/registry. On the boundary page read the ships/does-not-ship table (`transport`, `streaming client`, `tool executor` in does-not-ship cells; `useChat` in the consumer-wires cell) and the ownership-split + gaps table. On /porting read the mapping table (a deviations column, ≥5 rows) and the not-ported list. On /registry confirm exactly 56 rows split 39/11/6. Cross-check: every boundary gap is a consumer-owned responsibility or a named not-ported upstream element — zero contradictions, zero known omissions.   `exercises: GBC-003, GBC-004, GBC-006, GBC-017`
-3. Open http://localhost:4321/guides — the index lists exactly 5 guides; open each (re-theme, update-installed-items, preview-on-device, customize-rendering, troubleshooting) — each 200 with a complete how-to; /guides/troubleshooting carries 4 symptom→cause→fix entries; customize-rendering documents renderMarkdown and TextClassContext and component-page seam Callouts link it.   `exercises: GBC-001, GBC-002, GBC-009, GBC-010, GBC-015, GBC-016`
+3. Open http://localhost:4321/guides — the index lists exactly 5 guides; open each (re-theme, update-installed-items, preview-on-device, customize-rendering, troubleshooting) — each 200 with a complete how-to (every guide opens with a sentence matching /This guide shows you how to/ and numbered steps); /guides/troubleshooting carries 4 symptom→cause→fix entries; customize-rendering documents renderMarkdown and TextClassContext and component-page seam Callouts link it.   `exercises: GBC-001, GBC-002, GBC-009, GBC-010, GBC-015, GBC-016`
 4. Open http://localhost:4321/changelog — entries reverse-chronological (0.2.1 → 0.2.0 → 0.1.0); open http://localhost:4321/changelog/0.2.1 — literal date 2026-09-08 + Added/Changed/Fixed headings + a touched-component link resolving 200.   `exercises: GBC-005, GBC-007, GBC-008, GBC-015, GBC-016`
 5. On any page the header shows Components, Registry, Guides, Porting, Changelog (each resolving 200). Run `pnpm e2e:docs` — exits 0 with retries: 0, all lanes green including the sprint-06 lane (FLOW-DOCS-03/04/05/06) and the docs-integrator-arc + docs-themer-arc journey specs writing evidence.   `exercises: GBC-013, GBC-014`
 
@@ -74,11 +74,13 @@ All implementation, functional RED, and product verification are future work. Th
 
 **Waves:** A(6) → B(4) → C(4) → D(1) → E(1) → F(1) — 6 waves over 17 tasks (no two tasks in a wave share a write_allowed path).
 
+**Gate timing:** content tasks GBC-001..006 complete on build-green + prose review at their own wave; playwright VERIFY executes at the task owning the locked spec (boundary-tables → GBC-003, porting-map → GBC-009, guides-index → GBC-010, changelog-release-pages → GBC-008, journeys → GBC-014) or at the human gate — never 'verified later' at a content task's close.
+
 ## Source Coverage
 
 - 04-uc-docs.md UC-DOCS-03 (all six ACs), UC-DOCS-04 (all five), UC-DOCS-05 (all three), UC-DOCS-06 (all three)
 - TR-03 (changelog_entry, one-to-one with git tags), TR-12 (guide/troubleshooting/changelog templates), TR-07 (section-index wireframe, SectionHeader + IndexList NEW)
-- 11-e2e-testing-criteria.md T-DOCS-011..028, T-DOCS-032 (human-gate T-DOCS-018)
+- 12-e2e-testing-criteria.md T-DOCS-011..028, T-DOCS-032 (human-gate T-DOCS-018)
 
 ## Capability Coverage
 

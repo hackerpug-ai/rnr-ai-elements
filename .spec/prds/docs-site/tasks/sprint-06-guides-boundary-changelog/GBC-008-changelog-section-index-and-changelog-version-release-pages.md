@@ -113,7 +113,7 @@ Anti-pattern: Hardcoding release entries or order in the page template
 - pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
 
 ## Dependencies
-Depends on: ['GBC-007']
+Depends on: ['GBC-007', 'GBC-015', 'GBC-016']
 Blocks:     ['GBC-013', 'GBC-014']
 
 <!-- REQUIREMENT-CONTRACT v1 -->

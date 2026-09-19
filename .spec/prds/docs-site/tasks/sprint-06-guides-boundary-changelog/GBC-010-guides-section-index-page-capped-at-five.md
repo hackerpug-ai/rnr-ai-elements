@@ -110,7 +110,7 @@ Anti-pattern: Hardcoding the five guide titles/hrefs in the page template
 - pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
 
 ## Dependencies
-Depends on: ['GBC-009']
+Depends on: ['GBC-009', 'GBC-015', 'GBC-016']
 Blocks:     ['GBC-013', 'GBC-014']
 
 <!-- REQUIREMENT-CONTRACT v1 -->
