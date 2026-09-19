@@ -17,15 +17,17 @@ RED_GREEN_REQUIRED: yes
 MUST:
 - cross-check every mapping-column slug against the 56 registry items and fail naming the row + unknown slug
 - compute set(upstream) - set(mapped) and compare to set(not-ported), failing naming any drift and both lists
+- cross-check the boundary `gaps` frontmatter array (owns-vs-does-not-own.mdx, GBC-003): every gap ∈ consumer-owned ∪ not-ported, and no gap names one of the 56 slugs — fail naming the gap
 - wire into prebuild.ts (or the /porting route getStaticPaths) so drift fails the build
-- write a RED-first vitest drill for unknown slug, mapped-but-still-not-ported, and new-upstream-in-neither
+- write a RED-first vitest drill for unknown slug, mapped-but-still-not-ported, new-upstream-in-neither, and a planted gaps-list contradiction (a gap naming a ledger slug)
 NEVER:
 - author the /porting mapping or not-ported list (techwriting owns the structured source)
-- hardcode the 56-item list inside this gate (read registry-items.json)
+- hardcode the 56-item list inside this gate (read the tracked packages/registry/registry.json — never the gitignored generated registry-items.json)
 - warn-only on a mapping slug that does not resolve
 STRICTLY:
-- the 56-item source is apps/docs/src/data/registry-items.json
-- the upstream element set is a pinned constant (techwriting-authored) or derived from the structured mapping source
+- the 56-item source is the tracked packages/registry/registry.json (registry-items.json is gitignored prebuild output — absent on fresh worktrees)
+- the upstream element set is the `upstream` frontmatter array from porting.md (GBC-004 authors it from the dated upstream snapshot) — never derived from the mapping source itself
+- parse content frontmatter with the same YAML stack Astro's glob loader uses (gray-matter/js-yaml) — one parse authority, no drift between the gate's view and Astro's
 
 ## Specification
 Objective: Fail the build when the /porting mapping references a non-existent registry slug or the not-ported list is not the exact complement of the mapping against the upstream total.
@@ -38,7 +40,7 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
   THEN:  the build is green: every mapping slug resolves to one of the 56 items and not-ported == set(upstream) - set(mapped)
   FLOW_REF: FLOW-DOCS-05-porting-map-and-prior-art
   TEST_TIER: integration
-  VERIFICATION_SERVICE: real astro build + registry-items.json
+  VERIFICATION_SERVICE: real astro build + packages/registry/registry.json
   SURFACE_POLICY: None
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art: healthy mapping resolves and not-ported is the exact complement
@@ -53,7 +55,7 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
   THEN:  it fails naming the row and the unknown slug chat-conversation
   FLOW_REF: FLOW-DOCS-05-porting-map-and-prior-art
   TEST_TIER: integration
-  VERIFICATION_SERVICE: real astro build + registry-items.json
+  VERIFICATION_SERVICE: real astro build + packages/registry/registry.json
   SURFACE_POLICY: None
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art: unknown slug chat-conversation fails naming the row
@@ -68,7 +70,7 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
   THEN:  it fails naming the element and both lists involved
   FLOW_REF: FLOW-DOCS-05-porting-map-and-prior-art
   TEST_TIER: integration
-  VERIFICATION_SERVICE: real astro build + registry-items.json
+  VERIFICATION_SERVICE: real astro build + packages/registry/registry.json
   SURFACE_POLICY: None
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art: mapped-but-still-not-ported element fails naming both lists
@@ -83,7 +85,7 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
   THEN:  it fails naming the element
   FLOW_REF: FLOW-DOCS-05-porting-map-and-prior-art
   TEST_TIER: integration
-  VERIFICATION_SERVICE: real astro build + registry-items.json
+  VERIFICATION_SERVICE: real astro build + packages/registry/registry.json
   SURFACE_POLICY: None
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art: new upstream element in neither list fails
@@ -99,7 +101,7 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
 - TC-4: new-upstream-in-neither fails  (maps_to: AC-4)
 
 ## Reading List
-- apps/docs/src/data/registry-items.json
+- packages/registry/registry.json (tracked 56-item source)
 - scripts/docs-data/prebuild.ts
 - scripts/docs-data/gates.ts
 - scripts/docs-data/check-dist-links.ts
@@ -116,9 +118,9 @@ WRITE-PROHIBITED:
 
 ## Design
 References: ['scripts/docs-data/gates.ts (cross-check vs pinned dataset)', 'scripts/docs-data/check-dist-links.ts (DEFAULT_REQUIRED_REFERENCES already covers prior-art liveness)']
-Interaction notes: Depends on techwriting producing the mapping + not-ported list in a structured, machine-readable source plus a pinned upstream element set; this task validates that source against registry-items.json. Prior-art link liveness is already covered by check-dist-links.ts DEFAULT_REQUIRED_REFERENCES.
-Pattern: Cross-dataset consistency gate (content vs registry-items.json) + RED-first fixture drill (scripts/docs-data/gates.ts)
-Anti-pattern: Hardcoding the 56-item list inside the gate instead of reading registry-items.json
+Interaction notes: Depends on GBC-004 producing mapping/notPorted/upstream as porting.md frontmatter arrays plus a pinned upstream element set; this task validates that source against registry-items.json. Prior-art link liveness is already covered by check-dist-links.ts DEFAULT_REQUIRED_REFERENCES.
+Pattern: Cross-dataset consistency gate (porting.md frontmatter vs packages/registry/registry.json + boundary gaps array) + RED-first fixture drill (scripts/docs-data/gates.ts)
+Anti-pattern: Hardcoding the 56-item list inside the gate, or reading the gitignored registry-items.json instead of the tracked registry.json
 
 ## Verification Gates
 - pnpm exec tsc --noEmit
@@ -127,7 +129,7 @@ Anti-pattern: Hardcoding the 56-item list inside the gate instead of reading reg
 - pnpm exec vitest run tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts
 
 ## Dependencies
-Depends on: none
+Depends on: ['GBC-004']
 Blocks:     none
 
 <!-- REQUIREMENT-CONTRACT v1 -->

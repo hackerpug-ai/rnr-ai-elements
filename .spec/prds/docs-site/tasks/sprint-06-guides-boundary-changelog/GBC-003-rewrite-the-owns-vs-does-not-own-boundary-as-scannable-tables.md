@@ -15,11 +15,13 @@ RED_GREEN_REQUIRED: no
 ---
 ## Critical Constraints
 MUST:
-- Rewrite apps/docs/src/content/docs/owns-vs-does-not-own.md in place, keeping section: getting-started so it stays at /docs/owns-vs-does-not-own.
+- Rewrite apps/docs/src/content/docs/owns-vs-does-not-own.mdx in place (renamed from .md), keeping section: getting-started so it stays at /docs/owns-vs-does-not-own.
 - Render the ownership split and ships/does-not-ship facts as scannable tables, never prose paragraphs.
 - State in a table cell that the library ships no transport, no streaming client, and no tool executor, and that the consumer wires AI SDK v7 useChat.
 - List the ownership-split gaps honestly (>=1 listed gap), naming primitives as react-native-reusables and AI compositions as this library.
 - Link the worked example app (apps/example) with a resolving non-404 href.
+- Author the gaps list as a structured frontmatter array (`gaps`) enumerated from exactly two inputs: the consumer-owned responsibilities already stated on the page and the /porting not-ported list — any gap outside those two inputs is an invention.
+- Re-author the page as owns-vs-does-not-own.mdx (rename from .md) so it can host the info Callout; the reserved slug keeps /docs/owns-vs-does-not-own.
 NEVER:
 - Never invent a shipped capability, a verdict, or a live useChat claim not grounded in the named real sources.
 - Never render boundary claims as flowing paragraphs — every claim string must sit inside td/th.
@@ -142,7 +144,7 @@ Success state: A stranger opens /docs/owns-vs-does-not-own and reads, in tables:
 
 ## Guardrails
 WRITE-ALLOWED:
-- apps/docs/src/content/docs/owns-vs-does-not-own.md (rewrite in place)
+- apps/docs/src/content/docs/owns-vs-does-not-own.mdx (rewrite in place; rename from .md to host the info Callout)
 - tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts (NEW)
 WRITE-PROHIBITED:
 - packages/registry/**

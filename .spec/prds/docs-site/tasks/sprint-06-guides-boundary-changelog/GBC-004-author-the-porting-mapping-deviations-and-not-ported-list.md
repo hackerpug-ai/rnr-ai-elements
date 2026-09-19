@@ -19,6 +19,8 @@ MUST:
 - Provide an upstream-to-port mapping table with an explicit deviations column and >=5 rows, every mapped slug resolving to one of the 56 shipped items.
 - Provide a not-ported list naming exactly the missing upstream elements such that mapping + not-ported equals the upstream total and none matches a shipped item.
 - Credit prior art: elements.ai-sdk.dev and muratcakmak/expo-ai-elements with a why-differs statement.
+- Emit `mapping`, `notPorted`, and `upstream` as structured frontmatter arrays in porting.md — the machine-readable source GBC-012's gate diffs.
+- Pin the upstream enumeration to the vercel/ai-elements registry listing at a recorded URL/commit; note that dated snapshot in the page intro.
 NEVER:
 - Never invent an upstream element or a mapping row not grounded in the upstream registry and packages/registry/registry.json.
 - Never name a shipped registry item on the not-ported list.
@@ -92,7 +94,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
 ### AC-4: prior-art links absolute and live
   GIVEN: the authored porting manuscript
   WHEN:  a reviewer checks the prior-art hrefs
-  THEN:  both links are absolute https URLs resolving 200 or 301
+  THEN:  both links are absolute https URLs resolving 200 or 301 (validated by the recorded link-check lane, not an in-browser e2e follow)
   FLOW_REF: FLOW-DOCS-05-porting-map-and-prior-art
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview at http://localhost:4321
@@ -103,7 +105,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a prior-art link is relative, malformed, or dead']
         EVIDENCE: file_artifact
-        - ACTION: ['Inspect the prior-art anchor hrefs on /porting', 'Resolve each']
+        - ACTION: ['Inspect the prior-art anchor hrefs on /porting', 'Resolve each via the recorded link-check lane (scripts/docs-data/check-dist-links.ts)']
           MUST_OBSERVE: ['both prior-art links absolute https', 'each resolving 200 or 301']
           MUST_NOT_OBSERVE: ['a relative or http-only href', 'a dead link']
 

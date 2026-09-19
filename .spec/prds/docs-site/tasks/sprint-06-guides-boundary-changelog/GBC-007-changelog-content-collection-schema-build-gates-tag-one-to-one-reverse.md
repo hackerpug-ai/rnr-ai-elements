@@ -21,6 +21,7 @@ MUST:
 - enforce strict reverse-chronological date order at build
 - enforce date + added + changed + fixed presence on every entry at build (empty values fine, absent fields not)
 - wire the gates into scripts/docs-data/prebuild.ts so they run before any output byte is written
+- add optional mapping, notPorted, and upstream array fields to the docs collection schema (GBC-004 authors them in porting.md frontmatter; GBC-012's gate consumes them)
 - print `[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological` on a green run
 NEVER:
 - derive the expected tag set from the changelog collection (the git tags are the trusted outside source)
@@ -128,7 +129,7 @@ Success state: A clean tree with tags v0.1.0/v0.2.0/v0.2.1 and three matching en
 
 ## Guardrails
 WRITE-ALLOWED:
-- apps/docs/src/content.config.ts (MODIFY — add changelog collection)
+- apps/docs/src/content.config.ts (MODIFY — add changelog collection + optional mapping/notPorted/upstream array fields on the docs collection for GBC-012's gate)
 - scripts/docs-data/changelog-gates.ts (NEW)
 - scripts/docs-data/prebuild.ts (MODIFY — invoke changelog gates before output bytes)
 - tests/sprint-06-guides-boundary-changelog/changelog-gates.test.ts (NEW vitest fixture drill)
