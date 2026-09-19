@@ -1,13 +1,14 @@
 OK: composer ready, transcript empty
 OK: marker submitted, echoed, and its reply completed
-OK: seed reply streamed to a completed provider record (growth samples: 108, 83, 206, 43, 50, 51)
+OK: seed reply streamed to a completed provider record (growth samples: 50, 51, 118, 83, 252, 43)
 OK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)
 OK: coordinate send + stop tap at 954,2232
-OK: fallback stop tap 1 at 954,2232
-OK: fallback stop tap 2 at 954,2232
-OK: fallback stop tap 3 at 954,2232
+STOP-RETRY-EVIDENCE: drive 1 record query beyond baseline 4 shows outcome=completed deltaCount=34 — the essay reached a terminal non-abort outcome before any stop tap landed
+STOP-RETRY-EVIDENCE: re-driving the stop turn (drive 2 of 3)
 OK: coordinate send + stop tap at 954,2232
 OK: fallback stop tap 1 at 954,2232
 OK: fallback stop tap 2 at 954,2232
 OK: fallback stop tap 3 at 954,2232
-FAIL: active stop did not abort the stream {"fieldText":"What would you like to know?","sendEnabled":"false","sendPresent":true,"stopPresent":false,"screenTexts":"Tools | Live chat | Write a detailed essay on the history of | Write a detailed essay on the history of | AI | AI | You gave me the marker ORI-RN-005:ORI-RN | What marker did I give you? | AI | AI | ORI-RN-005:ORI-RN-005-1789795874054:andr | Message"}
+STOP-RETRY-EXHAUSTED: drive 2 produced neither an abort nor a terminal non-abort record beyond baseline 5 — no evidence-discriminating retry condition
+STOP-RETRY-EXHAUSTED: final record outcome=completed deltaCount=34
+FAIL: active stop did not abort the stream {"fieldText":"What would you like to know?","sendEnabled":"false","sendPresent":true,"stopPresent":false,"screenTexts":"Tools | Live chat | Write a detailed essay on the history of | AI | AI | Could you please clarify what you mean b | Write a d | AI | AI | You gave me the marker: ORI-RN-005:ORI-R | What marker did I give you? | AI"}

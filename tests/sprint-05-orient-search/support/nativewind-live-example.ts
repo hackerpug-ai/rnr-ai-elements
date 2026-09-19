@@ -1349,8 +1349,17 @@ async function runAndroidInputFlow(
   // but the SAME fixed slot morphs from Send to Stop the moment the hook's status
   // leaves 'ready', so a coordinate tap on that slot is the stop control whenever a
   // stream is running.
+  //
+  // Bounded, evidence-discriminating stop-turn drives (cycle-4 contract): a re-drive
+  // happens ONLY when the provider records prove this drive's essay reached a
+  // terminal COMPLETED/ERROR outcome with no abort — i.e. the essay ended before any
+  // stop tap landed. A verified abort never re-drives; a missing record never
+  // re-drives (the send may still be in flight — handled by the field check below);
+  // and every decision writes its discriminating record query to the leg log
+  // (STOP-RETRY-EVIDENCE / STOP-RETRY-EXHAUSTED). Bound: 3 drives per leg.
   let stopExercised = false;
-  for (let stopAttempt = 0; stopAttempt < 2 && !stopExercised; stopAttempt += 1) {
+  const maxStopDrives = 3;
+  for (let stopDrive = 1; stopDrive <= maxStopDrives && !stopExercised; stopDrive += 1) {
     const prep = prepareTurn('long', longPrompt);
     if (prep) return { result: prep, growth };
     dismissLogBox(serial);
@@ -1379,13 +1388,23 @@ async function runAndroidInputFlow(
       // The retained partial after the abort adds its distinct observed length(s).
       noteVisibleGrowth(growth, serial);
     }
+    let essayEndedFirst = false;
     for (let tapAttempt = 0; tapAttempt < 3 && !stopExercised; tapAttempt += 1) {
+      // RECORD QUERY FIRST — the fast, discriminating channel (a capture costs ~9s
+      // and pushes every later tap past the essay's natural end; the record poll
+      // costs ~1s).
       const records = session.current.records();
-      if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') {
-        break; // the essay ended before any stop landed — retry the whole turn
+      const record = records.length > baseline ? records[records.length - 1] : null;
+      if (record && record.outcome !== 'aborted') {
+        essayEndedFirst = true;
+        logs.push(
+          `STOP-RETRY-EVIDENCE: drive ${stopDrive} record query beyond baseline ${baseline} shows outcome=${record.outcome} deltaCount=${record.deltaCount} — the essay reached a terminal non-abort outcome before any stop tap landed`,
+        );
+        break;
       }
-      // A mid-run notification can expand the shade over the composer between the send
-      // and the fallback stop taps (cycle-2 attempt C) — collapse it before re-tapping.
+      // No terminal record: either the stream is live (tap again NOW) or the send
+      // never dispatched. A mid-run notification can expand the shade over the
+      // composer — collapse it before re-tapping.
       adbExec(serial, ['shell', 'cmd', 'statusbar', 'collapse']);
       adbExec(serial, [
         'shell',
@@ -1395,25 +1414,54 @@ async function runAndroidInputFlow(
         'android.intent.action.CLOSE_SYSTEM_DIALOGS',
       ]);
       dismissLogBox(serial);
-      const fieldTextNow = parseUiHierarchy(captureHierarchy(serial)).find(
-        (e) => e.accessibilityText === 'Message',
-      )?.text;
-      if (fieldTextNow !== undefined && fieldTextNow.length > 60) {
-        logs.push('WARN: coordinate send never landed (field holds the prompt) — maestro resend');
-        if (!dismissThenTap(serial, 'Send message')) {
-          return {
-            result: fail(`could not tap "Send message" (long resend) ${stateSummary(serial)}`),
-            growth,
-          };
-        }
-        spawnSync('sleep', ['2']);
-      }
       adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
       logs.push(`OK: fallback stop tap ${tapAttempt + 1} at ${stopCenter.x},${stopCenter.y}`);
       stopExercised = await waitForRecordOutcome(session.current, baseline, 'aborted', 8_000);
+      if (stopExercised) {
+        noteVisibleGrowth(growth, serial);
+        break;
+      }
+      // Still no record after this tap's wait: the send may never have dispatched —
+      // ONE field capture distinguishes it (the prompt would still sit in the field).
+      const stillNone =
+        session.current.records().length <= baseline ||
+        session.current.records()[session.current.records().length - 1].outcome === undefined;
+      if (stillNone && tapAttempt === 1) {
+        const fieldTextNow = parseUiHierarchy(captureHierarchy(serial)).find(
+          (e) => e.accessibilityText === 'Message',
+        )?.text;
+        if (fieldTextNow !== undefined && fieldTextNow.length > 60) {
+          logs.push('WARN: coordinate send never landed (field holds the prompt) — maestro resend');
+          if (!dismissThenTap(serial, 'Send message')) {
+            return {
+              result: fail(`could not tap "Send message" (long resend) ${stateSummary(serial)}`),
+              growth,
+            };
+          }
+          spawnSync('sleep', ['2']);
+        }
+      }
+    }
+    if (!stopExercised && !essayEndedFirst && stopDrive < maxStopDrives) {
+      // No discriminating record evidence → a re-drive is NOT justified. Fail loudly
+      // rather than silently burning the budget.
+      logs.push(
+        `STOP-RETRY-EXHAUSTED: drive ${stopDrive} produced neither an abort nor a terminal non-abort record beyond baseline ${baseline} — no evidence-discriminating retry condition`,
+      );
+      break;
+    }
+    if (essayEndedFirst && stopDrive < maxStopDrives) {
+      logs.push(
+        `STOP-RETRY-EVIDENCE: re-driving the stop turn (drive ${stopDrive + 1} of ${maxStopDrives})`,
+      );
     }
   }
   if (!stopExercised) {
+    const records = session.current.records();
+    const last = records[records.length - 1];
+    logs.push(
+      `STOP-RETRY-EXHAUSTED: final record outcome=${last?.outcome ?? 'none'} deltaCount=${last?.deltaCount ?? 'n/a'}`,
+    );
     return { result: fail(`active stop did not abort the stream ${stateSummary(serial)}`), growth };
   }
   logs.push('OK: active stop aborted the stream (aborted provider record)');
@@ -1614,30 +1662,68 @@ async function runIosInputFlow(
   // separate flows: the ~9s mid-flow hierarchy capture plus flow startup let the essay
   // finish before the stop tap could land). Growth is harvested from the seed sampler
   // plus the retained post-abort partial instead of a mid-essay capture.
-  const baseline = session.current.records().length;
-  const stopFlow = runOneOffMaestroFlow(
-    deviceId,
-    [
-      '- tapOn: "Message.*"',
-      `- inputText: ${JSON.stringify(LONG_PROMPT)}`,
-      '- tapOn: "Send message"',
-      '- extendedWaitUntil:',
-      '    visible: "Stop generating"',
-      '    timeout: 30000',
-      '- tapOn: "Stop generating"',
-    ].join('\n'),
-    300_000,
-  );
-  if (stopFlow.exit !== 0) {
+  //
+  // Bounded, evidence-discriminating stop-turn drives (cycle-4 contract): a re-drive
+  // happens ONLY when the provider records prove this drive's essay reached a
+  // terminal COMPLETED/ERROR outcome with no abort — the essay ended before the Stop
+  // control could appear (a fast essay). Every decision writes its record query to
+  // the leg log. Bound: 3 drives per leg.
+  let stopDone = false;
+  const maxIosStopDrives = 3;
+  for (let stopDrive = 1; stopDrive <= maxIosStopDrives && !stopDone; stopDrive += 1) {
+    const baseline = session.current.records().length;
+    const stopFlow = runOneOffMaestroFlow(
+      deviceId,
+      [
+        '- tapOn: "Message.*"',
+        `- inputText: ${JSON.stringify(LONG_PROMPT)}`,
+        '- tapOn: "Send message"',
+        '- extendedWaitUntil:',
+        '    visible: "Stop generating"',
+        '    timeout: 30000',
+        '- tapOn: "Stop generating"',
+      ].join('\n'),
+      300_000,
+    );
+    if (stopFlow.exit === 0) {
+      if (await waitForRecordOutcome(session.current, baseline, 'aborted', 30_000)) {
+        stopDone = true;
+        break;
+      }
+    }
+    // The flow failed or no abort followed — query the record for the discriminating
+    // evidence before any re-drive.
+    const outcome = await awaitTerminalRecord(session.current, baseline, 120_000);
+    if (outcome === 'aborted') {
+      stopDone = true;
+      break;
+    }
+    if (outcome === 'completed' || outcome === 'error') {
+      const record = session.current.records()[session.current.records().length - 1];
+      logs.push(
+        `STOP-RETRY-EVIDENCE: drive ${stopDrive} record query beyond baseline ${baseline} shows outcome=${record.outcome} deltaCount=${record.deltaCount} — the essay reached a terminal non-abort outcome before the Stop control appeared`,
+      );
+      if (stopDrive < maxIosStopDrives) {
+        logs.push(
+          `STOP-RETRY-EVIDENCE: re-driving the stop turn (drive ${stopDrive + 1} of ${maxIosStopDrives})`,
+        );
+        continue;
+      }
+      logs.push('STOP-RETRY-EXHAUSTED: drive budget spent with essay-first outcomes only');
+      break;
+    }
+    logs.push(
+      `STOP-RETRY-EXHAUSTED: drive ${stopDrive} produced neither an abort nor a terminal non-abort record beyond baseline ${baseline} (observed ${outcome}) — no evidence-discriminating retry condition`,
+    );
+    break;
+  }
+  if (!stopDone) {
     return {
       result: fail(
-        `the Stop control never became tappable mid-stream (maestro flow output: ${stopFlow.output.slice(-800)})`,
+        `the stop turn never aborted the stream across ${maxIosStopDrives} evidence-gated drives`,
       ),
       growth,
     };
-  }
-  if (!(await waitForRecordOutcome(session.current, baseline, 'aborted', 30_000))) {
-    return { result: fail('active stop did not abort the stream'), growth };
   }
   noteVisibleGrowth(growth, deviceId);
   logs.push('OK: active stop aborted the stream (aborted provider record)');
