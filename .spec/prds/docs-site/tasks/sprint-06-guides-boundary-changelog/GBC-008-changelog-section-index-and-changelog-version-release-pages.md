@@ -18,13 +18,13 @@ MUST:
 - render /changelog as a section-index page with entries in strict reverse-chronological order
 - render /changelog/[version] with the literal release date and Added/Changed/Fixed headings
 - link each touched component to its /components/[item] page
-- derive hrefs and sort order from apps/docs/src/lib/changelog.ts (single source both routes read)
+- derive hrefs and sort order from apps/docs/src/lib/changelog.ts (single source both routes read), implementing the same date-DESC-then-semver-DESC tiebreak as GBC-007's gate
 NEVER:
 - hardcode the changelog entries or their order in a page (derive from the collection)
 - render a changelog page without the three Added/Changed/Fixed sections
 - link a touched component to a non-existent route
 STRICTLY:
-- reverse-chronological = newest first (0.2.1 above 0.2.0 above 0.1.0)
+- reverse-chronological = newest first (0.2.1 above 0.2.0 above 0.1.0); on equal dates order by semver DESC — mirrors GBC-007's tiebreak (v0.2.0 and v0.2.1 share 2026-09-08)
 - version route param matches the entry version (no `v` prefix)
 
 ## Specification

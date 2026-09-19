@@ -18,8 +18,11 @@ MUST:
 - register the `changelog` collection in apps/docs/src/content.config.ts with glob base `./src/content/changelog`
 - require version (semver), date (ISO), added, changed, fixed on every entry via the Zod schema
 - enforce one-to-one between `git tag --list 'v*'` (mapped to `{semver}` by stripping the `v`) and entry versions at build
-- enforce strict reverse-chronological date order at build
+- enforce reverse-chronological order at build: date DESC, then semver DESC as the tiebreak — equal dates are LEGAL (v0.2.0 and v0.2.1 are both 2026-09-08 in the real tags; 'strictly descending dates' would fail the healthy tree)
+- pin version to z.string().regex(SEMVER) and date to z.string().datetime() in the Zod schema — presence without shape lets malformed values reach hrefs and headings
 - enforce date + added + changed + fixed presence on every entry at build (empty values fine, absent fields not)
+- fail malformed-value fixtures: version "<script>alert(1)</script>" and date "not-a-date" each fail the schema naming the entry and field; a duplicate-version pair (two entries claiming 0.2.1 against one tag) fails one-to-one
+- include a tie fixture in the vitest drill: two entries sharing a date must order by semver DESC (0.2.1 above 0.2.0)
 - wire the gates into scripts/docs-data/prebuild.ts so they run before any output byte is written
 - add optional mapping, notPorted, and upstream array fields to the docs collection schema (GBC-004 authors them in porting.md frontmatter; GBC-012's gate consumes them)
 - print `[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological` on a green run
@@ -29,6 +32,10 @@ NEVER:
 - author the changelog entry .md files (techwriting GBC-005 owns apps/docs/src/content/changelog/*.md)
 - write any output file (the gates are read-only; prebuild owns writing)
 STRICTLY:
+- rendered version/date strings come only from schema-validated frontmatter — raw `git tag` output appears in gate diagnostics (stderr) only, never in rendered pages
+- spawn git via arg-array (execFileSync('git', ['tag', '--list', 'v*'])), never a shell string
+- zod owns field presence and shape at the astro build; the prebuild gate owns tag-sync and ordering only
+- trust model: markdown raw HTML passes through unsanitized (committer-trusted); any external-content path requires rehype-sanitize first
 - use the `[docs-data] changelog: ...` violation renderer (matching the gates.ts `[docs-data] <gate>:` shape)
 - run `git tag --list 'v*'` from the repo root and map `v{semver}` -> `{semver}`
 - keep assertChangelogSync a pure function (entries + tags in, violations out) so the vitest drill can inject a tag set
