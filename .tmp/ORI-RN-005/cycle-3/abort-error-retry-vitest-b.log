@@ -1,0 +1,34 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts (4 tests | 1 failed | 3 skipped) 3088518ms
+   × ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets 3088517ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/nativewind-live-example.test.ts > ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets
+AssertionError: web must surface a sanitized endpoint-loss error: expected '{"emptyStateVisible":true,"markerSubm…' to contain 'sanitized error with an accessible Re…'
+
+Expected: "sanitized error with an accessible Retry"
+Received: "{"emptyStateVisible":true,"markerSubmitted":true,"inputCleared":true,"assistantResponded":true,"growthSamples":[79,237,234,60,78],"followUpRecallVisible":true,"stopControlVisible":true,"retryControlVisible":true,"retryErrorSanitized":true,"retryCompleted":true,"retrySingleUserTurn":true}"
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts:236:81
+    234|       expect(drive?.stopControlVisible, 'web must catch Stop generatin…
+    235|     }
+    236|     expect(log, `${leg.platform} must surface a sanitized endpoint-los…
+       |                                                                                 ^
+    237|       'sanitized error with an accessible Retry',
+    238|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  22:33:45
+   Duration  3088.65s (transform 16ms, setup 0ms, import 26ms, tests 3088.52s, environment 0ms)
+
+done=1

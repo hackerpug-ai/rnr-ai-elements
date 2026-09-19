@@ -75,6 +75,20 @@ RNR_S05_IOS_UDID=81487B1E-A4D1-45AE-9BCE-D675802BACD1 RNR_S05_ANDROID_SERIAL=emu
   pnpm exec vitest run tests/sprint-05-orient-search/nativewind-live-example.test.ts -t ORI-RN-005-live-three-platforms
 ```
 
+## Cycle-3 note (AC-3 selector)
+
+Three further attempts on the quiet host (logs under `.tmp/ORI-RN-005/cycle-3/`):
+attempt A concluded with an iOS stop-timing miss and the (since-fixed) widened
+Android stop window; attempt B's RUN COMPLETED FULLY GREEN — run
+`ORI-RN-005-1789792426372`, all five legs passed, `completed: true` — but the
+selector still failed on a test-side bug (the web branch grepped the native flow-log
+phrasing instead of asserting the web booleans, all of which were true); that bug is
+fixed in this commit, and attempt B's artifacts were overwritten by attempt C before
+the fix could be verified. Attempt C concluded with an Android stop-timing race (all
+coordinate taps landing after the essays' natural end) and one aborted-marker-record
+anomaly — the same classes that pass in other runs of the identical driver. No
+external kills occurred in cycle 3; every attempt concluded and tore down cleanly.
+
 The pinned Expo Go 57.0.9 Android APK lives at
 `~/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk`; if the scratch
 reaper removes it, restore it from the official

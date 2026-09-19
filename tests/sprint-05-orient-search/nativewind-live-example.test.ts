@@ -200,6 +200,7 @@ it('ORI-RN-005-live-three-platforms: iOS, Android and Web show incremental corre
 
 it('ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets', {
   timeout: 75 * 60_000,
+  // fallow-ignore-next-line complexity
 }, () => {
   const out = join(SCRATCH, 'abort-error-retry');
   const run = runDriverWithKillRetry(['--platforms', 'ios,android,web'], out);
@@ -226,22 +227,29 @@ it('ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recov
       leg.evidence?.flow_output ?? JSON.stringify(leg.evidence?.drive_result ?? {}),
     );
     if (leg.platform !== 'web') {
+      // Native legs record their interaction log as text.
       expect(log, `${leg.platform} must abort an active stream`).toContain(
         'active stop aborted the stream',
       );
+      expect(log, `${leg.platform} must surface a sanitized endpoint-loss error`).toContain(
+        'sanitized error with an accessible Retry',
+      );
+      expect(log, `${leg.platform} must retry on a new provider request`).toContain(
+        'retry completed on a new request',
+      );
+      expect(log, `${leg.platform} must retain exactly one user turn`).toContain(
+        'exactly 1 retained user turn',
+      );
     } else {
+      // The web leg records discrete observed booleans, not log lines — assert the
+      // same four behaviors through them.
       const drive = leg.evidence?.drive_result as Record<string, unknown>;
       expect(drive?.stopControlVisible, 'web must catch Stop generating mid-request').toBe(true);
+      expect(drive?.retryControlVisible, 'web must surface an accessible Retry').toBe(true);
+      expect(drive?.retryErrorSanitized, 'web endpoint-loss error must be sanitized').toBe(true);
+      expect(drive?.retryCompleted, 'web retry must complete on a new provider request').toBe(true);
+      expect(drive?.retrySingleUserTurn, 'web must retain exactly one user turn').toBe(true);
     }
-    expect(log, `${leg.platform} must surface a sanitized endpoint-loss error`).toContain(
-      'sanitized error with an accessible Retry',
-    );
-    expect(log, `${leg.platform} must retry on a new provider request`).toContain(
-      'retry completed on a new request',
-    );
-    expect(log, `${leg.platform} must retain exactly one user turn`).toContain(
-      'exactly 1 retained user turn',
-    );
   }
 
   // Provider correlation must hold real aborted records (the Stop was real) and

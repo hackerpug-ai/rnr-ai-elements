@@ -1361,18 +1361,16 @@ async function runAndroidInputFlow(
         growth,
       };
     const baseline = session.current.records().length;
-    // Coordinate send, then ONE mid-essay growth capture, then the stop tap. The essay
-    // (maxOutputTokens 4096 + a 1200-word demand) streams for well over 20s, so a
-    // single ~9s capture plus a 3s settle still lands the stop safely mid-stream —
-    // and the capture yields REAL mid-stream text lengths for AC-2 (the seed turn
-    // is shorter than one capture, so it can never show intra-stream growth here).
+    // HOT PATH — coordinate send, then coordinate stop tap, NOTHING in between (the
+    // ORI-RN-004 discipline this driver must keep: cycle-3 proved that inserting a
+    // ~12s growth-capture window between the send and the stop lets faster essays
+    // COMPLETE before the stop tap lands — two android legs failed exactly so). The
+    // AC-2 growth lengths come from the seed sampler plus the post-abort partial.
     adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
     spawnSync('sleep', ['2']); // let the status flip morph the control into Stop
-    noteVisibleGrowth(growth, serial);
-    spawnSync('sleep', ['3']); // the stream keeps growing past the captured lengths
-    // A heads-up system notification can re-expand the shade over the composer inside
-    // this widened window (twice in cycle-2: "Set a screen lock" ate the stop taps) —
-    // collapse it in the instant before the tap. A no-op when already collapsed.
+    // A heads-up system notification can re-expand the shade over the composer at any
+    // instant (cycle-2: "Set a screen lock" ate the stop taps twice) — collapse it in
+    // the beat before the tap. Cheap, no device read, a no-op when already collapsed.
     adbExec(serial, ['shell', 'cmd', 'statusbar', 'collapse']);
     adbExec(serial, ['shell', 'input', 'tap', String(stopCenter.x), String(stopCenter.y)]);
     logs.push(`OK: coordinate send + stop tap at ${stopCenter.x},${stopCenter.y}`);

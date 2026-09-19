@@ -1,0 +1,50 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts (4 tests | 1 failed | 3 skipped) 2471022ms
+   × ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets 2471022ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/nativewind-live-example.test.ts > ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets
+AssertionError: all three platforms must pass in one run — first leg diagnostic:
+OK: composer ready, transcript empty
+OK: marker submitted, echoed, and its reply completed
+OK: seed reply streamed to a completed provider record (growth samples: 108, 83, 206, 43, 50, 51)
+OK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)
+OK: coordinate send + stop tap at 954,2232
+OK: fallback stop tap 1 at 954,2232
+OK: fallback stop tap 2 at 954,2232
+OK: fallback stop tap 3 at 954,2232
+OK: coordinate send + stop tap at 954,2232
+OK: fallback stop tap 1 at 954,2232
+OK: fallback stop tap 2 at 954,2232
+OK: fallback stop tap 3 at 954,2232
+FAIL: active stop did not abort the stream {"fieldText":"What would you like to know?","sendEnabled":"false","sendPresent":true,"stopPresent":false,"screenTexts":"Tools | Live chat | Write a detailed essay on the history of | Write a detailed essay on the history of | AI | AI | You gave me the marker ORI-RN-005:ORI-RN | What marker did I give you? | AI | AI | ORI-RN-005:ORI-RN-005-1789795874054:andr | Message"}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts:215:5
+    213|   expect(
+    214|     manifest.completed,
+    215|     `all three platforms must pass in one run — first leg diagnostic:\…
+       |     ^
+    216|   ).toBe(true);
+    217|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  23:31:13
+   Duration  2471.16s (transform 13ms, setup 0ms, import 23ms, tests 2471.02s, environment 0ms)
+
+done=1
