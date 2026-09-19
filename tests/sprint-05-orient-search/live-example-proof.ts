@@ -69,7 +69,6 @@ import {
 } from './support/live-backend';
 import { runLiveExampleProof } from './support/live-example-proof.test';
 import {
-  captureHierarchy,
   captureScreenshot,
   REPO_ROOT,
   reserveDevices,
@@ -372,32 +371,6 @@ function makeSink(): RecordSink {
 /* ------------------------------------------------------------ device observer -- */
 
 type DeviceSample = { ts: string; texts: string[] };
-
-/** Extracts candidate transcript texts (>40 chars) from a maestro hierarchy dump. */
-function longTextsOfHierarchy(raw: string): string[] {
-  const start = raw.indexOf('{');
-  const end = raw.lastIndexOf('}');
-  if (start === -1 || end <= start) return [];
-  let data: unknown;
-  try {
-    data = JSON.parse(raw.slice(start, end + 1)) as unknown;
-  } catch {
-    return [];
-  }
-  const texts = new Set<string>();
-  const walk = (node: unknown): void => {
-    if (typeof node !== 'object' || node === null) return;
-    const record = node as Record<string, unknown>;
-    const attrs = (record.attributes ?? {}) as Record<string, unknown>;
-    for (const value of [attrs.text, attrs.accessibilityText]) {
-      if (typeof value === 'string' && value.length > 40) texts.add(value);
-    }
-    const kids = record.children;
-    if (Array.isArray(kids)) for (const kid of kids) walk(kid);
-  };
-  walk(data);
-  return [...texts];
-}
 
 /**
  * Observes one real device screen from a CHILD PROCESS through a strictly passive
@@ -1537,6 +1510,32 @@ async function verifyRestoredModel(
   }
 }
 
+/** The maestro XCUITest runner app on the reserved iOS simulator. */
+const MAESTRO_IOS_RUNNER = 'dev.mobile.maestro-driver-iosUITests.xctrunner';
+
+/**
+ * Resets the maestro iOS driver channel between phases. A failed maestro flow
+ * (the reject phase's flows fail by design) leaves the XCUITest runner stale:
+ * the next flow's driver status check gets connection-refused on 127.0.0.1:7001
+ * and every subsequent tap silently never dispatches (the cycle-1/2 iOS
+ * send-never-dispatches signature). Terminating the runner and reaping maestro
+ * JVMs forces the next flow to start a fresh driver session. This touches only
+ * the reserved device's maestro tooling — never app or system state.
+ */
+function resetMaestroIosDriver(udid: string, journal: EvidenceJournal, phase: string): void {
+  const terminate = spawnSync('xcrun', ['simctl', 'terminate', udid, MAESTRO_IOS_RUNNER], {
+    encoding: 'utf8',
+    timeout: 30_000,
+  });
+  spawnSync('pkill', ['-f', 'maestro'], { encoding: 'utf8', timeout: 15_000 });
+  spawnSync('sleep', ['2']);
+  journal.emit('maestro-driver-reset', {
+    udid,
+    phase,
+    terminate_status: terminate.status,
+  });
+}
+
 /** One engine's three phases (reject -> live -> web-self). */
 // fallow-ignore-next-line complexity
 async function runEnginePhases(
@@ -1571,6 +1570,9 @@ async function runEnginePhases(
   /* ---------- REJECT: the real provider endpoint rejecting a nonexistent model -- */
   journal.emit('phase-start', { engine, phase: 'reject', model: rejectModel });
   {
+    if (options.platforms.includes('ios')) {
+      resetMaestroIosDriver(options.iosUdid, journal, 'pre-reject');
+    }
     const backend = await launchRecordingBackend(journal, sink, engine, 'reject', rejectModel);
     const runId = `${options.runId}-reject`;
     let driverRun: DriverRunResult | null = null;
@@ -1625,6 +1627,9 @@ async function runEnginePhases(
   /* ---------- LIVE: the restored primary model + the full green matrix -------- */
   journal.emit('phase-start', { engine, phase: 'live', model: DEFAULT_MODEL });
   {
+    if (options.platforms.includes('ios')) {
+      resetMaestroIosDriver(options.iosUdid, journal, 'pre-live');
+    }
     const backend = await launchRecordingBackend(journal, sink, engine, 'live', DEFAULT_MODEL);
     const runId = `${options.runId}-live`;
     const hasNative = options.platforms.includes('ios') || options.platforms.includes('android');
@@ -1776,6 +1781,9 @@ async function runEnginePhases(
       let proxy: ProxyHandle | null = null;
       try {
         await ctrl.relaunch(DEFAULT_MODEL);
+        // The driver's own web proxy may still be closing when the live phase
+        // just ended — free the port first.
+        await waitForPortFree(ENGINE_PORTS[engine].web, 8000);
         proxy = await serveTeeingProxy(dist, ENGINE_PORTS[engine].web, journal);
         proxy.setUpstream('127.0.0.1', ENGINE_PORTS[engine].backend);
         const webSelf = await runWebSelfSession({
