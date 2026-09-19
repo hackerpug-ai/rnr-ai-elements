@@ -1,0 +1,74 @@
+{
+  "task": "ORI-RN-005",
+  "case": "ORI-RN-005-install-exact-source",
+  "candidate_head_sha": "aad45cdc1e3caedd7c03949ace719eac2df2947f",
+  "generated_at": "2026-09-18T21:23:05.539Z",
+  "cli_version": "1.0.0",
+  "script_exit": 0,
+  "copy_pairs": [
+    {
+      "source": "apps/example/app/live-chat.tsx",
+      "target": "app/live-chat.tsx",
+      "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "match": true
+    },
+    {
+      "source": "apps/example/components/live-chat-screen.tsx",
+      "target": "components/live-chat-screen.tsx",
+      "sourceSha": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+      "targetSha": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+      "match": true
+    },
+    {
+      "source": "apps/example/components/live-chat-message.tsx",
+      "target": "components/live-chat-message.tsx",
+      "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+      "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+      "match": true
+    },
+    {
+      "source": "apps/example/lib/live-chat-config.ts",
+      "target": "lib/live-chat-config.ts",
+      "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+      "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+      "match": true
+    },
+    {
+      "source": "apps/example/lib/use-live-chat.ts",
+      "target": "lib/use-live-chat.ts",
+      "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "match": true
+    }
+  ],
+  "five_pairs_match": true,
+  "tsc": {
+    "exit": 0,
+    "output": ""
+  },
+  "expo_doctor": {
+    "exit": 0,
+    "output": "Running 21 checks on your project...\n21/21 checks passed. No issues detected!\n"
+  },
+  "resolved_versions": {
+    "expo": "57.0.24",
+    "react-native": "0.86.3",
+    "react": "19.2.3",
+    "typescript": "6.0.3",
+    "nativewind": "4.2.6",
+    "uniwind": "missing",
+    "tailwindcss": "3.4.19",
+    "@rn-primitives/dialog": "1.5.2",
+    "react-native-safe-area-context": "5.7.0"
+  },
+  "public_registry_hashes": {
+    "https://rnraielements.com/r/nativewind/conversation.json": "c84d855da4e4e557705d5b93727f5fda186b177b1071bf0a3dc374575b43576f",
+    "https://rnraielements.com/r/nativewind/message.json": "c2faccb66abd23eb8d840805886ff02eeabbd3d13d9fd54de63ec1a9bc45943d",
+    "https://rnraielements.com/r/nativewind/prompt-input.json": "dc64dfbce4e8e284f19d18446756707972ab197b6c431755ec14ef9b2ece8246",
+    "https://rnraielements.com/r/nativewind/item.json": "a0d2c46de0ec000123387c5ee15b20977ee85cfbe5fc095bd9e38230508dcaed",
+    "https://rnraielements.com/r/nativewind/sheet.json": "b39706723eec6acfad5a3cf87d026bf1ee33c9784f48ef23e11518865495fb14"
+  },
+  "install_log_tail": "Progress: resolved 1, reused 0, downloaded 0, added 0\nProgress: resolved 432, reused 421, downloaded 0, added 0\n WARN  1 deprecated subdependencies found: uuid@7.0.3\nPackages: +658\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\nProgress: resolved 677, reused 658, downloaded 0, added 140\nProgress: resolved 677, reused 658, downloaded 0, added 530\nProgress: resolved 677, reused 658, downloaded 0, added 614\nProgress: resolved 677, reused 658, downloaded 0, added 650\nProgress: resolved 677, reused 658, downloaded 0, added 658, done\n\ndependencies:\n+ @ai-sdk/react 4.0.92 (4.0.104 is available)\n+ @rn-primitives/avatar 1.5.2\n+ @rn-primitives/dialog 1.5.2\n+ @rn-primitives/portal 1.5.3\n+ @rn-primitives/separator 1.5.2\n+ @rn-primitives/slot 1.5.2\n+ ai 7.0.89 (7.0.93 is available)\n+ class-variance-authority 0.7.1\n+ clsx 2.1.1\n+ expo 57.0.24\n+ expo-constants 57.0.19\n+ expo-document-picker 57.0.2\n+ expo-image-picker 57.0.19\n+ expo-linking 57.0.10\n+ expo-router 57.0.22\n+ expo-status-bar 57.0.1\n+ lucide-react-native 0.577.0 (1.47.0 is available)\n+ nativewind 4.2.6 (4.2.7 is available)\n+ react 19.2.3 (19.3.0 is available)\n+ react-dom 19.2.3 (19.3.0 is available)\n+ react-native 0.86.3 (0.87.1 is available)\n+ react-native-css-interop 0.2.6 (0.2.7 is available)\n+ react-native-gesture-handler 2.32.0 (3.3.0 is available)\n+ react-native-reanimated 4.5.1 (4.6.0 is available)\n+ react-native-safe-area-context 5.7.0 (5.10.0 is available)\n+ react-native-screens 4.26.2 (4.28.0 is available)\n+ react-native-svg 15.15.4 (15.15.5 is available)\n+ react-native-web 0.21.2\n+ react-native-worklets 0.10.1 (0.11.4 is available)\n+ tailwind-merge 3.7.0\n+ tailwindcss-animate 1.0.7\n\ndevDependencies:\n+ @types/react 19.2.18 (19.3.0 is available)\n+ expo-doctor 1.20.4\n+ tailwindcss 3.4.19 (4.3.3 is available)\n+ typescript 6.0.3 (7.0.2 is available)\n\nDone in 5.4s using pnpm v10.32.1\n› Installing using pnpm\n> pnpm install\nLockfile is up to date, resolution step is skipped\nAlready up to date\n\nDone in 307ms using pnpm v10.32.1\n\u001b[2m\u001b[34mℹ\u001b[39m Styling Library: Nativewind\u001b[0m\n  - components/ui/text.tsx\n  - components/ui/icon.tsx\n  - components/ui/button.tsx\n  - components/ui/empty.tsx\n  - components/ai/conversation.tsx\n\u001b[2m\u001b[32m✔\u001b[39m All checks passed.\u001b[0m\n\n\u001b[2m\u001b[34mℹ\u001b[39m Styling Library: Nativewind\u001b[0m\n  - components/ui/avatar.tsx\n  - lib/markdown.ts\n  - components/ui/input.tsx\n  - components/ui/separator.tsx\n  - components/ai/message.tsx\n  - components/ui/sheet.tsx\n  - components/ui/item.tsx\n  - components/ui/input-group.tsx\n  - components/ai/prompt-input.tsx\n  - components/ai/prompt-input.logic.ts\n  - components/ai/attachments.logic.ts\n  - components/ui/text.tsx\n  - components/ui/icon.tsx\n  - components/ui/button.tsx\n\u001b[2m\u001b[32m✔\u001b[39m All checks passed.\u001b[0m\n\nDependencies are up to date\n\u001b[2m\u001b[34mℹ\u001b[39m Styling Library: Nativewind\u001b[0m\n\u001b[2m\u001b[32m✔\u001b[39m All checks passed.\u001b[0m\n\nRunning 21 checks on your project...\n21/21 checks passed. No issues detected!\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n- Checking registry.\n✔ Checking registry.\n- Installing dependencies.\n- Installing dependencies.\n✔ Installing dependencies.\n- Updating files.\n✔ Created 5 files:\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n- Checking registry.\n✔ Checking registry.\n- Installing dependencies.\n- Installing dependencies.\n✔ Installing dependencies.\n- Updating files.\n✔ Created 11 files:\nℹ Skipped 3 files: (files might be identical, use --overwrite to overwrite)\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n",
+  "passed": true
+}

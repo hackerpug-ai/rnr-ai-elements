@@ -1,0 +1,52 @@
+{
+  "task": "ORI-RN-005",
+  "engine": "nativewind",
+  "description": "Exact source-to-target mappings for the canonical live-chat worked example, copied byte-identical into the independent NativeWind consumer. Sources are read-only inputs owned by apps/example (ORI-RN-004/ORI-AI-001); targets are relative to the fresh consumer root created outside the monorepo by support/nativewind-live-example.ts.",
+  "consumer": {
+    "template": "packages/docs-snippets/nativewind",
+    "recipe": "packages/docs-snippets/commands/nativewind.sh",
+    "recipe_sha256": "5812581f66e98faac75bf7caf6a88fd7a5f3d93a3505cdaf103a73ebda7c3e5c",
+    "root_lockfile_sha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "hook_pins": {
+      "ai": "7.0.89",
+      "@ai-sdk/react": "4.0.92"
+    },
+    "registry_items": [
+      "https://rnraielements.com/r/nativewind/conversation.json",
+      "https://rnraielements.com/r/nativewind/message.json",
+      "https://rnraielements.com/r/nativewind/prompt-input.json",
+      "https://rnraielements.com/r/nativewind/item.json",
+      "https://rnraielements.com/r/nativewind/sheet.json"
+    ]
+  },
+  "mappings": [
+    {
+      "source": "apps/example/app/live-chat.tsx",
+      "target": "app/live-chat.tsx",
+      "expected_source_sha256": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+    },
+    {
+      "source": "apps/example/components/live-chat-screen.tsx",
+      "target": "components/live-chat-screen.tsx",
+      "expected_source_sha256": "04af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73"
+    },
+    {
+      "source": "apps/example/components/live-chat-message.tsx",
+      "target": "components/live-chat-message.tsx",
+      "expected_source_sha256": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b"
+    },
+    {
+      "source": "apps/example/lib/live-chat-config.ts",
+      "target": "lib/live-chat-config.ts",
+      "expected_source_sha256": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297"
+    },
+    {
+      "source": "apps/example/lib/use-live-chat.ts",
+      "target": "lib/use-live-chat.ts",
+      "expected_source_sha256": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87"
+    }
+  ],
+  "resolved_source_graph_gaps": [
+    "FIX-ORI-RN-005-1 (merged as de21fa6c/4be2db3f) replaced the screen's `useUniwind` import with React Native's `useColorScheme` and exported THEME from packages/docs-snippets/nativewind/lib/theme.ts; the consumer compile gate is green (tsc 0, expo-doctor 0) and the screen mapping hash was updated to the fixed source (34af5832…, was 8990ade6…)."
+  ]
+}

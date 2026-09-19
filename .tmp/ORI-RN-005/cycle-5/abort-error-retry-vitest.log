@@ -1,0 +1,43 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts (4 tests | 1 failed | 3 skipped) 3086727ms
+   × ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets 3086727ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/nativewind-live-example.test.ts > ORI-RN-005-abort-error-retry: active Stop and both failure/retry paths recover on three targets
+AssertionError: all three platforms must pass in one run — first leg diagnostic:
+OK: composer ready, transcript empty
+OK: marker submitted, echoed, and its reply completed
+OK: seed reply streamed to a completed provider record (growth samples: 79, 89)
+OK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 3-text baseline)
+STOP-RETRY-EXHAUSTED: drive 1 produced neither an abort nor a terminal non-abort record beyond baseline 3 (observed null) — no evidence-discriminating retry condition
+FAIL: the stop turn never aborted the stream across 6 evidence-gated drives: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts:216:5
+    214|     manifest.completed,
+    215|     `all three platforms must pass in one run — first leg diagnostic:\…
+    216|   ).toBe(true);
+       |     ^
+    217|
+    218|   // The interaction log of every native leg must record the active st…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  01:59:34
+   Duration  3086.85s (transform 16ms, setup 0ms, import 25ms, tests 3086.73s, environment 0ms)
+
+done=1

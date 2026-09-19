@@ -159,11 +159,11 @@ function itemIdsOfParts(parts: readonly object[]): string[] {
     if (typeof providerMetadata !== 'object' || providerMetadata === null) {
       continue;
     }
-    const openai: unknown = (providerMetadata as Record<string, unknown>)['openai'];
+    const openai: unknown = (providerMetadata as Record<string, unknown>).openai;
     if (typeof openai !== 'object' || openai === null) {
       continue;
     }
-    const itemId: unknown = (openai as Record<string, unknown>)['itemId'];
+    const itemId: unknown = (openai as Record<string, unknown>).itemId;
     if (typeof itemId === 'string') {
       itemIds.push(itemId);
     }
@@ -217,12 +217,12 @@ function parseWireMessage(value: unknown): OutgoingMessage | null {
   if (record === null) {
     return null;
   }
-  const id = record['id'];
-  const role = record['role'];
+  const id = record.id;
+  const role = record.role;
   if (typeof id !== 'string' || typeof role !== 'string') {
     return null;
   }
-  const parts = Array.isArray(record['parts']) ? record['parts'] : [];
+  const parts = Array.isArray(record.parts) ? record.parts : [];
   return summarizeMessage(id, role, parts);
 }
 
@@ -236,19 +236,19 @@ function parseOutgoingBody(raw: string): OutgoingBody | null {
     return null;
   }
   const envelope = asRecord(parsed);
-  if (envelope === null || !Array.isArray(envelope['messages'])) {
+  if (envelope === null || !Array.isArray(envelope.messages)) {
     return null;
   }
   const messages: OutgoingMessage[] = [];
-  for (const value of envelope['messages']) {
+  for (const value of envelope.messages) {
     const message = parseWireMessage(value);
     if (message !== null) {
       messages.push(message);
     }
   }
   return {
-    trigger: stringOr(envelope['trigger'], 'unknown'),
-    requestId: stringOr(envelope['id'], 'unknown'),
+    trigger: stringOr(envelope.trigger, 'unknown'),
+    requestId: stringOr(envelope.id, 'unknown'),
     messages,
   };
 }
