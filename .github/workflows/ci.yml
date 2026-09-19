@@ -45,6 +45,12 @@ jobs:
           cache: 'pnpm'
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm install --frozen-lockfile
+      # Generate the gitignored docs datasets before tsc: contract tests import
+      # apps/docs/src/data/registry-items.json, which is prebuild OUTPUT — absent
+      # on a fresh checkout, tsc fails TS2307 + cascading TS7006 that look like
+      # trunk defects. Same chain the docs prebuild and human gate rely on.
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm registry:build && pnpm gallery:manifest && pnpm exec tsx scripts/docs-data/prebuild.ts
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm exec tsc --noEmit && pnpm --filter @rnr-ai-elements/registry exec tsc --noEmit
 
@@ -91,6 +97,10 @@ jobs:
           cache: 'pnpm'
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm install --frozen-lockfile
+      # Same reason as typecheck: vitest imports the generated registry-items.json
+      # at module load; without the generation chain the suite cannot even start.
+      - if: steps.guard.outputs.ready == 'true'
+        run: pnpm registry:build && pnpm gallery:manifest && pnpm exec tsx scripts/docs-data/prebuild.ts
       - if: steps.guard.outputs.ready == 'true'
         run: pnpm exec vitest run --reporter=default --reporter=junit --outputFile.junit=./test-report.junit.xml
       - if: always() && steps.guard.outputs.ready == 'true'
