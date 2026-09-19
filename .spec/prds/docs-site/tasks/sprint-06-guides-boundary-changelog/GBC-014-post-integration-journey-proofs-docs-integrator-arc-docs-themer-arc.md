@@ -42,10 +42,10 @@ Success state: pnpm e2e:docs exits 0 with both journey specs passing and evidenc
   VERIFICATION_SERVICE: built dist over astro preview
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts
-  TEST_FUNCTION: journeys/docs-integrator-arc: install and wire a chat screen end to end
+  TEST_FUNCTION: journeys/docs-integrator-arc: read and copy the install-and-wire path end to end
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc
   SCENARIO:
-        MUST_OBSERVE: ['/docs/installation 200', '/docs/quickstart 200', '/registry 200 with 56 rows', '/docs/owns-vs-does-not-own 200', 'absolute-URL install command only']
+        MUST_OBSERVE: ['/docs/installation 200', '/docs/quickstart 200', '/registry 200 with 56 rows', '/docs/owns-vs-does-not-own 200', 'absolute-URL install command only', 'the boundary example-app section renders the live-chat characterization (a streaming chat exists at /live-chat)', 'the header shows Components, Registry, Guides, Porting, Changelog, each resolving 200']
         MUST_NOT_OBSERVE: ['engine choice in the URL', 'engine reset mid-journey', 'a short-name or relative install command']
 
 ### AC-2: Engine choice never leaks into a URL and never resets
@@ -128,7 +128,7 @@ Anti-pattern: Mock renderer or stubbed content standing in for the integrated si
 - pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc
 
 ## Dependencies
-Depends on: ['GBC-008', 'GBC-009', 'GBC-010', 'GBC-013']
+Depends on: ['GBC-008', 'GBC-009', 'GBC-010', 'GBC-013'] — external prerequisite: sprint-05 ORI-CONT-004 /docs/quickstart exists (block or skip-with-reason if unmet; do not RED forever for a non-sprint-06 reason)
 Blocks:     none
 
 <!-- REQUIREMENT-CONTRACT v1 -->
