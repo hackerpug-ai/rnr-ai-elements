@@ -44,7 +44,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the guide is a stub, has fewer than four entries, or omits symptom/cause/fix headings']
         EVIDENCE: file_artifact
@@ -62,7 +62,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the DependencyPanel footer Callout links only /registry, or Installation lacks the link']
         EVIDENCE: file_artifact
@@ -80,7 +80,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the entry omits the DOM-import symptom, the shadcn registry cause, or the absolute-URL fix']
         EVIDENCE: file_artifact
@@ -98,7 +98,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the entry blames a different cause or omits the renamed option name']
         EVIDENCE: file_artifact
@@ -116,7 +116,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a symptom carries zero or two contradictory fixes']
         EVIDENCE: file_artifact
@@ -158,7 +158,7 @@ Anti-pattern: prose-only troubleshooting; a symptom with zero or two fixes; blam
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+- pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
 
 ## Dependencies
 Depends on: ['GBC-001']
@@ -185,7 +185,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -199,7 +199,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -213,7 +213,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -227,7 +227,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -241,7 +241,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -253,7 +253,7 @@ Blocks:     none
       "primary": false,
       "description": "The troubleshooting guide renders four distinct symptom-cause-fix entries.",
       "maps_to_ac": "AC-1",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "TC-2",
@@ -261,7 +261,7 @@ Blocks:     none
       "primary": false,
       "description": "Installation and the dependency-panel footer link to /guides/troubleshooting.",
       "maps_to_ac": "AC-2",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "TC-3",
@@ -269,7 +269,7 @@ Blocks:     none
       "primary": false,
       "description": "The short-name collision entry names DOM imports, the shadcn registry cause, and the absolute-URL fix.",
       "maps_to_ac": "AC-3",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "TC-4",
@@ -277,7 +277,7 @@ Blocks:     none
       "primary": false,
       "description": "The markdown streaming crash entry names the renamed option as cause and importForwarding.moduleNames as the fix.",
       "maps_to_ac": "AC-4",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "TC-5",
@@ -285,7 +285,7 @@ Blocks:     none
       "primary": false,
       "description": "Every symptom has exactly one fix and links its canonical owning page.",
       "maps_to_ac": "AC-5",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     }
   ]
 }

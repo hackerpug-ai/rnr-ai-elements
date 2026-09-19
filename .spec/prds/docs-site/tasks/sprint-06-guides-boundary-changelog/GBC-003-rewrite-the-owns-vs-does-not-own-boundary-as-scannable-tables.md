@@ -48,7 +48,7 @@ Success state: A stranger opens /docs/owns-vs-does-not-own and reads, in tables:
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ["the boundary page renders prose paragraphs instead of tables, or 'useChat' sits outside a table cell"]
         EVIDENCE: screenshot
@@ -66,7 +66,7 @@ Success state: A stranger opens /docs/owns-vs-does-not-own and reads, in tables:
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the page omits the ownership split, omits react-native-reusables, or lists zero gaps']
         EVIDENCE: file_artifact
@@ -84,7 +84,7 @@ Success state: A stranger opens /docs/owns-vs-does-not-own and reads, in tables:
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the example-app anchor is a placeholder href or targets an absent path']
         EVIDENCE: file_artifact
@@ -102,7 +102,7 @@ Success state: A stranger opens /docs/owns-vs-does-not-own and reads, in tables:
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['boundary tables are duplicated on /porting or the home/Introduction carry full tables rather than teasers']
         EVIDENCE: file_artifact
@@ -120,7 +120,7 @@ Success state: A stranger opens /docs/owns-vs-does-not-own and reads, in tables:
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the page claims a built-in streaming client, tool execution, or transport management']
         EVIDENCE: file_artifact
@@ -163,7 +163,7 @@ Anti-pattern: prose ownership claims; a second boundary page; a gap naming a shi
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+- pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
 
 ## Dependencies
 Depends on: none
@@ -201,7 +201,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -215,7 +215,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -229,7 +229,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -243,7 +243,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -257,7 +257,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -271,7 +271,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -285,7 +285,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -299,7 +299,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -313,7 +313,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -327,7 +327,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",

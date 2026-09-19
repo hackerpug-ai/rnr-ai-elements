@@ -42,7 +42,7 @@ Success state: Over the built preview, /changelog lists 0.2.1 above 0.2.0 above 
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages: newest-first with per-release pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         MUST_OBSERVE: ['/changelog 200', '/changelog/0.2.1 200', '0.2.1 appears above 0.2.0', '0.2.0 appears above 0.1.0', 'Added/Changed/Fixed headings on /changelog/0.2.1', 'a touched-component link resolves 200']
         MUST_NOT_OBSERVE: ['any non-200 release link', 'a release page without the three headings', 'reverse order (0.1.0 above 0.2.0)']
@@ -57,7 +57,7 @@ Success state: Over the built preview, /changelog lists 0.2.1 above 0.2.0 above 
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages: every entry links a 200 page with date + three headings
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         MUST_OBSERVE: ['3 release links', 'each link 200', 'each page carries a date', 'each page carries Added/Changed/Fixed headings']
         MUST_NOT_OBSERVE: ['a release page missing any of the three headings']
@@ -72,7 +72,7 @@ Success state: Over the built preview, /changelog lists 0.2.1 above 0.2.0 above 
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages: touched-component links resolve 200
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         MUST_OBSERVE: ['>=1 touched-component link on /changelog/0.2.1', 'each link 200', 'destination h1 equals the item name']
         MUST_NOT_OBSERVE: ['a dead component link']
@@ -110,7 +110,7 @@ Anti-pattern: Hardcoding release entries or order in the page template
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+- pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
 
 ## Dependencies
 Depends on: ['GBC-007']
@@ -136,42 +136,42 @@ Blocks:     ['GBC-013', 'GBC-014']
       "source": "AC-1",
       "type": "behavioral",
       "statement": "changelog reads newest-first with per-release pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "GBC-008-R2",
       "source": "AC-2",
       "type": "behavioral",
       "statement": "every entry links a 200 page with date + Added/Changed/Fixed",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "GBC-008-R3",
       "source": "AC-3",
       "type": "behavioral",
       "statement": "touched-component links resolve",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "GBC-008-R4",
       "source": "TC-1",
       "type": "boolean-check",
       "statement": "reverse-chronological index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "GBC-008-R5",
       "source": "TC-2",
       "type": "boolean-check",
       "statement": "per-release 200 pages with three headings",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "GBC-008-R6",
       "source": "TC-3",
       "type": "boolean-check",
       "statement": "touched-component links 200",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     }
   ]
 }

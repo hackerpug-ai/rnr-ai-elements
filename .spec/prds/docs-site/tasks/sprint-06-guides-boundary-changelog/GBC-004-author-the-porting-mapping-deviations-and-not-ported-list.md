@@ -47,7 +47,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['/porting renders no mapping table, no deviations column, or fewer than 5 rows']
         EVIDENCE: file_artifact
@@ -65,7 +65,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the not-ported list is absent, overlaps a shipped item, or the sets do not sum to the upstream total']
         EVIDENCE: file_artifact
@@ -83,7 +83,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the prior-art names are absent or no why-differs rationale is stated']
         EVIDENCE: file_artifact
@@ -101,7 +101,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a prior-art link is relative, malformed, or dead']
         EVIDENCE: file_artifact
@@ -119,7 +119,7 @@ Success state: A contributor opens /porting and reads a >=5-row mapping table wi
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['/porting duplicates the boundary ships/does-not-ship tables']
         EVIDENCE: file_artifact
@@ -161,7 +161,7 @@ Anti-pattern: a mapping row naming a non-existent slug; a not-ported entry that 
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+- pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
 
 ## Dependencies
 Depends on: none
@@ -199,7 +199,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -213,7 +213,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -227,7 +227,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -241,7 +241,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -255,7 +255,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -269,7 +269,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -283,7 +283,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -297,7 +297,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -311,7 +311,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -325,7 +325,7 @@ Blocks:     ['GBC-006']
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",

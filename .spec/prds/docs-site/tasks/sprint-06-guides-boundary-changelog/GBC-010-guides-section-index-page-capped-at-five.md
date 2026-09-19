@@ -42,7 +42,7 @@ Success state: Over the built preview, /guides lists exactly 5 cards, each card 
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index: exactly five cards with matching H1s
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         MUST_OBSERVE: ['/guides 200', 'exactly 5 guide cards', 'each card title equals its destination H1']
         MUST_NOT_OBSERVE: ['4 or 6 cards', 'a card title mismatching its destination H1', 'a stub or empty card']
@@ -57,7 +57,7 @@ Success state: Over the built preview, /guides lists exactly 5 cards, each card 
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index: every card links a 200 page
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         MUST_OBSERVE: ['5 guide hrefs', 'each href 200']
         MUST_NOT_OBSERVE: ['a dead guide href']
@@ -72,7 +72,7 @@ Success state: Over the built preview, /guides lists exactly 5 cards, each card 
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index: the five launch guide cards are present
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         MUST_OBSERVE: ['oklch-tokens guide', 'update-installed guide', 'expo-go-preview guide', 'customize-rendering guide', 'troubleshooting guide']
         MUST_NOT_OBSERVE: ['a sixth guide card', 'engine-choice or porting as a guide']
@@ -107,7 +107,7 @@ Anti-pattern: Hardcoding the five guide titles/hrefs in the page template
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+- pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
 
 ## Dependencies
 Depends on: ['GBC-009']
@@ -133,42 +133,42 @@ Blocks:     ['GBC-013', 'GBC-014']
       "source": "AC-1",
       "type": "behavioral",
       "statement": "guides index lists exactly five cards with matching H1s",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-010-R2",
       "source": "AC-2",
       "type": "behavioral",
       "statement": "every card links a 200 page",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-010-R3",
       "source": "AC-3",
       "type": "behavioral",
       "statement": "the five launch guides are present",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-010-R4",
       "source": "TC-1",
       "type": "boolean-check",
       "statement": "exactly 5 cards",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-010-R5",
       "source": "TC-2",
       "type": "boolean-check",
       "statement": "card links 200",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-010-R6",
       "source": "TC-3",
       "type": "boolean-check",
       "statement": "five launch guides present",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     }
   ]
 }

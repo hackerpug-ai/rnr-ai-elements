@@ -47,7 +47,7 @@ Success state: The built /guides and /changelog pages each render IndexList rows
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the IndexList renders 0 rows or prose paragraphs instead of linked rows']
         EVIDENCE: screenshot
@@ -65,7 +65,7 @@ Success state: The built /guides and /changelog pages each render IndexList rows
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['changelog rows sort ascending or unsorted, or omit the date meta']
         EVIDENCE: screenshot
@@ -83,7 +83,7 @@ Success state: The built /guides and /changelog pages each render IndexList rows
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the row lacks a stretched title anchor, is shorter than 44px, nests an <a> inside an <a>, or lacks a link target']
         EVIDENCE: file_artifact (boundingBox measurement + DOM query)
@@ -101,7 +101,7 @@ Success state: The built /guides and /changelog pages each render IndexList rows
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['touched-component links 404 or render as plain text without href']
         EVIDENCE: file_artifact
@@ -157,7 +157,7 @@ Anti-pattern: Do not fork per-variant sibling files; do not inline hex colors; d
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+- pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
 
 ## Dependencies
 Depends on: none
@@ -184,7 +184,7 @@ Blocks:     ['GBC-016']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -235,7 +235,7 @@ Blocks:     ['GBC-016']
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -286,7 +286,7 @@ Blocks:     ['GBC-016']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -337,7 +337,7 @@ Blocks:     ['GBC-016']
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -386,7 +386,7 @@ Blocks:     ['GBC-016']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -433,28 +433,28 @@ Blocks:     ['GBC-016']
       "type": "test_criterion",
       "description": "/guides renders exactly 5 IndexList rows",
       "maps_to_ac": "AC-1",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "TC-2",
       "type": "test_criterion",
       "description": "/changelog rows are strictly descending by date",
       "maps_to_ac": "AC-2",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "TC-3",
       "type": "test_criterion",
       "description": "each row is an anchor with min-height >= 44px",
       "maps_to_ac": "AC-3",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "TC-4",
       "type": "test_criterion",
       "description": "changelog touched-component links resolve to 200 pages",
       "maps_to_ac": "AC-4",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages"
     },
     {
       "id": "TC-5",

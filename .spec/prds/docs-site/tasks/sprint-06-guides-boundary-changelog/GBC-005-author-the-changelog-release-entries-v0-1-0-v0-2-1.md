@@ -46,7 +46,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['/changelog is empty, out of order, or omits a release']
         EVIDENCE: file_artifact
@@ -64,7 +64,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the page omits the date or any of the Added/Changed/Fixed headings']
         EVIDENCE: file_artifact
@@ -82,7 +82,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a tag lacks an entry or an entry lacks a tag']
         EVIDENCE: file_artifact
@@ -100,7 +100,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a touched-component link is dead or targets a non-existent item slug']
         EVIDENCE: file_artifact
@@ -118,7 +118,7 @@ Success state: A visitor opens /changelog and reads entries reverse-chronologica
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts
   TEST_FUNCTION: FLOW-DOCS-06-changelog-release-pages
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a heading is absent rather than rendered with an explicit none']
         EVIDENCE: file_artifact
@@ -162,7 +162,7 @@ Anti-pattern: invented release notes; an absent Added/Changed/Fixed heading; a f
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages
+- pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages
 
 ## Dependencies
 Depends on: none
@@ -200,7 +200,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -214,7 +214,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -228,7 +228,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -242,7 +242,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -256,7 +256,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -270,7 +270,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -284,7 +284,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -298,7 +298,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -312,7 +312,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -326,7 +326,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-06-changelog-release-pages",
       "test_file": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
       "test_function": "FLOW-DOCS-06-changelog-release-pages",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-06-changelog-release-pages",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",

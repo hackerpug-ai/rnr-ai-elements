@@ -45,7 +45,7 @@ Success state: Over the built preview, /guides/{any-slug} and /porting each retu
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index: guides publish at /guides/{slug} with no /docs alias
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         MUST_OBSERVE: ['/guides/{slug} 200 for each guide', '/docs/{guide-slug} 404 (no alias)', '/docs/guides/{slug} 404 (no nested alias)']
         MUST_NOT_OBSERVE: ['a guide reachable at /docs/{slug}', 'a guide reachable at /docs/guides/{slug}', 'a doubled /guides/guides/{slug} segment']
@@ -60,7 +60,7 @@ Success state: Over the built preview, /guides/{any-slug} and /porting each retu
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art: /porting serves the single porting entry
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         MUST_OBSERVE: ['/porting 200', '/docs/porting 404 (no alias)']
         MUST_NOT_OBSERVE: ['/porting resolving to a /docs alias']
@@ -113,7 +113,7 @@ Anti-pattern: Per-route hardcoded href prefixes that can disagree with the sideb
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+- pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
 - pnpm exec vitest run tests/sprint-06-guides-boundary-changelog/guides-routing.test.ts
 
 ## Dependencies
@@ -142,14 +142,14 @@ Blocks:     ['GBC-010', 'GBC-011', 'GBC-013', 'GBC-014']
       "source": "AC-1",
       "type": "behavioral",
       "statement": "guides publish at /guides/{slug} with no /docs alias",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-009-R2",
       "source": "AC-2",
       "type": "behavioral",
       "statement": "porting publishes at /porting with no /docs alias",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art"
     },
     {
       "id": "GBC-009-R3",
@@ -163,14 +163,14 @@ Blocks:     ['GBC-010', 'GBC-011', 'GBC-013', 'GBC-014']
       "source": "TC-1",
       "type": "boolean-check",
       "statement": "section-aware hrefs in publishedDocs",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-009-R5",
       "source": "TC-2",
       "type": "boolean-check",
       "statement": "catch-all scoped to getting-started",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index"
     },
     {
       "id": "GBC-009-R6",

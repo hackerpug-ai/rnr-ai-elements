@@ -47,7 +47,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['boundary claim strings render in prose paragraphs, or fewer than 2 tables']
         EVIDENCE: screenshot
@@ -65,7 +65,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a mapping table without a Deviation column, an empty not-ported list, or missing prior-art text']
         EVIDENCE: screenshot
@@ -83,7 +83,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['no gaps section or an empty gaps list']
         EVIDENCE: screenshot
@@ -101,7 +101,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a second copy of the boundary tables on /porting']
         EVIDENCE: file_artifact
@@ -119,7 +119,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a missing or broken example-app link']
         EVIDENCE: file_artifact
@@ -137,7 +137,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['unstyled default browser tables', 'a table wider than its container without scroll', 'a missing caption or th scope']
         EVIDENCE: file_artifact (computed-style assertions)
@@ -177,7 +177,7 @@ Anti-pattern: Do not render boundary claims as prose; do not author table conten
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+- pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
 
 ## Dependencies
 Depends on: ['GBC-003', 'GBC-004', 'GBC-009']
@@ -204,7 +204,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -254,7 +254,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -306,7 +306,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -356,7 +356,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -406,7 +406,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -455,7 +455,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -503,42 +503,42 @@ Blocks:     none
       "type": "test_criterion",
       "description": "/docs/owns-vs-does-not-own renders >=2 tables with claims in td/th",
       "maps_to_ac": "AC-1",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables"
     },
     {
       "id": "TC-2",
       "type": "test_criterion",
       "description": "/porting renders a Deviation-column mapping table, a not-ported list, and prior-art text",
       "maps_to_ac": "AC-2",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art"
     },
     {
       "id": "TC-3",
       "type": "test_criterion",
       "description": "boundary page has a gaps section with >=1 item and names react-native-reusables",
       "maps_to_ac": "AC-3",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables"
     },
     {
       "id": "TC-4",
       "type": "test_criterion",
       "description": "boundary tables render only on /docs/owns-vs-does-not-own",
       "maps_to_ac": "AC-4",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables"
     },
     {
       "id": "TC-5",
       "type": "test_criterion",
       "description": "example-app anchor resolves non-404",
       "maps_to_ac": "AC-5",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables"
     },
     {
       "id": "TC-6",
       "type": "test_criterion",
       "description": "markdown tables in Prose render with zebra/border/sticky styling and no hex literals",
       "maps_to_ac": "AC-6",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art"
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art"
     }
   ]
 }

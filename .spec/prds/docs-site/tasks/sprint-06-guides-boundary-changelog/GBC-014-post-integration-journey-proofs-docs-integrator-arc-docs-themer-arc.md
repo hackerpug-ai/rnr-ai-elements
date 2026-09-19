@@ -43,7 +43,7 @@ Success state: pnpm e2e:docs exits 0 with both journey specs passing and evidenc
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts
   TEST_FUNCTION: journeys/docs-integrator-arc: read and copy the install-and-wire path end to end
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc
+  VERIFY: pnpm e2e:docs --grep journeys/docs-integrator-arc
   SCENARIO:
         MUST_OBSERVE: ['/docs/installation 200', '/docs/quickstart 200', '/registry 200 with 56 rows', '/docs/owns-vs-does-not-own 200', 'absolute-URL install command only', 'the boundary example-app section renders the live-chat characterization (a streaming chat exists at /live-chat)', 'the header shows Components, Registry, Guides, Porting, Changelog, each resolving 200']
         MUST_NOT_OBSERVE: ['engine choice in the URL', 'engine reset mid-journey', 'a short-name or relative install command']
@@ -58,7 +58,7 @@ Success state: pnpm e2e:docs exits 0 with both journey specs passing and evidenc
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts
   TEST_FUNCTION: journeys/docs-integrator-arc: engine choice never leaks or resets
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc
+  VERIFY: pnpm e2e:docs --grep journeys/docs-integrator-arc
   SCENARIO:
         MUST_OBSERVE: ['engine persisted across >=3 pages', 'no engine in URL across >=5 pages']
         MUST_NOT_OBSERVE: ['an engine query param or path segment', 'a mid-journey engine reset']
@@ -73,7 +73,7 @@ Success state: pnpm e2e:docs exits 0 with both journey specs passing and evidenc
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts
   TEST_FUNCTION: journeys/docs-themer-arc: re-theme the suite through the documented token seam
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc
+  VERIFY: pnpm e2e:docs --grep journeys/docs-themer-arc
   SCENARIO:
         MUST_OBSERVE: ['/docs/theming 200 with token map', 'token-customize guide 200', 'seam links on seam-using pages 200', 'no tailwind.config.js statement']
         MUST_NOT_OBSERVE: ['stale token swatches after toggle', 'a flash on theme flip', 'dead seam links']
@@ -88,7 +88,7 @@ Success state: pnpm e2e:docs exits 0 with both journey specs passing and evidenc
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts
   TEST_FUNCTION: journeys/docs-themer-arc: seam links resolve to the guides
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc
+  VERIFY: pnpm e2e:docs --grep journeys/docs-themer-arc
   SCENARIO:
         MUST_OBSERVE: ['renderMarkdown seam link 200', 'TextClassContext seam link 200']
         MUST_NOT_OBSERVE: ['a dead seam link']
@@ -124,8 +124,8 @@ Anti-pattern: Mock renderer or stubbed content standing in for the integrated si
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc
+- pnpm e2e:docs --grep journeys/docs-integrator-arc
+- pnpm e2e:docs --grep journeys/docs-themer-arc
 
 ## Dependencies
 Depends on: ['GBC-008', 'GBC-009', 'GBC-010', 'GBC-013'] — external prerequisite: sprint-05 ORI-CONT-004 /docs/quickstart exists (block or skip-with-reason if unmet; do not RED forever for a non-sprint-06 reason)
@@ -152,42 +152,42 @@ Blocks:     none
       "source": "AC-1",
       "type": "behavioral",
       "statement": "integrator arc completes end to end with absolute-URL commands",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc"
+      "verify": "pnpm e2e:docs --grep journeys/docs-integrator-arc"
     },
     {
       "id": "GBC-014-R2",
       "source": "AC-2",
       "type": "behavioral",
       "statement": "engine never leaks into URL nor resets",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc"
+      "verify": "pnpm e2e:docs --grep journeys/docs-integrator-arc"
     },
     {
       "id": "GBC-014-R3",
       "source": "AC-3",
       "type": "behavioral",
       "statement": "themer arc completes with live swatches",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc"
+      "verify": "pnpm e2e:docs --grep journeys/docs-themer-arc"
     },
     {
       "id": "GBC-014-R4",
       "source": "AC-4",
       "type": "behavioral",
       "statement": "seam links resolve",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc"
+      "verify": "pnpm e2e:docs --grep journeys/docs-themer-arc"
     },
     {
       "id": "GBC-014-R5",
       "source": "TC-1",
       "type": "boolean-check",
       "statement": "integrator arc",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc"
+      "verify": "pnpm e2e:docs --grep journeys/docs-integrator-arc"
     },
     {
       "id": "GBC-014-R6",
       "source": "TC-3",
       "type": "boolean-check",
       "statement": "themer arc",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc"
+      "verify": "pnpm e2e:docs --grep journeys/docs-themer-arc"
     }
   ]
 }

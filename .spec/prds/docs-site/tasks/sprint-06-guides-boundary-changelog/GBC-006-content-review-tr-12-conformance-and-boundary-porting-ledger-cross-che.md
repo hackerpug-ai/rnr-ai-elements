@@ -46,7 +46,7 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the gaps list names a shipped item, omits a known gap, or the not-ported list overlaps a shipped item']
         EVIDENCE: file_artifact
@@ -64,7 +64,7 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['forbidden terms (styling engine, flavor, registry variant, group, flag, support level, deps, dev build) appear in authored prose', "'component' used as a synonym for a shippable unit — legal only as the registry:component schema type or quoted code", 'an authored page with no checklist verdict recorded']
         EVIDENCE: file_artifact
@@ -82,7 +82,7 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['reconciliation introduced a boundary-table copy on /porting or a second boundary page']
         EVIDENCE: file_artifact
@@ -100,7 +100,7 @@ Success state: The stranger's gate cross-check passes: boundary gaps list, 56 le
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts
   TEST_FUNCTION: FLOW-DOCS-04-boundary-ownership-tables
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['a contradiction is silently tolerated']
         EVIDENCE: file_artifact
@@ -144,8 +144,8 @@ Anti-pattern: a gap naming a shipped item; a known missing element absent from t
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
+- pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables
+- pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art
 
 ## Dependencies
 Depends on: ['GBC-003', 'GBC-004']
@@ -183,7 +183,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -197,7 +197,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -211,7 +211,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -225,7 +225,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -239,7 +239,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -253,7 +253,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -267,7 +267,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-05-porting-map-and-prior-art",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -281,7 +281,7 @@ Blocks:     none
       "flow_ref": "FLOW-DOCS-04-boundary-ownership-tables",
       "test_file": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
       "test_function": "FLOW-DOCS-04-boundary-ownership-tables",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-04-boundary-ownership-tables",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",

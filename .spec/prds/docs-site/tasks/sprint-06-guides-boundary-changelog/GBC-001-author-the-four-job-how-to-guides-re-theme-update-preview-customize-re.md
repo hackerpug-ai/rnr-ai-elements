@@ -51,7 +51,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the guide route is disconnected from its markdown source or renders an empty shell, or the guide is not listed on /guides']
         EVIDENCE: file_artifact
@@ -69,7 +69,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the add command is absent, short-name, relative, or templated after page load']
         EVIDENCE: file_artifact
@@ -87,7 +87,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the guide omits one seam, or seam-map.ts still points at /docs/theming#']
         EVIDENCE: file_artifact
@@ -105,7 +105,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the guide is not linked from /guides, or describes a dev-client-only item as an Expo Go preview']
         EVIDENCE: file_artifact
@@ -123,7 +123,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
   SURFACE_POLICY: .spec/e2e-policy/surface.json
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ["a guide restates 'Tailwind v4 + @theme implies the nativewind tree' or 'Tailwind v3 implies uniwind'", "any guide prints the literal 'nativewind v3' or 'NativeWind 3' as a version claim"]
         EVIDENCE: file_artifact
@@ -172,7 +172,7 @@ Anti-pattern: prose walls without steps; duplicating the Theming token map; engi
 - pnpm exec tsc --noEmit
 - pnpm exec biome ci .
 - pnpm --filter @rnr-ai-elements/docs build
-- pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+- pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index
 
 ## Dependencies
 Depends on: none
@@ -211,7 +211,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -265,7 +265,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -316,7 +316,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -367,7 +367,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -417,7 +417,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -468,7 +468,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -482,7 +482,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -496,7 +496,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -510,7 +510,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -524,7 +524,7 @@ Blocks:     ['GBC-002']
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
-      "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "verify": "pnpm e2e:docs --grep FLOW-DOCS-03-five-guides-index",
       "test_tier": "e2e",
       "verification_service": "built dist over astro preview at http://localhost:4321",
       "surface_policy": ".spec/e2e-policy/surface.json",
