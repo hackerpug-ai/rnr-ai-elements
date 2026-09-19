@@ -1,0 +1,12 @@
+Final re-verification (after the AC-2 probe was removed and the tree restored):
+  commit at verification: 75e5cc9ece17e1d64048fdd1117d98885c876f03 (the fix commit)
+  command: pnpm check:fallow
+  result: exit 0 — "✓ No issues in 5 changed files" (the only non-committed files are this evidence dir)
+  scope check: the only semantic change vs base 614daa8 is the single ignorePatterns
+             entry "+ packages/docs-snippets/**" in .fallowrc.json. All other staged
+             files are this evidence dir (tests/sprint-05-orient-search/evidence/
+             FIX-ORI-RN-001-1/*) and the owned scratch (.tmp/FIX-ORI-RN-001-1/*).
+  invariant: the AC-2 probe (probe-unresolved.ts) is gone and the working tree is
+             byte-exact restored (status/tree sha256 before === after — see
+             probe-restore.json).
+  captured_at: 2026-09-15T00:52:00Z

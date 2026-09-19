@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004
+
+ ❯ tests/sprint-04-generated-reference/seam-contract.test.ts (4 tests | 1 failed | 3 skipped) 5ms
+   × REF-004-seam-map-derivation: real counts from real sourceFiles text 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/seam-contract.test.ts > REF-004-seam-map-derivation: real counts from real sourceFiles text
+Error: Cannot find module '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004/apps/docs/src/lib/seam-map.ts' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-004/tests/sprint-04-generated-reference/seam-contract.test.ts
+ ❯ tests/sprint-04-generated-reference/seam-contract.test.ts:115:27
+    113| it('REF-004-seam-map-derivation: real counts from real sourceFiles tex…
+    114|   // RED at task start: the module does not exist yet (import names th…
+    115|   const { deriveSeams } = await import(SEAM_MAP);
+       |                           ^
+    116|
+    117|   const items = registryComponentItems();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:01:04
+   Duration  101ms (transform 13ms, setup 0ms, import 19ms, tests 5ms, environment 0ms)
+

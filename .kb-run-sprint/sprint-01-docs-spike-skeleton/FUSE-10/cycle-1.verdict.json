@@ -1,0 +1,16 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "My own pnpm e2e:docs exit=0: ordered markers registry(9)<gallery(28)<astro Complete!(47)<Playwright(60); 4 passed, 0 failed, 0 retried, no 'astro dev'. Grep run: exactly 1 test x 3 projects. Contracted vitest verify exit=0. RED log: exit 254 script-not-found."},
+    {"id": "AC-2", "satisfied": true, "evidence": "vitest -t FUSE-10-config-contract exit=0: testDir, testMatch '**/*.spec.ts', retries 0, astro preview not dev, --port 4321, strict guard exit(1), localhost url, reuse !CI, 3 projects incl. nojs. RED: config absent, exit=1."},
+    {"id": "TC-1", "satisfied": true, "evidence": "Independent run exit 0; chain ordering observed at /tmp/fuse10-e2e-run.log lines 9, 28, 47, 60."},
+    {"id": "TC-2", "satisfied": true, "evidence": "runner.spec.ts:6-10 asserts GET / returns 200 plus non-empty title; canary green in all 3 projects, 0 failed, 0 retried."},
+    {"id": "TC-3", "satisfied": true, "evidence": "--grep FUSE-10-runner-turnkey matched exactly 1 test (3 passed = 1 x 3 projects); ci-chain-order.test.ts:131-134 also asserts grep excludes the deliv wrapper."},
+    {"id": "TC-4", "satisfied": true, "evidence": "runner-config.test.ts:9-47 asserts every TC-4 field; vitest exit=0."},
+    {"id": "SCOPE", "satisfied": true, "evidence": "No writeProhibited path touched. Two accepted deviations: pnpm-lock.yaml (purely additive @playwright/test chain, mechanical to sanctioned devDependency); deliv-03-112 wrapper — FUSE-02's landed main comment explicitly reserved the wrap for FUSE-10, body byte-identical, wrapper calls the real exported FLOW function, skip guards filesystem-mutating body from project races."},
+    {"id": "TDD/quality gates", "satisfied": true, "evidence": "typecheck exit=0; biome ci exit=0 on all 6 touched paths; install --frozen-lockfile exit=0; JUnit+HTML at apps/docs/playwright-report/; port 4321 free after runs; RED logs present in .tmp/FUSE-10/cycle-1/red/."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Real runner over real services, no stubs. I independently ran pnpm e2e:docs (exit 0, ordered chain, canary 200 + non-empty title, 0 failed/0 retried, no 'astro dev'), both grep-forwarding paths, both vitest verifies, typecheck, and biome — all green. The ci-chain-order rewrite is strictly stronger than FUSE-01's main version; guard and foreground pin verified against astro 7.3.2 source; negative controls genuinely fail occupied-port and foreign-server cases. Lockfile and FUSE-02 wrapper are the only scope deviations, both sanctioned and additive."
+}

@@ -1,0 +1,111 @@
+---
+import CopyButton from '../components/islands/CopyButton.astro';
+import Layout from '../layouts/DocsLayout.astro';
+import LedgerFilter from '../components/islands/LedgerFilter.astro';
+import LedgerTable from '../components/LedgerTable.astro';
+import items from '../data/registry-items.json';
+
+/**
+ * FUSE-06 + ORI-AST-007 — the generated /registry ledger. Every row derives
+ * from the FUSE-05 artifact at build time; there is no hand-editable ledger
+ * source under apps/docs src (T-GEND-031), and per-row commands come from the
+ * same dataset the component pages use — never a second source.
+ *
+ * The table itself composes through LedgerTable (rich cells over the shared
+ * DataTable); the LedgerFilter island supplies the category + engine + text
+ * controls. The engine base URLs are copyable text (no <a href> wrapper): a
+ * bare engine base URL has no resolvable destination on the deployed site
+ * (public/r is a directory of item JSON, not an index page), so wrapping it
+ * in a link would emit a 404 target the link-checker correctly rejects.
+ */
+type LedgerItem = {
+  name: string;
+  title: string;
+  description: string;
+  type: string;
+  engines: string[];
+  expoGo: boolean;
+};
+
+const ledger = items as LedgerItem[];
+
+const NATIVEWIND_BASE = 'https://rnraielements.com/r/nativewind';
+const UNIWIND_BASE = 'https://rnraielements.com/r/uniwind';
+
+const categories = [
+  {
+    id: 'component',
+    label: 'component',
+    count: ledger.filter((item) => item.type === 'registry:component').length,
+  },
+  {
+    id: 'ui',
+    label: 'ui',
+    count: ledger.filter((item) => item.type === 'registry:ui').length,
+  },
+  {
+    id: 'lib',
+    label: 'lib',
+    count: ledger.filter((item) => item.type === 'registry:lib').length,
+  },
+];
+---
+
+<Layout title="Registry ledger — RNR AI Elements">
+  <main class="ledger">
+    <h1>Registry ledger — all {ledger.length} items</h1>
+    <p class="ledger__note">
+      Generated at build from public/r/*.json — this ledger cannot drift from the
+      shipped artifact.
+    </p>
+
+    <section class="ledger__bulk-add" aria-labelledby="bulk-add-heading">
+      <h2 id="bulk-add-heading">Add every item at once</h2>
+      <p>
+        The CLI accepts an engine base URL: passing one installs that engine's
+        full item set. Copy either base URL:
+      </p>
+      <ul class="ledger__bases">
+        <li>
+          <code>{NATIVEWIND_BASE}</code>
+          <CopyButton command={NATIVEWIND_BASE} label="Copy the nativewind base URL" />
+        </li>
+        <li>
+          <code>{UNIWIND_BASE}</code>
+          <CopyButton command={UNIWIND_BASE} label="Copy the uniwind base URL" />
+        </li>
+      </ul>
+    </section>
+
+    <LedgerFilter target=".ledger" categories={categories} engine />
+
+    <LedgerTable items={ledger} />
+  </main>
+</Layout>
+
+<style>
+  .ledger {
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .ledger__note {
+    font-weight: 700;
+  }
+  .ledger__bases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .ledger__bases li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ledger__bases code {
+    overflow-wrap: anywhere;
+  }
+</style>

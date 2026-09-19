@@ -20,5 +20,15 @@ export default defineConfig({
     // an inert string and no style can be asserted at all.
     include: ['tests/**/*.test.ts'],
     exclude: ['**/node_modules/**', 'apps/**'],
+    // The count drill (scripts/docs-data/drill-item-count.ts) mutates the real
+    // packages/registry/registry.json for ~13s and byte-restores it. With parallel
+    // test files, registry readers (enrichment-modules) see the mutated 55-item
+    // registry mid-drill and fail their 56-item assertions — deterministically.
+    // The enrichment drill (scripts/docs-data/drill-enrichment.ts) widens the
+    // same hazard to four mutation windows (shimmer.tsx, dev-client-matrix.json,
+    // registry.json, conversation.tsx) plus two full docs builds over the
+    // mutated tree — any parallel lane file reading those paths mid-drill fails.
+    // Serializing test files makes every mutation window invisible to other files.
+    fileParallelism: false,
   },
 });

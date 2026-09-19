@@ -1,0 +1,164 @@
+{
+  "sprint": "sprint-04-generated-reference",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference",
+    "sprint_slug": "sprint-04-generated-reference"
+  },
+  "planned_at": "2026-09-14T01:36:29Z",
+  "planned_steps": 11,
+  "steps": [
+    {
+      "n": 1,
+      "text": "At the repo root run `pnpm e2e:docs` \u2014 it exits 0 with retries: 0: the ordered chain completes with every lane green including the NEW sprint-04 lane (eight FLOW specs plus riding specs and the enrichment-drill vitest file).",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 1",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-14-reference-page-anatomy",
+          "FLOW-GEND-15-family-pager-stays-in-family",
+          "FLOW-GEND-20-exact-absolute-url-command-copy",
+          "FLOW-GEND-21-dependency-panel-peers",
+          "FLOW-GEND-34-props-table-generated",
+          "FLOW-GEND-35-code-view-byte-identical-to-shipped-source",
+          "FLOW-SHELL-13-engine-tab-persists-across-pages",
+          "FLOW-SHELL-14-tab-panels-in-initial-html"
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "text": "Run the reference-page-anatomy spec \u2014 3 passed (chromium-desktop, chromium-mobile, chromium-nojs); evidence JSON asserts across all 39 pages that top-level section DOM order is install before source/props/theming/usage (+dependencies per AMEND-1) and 0 preview-panel elements exist.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 2",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-14-reference-page-anatomy"
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "text": "Run the family-pager spec \u2014 3 passed; evidence records set(pages_reachable_via_pager) == set(family_members) for each of the seven families and every pager href 200 in dist/.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 3",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-15-family-pager-stays-in-family"
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "text": "Run the exact-absolute-url-command-copy spec \u2014 3 passed; every one of the 39 component pages yields, per engine tab, a one-click copy matching the locked absolute-URL regex with a visible success state.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 4",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-20-exact-absolute-url-command-copy"
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "text": "Run the dependency-panel-peers spec \u2014 3 passed; panels on shimmer and conversation equal registry dependencies + engine-resolved registryDependencies + the AI SDK v7 peer, >=5 sampled panels match live-served /r/nativewind/*.json with 0 invented or dropped entries.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 5",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-21-dependency-panel-peers"
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "text": "Run the props-table-generated spec \u2014 3 passed; props_tables == 39 in the evidence JSON, every table Name/Type/Default/Description headers and >=1 row (conversation: 5 rows), types as resolved text.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 6",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-34-props-table-generated"
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "text": "Run the code-view-byte-identical spec \u2014 3 passed; >=5 sampled multi-file items byte-match the Code view text against files[] fetched from http://localhost:4321/r/nativewind/{item}.json \u2014 zero normalization diffs.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 7",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-35-code-view-byte-identical-to-shipped-source"
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "text": "Run the engine-tab-persistence spec \u2014 3 passed (chromium-nojs asserts the stacked server-rendered fallback); uniwind selection persists across soft and hard navigation, no engine state in any URL.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 8",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-13-engine-tab-persists-across-pages"
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "text": "Run the tab-panels-in-initial-html spec \u2014 3 passed; raw pre-JS HTML contains both engine /r/ literal strings inside server-rendered tab panels; with JavaScript disabled both panels render stacked and readable.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 9",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-SHELL-14-tab-panels-in-initial-html"
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "text": "Over `astro preview` open http://localhost:4321/components/conversation and read the props table, dependency panel, theming note + usage snippet, full untruncated source with QR aside; then curl /r/nativewind/conversation.json and diff served files[] against the Code view \u2014 zero byte differences.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 10",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-14-reference-page-anatomy",
+          "FLOW-GEND-21-dependency-panel-peers",
+          "FLOW-GEND-34-props-table-generated",
+          "FLOW-GEND-35-code-view-byte-identical-to-shipped-source"
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "text": "At a 390px viewport check the FLOW-GEND-14 mobile frame: props table stacked cards, dependency table horizontal scroll with sticky first column, zero clipped text, copy buttons + QR aside operable with touch targets >=44px.",
+      "type": "terminal",
+      "method": "locked-flow",
+      "literal_cmd": "python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 11",
+      "assertion": {
+        "kind": "flow_evidence",
+        "flow_ids": [
+          "FLOW-GEND-14-reference-page-anatomy"
+        ]
+      }
+    }
+  ]
+}

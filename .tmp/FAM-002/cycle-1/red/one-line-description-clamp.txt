@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002
+
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts (4 tests | 1 failed | 3 skipped) 7ms
+   × FAM-002-one-line-description-clamp: all 39 real descriptions window to <=120 chars at a word boundary, ellipsis only on truncation 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/component-contract.test.ts > FAM-002-one-line-description-clamp: all 39 real descriptions window to <=120 chars at a word boundary, ellipsis only on truncation
+Error: Cannot find module '/apps/docs/src/lib/one-line-description' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-002/tests/sprint-03-family-browse/component-contract.test.ts
+ ❯ tests/sprint-03-family-browse/component-contract.test.ts:51:34
+     49| it('FAM-002-one-line-description-clamp: all 39 real descriptions windo…
+     50|   // RED at task start: the module does not exist, so this dynamic imp…
+     51|   const { oneLineDescription } = await import('../../apps/docs/src/lib…
+       |                                  ^
+     52|
+     53|   expect(existsSync(REGISTRY), `the real registry exists at ${REGISTRY…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  11:31:05
+   Duration  135ms (transform 24ms, setup 0ms, import 30ms, tests 7ms, environment 0ms)
+

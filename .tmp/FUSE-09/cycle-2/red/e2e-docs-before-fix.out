@@ -1,0 +1,152 @@
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09
+> pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+11:38:14 [types] Generated 87ms
+11:38:14 [build] output: "static"
+11:38:14 [build] mode: "static"
+11:38:14 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/apps/docs/dist/
+11:38:14 [build] Collecting build info...
+11:38:14 [build] ✓ Completed in 103ms.
+11:38:14 [build] Building static entrypoints...
+11:38:14 [vite] ✓ built in 286ms
+11:38:14 [vite] ✓ built in 23ms
+11:38:14 [build] Rearranging server assets...
+
+ generating static routes 
+11:38:14   ├─ /islands/copy-button/index.html (+13ms) 
+11:38:14   ├─ /index.html (+3ms) 
+11:38:14 ✓ Completed in 30ms.
+
+11:38:14 [build] ✓ Completed in 377ms.
+11:38:14 [build] 2 page(s) built in 482ms
+11:38:14 [build] Complete!
+Removing unused browser at /Users/justinrich/Library/Caches/ms-playwright/chromium-1169
+Removing unused browser at /Users/justinrich/Library/Caches/ms-playwright/chromium_headless_shell-1169
+
+Running 15 tests using 9 workers
+
+[1/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:101:1 › FLOW-DELIV-03-112-file-completeness
+[2/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[3/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:101:1 › FLOW-DELIV-03-112-file-completeness
+[4/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:30:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[5/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:34:1 › FLOW-GEND-02-hero-install-command-copy
+[6/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:34:1 › FLOW-GEND-02-hero-install-command-copy
+[7/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[8/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:30:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[9/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:30:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[10/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:101:1 › FLOW-DELIV-03-112-file-completeness
+[11/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:34:1 › FLOW-GEND-02-hero-install-command-copy
+[chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:101:1 › FLOW-DELIV-03-112-file-completeness
+
+
+[12/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:44:1 › FUSE-09 TC-2 success state within 500ms and zero-JS selectable fallback
+[13/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:44:1 › FUSE-09 TC-2 success state within 500ms and zero-JS selectable fallback
+  1) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:30:1 › FUSE-09 TC-1 copy places the exact command on the clipboard 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json"
+    Received: ""
+
+      38 |
+      39 |   const clipboard = await page.evaluate(() => navigator.clipboard.readText());
+    > 40 |   expect(clipboard).toBe(COMMAND); // no trailing newline, no wrap artifact
+         |                     ^
+      41 |   await context.close();
+      42 | });
+      43 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:40:21
+
+    Error Context: test-results/copy-button-FUSE-09-TC-1-c-73c07-ct-command-on-the-clipboard-chromium-nojs/error-context.md
+
+
+[14/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[15/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:44:1 › FUSE-09 TC-2 success state within 500ms and zero-JS selectable fallback
+  2) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:34:1 › FLOW-GEND-02-hero-install-command-copy 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('rnr-copy-button button')
+    Expected: "copied"
+    Received: "idle"
+    Timeout:  500ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('rnr-copy-button button') with timeout 500ms
+      - waiting for locator('rnr-copy-button button')
+        7 × locator resolved to <button type="button" data-state="idle" data-astro-cid-d4l6eyi2="" class="copy-button__trigger" aria-label="Copy install command">Copy</button>
+          - unexpected value "idle"
+
+
+      47 |
+      48 |   // Visible success state within 500 ms of the click (by value, not class name).
+    > 49 |   await expect(trigger).toHaveAttribute('data-state', 'copied', { timeout: 500 });
+         |                         ^
+      50 |   await expect(trigger).toBeVisible();
+      51 |
+      52 |   const clipboard = await page.evaluate(() => navigator.clipboard.readText());
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/home.spec.ts:49:25
+
+    Error Context: test-results/home-FLOW-GEND-02-hero-install-command-copy-chromium-nojs/error-context.md
+
+
+  3) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:44:1 › FUSE-09 TC-2 success state within 500ms and zero-JS selectable fallback 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('rnr-copy-button button')
+    Expected: "copied"
+    Received: "idle"
+    Timeout:  500ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('rnr-copy-button button') with timeout 500ms
+      - waiting for locator('rnr-copy-button button')
+        7 × locator resolved to <button type="button" data-state="idle" data-astro-cid-d4l6eyi2="" class="copy-button__trigger" aria-label="Copy install command">Copy</button>
+          - unexpected value "idle"
+
+
+      52 |   const trigger = page.locator(TRIGGER);
+      53 |   await trigger.click();
+    > 54 |   await expect(trigger).toHaveAttribute('data-state', 'copied', { timeout: 500 });
+         |                         ^
+      55 |   await context.close();
+      56 |
+      57 |   const noJsContext = await browser.newContext({ javaScriptEnabled: false });
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-09/tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:54:25
+
+    Error Context: test-results/copy-button-FUSE-09-TC-2-s-be3a8-zero-JS-selectable-fallback-chromium-nojs/error-context.md
+
+
+  3 failed
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:30:1 › FUSE-09 TC-1 copy places the exact command on the clipboard 
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:44:1 › FUSE-09 TC-2 success state within 500ms and zero-JS selectable fallback 
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:34:1 › FLOW-GEND-02-hero-install-command-copy 
+  2 skipped
+  10 passed (5.7s)
+ ELIFECYCLE  Command failed with exit code 1.

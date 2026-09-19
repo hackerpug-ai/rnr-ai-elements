@@ -1,0 +1,67 @@
+{
+ "sprint": "sprint-03-family-browse",
+ "sprint_identity": {
+  "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-03-family-browse",
+  "sprint_slug": "sprint-03-family-browse"
+ },
+ "run_id": "2026-09-12T21:42:00Z",
+ "verdict": "pass",
+ "steps_total": 5,
+ "steps_executed": 5,
+ "steps_passed": 5,
+ "ui_driver": "none",
+ "exec_surface": "surface:521 (205ECEA8-0EF1-4EAC-B975-5AA1AD4E2030)",
+ "qa_surface_id": "4D04AC79-43C2-448E-A3CE-91EA40FB9F08",
+ "steps": [
+  {
+   "n": 1,
+   "text": "At the repo root run `pnpm e2e:docs` \u2014 exits 0 with retries: 0, every lane green including superseded sprint-01 lanes, all sprint-02 lanes, and the new tests/sprint-03-family-browse lane.",
+   "type": "terminal",
+   "executed": true,
+   "result": "pass",
+   "evidence": "run_flow --step 1: exit 0; flows FLOW-GEND-07-components-page-39-in-7-families, FLOW-GEND-08-family-card-anatomy all PASS (exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+   "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-03-family-browse/.gate-evidence/2026-09-12T21:43:00Z/step1.log",
+   "duration_ms": 13215
+  },
+  {
+   "n": 2,
+   "text": "Run `pnpm playwright test tests/sprint-03-family-browse/components-family-grid.spec.ts --grep FLOW-GEND-07-components-page-39-in-7-families` \u2014 3 passed; evidence JSON at the locked artifact path.",
+   "type": "terminal",
+   "executed": true,
+   "result": "pass",
+   "evidence": "run_flow --step 2: exit 0; flows FLOW-GEND-07-components-page-39-in-7-families all PASS (exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+   "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-03-family-browse/.gate-evidence/2026-09-12T21:43:00Z/step2.log",
+   "duration_ms": 7540
+  },
+  {
+   "n": 3,
+   "text": "Run `pnpm playwright test tests/sprint-03-family-browse/card-anatomy.spec.ts --grep FLOW-GEND-08-family-card-anatomy` \u2014 3 passed; cards_with_all_fields == 39 in the evidence JSON.",
+   "type": "terminal",
+   "executed": true,
+   "result": "pass",
+   "evidence": "run_flow --step 3: exit 0; flows FLOW-GEND-08-family-card-anatomy all PASS (exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+   "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-03-family-browse/.gate-evidence/2026-09-12T21:43:00Z/step3.log",
+   "duration_ms": 7159
+  },
+  {
+   "n": 4,
+   "text": "Built dist over astro preview: tally seven anchored family sections in order (counts 3,7,6,7,4,1,11), 39 cards total, no duplicate item, every card links to its real /components/{item} page.",
+   "type": "terminal",
+   "executed": true,
+   "result": "pass",
+   "evidence": "run_flow --step 4: exit 0; flows FLOW-GEND-07-components-page-39-in-7-families all PASS (exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+   "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-03-family-browse/.gate-evidence/2026-09-12T21:43:00Z/step4.log",
+   "duration_ms": 7168
+  },
+  {
+   "n": 5,
+   "text": "Every card shows name + non-empty <=120-char description + category chip + exact Expo Go verdict badge; all 56 /registry rows show the same badge.",
+   "type": "terminal",
+   "executed": true,
+   "result": "pass",
+   "evidence": "run_flow --step 5: exit 0; flows FLOW-GEND-08-family-card-anatomy all PASS (exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+   "log": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-03-family-browse/.gate-evidence/2026-09-12T21:43:00Z/step5.log",
+   "duration_ms": 8287
+  }
+ ]
+}

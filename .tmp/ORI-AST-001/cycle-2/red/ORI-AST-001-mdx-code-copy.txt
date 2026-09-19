@@ -1,0 +1,41 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-001
+
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts (4 tests | 1 failed | 3 skipped) 1840ms
+   × ORI-AST-001-mdx-code-copy 1801ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/docs-collection.test.ts > ORI-AST-001-mdx-code-copy
+AssertionError: clipboard equals displayed source (terminal newline preserved): expected 'import { Button } from \'@/registry/n…' to be 'import { Button } from \'@/registry/n…' // Object.is equality
+
+- Expected
++ Received
+
+@@ -208,6 +208,5 @@
+      </View>
+    );
+  }
+
+  export { Conversation, ConversationScrollButton, useConversation };
+-
+
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts:578:91
+    576|       // Byte-exact: the clipboard equals the unnormalized displayed s…
+    577|       // served content, including the terminal newline.
+    578|       expect(clipboard, 'clipboard equals displayed source (terminal n…
+       |                                                                                           ^
+    579|         displayed,
+    580|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  00:25:38
+   Duration  2.06s (transform 22ms, setup 0ms, import 154ms, tests 1.84s, environment 0ms)
+

@@ -1,0 +1,81 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-006
+
+ ❯ tests/sprint-05-orient-search/dist-link-gate.test.ts (4 tests | 4 failed) 7992ms
+   × ORI-AST-006-resolves-emitted-targets 120ms
+   × ORI-AST-006-rejects-missing-documents 170ms
+   × ORI-AST-006-validates-fragments 281ms
+   × ORI-AST-006-checks-external-policy 186ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/dist-link-gate.test.ts > ORI-AST-006-resolves-emitted-targets
+AssertionError: traversal counts emitted html files: expected '' to match /\d+ html files/
+
+- Expected:
+/\d+ html files/
+
++ Received:
+""
+
+ ❯ tests/sprint-05-orient-search/dist-link-gate.test.ts:207:61
+    205|
+    206|   // Nonempty traversal covering every required route.
+    207|   expect(run.stdout, 'traversal counts emitted html files').toMatch(/\…
+       |                                                             ^
+    208|   expect(Number(/^\[docs-data\] link-check: (\d+) html files/.exec(run…
+    209|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/sprint-05-orient-search/dist-link-gate.test.ts > ORI-AST-006-rejects-missing-documents
+AssertionError: message-document deletion fails the gate: expected +0 not to be +0 // Object.is equality
+ ❯ tests/sprint-05-orient-search/dist-link-gate.test.ts:286:73
+    284|
+    285|       const failed = runChecker(['--dist', copy, '--origin', ORIGIN]);
+    286|       expect(failed.exit, `${drill.label} deletion fails the gate`).no…
+       |                                                                         ^
+    287|       expect(failed.stderr, `${drill.label} names the unresolved URL`)…
+    288|       expect(failed.stderr, `${drill.label} names the referring file`)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/sprint-05-orient-search/dist-link-gate.test.ts > ORI-AST-006-validates-fragments
+AssertionError: missing fragment fails the gate: expected +0 not to be +0 // Object.is equality
+ ❯ tests/sprint-05-orient-search/dist-link-gate.test.ts:347:64
+    345|
+    346|     const failed = runChecker(['--dist', copy, '--origin', ORIGIN]);
+    347|     expect(failed.exit, 'missing fragment fails the gate').not.toBe(0);
+       |                                                                ^
+    348|     expect(failed.stderr, 'names the complete fragment URL').toContain…
+    349|     expect(failed.stderr, 'names a referring file').toContain('docs/in…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/sprint-05-orient-search/dist-link-gate.test.ts > ORI-AST-006-checks-external-policy
+AssertionError: ordinary 404 produces a warning: expected '' to contain 'warning'
+
+- Expected
++ Received
+
+- warning
+
+ ❯ tests/sprint-05-orient-search/dist-link-gate.test.ts:385:64
+    383|     const ordinary = runChecker(['--dist', copy, '--origin', ORIGIN]);
+    384|     expect(ordinary.exit, `ordinary 404 warns and required refs pass: …
+    385|     expect(ordinary.stderr, 'ordinary 404 produces a warning').toConta…
+       |                                                                ^
+    386|     expect(ordinary.stderr, 'ordinary 404 names the URL').toContain(RE…
+    387|     expect(ordinary.stdout, 'external requests were actually made').to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  02:05:30
+   Duration  8.08s (transform 13ms, setup 0ms, import 22ms, tests 7.99s, environment 0ms)
+

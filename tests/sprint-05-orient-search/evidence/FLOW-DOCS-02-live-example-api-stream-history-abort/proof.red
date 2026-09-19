@@ -1,0 +1,119 @@
+proof.red (ORI-AI-001 functional RED — pre-implementation candidate)
+command: pnpm exec vitest run tests/sprint-05-orient-search/live-example-api.test.ts -t FLOW-DOCS-02-live-example-api-stream-history-abort
+command_sha256: fcc597f404a405925fe0ad9a8ebd3eee2bdac90d28dcd93048e4774faf92dab1
+exit_code: 1
+tests_selected: 4
+tests_failed: 4
+verdict: RED
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-001
+
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts (4 tests | 4 failed) 448ms
+     × AC-1 streams real deltas and retains the nonce in SDK history [PRIMARY] 106ms
+     × AC-2 rejects invalid input and startup, with a real provider control 0ms
+     × AC-3 surfaces genuine provider error, active cancellation and recovery 103ms
+     × AC-4 pins the hook contract, compiles both graphs and tears down owned children 236ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/live-example-api.test.ts [ tests/sprint-05-orient-search/live-example-api.test.ts ]
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-001/apps/example/server/index.ts'
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts:668:27
+    666|     exit: 0,
+    667|     sourceHashes: {
+    668|       serverIndex: sha256(readFileSync(join(REPO_ROOT, 'apps/example/s…
+       |                           ^
+    669|       serverChat: sha256(readFileSync(join(REPO_ROOT, 'apps/example/se…
+    670|       serverEnv: sha256(readFileSync(join(REPO_ROOT, 'apps/example/ser…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/live-example-api.test.ts > FLOW-DOCS-02-live-example-api-stream-history-abort > AC-1 streams real deltas and retains the nonce in SDK history [PRIMARY]
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts:248:29
+    246|   it('AC-1 streams real deltas and retains the nonce in SDK history [P…
+    247|     backend = await launchOwnedBackend({ port: MAIN_PORT });
+    248|     expect(backend.started).toBe(true);
+       |                             ^
+    249|
+    250|     const runNonce = nonce();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/live-example-api.test.ts > FLOW-DOCS-02-live-example-api-stream-history-abort > AC-2 rejects invalid input and startup, with a real provider control
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts:334:29
+    332|
+    333|   it('AC-2 rejects invalid input and startup, with a real provider con…
+    334|     expect(backend.started).toBe(true);
+       |                             ^
+    335|
+    336|     // Malformed JSON.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/live-example-api.test.ts > FLOW-DOCS-02-live-example-api-stream-history-abort > AC-3 surfaces genuine provider error, active cancellation and recovery
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts:498:29
+    496|   it('AC-3 surfaces genuine provider error, active cancellation and re…
+    497|     backend = await backend.selectModel('gpt-4.1-nonexistent-model-000…
+    498|     expect(backend.started).toBe(true);
+       |                             ^
+    499|     expect(backend.model).toBe('gpt-4.1-nonexistent-model-0000');
+    500|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/live-example-api.test.ts > FLOW-DOCS-02-live-example-api-stream-history-abort > AC-4 pins the hook contract, compiles both graphs and tears down owned children
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts:593:27
+    591|
+    592|     const serverTscExit = await runCommand(['exec', 'tsc', '--noEmit',…
+    593|     expect(serverTscExit).toBe(0);
+       |                           ^
+    594|
+    595|     const liveChatTscExit = await runCommand([
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  02:18:54
+   Duration  565ms (transform 28ms, setup 0ms, import 37ms, tests 448ms, environment 0ms)
+

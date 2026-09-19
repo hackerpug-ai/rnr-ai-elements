@@ -1,0 +1,73 @@
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  1) [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+
+    Error: image fixture sanity
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      168 |     for (const engine of ['nativewind', 'uniwind'] as const) {
+      169 |       const expected = resolveRegistryDependencies(item.registryDependencies, engine, VERSION);
+    > 170 |       expect(expected.length, `${item.name} fixture sanity`).toBeGreaterThan(0);
+          |                                                              ^
+      171 |       const table = pageDeps.locator(`tbody[data-engine-urls="${engine}"]`);
+      172 |       expect(await table.locator('code').allTextContents(), `${item.name} ${engine}`).toEqual(
+      173 |         expected,
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-012/tests/sprint-02-shell-hero/item-install-copy.spec.ts:170:62
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-desktop/error-context.md
+
+
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  2) [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+
+    Error: image fixture sanity
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      168 |     for (const engine of ['nativewind', 'uniwind'] as const) {
+      169 |       const expected = resolveRegistryDependencies(item.registryDependencies, engine, VERSION);
+    > 170 |       expect(expected.length, `${item.name} fixture sanity`).toBeGreaterThan(0);
+          |                                                              ^
+      171 |       const table = pageDeps.locator(`tbody[data-engine-urls="${engine}"]`);
+      172 |       expect(await table.locator('code').allTextContents(), `${item.name} ${engine}`).toEqual(
+      173 |         expected,
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-012/tests/sprint-02-shell-hero/item-install-copy.spec.ts:170:62
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-mobile/error-context.md
+
+
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  3) [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+
+    Error: image fixture sanity
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      168 |     for (const engine of ['nativewind', 'uniwind'] as const) {
+      169 |       const expected = resolveRegistryDependencies(item.registryDependencies, engine, VERSION);
+    > 170 |       expect(expected.length, `${item.name} fixture sanity`).toBeGreaterThan(0);
+          |                                                              ^
+      171 |       const table = pageDeps.locator(`tbody[data-engine-urls="${engine}"]`);
+      172 |       expect(await table.locator('code').allTextContents(), `${item.name} ${engine}`).toEqual(
+      173 |         expected,
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-012/tests/sprint-02-shell-hero/item-install-copy.spec.ts:170:62
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-nojs/error-context.md
+
+
+  3 failed
+    [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+    [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+    [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:87:1 › FLOW-GEND-20-exact-absolute-url-command-copy 

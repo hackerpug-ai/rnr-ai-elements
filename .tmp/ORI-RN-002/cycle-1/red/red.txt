@@ -1,0 +1,28 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-002
+
+ ❯ tests/sprint-05-orient-search/quickstart-sample-compile.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/quickstart-sample-compile.test.ts [ tests/sprint-05-orient-search/quickstart-sample-compile.test.ts ]
+Error: Cannot find module '../../packages/docs-snippets/shared/quickstart-messages' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-002/tests/sprint-05-orient-search/quickstart-sample-compile.test.ts
+ ❯ tests/sprint-05-orient-search/quickstart-sample-compile.test.ts:36:1
+     34| import { dirname, join } from 'node:path';
+     35| import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+     36| import { SEED_MESSAGES } from '../../packages/docs-snippets/shared/qui…
+       | ^
+     37| import {
+     38|   cleanupConsumer,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  02:01:38
+   Duration  99ms (transform 15ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+

@@ -1,0 +1,24 @@
+---
+/**
+ * Spike-only proof route for the CopyButton island (FUSE-09). Removed or
+ * repointed in Sprint 02 once every real page exercises the island. The
+ * command is composed from Astro.site so the absolute-URL form is structural,
+ * never hand-typed.
+ */
+import Layout from '../../layouts/DocsLayout.astro';
+import CopyButton from '../../components/islands/CopyButton.astro';
+
+const installUrl = new URL('r/nativewind/conversation.json', Astro.site);
+const command = `npx @react-native-reusables/cli@latest add ${installUrl.toString()}`;
+---
+
+<Layout title="Islands — CopyButton">
+  <main>
+    <h1>CopyButton island</h1>
+    <p>
+      Island 1/5 proof surface. The install command below is plain text: it is
+      selectable and copyable by hand even with JavaScript disabled.
+    </p>
+    <CopyButton command={command} />
+  </main>
+</Layout>

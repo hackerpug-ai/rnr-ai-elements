@@ -7,7 +7,14 @@
     "bash\\s+tests/sprint-01/install-(core|dirty-app)\\.test\\.sh",
     "maestro\\s+test\\s+\\.maestro/",
     "~/\\.maestro/bin/maestro\\s+test\\s+\\.maestro/",
-    "pnpm\\s+e2e:smoke:(ios|android)"
+    "pnpm\\s+e2e:smoke:(ios|android)",
+    "pnpm\\s+e2e:docs",
+    "pnpm\\s+--filter\\s+@rnr-ai-elements/docs\\s+(build|exec|preview)",
+    "astro\\s+(build|preview)",
+    "pnpm\\s+-w\\s+run\\s+(registry:build|gallery:manifest)",
+    "scripts/docs-data/(props|drill-item-count|prebuild)\\.ts",
+    "localhost:4321",
+    "navigateLocalhost|page\\.goto|request\\.(get|newContext)"
   ],
   "require_product_target_any": [
     "raw\\.githubusercontent\\.com/hackerpug-ai/rnr-ai-elements/v0\\.1\\.0/public/r/uniwind/",
@@ -16,6 +23,17 @@
     "apps/example/components/ui/(text|avatar|button|icon|popover)\\.tsx",
     "apps/example/app/index\\.tsx",
     "\\.maestro/cold-boot\\.yaml",
-    "design/goldens/mobile-(ios|android)/sprint-01/cold-boot\\.png"
+    "design/goldens/mobile-(ios|android)/sprint-01/cold-boot\\.png",
+    "rnraielements\\.com/r/nativewind/",
+    "apps/docs/dist/",
+    "apps/docs/public/r/nativewind/",
+    "packages/registry/registry\\.json",
+    "apps/docs/src/data/registry-items\\.json",
+    "rnraielements\\.com",
+    "rnraielements[\\\\\\\\]{0,2}\\\\.?com",
+    "/r/nativewind/",
+    "/registry",
+    "/components",
+    "conversation\\.json"
   ]
 }

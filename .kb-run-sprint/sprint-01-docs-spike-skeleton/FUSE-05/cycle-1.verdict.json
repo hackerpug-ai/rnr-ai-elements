@@ -1,0 +1,20 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "TC-1 exit 0 (28.5s real chain): 56 entries, exactly the 14 contract fields, 39 props arrays/17 null, expoGo+permissions verbatim vs manifest, '56 items; props resolved for 39/39' logged; 55-item drill failed naming shimmer, outputs byte-untouched."},
+    {"id": "AC-2", "satisfied": true, "evidence": "TC-2 exit 0 + deliv-03 spec PASS: 57 JSONs/engine, 114/114 sha256-identical to root, check-ignore exit 0 printing path, delete+rebuild byte-identical, git ls-files apps/docs/public empty."},
+    {"id": "AC-3", "satisfied": true, "evidence": "TC-3 + enrichment-gates FLOW-DELIV-01 exit 0: 9 families, 7 AI families split 39 components 3+7+6+7+4+1+11 exactly once, ui=11 registry:ui, lib=6 registry:lib (verified against real registry.json); families.json tracked, not ignored."},
+    {"id": "TC-1", "satisfied": true, "evidence": "Filtered vitest run exit 0; direct prebuild logs '[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files'."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Filtered vitest run exit 0 (14.96s): counts, byte-compare, check-ignore, delete+rebuild determinism all asserted over real processes."},
+    {"id": "TC-3", "satisfied": true, "evidence": "Filtered vitest run exit 0; prebuild family gate consumes committed families.json and exits 0."},
+    {"id": "ASSUMPTION-1-14-fields", "satisfied": true, "evidence": "boundary_contracts line 213 enumerates exactly 14 keys; CONTRACT_KEYS matches verbatim; FUSE-06 locks names against the emitted artifact, data-schema's extra fields are v1.1.0/v1.2.0 later additions. Prose '15' is a spec arithmetic slip. Accepted."},
+    {"id": "ASSUMPTION-2-family-assignment", "satisfied": true, "evidence": "Verified against real registry.json: tool family = genuine code-surface cluster (terminal, file-tree, stack-trace, schema-display, test-results, snippet, commit, env-vars, package-info, artifact); transcription correctly in voice cluster; audio-player/web-preview plausibly source renderers; ui/lib = exact type partitions. Accepted."},
+    {"id": "ASSUMPTION-3-pnpm-prepost", "satisfied": true, "evidence": "pnpm 10.32.1: docs build stdout contains the prebuild-only log line (TC-1 asserts), proving prebuild ran before build. Verified empirically."},
+    {"id": "ASSUMPTION-4-deliv03-snapshot", "satisfied": true, "evidence": "RED log shows the real failure (git checkout of then-untracked families.json); in-buffer snapshot/restore of the authored committed map around FUSE-02's delete-dir case is correct and minimal. Accepted."},
+    {"id": "SCOPE", "satisfied": true, "evidence": "git diff a1ef1cc..c4a1250 touches only writeAllowed files plus .tmp evidence logs (FUSE-04 sprint precedent); package.json changed only the prebuild line; tree clean after mutation-drill tests."},
+    {"id": "BLOCKER-tracked-generated-json", "satisfied": true, "evidence": "RULING: dispatch follow-up FIX — git rm --cached apps/docs/src/data/gallery-manifest.json + commit, verify fresh-clone regeneration. Tracked-but-ignored is NOT acceptable long-term: violates T-DELIV-004 'absent in fresh clone' and a bare docs build on fresh clone would consume the stale copy, masking gallery:manifest breakage. FUSE-05 did all it could in-scope (.gitignore line, check-ignore --no-index exit 0) and declared the conflict honestly; the ordered chain regenerates the manifest before consumption, so the human gate itself is not masked. Compatible with APPROVED; land the FIX before T-DELIV-004 and FUSE-06."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "FUSE-05 verified over real processes: chain green, 56-entry gated dataset, 14 contract fields, 39/17 props, verbatim verdicts, 114-file byte-identical gitignored public/r, deterministic rebuild, shimmer drill fails untouched, genuine RED. No stubs. One FIX: untrack gallery-manifest.json (FIX-FUSE-05-1, before FUSE-06)."
+}

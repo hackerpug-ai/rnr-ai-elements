@@ -1,0 +1,170 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-006
+
+ ❯ tests/sprint-04-generated-reference/data-table-contract.test.ts (4 tests | 1 failed | 3 skipped) 7ms
+   × REF-006-panel-testid-continuity-equality: 4 testid families, 3 map paths, code URL cells, 1 footer Callout 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/data-table-contract.test.ts > REF-006-panel-testid-continuity-equality: 4 testid families, 3 map paths, code URL cells, 1 footer Callout
+AssertionError: panel composes the DataTable primitive: expected '---\n/**\n * DependencyPanel (SHELL-0…' to contain 'import DataTable from \'./DataTable.a…'
+
+- Expected
++ Received
+
+- import DataTable from './DataTable.astro'
++ ---
++ /**
++  * DependencyPanel (SHELL-008) — the item page's data-verbatim dependencies
++  * panel. Receives the item's raw arrays plus the resolved-per-engine URL
++  * pairs ([item].astro resolves through lib/resolve-deps in frontmatter, so
++  * the served HTML is already concrete — nothing is fetched or templated on
++  * the client) and renders:
++  *
++  * - the npm dependency list verbatim, or an explicit empty state when the
++  *   dataset's dependencies[] is empty (the section never silently drops),
++  * - one engine-tabbed table of the resolved registry dependency URLs per
++  *   engine — both forms render; the inactive one is hidden-attribute only,
++  * - the project-level AI SDK peers line verbatim from site-facts.json.
++  *
++  * Plain token-styled table: the DataTable polish stays sprint-04's. Every
++  * rendered string arrives as a prop — a dataset edit moves this panel.
++  */
++ import type { AiSdkPeer } from '../lib/resolve-deps';
++ import TabGroup from './islands/TabGroup.astro';
++
++ interface Props {
++   /** The item's dependencies[] — npm package names, rendered verbatim. */
++   dependencies: readonly string[];
++   /** resolve-deps.ts output per engine — already concrete absolute URLs. */
++   registryUrls: { nativewind: readonly string[]; uniwind: readonly string[] };
++   /** site-facts.json aiSdkPeers, rendered verbatim. */
++   peers: readonly AiSdkPeer[];
++ }
++
++ const { dependencies, registryUrls, peers } = Astro.props;
++ ---
++
++ {
++   dependencies.length === 0 ? (
++     <p class="deps-empty" data-deps-empty>
++       No required npm packages — this item installs through the registry dependencies below.
++     </p>
++   ) : (
++     <ul class="deps-packages" data-deps-packages>
++       {dependencies.map((name) => (
++         <li>
++           <code>{name}</code>
++         </li>
++       ))}
++     </ul>
++   )
++ }
++ <TabGroup
++   panels={[
++     { engine: 'nativewind', label: 'nativewind' },
++     { engine: 'uniwind', label: 'uniwind' },
++   ]}
++ >
++   <Fragment slot="nativewind">
++     <table class="deps-urls">
++       <tbody data-engine-urls="nativewind">
++         {registryUrls.nativewind.map((url) => (
++           <tr>
++             <td>
++               <code>{url}</code>
++             </td>
++           </tr>
++         ))}
++       </tbody>
++     </table>
++   </Fragment>
++   <Fragment slot="uniwind">
++     <table class="deps-urls">
++       <tbody data-engine-urls="uniwind">
++         {registryUrls.uniwind.map((url) => (
++           <tr>
++             <td>
++               <code>{url}</code>
++             </td>
++           </tr>
++         ))}
++       </tbody>
++     </table>
++   </Fragment>
++ </TabGroup>
++ {
++   peers.length > 0 && (
++     <p class="deps-peers" data-deps-peers>
++       <span>AI SDK peers:</span>
++       {peers.map((peer) => (
++         <code>{peer.name}@{peer.range}</code>
++       ))}
++     </p>
++   )
++ }
++
++ <style>
++   .deps-packages {
++     display: flex;
++     flex-wrap: wrap;
++     gap: 0.5rem;
++     padding: 0;
++     margin: 0 0 0.75rem;
++     list-style: none;
++   }
++   .deps-packages code {
++     border: 1px solid var(--border);
++     border-radius: 999px;
++     padding: 0.125rem 0.625rem;
++     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
++   }
++   .deps-empty {
++     margin: 0 0 0.75rem;
++     color: var(--muted-foreground);
++   }
++   .deps-urls {
++     width: 100%;
++     border-collapse: collapse;
++   }
++   .deps-urls td {
++     border-top: 1px solid var(--border);
++     padding: 0.375rem 0;
++   }
++   .deps-urls code {
++     overflow-wrap: anywhere;
++     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
++   }
++   .deps-peers {
++     display: flex;
++     flex-wrap: wrap;
++     align-items: center;
++     gap: 0.5rem;
++     margin: 0.75rem 0 0;
++     color: var(--muted-foreground);
++   }
++   .deps-peers code {
++     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
++   }
++ </style>
++
+
+ ❯ tests/sprint-04-generated-reference/data-table-contract.test.ts:199:59
+    197|
+    198|   // RED at task start: no DataTable composition in the panel.
+    199|   expect(panel, 'panel composes the DataTable primitive').toContain(
+       |                                                           ^
+    200|     "import DataTable from './DataTable.astro'",
+    201|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:03:52
+   Duration  100ms (transform 13ms, setup 0ms, import 19ms, tests 7ms, environment 0ms)
+

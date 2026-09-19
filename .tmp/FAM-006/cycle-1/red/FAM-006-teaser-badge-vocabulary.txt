@@ -1,0 +1,30 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-006
+
+ ❯ tests/sprint-03-family-browse/home-teaser-contract.test.ts (4 tests | 1 failed | 3 skipped) 5ms
+   × FAM-006-teaser-badge-vocabulary: every card binds item.expoGo and the verdict vocabulary reaches the teaser only through ComponentCard composition 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/home-teaser-contract.test.ts > FAM-006-teaser-badge-vocabulary: every card binds item.expoGo and the verdict vocabulary reaches the teaser only through ComponentCard composition
+AssertionError: the #families landmark exists (<section id="families" aria-label="Component families">): expected -1 to be greater than -1
+ ❯ teaserRegion tests/sprint-03-family-browse/home-teaser-contract.test.ts:69:67
+     67| function teaserRegion(page: string): string {
+     68|   const at = page.indexOf(SECTION_ANCHOR);
+     69|   expect(at, `the #families landmark exists (${SECTION_ANCHOR})`).toBe…
+       |                                                                   ^
+     70|   return page.slice(at, page.indexOf(LAYOUT_CLOSE, at));
+     71| }
+ ❯ tests/sprint-03-family-browse/home-teaser-contract.test.ts:154:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  13:42:09
+   Duration  156ms (transform 21ms, setup 0ms, import 36ms, tests 5ms, environment 0ms)
+

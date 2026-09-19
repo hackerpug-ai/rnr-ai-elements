@@ -1,0 +1,20 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "MUST-untrack-via-rm-cached", "satisfied": true, "evidence": "git diff 456011b..6f5b796 shows D apps/docs/src/data/gallery-manifest.json (index only); file on disk, sha256 ba76423f... byte-identical to 456011b's committed blob."},
+    {"id": "MUST-check-ignore-exit-0", "satisfied": true, "evidence": "My run: `git check-ignore apps/docs/src/data/gallery-manifest.json` prints the path, exit=0. RED log shows exit=1 pre-change."},
+    {"id": "MUST-regeneration-proof", "satisfied": true, "evidence": "Test itself rm's the file, runs real `pnpm -w run registry:build && gallery:manifest` (execFileSync throws on nonzero), byte-compares. My run: test-exit=0; post-test sha256 ba76423f matches baseline."},
+    {"id": "MUST-red-first", "satisfied": true, "evidence": ".tmp/FIX-FUSE-05-1/cycle-1/red/: ls-files lists the generated file, check-ignore exit=1, vitest failed at test:32 'generated JSON must not be tracked', exit=1."},
+    {"id": "NEVER-delete-worktree-file", "satisfied": true, "evidence": "File present on disk (35.4K) after commit; test asserts existsSync before delete-and-regenerate; git status --porcelain empty after my test run."},
+    {"id": "NEVER-touch-families-json", "satisfied": true, "evidence": "Not in diff name-status; ls-files apps/docs/src/data/ returns exactly families.json; test:36 pins tracked == [families.json]."},
+    {"id": "NEVER-edit-build-gallery-manifest-ts", "satisfied": true, "evidence": "scripts/build-gallery-manifest.ts absent from git diff 456011b..6f5b796 name-status."},
+    {"id": "AC-1", "satisfied": true, "evidence": "ls-files lists only families.json; check-ignore exit 0; regeneration proof green via the test's own delete+chain+byte-compare (test-exit=0)."},
+    {"id": "DONE-WHEN-gates", "satisfied": true, "evidence": "pnpm typecheck exit=0; ./node_modules/.bin/biome ci on test file exit=0, 'Checked 1 file... No fixes applied'."},
+    {"id": "SCOPE-writeAllowed", "satisfied": true, "evidence": "Diff name-status = D gallery-manifest.json + A test file + A .tmp/FIX-FUSE-05-1/* only — all within writeAllowed."},
+    {"id": "STRICTLY-exit-code-wrappers", "satisfied": true, "evidence": "All evidence logs use `sh -c '...; echo exit=$?'` — red/green exit.txt and logs show exit= values."},
+    {"id": "JUDGED-outcome-conflict", "satisfied": true, "evidence": "NEVER tier correctly wins over OUTCOME's literal 'EMPTY': test:32 asserts generated JSON untracked AND test:36 asserts exactly families.json tracked — both sides pinned."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Clean execution of the FUSE-05 cycle-1 ruling. The commit is exactly the index removal, the new integration test, and evidence; families.json and build-gallery-manifest.ts untouched; working-tree file preserved byte-identical to the last committed emit. The OUTCOME-vs-NEVER wording conflict was resolved for the NEVER tier (the only coherent reading) and the test pins both sides: generated JSON absent from the index, families.json exactly tracked. RED evidence is genuine (failure at the tracked assertion pre-change). The test is real integration — real git index, real check-ignore, real delete + ordered chain + byte-compare — no mocks. Verified independently: test exit 0, typecheck exit 0, biome exit 0, tree clean after regeneration. The OUTCOME's 'docs build' mention is superseded by the MUST-tier chain definition (registry:build && gallery:manifest), which was followed; byte-identical regeneration is strictly stronger proof anyway, and no docs consumer exists yet (FUSE-06/07 pending)."
+}

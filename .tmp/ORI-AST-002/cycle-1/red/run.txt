@@ -1,0 +1,644 @@
+
+Running 5 tests using 1 worker
+
+[1/5] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:207:1 › ORI-AST-002-AC-1
+  1) [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:207:1 › ORI-AST-002-AC-1 
+
+    Error: fresh root data-engine is nativewind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      222 |   // Fresh context: nativewind selected, root resolves to nativewind.
+      223 |   let state = await readState(page);
+    > 224 |   soft(state.rootEngine, 'fresh root data-engine is nativewind').toBe('nativewind');
+          |                                                                  ^
+      225 |   for (const group of state.groups) {
+      226 |     soft(group.selected, 'fresh selection is nativewind').toEqual(['nativewind']);
+      227 |     soft(group.visible, 'exactly one visible panel').toEqual(['nativewind']);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:224:66
+
+    Error: all 8 IDs are unique
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 8
+    Received: 4
+
+      244 |     return new Set(ids).size;
+      245 |   });
+    > 246 |   soft(uniqueIds, 'all 8 IDs are unique').toBe(8);
+          |                                           ^
+      247 |
+      248 |   // Click uniwind in Dependencies: both groups, storage, and root agree.
+      249 |   await page.locator(`${DEPENDENCIES_GROUP} [role="tab"][data-engine="uniwind"]`).click();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:246:43
+
+    Error: root data-engine is uniwind after Dependencies click
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      249 |   await page.locator(`${DEPENDENCIES_GROUP} [role="tab"][data-engine="uniwind"]`).click();
+      250 |   state = await readState(page);
+    > 251 |   soft(state.rootEngine, 'root data-engine is uniwind after Dependencies click').toBe('uniwind');
+          |                                                                                  ^
+      252 |   soft(state.rnrEngine, 'rnr-engine storage is uniwind').toBe('uniwind');
+      253 |   for (const group of state.groups) {
+      254 |     soft(group.selected, 'both groups select uniwind').toEqual(['uniwind']);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:251:82
+
+    Error: both groups select uniwind
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "uniwind",
+    +   "nativewind",
+      ]
+
+      252 |   soft(state.rnrEngine, 'rnr-engine storage is uniwind').toBe('uniwind');
+      253 |   for (const group of state.groups) {
+    > 254 |     soft(group.selected, 'both groups select uniwind').toEqual(['uniwind']);
+          |                                                        ^
+      255 |     soft(group.visible, 'both groups show uniwind').toEqual(['uniwind']);
+      256 |     soft(group.ownershipOk, 'aria-controls stays in its owning group').toBe(true);
+      257 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:254:56
+
+    Error: both groups show uniwind
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "uniwind",
+    +   "nativewind",
+      ]
+
+      253 |   for (const group of state.groups) {
+      254 |     soft(group.selected, 'both groups select uniwind').toEqual(['uniwind']);
+    > 255 |     soft(group.visible, 'both groups show uniwind').toEqual(['uniwind']);
+          |                                                     ^
+      256 |     soft(group.ownershipOk, 'aria-controls stays in its owning group').toBe(true);
+      257 |   }
+      258 |   soft(state.url, 'engine state never enters the URL').toBe('/components/message');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:255:53
+
+    Error: root data-engine is nativewind after ArrowRight
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      279 |     soft(group.selected, 'ArrowRight selects nativewind in both groups').toEqual(['nativewind']);
+      280 |   }
+    > 281 |   soft(state.rootEngine, 'root data-engine is nativewind after ArrowRight').toBe('nativewind');
+          |                                                                             ^
+      282 |   soft(state.rnrEngine, 'storage is nativewind after ArrowRight').toBe('nativewind');
+      283 |
+      284 |   await page.keyboard.press('ArrowLeft');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:281:77
+
+    Error: ArrowLeft restores uniwind in both groups
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "uniwind",
+    +   "nativewind",
+      ]
+
+      285 |   state = await readState(page);
+      286 |   for (const group of state.groups) {
+    > 287 |     soft(group.selected, 'ArrowLeft restores uniwind in both groups').toEqual(['uniwind']);
+          |                                                                       ^
+      288 |   }
+      289 |   soft(state.rootEngine, 'root data-engine is uniwind after ArrowLeft').toBe('uniwind');
+      290 |   // Keyboard focus follows the selected tab (one tabindex=0 per group, the
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:287:71
+
+    Error: root data-engine is uniwind after ArrowLeft
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      287 |     soft(group.selected, 'ArrowLeft restores uniwind in both groups').toEqual(['uniwind']);
+      288 |   }
+    > 289 |   soft(state.rootEngine, 'root data-engine is uniwind after ArrowLeft').toBe('uniwind');
+          |                                                                         ^
+      290 |   // Keyboard focus follows the selected tab (one tabindex=0 per group, the
+      291 |   // selected one).
+      292 |   const focusState = await page.evaluate(() => {
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:289:73
+
+    Error: exactly one tabindex=0 per group
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "uniwind",
+    +   "nativewind",
+      ]
+
+      301 |   });
+      302 |   for (const focus of focusState) {
+    > 303 |     soft(focus.roving, 'exactly one tabindex=0 per group').toEqual(['uniwind']);
+          |                                                            ^
+      304 |   }
+      305 |   soft(state.url, 'URL still /components/message after keyboard navigation').toBe('/components/message');
+      306 |   await context.close();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:303:60
+
+    Error Context: test-results/sprint-05-orient-search-en-946e8-e-contract-ORI-AST-002-AC-1-chromium-desktop/error-context.md
+
+
+[2/5] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:312:1 › ORI-AST-002-AC-2
+  2) [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:312:1 › ORI-AST-002-AC-2 
+
+    Error: persisted uniwind resolves root data-engine before first paint
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      328 |   await page.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+      329 |   let firstPaint = await readFirstPaint(page);
+    > 330 |   soft(firstPaint.engine, 'persisted uniwind resolves root data-engine before first paint').toBe('uniwind');
+          |                                                                                             ^
+      331 |   let state = await readState(page);
+      332 |   soft(state.rootEngine, 'root data-engine is uniwind after hard load').toBe('uniwind');
+      333 |   for (const group of state.groups) {
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:330:93
+
+    Error: root data-engine is uniwind after hard load
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      330 |   soft(firstPaint.engine, 'persisted uniwind resolves root data-engine before first paint').toBe('uniwind');
+      331 |   let state = await readState(page);
+    > 332 |   soft(state.rootEngine, 'root data-engine is uniwind after hard load').toBe('uniwind');
+          |                                                                         ^
+      333 |   for (const group of state.groups) {
+      334 |     soft(group.selected, 'settled panels select uniwind').toEqual(['uniwind']);
+      335 |     soft(group.visible, 'exactly one readable panel').toHaveLength(1);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:332:73
+
+    Error: persisted nativewind resolves before first paint
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      343 |   await page.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+      344 |   firstPaint = await readFirstPaint(page);
+    > 345 |   soft(firstPaint.engine, 'persisted nativewind resolves before first paint').toBe('nativewind');
+          |                                                                               ^
+      346 |
+      347 |   // Malformed inputs (bogus-engine, empty string) and absent input all resolve
+      348 |   // to the documented nativewind default.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:345:79
+
+    Error: malformed input "bogus-engine" resolves to nativewind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      362 |       badState.rootEngine,
+      363 |       `malformed input ${JSON.stringify(bad)} resolves to nativewind`,
+    > 364 |     ).toBe('nativewind');
+          |       ^
+      365 |     soft(badState.rnrEngine === 'nativewind' || badState.rnrEngine === bad, 'storage holds a value').toBe(
+      366 |       true,
+      367 |     );
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:364:7
+
+    Error: malformed input "" resolves to nativewind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      362 |       badState.rootEngine,
+      363 |       `malformed input ${JSON.stringify(bad)} resolves to nativewind`,
+    > 364 |     ).toBe('nativewind');
+          |       ^
+      365 |     soft(badState.rnrEngine === 'nativewind' || badState.rnrEngine === bad, 'storage holds a value').toBe(
+      366 |       true,
+      367 |     );
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:364:7
+
+    Error: absent input resolves to nativewind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      381 |   await freshPage.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+      382 |   const freshState = await readState(freshPage);
+    > 383 |   soft(freshState.rootEngine, 'absent input resolves to nativewind').toBe('nativewind');
+          |                                                                      ^
+      384 |   soft(freshState.rnrEngine, 'absent input leaves no storage entry').toBeNull();
+      385 |   await freshContext.close();
+      386 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:383:70
+
+    Error: absent input leaves no storage entry
+
+    expect(received).toBeNull()
+
+    Received: "nativewind"
+
+      382 |   const freshState = await readState(freshPage);
+      383 |   soft(freshState.rootEngine, 'absent input resolves to nativewind').toBe('nativewind');
+    > 384 |   soft(freshState.rnrEngine, 'absent input leaves no storage entry').toBeNull();
+          |                                                                      ^
+      385 |   await freshContext.close();
+      386 |
+      387 |   // Case storage_denied: a real Chromium-level denial (--disable-local-storage
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:384:70
+
+    Error: denied storage resolves to nativewind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      408 |   await deniedPage.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+      409 |   const deniedState = await readState(deniedPage);
+    > 410 |   soft(deniedState.rootEngine, 'denied storage resolves to nativewind').toBe('nativewind');
+          |                                                                         ^
+      411 |   for (const group of deniedState.groups) {
+      412 |     soft(group.visible, 'one readable panel per group under denial').toHaveLength(1);
+      413 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:410:73
+
+    Error: root data-engine is uniwind despite storage denial
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      415 |   await deniedPage.locator(`${DEPENDENCIES_GROUP} [role="tab"][data-engine="uniwind"]`).click();
+      416 |   const deniedAfter = await readState(deniedPage);
+    > 417 |   soft(deniedAfter.rootEngine, 'root data-engine is uniwind despite storage denial').toBe('uniwind');
+          |                                                                                      ^
+      418 |   for (const group of deniedAfter.groups) {
+      419 |     soft(group.selected, 'both groups select uniwind under denial').toEqual(['uniwind']);
+      420 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:417:86
+
+    Error: both groups select uniwind under denial
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "uniwind",
+    +   "nativewind",
+      ]
+
+      417 |   soft(deniedAfter.rootEngine, 'root data-engine is uniwind despite storage denial').toBe('uniwind');
+      418 |   for (const group of deniedAfter.groups) {
+    > 419 |     soft(group.selected, 'both groups select uniwind under denial').toEqual(['uniwind']);
+          |                                                                     ^
+      420 |   }
+      421 |   const installText = await deniedPage
+      422 |     .locator(`${INSTALL_GROUP} [role="tabpanel"][data-engine="uniwind"] rnr-copy-button code`)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:419:69
+
+    Error Context: test-results/sprint-05-orient-search-en-2dd34-e-contract-ORI-AST-002-AC-2-chromium-desktop/error-context.md
+
+
+[3/5] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:436:1 › ORI-AST-002-AC-3
+  3) [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:436:1 › ORI-AST-002-AC-3 
+
+    Error: ClientRouter performed a soft navigation (window state survived)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      462 |     await page.evaluate(() => (globalThis as { __softProbe?: boolean }).__softProbe === true),
+      463 |     'ClientRouter performed a soft navigation (window state survived)',
+    > 464 |   ).toBe(true);
+          |     ^
+      465 |
+      466 |   await page.locator('a[data-card][href="/components/message"]').click();
+      467 |   await waitForAstroPageLoad(page);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:464:5
+
+    Error: engine persists after soft navigation
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      468 |
+      469 |   state = await readState(page);
+    > 470 |   soft(state.rootEngine, 'engine persists after soft navigation').toBe('uniwind');
+          |                                                                   ^
+      471 |   soft(state.rnrEngine, 'rnr-engine persists after soft navigation').toBe('uniwind');
+      472 |   soft(state.light, 'light theme persists after soft navigation').toBe(true);
+      473 |   soft(state.dark, 'dark marker stays complementary after soft navigation').toBe(false);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:470:67
+
+    Error: single click activates nativewind after repeated swaps
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      517 |   await page.locator(`${INSTALL_GROUP} [role="tab"][data-engine="nativewind"]`).click();
+      518 |   state = await readState(page);
+    > 519 |   soft(state.rootEngine, 'single click activates nativewind after repeated swaps').toBe('nativewind');
+          |                                                                                    ^
+      520 |   soft(state.rnrEngine, 'single click persists nativewind').toBe('nativewind');
+      521 |   for (const group of state.groups) {
+      522 |     soft(group.selected, 'single click synchronizes both groups').toEqual(['nativewind']);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:519:84
+
+    Error: single click synchronizes both groups
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   "nativewind",
+    +   "uniwind",
+      ]
+
+      520 |   soft(state.rnrEngine, 'single click persists nativewind').toBe('nativewind');
+      521 |   for (const group of state.groups) {
+    > 522 |     soft(group.selected, 'single click synchronizes both groups').toEqual(['nativewind']);
+          |                                                                   ^
+      523 |   }
+      524 |   soft(state.url.includes('engine'), 'no engine state in the URL after every cycle').toBe(false);
+      525 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:522:67
+
+    Error: dark chosen → dark marker true
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      528 |   state = await readState(page);
+      529 |   soft(state.light, 'dark chosen → light marker false').toBe(false);
+    > 530 |   soft(state.dark, 'dark chosen → dark marker true').toBe(true);
+          |                                                      ^
+      531 |
+      532 |   await navigateLocalhost(page, '/components/message');
+      533 |   await page.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:530:54
+
+    Error: hard load keeps dark → dark true
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      534 |   state = await readState(page);
+      535 |   soft(state.light, 'hard load keeps dark → light false').toBe(false);
+    > 536 |   soft(state.dark, 'hard load keeps dark → dark true').toBe(true);
+          |                                                        ^
+      537 |   soft(state.rootEngine, 'hard load keeps nativewind engine').toBe('nativewind');
+      538 |
+      539 |   // An ordinary fresh-tab (full-load) navigation resolves the same state.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:536:56
+
+    Error: hard load keeps nativewind engine
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      535 |   soft(state.light, 'hard load keeps dark → light false').toBe(false);
+      536 |   soft(state.dark, 'hard load keeps dark → dark true').toBe(true);
+    > 537 |   soft(state.rootEngine, 'hard load keeps nativewind engine').toBe('nativewind');
+          |                                                               ^
+      538 |
+      539 |   // An ordinary fresh-tab (full-load) navigation resolves the same state.
+      540 |   const freshTab = await context.newPage();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:537:63
+
+    Error: fresh-tab link load resolves nativewind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      542 |   await freshTab.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+      543 |   const freshState = await readState(freshTab);
+    > 544 |   soft(freshState.rootEngine, 'fresh-tab link load resolves nativewind').toBe('nativewind');
+          |                                                                          ^
+      545 |   soft(freshState.dark, 'fresh-tab link load keeps the dark marker').toBe(true);
+      546 |
+      547 |   await context.close();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:544:74
+
+    Error: fresh-tab link load keeps the dark marker
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      543 |   const freshState = await readState(freshTab);
+      544 |   soft(freshState.rootEngine, 'fresh-tab link load resolves nativewind').toBe('nativewind');
+    > 545 |   soft(freshState.dark, 'fresh-tab link load keeps the dark marker').toBe(true);
+          |                                                                      ^
+      546 |
+      547 |   await context.close();
+      548 | });
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:545:70
+
+    Error Context: test-results/sprint-05-orient-search-en-f4851-e-contract-ORI-AST-002-AC-3-chromium-desktop/error-context.md
+
+
+[4/5] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:553:1 › ORI-AST-002-AC-4
+  4) [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:553:1 › ORI-AST-002-AC-4 
+
+    Error: all 8 raw IDs are unique
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 8
+    Received: 4
+
+      580 |   );
+      581 |   soft(ids.length, '8 tab/panel IDs in the raw message response').toBe(8);
+    > 582 |   soft(new Set(ids).size, 'all 8 raw IDs are unique').toBe(8);
+          |                                                       ^
+      583 |
+      584 |   // JavaScript-disabled context: both labeled panels are stacked and readable,
+      585 |   // and ordinary links reach their destinations.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:582:55
+
+    Error Context: test-results/sprint-05-orient-search-en-23ecc-e-contract-ORI-AST-002-AC-4-chromium-desktop/error-context.md
+
+
+[5/5] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:616:1 › ORI-AST-002-AC-5
+  5) [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:616:1 › ORI-AST-002-AC-5 
+
+    Error: all 12 IDs are unique
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 12
+    Received: 8
+
+      640 |   soft(idSummary.groups, '3 groups (2 engine + 1 generic)').toBe(3);
+      641 |   soft(idSummary.count, '12 tab/panel IDs').toBe(12);
+    > 642 |   soft(idSummary.unique, 'all 12 IDs are unique').toBe(12);
+          |                                                   ^
+      643 |
+      644 |   // Select uniwind through the install engine control.
+      645 |   await page.locator('main section[data-section="install"] [role="tab"][data-engine="uniwind"]').click();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:642:51
+
+    Error: engine selection resolves root to uniwind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      645 |   await page.locator('main section[data-section="install"] [role="tab"][data-engine="uniwind"]').click();
+      646 |   let state = await readState(page);
+    > 647 |   soft(state.rootEngine, 'engine selection resolves root to uniwind').toBe('uniwind');
+          |                                                                       ^
+      648 |   soft(state.rnrEngine, 'engine selection persists uniwind').toBe('uniwind');
+      649 |
+      650 |   // Click pnpm in the generic group: generic shows pnpm, engine groups unchanged.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:647:71
+
+    Error: generic selection never writes rnr-engine
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: "pnpm"
+
+      655 |   soft(genericPanel, 'generic selection displays pnpm add example').toContain('pnpm add example');
+      656 |   state = await readState(page);
+    > 657 |   soft(state.rnrEngine, 'generic selection never writes rnr-engine').toBe('uniwind');
+          |                                                                      ^
+      658 |   soft(state.rootEngine, 'generic selection leaves root engine as uniwind').toBe('uniwind');
+      659 |   const engineGroups = state.groups.filter((group) => group.persistent === 'true');
+      660 |   for (const group of engineGroups) {
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:657:70
+
+    Error: generic selection leaves root engine as uniwind
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      656 |   state = await readState(page);
+      657 |   soft(state.rnrEngine, 'generic selection never writes rnr-engine').toBe('uniwind');
+    > 658 |   soft(state.rootEngine, 'generic selection leaves root engine as uniwind').toBe('uniwind');
+          |                                                                             ^
+      659 |   const engineGroups = state.groups.filter((group) => group.persistent === 'true');
+      660 |   for (const group of engineGroups) {
+      661 |     soft(group.selected, 'engine groups remain on uniwind after generic click').toEqual(['uniwind']);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:658:77
+
+    Error: nativewind selection resolves root
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      666 |   await page.locator('main section[data-section="dependencies"] [role="tab"][data-engine="nativewind"]').click();
+      667 |   state = await readState(page);
+    > 668 |   soft(state.rootEngine, 'nativewind selection resolves root').toBe('nativewind');
+          |                                                                ^
+      669 |   const genericAfter = await page
+      670 |     .locator('main section[data-section="package-manager"] [role="tabpanel"][data-engine="pnpm"]')
+      671 |     .textContent();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:668:64
+
+    Error: engine groups restore nativewind after reload
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "nativewind"
+    Received: null
+
+      679 |   await page.waitForFunction(() => (globalThis as { __rnrTabGroupRegistered?: boolean }).__rnrTabGroupRegistered === true);
+      680 |   state = await readState(page);
+    > 681 |   soft(state.rootEngine, 'engine groups restore nativewind after reload').toBe('nativewind');
+          |                                                                           ^
+      682 |   const genericSelected = state.groups.find((group) => group.persistent === 'false');
+      683 |   soft(genericSelected?.selected, 'nonpersistent group returns to npm after reload').toEqual(['npm']);
+      684 |   const genericDefault = await page
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:681:75
+
+    Error: nonpersistent group returns to npm after reload
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: ["npm"]
+    Received: undefined
+
+      681 |   soft(state.rootEngine, 'engine groups restore nativewind after reload').toBe('nativewind');
+      682 |   const genericSelected = state.groups.find((group) => group.persistent === 'false');
+    > 683 |   soft(genericSelected?.selected, 'nonpersistent group returns to npm after reload').toEqual(['npm']);
+          |                                                                                      ^
+      684 |   const genericDefault = await page
+      685 |     .locator('main section[data-section="package-manager"] [role="tabpanel"][data-engine="npm"]')
+      686 |     .textContent();
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-002/tests/sprint-05-orient-search/engine-state-contract.spec.ts:683:86
+
+    Error Context: test-results/sprint-05-orient-search-en-5f83f-e-contract-ORI-AST-002-AC-5-chromium-desktop/error-context.md
+
+
+  5 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:207:1 › ORI-AST-002-AC-1 
+    [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:312:1 › ORI-AST-002-AC-2 
+    [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:436:1 › ORI-AST-002-AC-3 
+    [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:553:1 › ORI-AST-002-AC-4 
+    [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:616:1 › ORI-AST-002-AC-5 

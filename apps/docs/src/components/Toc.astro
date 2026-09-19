@@ -1,0 +1,74 @@
+---
+/**
+ * Toc (TR-07 R8) — the on-this-page rail: source-derived heading anchors with
+ * zero-JS `:target` highlight. Receives real depth/slug/text records from the
+ * markdown renderer's heading extraction (h2/h3 only) and emits ordinary
+ * fragment links; a heading link resolves to exactly one heading on the page.
+ */
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+/** Only h2/h3 participate in the page rail (h1 is the page title itself). */
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+{
+  tocHeadings.length > 0 && (
+    <nav class="toc" aria-label="On this page">
+      <h2 class="toc__title">On this page</h2>
+      <ul class="toc__list">
+        {tocHeadings.map((heading) => (
+          <li class={`toc__item toc__item--depth-${heading.depth}`}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .toc__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.5rem;
+  }
+  .toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .toc__item a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    padding-inline: 0.25rem;
+  }
+  .toc__item a:hover {
+    color: var(--foreground);
+    background: var(--accent);
+  }
+  /* Deeper headings indent; the h2/h3 split keeps the rail scannable. */
+  .toc__item--depth-3 a {
+    padding-inline-start: 1rem;
+  }
+  /* Zero-JS destination highlight: the browser applies :target natively. */
+  .toc__item a:target {
+    color: var(--foreground);
+  }
+</style>

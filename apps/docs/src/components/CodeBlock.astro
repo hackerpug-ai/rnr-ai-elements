@@ -1,0 +1,46 @@
+---
+/**
+ * CodeBlock — R6c: the full-source code block (TR-07 component detail).
+ *
+ * Composes the UNMODIFIED rnr-copy-button island: `code` passes to the
+ * island's command prop verbatim — zero normalization inside this component,
+ * because the T-GEND-024 byte-match contract rides the rendered text node.
+ * The island's <code> child is the code surface; its trigger copies that
+ * child's textContent and reports through the role=status span. Zero JS here
+ * (the island owns all copy behavior); tokens only.
+ */
+import CopyButton from './islands/CopyButton.astro';
+
+interface Props {
+  code: string;
+  label?: string;
+}
+
+const { code, label = 'Copy code' } = Astro.props;
+---
+
+<div class="code-block">
+  <CopyButton command={code} label={label} />
+</div>
+
+<style>
+  .code-block {
+    background: var(--code-background);
+    color: var(--code-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+  }
+
+  /* The code surface — grows with content, never height-limited. */
+  :global(.copy-button__command) {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+  }
+
+  /* Always-visible trigger with a 44px touch target; focus ring untouched. */
+  :global(.copy-button__trigger) {
+    min-height: 44px;
+  }
+</style>

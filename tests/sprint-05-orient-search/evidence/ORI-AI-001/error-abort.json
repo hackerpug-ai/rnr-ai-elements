@@ -1,0 +1,72 @@
+{
+  "badModel": {
+    "model": "gpt-4.1-nonexistent-model-0000",
+    "record": {
+      "requestId": "req-bad-model",
+      "provider": "openai",
+      "providerModel": "gpt-4.1-nonexistent-model-0000",
+      "responseId": null,
+      "callId": null,
+      "outcome": "error",
+      "deltaCount": 0,
+      "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "durationMs": 465,
+      "errorText": "An error occurred while generating the response.",
+      "activeGenerations": 0
+    }
+  },
+  "recovered": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "record": {
+      "requestId": "req-recovered",
+      "provider": "openai",
+      "providerModel": "gpt-4.1-mini-2025-04-14",
+      "responseId": "resp_0940ef41405fbeb7006aa906a402d887d08f18d1bd83c6b71b",
+      "callId": "call-smGsZVWtuUDUfZCTVeugxwgT",
+      "outcome": "completed",
+      "deltaCount": 3,
+      "inputTokens": 49,
+      "outputTokens": 4,
+      "totalTokens": 53,
+      "textHash": "511b6de24de031f53b6629672385535563df7a0e3d590d4dea13dc93266f194f",
+      "durationMs": 1700,
+      "errorText": null,
+      "activeGenerations": 0
+    }
+  },
+  "abort": {
+    "abortedByTest": true,
+    "clientAborted": true,
+    "record": {
+      "requestId": "req-abort",
+      "provider": "openai",
+      "providerModel": "gpt-4.1-mini-2025-04-14",
+      "responseId": null,
+      "callId": null,
+      "outcome": "aborted",
+      "deltaCount": 2,
+      "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "durationMs": 711,
+      "errorText": null,
+      "activeGenerations": 0
+    }
+  },
+  "afterAbort": {
+    "record": {
+      "requestId": "req-after-abort",
+      "provider": "openai",
+      "providerModel": "gpt-4.1-mini-2025-04-14",
+      "responseId": "resp_05a1f0b1abdc6682006aa906a679b887d0a8b920ee294abbe0",
+      "callId": "call-RnfUb5HNUAzQ7qxEiTX8Qg22",
+      "outcome": "completed",
+      "deltaCount": 2,
+      "inputTokens": 48,
+      "outputTokens": 3,
+      "totalTokens": 51,
+      "textHash": "0436ac5f0b422251d1a7576a8ef3e7af6f1f9ef86af4a0641ff2584b3bac0c50",
+      "durationMs": 813,
+      "errorText": null,
+      "activeGenerations": 0
+    }
+  }
+}

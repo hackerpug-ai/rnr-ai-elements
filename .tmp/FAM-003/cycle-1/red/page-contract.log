@@ -1,0 +1,158 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-003
+
+ ❯ tests/sprint-03-family-browse/page-contract.test.ts (2 tests | 2 failed) 12ms
+   × FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid, no 56-name oracle remains, GEND-14/GEND-15 bodies byte-identical 8ms
+   × FAM-003-page-contract-extras: families.json-derived jump nav, one empty mount slot, data-filter-text on the 39-card join, zero ui/lib ids, zero URL writes 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/page-contract.test.ts > FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid, no 56-name oracle remains, GEND-14/GEND-15 bodies byte-identical
+AssertionError: sections derived from the all-component family join: expected 'test(\'FUSE-07-components-index — lea…' to contain 'componentFamilies.length'
+
+- Expected
++ Received
+
+- componentFamilies.length
++ test('FUSE-07-components-index — lean index anchors all 56 names exactly once', async ({
++     page,
++     request,
++   }, testInfo) => {
++     const response = await page.goto(`${PREVIEW_URL}/components`);
++     expect(response?.status(), '/components must serve 200').toBe(200);
++
++     const sections = page.locator('main > section[id]');
++     expect(await sections.count(), 'one anchored section per family').toBe(families.length);
++
++     const seen = new Map<string, number>();
++     for (const family of families) {
++       const section = page.locator(`main > section[id="${family.id}"]`);
++       expect(await section.count(), `section #${family.id}`).toBe(1);
++       const texts = (await section.locator('ul li').allTextContents()).map((text) => text.trim());
++       expect(texts, `${family.id} members in families.json order`).toEqual(family.itemNames);
++       for (const text of texts) seen.set(text, (seen.get(text) ?? 0) + 1);
++     }
++
++     const allNames = items.map((item) => item.name);
++     expect([...seen.keys()].sort(), 'exactly the 56 registry names').toEqual([...allNames].sort());
++     expect(
++       [...seen.values()].every((count) => count === 1),
++       'every name appears exactly once',
++     ).toBe(true);
++
++     // The 39 component names link their page; ui/lib names stay anchor rows.
++     for (const name of componentNames) {
++       const link = page.locator(`main a[href="/components/${name}"]`);
++       expect(await link.count(), `${name} link`).toBe(1);
++       expect((await link.textContent())?.trim(), `${name} link text`).toBe(name);
++     }
++     for (const item of items.filter((entry) => entry.type !== 'registry:component')) {
++       expect(
++         await page.locator(`main a[href="/components/${item.name}"]`).count(),
++         `${item.name} must not link a component page`,
++       ).toBe(0);
++     }
++     for (const name of componentNames) {
++       const linkResponse = await request.get(`${PREVIEW_URL}/components/${name}`);
++       expect(linkResponse.status(), `/components/${name}`).toBe(200);
++     }
++
++     await page.screenshot({ path: evidencePath(testInfo, 'components-index'), fullPage: true });
+
+ ❯ tests/sprint-03-family-browse/page-contract.test.ts:113:73
+    111|   // The block asserts the DERIVED surface — counts reference the data…
+    112|   // never literals, so a dataset change moves the oracle instead of p…
+    113|   expect(fuse07, 'sections derived from the all-component family join'…
+       |                                                                         ^
+    114|     'componentFamilies.length',
+    115|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-03-family-browse/page-contract.test.ts > FAM-003-page-contract-extras: families.json-derived jump nav, one empty mount slot, data-filter-text on the 39-card join, zero ui/lib ids, zero URL writes
+AssertionError: sections filtered to all-component families: expected '---\n/**\n * FUSE-07 — lean /componen…' to contain '.every((name) => componentNames.has(n…'
+
+- Expected
++ Received
+
+- .every((name) => componentNames.has(name))
++ ---
++ /**
++  * FUSE-07 — lean /components index, sprint-01.
++  * One anchored section per families.json family (family order), covering all
++  * 56 registry names exactly once: registry:component names link their
++  * /components/{item} page, ui/lib names render as anchor rows (no detail
++  * pages this sprint). Generated from the committed families map + the FUSE-05
++  * dataset — never a hand-written link list.
++  */
++ import Layout from '../../layouts/DocsLayout.astro';
++ import families from '../../data/families.json';
++ import items from '../../data/registry-items.json';
++
++ const ordered = [...families].sort((a, b) => a.order - b.order);
++ const componentNames = new Set(
++   items.filter((entry) => entry.type === 'registry:component').map((entry) => entry.name),
++ );
++ ---
++
++ <Layout title="Components — RNR AI Elements">
++   <main class="components-index">
++     <header class="page-header">
++       <h1>Components</h1>
++     </header>
++     {
++       ordered.map((family) => (
++         <section id={family.id} aria-labelledby={`${family.id}-heading`}>
++           <h2 id={`${family.id}-heading`}>{family.title}</h2>
++           <ul>
++             {family.itemNames.map((name) => (
++               <li>
++                 {componentNames.has(name) ? (
++                   <a href={`/components/${name}`}>{name}</a>
++                 ) : (
++                   <span>{name}</span>
++                 )}
++               </li>
++             ))}
++           </ul>
++         </section>
++       ))
++     }
++   </main>
++ </Layout>
++
++ <style>
++   .components-index section {
++     margin-block: 2rem;
++   }
++   .components-index h2 {
++     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
++   }
++   .components-index ul {
++     padding: 0;
++     list-style: none;
++     columns: 2;
++     column-gap: 2rem;
++   }
++ </style>
++
+
+ ❯ tests/sprint-03-family-browse/page-contract.test.ts:140:63
+    138|     '.sort((a, b) => a.order - b.order)',
+    139|   );
+    140|   expect(page, 'sections filtered to all-component families').toContai…
+       |                                                               ^
+    141|     '.every((name) => componentNames.has(name))',
+    142|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:22:54
+   Duration  199ms (transform 30ms, setup 0ms, import 50ms, tests 12ms, environment 0ms)
+

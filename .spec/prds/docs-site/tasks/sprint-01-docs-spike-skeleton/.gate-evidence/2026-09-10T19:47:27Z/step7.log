@@ -1,0 +1,68 @@
+@@GATE-META step=step7 cmd_sha=c391571d51ab2c3d1681c74683743f97bd9f781575c748cba16abde30cea1674@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 7
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=1/10
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/ledger.spec.ts --grep FLOW-GEND-41-ledger-filter-and-row-copy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+  1 skipped
+  2 passed (2.7s)
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): exit=0 artifact_fresh=False surface_ok=True coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-41-ledger-filter-and-row-copy': no captured artifact on disk
+      - flow 'FLOW-GEND-41-ledger-filter-and-row-copy': artifact was not created or changed by this playback
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + row-copy screenshot under test-results/)
+[run_flow] 0/1 flows PASS; not met: FLOW-GEND-41-ledger-filter-and-row-copy=FAIL
+@@GATE-EXIT=1@@
+
+=== replay (artifact repaired to junit.xml) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=1/10
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/ledger.spec.ts --grep FLOW-GEND-41-ledger-filter-and-row-copy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+  1 skipped
+  2 passed (2.6s)
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): exit=0 artifact_fresh=False surface_ok=True coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-41-ledger-filter-and-row-copy': no captured artifact on disk
+      - flow 'FLOW-GEND-41-ledger-filter-and-row-copy': artifact was not created or changed by this playback
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + row-copy screenshot under test-results/)
+[run_flow] 0/1 flows PASS; not met: FLOW-GEND-41-ledger-filter-and-row-copy=FAIL
+@@GATE-EXIT=1@@
+
+=== replay 2 (artifact=junit.xml) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=1/10
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/ledger.spec.ts --grep FLOW-GEND-41-ledger-filter-and-row-copy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+  1 skipped
+  2 passed (3.4s)
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@
+
+=== final refresh (post FIX-FUSE-07-1 merge, final tree) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=6d1e06d930acf40fbc9993c575c59392c6789796+dirty expect=green flows=1/10
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/ledger.spec.ts --grep FLOW-GEND-41-ledger-filter-and-row-copy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:278:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+  1 skipped
+  2 passed (2.3s)
+[run_flow] FLOW-GEND-41-ledger-filter-and-row-copy (steps 5,7): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

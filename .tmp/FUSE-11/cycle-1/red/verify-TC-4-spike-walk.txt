@@ -1,0 +1,52 @@
+
+Running 3 tests using 3 workers
+
+[1/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[3/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+  1) [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch 
+
+    Error: http://localhost:4321/r/nativewind/conversation.json must return 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      94 |   const localUrl = `${PREVIEW_URL}${advertised.slice(LIVE_ORIGIN.length)}`;
+      95 |   const fetched = await request.get(localUrl);
+    > 96 |   expect(fetched.status(), `${localUrl} must return 200`).toBe(200);
+         |                                                           ^
+      97 |   expect(fetched.headers()['content-type'] ?? '', 'fetched content-type').toContain(
+      98 |     'application/json',
+      99 |   );
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:96:59
+
+    Error Context: test-results/spike-flow-spike-walk-FLOW-cd562-mand-same-origin-JSON-fetch-chromium-mobile/error-context.md
+
+
+  2) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch 
+
+    Error: http://localhost:4321/r/nativewind/conversation.json must return 200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      94 |   const localUrl = `${PREVIEW_URL}${advertised.slice(LIVE_ORIGIN.length)}`;
+      95 |   const fetched = await request.get(localUrl);
+    > 96 |   expect(fetched.status(), `${localUrl} must return 200`).toBe(200);
+         |                                                           ^
+      97 |   expect(fetched.headers()['content-type'] ?? '', 'fetched content-type').toContain(
+      98 |     'application/json',
+      99 |   );
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-11/tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:96:59
+
+    Error Context: test-results/spike-flow-spike-walk-FLOW-cd562-mand-same-origin-JSON-fetch-chromium-desktop/error-context.md
+
+
+  2 failed
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch 
+    [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch 
+  1 skipped

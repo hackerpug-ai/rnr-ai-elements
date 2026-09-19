@@ -1,0 +1,38 @@
+# FIX-ORI-RN-003-2 — focused-composer proof flow (throwaway, not committed).
+#
+# Drives the ORI-RN-002 seed-data quickstart screen on a REAL Expo Go session
+# (appId host.exp.Exponent). The one flow serves RED (pre-fix: focusing the
+# composer crashes the nativewind render and the send button vanishes) and
+# GREEN (post-fix: composer stays, send button present and tappable, focused
+# screenshot captured for the 30%/50% appearance sign-off).
+#
+# MARKER + FOCUS_SCREENSHOT arrive via `-e` from the driver — no env: defaults
+# because a default MARKER silently wins over the CLI override on iOS.
+appId: host.exp.Exponent
+---
+# First launch of a new project in Expo Go shows its developer-menu onboarding, then the
+# dev menu; dismiss both when present. Optional so a warm session is unaffected.
+- tapOn:
+    text: "Continue"
+    optional: true
+- tapOn:
+    text: "Close"
+    optional: true
+- extendedWaitUntil:
+    visible: "Send message"
+    timeout: 90000
+- assertVisible: "Send message"
+# Focus the composer. On RED (nativewind + pre-fix) this re-render crashes the tree and
+# the send button disappears, so the next assert fails.
+- tapOn: "Message.*"
+- assertVisible: "Send message"
+# Focused screenshot — the ONLY proof of the pinned 30% dark-input background and 50%
+# focus ring (the scripted gates assert literal form, not rendered alpha).
+- takeScreenshot: ${FOCUS_SCREENSHOT}
+# Type a fresh marker and submit.
+- inputText: ${MARKER}
+- tapOn: "Send message"
+- extendedWaitUntil:
+    visible: ${MARKER}
+    timeout: 20000
+- assertVisible: ${MARKER}

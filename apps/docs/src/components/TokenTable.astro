@@ -1,0 +1,168 @@
+---
+/**
+ * TokenTable (ORI-AST-003, TR-07 R6c) — the live Theming token map.
+ *
+ * Build-time, this component reads the REAL docs token sheet
+ * (`apps/docs/src/styles/global.css`) and the authored usage metadata
+ * (`apps/docs/src/data/token-usage.json`), and derives one paired row per
+ * semantic color token through `scripts/docs-data/token-map`. Both the light
+ * and dark columns are written into the static HTML, so the map is fully
+ * readable with JavaScript disabled.
+ *
+ * Live, the swatch chip resolves `var(--<token>)` directly — it re-themes for
+ * free when the root class flips — and the `[data-token-current]` cell is
+ * filled by the existing `rnr-theme-toggle` island (theme-toggle.ts reads the
+ * computed custom property and writes the text). No new island, no script of
+ * its own: the table only publishes the observation targets.
+ *
+ * DOCS-ONLY: the code-background / code-foreground rows carry a `DOCS-ONLY`
+ * badge — those two pairs are consumed by this site's code frames and install
+ * strips, never by a registry item.
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { deriveTokenMap, type TokenUsage } from '../../../../scripts/docs-data/token-map';
+
+// `astro build` runs with cwd at the docs app root (the catch-all uses the same
+// process.cwd() convention), so the source files resolve there — never from
+// import.meta.url, which points at the compiled dist chunk during prerender.
+const srcDir = join(process.cwd(), 'src');
+const css = readFileSync(join(srcDir, 'styles/global.css'), 'utf8');
+const usage = JSON.parse(readFileSync(join(srcDir, 'data/token-usage.json'), 'utf8')) as Record<
+  string,
+  TokenUsage
+>;
+
+const rows = deriveTokenMap(css, usage);
+---
+
+<div class="token-table__scroll">
+  <table class="token-table" data-token-table>
+    <thead>
+      <tr>
+        <th scope="col">Token</th>
+        <th scope="col">Usage</th>
+        <th scope="col">Light</th>
+        <th scope="col">Dark</th>
+        <th scope="col">Swatch</th>
+        <th scope="col">Current</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr data-token={row.name}>
+          <th scope="row" class="token-table__name" data-label="Token">
+            <code>{row.property}</code>
+            {row.docsOnly && (
+              <span class="token-table__docs-only" data-docs-only>DOCS-ONLY</span>
+            )}
+          </th>
+          <td data-usage data-label="Usage">{row.usage}</td>
+          <td data-value="light" data-label="Light"><code>{row.light}</code></td>
+          <td data-value="dark" data-label="Dark"><code>{row.dark}</code></td>
+          <td data-label="Swatch">
+            <span
+              class="token-table__swatch"
+              data-swatch
+              style={`background: var(${row.property})`}
+            ></span>
+          </td>
+          <td data-label="Current">
+            <code class="token-table__current" data-token-current={row.property}></code>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .token-table__scroll {
+    overflow-x: auto;
+  }
+  .token-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .token-table th,
+  .token-table td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .token-table thead th {
+    border-bottom: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    background: var(--card);
+    position: sticky;
+    top: 0;
+  }
+  .token-table tbody tr:nth-child(even) td {
+    background: var(--muted);
+  }
+  .token-table code {
+    font-family: var(--font-mono);
+  }
+  .token-table__name code {
+    font-weight: 600;
+  }
+  .token-table__docs-only {
+    display: inline-block;
+    margin-inline-start: 0.5rem;
+    padding: 0.0625rem 0.375rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+  /* The live swatch: a fixed chip resolving the token itself, so it re-themes
+     when the root class flips. A token border keeps near-canvas colors visible. */
+  .token-table__swatch {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .token-table__current {
+    color: var(--foreground);
+  }
+
+  /* Mobile (covers the 375px frame): one query re-flows rows into stacked
+     cards and restores each column label from the td data-label attribute —
+     CSS-only, the markup stays a single table for the no-JS crawl. */
+  @media (max-width: 48rem) {
+    .token-table thead {
+      display: none;
+    }
+    .token-table tbody tr {
+      display: block;
+      margin: 0 0 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.5rem 0.75rem;
+    }
+    .token-table td,
+    .token-table th {
+      display: block;
+      border-top: 0;
+      padding: 0.25rem 0;
+    }
+    .token-table td::before,
+    .token-table th::before {
+      content: attr(data-label);
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+    .token-table tbody tr:nth-child(even) td {
+      background: transparent;
+    }
+  }
+</style>

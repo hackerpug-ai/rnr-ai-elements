@@ -1,0 +1,158 @@
+---
+/**
+ * LedgerFilter — island 4/5 (FAM-004; extended by ORI-AST-007). A generalized
+ * WAI-ARIA search box the bundled script upgrades into `rnr-ledger-filter`.
+ * The surface now composes three independent controls, each optional so the
+ * /components grid keeps its text-only form:
+ *
+ * - category facet buttons (All + each passed category, each carrying its
+ *   static membership count) — a category selection narrows the target rows
+ *   by their `data-category`,
+ * - the shared engine selector (a real TabGroup, explicit `group` identity so
+ *   the ledger's byte-distinct command panels never collide on the content
+ *   digest) — engine choice drives the shared root `data-engine` contract and
+ *   the LedgerTable's command visibility, and
+ * - the text input matching each row's `data-filter-text`.
+ *
+ * Category and text filtering are ephemeral (client DOM only, never the URL);
+ * engine persistence belongs to ORI-AST-002. Empty-state detection counts
+ * matching ROWS (not containing sections) so a fully-emptied ledger shows the
+ * one muted no-results row, and clearing restores the full set.
+ *
+ * Zero-JS fallback: the element never upgrades, `:not(:defined)` keeps it off
+ * screen, and its input ships disabled — the full server-rendered grid/table
+ * stays exactly as served, with no dead control on the page (the engine tabs
+ * ride inside this element, so they too stay off screen without JS).
+ */
+import TabGroup from './TabGroup.astro';
+
+interface CategoryFacet {
+  /** The stripped category id, e.g. "component" | "ui" | "lib". */
+  id: string;
+  label: string;
+  /** The category's static membership count (unchanged by text filtering). */
+  count: number;
+}
+
+interface Props {
+  /** Selector of the container whose [data-filter-text] cards are filtered. */
+  target: string;
+  /** When present, render the category facet buttons. */
+  categories?: readonly CategoryFacet[];
+  /** When true, render the shared engine selector TabGroup. */
+  engine?: boolean;
+}
+
+const { target, categories, engine = false } = Astro.props;
+
+const total = (categories ?? []).reduce((sum, facet) => sum + facet.count, 0);
+
+const ENGINE_PANELS = [
+  { engine: 'nativewind', label: 'nativewind' },
+  { engine: 'uniwind', label: 'uniwind' },
+];
+---
+
+<rnr-ledger-filter class="ledger-filter" role="search" aria-label="Filter the registry ledger" target={target}>
+  {
+    categories && (
+      <div class="ledger-filter__categories" role="group" aria-label="Filter by category">
+        <button
+          type="button"
+          class="ledger-filter__category"
+          data-category-filter="all"
+          aria-pressed="true"
+        >
+          All <span class="ledger-filter__count" data-category-count>{total}</span>
+        </button>
+        {categories.map((facet) => (
+          <button
+            type="button"
+            class="ledger-filter__category"
+            data-category-filter={facet.id}
+            aria-pressed="false"
+          >
+            {facet.label} <span class="ledger-filter__count" data-category-count>{facet.count}</span>
+          </button>
+        ))}
+      </div>
+    )
+  }
+  {
+    engine && (
+      <TabGroup group="registry-ledger-engine" panels={ENGINE_PANELS}>
+        <Fragment slot="nativewind">Showing nativewind install commands.</Fragment>
+        <Fragment slot="uniwind">Showing uniwind install commands.</Fragment>
+      </TabGroup>
+    )
+  }
+  <input
+    type="search"
+    class="ledger-filter__input"
+    placeholder="Filter by name, description, or family"
+    aria-label="Filter by name, description, or family"
+    disabled
+  />
+  <p class="ledger-filter__no-results" data-no-results hidden>
+    No items match that filter.
+  </p>
+</rnr-ledger-filter>
+
+<script src="../../scripts/ledger-filter.ts"></script>
+
+<style>
+  /* An un-upgraded custom element is inert; hide it rather than ship a fake
+     control to zero-JS visitors (upgrades to visible once defined). */
+  rnr-ledger-filter:not(:defined) {
+    display: none;
+  }
+  .ledger-filter {
+    display: block;
+    margin-block-end: 1.5rem;
+  }
+  .ledger-filter__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block-end: 0.75rem;
+  }
+  .ledger-filter__category {
+    min-height: 44px; /* touch target */
+    padding: 0.25rem 0.75rem;
+    font: inherit;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+  .ledger-filter__category[aria-pressed='true'] {
+    color: var(--primary-foreground);
+    background: var(--primary);
+    border-color: var(--ring);
+  }
+  .ledger-filter__count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .ledger-filter__input {
+    width: 100%;
+    min-height: 44px; /* touch target */
+    padding: 0.5rem 0.75rem;
+    font: inherit;
+    color: var(--foreground);
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  /* Focus-ring contract: 2px ring in the theme token, 2px offset. */
+  .ledger-filter__input:focus-visible,
+  .ledger-filter__category:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .ledger-filter__no-results {
+    margin: 0;
+    color: var(--muted-foreground);
+  }
+</style>

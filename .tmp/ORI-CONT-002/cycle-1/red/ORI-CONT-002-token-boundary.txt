@@ -1,0 +1,31 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-002
+
+ ❯ tests/sprint-05-orient-search/theming-manuscript.test.ts (4 tests | 1 failed | 3 skipped) 3ms
+   × ORI-CONT-002-token-boundary 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/theming-manuscript.test.ts > ORI-CONT-002-token-boundary
+Error: [ORI-CONT-002] required file missing: apps/docs/src/content/docs/theming.mdx
+ ❯ readRepoFile tests/sprint-05-orient-search/theming-manuscript.test.ts:64:32
+     62| function readRepoFile(rel: string): string {
+     63|   const path = join(REPO_ROOT, rel);
+     64|   if (!existsSync(path)) throw new Error(`[ORI-CONT-002] required file…
+       |                                ^
+     65|   return readFileSync(path, 'utf8');
+     66| }
+ ❯ parseManuscript tests/sprint-05-orient-search/theming-manuscript.test.ts:109:28
+ ❯ tests/sprint-05-orient-search/theming-manuscript.test.ts:475:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  02:09:44
+   Duration  89ms (transform 16ms, setup 0ms, import 27ms, tests 3ms, environment 0ms)
+

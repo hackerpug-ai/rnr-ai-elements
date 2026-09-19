@@ -1,0 +1,39 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-001
+
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts (4 tests | 1 failed | 3 skipped) 697ms
+   × ORI-AST-001-publication-contract 645ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/docs-collection.test.ts > ORI-AST-001-publication-contract
+AssertionError: expected [] to deeply equal [ 'collection-reference', …(1) ]
+
+- Expected
++ Received
+
+- [
+-   "collection-reference",
+-   "collection-reference-mdx",
+- ]
++ []
+
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts:329:79
+    327|   let result = runBuild();
+    328|   expect(result.exit, 'two published entries build').toBe(0);
+    329|   expect(listDocRoutes().filter((r) => r.startsWith('collection-refere…
+       |                                                                               ^
+    330|     ['collection-reference', 'collection-reference-mdx'].sort(),
+    331|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  23:01:46
+   Duration  893ms (transform 16ms, setup 0ms, import 139ms, tests 697ms, environment 0ms)
+

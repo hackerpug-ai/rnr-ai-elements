@@ -1,0 +1,111 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import ThemeToggle from '../components/islands/ThemeToggle.astro';
+
+/**
+ * DocsLayout (SHELL-002 + ORI-AST-002) — the themed shell every adopted docs
+ * route renders through: SHELL-001's token sheet imported exactly once, the
+ * sticky Header, the page slot, then the Footer. The inline pre-paint script
+ * below (SHELL-003) resolves BOTH the theme AND the engine BEFORE first paint
+ * — stored `rnr-theme` > system scheme > dark, and stored `rnr-engine` (only
+ * `uniwind` recognized; anything else defaults to `nativewind`) — and flips the
+ * root markers in the served HTML's first parse; it must stay is:inline +
+ * data-astro-rerun (never a fetched module: ClientRouter swapRootAttributes
+ * would overwrite root attrs on soft nav, so the re-run re-applies them).
+ *
+ * Root markers are complementary outputs of ONE decision each:
+ * - theme: `html.light` (authoritative for CSS) and `html.dark` (the
+ *   compatibility marker) are opposite sides of the same resolved light
+ *   boolean — never two stores.
+ * - engine: `document.documentElement.dataset.engine` carries the validated
+ *   engine; the TabGroup island owns click-time transitions and panel
+ *   visibility, this script owns pre-paint + post-swap restoration.
+ *
+ * ClientRouter enables SPA-mode soft navigation with view transitions; the
+ * bundled islands (CopyButton, ThemeToggle, LedgerFilter, TabGroup) reconnect
+ * per-instance in connectedCallback, so swapped-in elements upgrade without
+ * re-running side effects or duplicating listeners. Pages keep their own
+ * content trees — adoption wraps, it never rewrites page structure.
+ */
+interface Props {
+  title: string;
+  /** Reserved for SHELL-007: the home variant suppresses the sidebar + ToC once they exist. */
+  variant?: 'docs' | 'home';
+}
+
+const { title, variant = 'docs' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ClientRouter />
+    <script is:inline data-astro-rerun>
+      (() => {
+        var storedTheme = null;
+        var storedEngine = null;
+        try {
+          storedTheme = localStorage.getItem('rnr-theme');
+          storedEngine = localStorage.getItem('rnr-engine');
+        } catch (error) {
+          // Storage blocked (privacy mode): fall through to the scheme/dark
+          // theme and the nativewind engine default.
+        }
+        var light =
+          storedTheme === 'light' ||
+          (storedTheme !== 'dark' &&
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches);
+        var root = document.documentElement;
+        root.classList.toggle('light', light);
+        // Complementary dark marker — the same resolved boolean, never a second store.
+        root.classList.toggle('dark', !light);
+        // Engine, validated before paint: only uniwind is a non-default value.
+        root.dataset.engine = storedEngine === 'uniwind' ? 'uniwind' : 'nativewind';
+
+        // Keep the html.dark compatibility marker complementary to html.light
+        // after ThemeToggle clicks: theme-toggle.ts owns the light class flip
+        // (writeProhibited here), so one observer re-derives dark from the same
+        // boolean. Window-guarded — a single observer per document, surviving
+        // soft navigation without stacking duplicate observers.
+        if (!window.__rnrThemeMarkerObserver) {
+          window.__rnrThemeMarkerObserver = true;
+          new MutationObserver(function () {
+            document.documentElement.classList.toggle(
+              'dark',
+              !document.documentElement.classList.contains('light'),
+            );
+          }).observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class'],
+          });
+        }
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body data-layout={variant}>
+    <Header />
+    <ThemeToggle />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /*
+   * Deep links land below the sticky header (R1): every anchored region on an
+   * adopting route compensates by --layout-header-h. The selectors are global
+   * because the anchored sections and headings live in page trees, not here.
+   */
+  :global(section[id], h2[id], h3[id]) {
+    scroll-margin-top: var(--layout-header-h);
+  }
+</style>

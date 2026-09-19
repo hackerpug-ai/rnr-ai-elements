@@ -1,0 +1,20 @@
+@@GATE-META step=step10 cmd_sha=15242d494933593431e95df38e08e0db6558f7b5138011448c09d2b6147c3e8f@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 10
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=1/10
+[run_flow] FLOW-DELIV-01-fail-closed-item-count (steps 10): $ pnpm vitest run tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts -t FLOW-DELIV-01-fail-closed-item-count
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 2 skipped (4)
+   Start at  15:04:24
+   Duration  15.53s (transform 37ms, setup 0ms, import 171ms, tests 15.28s, environment 0ms)
+
+[run_flow] FLOW-DELIV-01-fail-closed-item-count (steps 10): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/packages/registry/registry.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

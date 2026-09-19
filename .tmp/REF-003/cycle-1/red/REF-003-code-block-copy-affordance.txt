@@ -1,0 +1,38 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-003
+
+ ❯ tests/sprint-04-generated-reference/code-primitives-contract.test.ts (5 tests | 1 failed | 4 skipped) 3ms
+   × REF-003-code-block-copy-affordance: always-visible trigger, 44px touch target, label plumbing, byte-identical island pair 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-04-generated-reference/code-primitives-contract.test.ts > REF-003-code-block-copy-affordance: always-visible trigger, 44px touch target, label plumbing, byte-identical island pair
+AssertionError: CodeBlock exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-003/apps/docs/src/components/CodeBlock.astro: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ readSource tests/sprint-04-generated-reference/code-primitives-contract.test.ts:51:57
+     49| function readSource(name: keyof typeof SOURCES): string {
+     50|   const path = SOURCES[name];
+     51|   expect(existsSync(path), `${name} exists at ${path}`).toBe(true);
+       |                                                         ^
+     52|   return readFileSync(path, 'utf8');
+     53| }
+ ❯ tests/sprint-04-generated-reference/code-primitives-contract.test.ts:144:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  15:01:14
+   Duration  162ms (transform 74ms, setup 0ms, import 100ms, tests 3ms, environment 0ms)
+
+exit=1

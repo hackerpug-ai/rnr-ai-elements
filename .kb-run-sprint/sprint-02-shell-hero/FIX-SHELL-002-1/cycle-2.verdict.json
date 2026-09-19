@@ -1,0 +1,14 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "8cf8ba9276f6c4f8bab6560265910343e15c7e64",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Full lane on committed bytes run twice by reviewer: 3 passed (3), exit 0 (pipefail-verified). Diff 29ea5af..8cf8ba9 pure addition — Header/Footer not.toContain('<script') and contracted-marker pins byte-identical; additions are 4 comment lines + one countMatches assertion at shell-layout.test.ts:308-311."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Reviewer reproduced the exact cycle-1 hole: self-closing interloper shipped into all three dist pages (grep 1/1/1, matching committed red/dist-interloper-counts.txt) and lane now FAILS 'expected 2 to be 1' at :311 exit 1. Paired second script FAILS at :303; data-astro-rerun-without-is:inline FAILS at :299; missing rnr-theme FAILS at :299; verbatim duplication FAILS at :299. Logic sound: with contracted=1 and non-contracted=0 pinned, openers===paired enforces exactly one <script opener — self-closing AND unclosed openers fail on either side."},
+    {"id": "DONE-WHEN-typecheck-lint", "satisfied": true, "evidence": "pnpm typecheck exit=0; biome ci exit=0, no fixes applied."},
+    {"id": "DONE-WHEN-scope", "satisfied": true, "evidence": "Diff = shell-layout.test.ts + .tmp/FIX-SHELL-002-1/cycle-2/ evidence only. apps/ + packages/ byte-identical to trunk across both cycles; worktree clean after scratch reverts; families.json intact."},
+    {"id": "RESIDUAL-judgment", "satisfied": true, "evidence": "Flagged comment residual judged NONEXISTENT, not merely accepted: a paired non-contracted script inside an HTML comment FAILS at :303 (paired-tag regex comment-blind, routes into non-contracted check — reproduced); commented contracted-shaped script fails :299 (count 2); commented self-closing/unclosed opener fails :311 (openers !== paired). No constructible form passes all three. A comment that ships reaches dist as inert <!-- --> text (verified in dist bytes), never parsed as an executing script."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle 2 closes cycle-1's one finding with exactly the prescribed one-assertion fix and nothing else moved. Every proof state independently reproduced against 8cf8ba9 (clean lane 3/3 twice with dist rebuilt clean; self-closing interloper confirmed shipping to dist then failing 'expected 2 to be 1'; all cycle-1 interloper variants still fail at byte-identical assertions). Self-flagged comment residual judged nonexistent — over-cautious flagging in the safe direction, recorded as a judgment not a defect. Diff test-only plus sanctioned evidence; product byte-identical to trunk."
+}

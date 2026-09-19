@@ -1,0 +1,20 @@
+@@GATE-META step=step9 cmd_sha=87abadd7027e65d5fb5d5c3106bca57bbd46c414409cf1b916a4de494aeffa2b@@
++ python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 9
+[run_flow] sprint=sprint-04-generated-reference root=/Users/justinrich/Projects/rnr-ai-elements head=904cf5b62b3c88237ca23f760e5b7a1afc263bb3+dirty expect=green flows=1/8
+[run_flow] FLOW-SHELL-14-tab-panels-in-initial-html (steps 1,9): $ pnpm playwright test tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts --grep FLOW-SHELL-14-tab-panels-in-initial-html
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+  3 passed (6.3s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-SHELL-14-tab-panels-in-initial-html (steps 1,9): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-SHELL-14-tab-panels-in-initial-html.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-008
+
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts (6 tests | 1 failed | 5 skipped) 24ms
+     × REF-008-imagery-flag: unset flag holds 0 imagery violations; DOCS_GATE_IMAGERY=1 fails closed naming items 24ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts > REF-008 matrix + imagery gates > REF-008-imagery-flag: unset flag holds 0 imagery violations; DOCS_GATE_IMAGERY=1 fails closed naming items
+TypeError: gateImagery is not a function
+ ❯ tests/sprint-01-docs-spike-skeleton/enrichment-gates.test.ts:516:14
+    514|       // Flag OFF: the gate is inert over the all-null-imagery dataset…
+    515|       // clean real tree passes the whole aggregate (default-build par…
+    516|       expect(gateImagery(dataset), 'imagery violations with the flag u…
+       |              ^
+    517|       expect(() => runAllGates(dataset, expectation, project)).not.toT…
+    518|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 skipped (6)
+   Start at  15:30:36
+   Duration  219ms (transform 32ms, setup 0ms, import 135ms, tests 24ms, environment 0ms)
+

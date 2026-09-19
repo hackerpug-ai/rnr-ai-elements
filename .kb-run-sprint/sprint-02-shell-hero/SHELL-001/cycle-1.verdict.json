@@ -1,0 +1,29 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "3e8bd1a5087abcb0bbf9544e95151361b3ee66c1",
+  "requirements": [
+    {"id": "AC-1", "satisfied": false,
+     "evidence": "Authored half PASSES: apps/docs/src/styles/global.css:21-75 transcribes TR-07 verbatim (all 18 core + 2 code tokens, exact oklch pairs checked against 07-ui-infrastructure.md:15-29), :65 --radius 0.625rem + sm/md/lg/xl calc, :72-75 --measure/--layout-*, :132-136 h1 2.25rem/1.2/600, :174-177 2px var(--ring) focus ring. Built half RED in committed state, reproduced by reviewer: `pnpm vitest run tests/sprint-02-shell-hero/tokens.test.ts` exit 1 — 'no dist/_astro/*.css bundles exist on disk: expected 0 to be greater than 0' (tokens.test.ts:233). Reviewer independently reproduced the wiring proof: with a one-line layout import + inlineStylesheets:'never' the lane passes 2/2 exit 0; isolation run (import only, config reverted) still 0 css bundles — both wiring lines required, NEITHER in SHELL-001's writeAllowed.",
+     "fix": "1) In apps/docs/src/layouts/DocsLayout.astro add `import '../styles/global.css';` — contracted to SHELL-002. 2) In apps/docs/astro.config.mjs add `build: { inlineStylesheets: 'never' },` — owned by NO sprint-02 task (zero references across all 13 task files + SPRINT.md).",
+     "fix_location": "apps/docs/src/layouts/DocsLayout.astro (SHELL-002 writeAllowed) + apps/docs/astro.config.mjs (unowned in sprint-02)"},
+    {"id": "AC-2", "satisfied": false,
+     "evidence": "Authored half PASSES: global.css:17-76 :root carries the dark column; :82-120 html.light carries the light column; node check over comment-stripped rules: prefers-color-scheme absent, light canvas never on the default rule. Built half RED in committed state (tokens.test.ts:315, same zero-emission blocker); passes with the same two wiring lines (reviewer re-run: 2/2 exit 0).",
+     "fix": "Same two wiring lines as AC-1. Hardening note: global.css:11 header comment contains the literal 'prefers-color-scheme' substring; rewording the comment makes even the pedantic MUST_NOT_OBSERVE reading hold.",
+     "fix_location": "apps/docs/src/layouts/DocsLayout.astro (SHELL-002) + apps/docs/astro.config.mjs (unowned)"},
+    {"id": "TC-1", "satisfied": false,
+     "evidence": "Emitted-CSS requirement RED in committed state (0 dist/_astro/*.css after real build — reviewer run, exit 1). Value table at tokens.test.ts:38-63 exact; matcher accepts only identical-value serializations; negative control oklch(0.15 0 0) rejected. Proven green with wiring (2/2 exit 0).",
+     "fix": "Same wiring as AC-1. Hardening: anchor the alpha alternation tail in numberAlternations (require following `)` or `;`) so a re-picked minified alpha like `.15` cannot prefix-match the 10% pattern at tokens.test.ts:97.",
+     "fix_location": "apps/docs/src/layouts/DocsLayout.astro (SHELL-002) + apps/docs/astro.config.mjs (unowned)"},
+    {"id": "TC-2", "satisfied": false,
+     "evidence": "Authored half PASSES (reviewer node check: 0 hex, 0 max-height, 0 '#' chars in global.css). Emitted half unverifiable in committed state (no bundles); carrying gate red, reproduced exit 1.",
+     "fix": "Same wiring as AC-1.",
+     "fix_location": "apps/docs/src/layouts/DocsLayout.astro (SHELL-002) + apps/docs/astro.config.mjs (unowned)"},
+    {"id": "TC-3", "satisfied": true,
+     "evidence": "Authored-only criterion fully judged: global.css:65-69, :72-75, :132-136, :174-177 all match TR-07 verbatim. Passing inside reviewer's wired 2/2 run."},
+    {"id": "TC-4", "satisfied": true,
+     "evidence": "Authored-structure criterion passes (dark column on default rule at :21, light scoped to html.light :82-120, no prefers-color-scheme in rules). Carrying vitest token still red in committed state only via shared built-half assertions."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "fail"},
+  "summary": "In-scope work complete, faithful, stub-free: global.css transcribes TR-07 verbatim; tokens.test.ts runs the real ordered build chain, refuses vacuous pass over empty bundle set (cssBundleCount > 0 at :233), matches only identical-value serializations; genuine pre-authoring RED committed. Reviewer reproduced every claim: typecheck 0, biome 0 on touched .ts files, committed-state vitest exit 1 failing exactly on the built-emission half, playwright VERIFY 'No tests found' (testDir pinned; SHELL-011 owns widening), full lane 2/2 once a layout imports the sheet AND astro.config.mjs sets build.inlineStylesheets:'never' — isolation run proves the config line independently required. NEEDS_FIXES solely because exit-0 gates cannot be green in this commit: layout import is SHELL-002's contracted wiring; inlineStylesheets line sits in an unowned file. Reviewer: 'remediation belongs to the orchestrator amending scope, not to another SHELL-001 authoring cycle.' Two non-blocking hardening notes: anchor alpha-alternation tail; drop literal 'prefers-color-scheme' from global.css:11 comment."
+}

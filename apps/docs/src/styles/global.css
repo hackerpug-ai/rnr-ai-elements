@@ -1,0 +1,177 @@
+/*
+ * RNR AI Elements docs — global token stylesheet (SHELL-001).
+ *
+ * Source of truth: .spec/prds/docs-site/11-technical-requirements/07-ui-infrastructure.md
+ * (TR-07 style-token table, transcribed VERBATIM — the pairs are pre-verified:
+ * body 15.8:1 / 14.6:1, muted ~5.0:1 / ~7.0:1, destructive >=4.5:1, ring >=3:1).
+ * Values mirror apps/example/global.css (read-only provenance; docs never feed back).
+ *
+ * Dark-first: :root — the unclassed html default — carries the DARK column, and every
+ * light value lives under html.light. The pre-paint class flip (SHELL-003) is the ONLY
+ * theme mechanism — this sheet never reads the visitor's OS color preference.
+ *
+ * Plain CSS custom properties only — no Tailwind, no @theme, no new dependency.
+ * Every color is oklch; no hex literal appears in this file.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* Page canvas / Body text (14.6:1 dark) */
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  /* Elevated + dialog surfaces */
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
+  /* THE one accent: CTAs, links, active tab */
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+
+  /* Inactive panels, table bands, hover fills */
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0); /* Descriptions, chips, types (~7.0:1 dark) */
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
+  /* Dev-client verdict tone, errors (>=4.5:1 dark) */
+  --destructive: oklch(0.704 0.191 22.216);
+
+  /* Dividers, control edges */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+
+  /* Focus rings, active tab indicator (>=3:1 dark) */
+  --ring: oklch(0.556 0 0);
+
+  /* DOCS-ONLY (TR-07): EC frames + install strips — the install path strips these;
+   * sprint-05's TokenTable labels them DOCS-ONLY. Never consumed by registry items. */
+  --code-background: oklch(0.235 0 0);
+  --code-foreground: oklch(0.922 0 0);
+
+  /* Typography — family names now; self-hosted Spline Sans woff2 files are sprint-05 */
+  --font-sans:
+    'Spline Sans Variable', 'Spline Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    'Spline Sans Mono Variable', 'Spline Sans Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+
+  /* Radius — 0.625rem verbatim from apps/example/global.css */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: calc(var(--radius));
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Measure + shell layout */
+  --measure: 70ch;
+  --layout-header-h: 3.5rem;
+  --layout-sidebar-w: 16.5rem;
+  --layout-toc-w: 14rem;
+}
+
+/*
+ * The light column — scoped to the html light class so SHELL-003's pre-paint flip is
+ * the single theme mechanism. Unchanged token names, light values.
+ */
+html.light {
+  color-scheme: light;
+
+  /* Page canvas / Body text (15.8:1 light) */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+
+  /* Elevated + dialog surfaces */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
+  /* THE one accent: CTAs, links, active tab */
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+
+  /* Inactive panels, table bands, hover fills */
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.145 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0); /* Descriptions, chips, types (~5.0:1 light) */
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.145 0 0);
+
+  /* Dev-client verdict tone, errors (>=4.5:1 light) */
+  --destructive: oklch(0.577 0.245 27.325);
+
+  /* Dividers, control edges */
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+
+  /* Focus rings, active tab indicator (>=3:1 light) */
+  --ring: oklch(0.708 0 0);
+
+  /* DOCS-ONLY (TR-07): EC frames + install strips */
+  --code-background: oklch(0.97 0 0);
+  --code-foreground: oklch(0.205 0 0);
+}
+
+/* Base document — the typographic scale (TR-07) consumed by every route. */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+h1 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.1875rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+small {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--code-background);
+  color: var(--code-foreground);
+  border-radius: var(--radius-sm);
+  padding: 0.125em 0.375em;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.125em 0.375em;
+}
+
+/* Focus-ring contract: a 2px ring in the theme's --ring, 2px offset
+ * (hard UI constraint, applies site-wide to every interactive element). */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}

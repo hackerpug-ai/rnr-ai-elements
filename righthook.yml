@@ -1,0 +1,33 @@
+version: "1"
+
+output:
+  mode: compact
+  timing: true
+  show_success: true
+
+# Always execute the gates. Righthook's job cache does not hash file contents.
+cache:
+  enabled: false
+
+policy:
+  require_installed: true
+  required_hooks:
+    - pre-commit
+  allow_skip: fail
+
+# These checks only read the working tree. Never stash or stage another writer's work.
+safety:
+  isolation: smart
+  partial_staging: preserve
+  unstaged_strategy: ignore
+  on_conflict: fail
+
+hooks:
+  pre-commit:
+    jobs:
+      typecheck:
+        run: pnpm typecheck
+      biome:
+        run: pnpm lint
+      fallow:
+        run: pnpm check:fallow

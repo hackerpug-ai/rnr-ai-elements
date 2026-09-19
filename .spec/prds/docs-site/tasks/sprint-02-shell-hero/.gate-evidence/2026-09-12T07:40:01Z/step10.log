@@ -1,0 +1,21 @@
+@@GATE-META step=step10 cmd_sha=dd0c34d518fef4c2b834239b9d79c05fbc9a5b547ccf3e8ba54db2d01952ec7c@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 10
+[run_flow] sprint=sprint-02-shell-hero root=/Users/justinrich/Projects/rnr-ai-elements head=64a3c2ab90a0cf7e19c354e3fc071e9fab069279+dirty expect=green flows=1/6
+[run_flow] FLOW-SHELL-02-first-visit-prefers-dark-no-flash (steps 1,10): $ pnpm playwright test tests/sprint-02-shell-hero/theme-first-paint.spec.ts --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+  1 skipped
+  2 passed (4.0s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-SHELL-02-first-visit-prefers-dark-no-flash (steps 1,10): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-02-shell-hero/e2e-evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

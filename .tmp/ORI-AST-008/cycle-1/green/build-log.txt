@@ -1,0 +1,99 @@
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+16:19:38 [vite] Re-optimizing dependencies because vite config has changed
+16:19:38 [types] Generated 103ms
+16:19:38 [build] output: "static"
+16:19:38 [build] mode: "static"
+16:19:38 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-008/apps/docs/dist/
+16:19:38 [build] Collecting build info...
+16:19:38 [build] ✓ Completed in 112ms.
+16:19:38 [build] Building static entrypoints...
+16:19:38 [vite] ✓ built in 130ms
+16:19:38 [vite] ✓ built in 36ms
+16:19:38 [build] Rearranging server assets...
+
+ generating static routes 
+16:19:38   ├─ /components/shimmer/index.html (+10ms) 
+16:19:38   ├─ /components/checkpoint/index.html (+2ms) 
+16:19:38   ├─ /components/image/index.html (+2ms) 
+16:19:38   ├─ /components/persona/index.html (+2ms) 
+16:19:38   ├─ /components/speech-input/index.html (+2ms) 
+16:19:38   ├─ /components/kbd/index.html (+1ms) 
+16:19:38   ├─ /components/breadcrumb/index.html (+2ms) 
+16:19:38   ├─ /components/button-group/index.html (+6ms) 
+16:19:38   ├─ /components/slider/index.html (+2ms) 
+16:19:38   ├─ /components/table/index.html (+2ms) 
+16:19:38   ├─ /components/command/index.html (+1ms) 
+16:19:38   ├─ /components/mono/index.html (+1ms) 
+16:19:38   ├─ /components/markdown/index.html (+1ms) 
+16:19:38   ├─ /components/code-block/index.html (+2ms) 
+16:19:38   ├─ /components/conversation/index.html (+1ms) 
+16:19:38   ├─ /components/message/index.html (+1ms) 
+16:19:38   ├─ /components/prompt-input/index.html (+2ms) 
+16:19:38   ├─ /components/empty/index.html (+1ms) 
+16:19:38   ├─ /components/item/index.html (+1ms) 
+16:19:38   ├─ /components/input-group/index.html (+1ms) 
+16:19:38   ├─ /components/sheet/index.html (+1ms) 
+16:19:38   ├─ /components/suggestion/index.html (+1ms) 
+16:19:38   ├─ /components/status/index.html (+1ms) 
+16:19:38   ├─ /components/reasoning-lifecycle/index.html (+1ms) 
+16:19:38   ├─ /components/tool/index.html (+1ms) 
+16:19:38   ├─ /components/reasoning/index.html (+1ms) 
+16:19:38   ├─ /components/task/index.html (+1ms) 
+16:19:38   ├─ /components/question/index.html (+1ms) 
+16:19:38   ├─ /components/agent/index.html (+2ms) 
+16:19:38   ├─ /components/chain-of-thought/index.html (+1ms) 
+16:19:38   ├─ /components/plan/index.html (+2ms) 
+16:19:38   ├─ /components/confirmation/index.html (+2ms) 
+16:19:38   ├─ /components/queue/index.html (+2ms) 
+16:19:38   ├─ /components/url/index.html (+1ms) 
+16:19:38   ├─ /components/sources/index.html (+1ms) 
+16:19:38   ├─ /components/inline-citation/index.html (+1ms) 
+16:19:38   ├─ /components/artifact/index.html (+1ms) 
+16:19:38   ├─ /components/snippet/index.html (+1ms) 
+16:19:38   ├─ /components/commit/index.html (+1ms) 
+16:19:38   ├─ /components/attachments/index.html (+1ms) 
+16:19:38   ├─ /components/context/index.html (+2ms) 
+16:19:38   ├─ /components/open-in-chat/index.html (+1ms) 
+16:19:38   ├─ /components/model-selector/index.html (+1ms) 
+16:19:38   ├─ /components/mic-selector/index.html (+2ms) 
+16:19:38   ├─ /components/voice-selector/index.html (+1ms) 
+16:19:38   ├─ /components/audio-player/index.html (+1ms) 
+16:19:38   ├─ /components/transcription/index.html (+1ms) 
+16:19:38   ├─ /components/terminal/index.html (+1ms) 
+16:19:38   ├─ /components/file-tree/index.html (+2ms) 
+16:19:38   ├─ /components/environment-variables/index.html (+2ms) 
+16:19:38   ├─ /components/package-info/index.html (+1ms) 
+16:19:38   ├─ /components/stack-trace-parser/index.html (+1ms) 
+16:19:38   ├─ /components/stack-trace/index.html (+1ms) 
+16:19:38   ├─ /components/schema-display/index.html (+1ms) 
+16:19:38   ├─ /components/test-results/index.html (+5ms) 
+16:19:38   ├─ /components/web-preview/index.html (+1ms) 
+16:19:38   ├─ /components/index.html (+4ms) 
+16:19:38   ├─ /docs/theming/index.html (+1ms) 
+16:19:38   ├─ /islands/copy-button/index.html (+1ms) 
+16:19:38   ├─ /registry/index.html (+2ms) 
+16:19:38   ├─ /index.html (+2ms) 
+16:19:38 ✓ Completed in 148ms.
+
+16:19:38 [build] ✓ Completed in 335ms.
+16:19:38 [build] 61 page(s) built in 471ms
+16:19:38 [build] Complete!
+EXIT=0

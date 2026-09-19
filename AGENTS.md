@@ -24,9 +24,15 @@ When dispatching subagents for planning, review, or implementation, prefer these
 | `aisdk-planner` | AI SDK architecture | The `UIMessage` / tool-part `state` seam, streaming contracts, provider strategy for the example app |
 | `aisdk-implementer` | AI SDK wiring | `useChat`, transport, tool execution, abort/retry in the example app — the library itself ships none of this |
 | `aisdk-reviewer` | AI SDK review | v7-correctness, real-provider verification, stale-v6 patterns |
+| `flue-planner` | Flue agent framework planning | Agent definitions, workflows, sandbox strategy, and deployment architecture using the Flue Rosetta knowledge base |
+| `flue-implementer` | Flue agent framework implementation | Agents, workflows, tools, channels, and deployment config using TDD (RED → GREEN → REFACTOR per AC) against a real Flue runtime |
+| `flue-reviewer` | Flue agent framework review | Adversarial validation of agents, workflows, tools, sandbox configuration, and deployment safety against the Flue Rosetta knowledge base |
 | `frontend-designer` | Visual presentation | Layout, styling, animation, token design ONLY — not logic or state management |
 | `test-quality-reviewer` | Test reality | Whether a component test would actually catch a break, vs. asserting on a mock |
 | `security-reviewer` | Security | Markdown rendering, link handling, any user-content path |
+| `techwriting-planner` | Documentation planning | Doc-set IA, Diátaxis quadrant mapping, audience/scope for the docs site and GitHub-facing docs — routes content-task planning, never implementation |
+| `techwriting-implementer` | Documentation authoring | Authored docs pages (getting-started, quickstart, guides, porting notes, boundary, troubleshooting), README/CONTRIBUTING/release notes — every technical claim verified against the real product; applies `10-technical-requirements/12-content-standards.md` from the docs-site PRD |
+| `techwriting-reviewer` | Documentation review | Adversarial doc-page validation: quadrant purity, style/glossary conformance, unverified claims, sample code that was never run — the reviewer for docs-site content tasks |
 
 ### Consulting experts — reference only, they do NOT implement
 

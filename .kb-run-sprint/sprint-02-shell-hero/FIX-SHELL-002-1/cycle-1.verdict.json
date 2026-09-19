@@ -1,0 +1,16 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "29ea5afd15ebbe7ea0c0ed1b6b0156e05eda9d8f",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Full lane on final committed bytes: 3 passed (3), exit 0. Header/Footer not.toContain('<script') byte-identical (:284-288; message text 'shell components'->'shell chrome' cosmetic). Exemption pins all three contract markers against AUTHORED source (readSource -> DocsLayout.astro, :43,:289). RED genuine (.tmp red/red-token.log: old assertion failing on unmodified tree, 1 failed | 2 skipped). Caveat: 'cannot silently admit arbitrary scripts' holds for paired scripts only — see AC-2."},
+    {"id": "AC-2", "satisfied": false,
+     "evidence": "All specified interlopers correctly FAIL (reproduced by reviewer): second plain script; data-astro-rerun without is:inline; is:inline+data-astro-rerun without rnr-theme; verbatim duplication ('expected 2 to be 1'). BUT the paired-tag regex at shell-layout.test.ts:289 (/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/g) requires a closing tag, so a SELF-CLOSING script after the contracted one (<script is:inline src=\"https://evil.example/interlooper.js\" /> before <slot name=\"head\" />) is invisible: lane PASSED 3/3 against that scratch state, and a real docs build emitted <script src=...></script> into dist/registry/index.html with exit 0. The old not.toContain('<script') caught this form. Violates the MUST 'any OTHER script in DocsLayout.astro still fails'. Placement BEFORE the contracted script IS caught; only trailing self-closing escapes.",
+     "fix": "Keep contracted-marker pins as-is; add one assertion closing the self-closing hole: count all opening tags with /<script\\b/g over the layout source and assert that count equals layoutScripts.length (any unpaired/self-closing opener then fails with a guiding message), or equivalently assert opening-tag count toBe(1) given contracted toBe(1). Do not touch any other assertion.",
+     "fix_location": "tests/sprint-02-shell-hero/shell-layout.test.ts:289-303"},
+    {"id": "DONE-WHEN-typecheck-lint", "satisfied": true, "evidence": "pnpm typecheck exit=0; biome ci on touched path exit=0."},
+    {"id": "DONE-WHEN-scope", "satisfied": true, "evidence": "Diff = shell-layout.test.ts (+32/-5) + .tmp/FIX-SHELL-002-1/cycle-1/ evidence; apps/ and packages/ byte-identical to main; tree clean after reviewer scratch reverts."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Honestly scoped and mostly strong: test-only diff, no token moved, Header/Footer intact, RED genuine, lane green 3/3, typecheck+biome pass, all contemplated interloper variants correctly fail (reproduced). One real hole demonstrated end-to-end: paired-tag regex misses self-closing scripts placed after the contracted one — shipped to dist as a real script tag with the lane green, which the old assertion caught. One added opening-tag-count assertion closes it; everything else stands."
+}

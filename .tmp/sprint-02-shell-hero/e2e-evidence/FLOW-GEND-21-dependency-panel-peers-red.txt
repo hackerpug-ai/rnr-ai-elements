@@ -1,0 +1,103 @@
+@@RUN-FLOW flow=FLOW-GEND-21-dependency-panel-peers sprint=sprint-02-shell-hero expect=red cmd_sha=471a65f5ebce8e9577d5a4a5b2a2592545b79bf1a6ebbfaa789934a3b19f6af6 head=747e7cdc55fb0907840bd9d775c619b7029bc5ae+dirty at=2026-09-12T08:19:13Z@@
++ pnpm playwright test tests/sprint-02-shell-hero/dependency-panels.spec.ts --grep FLOW-GEND-21-dependency-panel-peers
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+  1) [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers 
+
+    Error: shimmer: dependencies section present
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="dependencies"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - shimmer: dependencies section present locator('main > section[data-section="dependencies"]') with timeout 5000ms
+      - waiting for locator('main > section[data-section="dependencies"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      101 |
+      102 |     const section = page.locator(DEPENDENCIES_SECTION);
+    > 103 |     await expect(section, `${name}: dependencies section present`).toHaveCount(1);
+          |                                                                    ^
+      104 |
+      105 |     // npm dependencies[] verbatim — or the explicit empty state when empty.
+      106 |     if (item.dependencies.length === 0) {
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/dependency-panels.spec.ts:103:68
+
+    Error Context: test-results/sprint-02-shell-hero-depen-ba46a-D-21-dependency-panel-peers-chromium-desktop/error-context.md
+
+
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+  2) [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers 
+
+    Error: shimmer: dependencies section present
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="dependencies"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - shimmer: dependencies section present locator('main > section[data-section="dependencies"]') with timeout 5000ms
+      - waiting for locator('main > section[data-section="dependencies"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      101 |
+      102 |     const section = page.locator(DEPENDENCIES_SECTION);
+    > 103 |     await expect(section, `${name}: dependencies section present`).toHaveCount(1);
+          |                                                                    ^
+      104 |
+      105 |     // npm dependencies[] verbatim — or the explicit empty state when empty.
+      106 |     if (item.dependencies.length === 0) {
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/dependency-panels.spec.ts:103:68
+
+    Error Context: test-results/sprint-02-shell-hero-depen-ba46a-D-21-dependency-panel-peers-chromium-mobile/error-context.md
+
+
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+  3) [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers 
+
+    Error: shimmer: dependencies section present
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main > section[data-section="dependencies"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - shimmer: dependencies section present locator('main > section[data-section="dependencies"]') with timeout 5000ms
+      - waiting for locator('main > section[data-section="dependencies"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      101 |
+      102 |     const section = page.locator(DEPENDENCIES_SECTION);
+    > 103 |     await expect(section, `${name}: dependencies section present`).toHaveCount(1);
+          |                                                                    ^
+      104 |
+      105 |     // npm dependencies[] verbatim — or the explicit empty state when empty.
+      106 |     if (item.dependencies.length === 0) {
+        at /private/tmp/gate-red-items/tests/sprint-02-shell-hero/dependency-panels.spec.ts:103:68
+
+    Error Context: test-results/sprint-02-shell-hero-depen-ba46a-D-21-dependency-panel-peers-chromium-nojs/error-context.md
+
+
+  3 failed
+    [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers 
+    [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers 
+    [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers 
+@@GATE-EXIT=1@@

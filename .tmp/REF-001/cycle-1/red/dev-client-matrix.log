@@ -1,0 +1,20 @@
+
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/apps/docs/src/data/dev-client-matrix.json'
+
+   at sprint-04-generated-reference/dev-client-matrix.spec.ts:30
+
+  28 |   for (;;) {
+  29 |     try {
+> 30 |       return JSON.parse(readFileSync(url, 'utf8')) as T;
+     |                         ^
+  31 |     } catch (error) {
+  32 |       const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+  33 |       if (!retryable || Date.now() > deadline) throw error;
+    at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/dev-client-matrix.spec.ts:30:25)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-001/tests/sprint-04-generated-reference/dev-client-matrix.spec.ts:46:16
+
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+
+

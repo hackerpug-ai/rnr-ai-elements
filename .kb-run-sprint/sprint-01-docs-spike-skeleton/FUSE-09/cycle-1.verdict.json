@@ -1,0 +1,54 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": false,
+      "evidence": "Behavior is real: chromium-desktop+mobile PASS in junit.xml (exact 99-char clipboard, data-state=copied). But contracted VERIFY fails — all 3 runs fail in [chromium-nojs]: copy-button.spec.ts:30,44 and home.spec.ts:34 lack a JS-disabled project guard. Fix: test.skip(testInfo.project.use.javaScriptEnabled === false) on JS-dependent tests, or split the zero-JS case into its own unguarded test.",
+      "fix": "Skip JS-dependent tests when the project disables JS; keep the zero-JS selectable-text case as its own unguarded test. Then pnpm e2e:docs exits 0.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "pnpm vitest run island-budget.test.ts -t FUSE-09-island-budget exit 0 — exactly one customElements.define (rnr-copy-button in copy-button.ts:61), zero framework imports; dist module script bundle confirms no react/svelte/vue/preact/solid."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": false,
+      "evidence": "PASSes in chromium-desktop/mobile; FAILs in chromium-nojs (click runs no JS, clipboard empty). Canonical lane exit 1.",
+      "fix": "Same JS-disabled guard as AC-1 on the click-dependent test.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": false,
+      "evidence": "PASSes in JS projects (500ms toHaveAttribute bound held); FAILs in chromium-nojs — data-state stays 'idle' at copy-button.spec.ts:54.",
+      "fix": "Same JS-disabled guard on the data-state test.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Same vitest run: 1 define / 0 framework imports, exit 0."
+    },
+    {
+      "id": "RUNNER-REALITY",
+      "satisfied": true,
+      "evidence": "Runner WORKS on merged tree — no hang. `timeout 600 pnpm e2e:docs`: build chain + webServer astro preview, 10 passed/3 failed/2 skipped in 4.8s, exit 1. Implementer's deadlock claim does not reproduce; library driver was masking these nojs failures. Port 4321 left free."
+    },
+    {
+      "id": "GATES-TYPECHECK-LINT-SCOPE",
+      "satisfied": true,
+      "evidence": "pnpm typecheck exit 0; biome ci on touched paths exit 0 (.astro files ignored repo-wide by biome.json, not a defect); diff files in writeAllowed, .tmp evidence follows main convention (FUSE-05, FIX-F5-1)."
+    },
+    {
+      "id": "RED-EVIDENCE",
+      "satisfied": true,
+      "evidence": ".tmp/FUSE-09/cycle-1/red/: island-budget.test.out — real vitest FAIL ([] define sites); ac1-driver.out — real locator timeout pre-route. GREEN driver: clipboard len 99 exact, success 61-96ms, no-JS 200 + full command."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "fail"},
+  "summary": "No stubs: the island is real (reads its own rendered <code>, real navigator.clipboard.writeText, genuine RED evidence), and it passes in both JS Chromium projects against real astro preview. But the canonical lane fails: FUSE-10's playwright.config.ts runs every spec in a chromium-nojs project, and FUSE-09's click-dependent specs (copy-button.spec.ts:30,44; home.spec.ts:34) have no JS-disabled guard — 3 failed, exit 1. The implementer's runner-deadlock claim is false on the merged tree (lane completes in seconds); their library-mode driver masked exactly these failures. Fix is spec-side and inside writeAllowed: skip JS-dependent tests when the project disables JS and let the zero-JS case run unguarded; then pnpm e2e:docs exits 0. Non-blocking note: setState idle reset never restores the 'Copy' label (copy-button.ts:48 label guard)."
+}

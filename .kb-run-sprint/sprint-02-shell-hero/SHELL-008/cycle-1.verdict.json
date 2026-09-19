@@ -1,0 +1,18 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "f9bb69cdbab969e671cdb8f7254b34e97db7fa83",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Narrow lane SHELL-008-tabbed-install-first exit 0 (reviewer run). Independent dist greps: install first data-section on 39/39 pages; both engine commands exactly twice per page; nativewind byte-precedes uniwind; storage-key=rnr-engine on 39/39; 0 files with {engine}/{version}/max-height/install-row. TabGroup.astro:46-57 hidden={index!==0} only."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Narrow lane SHELL-008-dependencies-dataverbatim exit 0. dist greps: shimmer react-native-reanimated + reactnativereusables.com/r/{nativewind,uniwind}/text.json; conversation safe-area-context + button/icon + raw.githubusercontent v0.2.1 empty.json both engines; message data-deps-empty + 'No required npm packages' + avatar/text/markdown both engines; peers ai@^7.0.89 on 39/39. URLs resolved in [item].astro:53-57 via resolveRegistryDependencies; DependencyPanel renders props only."},
+    {"id": "AC-3", "satisfied": true, "evidence": "FLOW-GEND-14 3/3 chromium in three of four runs (one non-reproducing cold-start transient). spike.astro deleted, zero importers. component-page.spec.ts supersede = two-locator tabpanel migration + storage-key contract."},
+    {"id": "DONE-WHEN-typecheck-lint", "satisfied": true, "evidence": "typecheck exit 0; biome ci clean per touched file."},
+    {"id": "DONE-WHEN-scope", "satisfied": true, "evidence": "6 writeAllowed files + FLAG-A (index.astro line-4 swap: correct-for-tree, merge-redundant on trunk) + FLAG-B (spike-flow one-locator migration: forced, minimal, lane green) + FLAG-C (pngs not in commit, restored) — all judged satisfied + .tmp evidence."},
+    {"id": "TC-1..TC-5", "satisfied": true, "evidence": "All green; TC-4 vacuous-loop risk transitively closed by SHELL-006 pinned site-facts peers + fail-closed build."},
+    {"id": "ASSUMPTION-1..4", "satisfied": true, "evidence": "dist/components/{name}/index.html real emission; two-link oracle acceptable; testDir claim true; ordering verified in dist."}
+  ],
+  "stubs": [
+    "BLOCKER tests/sprint-02-shell-hero/item-install-copy.spec.ts:196-198 — CASE 3 asserts message dependencies tbody contains ${SITE}/r/nativewind/avatar.json with SITE='https://rnraielements.com' (:66), but dataset (packages/registry/registry.json) and served dist both carry https://reactnativereusables.com/r/nativewind/avatar.json — the exact URL the AC-2 scenario names. Spec unrunnable under sprint-01-pinned testDir so never executed; will go red when SHELL-011 widens testDir (phantom failure against correct product code). Fix: derive expectation from resolveRegistryDependencies(message.registryDependencies,'nativewind',VERSION)[0] (pattern at item-pages-build.test.ts:225-233) or pin the AC-named reactnativereusables.com literal. One-line change, no product code."
+  ],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Implementation verified correct end-to-end (build chain rerun, 39-page dist greps, both narrow lanes, typecheck, biome, FLOW-GEND-14 3/3, spike-flow green, full suite 661/662 with only the routed shell-layout item failing — untouched by this commit). All three flagged deviations check out. Sole blocker: one provably-false hand-typed literal in the committed-but-unrunnable item-install-copy.spec.ts — a latent phantom red for SHELL-011's widened lane. One-line test fix; no product changes."
+}

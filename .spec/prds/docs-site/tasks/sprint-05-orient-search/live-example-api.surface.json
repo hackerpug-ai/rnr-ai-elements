@@ -1,0 +1,23 @@
+{
+  "require_any": [
+    "\\bfetch\\s*\\(",
+    "\\b(?:http|https)\\.request\\s*\\("
+  ],
+  "require_product_target_any": [
+    "/api/chat"
+  ],
+  "banned_patterns": [
+    "\\b(?:vi|jest)\\.(?:mock|doMock|spyOn)\\s*\\(",
+    "\\b(?:mockImplementation|mockResolvedValue|mockReturnValue)\\s*\\(",
+    "\\b(?:MockLanguageModel|MockProvider)\\w*",
+    "\\b(?:it|test|describe)\\.skip(?:If)?\\s*\\("
+  ],
+  "banned_success_oracles": [
+    "body",
+    "html",
+    "main",
+    "document",
+    "*"
+  ],
+  "allowlist": []
+}

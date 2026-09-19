@@ -1,0 +1,115 @@
+---
+/**
+ * DependencyPanel (SHELL-008; re-skinned onto DataTable in REF-006) — the item
+ * page's data-verbatim dependencies panel. Receives the item's raw arrays plus
+ * the resolved-per-engine URL pairs ([item].astro resolves through
+ * lib/resolve-deps in frontmatter, so the served HTML is already concrete —
+ * nothing is fetched or templated on the client) and renders:
+ *
+ * - the npm dependency list verbatim, or an explicit empty state when the
+ *   dataset's dependencies[] is empty (the section never silently drops),
+ * - one engine-tabbed DataTable of the resolved registry dependency URLs per
+ *   engine — both forms render; the inactive one is hidden-attribute only,
+ * - the project-level AI SDK peers line verbatim from site-facts.json,
+ * - a footer Callout (REF-004) linking the registry ledger for
+ *   troubleshooting.
+ *
+ * Table mechanics live in the generic DataTable; this panel owns every domain
+ * string and the sprint-02 data-testid surface. Every rendered string arrives
+ * as a prop — a dataset edit moves this panel.
+ */
+import type { AiSdkPeer } from '../lib/resolve-deps';
+import Callout from './Callout.astro';
+import DataTable from './DataTable.astro';
+import TabGroup from './islands/TabGroup.astro';
+
+interface Props {
+  /** The item's dependencies[] — npm package names, rendered verbatim. */
+  dependencies: readonly string[];
+  /** resolve-deps.ts output per engine — already concrete absolute URLs. */
+  registryUrls: { nativewind: readonly string[]; uniwind: readonly string[] };
+  /** site-facts.json aiSdkPeers, rendered verbatim. */
+  peers: readonly AiSdkPeer[];
+}
+
+const { dependencies, registryUrls, peers } = Astro.props;
+
+/** One engine's URL rows — mono cells so every URL renders as <code>. */
+const engineRows = (engine: 'nativewind' | 'uniwind') =>
+  registryUrls[engine].map((url) => [{ text: url, mono: true }]);
+---
+
+{
+  dependencies.length === 0 ? (
+    <p class="deps-empty" data-deps-empty>
+      No required npm packages — this item installs through the registry dependencies below.
+    </p>
+  ) : (
+    <ul class="deps-packages" data-deps-packages>
+      {dependencies.map((name) => (
+        <li>
+          <code>{name}</code>
+        </li>
+      ))}
+    </ul>
+  )
+}
+<TabGroup
+  panels={[
+    { engine: 'nativewind', label: 'nativewind' },
+    { engine: 'uniwind', label: 'uniwind' },
+  ]}
+>
+  <Fragment slot="nativewind">
+    <DataTable bodyAttrs={{ 'data-engine-urls': 'nativewind' }} rows={engineRows('nativewind')} />
+  </Fragment>
+  <Fragment slot="uniwind">
+    <DataTable bodyAttrs={{ 'data-engine-urls': 'uniwind' }} rows={engineRows('uniwind')} />
+  </Fragment>
+</TabGroup>
+{
+  peers.length > 0 && (
+    <p class="deps-peers" data-deps-peers>
+      <span>AI SDK peers:</span>
+      {peers.map((peer) => (
+        <code>{peer.name}@{peer.range}</code>
+      ))}
+    </p>
+  )
+}
+<footer class="deps-footer">
+  <Callout variant="info" title="A dependency URL not resolving?">
+    <a slot="link" href="/registry">Open the registry ledger</a>
+  </Callout>
+</footer>
+
+<style>
+  .deps-packages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0 0 0.75rem;
+    list-style: none;
+  }
+  .deps-packages code {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.125rem 0.625rem;
+  }
+  .deps-empty {
+    margin: 0 0 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .deps-peers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem 0 0;
+    color: var(--muted-foreground);
+  }
+  .deps-footer {
+    margin: 0.75rem 0 0;
+  }
+</style>

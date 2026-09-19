@@ -1,0 +1,96 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004
+
+ ❯ tests/sprint-03-family-browse/ledger-filter-contract.test.ts (4 tests | 4 failed) 10ms
+   × FAM-004-contract-filter-wiring: exactly 1 rnr-ledger-filter define, astro:page-load init, target-attribute-driven data-filter-text reads, island mounted at the FAM-003 slot 6ms
+   × FAM-004-contract-no-url-writes: 0 URL/history state in the script, exactly 1 muted no-results row, an input-clear branch restoring all cards 1ms
+   × FAM-004-contract-nojs-fallback: the 39-card grid is static page template markup, the input is inert until upgrade, 0 client-side grid construction 0ms
+   × FAM-004-contract-a11y: the input carries a resolvable accessible name, a :focus-visible ring rule targets it, one role="search" landmark 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/ledger-filter-contract.test.ts > FAM-004-contract-filter-wiring: exactly 1 rnr-ledger-filter define, astro:page-load init, target-attribute-driven data-filter-text reads, island mounted at the FAM-003 slot
+AssertionError: the island script exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/scripts/ledger-filter.ts: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-03-family-browse/ledger-filter-contract.test.ts:38:71
+     36|
+     37| it('FAM-004-contract-filter-wiring: exactly 1 rnr-ledger-filter define…
+     38|   expect(existsSync(SCRIPT), `the island script exists at ${SCRIPT}`).…
+       |                                                                       ^
+     39|   expect(existsSync(ISLAND), `the island component exists at ${ISLAND}…
+     40|   const script = readFileSync(SCRIPT, 'utf8');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/sprint-03-family-browse/ledger-filter-contract.test.ts > FAM-004-contract-no-url-writes: 0 URL/history state in the script, exactly 1 muted no-results row, an input-clear branch restoring all cards
+AssertionError: the island script exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/scripts/ledger-filter.ts: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-03-family-browse/ledger-filter-contract.test.ts:84:71
+     82|
+     83| it('FAM-004-contract-no-url-writes: 0 URL/history state in the script,…
+     84|   expect(existsSync(SCRIPT), `the island script exists at ${SCRIPT}`).…
+       |                                                                       ^
+     85|   expect(existsSync(ISLAND), `the island component exists at ${ISLAND}…
+     86|   const script = readFileSync(SCRIPT, 'utf8');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/sprint-03-family-browse/ledger-filter-contract.test.ts > FAM-004-contract-nojs-fallback: the 39-card grid is static page template markup, the input is inert until upgrade, 0 client-side grid construction
+AssertionError: the island script exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/scripts/ledger-filter.ts: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-03-family-browse/ledger-filter-contract.test.ts:112:71
+    110|
+    111| it('FAM-004-contract-nojs-fallback: the 39-card grid is static page te…
+    112|   expect(existsSync(SCRIPT), `the island script exists at ${SCRIPT}`).…
+       |                                                                       ^
+    113|   expect(existsSync(ISLAND), `the island component exists at ${ISLAND}…
+    114|   const script = readFileSync(SCRIPT, 'utf8');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/sprint-03-family-browse/ledger-filter-contract.test.ts > FAM-004-contract-a11y: the input carries a resolvable accessible name, a :focus-visible ring rule targets it, one role="search" landmark
+AssertionError: the island component exists at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-004/apps/docs/src/components/islands/LedgerFilter.astro: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-03-family-browse/ledger-filter-contract.test.ts:142:74
+    140|
+    141| it('FAM-004-contract-a11y: the input carries a resolvable accessible n…
+    142|   expect(existsSync(ISLAND), `the island component exists at ${ISLAND}…
+       |                                                                          ^
+    143|   const island = readFileSync(ISLAND, 'utf8');
+    144|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  13:10:34
+   Duration  587ms (transform 38ms, setup 0ms, import 63ms, tests 10ms, environment 0ms)
+

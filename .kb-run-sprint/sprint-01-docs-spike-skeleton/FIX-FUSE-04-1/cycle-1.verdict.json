@@ -1,0 +1,17 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "MUST-config-change", "satisfied": true, "evidence": "vitest.config.ts:28 adds fileParallelism: false inside test: block, with comment; diff a1ef1cc..f5a8894 touches no other config key."},
+    {"id": "MUST-RED-evidence", "satisfied": true, "evidence": ".tmp/red/exit-code.txt exit=1; full-suite.log shows enrichment-modules 56-item assertions failing with deleted 'shimmer' line visible in assertion diff; 2 failed | 637 passed."},
+    {"id": "MUST-GREEN-with-drill", "satisfied": true, "evidence": "green/exit-code.txt exit=0, 47 files/639 tests; drill-report.json shows mutated exit 1 naming shimmer, restored exit 0, registry sha256 identical, public/r 114->112->114; verbose drill run 26.6s."},
+    {"id": "NEVER-drill-gates-tests-untouched", "satisfied": true, "evidence": "git diff --name-only a1ef1cc..f5a8894 = vitest.config.ts plus .tmp/FIX-FUSE-04-1 evidence only; single commit f5a8894."},
+    {"id": "NEVER-no-maxWorkers-partial", "satisfied": true, "evidence": "No maxWorkers anywhere in diff; fileParallelism: false is total file serialization."},
+    {"id": "STRICTLY-wrapped-exit-codes", "satisfied": true, "evidence": "exit-code.txt files contain 'exit=1' / 'exit=0' wrapper format."},
+    {"id": "AC-1", "satisfied": true, "evidence": "Reviewer repro: plain pnpm vitest run exit=0, 47 files/639 tests, 76s; registry.json sha256 byte-identical before and after run."},
+    {"id": "typecheck-biome-clean", "satisfied": true, "evidence": "Reviewer runs: pnpm typecheck exit=0; ./node_modules/.bin/biome ci vitest.config.ts exit=0."},
+    {"id": "scope-writeAllowed", "satisfied": true, "evidence": "Committed diff = vitest.config.ts + .tmp/FIX-FUSE-04-1/, both in writeAllowed. Untracked apps/docs/.astro is typecheck build output, not committed."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "The fix is exactly the contracted one-key change: fileParallelism: false at vitest.config.ts:28 with an explanatory comment, nothing else touched. RED evidence is genuine — exit 1 with both 56-item enrichment-modules assertions failing and the deleted 'shimmer' entry visible in the assertion diff. GREEN exits 0 with all 47 files/639 tests passing at roughly doubled wall time (41s -> 71s), the accepted serialization cost. I independently reproduced the plain run: exit 0, 639/639, and registry.json byte-identical before and after my own run. The implementer's evidence-supplement assumption is accepted: vitest's default reporter prints no passing test names (my repro produced the identical silent log), so the drill's observability is carried by drill-report.json (real mutation exit 1, byte-identical restore, public/r 114->112->114) and a verbose named drill pass; the plain GREEN run is unmodified. Typecheck and biome ci clean."
+}

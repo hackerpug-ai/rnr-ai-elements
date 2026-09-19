@@ -1,0 +1,1283 @@
+{
+  "flows": [
+    {
+      "id": "FLOW-DOCS-01-getting-started-engine-decision",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-01",
+      "manual_physical": false,
+      "actor": "First-time integrator using the built docs site",
+      "preconditions": [
+        "Build the current committed source and complete the ordered docs content gates.",
+        "Serve that dist through the owned localhost:4321 preview.",
+        "Use a fresh browser context with empty localStorage.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/introduction and read its opening identity and distribution statements."
+        },
+        {
+          "number": 2,
+          "action": "Follow its boundary link and verify /docs/owns-vs-does-not-own returns real ownership content."
+        },
+        {
+          "number": 3,
+          "action": "Open /docs/installation and read the single engine decision guide."
+        },
+        {
+          "number": 4,
+          "action": "Select nativewind and inspect the complete conversation command in its panel."
+        },
+        {
+          "number": 5,
+          "action": "Select uniwind and inspect the corresponding uniwind command."
+        },
+        {
+          "number": 6,
+          "action": "Follow the getting-started links to CLI, Theming, and Dark mode."
+        }
+      ],
+      "observable_expected": [
+        "All five getting-started destinations return 200 with their matching titles.",
+        "Introduction states universal React Native AI chat/agent UI, copy-paste registry distribution, and not an npm package.",
+        "The engine question appears once.",
+        "Tailwind v4 plus @theme maps to uniwind; the NativeWind 4/Tailwind v3 setup maps to nativewind. The engine value remains nativewind.",
+        "The nativewind conversation command occurs only inside nativewind instruction panels.",
+        "The linked boundary page provides real explanations.",
+        "Installation has exactly one engine-decision TabGroup; each entire literal command remains inside its corresponding panel. Mobile and JavaScript-disabled readers can read the ordinary bodies and labels."
+      ],
+      "evidence_capture": [
+        "Navigation response statuses and final URLs",
+        "Screenshots of Introduction and both Installation panels",
+        "DOM excerpts for the decision guide and labeled commands"
+      ],
+      "teardown": [
+        "Close the browser context.",
+        "Stop only the preview process owned by this run."
+      ],
+      "test": "tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts --grep FLOW-DOCS-01-getting-started-engine-decision",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-01-getting-started-engine-decision/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-01-getting-started-engine-decision/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        1
+      ],
+      "primary_owner": "ORI-CONT-004",
+      "desc": "Use a fresh browser context over the built localhost preview to open all five getting-started routes. Assert 200 responses and their named rendered bodies. Introduction states the full product identity in its opening and links to substantive boundary content. Installation has exactly one engine TabGroup, correct project-fact mappings, and each complete canonical conversation command inside its corresponding panel. CLI describes the registry-specific URL and destination contract and links to the authoritative reference. Enhanced desktop and mobile projects exercise deliberate engine selection; the no-JavaScript project reads both labeled panels. A page containing only the shared shell fails.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner",
+        "techwriting-planner",
+        "frontend-designer"
+      ]
+    },
+    {
+      "id": "FLOW-DOCS-01-theming-and-section-nav",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-01",
+      "manual_physical": false,
+      "actor": "Integrator reading the token reference",
+      "preconditions": [
+        "The current dist includes the real authored Theming entry and TokenTable.",
+        "The preview serves the current dist at localhost:4321.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/theming and read it from its title through the last section."
+        },
+        {
+          "number": 2,
+          "action": "Inspect the explanation of Tailwind v4 @theme and the absence of tailwind.config.js for that engine."
+        },
+        {
+          "number": 3,
+          "action": "Read the light and dark oklch values in the table."
+        },
+        {
+          "number": 4,
+          "action": "Follow the Getting started navigation to /docs/cli and /docs/dark-mode, then return to Theming."
+        }
+      ],
+      "observable_expected": [
+        "Each destination returns 200.",
+        "The guide distinguishes the consumer theme from the docs site's own CSS.",
+        "At least ten token rows have paired light/dark values and usage text.",
+        "CLI and Dark mode are reachable through actual section navigation.",
+        "Preserved #textclasscontext and #rendermarkdown anchors navigate to accurate current interface descriptions; both value columns and at least ten oklch values remain readable without JavaScript."
+      ],
+      "evidence_capture": [
+        "Theming screenshot with both value columns",
+        "Response statuses and clicked section-link destinations",
+        "Extracted token row names and paired values"
+      ],
+      "teardown": [
+        "Close the browser context."
+      ],
+      "test": "tests/sprint-05-orient-search/theming-and-section-nav.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/theming-and-section-nav.spec.ts --grep FLOW-DOCS-01-theming-and-section-nav",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-01-theming-and-section-nav/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-01-theming-and-section-nav/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        2
+      ],
+      "primary_owner": "ORI-CONT-004",
+      "desc": "Read the built /docs/theming page and assert the scoped no-config statement, @theme mapping, Light and Dark columns, at least ten oklch occurrences, and distinct paired values for --primary. Traverse Getting started links to CLI and Dark mode and assert their actual content and 200 responses. Preserve and follow #textclasscontext and #rendermarkdown. The no-JavaScript project proves that the reference remains readable. The RED must expose missing paired values or navigation, not falsely assert that the existing Theming route is absent.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner",
+        "techwriting-planner",
+        "frontend-designer"
+      ]
+    },
+    {
+      "id": "FLOW-DOCS-02-quickstart-chat-screen",
+      "uc_ref": "UC-DOCS-02",
+      "scope": "task",
+      "type": "core",
+      "primary_owner": "ORI-CONT-004",
+      "supporting_owners": [
+        "ORI-RN-000",
+        "ORI-RN-001",
+        "ORI-RN-002",
+        "ORI-RN-003",
+        "ORI-RN-004",
+        "ORI-AST-005",
+        "ORI-AI-001",
+        "ORI-DEP-001",
+        "ORI-RN-005",
+        "ORI-AI-002"
+      ],
+      "manual_physical": false,
+      "desc": "Follow the built site's single quickstart, install both canonical engine variants into clean Expo 57 consumers, run the displayed seed-data screen on iOS, Android, and Web, and follow the conclusion to the real provider-backed apps/example live-chat screen.",
+      "test": "tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts --grep FLOW-DOCS-02-quickstart-chat-screen --project=chromium-desktop",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-quickstart-chat-screen/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-quickstart-chat-screen/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "actor": "An integrator following the displayed tutorial, driven through a real browser and native accessibility controls",
+      "preconditions": [
+        "The candidate registry and docs build completed, and the built dist is served by the owned Astro preview process at http://localhost:4321.",
+        "ORI-DEP-001 deployed the corrected candidate artifacts. The literal public URLs resolve through normal DNS and return actual registry JSON over HTTPS.",
+        "Two clean consumer directories are created outside the monorepo. Neither has copied component files or links into repository source.",
+        "RNR_S05_IOS_UDID and RNR_S05_ANDROID_SERIAL identify exclusively reserved devices. The SDK-57-compatible Expo Go application and real native automation driver are available.",
+        "The AI SDK owner provides a running real endpoint reachable from iOS, Android, and Web, with server-only provider credentials.",
+        "The browser context begins with empty storage. The proof uses fresh run identifiers and records the candidate SHA before execution.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open http://localhost:4321/docs/quickstart.",
+          "expected": "HTTP 200; the page names a scrolling seed-data message list with working prompt input in Expo Go as its end state."
+        },
+        {
+          "number": 2,
+          "action": "Select nativewind. Read and copy the displayed install command and every subsequent setup/source block needed by the tutorial.",
+          "expected": "The required standalone conversation command is exactly npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json. The remaining actual item URLs and complete rendering source are present."
+        },
+        {
+          "number": 3,
+          "action": "Execute those displayed commands in the fresh nativewind consumer, compile the exact displayed source, and run Expo doctor.",
+          "expected": "The real CLI installs files through the public hostname; the consumer resolves its own dependencies and source; compilation and the Expo checks succeed."
+        },
+        {
+          "number": 4,
+          "action": "Start the consumer's owned Metro process and open its URL in Expo Go on the reserved iOS simulator. Scroll to an older named seed turn, enter the current run marker, and press Send message.",
+          "expected": "The marker appears once as a user turn, the input clears, and the transcript remains scrollable. No assistant response is synthesized."
+        },
+        {
+          "number": 5,
+          "action": "With the iOS keyboard open, switch between light and dark device appearance. Repeat the seed-message interaction on the reserved Android emulator in both appearances.",
+          "expected": "The list occupies visible space; the composer stays above the keyboard and system gesture region; text and native chrome remain readable and themed."
+        },
+        {
+          "number": 6,
+          "action": "Export and serve the same nativewind consumer for Web, then perform the seed-message interaction in a real browser.",
+          "expected": "The exact source produces a scrolling message list and working composer on Web."
+        },
+        {
+          "number": 7,
+          "action": "Return to the Quickstart, select uniwind, and repeat the command, source, compiler, iOS, Android, and Web sequence in the independent uniwind consumer.",
+          "expected": "The literal conversation command uses /r/uniwind/conversation.json. Both engines have complete runnable panels and all six engine/platform combinations pass."
+        },
+        {
+          "number": 8,
+          "action": "Follow the Quickstart conclusion's worked-example link and launch its documented apps/example /live-chat entrypoint.",
+          "expected": "The link resolves to the actual AI SDK v7 integration target and opens the separate live chat screen."
+        },
+        {
+          "number": 9,
+          "action": "Submit a fresh nonce-bearing prompt through each engine's actual live screen on iOS, Android and Web, then send a contextual follow-up without repeating the nonce.",
+          "expected": "All six targets show incremental assistant text and completion correlated with the actual OpenAI request/response and server text hash. The follow-up demonstrates prior-turn context, and both engines run the same app-owned useChat hook."
+        },
+        {
+          "number": 10,
+          "action": "On each live target start an unfinished bounded generation and use Stop generating. Stop only the owned endpoint, submit another prompt, restart it and use Retry. Repeat with the actual provider rejecting a deliberately nonexistent model, then restore the primary model and retry.",
+          "expected": "Stop actually aborts an active provider request. Real service loss and upstream rejection appear as sanitized errors. Retry issues a real successful request for the retained turn without duplicating the user message. A stream that finishes before Stop is not accepted as abort evidence."
+        }
+      ],
+      "observable_expected": [
+        "Quickstart returns 200 and is the site's single tutorial.",
+        "Every engine-varying block uses the shared engine tabs and supplies complete source for either engine.",
+        "Both literal public conversation commands run without rewriting their hostname.",
+        "Exact displayed source compiles and runs in clean consumers on iOS, Android, and Web.",
+        "The seed composer appends the learner's message and clears on successful submission.",
+        "The conclusion reaches an actual AI SDK v7 useChat example with real provider behavior.",
+        "The complete two-engine, three-platform live matrix proves contextual follow-up, active abort, real endpoint loss, actual rejected-provider request and successful retry without a duplicated user turn."
+      ],
+      "evidence_capture": [
+        "Browser trace and screenshots of the selected engine panels, displayed commands, source blocks, expected-result text, and worked-example link.",
+        "Candidate SHA, run identifier, source hashes, public registry response hashes, CLI version, resolved package versions, and command/compiler output.",
+        "For each engine/platform leg: exact device or browser identity, Metro or export logs, accessibility hierarchy, before/after screenshots, submitted marker, and light/dark keyboard evidence.",
+        "For the live example: redacted endpoint/provider correlation, incremental and completed screen captures, abort evidence, unavailable-endpoint error, and successful recovery.",
+        "The browser test awaits runQuickstartProof and the live proof in the same invocation. It rejects missing legs, receipts from another run, or mismatched source hashes.",
+        "All six live records include observed response growth, request/response IDs, model, usage, source and registry hashes, final answer correlation, native recordings and inspected screenshots; redact credentials, not outcomes."
+      ],
+      "teardown": [
+        "Stop only the Metro, Web server, and endpoint processes started by the current proof, using the recorded child process identities.",
+        "Remove only reverse-port mappings created for the reserved Android serial.",
+        "Restore each reserved device's prior appearance and release its reservation; do not erase shared devices or clear unrelated applications.",
+        "Close proof-owned browser contexts.",
+        "Retain the bounded evidence directory and dispose of the exact temporary consumer roots through the scratch-artifact lifecycle."
+      ],
+      "artifact_status": "planned_output_not_observed",
+      "gate_steps": [
+        3
+      ],
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner",
+        "techwriting-planner",
+        "frontend-designer",
+        "react-native-reusables-planner",
+        "aisdk-planner",
+        "cloudflare-workers-planner",
+        "ghactions-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-SHELL-01",
+      "manual_physical": false,
+      "actor": "Visitor changing the site theme",
+      "preconditions": [
+        "Current built preview with live TokenTable and the shared theme implementation.",
+        "Fresh context with light colorScheme and empty localStorage.",
+        "Frame recording starts before navigation.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/theming and verify the light theme."
+        },
+        {
+          "number": 2,
+          "action": "Click the actual rnr-theme-toggle button."
+        },
+        {
+          "number": 3,
+          "action": "Read root classes, computed color-scheme, background, rnr-theme, and the background token swatch."
+        },
+        {
+          "number": 4,
+          "action": "Hard-reload while capturing every navigation frame."
+        },
+        {
+          "number": 5,
+          "action": "Toggle back to light and re-read the same product values."
+        }
+      ],
+      "observable_expected": [
+        "Dark selection sets rnr-theme=dark, html.dark present, html.light absent, and computed color-scheme dark.",
+        "The page background corresponds to oklch(0.145 0 0).",
+        "The first nonblank reload frame is dark.",
+        "Returning to light reverses the complementary classes and stores light.",
+        "The TokenTable swatch and current value change with each toggle."
+      ],
+      "evidence_capture": [
+        "Frame sequence from navigation start through load",
+        "Before/after computed styles, storage, and root classes",
+        "TokenTable screenshots in both themes"
+      ],
+      "teardown": [
+        "Close the isolated browser context."
+      ],
+      "test": "tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts --grep FLOW-SHELL-01-theme-toggle-persisted-flash-free",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-01-theme-toggle-persisted-flash-free/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        4
+      ],
+      "primary_owner": "ORI-AST-003",
+      "desc": "Visitor changing the site theme: 1. Open /docs/theming and verify the light theme.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-SHELL-01",
+      "manual_physical": false,
+      "actor": "First-time visitor whose system preference is dark",
+      "preconditions": [
+        "Current built preview.",
+        "New context with dark colorScheme, empty storage, and no back-forward cache restoration.",
+        "Observation-only parser and frame recording starts before navigation.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Cold-navigate to /docs/theming."
+        },
+        {
+          "number": 2,
+          "action": "Observe the root state when body first becomes parseable."
+        },
+        {
+          "number": 3,
+          "action": "Inspect every captured frame through completed load."
+        },
+        {
+          "number": 4,
+          "action": "Read the dark TokenTable values."
+        },
+        {
+          "number": 5,
+          "action": "Repeat with independent cold contexts on / and /components/message."
+        }
+      ],
+      "observable_expected": [
+        "html.dark and computed color-scheme dark are established before body content is painted.",
+        "Every route's first nonblank frame has the dark background.",
+        "No white or light-theme frame appears.",
+        "Theming displays the dark code-background value oklch(0.235 0 0)."
+      ],
+      "evidence_capture": [
+        "Per-route parser-state timestamps",
+        "Per-route frame sequences and first-nonblank-frame images",
+        "Computed background and token values"
+      ],
+      "teardown": [
+        "Close every created context and its recording session."
+      ],
+      "test": "tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts --grep FLOW-SHELL-02-first-visit-prefers-dark-no-flash",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-02-first-visit-prefers-dark-no-flash/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        5
+      ],
+      "primary_owner": "ORI-AST-003",
+      "desc": "First-time visitor whose system preference is dark: 1. Cold-navigate to /docs/theming.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-07-cmdk-open-search-navigate",
+      "type": "core",
+      "scope": "journey",
+      "uc_ref": "UC-SHELL-02",
+      "manual_physical": false,
+      "actor": "Visitor finding documentation through search",
+      "preconditions": [
+        "Fresh current dist plus its real Pagefind index.",
+        "All 56 item destinations, authored getting-started entries, boundary content, and custom 404 are present.",
+        "A real browser with keyboard input and network observation.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/introduction and press Meta+K on macOS or Control+K elsewhere."
+        },
+        {
+          "number": 2,
+          "action": "Observe the dialog opening, focused input, and actual loading transition."
+        },
+        {
+          "number": 3,
+          "action": "Type streamdown, inspect grouped results and the announced count, then use Enter on the highlighted result."
+        },
+        {
+          "number": 4,
+          "action": "Reopen search and query renderMarkdown; find both the boundary result and an applicable item result and navigate to each."
+        },
+        {
+          "number": 5,
+          "action": "Repeat with dev client and verify boundary and item destinations contain the relevant text."
+        },
+        {
+          "number": 6,
+          "action": "Confirm five item and three documentation destinations are represented by actual index results."
+        },
+        {
+          "number": 7,
+          "action": "Navigate to a fresh unknown path, open search from the real custom 404, and recover to Message."
+        },
+        {
+          "number": 8,
+          "action": "Reopen and dismiss with Escape, confirming focus returns to the invoking control."
+        }
+      ],
+      "observable_expected": [
+        "A native dialog with aria-modal=true opens within 300ms independently of Pagefind initialization.",
+        "Results expose components/ui/lib/pages grouping and an aria-live count.",
+        "Selected results close the dialog and navigate to real content.",
+        "renderMarkdown and dev client include /docs/owns-vs-does-not-own plus applicable item pages.",
+        "Props and verdict content are searchable.",
+        "Custom 404 search recovery uses the same working dialog.",
+        "With JavaScript disabled, actual navigation and recovery links remain usable."
+      ],
+      "evidence_capture": [
+        "Dialog-open timing and focus observations",
+        "Result counts, grouping, text, and destination URLs",
+        "Navigation response statuses and destination content screenshots",
+        "404 recovery trace"
+      ],
+      "teardown": [
+        "Dismiss any open dialog.",
+        "Close the browser context."
+      ],
+      "test": "tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts --grep FLOW-SHELL-07-cmdk-open-search-navigate",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        6
+      ],
+      "primary_owner": "ORI-AST-010",
+      "desc": "Visitor finding documentation through search: 1. Open /docs/introduction and press Meta+K on macOS or Control+K elsewhere.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-08-pagefind-lazy-load-on-first-open",
+      "type": "core",
+      "scope": "journey",
+      "uc_ref": "UC-SHELL-02",
+      "manual_physical": false,
+      "actor": "Visitor browsing before first using search",
+      "preconditions": [
+        "Current built preview with ClientRouter and real Pagefind output.",
+        "Fresh context without loaded Pagefind resources.",
+        "Request observation attached before the first navigation.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/introduction and wait five seconds without opening search."
+        },
+        {
+          "number": 2,
+          "action": "Hover header navigation links."
+        },
+        {
+          "number": 3,
+          "action": "Follow real links through /docs/installation and /registry using soft navigation."
+        },
+        {
+          "number": 4,
+          "action": "Assert no Pagefind request has occurred."
+        },
+        {
+          "number": 5,
+          "action": "Open search for the first time and await its real initialization."
+        },
+        {
+          "number": 6,
+          "action": "Close the dialog and reopen it on the same page without changing the query."
+        }
+      ],
+      "observable_expected": [
+        "Zero /pagefind/ requests occur before first open.",
+        "First open loads same-origin /pagefind/pagefind.js and real index resources.",
+        "Reopening the unchanged dialog adds no Pagefind requests.",
+        "The no-JavaScript browser performs no Pagefind requests and retains working navigation."
+      ],
+      "evidence_capture": [
+        "Complete request log with timestamps and initiating phase",
+        "Separate module and index-resource counts",
+        "Page navigation and dialog-open trace"
+      ],
+      "teardown": [
+        "Detach request observation and close the context."
+      ],
+      "test": "tests/sprint-05-orient-search/pagefind-lazy-load-on-first-open.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/pagefind-lazy-load-on-first-open.spec.ts --grep FLOW-SHELL-08-pagefind-lazy-load-on-first-open",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        7
+      ],
+      "primary_owner": "ORI-AST-010",
+      "desc": "Visitor browsing before first using search: 1. Open /docs/introduction and wait five seconds without opening search.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-13-engine-tab-persists-across-pages",
+      "type": "core",
+      "scope": "journey",
+      "uc_ref": "UC-SHELL-03",
+      "manual_physical": false,
+      "actor": "Integrator choosing an engine once",
+      "preconditions": [
+        "Current built preview with actual Installation and Quickstart content.",
+        "Fresh browser context with empty localStorage.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/installation and verify the documented fresh-context default."
+        },
+        {
+          "number": 2,
+          "action": "Click the uniwind tab and inspect its complete command."
+        },
+        {
+          "number": 3,
+          "action": "Read rnr-engine and root data-engine."
+        },
+        {
+          "number": 4,
+          "action": "Follow the actual Quickstart link through ClientRouter."
+        },
+        {
+          "number": 5,
+          "action": "Hard-load /components/message."
+        },
+        {
+          "number": 6,
+          "action": "Return to Quickstart and select nativewind from a later tabbed block."
+        },
+        {
+          "number": 7,
+          "action": "Inspect all engine groups, then visit home and Components."
+        }
+      ],
+      "observable_expected": [
+        "Uniwind selection changes its panel, storage, and root data-engine.",
+        "Selection survives soft navigation and hard loading.",
+        "Selecting nativewind updates every engine block on the current page.",
+        "Five page surfaces retain consistent selected-engine commands.",
+        "No URL contains engine state.",
+        "Tab/panel relationships remain unique and keyboard-operable."
+      ],
+      "evidence_capture": [
+        "Per-step URL, selected tab, visible command, storage, and root data-engine",
+        "Screenshots before and after navigation",
+        "ARIA ID uniqueness and ownership observations"
+      ],
+      "teardown": [
+        "Close the isolated context."
+      ],
+      "test": "tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts --grep FLOW-SHELL-13-engine-tab-persists-across-pages",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        8
+      ],
+      "primary_owner": "ORI-AST-010",
+      "desc": "Integrator choosing an engine once: 1. Open /docs/installation and verify the documented fresh-context default.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-14-tab-panels-in-initial-html",
+      "type": "core",
+      "scope": "journey",
+      "uc_ref": "UC-SHELL-03",
+      "manual_physical": false,
+      "actor": "Integrator reading the initial document without client execution",
+      "preconditions": [
+        "Current built preview.",
+        "A real HTTP client and a JavaScript-disabled browser context.",
+        "Record the actual source/lockfile, built-dist, surface-policy and coldboot-policy hashes with a fresh run ID. Confirm localhost:4321 belongs to this candidate before observation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Fetch the raw response body for /docs/installation."
+        },
+        {
+          "number": 2,
+          "action": "Fetch the raw response body for /components/message."
+        },
+        {
+          "number": 3,
+          "action": "Inspect each response's labeled nativewind and uniwind panels."
+        },
+        {
+          "number": 4,
+          "action": "Load each route in the JavaScript-disabled browser and read both panels."
+        },
+        {
+          "number": 5,
+          "action": "Inspect the multiple Quickstart groups for unique ARIA IDs and readable engine labels."
+        }
+      ],
+      "observable_expected": [
+        "Both engine commands occur inside the correct panels in the original HTTP responses.",
+        "No registry fetch constructs their content after load.",
+        "Both panels are stacked, labeled, and readable without JavaScript.",
+        "Multiple tab groups do not share IDs or cross-reference another group's panel."
+      ],
+      "evidence_capture": [
+        "Raw HTTP response bodies and status",
+        "No-JavaScript screenshots",
+        "Panel label/command associations and network log"
+      ],
+      "teardown": [
+        "Close the browser context and HTTP client."
+      ],
+      "test": "tests/sprint-05-orient-search/tab-panels-in-initial-html.spec.ts",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/tab-panels-in-initial-html.spec.ts --grep FLOW-SHELL-14-tab-panels-in-initial-html",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        9
+      ],
+      "primary_owner": "ORI-AST-010",
+      "desc": "Integrator reading the initial document without client execution: 1. Fetch the raw response body for /docs/installation.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run this same real-browser flow against the recorded preimplementation source, preserve the actual observed failure and exact command output at red_proof, then run the completed candidate. Source absence or an authored success flag is not RED/GREEN evidence.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-15-search-contract-before-recovery",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-SHELL-02",
+      "manual_physical": false,
+      "actor": "Visitor finding published registry references and documentation through the built site's search dialog",
+      "preconditions": [
+        "Use the isolated candidate containing ORI-AST-004 and its existing dependencies. Generate actual registry and documentation data, Astro HTML and the real Pagefind index through their production entrypoints.",
+        "The emitted site contains all 56 registry-item destinations and the actual published documentation supplied by the existing dependencies, including /docs/owns-vs-does-not-own. Do not supply fabricated documents or injected result data.",
+        "Serve that candidate's built dist through the owned preview at http://localhost:4321. Refuse an unowned listener.",
+        "Record a fresh run ID, candidate source and lockfile hashes, built-dist and Pagefind hashes, test-source hash, and surface-policy and coldboot-policy hashes.",
+        "Start with a fresh browser context, empty storage and no loaded Pagefind resources. Attach observation-only network and timing capture before navigation.",
+        "This proof runs before custom-404 composition and requires no ORI-AST-009, ORI-AST-010 or downstream acceptance output."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /docs/introduction, wait five seconds without opening search, hover real navigation links, and follow existing links through /docs/installation and /registry. Observe every request from before the initial navigation."
+        },
+        {
+          "number": 2,
+          "action": "Open search through the existing header control. Measure activation-to-dialog visibility independently of Pagefind readiness, and inspect the actual focused element."
+        },
+        {
+          "number": 3,
+          "action": "Await the genuine first initialization. Record the same-origin Pagefind module and index requests, then search for streamdown and inspect the actual result groups and announced count."
+        },
+        {
+          "number": 4,
+          "action": "Dismiss with Escape and observe focus returning to the invoking header control. Reopen on the same page without changing the query and compare the Pagefind request log with the recorded initialized state."
+        },
+        {
+          "number": 5,
+          "action": "Use ArrowDown and ArrowUp to change the active result, then use Enter to open the actual /components/streamdown result. Observe dialog closure, navigation response, final URL and the destination's rendered title and relevant content."
+        },
+        {
+          "number": 6,
+          "action": "After real ClientRouter navigation, reopen search with Meta+K on macOS or Control+K elsewhere. Confirm that initialization is retained and that one activation produces one working dialog."
+        },
+        {
+          "number": 7,
+          "action": "Search for renderMarkdown and dev client separately. For each query, inspect and follow the actual boundary-page result and an applicable item result, then verify the destination content answers the query."
+        },
+        {
+          "number": 8,
+          "action": "Through real searches, select and visit five existing item destinations: /components/message, /components/conversation, /components/streamdown, /components/item and /components/stack-trace-parser. Inspect their actual titles, result category metadata and rendered bodies."
+        },
+        {
+          "number": 9,
+          "action": "Through real searches, select and visit /docs/introduction, /docs/installation and /docs/owns-vs-does-not-own. Observe their response statuses, final URLs and substantive rendered content."
+        },
+        {
+          "number": 10,
+          "action": "Search for nearBottomThreshold and inspect the real Conversation result to prove indexed prop content. Select a distinctive verdict phrase from an actual emitted item document, search for that phrase, and verify the corresponding real item result and destination."
+        },
+        {
+          "number": 11,
+          "action": "Enter a fresh run-specific no-match query and observe the genuine empty-result state. Replace it with streamdown and verify that actual results return."
+        },
+        {
+          "number": 12,
+          "action": "Enter the literal query <b data-s05-query=\"literal\">streamdown</b> through the search input. Inspect the dialog's rendered nodes and query value to verify that query text does not create a b element or a data-s05-query attribute. Clear the query and verify that normal result navigation still works."
+        },
+        {
+          "number": 13,
+          "action": "Dismiss the dialog with Escape and observe focus returning to the actual invoking control."
+        }
+      ],
+      "observable_expected": [
+        "Exactly zero /pagefind/ requests occur before the first search activation, including the initial five-second wait, hover and ordinary navigation.",
+        "The native dialog has aria-modal=true, opens within 300ms of activation independently of index readiness, and focuses its real search input.",
+        "First activation loads the actual same-origin /pagefind/pagefind.js module and real index resources produced from the current built HTML.",
+        "Reopening the initialized dialog with an unchanged query adds zero Pagefind requests. Soft navigation retains initialization; additional resources for genuinely different queries are recorded separately.",
+        "Real results expose the components, ui, lib and pages categories, an aria-live result count and a keyboard-active result.",
+        "Arrow keys change the active result. Enter closes the dialog and navigates to the selected real destination. Escape restores focus to the invoking control.",
+        "The five named item destinations and three named documentation destinations return HTTP 200 and contain their matching substantive rendered content.",
+        "Both renderMarkdown and dev client produce meaningful boundary-page and applicable item results. nearBottomThreshold finds Conversation, and a phrase from an actual verdict is searchable.",
+        "The no-match query produces an actual empty-result state; replacing it with streamdown restores matching results.",
+        "The literal HTML-shaped query remains input text and creates zero b[data-s05-query=\"literal\"] elements and zero data-s05-query attributes inside the dialog.",
+        "Results derive from the current Pagefind index. No request interception, manufactured search response, injected document, canned result or static success receipt satisfies the proof."
+      ],
+      "evidence_capture": [
+        "Current-run source, lockfile, test, policy, built-dist and Pagefind identities; actual build and index command outputs.",
+        "Complete timestamped request log distinguishing pre-open, first initialization, unchanged-query reopen, soft navigation and subsequent queries.",
+        "Activation-to-visible timing, focused-element observations, announced counts and active-result changes.",
+        "Result text, category, URL and response status for all five named item destinations and three named documentation destinations.",
+        "Browser traces and screenshots showing the actual dialog, search results, destination content, empty-result recovery and restored focus.",
+        "DOM observations showing the literal HTML-shaped query value and absence of query-created elements or attributes."
+      ],
+      "teardown": [
+        "Dismiss any open dialog, detach observers and close only this run's browser contexts.",
+        "Stop only the preview and other child processes launched and recorded by this run.",
+        "Retain the current-run evidence and dispose only of owned scratch output through the repository scratch-artifact lifecycle."
+      ],
+      "test": "tests/sprint-05-orient-search/search-contract.spec.ts",
+      "test_function": "FLOW-SHELL-15-search-contract-before-recovery",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/search-contract.spec.ts --grep FLOW-SHELL-15-search-contract-before-recovery",
+      "test_tier": "e2e",
+      "verification_service": "Real built Astro preview at http://localhost:4321, production Pagefind index, same-origin HTTP resources and actual Playwright browser keyboard, focus and navigation",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-15-search-contract-before-recovery/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-15-search-contract-before-recovery/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        10
+      ],
+      "primary_owner": "ORI-AST-004",
+      "desc": "Gate step 10, after the current maximum numbered step 9, exercises ORI-AST-004 through its already-planned search-contract.spec.ts. Prove real built indexing, immediate dialog opening, focus and keyboard navigation, actual result destinations, first-open lazy loading and reuse, and safe query rendering. Custom-404 composition remains exclusively in the unchanged downstream flow. This locks existing proof and adds no product or test-file scope.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run the exact locked command against the recorded preimplementation candidate with a functioning real build and preview, and capture an observed assertion failure for the missing search behavior. A missing server, missing test, selector matching no tests, or build failure is not functional RED. Preserve the actual command, source identity and failure output at red_proof. Run the same command against the implemented candidate and capture its concrete browser and network observations. The assertions must fail for a disconnected index, static result shell, eager Pagefind load, broken keyboard navigation or query HTML insertion. No stubbed transport, fabricated response or authored success flag is accepted.",
+      "co_authored_by": [
+        "astro-planner"
+      ]
+    },
+    {
+      "id": "FLOW-GEND-07-registry-ledger-controls",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-GEND-07",
+      "manual_physical": false,
+      "actor": "Integrator filtering the generated registry ledger and copying the selected engine's command",
+      "preconditions": [
+        "Use the isolated candidate containing ORI-AST-007 and its existing dependencies ORI-AST-002 and ORI-AST-008.",
+        "Generate registry data and build the real Astro site through production entrypoints. The generated dataset contains 56 items: 39 components, 11 ui items, and 6 lib items.",
+        "Serve the candidate's actual dist at http://localhost:4321. Refuse an unowned listener.",
+        "Record a fresh run ID and candidate source, lockfile, test-source, dist, surface-policy, and coldboot-policy hashes.",
+        "Use actual Playwright desktop and mobile browser projects and a separate JavaScript-disabled context. Use the browser's real clipboard with required permissions; do not replace the clipboard API.",
+        "Seed only through the production build and ordinary browser navigation. Do not inject rows, engine state, clipboard contents, or manufactured HTTP responses."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Open /registry in a fresh browser context. Inspect the generated table, its 56 item rows, and category totals 56/39/11/6."
+        },
+        {
+          "number": 2,
+          "action": "Select the component category and verify 39 visible component rows. Select uniwind and verify the category count remains 39."
+        },
+        {
+          "number": 3,
+          "action": "Enter conversation in the real text filter. Inspect the matching conversation row and its complete displayed uniwind install command."
+        },
+        {
+          "number": 4,
+          "action": "Activate that row's real CopyButton and read the system clipboard. Compare the complete clipboard value with the displayed command."
+        },
+        {
+          "number": 5,
+          "action": "Switch to nativewind, verify the matching row count is unchanged, copy again, and compare the displayed command with the real clipboard. Follow the row's Docs link to /components/conversation and inspect its content and selected engine."
+        },
+        {
+          "number": 6,
+          "action": "Use real navigation to an available authored engine panel and back to Registry. Observe shared engine selection, rnr-engine storage, root data-engine, and displayed commands without writing state from the test."
+        },
+        {
+          "number": 7,
+          "action": "Clear the query and inspect the ui and lib categories separately. Verify 11 and 6 rows respectively. Follow item to /components/item and stack-trace-parser to /components/stack-trace-parser, observing real response statuses and matching rendered content."
+        },
+        {
+          "number": 8,
+          "action": "Return to Registry, select All, and enter a fresh run-specific query that matches no actual item. Observe the table's empty-result message and zero matching rows. Clear the query and verify all 56 rows return and the empty-result message disappears."
+        },
+        {
+          "number": 9,
+          "action": "Navigate to /components and exercise its existing text filter with conversation, the run-specific no-match query, and then a cleared query. Verify matching cards, empty-state behavior, and restoration of the original grid."
+        },
+        {
+          "number": 10,
+          "action": "In the JavaScript-disabled context, load /registry and inspect the initial document and rendered table. Read both labeled engine commands for conversation, count all 56 item rows, and follow representative component, ui, and lib Docs links."
+        }
+      ],
+      "observable_expected": [
+        "The generated ledger contains exactly 56 item rows, with category totals All=56, component=39, ui=11, and lib=6 before text filtering.",
+        "Selecting either engine changes commands without changing the selected category's item count.",
+        "Filtering components by conversation includes the real conversation row.",
+        "For conversation, the displayed and copied uniwind value is exactly npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json.",
+        "For conversation, the displayed and copied nativewind value is exactly npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json.",
+        "Registry controls, available authored engine panels, reference tabs, rnr-engine storage, and root data-engine agree after actual user selection and navigation.",
+        "/components/conversation, /components/item, and /components/stack-trace-parser return HTTP 200 with matching substantive content; ui/lib Docs links do not merely point back to their ledger rows.",
+        "The no-match query yields zero matching rows and a visible empty-result message. Clearing restores 56 rows and hides that message.",
+        "The existing component grid still filters, reports no matches, and restores its original cards when cleared.",
+        "Without JavaScript, all 56 rows and both labeled engine commands remain readable, recovery through Docs links works, and inert filter controls are not exposed.",
+        "Product-owned ledger rows, command text, clipboard values, destination content, and component cards are executable success assertions; generic document roots are not success oracles."
+      ],
+      "evidence_capture": [
+        "Current-run source, lockfile, test-source, dist, and policy identities plus actual build output.",
+        "Per-action category, engine, query, visible row counts, storage, root data-engine, and displayed command observations.",
+        "Actual clipboard values compared with the complete displayed commands.",
+        "Navigation response statuses, final URLs, and destination-content observations.",
+        "Browser traces and screenshots covering filtering, empty-result recovery, component-grid preservation, and the JavaScript-disabled table."
+      ],
+      "teardown": [
+        "Close only this run's browser contexts and detach observation listeners.",
+        "Stop only the preview process launched and recorded by this run.",
+        "Preserve evidence and release only owned scratch resources."
+      ],
+      "test": "tests/sprint-05-orient-search/registry-ledger-controls.spec.ts",
+      "test_function": "FLOW-GEND-07-registry-ledger-controls",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/registry-ledger-controls.spec.ts --grep FLOW-GEND-07-registry-ledger-controls",
+      "test_tier": "e2e",
+      "verification_service": "Real built Astro preview at http://localhost:4321, production-generated registry data, actual Playwright browsers, system clipboard, and real HTTP navigation",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-GEND-07-registry-ledger-controls/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        11
+      ],
+      "primary_owner": "ORI-AST-007",
+      "desc": "Lock ORI-AST-007's already-planned browser proof for generated ledger filtering, engine-correct command copying, real reference destinations, empty-result recovery, preserved component-grid filtering, and the complete JavaScript-disabled table. This adds no product behavior or test file.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run the exact command against a recorded preimplementation candidate with a functioning real build and preview. Capture an actual assertion failure for missing ledger behavior through the governing run_flow RED capture format at proof.red. A missing test, unmatched selector, unavailable server, build error, authored success flag, or plain renamed log is not functional RED evidence. Run the same command against the implemented candidate and capture concrete browser and clipboard observations. The test must fail when filtering is disconnected, the copied engine is wrong, ui/lib links remain self-anchors, or the no-JavaScript table omits rows or commands. No API replacement, request interception, view injection, canned clipboard value, or skipped target is accepted.",
+      "co_authored_by": [
+        "astro-planner",
+        "frontend-designer"
+      ]
+    },
+    {
+      "id": "FLOW-SHELL-16-not-found-search-recovery",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-SHELL-04",
+      "manual_physical": false,
+      "actor": "Visitor recovering from an unknown documentation URL",
+      "preconditions": [
+        "Use the isolated candidate containing ORI-AST-009 and its existing dependencies ORI-AST-001, ORI-AST-004, and ORI-CONT-005.",
+        "Build the real site and production Pagefind index through production entrypoints. Use the actual system manuscript at apps/docs/src/content/system/not-found.md and the emitted custom 404.html.",
+        "Serve the current candidate's dist at http://localhost:4321. Confirm listener ownership before observation.",
+        "Record a fresh run ID and candidate source, lockfile, test-source, built-dist, Pagefind, surface-policy, and coldboot-policy hashes.",
+        "Use real Playwright desktop and mobile browser projects and a separate JavaScript-disabled context. Observe HTTP requests and dialog timing without replacing responses.",
+        "This task-owned proof does not require ORI-AST-010, final visual tasks, or deployed Cloudflare acceptance. Public Worker status-code verification remains with its existing owner."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Navigate to a fresh run-specific unknown path under /docs/. Capture the actual navigation response and inspect the custom missing-page title, explanation, search hint, header, footer, and recovery links against the real system manuscript."
+        },
+        {
+          "number": 2,
+          "action": "Inspect the emitted 404.html and its served recovery content. Confirm that the system manuscript remains outside the docs collection and does not create an ordinary documentation navigation entry."
+        },
+        {
+          "number": 3,
+          "action": "Activate Search the site from the recovery page. Measure activation-to-dialog visibility separately from Pagefind readiness and inspect the focused input."
+        },
+        {
+          "number": 4,
+          "action": "Await the real index, search for message, select the actual Message result with the keyboard, and navigate to /components/message. Observe dialog closure, the navigation response, the final URL, and substantive Message content."
+        },
+        {
+          "number": 5,
+          "action": "Return to a fresh unknown path, reopen search, and dismiss it with Escape. Verify focus returns to the actual recovery-page invoking control."
+        },
+        {
+          "number": 6,
+          "action": "Open search from an ordinary page and compare its actual module/index resources and Message destination with recovery-page search. Query the missing-page title and a distinctive phrase from the actual system manuscript; inspect returned result URLs and verify the missing-page document is excluded."
+        },
+        {
+          "number": 7,
+          "action": "Set the site theme through its real existing control, revisit an unknown path, and inspect the retained theme and shared header/footer. Do not write theme state directly from the test."
+        },
+        {
+          "number": 8,
+          "action": "In the JavaScript-disabled context, navigate to a fresh unknown path. Read the missing-page explanation and follow the plain Components and Registry links, observing HTTP 200 responses and matching rendered destination content."
+        }
+      ],
+      "observable_expected": [
+        "A genuinely unknown path displays the candidate's custom recovery document with the actual manuscript content, rather than an empty shell or an unrelated page.",
+        "The build emits 404.html, while system/not-found.md remains outside the docs collection and ordinary documentation navigation.",
+        "The existing native search dialog has aria-modal=true, becomes visible within 300ms of activation independently of index readiness, and focuses its actual input.",
+        "The real Message result closes the dialog and reaches /components/message with HTTP 200 and substantive Message content.",
+        "Escape restores focus to the actual recovery-page search trigger.",
+        "Recovery and ordinary-page search use the same production Pagefind resources and real Message destination. Neither 404.html nor the run-specific unknown URL appears as a search result.",
+        "The existing site theme, header, and footer remain present on the custom recovery page.",
+        "Without JavaScript, the missing-page explanation remains readable and plain Components and Registry links reach real matching content.",
+        "Observed /components/message, /components, and /registry destinations and their rendered content are success targets. Generic roots and static success markers cannot satisfy the proof.",
+        "Local preview observations do not substitute for the separate deployed Worker HTTP 404 status-code proof."
+      ],
+      "evidence_capture": [
+        "Current-run source, lockfile, test-source, dist, Pagefind, and policy identities plus actual build output.",
+        "Unknown-path navigation response, emitted 404.html identity, and rendered system-copy observations.",
+        "Dialog-open timing, focused-element observations, keyboard navigation, and restored-focus observations.",
+        "Actual search-resource URLs, result URLs, response statuses, and destination-content observations.",
+        "Browser traces and screenshots of enhanced recovery, retained theme, and JavaScript-disabled Components and Registry navigation."
+      ],
+      "teardown": [
+        "Dismiss any open dialog, detach observers, and close only this run's browser contexts.",
+        "Stop only the preview process launched and recorded by this run.",
+        "Retain current-run evidence and release only owned scratch resources."
+      ],
+      "test": "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts",
+      "test_function": "FLOW-SHELL-16-not-found-search-recovery",
+      "run_cmd": "pnpm exec playwright test tests/sprint-05-orient-search/not-found-search-recovery.spec.ts --grep FLOW-SHELL-16-not-found-search-recovery",
+      "test_tier": "e2e",
+      "verification_service": "Real built Astro preview at http://localhost:4321, emitted custom 404.html, production Pagefind index, real HTTP navigation, and actual Playwright browser keyboard and focus",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-16-not-found-search-recovery/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-16-not-found-search-recovery/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "gate_steps": [
+        12
+      ],
+      "primary_owner": "ORI-AST-009",
+      "desc": "Lock ORI-AST-009's already-planned browser proof for custom unknown-URL recovery, shared search activation and navigation, index exclusion, retained shell/theme, and useful JavaScript-disabled links. This adds no product behavior or test file and does not replace ORI-AST-010's integrated search flow.",
+      "artifact_status": "planned_output_not_observed",
+      "red_proof_contract": "Run the exact command against a recorded preimplementation candidate with a functioning real build, preview, and prerequisite search implementation. Capture an actual assertion failure for missing recovery behavior through the governing run_flow RED capture format at proof.red. Missing infrastructure, unmatched tests, source absence alone, or an authored success flag cannot establish RED. Run the identical command against the implemented candidate and capture actual recovery, search, keyboard, HTTP, and no-JavaScript observations. The assertions must fail for a generic missing-page shell, disconnected recovery search, broken destination links, or an indexed 404 document. Do not intercept requests, inject recovery markup, manufacture results, or skip browser targets.",
+      "co_authored_by": [
+        "astro-planner",
+        "techwriting-planner",
+        "frontend-designer",
+        "cloudflare-workers-planner"
+      ]
+    },
+    {
+      "id": "FLOW-DOCS-02-live-example-api-stream-history-abort",
+      "uc_ref": "UC-DOCS-02",
+      "scope": "task",
+      "type": "core",
+      "primary_owner": "ORI-AI-001",
+      "manual_physical": false,
+      "actor": "API client exercising the actual example server",
+      "desc": "Prove the already-planned example API integration before screen composition: real OpenAI streaming, SDK-produced conversation history, request validation, configuration rejection, upstream failure, active cancellation, recovery, actual package compatibility and owned-process cleanup.",
+      "gate_steps": [
+        13
+      ],
+      "test": "tests/sprint-05-orient-search/live-example-api.test.ts",
+      "test_function": "FLOW-DOCS-02-live-example-api-stream-history-abort",
+      "run_cmd": "pnpm exec vitest run tests/sprint-05-orient-search/live-example-api.test.ts -t FLOW-DOCS-02-live-example-api-stream-history-abort",
+      "test_tier": "integration",
+      "verification_service": "Real Node 24 example HTTP server, installed AI SDK v7 packages and OpenAI Responses API at https://api.openai.com/v1 using gpt-4.1-mini-2025-04-14",
+      "surface_policy": ".spec/prds/docs-site/tasks/sprint-05-orient-search/live-example-api.surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+      "artifact": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-live-example-api-stream-history-abort/run.json",
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-live-example-api-stream-history-abort/proof.red",
+      "artifact_status": "planned_output_not_observed",
+      "co_authored_by": [
+        "react-native-reusables-planner"
+      ],
+      "preconditions": [
+        "Use the isolated ORI-AI-001 candidate and its unchanged existing dependencies. This proof requires no Quickstart page, ORI-CONT-004 output, native screen or ORI-AI-002 output.",
+        "Verify the actual pinned packages through the preserved setup commands. Missing or incompatible packages, credentials, networking or model access fail closed.",
+        "Reserve the actual backend address and port. Launch the real Node server through the task-owned backend lifecycle and record PID, launch identity, source and lockfile hashes, test and policy hashes, commands and a fresh run ID.",
+        "Pass OPENAI_API_KEY only to the trusted launcher and real server child. Keep credentials out of installs, compilers, client configuration, command arguments and captured evidence.",
+        "Use the fixed official OpenAI endpoint, the primary model, maxOutputTokens=1024, maxRetries=0 and the bounded request deadline already required by ORI-AI-001.",
+        "Materialize the API-specific governed surface policy supplied in this payload before task-plan validation."
+      ],
+      "steps": [
+        {
+          "number": 1,
+          "action": "Run the exact flow-ID-selected integration suite against the real owned server. Submit a fresh nonce-bearing text prompt through POST /api/chat and consume actual SDK UI-stream deltas."
+        },
+        {
+          "number": 2,
+          "action": "Submit a contextual follow-up using the SDK-produced first-turn history, including assistant structural parts. Do not repeat the nonce in the second user message."
+        },
+        {
+          "number": 3,
+          "action": "Exercise malformed and prohibited input, the 64 KiB body limit, the 50-message limit, unsupported methods, missing or malformed configuration, and an occupied port. Pair rejection evidence with a real successful request."
+        },
+        {
+          "number": 4,
+          "action": "Restart the same real server with a deliberately nonexistent model, observe the actual provider rejection, restore the primary model and verify successful recovery."
+        },
+        {
+          "number": 5,
+          "action": "Abort a real unfinished HTTP stream after observing a delta. Verify provider cancellation and resource cleanup, then complete another real request."
+        },
+        {
+          "number": 6,
+          "action": "Execute the preserved package, server-compiler, scoped hook-compiler and lint checks. Inspect the actual client import boundary and clean up all recorded server children."
+        }
+      ],
+      "observable_expected": [
+        "A valid request produces at least two nonempty text deltas before completion, with actual response ID, model, usage, request correlation and final text hash.",
+        "The contextual answer includes the first turn's nonce even though the second user message omits it.",
+        "Invalid bodies return 400, oversized bodies return 413 and unsupported methods return 405; rejected input causes zero provider calls.",
+        "Invalid startup configuration exits before listening. An occupied port does not cause another listener to be killed or silently substituted.",
+        "The real rejected-model request produces a sanitized failure; restoring the primary model produces a real completed response.",
+        "Cancellation occurs while generation is unfinished, reaches the provider AbortController and releases resources. Ordinary completed request-body close does not abort generation.",
+        "The actual pinned SDK and hook import graph compile without compatibility shims, replacement declarations or weakened compiler settings.",
+        "The run records exact source, command, outcome and teardown evidence. Scoped compiler success does not claim rendered hook acceptance or whole-example correctness."
+      ],
+      "evidence_capture": [
+        "run.json containing current-run identity, source/lockfile/test/policy hashes, exact command and exit, and references to the actual ORI-AI-001 package, provider-stream, error-abort, validation and teardown artifacts.",
+        "Timestamped nonempty stream deltas, actual final answer, nonce/history correlation, request IDs, provider response IDs, configured model, usage and terminal outcomes.",
+        "Observed validation responses, provider-call counts for rejected requests, invalid-launch exits, genuine upstream rejection, active cancellation and restored successful requests.",
+        "proof.red captured by run_flow.py with --expect red for the exact locked command; its header and command hash must remain intact.",
+        "red.txt retained as the requested supplementary transcript of that same actual RED run. It is not the validator's canonical red_proof."
+      ],
+      "red_proof_contract": "Run the exact selected suite against the recorded preimplementation state with real dependencies available and capture a functional assertion failure before implementation. A missing test, missing package, unavailable credential, unreachable prerequisite or zero selected tests is not functional RED. Capture the canonical proof through run_flow.py --expect red at proof.red. Run the identical command against the implemented candidate for GREEN. Never author success receipts, substitute a provider, replay a canned stream or introduce artificial stream delays.",
+      "teardown": [
+        "Abort unfinished requests and clear request deadlines and listeners on success, failure, disconnect and shutdown.",
+        "Stop only server children identified by this run's owned backend handles; preserve unrelated listeners.",
+        "Restore the primary model after rejected-model testing and record actual stop/restart outcomes.",
+        "Verify that every recorded child has exited and no owned listener or active generation remains.",
+        "Preserve bounded current-run evidence and dispose only of owned scratch resources."
+      ],
+      "scenario": {
+        "id": "SC-DOCS-02-LIVE-API-1",
+        "use_case_ref": "UC-DOCS-02",
+        "ac_ref": "AC-1",
+        "primary": true,
+        "tier": "visible",
+        "test_tier": "integration",
+        "verification_service": "Real Node 24 example HTTP server, installed AI SDK v7 packages and OpenAI Responses API at https://api.openai.com/v1 using gpt-4.1-mini-2025-04-14",
+        "start_state": {
+          "description": "Launch the actual server through its CLI in the isolated candidate using valid server-only configuration; reserve its port and record its PID, source identity and a fresh nonsecret run nonce.",
+          "seed_method": "cli",
+          "records": [
+            "OPENAI Responses model=gpt-4.1-mini-2025-04-14; official base URL fixed",
+            "Empty new conversation; 0 assistant turns; fresh nonce generated for this invocation",
+            "Real installed ai@7.0.89, @ai-sdk/react@4.0.92, @ai-sdk/openai@4.0.66 and zod@4.6.1"
+          ]
+        },
+        "negative_control": {
+          "would_fail_if": [
+            "The HTTP route is a static success response or is disconnected from the real provider.",
+            "History is omitted or the SDK-produced assistant step-start parts are rejected.",
+            "Input validation is a no-op, secrets are logged, or normal request-body close incorrectly aborts generation.",
+            "The provider AbortController is disconnected from HTTP cancellation or teardown leaves owned listeners active.",
+            "The hook uses a stub transport or incompatible SDK declarations instead of the installed packages."
+          ]
+        },
+        "evidence": {
+          "artifact_type": "event_log",
+          "required_capture": true
+        },
+        "cases": [
+          {
+            "action": {
+              "actor": "api_client",
+              "steps": [
+                "POST a fresh DefaultChatTransport envelope to /api/chat containing a text prompt asking for the current nonce followed by a substantive explanation; consume the actual SDK UI stream incrementally.",
+                "Send a second turn containing the SDK-produced first-turn history, including its assistant structural parts; ask for the earlier marker without repeating the nonce in the new user message."
+              ]
+            },
+            "end_state": {
+              "must_observe": [
+                "At least 2 nonempty text deltas arrive before terminal completion; concatenation contains the current run nonce.",
+                "The second answer contains the exact `runNonce` from the first turn, although the second user message omits it.",
+                "Both responses carry actual provider response IDs, model, usage, request IDs, text hashes and terminal outcome: completed."
+              ],
+              "must_not_observe": [
+                "0 assistant deltas, empty response, or a static canned answer.",
+                "A second request without first-turn history or an HTTP 200 stream classified successful after an error."
+              ]
+            }
+          },
+          {
+            "action": {
+              "actor": "api_client",
+              "steps": [
+                "Send malformed JSON, invalid envelopes, system/tool/file parts and client provider/model overrides to /api/chat.",
+                "Send a body exceeding 65536 bytes, an envelope with 51 messages, and an unsupported method; retain a valid text request as the positive control."
+              ]
+            },
+            "end_state": {
+              "must_observe": [
+                "Invalid bodies and 51-message input return HTTP 400; oversized body returns HTTP 413; unsupported method returns HTTP 405.",
+                "Each rejected request has recorded provider-call count=0; the positive control receives a real completed provider stream."
+              ],
+              "must_not_observe": [
+                "HTTP 200 or provider dispatch for rejected input; empty rejection evidence."
+              ]
+            }
+          },
+          {
+            "action": {
+              "actor": "cli_user",
+              "steps": [
+                "Launch actual server children with each required configuration value missing or malformed and with an occupied reserved port, preserving the existing listener.",
+                "Launch again with valid configuration and send a real request."
+              ]
+            },
+            "end_state": {
+              "must_observe": [
+                "Every invalid launch has exit_code > 0 before listening; occupied-port handling preserves the recorded original PID.",
+                "The restored valid launch answers `/api/chat` with a real completed provider response."
+              ],
+              "must_not_observe": [
+                "A server listening after configuration rejection, hidden port substitution, or empty launch diagnostics."
+              ]
+            }
+          },
+          {
+            "action": {
+              "actor": "api_client",
+              "steps": [
+                "Restart the actual owned server with a deliberately nonexistent model identifier while retaining the official provider endpoint and real credential.",
+                "Send valid text input, observe the actual provider rejection and sanitized HTTP or SDK stream failure, then restore the primary model and repeat."
+              ]
+            },
+            "end_state": {
+              "must_observe": [
+                "The nonexistent model produces an actual upstream rejection with terminal outcome: `error` and a sanitized client-visible error.",
+                "Restored gpt-4.1-mini-2025-04-14 produces a completed real response with usage and response ID."
+              ],
+              "must_not_observe": [
+                "An empty error record, leaked credentials/raw provider error, fallback model, or error stream counted as successful."
+              ]
+            }
+          },
+          {
+            "action": {
+              "actor": "api_client",
+              "steps": [
+                "Request a long bounded response and abort the real HTTP request after observing a delta while generation remains unfinished.",
+                "Observe the server's abort and cleanup, then issue a new independent real request.",
+                "Treat completion before cancellation as nondiscriminating and retry with a longer bounded prompt; never delay the stream artificially."
+              ]
+            },
+            "end_state": {
+              "must_observe": [
+                "The unfinished request records outcome=aborted and provider cancellation; its active-generation count returns to 0.",
+                "The subsequent request produces at least 2 real deltas and outcome: completed; normal request-body close does not abort generation."
+              ],
+              "must_not_observe": [
+                "No cancellation signal, continued orphan generation, or a completed-before-Stop run accepted as abort evidence."
+              ]
+            }
+          },
+          {
+            "action": {
+              "actor": "cli_user",
+              "steps": [
+                "Run the preserved package-list, server compiler and scoped live-chat compiler commands against actual installed dependencies; run the scoped lint command.",
+                "Inspect the real hook/config import graph and verify server credentials and provider imports remain unreachable from client code.",
+                "Stop all recorded server children and inspect their ports and shutdown outcomes."
+              ]
+            },
+            "end_state": {
+              "must_observe": [
+                "The real server and scoped hook compilers exit 0 with the pinned packages and no replacement declarations.",
+                "The actual hook uses stable DefaultChatTransport, expo/fetch, throttle: 50, empty initial messages and validated absolute API configuration.",
+                "After teardown, owned active requests: 0; owned listeners: 0; all recorded server children have exited."
+              ],
+              "must_not_observe": [
+                "Empty compiler evidence, compatibility shims, client credential reads, skipped dependencies or a leftover owned listener.",
+                "A scoped compiler result presented as rendered useChat acceptance or whole-example/gallery success."
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "deferred_journeys": [
+    {
+      "covers_ucs": [
+        "UC-DOCS-01",
+        "UC-DOCS-02",
+        "UC-DOCS-04",
+        "UC-GEND-04",
+        "UC-GEND-07",
+        "UC-SHELL-03"
+      ],
+      "id": "journeys/docs-integrator-arc",
+      "outstanding_ucs": [
+        "UC-DOCS-04"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DELIV-04",
+        "UC-SHELL-02",
+        "UC-SHELL-04"
+      ],
+      "id": "journeys/docs-resilience-arc",
+      "outstanding_ucs": [
+        "UC-DELIV-04",
+        "UC-SHELL-04"
+      ]
+    },
+    {
+      "covers_ucs": [
+        "UC-DOCS-01",
+        "UC-DOCS-03",
+        "UC-GEND-03",
+        "UC-SHELL-01"
+      ],
+      "id": "journeys/docs-themer-arc",
+      "outstanding_ucs": [
+        "UC-DOCS-03"
+      ]
+    }
+  ]
+}

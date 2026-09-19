@@ -1,0 +1,15 @@
+@@GATE-META step=step9 cmd_sha=ce9f291e82e3fe0eaa3f2a5dc3042da792d040ca3e1d1980de2ee702c70e13f9@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 9
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=1/10
+[run_flow] FLOW-DELIV-03-live-registry-round-trip (steps 9): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts --grep FLOW-DELIV-03-live-registry-round-trip
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+  3 passed (1.6s)
+[run_flow] FLOW-DELIV-03-live-registry-round-trip (steps 9): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

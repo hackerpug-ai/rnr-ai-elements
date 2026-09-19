@@ -1,0 +1,147 @@
+{
+  "arms": [
+    {
+      "arm": "props",
+      "label": "unresolved props type in shimmer.tsx fails the props gate, then restores",
+      "item": "shimmer",
+      "mutatedPath": "packages/registry/src/components/ai/shimmer.tsx",
+      "runs": {
+        "mutated": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": "[docs-data] props: item \"shimmer\" prop \"tone\" has unresolved type\n"
+        },
+        "restored": {
+          "exitCode": 0,
+          "stdout": "[docs-data] gates: 56 of 56 names match expectation; count, files, props, family, verdict, matrix gates pass\n",
+          "stderr": ""
+        }
+      },
+      "sha256": {
+        "before": "b2a477d189c7cfbe152d3fc7e35229205f5fd9a0be04d4aeb6efd14211340cd2",
+        "after": "b2a477d189c7cfbe152d3fc7e35229205f5fd9a0be04d4aeb6efd14211340cd2",
+        "bytesIdentical": true
+      },
+      "expectationsHeld": true
+    },
+    {
+      "arm": "matrix",
+      "label": "blanked peers[] on \"streamdown\" fails the matrix gate, then restores",
+      "item": "streamdown",
+      "mutatedPath": "apps/docs/src/data/dev-client-matrix.json",
+      "runs": {
+        "mutated": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": "[docs-data] matrix: item \"streamdown\" has empty peers\n"
+        },
+        "restored": {
+          "exitCode": 0,
+          "stdout": "[docs-data] gates: 56 of 56 names match expectation; count, files, props, family, verdict, matrix gates pass\n",
+          "stderr": ""
+        }
+      },
+      "sha256": {
+        "before": "1eb805d9dcf67ffd0f384a792848d8462fb2eb768a78cd39458a5df4e85b2793",
+        "after": "1eb805d9dcf67ffd0f384a792848d8462fb2eb768a78cd39458a5df4e85b2793",
+        "bytesIdentical": true
+      },
+      "expectationsHeld": true
+    },
+    {
+      "arm": "imagery",
+      "label": "imagery injected on every entry except \"prompt-input\": flag ON fails naming only it, default passes",
+      "item": "prompt-input",
+      "mutatedPath": "packages/registry/registry.json",
+      "runs": {
+        "on": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": "[docs-data] imagery: item \"prompt-input\" missing imagery\n"
+        },
+        "default": {
+          "exitCode": 0,
+          "stdout": "[docs-data] gates: 56 of 56 names match expectation; count, files, props, family, verdict, matrix gates pass\n",
+          "stderr": ""
+        }
+      },
+      "onImageryViolationCount": 1,
+      "sha256": {
+        "before": "9aa8d8a7122c0628270dd3124c41a1335d10bde1094aa2fbc2c29f5980c0b253",
+        "after": "9aa8d8a7122c0628270dd3124c41a1335d10bde1094aa2fbc2c29f5980c0b253",
+        "bytesIdentical": true
+      },
+      "expectationsHeld": true
+    },
+    {
+      "arm": "derivation",
+      "label": "one optional prop in conversation.tsx moves the props table and Code view together in dist",
+      "item": "conversation",
+      "mutatedPath": "packages/registry/src/components/ai/conversation.tsx",
+      "runs": {
+        "mutatedBuild": {
+          "exitCode": 0,
+          "stdout": "\n> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/apps/docs\n> tsx ../../scripts/docs-data/prebuild.ts\n\n[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89\n\n> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/apps/docs\n> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build\n\n\n> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011\n> tsx packages/registry/scripts/build-registry.ts\n\nregistry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/\n\n> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011\n> tsx scripts/build-gallery-manifest.ts\n\ngallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json\n19:09:20 [types] Generated 54ms\n19:09:20 [build] output: \"static\"\n19:09:20 [build] mode: \"static\"\n19:09:20 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/apps/docs/dist/\n19:09:20 [build] Collecting build info...\n19:09:20 [build] ✓ Completed in 65ms.\n19:09:20 [build] Building static entrypoints...\n19:09:21 [vite] ✓ built in 202ms\n19:09:21 [vite] ✓ built in 47ms\n19:09:21 [build] Rearranging server assets...\n\n generating static routes \n19:09:21   ├─ /components/shimmer/index.html (+17ms) \n19:09:21   ├─ /components/checkpoint/index.html (+4ms) \n19:09:21   ├─ /components/image/index.html (+4ms) \n19:09:21   ├─ /components/persona/index.html (+3ms) \n19:09:21   ├─ /components/speech-input/index.html (+3ms) \n19:09:21   ├─ /components/conversation/index.html (+3ms) \n19:09:21   ├─ /components/message/index.html (+3ms) \n19:09:21   ├─ /components/prompt-input/index.html (+3ms) \n19:09:21   ├─ /components/suggestion/index.html (+3ms) \n19:09:21   ├─ /components/tool/index.html (+3ms) \n19:09:21   ├─ /components/reasoning/index.html (+3ms) \n19:09:21   ├─ /components/task/index.html (+3ms) \n19:09:21   ├─ /components/question/index.html (+2ms) \n19:09:21   ├─ /components/agent/index.html (+2ms) \n19:09:21   ├─ /components/chain-of-thought/index.html (+2ms) \n19:09:21   ├─ /components/plan/index.html (+2ms) \n19:09:21   ├─ /components/confirmation/index.html (+2ms) \n19:09:21   ├─ /components/queue/index.html (+2ms) \n19:09:21   ├─ /components/sources/index.html (+2ms) \n19:09:21   ├─ /components/inline-citation/index.html (+3ms) \n19:09:21   ├─ /components/artifact/index.html (+2ms) \n19:09:21   ├─ /components/snippet/index.html (+2ms) \n19:09:21   ├─ /components/commit/index.html (+2ms) \n19:09:21   ├─ /components/attachments/index.html (+2ms) \n19:09:21   ├─ /components/context/index.html (+2ms) \n19:09:21   ├─ /components/open-in-chat/index.html (+2ms) \n19:09:21   ├─ /components/model-selector/index.html (+2ms) \n19:09:21   ├─ /components/mic-selector/index.html (+2ms) \n19:09:21   ├─ /components/voice-selector/index.html (+2ms) \n19:09:21   ├─ /components/audio-player/index.html (+2ms) \n19:09:21   ├─ /components/transcription/index.html (+2ms) \n19:09:21   ├─ /components/terminal/index.html (+2ms) \n19:09:21   ├─ /components/file-tree/index.html (+8ms) \n19:09:21   ├─ /components/environment-variables/index.html (+2ms) \n19:09:21   ├─ /components/package-info/index.html (+2ms) \n19:09:21   ├─ /components/stack-trace/index.html (+2ms) \n19:09:21   ├─ /components/schema-display/index.html (+2ms) \n19:09:21   ├─ /components/test-results/index.html (+2ms) \n19:09:21   ├─ /components/web-preview/index.html (+2ms) \n19:09:21   ├─ /components/index.html (+5ms) \n19:09:21   ├─ /docs/theming/index.html (+2ms) \n19:09:21   ├─ /islands/copy-button/index.html (+2ms) \n19:09:21   ├─ /registry/index.html (+3ms) \n19:09:21   ├─ /index.html (+2ms) \n19:09:21 ✓ Completed in 177ms.\n\n19:09:21 [build] ✓ Completed in 460ms.\n19:09:21 [build] 44 page(s) built in 554ms\n19:09:21 [build] Complete!\n",
+          "stderr": ""
+        },
+        "restoredBuild": {
+          "exitCode": 0,
+          "stdout": "\n> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/apps/docs\n> tsx ../../scripts/docs-data/prebuild.ts\n\n[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89\n\n> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/apps/docs\n> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build\n\n\n> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011\n> tsx packages/registry/scripts/build-registry.ts\n\nregistry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/\n\n> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011\n> tsx scripts/build-gallery-manifest.ts\n\ngallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json\n19:09:33 [types] Generated 57ms\n19:09:33 [build] output: \"static\"\n19:09:33 [build] mode: \"static\"\n19:09:33 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-04-generated-reference/REF-011/apps/docs/dist/\n19:09:33 [build] Collecting build info...\n19:09:33 [build] ✓ Completed in 4.93s.\n19:09:33 [build] Building static entrypoints...\n19:09:36 [vite] ✓ built in 193ms\n19:09:36 [vite] ✓ built in 55ms\n19:09:36 [build] Rearranging server assets...\n\n generating static routes \n19:09:36   ├─ /components/shimmer/index.html (+16ms) \n19:09:36   ├─ /components/checkpoint/index.html (+4ms) \n19:09:36   ├─ /components/image/index.html (+3ms) \n19:09:36   ├─ /components/persona/index.html (+3ms) \n19:09:36   ├─ /components/speech-input/index.html (+3ms) \n19:09:37   ├─ /components/conversation/index.html (+2ms) \n19:09:37   ├─ /components/message/index.html (+2ms) \n19:09:37   ├─ /components/prompt-input/index.html (+3ms) \n19:09:37   ├─ /components/suggestion/index.html (+3ms) \n19:09:37   ├─ /components/tool/index.html (+3ms) \n19:09:37   ├─ /components/reasoning/index.html (+2ms) \n19:09:37   ├─ /components/task/index.html (+2ms) \n19:09:37   ├─ /components/question/index.html (+2ms) \n19:09:37   ├─ /components/agent/index.html (+29ms) \n19:09:37   ├─ /components/chain-of-thought/index.html (+72ms) \n19:09:37   ├─ /components/plan/index.html (+22ms) \n19:09:37   ├─ /components/confirmation/index.html (+18ms) \n19:09:37   ├─ /components/queue/index.html (+14ms) \n19:09:37   ├─ /components/sources/index.html (+12ms) \n19:09:37   ├─ /components/inline-citation/index.html (+8ms) \n19:09:37   ├─ /components/artifact/index.html (+15ms) \n19:09:37   ├─ /components/snippet/index.html (+4ms) \n19:09:37   ├─ /components/commit/index.html (+2ms) \n19:09:37   ├─ /components/attachments/index.html (+3ms) \n19:09:37   ├─ /components/context/index.html (+2ms) \n19:09:37   ├─ /components/open-in-chat/index.html (+2ms) \n19:09:37   ├─ /components/model-selector/index.html (+3ms) \n19:09:37   ├─ /components/mic-selector/index.html (+2ms) \n19:09:37   ├─ /components/voice-selector/index.html (+2ms) \n19:09:37   ├─ /components/audio-player/index.html (+2ms) \n19:09:37   ├─ /components/transcription/index.html (+2ms) \n19:09:37   ├─ /components/terminal/index.html (+2ms) \n19:09:37   ├─ /components/file-tree/index.html (+2ms) \n19:09:37   ├─ /components/environment-variables/index.html (+2ms) \n19:09:37   ├─ /components/package-info/index.html (+2ms) \n19:09:37   ├─ /components/stack-trace/index.html (+2ms) \n19:09:37   ├─ /components/schema-display/index.html (+2ms) \n19:09:37   ├─ /components/test-results/index.html (+2ms) \n19:09:37   ├─ /components/web-preview/index.html (+2ms) \n19:09:37   ├─ /components/index.html (+11ms) \n19:09:37   ├─ /docs/theming/index.html (+2ms) \n19:09:37   ├─ /islands/copy-button/index.html (+2ms) \n19:09:37   ├─ /registry/index.html (+4ms) \n19:09:37   ├─ /index.html (+4ms) \n19:09:37 ✓ Completed in 337ms.\n\n19:09:37 [build] ✓ Completed in 3.47s.\n19:09:37 [build] 44 page(s) built in 8.55s\n19:09:37 [build] Complete!\n",
+          "stderr": ""
+        }
+      },
+      "prop": "drillProbeRef011",
+      "editLine": "drillProbeRef011?: boolean;",
+      "distPath": "apps/docs/dist/components/conversation/index.html",
+      "mutatedDist": {
+        "propsRegionHasProp": true,
+        "sourceRegionHasEdit": true
+      },
+      "restoredDist": {
+        "propOccurrences": 0,
+        "editOccurrences": 0
+      },
+      "sha256": {
+        "before": "d8f699211796cdafc0399d970636099f9d59f9720684638e7cf8e668432e4622",
+        "after": "d8f699211796cdafc0399d970636099f9d59f9720684638e7cf8e668432e4622",
+        "bytesIdentical": true
+      },
+      "expectationsHeld": true
+    }
+  ],
+  "mutatedPaths": [
+    {
+      "path": "packages/registry/src/components/ai/shimmer.tsx",
+      "sha256": {
+        "before": "b2a477d189c7cfbe152d3fc7e35229205f5fd9a0be04d4aeb6efd14211340cd2",
+        "after": "b2a477d189c7cfbe152d3fc7e35229205f5fd9a0be04d4aeb6efd14211340cd2",
+        "bytesIdentical": true
+      }
+    },
+    {
+      "path": "apps/docs/src/data/dev-client-matrix.json",
+      "sha256": {
+        "before": "1eb805d9dcf67ffd0f384a792848d8462fb2eb768a78cd39458a5df4e85b2793",
+        "after": "1eb805d9dcf67ffd0f384a792848d8462fb2eb768a78cd39458a5df4e85b2793",
+        "bytesIdentical": true
+      }
+    },
+    {
+      "path": "packages/registry/registry.json",
+      "sha256": {
+        "before": "9aa8d8a7122c0628270dd3124c41a1335d10bde1094aa2fbc2c29f5980c0b253",
+        "after": "9aa8d8a7122c0628270dd3124c41a1335d10bde1094aa2fbc2c29f5980c0b253",
+        "bytesIdentical": true
+      }
+    },
+    {
+      "path": "packages/registry/src/components/ai/conversation.tsx",
+      "sha256": {
+        "before": "d8f699211796cdafc0399d970636099f9d59f9720684638e7cf8e668432e4622",
+        "after": "d8f699211796cdafc0399d970636099f9d59f9720684638e7cf8e668432e4622",
+        "bytesIdentical": true
+      }
+    }
+  ],
+  "expectationsHeld": true
+}

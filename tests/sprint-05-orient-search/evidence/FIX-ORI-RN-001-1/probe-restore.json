@@ -1,0 +1,22 @@
+{
+  "task": "FIX-ORI-RN-001-1",
+  "ac": "AC-2",
+  "cycle": 1,
+  "probe": {
+    "file": "tests/sprint-05-orient-search/evidence/FIX-ORI-RN-001-1/probe-unresolved.ts",
+    "kind": "deliberately-broken .ts file importing a non-existent module (probe-module-that-does-not-exist-xyz)",
+    "location": "OUTSIDE packages/docs-snippets/** — in a WRITE-ALLOWED path not covered by any ignorePatterns entry"
+  },
+  "result": "fallow audit --base HEAD reports: 1 unlisted dependency `probe-module-that-does-not-exist-xyz`; verdict `✗ dead code: 75 issues · 2 changed files`",
+  "probe_exit_code": 1,
+  "probe_green_after_restore_exit_code": 0,
+  "restore": {
+    "status_sha256_before": "256054bad3a450ec2cb4e21e8eb0cb5092b1100c67c96a505aeb411cc98add46",
+    "status_sha256_after": "256054bad3a450ec2cb4e21e8eb0cb5092b1100c67c96a505aeb411cc98add46",
+    "tree_sha256_before": "b0abbfdd57f91be527dd2cacb80c08740b632f1a04998377f3aeb4846b9a9c4b",
+    "tree_sha256_after": "b0abbfdd57f91be527dd2cacb80c08740b632f1a04998377f3aeb4846b9a9c4b",
+    "byte_exact": true
+  },
+  "sha256_definition": "status = sha256 over sorted `git status --porcelain=v1 --untracked-files=all`; tree = sha256 over sorted `git ls-files -s` plus per-file sha256 of the evidence directory",
+  "captured_at": "2026-09-15T00:48:00Z"
+}

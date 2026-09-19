@@ -1,0 +1,58 @@
+{
+  "task": "ORI-RN-000",
+  "candidate_head_sha": "f1efc71c7ecc0dfdf98381aec686c996ccff1ec7",
+  "commands": [
+    "pnpm exec vitest run tests/sprint-05-orient-search/prompt-input-sdk57.test.ts",
+    "pnpm registry:build",
+    "pnpm check:registry",
+    "pnpm typecheck",
+    "pnpm lint"
+  ],
+  "typescript": {
+    "bin": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/packages/registry/node_modules/.bin/tsc",
+    "version": "Version 6.0.3"
+  },
+  "expo_image_picker": {
+    "dir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/apps/example/node_modules/expo-image-picker",
+    "version": "57.0.16",
+    "asset_declaration_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/apps/example/node_modules/expo-image-picker/build/ImagePicker.types.d.ts"
+  },
+  "production_mapper": {
+    "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-000/packages/registry/src/components/ai/prompt-input.logic.ts",
+    "sha256": "c483e0ee81ac0f84cefa8d53b37358ab97feee990e52ce42b953e409a9744445"
+  },
+  "artifacts": {
+    "nativewind": {
+      "json": "public/r/nativewind/prompt-input.json",
+      "mapper_target": "components/ai/prompt-input.logic.ts",
+      "mapper_sha256": "c483e0ee81ac0f84cefa8d53b37358ab97feee990e52ce42b953e409a9744445",
+      "production_source_sha256": "c483e0ee81ac0f84cefa8d53b37358ab97feee990e52ce42b953e409a9744445",
+      "byte_matches_source": true,
+      "compile_exit": 0
+    },
+    "uniwind": {
+      "json": "public/r/uniwind/prompt-input.json",
+      "mapper_target": "components/ai/prompt-input.logic.ts",
+      "mapper_sha256": "c483e0ee81ac0f84cefa8d53b37358ab97feee990e52ce42b953e409a9744445",
+      "production_source_sha256": "c483e0ee81ac0f84cefa8d53b37358ab97feee990e52ce42b953e409a9744445",
+      "byte_matches_source": true,
+      "compile_exit": 0
+    }
+  },
+  "freshness": {
+    "stale_rejection": {
+      "command": "scripts/check-registry-fresh.ts over an isolated scratch copy with a reverted uniwind mapper",
+      "exit": 1,
+      "rejected_prompt_input": true
+    },
+    "real_check": {
+      "command": "pnpm check:registry",
+      "exit": 0
+    }
+  },
+  "mutation_sensitivity": {
+    "control": "scratch-only removal of the nullish filename fallback ('Image' -> '')",
+    "exit": 1,
+    "detected": true
+  }
+}

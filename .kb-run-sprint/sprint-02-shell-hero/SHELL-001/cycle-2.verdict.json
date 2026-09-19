@@ -1,0 +1,15 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "aa659a8e5bf3fe76514b30bbdd886e6b8ecd53bd",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Reviewer's own run: pnpm vitest run tests/sprint-02-shell-hero/tokens.test.ts = 2/2 exit 0 (fresh registry:build -> gallery:manifest -> docs build subprocess). 6 real dist/_astro/*.css bundles carrying the full TR-07 vocabulary (dark :root oklch(14.5% 0 0), light .light oklch(100% 0 0), minified .191/.1/.15 forms); dist/index.html, components/index.html, registry/index.html each <link rel=stylesheet> the bundles. Authored constants verified at global.css:65-75, :132-136, :174-177. Wiring within amended writeAllowed: astro.config.mjs:10 inlineStylesheets:'never' + spike.astro:4 import."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Emitted :root{color-scheme:dark;...} and .light{color-scheme:light;...} confirmed by direct grep of dist bundles; lane asserts dark on default rule, light under html.light, NOT-light on default (tokens.test.ts:305,322). Cycle-1 hardening note closed: raw grep of authored global.css = 0 'prefers-color-scheme' including comments; 0 in all 6 emitted bundles."},
+    {"id": "TC-1", "satisfied": true, "evidence": "SHELL-001-token-sheet-contract passed in reviewer run; all 18 core + 2 code tokens with BOTH exact light and dark values asserted against built CSS."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Reviewer raw greps: 0 hex literals, 0 max-height in authored global.css AND in each of the 6 emitted bundles; 0 max-height in served dist HTML."},
+    {"id": "TC-3", "satisfied": true, "evidence": "global.css:65-69, :72-75, :132-136, :174-177 all covered by passing lane assertions."},
+    {"id": "TC-4", "satisfied": true, "evidence": "SHELL-001-dark-first-single-mechanism passed against authored AND emitted structure; no prefers-color-scheme media query anywhere."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle 2 closes every cycle-1 gap with four minimal in-scope changes (amended writeAllowed honored exactly — diff main...aa659a8e = 5 permitted files + .tmp evidence, no foreign artifacts). The two wiring lines make the built emission real: 6 dist/_astro/*.css bundles carrying the complete TR-07 vocabulary, linked by built pages. Matcher hardening is strictly narrowing ((?![\\d.]) zero-width lookaheads; cannot accept anything the old pattern rejected); hardening proof re-executed by reviewer (9 match / 6 reject, exit 0, helpers mechanically diffed IDENTICAL); passing lane against real minified output proves no legitimate serialization over-rejected. Both cycle-1 hardening notes closed. No stubs, no weakened assertions, no skipped tests; cycle-1 RED evidence intact. Reviewer gates: tokens 2/2, sprint-01 regression 22/22, typecheck 0, biome 0."
+}

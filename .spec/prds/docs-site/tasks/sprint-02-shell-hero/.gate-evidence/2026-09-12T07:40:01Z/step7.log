@@ -1,0 +1,27 @@
+@@GATE-META step=step7 cmd_sha=e2a42834f0709a1b34ea5b4c959a35ea5d287c71aa873ae115d546603447750d@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-02-shell-hero --step 7
+[run_flow] sprint=sprint-02-shell-hero root=/Users/justinrich/Projects/rnr-ai-elements head=64a3c2ab90a0cf7e19c354e3fc071e9fab069279+dirty expect=green flows=1/6
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 1,6,7,8): $ pnpm playwright test tests/sprint-02-shell-hero/home-hero.spec.ts --grep FLOW-GEND-02-hero-install-command-copy
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[2/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[3/9] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[4/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[5/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[6/9] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[7/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[8/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[9/9] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+  2 skipped
+  7 passed (7.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 1,6,7,8): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-02-shell-hero/e2e-evidence/FLOW-GEND-02-hero-install-command-copy.json
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

@@ -1,0 +1,109 @@
+---
+/**
+ * DataTable (REF-006) — the generic zero-JS table primitive. Columns, rows,
+ * the tbody attribute passthrough, and the caption all arrive as props; the
+ * component owns only table mechanics: zebra striping on var(--muted), a
+ * sticky header row, and — under one max-width media query — a horizontally
+ * scrolling wrapper with the first column pinned. Mono cells render as
+ * <code>; plain cells render their text.
+ *
+ * 0 columns renders the bare-tbody form (the headerless single-column list).
+ *
+ * Rich-cell form (ORI-AST-007): when callers need real Astro markup in a cell
+ * (CopyButton islands, Badges, links — never stringified or set:html'd), they
+ * pass it as the default slot. The slot replaces the prop-driven rows inside
+ * the shared <tbody>, so the table, header, caption, zebra and pin mechanics
+ * stay in exactly one implementation. The cell/row chrome is :global scoped to
+ * the `.data-table` class namespace so slotted rows (authored in the CALLER's
+ * component, carrying the caller's scope hash) still inherit the shared table
+ * chrome — the `.data-table` class is unique to this component.
+ */
+interface Props {
+  /** Header labels; absent or empty renders no thead (the bare-tbody form). */
+  columns?: readonly string[];
+  /** Body rows: one array of cells per row; mono cells render as <code>. */
+  rows?: readonly { text: string; mono?: boolean }[][];
+  /** Attributes spread onto the tbody (test hooks and the like). */
+  bodyAttrs?: Record<string, string>;
+  /** Table caption rendered when present. */
+  caption?: string;
+}
+
+const { columns, rows, bodyAttrs, caption } = Astro.props;
+
+const hasRichBody = Astro.slots.has('default');
+---
+
+<div class="data-table__scroll">
+  <table class="data-table">
+    {caption && <caption>{caption}</caption>}
+    {columns && columns.length > 0 && (
+      <thead>
+        <tr>
+          {columns.map((column) => (
+            <th scope="col">{column}</th>
+          ))}
+        </tr>
+      </thead>
+    )}
+    <tbody {...bodyAttrs}>
+      {hasRichBody ? (
+        <slot />
+      ) : (
+        rows?.map((row) => (
+          <tr>
+            {row.map((cell) => (
+              <td>{cell.mono ? <code>{cell.text}</code> : cell.text}</td>
+            ))}
+          </tr>
+        ))
+      )}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .data-table__scroll {
+    overflow-x: auto;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .data-table caption {
+    padding: 0.375rem 0.75rem;
+    text-align: left;
+    color: var(--muted-foreground);
+  }
+  /* Cell + row chrome is FULLY :global, scoped to the `.data-table` class
+     namespace, so slotted rich rows (LedgerTable's <tr>/<td>, carrying the
+     caller's scope hash, never this component's) still inherit the shared
+     mechanics — one table implementation, no duplicated chrome. The `.data-table`
+     class is unique to this component, so the global selectors stay contained. */
+  :global(.data-table th),
+  :global(.data-table td) {
+    padding: 0.375rem 0.75rem;
+    text-align: left;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+  }
+  :global(.data-table thead th) {
+    position: sticky;
+    top: 0;
+  }
+  :global(.data-table tbody tr:nth-child(even) td) {
+    background: var(--muted);
+  }
+  /* Mobile: the table scrolls horizontally inside the wrapper with the first
+     column pinned — no card-ification, no clipping. Base cell backgrounds are
+     opaque token surfaces so the pinned column covers scrolled content; the
+     even-row zebra above wins the cascade on zebra rows, keeping the pin
+     continuous with its row. */
+  @media (max-width: 48rem) {
+    :global(.data-table th:first-child),
+    :global(.data-table td:first-child) {
+      position: sticky;
+      left: 0;
+    }
+  }
+</style>

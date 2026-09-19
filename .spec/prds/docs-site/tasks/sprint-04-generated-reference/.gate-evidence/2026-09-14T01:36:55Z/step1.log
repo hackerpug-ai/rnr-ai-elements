@@ -1,0 +1,125 @@
+@@GATE-META step=step1 cmd_sha=4f12b27e7d669d17c18683a23a0282a3d8880d1ebd4061a3515a32ce1a143cb0@@
++ python3 ~/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference --step 1
+[run_flow] sprint=sprint-04-generated-reference root=/Users/justinrich/Projects/rnr-ai-elements head=904cf5b62b3c88237ca23f760e5b7a1afc263bb3+dirty expect=green flows=8/8
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 1,2,10,11): $ pnpm playwright test tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts --grep FLOW-GEND-14-reference-page-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts:159:1 › FLOW-GEND-14-reference-page-anatomy
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts:159:1 › FLOW-GEND-14-reference-page-anatomy
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts:159:1 › FLOW-GEND-14-reference-page-anatomy
+  3 passed (10.3s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 1,2,10,11): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-14-reference-page-anatomy.json
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 1,3): $ pnpm playwright test tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts:145:1 › FLOW-GEND-15-family-pager-stays-in-family
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts:145:1 › FLOW-GEND-15-family-pager-stays-in-family
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts:145:1 › FLOW-GEND-15-family-pager-stays-in-family
+  3 passed (4.3s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 1,3): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-15-family-pager-stays-in-family.json
+[run_flow] FLOW-GEND-20-exact-absolute-url-command-copy (steps 1,4): $ pnpm playwright test tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts --grep FLOW-GEND-20-exact-absolute-url-command-copy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  3 passed (1.6m)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-20-exact-absolute-url-command-copy (steps 1,4): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-20-exact-absolute-url-command-copy.json
+[run_flow] FLOW-GEND-21-dependency-panel-peers (steps 1,5,10): $ pnpm playwright test tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts --grep FLOW-GEND-21-dependency-panel-peers
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts:147:1 › FLOW-GEND-21-dependency-panel-peers
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts:147:1 › FLOW-GEND-21-dependency-panel-peers
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts:147:1 › FLOW-GEND-21-dependency-panel-peers
+  3 passed (7.2s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-21-dependency-panel-peers (steps 1,5,10): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-21-dependency-panel-peers.json
+[run_flow] FLOW-GEND-34-props-table-generated (steps 1,6,10): $ pnpm playwright test tests/sprint-04-generated-reference/props-table-generated.spec.ts --grep FLOW-GEND-34-props-table-generated
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/props-table-generated.spec.ts:144:1 › FLOW-GEND-34-props-table-generated
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/props-table-generated.spec.ts:144:1 › FLOW-GEND-34-props-table-generated
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/props-table-generated.spec.ts:144:1 › FLOW-GEND-34-props-table-generated
+  3 passed (7.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-34-props-table-generated (steps 1,6,10): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-34-props-table-generated.json
+[run_flow] FLOW-GEND-35-code-view-byte-identical-to-shipped-source (steps 1,7,10): $ pnpm playwright test tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts --grep FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+  3 passed (5.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-GEND-35-code-view-byte-identical-to-shipped-source (steps 1,7,10): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-GEND-35-code-view-byte-identical-to-shipped-source.json
+[run_flow] FLOW-SHELL-13-engine-tab-persists-across-pages (steps 1,8): $ pnpm playwright test tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts --grep FLOW-SHELL-13-engine-tab-persists-across-pages
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts:159:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts:159:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts:159:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+  3 passed (9.3s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-SHELL-13-engine-tab-persists-across-pages (steps 1,8): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-SHELL-13-engine-tab-persists-across-pages.json
+[run_flow] FLOW-SHELL-14-tab-panels-in-initial-html (steps 1,9): $ pnpm playwright test tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts --grep FLOW-SHELL-14-tab-panels-in-initial-html
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[2/3] [chromium-mobile] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[3/3] [chromium-nojs] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+  3 passed (6.8s)
+
+To open last HTML report run:
+[36m[39m
+[36m  pnpm exec playwright show-report apps/docs/playwright-report/html[39m
+[36m[39m
+[run_flow] FLOW-SHELL-14-tab-panels-in-initial-html (steps 1,9): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/.tmp/sprint-04-generated-reference/e2e-evidence/FLOW-SHELL-14-tab-panels-in-initial-html.json
+[run_flow] 8/8 flows PASS
+@@GATE-EXIT=0@@

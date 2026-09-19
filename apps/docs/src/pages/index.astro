@@ -1,0 +1,175 @@
+---
+import pkg from '../../../../package.json';
+import Button from '../components/Button.astro';
+import Chip from '../components/Chip.astro';
+import ComponentCard from '../components/ComponentCard.astro';
+import InstallCommand from '../components/InstallCommand.astro';
+import Layout from '../layouts/DocsLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import families from '../data/families.json';
+import items from '../data/registry-items.json';
+
+/**
+ * SHELL-007 — the designed home hero (wireframe R5-R8) on the DocsLayout home
+ * variant: the statement (R5), the ChipRow health counters (R6), the
+ * engine-tabbed InstallCommand (R7), and the Button CTA pair (R8). This
+ * supersedes FUSE-08's structural block, which pre-declared this redesign.
+ *
+ * Counters stay build-computed from the same single sources the ledger and
+ * component pages use (root package.json version + registry-items.json type
+ * filters), so a fixture edit moves the rendered numbers.
+ * R9 (the family teaser grid below the hero) ships from the same derivation
+ * as /components.
+ * R10-R12 (quickstart strip, boundary teaser, QR) stay deferred — zero dead
+ * links here. The phrasing is structural; SHELL-010 owns the copy pass.
+ */
+type HomeItem = { type: string };
+
+const registry = items as HomeItem[];
+const total = registry.length;
+const componentCount = registry.filter((item) => item.type === 'registry:component').length;
+const uiCount = registry.filter((item) => item.type === 'registry:ui').length;
+const libCount = registry.filter((item) => item.type === 'registry:lib').length;
+
+/**
+ * FAM-006 — the R9 teaser derivation: byte-for-byte the same families.json +
+ * registry-items.json join /components renders (order sort, all-component
+ * family filter, registry:component-only item map), so the two surfaces can
+ * never drift. No filter island here — the cards' data-filter-text rides
+ * along unconsumed until a later sprint wires one.
+ */
+const ordered = [...families].sort((a, b) => a.order - b.order);
+const componentNames = new Set(
+  items.filter((entry) => entry.type === 'registry:component').map((entry) => entry.name),
+);
+const componentFamilies = ordered.filter((family) =>
+  family.itemNames.every((name) => componentNames.has(name)),
+);
+const itemsByName = new Map(
+  items
+    .filter((entry) => entry.type === 'registry:component')
+    .map((entry) => [entry.name, entry]),
+);
+---
+
+<Layout title="RNR AI Elements — Docs" variant="home">
+  <main class="hero">
+    <h1 id="hero-heading">Universal AI chat and agent UI components for React Native</h1>
+    <p class="hero__statement">
+      A <strong>copy-paste registry</strong>: the CLI copies each registry item's
+      source into your project. This is <strong>NOT an npm package</strong> — you
+      read, change, and own every line.
+    </p>
+
+    <ul class="hero__chips" aria-label="Registry health">
+      <li><Chip counter="version" value={pkg.version} label="Version" /></li>
+      <li><Chip counter="total" value={total} label="Registry items" /></li>
+      <li><Chip counter="components" value={componentCount} label="Components" /></li>
+      <li><Chip counter="ui" value={uiCount} label="UI primitives" /></li>
+      <li><Chip counter="libs" value={libCount} label="Libs" /></li>
+    </ul>
+
+    <div class="hero__install">
+      <InstallCommand item="conversation" />
+    </div>
+
+    <nav class="hero__ctas" aria-label="Primary">
+      <Button variant="primary" href="/registry">Get started</Button>
+      <Button variant="outline" href="/components">Browse components</Button>
+    </nav>
+  </main>
+
+  <section id="families" aria-label="Component families">
+    {
+      componentFamilies.map((family) => (
+        <section id={family.id} aria-labelledby={`${family.id}-heading`}>
+          <SectionHeader
+            title={family.title}
+            anchor={`${family.id}-heading`}
+            count={family.itemNames.length}
+          />
+          <ul class="family-grid">
+            {family.itemNames.map((name) => {
+              const item = itemsByName.get(name);
+              if (!item) {
+                throw new Error(`family ${family.id} names unknown item ${name}`);
+              }
+              return (
+                <li>
+                  <ComponentCard
+                    href={`/components/${name}`}
+                    title={item.title}
+                    description={item.description}
+                    category={item.type.replace('registry:', '')}
+                    expoGo={item.expoGo}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </section>
+</Layout>
+
+<style>
+  /*
+   * One-screen contract at 1440x900 (BOUNDARIES): the statement, counters row,
+   * tabbed install block, and both CTAs all sit inside the first 900px beneath
+   * the var(--layout-header-h) sticky header, sized on the token scale — no
+   * viewport-fitted magic numbers, no full-bleed stretch that could push a CTA
+   * past the fold.
+   */
+  .hero {
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 4rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+  .hero__chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .hero__install {
+    width: 100%;
+    max-width: 48rem;
+  }
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>
+
+<style>
+  /*
+   * FAM-006 — the R9 teaser region's own layout, mirroring /components
+   * verbatim (page-level placement the primitives do not carry): the same
+   * max-width container, the same per-family rhythm, the same auto-fill card
+   * grid that reflows to one column on narrow viewports — no media query.
+   */
+  #families {
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  #families section {
+    margin-block: 2rem;
+  }
+  .family-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

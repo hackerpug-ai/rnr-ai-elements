@@ -1,0 +1,63 @@
+---
+/**
+ * Callout — THE one site-wide aside primitive (seam callouts on item pages,
+ * home teaser, quickstart expected-results, troubleshooting, 404 hint).
+ * Exactly two tones, both named: info (the quiet --secondary surface with
+ * muted text) and warning (keyed to --destructive — Badge's dev-client
+ * idiom, >=4.5:1 in both themes). The optional link rides a named slot so
+ * consumers vary targets without forking the aside. Zero JS; tokens only.
+ */
+type CalloutVariant = 'info' | 'warning';
+
+interface Props {
+  variant?: CalloutVariant;
+  title: string;
+  body?: string;
+}
+
+const { variant = 'info', title, body } = Astro.props;
+---
+
+<aside class:list={['callout', `callout--${variant}`]}>
+  <p class="callout__title">{title}</p>
+  {body && <p class="callout__body">{body}</p>}
+  <div class="callout__link">
+    <slot name="link" />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .callout__title {
+    font-weight: 600;
+    line-height: 1.55;
+  }
+  .callout__body {
+    max-width: var(--measure);
+    line-height: 1.6;
+  }
+  .callout__link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Info tone — the quiet secondary surface. */
+  .callout--info {
+    background: var(--secondary);
+    color: var(--muted-foreground);
+  }
+
+  /* Warning tone — the error accents, >=4.5:1 in both themes. */
+  .callout--warning {
+    border-color: var(--destructive);
+    color: var(--destructive);
+  }
+</style>

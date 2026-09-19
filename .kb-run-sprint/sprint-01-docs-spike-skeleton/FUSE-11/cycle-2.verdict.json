@@ -1,0 +1,28 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Walk now clicks the real CTA: getByRole('link', { name: 'Get started' }).click() + waitForURL('**/registry') + exact preview-origin URL assert, then 56 rows (spike-flow.spec.ts:60-65). Link resolves at index.astro:72. My run: --grep spike-walk exit 0."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Diff confined to step 2 (+6/-3); clipboard read, regex, clipboard==displayed cross-check, origin rewrite, same-origin fetch all byte-identical. Full pnpm e2e:docs exit 0, 53 passed, 0 failed — no regression."
+    },
+    {
+      "id": "cycle2_RED_evidence",
+      "satisfied": true,
+      "evidence": ".tmp/FUSE-11/cycle-2/red/pre-fix-direct-goto-walk.txt shows the pre-fix walk passing (2 passed, 1 nojs skip) without touching the CTA — proves the cycle-1 deviation was real and uncovered."
+    },
+    {
+      "id": "cycle2_scope",
+      "satisfied": true,
+      "evidence": "Commit 69ffc05 numstat: spike-flow.spec.ts 6+/3- plus .tmp/FUSE-11/cycle-2 evidence only. No product code, config, or sibling spec touched."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle 2 resolves the sole cycle-1 blocker exactly as prescribed: the walk follows the home Get-started CTA with a real click (not a goto in disguise — the direct navigation was removed, and the landing is asserted by URL plus the 56-row render, with /registry's 200 already covered by home.spec.ts and the ledger spec). Clipboard, regex, origin-rewrite, and same-origin-fetch steps are untouched. My own runs on the merged tree: spike-walk grep exit 0, full timeout-900 pnpm e2e:docs exit 0 with 53 passed / 10 expected nojs skips / 0 failed, typecheck and biome exit 0. RED evidence demonstrates the pre-fix spec passed while never exercising the CTA. AC-3 and TC-4 now satisfied with nothing regressed."
+}

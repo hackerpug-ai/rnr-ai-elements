@@ -1,0 +1,339 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1
+
+ ❯ tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts (3 tests | 1 failed) 825704ms
+     × FLOW-DELIV-01-ci-chain-order 768928ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts > FLOW-DELIV-01 > FLOW-DELIV-01-ci-chain-order
+AssertionError: pnpm e2e:docs exited 1
+--- stdout ---
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1
+> pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+14:14:43 [types] Generated 248ms
+14:14:43 [build] output: "static"
+14:14:43 [build] mode: "static"
+14:14:43 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/apps/docs/dist/
+14:14:43 [build] Collecting build info...
+14:14:43 [build] ✓ Completed in 267ms.
+14:14:43 [build] Building static entrypoints...
+14:14:44 [vite] ✓ built in 1.14s
+14:14:44 [vite] ✓ built in 193ms
+14:14:44 [build] Rearranging server assets...
+
+ generating static routes 
+14:14:44   ├─ /components/shimmer/index.html (+13ms) 
+14:14:44   ├─ /components/checkpoint/index.html (+3ms) 
+14:14:44   ├─ /components/image/index.html (+2ms) 
+14:14:44   ├─ /components/persona/index.html (+128ms) 
+14:14:44   ├─ /components/speech-input/index.html (+7ms) 
+14:14:44   ├─ /components/conversation/index.html (+2ms) 
+14:14:44   ├─ /components/message/index.html (+2ms) 
+14:14:44   ├─ /components/prompt-input/index.html (+2ms) 
+14:14:44   ├─ /components/suggestion/index.html (+2ms) 
+14:14:44   ├─ /components/tool/index.html (+2ms) 
+14:14:44   ├─ /components/reasoning/index.html (+2ms) 
+14:14:44   ├─ /components/task/index.html (+2ms) 
+14:14:44   ├─ /components/question/index.html (+2ms) 
+14:14:44   ├─ /components/agent/index.html (+2ms) 
+14:14:44   ├─ /components/chain-of-thought/index.html (+2ms) 
+14:14:44   ├─ /components/plan/index.html (+2ms) 
+14:14:44   ├─ /components/confirmation/index.html (+2ms) 
+14:14:44   ├─ /components/queue/index.html (+3ms) 
+14:14:44   ├─ /components/sources/index.html (+4ms) 
+14:14:44   ├─ /components/inline-citation/index.html (+4ms) 
+14:14:44   ├─ /components/artifact/index.html (+2ms) 
+14:14:44   ├─ /components/snippet/index.html (+3ms) 
+14:14:44   ├─ /components/commit/index.html (+13ms) 
+14:14:44   ├─ /components/attachments/index.html (+3ms) 
+14:14:44   ├─ /components/context/index.html (+10ms) 
+14:14:44   ├─ /components/open-in-chat/index.html (+3ms) 
+14:14:44   ├─ /components/model-selector/index.html (+2ms) 
+14:14:44   ├─ /components/mic-selector/index.html (+2ms) 
+14:14:44   ├─ /components/voice-selector/index.html (+3ms) 
+14:14:45   ├─ /components/audio-player/index.html (+2ms) 
+14:14:45   ├─ /components/transcription/index.html (+60ms) 
+14:14:45   ├─ /components/terminal/index.html (+71ms) 
+14:14:45   ├─ /components/file-tree/index.html (+30ms) 
+14:14:45   ├─ /components/environment-variables/index.html (+2ms) 
+14:14:45   ├─ /components/package-info/index.html (+2ms) 
+14:14:45   ├─ /components/stack-trace/index.html (+5ms) 
+14:14:45   ├─ /components/schema-display/index.html (+2ms) 
+14:14:45   ├─ /components/test-results/index.html (+5ms) 
+14:14:45   ├─ /components/web-preview/index.html (+47ms) 
+14:14:45   ├─ /components/index.html (+7ms) 
+14:14:45   ├─ /docs/theming/index.html (+21ms) 
+14:14:45   ├─ /islands/copy-button/index.html (+3ms) 
+14:14:45   ├─ /registry/index.html (+28ms) 
+14:14:45   ├─ /index.html (+7ms) 
+14:14:45 ✓ Completed in 560ms.
+
+14:14:45 [build] ✓ Completed in 1.93s.
+14:14:45 [build] 44 page(s) built in 2.24s
+14:14:45 [build] Complete!
+
+Running 126 tests using 1 worker
+
+[1/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:96:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:205:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[3/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:252:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — /components renders the seven-family card grid
+[4/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:311:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+[5/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[6/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[7/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[8/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+
+
+
+
+[9/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[10/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[11/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[12/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[13/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+[14/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[15/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+[16/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:116:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[17/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:184:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[18/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:204:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[19/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:269:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[20/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:298:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[21/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[22/126] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[23/126] [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[24/126] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[25/126] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[26/126] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[27/126] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[28/126] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[29/126] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[30/126] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[31/126] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:426:1 › SHELL-012-engine-follow-and-zerojs: persisted rnr-engine follows across cold navigations; zero un-tabbed duplicates on every page
+[32/126] [chromium-desktop] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[33/126] [chromium-desktop] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:97:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[34/126] [chromium-desktop] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[35/126] [chromium-desktop] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families
+[36/126] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:108:1 › FAM-004-filter-narrows-and-clears
+[37/126] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:146:1 › FAM-004-no-results-url-stability
+[38/126] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:173:1 › FAM-004-nojs-full-grid
+[39/126] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:204:1 › FAM-004-a11y-and-init
+[40/126] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+[41/126] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:110:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+[42/126] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:199:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[43/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:96:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[44/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:205:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[45/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:252:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — /components renders the seven-family card grid
+[46/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:311:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+[47/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[48/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[49/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[50/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+[51/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[52/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[53/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[54/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[55/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+[56/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[57/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+[58/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:116:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[59/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:184:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[60/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:204:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[61/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:269:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[62/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:298:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[63/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[64/126] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[65/126] [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[66/126] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[67/126] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[68/126] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[69/126] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[70/126] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[71/126] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+  1) [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms 
+
+    Test timeout of 240000ms exceeded.
+
+    Error: locator.textContent: Test ended.
+    Call log:
+      - waiting for locator('main > section[data-section="install"] [role="tabpanel"][data-engine="nativewind"]').locator('rnr-copy-button code')
+
+
+      323 |       await page.locator(`${INSTALL_SECTION} [role="tab"][data-engine="${engine}"]`).click();
+      324 |       const panel = page.locator(`${INSTALL_SECTION} [role="tabpanel"][data-engine="${engine}"]`);
+    > 325 |       const displayed = ((await panel.locator('rnr-copy-button code').textContent()) ?? '').trim();
+          |                                                                       ^
+      326 |       expect(displayed, `${item.name} ${engine} displayed command`).toBe(
+      327 |         commandFor(engine, item.name),
+      328 |       );
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/tests/sprint-02-shell-hero/item-install-copy.spec.ts:325:71
+
+    Error Context: test-results/sprint-02-shell-hero-item--b4a1f-cess-by-value-within-500-ms-chromium-mobile/error-context.md
+
+
+[72/126] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[73/126] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:426:1 › SHELL-012-engine-follow-and-zerojs: persisted rnr-engine follows across cold navigations; zero un-tabbed duplicates on every page
+[74/126] [chromium-mobile] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[75/126] [chromium-mobile] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:97:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[76/126] [chromium-mobile] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[77/126] [chromium-mobile] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families
+[78/126] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:108:1 › FAM-004-filter-narrows-and-clears
+[79/126] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:146:1 › FAM-004-no-results-url-stability
+[80/126] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:173:1 › FAM-004-nojs-full-grid
+[81/126] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:204:1 › FAM-004-a11y-and-init
+[82/126] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+  2) [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.textContent: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('li[data-chip="expo"]').locator('.badge')
+
+
+      84 |     const badge = chip.locator('.badge');
+      85 |     const badgeCount = await badge.count();
+    > 86 |     const badgeText = badgeCount === 1 ? ((await badge.textContent()) ?? '').trim() : '';
+         |                                                        ^
+      87 |     const badgeClass = badgeCount === 1 ? ((await badge.getAttribute('class')) ?? '') : '';
+      88 |     const expectedText = verdictText(item.expoGo);
+      89 |     const expectedTone = toneClass(item.expoGo);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:86:56
+
+    Error Context: test-results/sprint-03-family-browse-ve-bc6a0-erdict-matching-item-expoGo-chromium-mobile/error-context.md
+
+
+[83/126] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:110:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+[84/126] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:199:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[85/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:96:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[86/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:205:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[87/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:252:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — /components renders the seven-family card grid
+[88/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:311:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+[89/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[90/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[91/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[92/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+[93/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:207:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[94/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[95/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[96/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[97/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+[98/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[99/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+[100/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:116:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[101/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:184:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[102/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:204:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[103/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:269:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[104/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:298:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[105/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[106/126] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[107/126] [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[108/126] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[109/126] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[110/126] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[111/126] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[112/126] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+  3) [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.evaluateAll: Test timeout of 30000ms exceeded.
+
+      206 |     const sections = await page
+      207 |       .locator('main > section[data-section]')
+    > 208 |       .evaluateAll((nodes) =>
+          |        ^
+      209 |         nodes.map(
+      210 |           (node) => (node as unknown as { dataset: Record<string, string> }).dataset.section ?? '',
+      211 |         ),
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FIX-FAM-006-1/tests/sprint-02-shell-hero/item-install-copy.spec.ts:208:8
+
+    Error Context: test-results/sprint-02-shell-hero-item--6164a-t-absolute-url-command-copy-chromium-nojs/error-context.md
+
+
+[113/126] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[114/126] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:371:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[115/126] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:426:1 › SHELL-012-engine-follow-and-zerojs: persisted rnr-engine follows across cold navigations; zero un-tabbed duplicates on every page
+[116/126] [chromium-nojs] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[117/126] [chromium-nojs] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:97:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[118/126] [chromium-nojs] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[119/126] [chromium-nojs] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families
+[120/126] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:108:1 › FAM-004-filter-narrows-and-clears
+[121/126] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:146:1 › FAM-004-no-results-url-stability
+[122/126] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:173:1 › FAM-004-nojs-full-grid
+[123/126] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:204:1 › FAM-004-a11y-and-init
+[124/126] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+[125/126] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:110:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+[126/126] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:199:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+  3 failed
+    [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:297:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms 
+    [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo 
+    [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:153:1 › FLOW-GEND-20-exact-absolute-url-command-copy 
+  19 skipped
+  104 passed (11.9m)
+ ELIFECYCLE  Command failed with exit code 1.
+
+--- stderr ---
+[chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183:1 › FLOW-DELIV-03-112-file-completeness
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/sprint-02-shell-hero/item-install-copy.spec.ts:325:71
+ ❯ tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:86:56
+ ❯ tests/sprint-02-shell-hero/item-install-copy.spec.ts:208:8
+ ❯ tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts:72:77
+     70|     const evidence = `--- stdout ---\n${full.stdout}\n--- stderr ---\n…
+     71|
+     72|     expect(full.status, `pnpm e2e:docs exited ${full.status}\n${eviden…
+       |                                                                             ^
+     73|     expect(log, 'astro dev must never run — the product surface is bui…
+     74|       'astro dev',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 61 passed (62)
+      Tests  1 failed | 679 passed (680)
+   Start at  14:07:43
+   Duration  1499.45s (transform 1.74s, setup 0ms, import 7.04s, tests 1474.42s, environment 5ms)
+
+vitest_exit=1

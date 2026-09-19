@@ -1,0 +1,28 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-1: governed lint exits 0, RED first",
+      "satisfied": true,
+      "evidence": "Reproduced RED: old spec + trunk policy -> GENERIC_ROOT_ORACLE exit 1. GREEN: fixed spec + trunk policy -> surface_ok=true exit 0. Worktree-policy staleness (base lacks 5eed561) verified."
+    },
+    {
+      "id": "AC-2: FLOW-GEND-14/15 pass all 3 projects, assertions preserved",
+      "satisfied": true,
+      "evidence": "pnpm e2e:docs --grep FLOW-GEND exit 0: 34 passed, 5 skipped (pre-existing nojs clipboard), 0 failed; component-page green in chromium-desktop/mobile/nojs. expect() count 49->49."
+    },
+    {
+      "id": "typecheck clean; biome ci clean on touched file",
+      "satisfied": true,
+      "evidence": "pnpm typecheck exit 0; pnpm exec biome ci on component-page.spec.ts exit 0, no fixes applied."
+    },
+    {
+      "id": "git diff --name-only within SCOPE.writeAllowed",
+      "satisfied": true,
+      "evidence": "Diff 41f519d..ba5b516: component-page.spec.ts (1 line) + .tmp/FIX-FUSE-07-1/ evidence only. No product source, no other specs."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "The fix is exactly the one-line oracle scoping the task demanded: the placeholder stand-in scan at component-page.spec.ts:164 now roots at main.component-page, the container confirmed at apps/docs/src/pages/components/[item].astro:60 that wraps the item's full real content. Because it is the same main element merely qualified by its page-specific class, the scanned text region is identical — no weakening. I independently reproduced the RED lint failure (GENERIC_ROOT_ORACLE exit 1 on the pre-fix spec), verified GREEN against trunk's extended policy (exit 0), confirmed the worktree-policy discrepancy is genuinely explained by trunk commit 5eed561, and reran the full FLOW-GEND lane green on the real preview with zero assertion loss (49->49 expect calls) plus clean typecheck and biome. Evidence files accurately reflect reality."
+}

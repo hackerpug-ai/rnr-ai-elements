@@ -1,0 +1,47 @@
+---
+/**
+ * CopyButton — island 1/5 (FUSE-09). Wraps a command as selectable text plus
+ * a copy trigger. The `<code>` child is server-rendered plain HTML: with zero
+ * JS the full command stays visible, selectable, and crawlable, and the
+ * button is inert rather than gating the content.
+ */
+interface Props {
+  command: string;
+  label?: string;
+}
+
+const { command, label = 'Copy install command' } = Astro.props;
+---
+
+<rnr-copy-button class="copy-button">
+  <code class="copy-button__command">{command}</code>
+  <button type="button" class="copy-button__trigger" data-state="idle" aria-label={label}>
+    Copy
+  </button>
+  <span class="copy-button__status" role="status" aria-live="polite"></span>
+</rnr-copy-button>
+
+<script src="../../scripts/copy-button.ts"></script>
+
+<style>
+  .copy-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .copy-button__command {
+    overflow-wrap: anywhere;
+  }
+  .copy-button__trigger {
+    flex-shrink: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+  .copy-button__trigger[data-state='copied'] {
+    font-weight: 700;
+  }
+  .copy-button__status:not(:empty) {
+    font-weight: 700;
+  }
+</style>

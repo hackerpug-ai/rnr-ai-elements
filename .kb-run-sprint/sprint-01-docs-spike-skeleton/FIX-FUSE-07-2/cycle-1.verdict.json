@@ -1,0 +1,12 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "GREEN reproduced: e2e_surface_check.py on component-page.spec.ts -> surface_ok=true exit=0. RED reproduced on merge-base 1328287 (old line 335 slot.locator('*')): exit=1 GENERIC_ROOT_ORACLE selector '*'. Committed captures match at .tmp/FIX-FUSE-07-2/cycle-1/{red,green}/."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Committed evidence: cycle-1/green/playwright-run.txt — real run, 12 tests across chromium-desktop/mobile/nojs, 12 passed (14.6s), 0 skipped; preceded by genuine astro build (44 pages) in green/docs-build.log so preview served the really built site."},
+    {"id": "TC-1", "satisfied": true, "evidence": "git diff --name-only 1328287...2eee5c0 = component-page.spec.ts + 6 evidence files under .tmp/FIX-FUSE-07-2/cycle-1/. home.spec.ts untouched."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Single hunk @@ -332,7 +332,10 @@: slot.locator('*').count()===0 -> slot.evaluate(el => el.children.length)===0. .toBe(0) retained; zero children <=> zero descendants; mount-slot comment and sibling assertions byte-identical."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Commit is exactly the scoped swap plus RED/GREEN evidence. RED and GREEN independently reproduced. Assumption 1 sound: biome lineWidth 100 forces the canonical 4-line wrap; biome ci passes with no fixes. Assumption 2 sound: all 12 .tmp/FUSE-07/evidence/*.png byte-identical to HEAD, absent from commit, mtimes predate the run — and back-dating cannot forge freshness since both freshness checks require NEWER mtimes to cheat. No stubs, no skips, no weakened assertions."
+}

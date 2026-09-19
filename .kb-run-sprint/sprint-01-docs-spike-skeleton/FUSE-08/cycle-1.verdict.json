@@ -1,0 +1,63 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "FLOW-GEND-01 passed x3 projects in my full lane run; dist/index.html carries statement, 'NOT an npm package', counters 0.2.1/56/39/11/6 as <data> inside main.hero, CTAs href=/registry and /components both GET 200."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "FLOW-GEND-02 hero click test passed (desktop+mobile): clipboard equals displayed command exactly, matches boundary regex; zero-JS case passed under chromium-nojs; dist has exactly one command occurrence and one rnr-copy-button."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "home.spec.ts:174-176 asserts all three strings against main.hero; verified present in built dist/index.html."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "index.astro:20-24 computes counts from imported registry-items.json + pkg.version (grep found zero hardcoded 0.2.1/56/39/11/6 literals); spec:129-149 recomputes expectations from same sources at runtime."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "home.spec.ts:190-193 asserts href attributes and GETs both routes expecting 200; passed in lane."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "home.spec.ts:218-224 asserts clipboard === displayed COMMAND, regex match; :236-240 zero-JS selectable text; both passed."
+    },
+    {
+      "id": "DONE-WHEN-gates",
+      "satisfied": true,
+      "evidence": "My full pnpm e2e:docs lane (superset of both grep gates): 45 passed, 0 failed, 9 skipped, including every home.spec.ts test across all three projects."
+    },
+    {
+      "id": "DONE-WHEN-checks",
+      "satisfied": true,
+      "evidence": "pnpm typecheck exit 0; biome ci on both gate paths exit 0 (spec checked clean; note: biome processes 0 .astro files repo-wide — inherited gate shape, not gamed)."
+    },
+    {
+      "id": "DONE-WHEN-scope",
+      "satisfied": true,
+      "evidence": "git diff --name-only b9073df..7532d41 = index.astro, home.spec.ts, .tmp/FUSE-08 evidence only; FUSE-09 tests untouched (diff purely additive, 160 insertions, 0 deletions)."
+    },
+    {
+      "id": "RED-evidence",
+      "satisfied": true,
+      "evidence": "red/gate-1.log: 3 failed (hero locator not found on placeholder); red/gate-2.log: 5 failed 2 passed — same test titles that now pass; GREEN logs plus screenshots present."
+    },
+    {
+      "id": "negative-control",
+      "satisfied": true,
+      "evidence": "negative-control log shows FLOW-GEND-01 passing post-mutation with restored fixture (56/39/11/6, tree clean). Log alone can't show 40/10/6, but code coupling (fixture-derived page + runtime-computed expectations) makes hardcoded literals structurally unpassable."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Clean cycle. Product diff is exactly the two in-scope files; the placeholder was replaced wholesale with a structural hero whose counters derive from the real package.json version and registry-items.json type filters (zero hardcoded literals — verified by grep and by the spec recomputing expectations from the same sources at runtime). One install command, one copy button, both CTAs resolve 200. FUSE-09's landed island tests were preserved untouched and still pass; the shared grep token now also runs the hero variants, which strictly strengthens that gate. RED evidence is real placeholder-era failure; my independent full lane run reproduced GREEN (45 passed, 0 failed). The ENOENT retry in readGeneratedDataset is a bounded bridge for the lane's documented rmSync race and reads the real artifact. Note only: biome cannot lint .astro files anywhere in this repo — pre-existing shape, .astro correctness is carried by the build and e2e."
+}

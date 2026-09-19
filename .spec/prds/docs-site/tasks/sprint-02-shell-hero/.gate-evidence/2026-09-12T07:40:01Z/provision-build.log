@@ -1,0 +1,94 @@
+@@GATE-META step=provision-build cmd_sha=759960f0a35fadbe88a4d16e6e6176d6bf2f11ddaa1628fde454a6c9fdc712f2@@
++ pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+02:02:42 [vite] Re-optimizing dependencies because vite config has changed
+02:02:42 [types] Generated 121ms
+02:02:42 [build] output: "static"
+02:02:42 [build] mode: "static"
+02:02:42 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/dist/
+02:02:42 [build] Collecting build info...
+02:02:42 [build] ✓ Completed in 137ms.
+02:02:42 [build] Building static entrypoints...
+02:02:43 [vite] ✓ built in 109ms
+02:02:43 [vite] ✓ built in 67ms
+02:02:43 [build] Rearranging server assets...
+
+ generating static routes 
+02:02:43   ├─ /components/shimmer/index.html (+5ms) 
+02:02:43   ├─ /components/checkpoint/index.html (+1ms) 
+02:02:43   ├─ /components/image/index.html (+1ms) 
+02:02:43   ├─ /components/persona/index.html (+1ms) 
+02:02:43   ├─ /components/speech-input/index.html (+1ms) 
+02:02:43   ├─ /components/conversation/index.html (+1ms) 
+02:02:43   ├─ /components/message/index.html (+1ms) 
+02:02:43   ├─ /components/prompt-input/index.html (+1ms) 
+02:02:43   ├─ /components/suggestion/index.html (+1ms) 
+02:02:43   ├─ /components/tool/index.html (+1ms) 
+02:02:43   ├─ /components/reasoning/index.html (+1ms) 
+02:02:43   ├─ /components/task/index.html (+1ms) 
+02:02:43   ├─ /components/question/index.html (+0ms) 
+02:02:43   ├─ /components/agent/index.html (+1ms) 
+02:02:43   ├─ /components/chain-of-thought/index.html (+1ms) 
+02:02:43   ├─ /components/plan/index.html (+1ms) 
+02:02:43   ├─ /components/confirmation/index.html (+1ms) 
+02:02:43   ├─ /components/queue/index.html (+1ms) 
+02:02:43   ├─ /components/sources/index.html (+0ms) 
+02:02:43   ├─ /components/inline-citation/index.html (+1ms) 
+02:02:43   ├─ /components/artifact/index.html (+1ms) 
+02:02:43   ├─ /components/snippet/index.html (+1ms) 
+02:02:43   ├─ /components/commit/index.html (+1ms) 
+02:02:43   ├─ /components/attachments/index.html (+1ms) 
+02:02:43   ├─ /components/context/index.html (+1ms) 
+02:02:43   ├─ /components/open-in-chat/index.html (+1ms) 
+02:02:43   ├─ /components/model-selector/index.html (+1ms) 
+02:02:43   ├─ /components/mic-selector/index.html (+0ms) 
+02:02:43   ├─ /components/voice-selector/index.html (+1ms) 
+02:02:43   ├─ /components/audio-player/index.html (+6ms) 
+02:02:43   ├─ /components/transcription/index.html (+1ms) 
+02:02:43   ├─ /components/terminal/index.html (+0ms) 
+02:02:43   ├─ /components/file-tree/index.html (+0ms) 
+02:02:43   ├─ /components/environment-variables/index.html (+0ms) 
+02:02:43   ├─ /components/package-info/index.html (+1ms) 
+02:02:43   ├─ /components/stack-trace/index.html (+0ms) 
+02:02:43   ├─ /components/schema-display/index.html (+0ms) 
+02:02:43   ├─ /components/test-results/index.html (+0ms) 
+02:02:43   ├─ /components/web-preview/index.html (+1ms) 
+02:02:43   ├─ /components/index.html (+1ms) 
+02:02:43   ├─ /docs/theming/index.html (+1ms) 
+02:02:43   ├─ /islands/copy-button/index.html (+1ms) 
+02:02:43   ├─ /registry/index.html (+2ms) 
+02:02:43   ├─ /index.html (+1ms) 
+02:02:43 ✓ Completed in 54ms.
+
+02:02:43 [build] ✓ Completed in 247ms.
+02:02:43 [build] 44 page(s) built in 404ms
+02:02:43 [build] Complete!
+@@GATE-EXIT=0@@

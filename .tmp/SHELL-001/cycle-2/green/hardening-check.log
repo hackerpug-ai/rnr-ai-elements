@@ -1,0 +1,17 @@
+PASS match   --border oklch(1 0 0 / 10%)  <-  --border: oklch(1 0 0 / 10%);
+PASS match   --border oklch(1 0 0 / 10%)  <-  --border:oklch(100% 0 0/.1);
+PASS match   --border oklch(1 0 0 / 10%)  <-  --border:oklch(100% 0 0/0.1);
+PASS match   --input oklch(1 0 0 / 15%)  <-  --input:oklch(100% 0 0/.15);
+PASS match   --background oklch(0.145 0 0)  <-  --background:oklch(14.5% 0 0);
+PASS match   --background oklch(1 0 0)  <-  --background:oklch(100% 0 0);
+PASS match   --muted-foreground oklch(0.708 0 0)  <-  --muted-foreground:oklch(.708 0 0);
+PASS match   --destructive oklch(0.704 0.191 22.216)  <-  --destructive:oklch(70.4% .191 22.216);
+PASS match   --ring oklch(0.556 0 0)  <-  --ring: oklch(0.556 0 0);
+PASS reject  --border oklch(1 0 0 / 10%)  <-  --border:oklch(100% 0 0/.15);
+PASS reject  --border oklch(1 0 0 / 10%)  <-  --border:oklch(100% 0 0/.105);
+PASS reject  --background oklch(0.145 0 0)  <-  --background:oklch(15% 0 0);
+PASS reject  --background oklch(0.145 0 0)  <-  --background:oklch(14.55% 0 0);
+PASS reject  --background oklch(0.145 0 0)  <-  --background:oklch(0.1450 0 0);
+PASS reject  --background oklch(1 0 0)  <-  --background:oklch(100.5% 0 0);
+HARDENING-CHECK: all cases pass
+exit=0

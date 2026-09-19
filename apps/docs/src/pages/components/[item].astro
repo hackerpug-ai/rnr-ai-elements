@@ -1,0 +1,253 @@
+---
+/**
+ * SHELL-008 + REF-009 — generated component reference page on the DocsLayout
+ * shell, assembled in the TR-07 component-detail region order (R5–R12).
+ * getStaticPaths fans one page per registry:component entry in the FUSE-05
+ * dataset (39 pages, slug = item name) — never hand-written per page.
+ * Anatomy: header + chip row (R5), the engine-tabbed InstallCommand composite
+ * as FIRST content section (SHELL-004; both engine commands server-rendered),
+ * then the data-verbatim DependencyPanel (SHELL-006's resolve-deps resolves in
+ * frontmatter — the served HTML is already concrete; REF-006's DataTable skin),
+ * then the Code-alone source region (R6/R6c: the CodeBlock primitives, no tab
+ * chrome — the capture sprint adds Preview|Code tabs as its own RED), the
+ * PropsTable (R8), the ThemingNote (R9), the UsageSnippet (R10), the seam
+ * callouts (R11, derived from REF-004's build-time seam map), the QrPanel
+ * aside (R6b: REF-008's build-time deep-link SVG), and the within-family pager
+ * (R12). No preview panel this sprint (T-GEND-021): omitted, never a
+ * placeholder. Zero islands in this file — the page is a static template over
+ * build-time data.
+ */
+import { readFileSync } from 'node:fs';
+import QRCode from 'qrcode';
+import Badge from '../../components/Badge.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import DependencyPanel from '../../components/DependencyPanel.astro';
+import InstallCommand from '../../components/InstallCommand.astro';
+import PropsTable from '../../components/PropsTable.astro';
+import QrPanel from '../../components/QrPanel.astro';
+import ThemingNote from '../../components/ThemingNote.astro';
+import UsageSnippet from '../../components/UsageSnippet.astro';
+import Callout from '../../components/Callout.astro';
+import families from '../../data/families.json';
+import items from '../../data/registry-items.json';
+import siteFacts from '../../data/site-facts.json';
+import { resolveRegistryDependencies } from '../../lib/resolve-deps';
+import { deriveSeams, SEAM_LINK_TARGETS, type SeamKind } from '../../lib/seam-map';
+import Layout from '../../layouts/DocsLayout.astro';
+
+interface Props {
+  item: (typeof items)[number];
+}
+
+export async function getStaticPaths() {
+  // All 56 real registry items — 39 registry:component, 11 registry:ui, 6
+  // registry:lib — one reference destination each (ORI-AST-008). The browse
+  // index keeps its own 39-card registry:component membership; this fan-out is
+  // the reference ledger's destination surface, never the browse grid.
+  return items.map((entry) => ({ params: { item: entry.name }, props: { item: entry } }));
+}
+
+const { item } = Astro.props;
+
+/**
+ * The Pagefind category derives from the registry type — never the route text
+ * (ORI-AST-008): registry:component -> "components", registry:ui -> "ui",
+ * registry:lib -> "lib". The chip row keeps its singular replace() form; only
+ * the search metadata pluralizes the component kind.
+ */
+const pagefindCategory =
+  item.type === 'registry:component' ? 'components' : item.type.replace('registry:', '');
+
+/** The source view renders the nativewind form (the served /r default). */
+const DEFAULT_ENGINE = 'nativewind';
+
+// The release version the chip carries AND the {version} substitution the
+// dependency URLs resolve with — one build-time read of the ROOT
+// package.json, so a version bump moves chip, URLs, and raw.githubusercontent
+// pins together, never apart. The ordered build chain runs astro from
+// apps/docs, so the path resolves there; a wrong cwd fails the build rather
+// than rendering a stale page.
+const { version } = JSON.parse(readFileSync('../../package.json', 'utf8')) as { version: string };
+
+const family = families.find((entry) => entry.itemNames.includes(item.name));
+if (!family) {
+  throw new Error(`[components/${item.name}] has no family in families.json`);
+}
+const memberIndex = family.itemNames.indexOf(item.name);
+const prevName = family.itemNames[(memberIndex - 1 + family.itemNames.length) % family.itemNames.length];
+const nextName = family.itemNames[(memberIndex + 1) % family.itemNames.length];
+
+// The dependencies panel's engine forms resolve HERE through the one
+// resolver (SHELL-006) — never in markup, never hand-typed. Both engines
+// resolve so both forms are server-rendered (the inactive one hidden only).
+const resolvedRegistryUrls = {
+  nativewind: resolveRegistryDependencies(item.registryDependencies, 'nativewind', version),
+  uniwind: resolveRegistryDependencies(item.registryDependencies, 'uniwind', version),
+};
+
+const sourceFiles = item.sourceFiles.map((file) => ({
+  filename: file.filename,
+  // The same {engine} substitution the registry fan-out applies (Vite's build
+  // resolver cannot import the helper across the package root, so the one-line
+  // form lives here); the spec's byte-compare against the served
+  // /r/{engine}/{item}.json fails the build if the two ever drift.
+  text: file.text.split('{engine}').join(DEFAULT_ENGINE),
+}));
+
+// R11 — the seams this item's own sources carry (REF-004): the map joins the
+// build-time derivation, so a source change moves the callouts, never a
+// hand-curated list. Each kind gets one explanatory Callout linking its
+// /docs/theming section through the single retarget surface.
+const seams = deriveSeams(item.sourceFiles);
+
+const SEAM_CALLOUTS: Record<SeamKind, { title: string; body: string }> = {
+  textclasscontext: {
+    title: 'The TextClassContext seam',
+    body: 'This component publishes its class strings through the TextClassContext provider, so a parent view can restyle its nested text.',
+  },
+  rendermarkdown: {
+    title: 'The renderMarkdown seam',
+    body: 'This component takes a renderMarkdown prop over the react-native-enriched-markdown native module and defaults to plain text.',
+  },
+};
+
+// R6b — the gallery deep link encodes at build time (REF-005/008): the QR is
+// finished inline SVG before this page renders; QrPanel only displays it.
+const qrSvg = await QRCode.toString(item.qrDeepLink, { type: 'svg' });
+---
+
+<Layout title={`${item.title} — RNR AI Elements`}>
+  <Fragment slot="head">
+    <meta name="description" content={item.metaDescription} />
+  </Fragment>
+  <main
+    class="component-page"
+    data-pagefind-body
+    data-pagefind-meta={`category:${pagefindCategory}`}
+  >
+    <header class="page-header">
+      <p class="breadcrumb">
+        <a href="/components">Components</a> <span aria-hidden="true">/</span> {family.title}
+      </p>
+      <h1>{item.title}</h1>
+      <p class="item-description">{item.description}</p>
+      <ul class="chips" aria-label="Item facts">
+        <li data-chip="version">v{version}</li>
+        <li data-chip="category">{item.type.replace('registry:', '')}</li>
+        {item.engines.map((engine) => <li data-chip="engine">{engine}</li>)}
+        <li data-chip="expo"><Badge tone={item.expoGo ? 'expo-go' : 'dev-client'} /></li>
+      </ul>
+    </header>
+
+    <section data-section="install" aria-labelledby="install-heading">
+      <h2 id="install-heading">Install</h2>
+      <InstallCommand item={item.name} />
+    </section>
+
+    <section data-section="dependencies" aria-labelledby="dependencies-heading">
+      <h2 id="dependencies-heading">Dependencies</h2>
+      <DependencyPanel
+        dependencies={item.dependencies}
+        registryUrls={resolvedRegistryUrls}
+        peers={siteFacts.aiSdkPeers}
+      />
+    </section>
+
+    <section data-section="source" aria-labelledby="source-heading">
+      <h2 id="source-heading">Source</h2>
+      {
+        sourceFiles.map((file) => (
+          <figure class="source-file">
+            <figcaption>{file.filename}</figcaption>
+            <CodeBlock code={file.text} label={`Copy ${file.filename}`} />
+          </figure>
+        ))
+      }
+    </section>
+
+    {
+      // ORI-AST-008: the extractor returns null props for all 17 ui/lib items.
+      // Omit the entire section for those — never invent an empty or fabricated
+      // table. Components (non-null props) keep the landed PropsTable region.
+      item.props && (
+        <section data-section="props" aria-labelledby="props-heading">
+          <h2 id="props-heading">Props</h2>
+          <PropsTable rows={item.props} />
+        </section>
+      )
+    }
+
+    <section data-section="theming" aria-labelledby="theming-heading">
+      <h2 id="theming-heading">Theming</h2>
+      <ThemingNote note={item.themingNote} />
+    </section>
+
+    <section data-section="usage" aria-labelledby="usage-heading">
+      <h2 id="usage-heading">Usage</h2>
+      <UsageSnippet snippet={item.usageSnippet} />
+    </section>
+
+    {
+      seams.map((kind) => (
+        <Callout variant="info" title={SEAM_CALLOUTS[kind].title} body={SEAM_CALLOUTS[kind].body}>
+          <a slot="link" href={SEAM_LINK_TARGETS[kind]}>
+            Theming guide: {SEAM_CALLOUTS[kind].title}
+          </a>
+        </Callout>
+      ))
+    }
+
+    <QrPanel item={item.name} svg={qrSvg} />
+
+    <nav class="pager" aria-label="Family pager">
+      <a rel="prev" href={`/components/${prevName}`}>← {prevName}</a>
+      <a rel="next" href={`/components/${nextName}`}>{nextName} →</a>
+    </nav>
+  </main>
+</Layout>
+
+<style>
+  .page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .breadcrumb {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .chips li {
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 0.125rem 0.625rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  /* The expo chip hosts the site-wide Badge: the Badge's own chrome is the
+     chip chrome, so the slot drops its pill instead of nesting one. */
+  .chips li[data-chip='expo'] {
+    border: none;
+    padding: 0;
+    font-size: 0.75rem;
+  }
+  .source-file figcaption {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin-block: 0 0.5rem;
+  }
+  /* The seam callouts (R11) and the QR aside (R6b) are child-component roots,
+     so the page's scope styles their rhythm; the primitives keep their chrome. */
+  .component-page > aside {
+    margin-block: 2rem 0;
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block: 2rem;
+  }
+</style>

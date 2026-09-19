@@ -1,0 +1,32 @@
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-01/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-01
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-01
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts
+09:58:36 [types] Generated 106ms
+09:58:36 [build] output: "static"
+09:58:36 [build] mode: "static"
+09:58:36 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-01-docs-spike-skeleton/FUSE-01/apps/docs/dist/
+09:58:36 [build] Collecting build info...
+09:58:36 [build] ✓ Completed in 114ms.
+09:58:36 [build] Building static entrypoints...
+09:58:36 [vite] ✓ built in 67ms
+09:58:36 [vite] ✓ built in 8ms
+09:58:36 [build] Rearranging server assets...
+
+ generating static routes 
+09:58:36   ├─ /index.html (+4ms) 
+09:58:36 ✓ Completed in 13ms.
+
+09:58:36 [build] ✓ Completed in 105ms.
+09:58:36 [build] 1 page(s) built in 220ms
+09:58:36 [build] Complete!

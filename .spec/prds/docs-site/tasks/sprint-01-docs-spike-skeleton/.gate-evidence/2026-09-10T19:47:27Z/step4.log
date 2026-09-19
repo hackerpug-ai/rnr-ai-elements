@@ -1,0 +1,20 @@
+@@GATE-META step=step4 cmd_sha=3028c028aae5dde4bc54522d56f2501fe79677632911d364e5e1e8b10028c334@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 4
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=1/10
+[run_flow] FLOW-DELIV-01-ci-chain-order (steps 1,2,3,4): $ pnpm vitest run tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts -t FLOW-DELIV-01-ci-chain-order
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  15:03:01
+   Duration  45.62s (transform 18ms, setup 0ms, import 63ms, tests 45.47s, environment 0ms)
+
+[run_flow] FLOW-DELIV-01-ci-chain-order (steps 1,2,3,4): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/dist/index.html
+[run_flow] 1/1 flows PASS
+@@GATE-EXIT=0@@

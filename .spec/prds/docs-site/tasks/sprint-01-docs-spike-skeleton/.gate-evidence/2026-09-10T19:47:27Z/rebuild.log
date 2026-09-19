@@ -1,0 +1,89 @@
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+14:37:58 [types] Generated 34ms
+14:37:58 [build] output: "static"
+14:37:58 [build] mode: "static"
+14:37:58 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/dist/
+14:37:58 [build] Collecting build info...
+14:37:58 [build] ✓ Completed in 47ms.
+14:37:58 [build] Building static entrypoints...
+14:37:58 [vite] ✓ built in 141ms
+14:37:58 [vite] ✓ built in 24ms
+14:37:58 [build] Rearranging server assets...
+
+ generating static routes 
+14:37:58   ├─ /components/shimmer/index.html (+5ms) 
+14:37:58   ├─ /components/checkpoint/index.html (+1ms) 
+14:37:58   ├─ /components/image/index.html (+1ms) 
+14:37:58   ├─ /components/persona/index.html (+1ms) 
+14:37:58   ├─ /components/speech-input/index.html (+1ms) 
+14:37:58   ├─ /components/conversation/index.html (+1ms) 
+14:37:58   ├─ /components/message/index.html (+1ms) 
+14:37:58   ├─ /components/prompt-input/index.html (+1ms) 
+14:37:58   ├─ /components/suggestion/index.html (+1ms) 
+14:37:58   ├─ /components/tool/index.html (+1ms) 
+14:37:58   ├─ /components/reasoning/index.html (+0ms) 
+14:37:58   ├─ /components/task/index.html (+0ms) 
+14:37:58   ├─ /components/question/index.html (+0ms) 
+14:37:58   ├─ /components/agent/index.html (+0ms) 
+14:37:58   ├─ /components/chain-of-thought/index.html (+0ms) 
+14:37:58   ├─ /components/plan/index.html (+0ms) 
+14:37:58   ├─ /components/confirmation/index.html (+0ms) 
+14:37:58   ├─ /components/queue/index.html (+0ms) 
+14:37:58   ├─ /components/sources/index.html (+0ms) 
+14:37:58   ├─ /components/inline-citation/index.html (+0ms) 
+14:37:58   ├─ /components/artifact/index.html (+0ms) 
+14:37:58   ├─ /components/snippet/index.html (+0ms) 
+14:37:58   ├─ /components/commit/index.html (+1ms) 
+14:37:58   ├─ /components/attachments/index.html (+1ms) 
+14:37:58   ├─ /components/context/index.html (+0ms) 
+14:37:58   ├─ /components/open-in-chat/index.html (+0ms) 
+14:37:58   ├─ /components/model-selector/index.html (+0ms) 
+14:37:58   ├─ /components/mic-selector/index.html (+0ms) 
+14:37:58   ├─ /components/voice-selector/index.html (+0ms) 
+14:37:58   ├─ /components/audio-player/index.html (+0ms) 
+14:37:58   ├─ /components/transcription/index.html (+0ms) 
+14:37:58   ├─ /components/terminal/index.html (+1ms) 
+14:37:58   ├─ /components/file-tree/index.html (+0ms) 
+14:37:58   ├─ /components/environment-variables/index.html (+0ms) 
+14:37:58   ├─ /components/package-info/index.html (+0ms) 
+14:37:58   ├─ /components/stack-trace/index.html (+0ms) 
+14:37:58   ├─ /components/schema-display/index.html (+1ms) 
+14:37:58   ├─ /components/test-results/index.html (+0ms) 
+14:37:58   ├─ /components/web-preview/index.html (+0ms) 
+14:37:58   ├─ /components/index.html (+1ms) 
+14:37:58   ├─ /islands/copy-button/index.html (+1ms) 
+14:37:58   ├─ /registry/index.html (+2ms) 
+14:37:58   ├─ /index.html (+1ms) 
+14:37:58 ✓ Completed in 42ms.
+
+14:37:58 [build] ✓ Completed in 227ms.
+14:37:58 [build] 43 page(s) built in 294ms
+14:37:58 [build] Complete!

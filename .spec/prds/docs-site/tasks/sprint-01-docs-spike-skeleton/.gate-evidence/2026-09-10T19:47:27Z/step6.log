@@ -1,0 +1,154 @@
+@@GATE-META step=step6 cmd_sha=27efca5e1a52129d746cd10296d9504dfd14693cc34df2798112e641f347bc1d@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 6
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-14-reference-page-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+  3 passed (6.0s)
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): exit=0 artifact_fresh=False surface_ok=False coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-14-reference-page-anatomy': no captured artifact on disk
+      - flow 'FLOW-GEND-14-reference-page-anatomy': artifact was not created or changed by this playback
+      - flow 'FLOW-GEND-14-reference-page-anatomy': surface-entry lint not satisfied (test entered below the human surface)
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + conversation-page screenshot under test-results/)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family
+
+Running 6 tests using 1 worker
+
+[1/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[3/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[4/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[6/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+  6 passed (8.3s)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): exit=0 artifact_fresh=False surface_ok=False coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': no captured artifact on disk
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': artifact was not created or changed by this playback
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': surface-entry lint not satisfied (test entered below the human surface)
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + pager walk trace under test-results/)
+[run_flow] 0/2 flows PASS; not met: FLOW-GEND-14-reference-page-anatomy=FAIL, FLOW-GEND-15-family-pager-stays-in-family=FAIL
+@@GATE-EXIT=1@@
+
+=== replay (artifact repaired to junit.xml) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-14-reference-page-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+  3 passed (5.7s)
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): exit=0 artifact_fresh=False surface_ok=False coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-14-reference-page-anatomy': no captured artifact on disk
+      - flow 'FLOW-GEND-14-reference-page-anatomy': artifact was not created or changed by this playback
+      - flow 'FLOW-GEND-14-reference-page-anatomy': surface-entry lint not satisfied (test entered below the human surface)
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + conversation-page screenshot under test-results/)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family
+
+Running 6 tests using 1 worker
+
+[1/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[3/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[4/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[6/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+  6 passed (8.4s)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): exit=0 artifact_fresh=False surface_ok=False coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': no captured artifact on disk
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': artifact was not created or changed by this playback
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': surface-entry lint not satisfied (test entered below the human surface)
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + pager walk trace under test-results/)
+[run_flow] 0/2 flows PASS; not met: FLOW-GEND-14-reference-page-anatomy=FAIL, FLOW-GEND-15-family-pager-stays-in-family=FAIL
+@@GATE-EXIT=1@@
+
+=== replay 2 (artifact=junit.xml) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-14-reference-page-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+  3 passed (5.4s)
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): exit=0 artifact_fresh=True surface_ok=False coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-14-reference-page-anatomy': surface-entry lint not satisfied (test entered below the human surface)
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family
+
+Running 6 tests using 1 worker
+
+[1/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[3/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[4/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[6/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+  6 passed (7.3s)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): exit=0 artifact_fresh=True surface_ok=False coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-15-family-pager-stays-in-family': surface-entry lint not satisfied (test entered below the human surface)
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 0/2 flows PASS; not met: FLOW-GEND-14-reference-page-anatomy=FAIL, FLOW-GEND-15-family-pager-stays-in-family=FAIL
+@@GATE-EXIT=1@@
+
+=== replay 3 (FIX-FUSE-07-1 landed: oracle scoped to main.component-page) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=6d1e06d930acf40fbc9993c575c59392c6789796+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-14-reference-page-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+  3 passed (6.7s)
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family
+
+Running 6 tests using 1 worker
+
+[1/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[3/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[4/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[6/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+  6 passed (7.4s)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 2/2 flows PASS
+@@GATE-EXIT=0@@
+
+=== final refresh (post FIX-FUSE-07-1 merge, final tree) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=6d1e06d930acf40fbc9993c575c59392c6789796+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-14-reference-page-anatomy
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:93:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+  3 passed (5.4s)
+[run_flow] FLOW-GEND-14-reference-page-anatomy (steps 6): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/component-page.spec.ts --grep FLOW-GEND-15-family-pager-stays-in-family
+
+Running 6 tests using 1 worker
+
+[1/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[2/6] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[3/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[4/6] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+[5/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:198:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[6/6] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:245:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — lean index anchors all 56 names exactly once
+  6 passed (7.3s)
+[run_flow] FLOW-GEND-15-family-pager-stays-in-family (steps 6): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 2/2 flows PASS
+@@GATE-EXIT=0@@

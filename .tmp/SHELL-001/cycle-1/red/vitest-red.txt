@@ -1,0 +1,43 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-001
+
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts (2 tests | 2 failed) 22386ms
+   × SHELL-001-token-sheet-contract: real build emits the complete TR-07 vocabulary verbatim 2ms
+   × SHELL-001-dark-first-single-mechanism: dark on :root, light scoped to the html light class 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-02-shell-hero/tokens.test.ts > SHELL-001-token-sheet-contract: real build emits the complete TR-07 vocabulary verbatim
+AssertionError: no dist/_astro/*.css bundles exist on disk: expected 0 to be greater than 0
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts:172:72
+    170|     'the docs prebuild marker is absent — the pnpm filter matched noth…
+    171|   ).toContain('56 items');
+    172|   expect(cssBundleCount, 'no dist/_astro/*.css bundles exist on disk')…
+       |                                                                        ^
+    173|
+    174|   // TC-1: every token name with its exact light AND dark value in the…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-02-shell-hero/tokens.test.ts > SHELL-001-dark-first-single-mechanism: dark on :root, light scoped to the html light class
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-001/apps/docs/src/styles/global.css'
+ ❯ readGlobalCss tests/sprint-02-shell-hero/tokens.test.ts:77:10
+     75|
+     76| function readGlobalCss(): string {
+     77|   return readFileSync(GLOBAL_CSS_PATH, 'utf8');
+       |          ^
+     78| }
+     79|
+ ❯ tests/sprint-02-shell-hero/tokens.test.ts:229:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  22:06:12
+   Duration  22.54s (transform 20ms, setup 0ms, import 30ms, tests 22.39s, environment 0ms)
+

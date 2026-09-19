@@ -1,0 +1,43 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-001
+
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts (4 tests | 1 failed | 3 skipped) 50ms
+   × ORI-AST-001-prose-navigation 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/docs-collection.test.ts > ORI-AST-001-prose-navigation
+AssertionError: AC-3 final prose proof requires authored manuscripts under apps/docs/src/content/docs/ — missing (supplied by ORI-CONT-001/002/003/005): introduction, installation, cli, dark-mode, quickstart, owns-vs-does-not-own: expected [ Array(6) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "introduction",
++   "installation",
++   "cli",
++   "dark-mode",
++   "quickstart",
++   "owns-vs-does-not-own",
++ ]
+
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts:451:5
+    449|     `AC-3 final prose proof requires authored manuscripts under apps/d…
+    450|       `missing (supplied by ORI-CONT-001/002/003/005): ${missing.join(…
+    451|   ).toEqual([]);
+       |     ^
+    452| });
+    453|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  23:01:48
+   Duration  246ms (transform 17ms, setup 0ms, import 137ms, tests 50ms, environment 0ms)
+

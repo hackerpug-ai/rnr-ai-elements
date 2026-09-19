@@ -1,0 +1,127 @@
+{
+  "sprint": "sprint-01-docs-spike-skeleton",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton",
+    "sprint_slug": "sprint-01-docs-spike-skeleton"
+  },
+  "run_id": "2026-09-10T19:47:27Z",
+  "verdict": "pass",
+  "steps_total": 10,
+  "steps_executed": 10,
+  "steps_passed": 10,
+  "ui_driver": "playwright-chromium",
+  "exec_surface": "surface:442 (B38F8259-9CD5-41CE-A41A-2D0F797C2389); steps 1-2 via exec pane, steps 3-10 via run_flow inline after exec-step pane-send flakes (evidence identical: run_flow cmd_sha-stamped logs)",
+  "qa_surface_id": "4D04AC79-43C2-448E-A3CE-91EA40FB9F08",
+  "steps": [
+    {
+      "n": 1,
+      "text": "gate step 1 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "ci-chain-order flow: real filtered build chain, ordered markers, dist/index.html \u2014 1/1 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step1.log",
+      "duration_ms": null
+    },
+    {
+      "n": 2,
+      "text": "gate step 2 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "same flow re-proven under the gate runner \u2014 1/1 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step2.log",
+      "duration_ms": null
+    },
+    {
+      "n": 3,
+      "text": "gate step 3 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "112-file same-origin sweep \u2014 2/2 flows PASS (junit artifact fresh)",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step3.log",
+      "duration_ms": null
+    },
+    {
+      "n": 4,
+      "text": "gate step 4 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "fail-closed count drill: shimmer 55-vs-56 named, byte-restore \u2014 1/1 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step4.log",
+      "duration_ms": null
+    },
+    {
+      "n": 5,
+      "text": "gate step 5 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "ledger: 56 rows 39/11/6, base URLs, generated-at-build note \u2014 2/2 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step5.log",
+      "duration_ms": null
+    },
+    {
+      "n": 6,
+      "text": "gate step 6 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "component page anatomy + family pager, oracle scoped (FIX-FUSE-07-1) \u2014 2/2 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step6.log",
+      "duration_ms": null
+    },
+    {
+      "n": 7,
+      "text": "gate step 7 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "row copy: clipboard == displayed absolute-URL command \u2014 1/1 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step7.log",
+      "duration_ms": null
+    },
+    {
+      "n": 8,
+      "text": "gate step 8 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "home block: NOT-an-npm-package, computed counters, one copyable command, CTAs \u2014 2/2 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step8.log",
+      "duration_ms": null
+    },
+    {
+      "n": 9,
+      "text": "gate step 9 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "round-trip: served conversation.json sha256 == generated \u2014 1/1 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step9.log",
+      "duration_ms": null
+    },
+    {
+      "n": 10,
+      "text": "gate step 10 (locked flows; full text in gate-plan.json)",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "mutation drill: shimmer-less registry fails chain, restore green \u2014 1/1 flows PASS",
+      "log": ".gate-evidence/2026-09-10T19:47:27Z/step10.log",
+      "duration_ms": null
+    }
+  ]
+}

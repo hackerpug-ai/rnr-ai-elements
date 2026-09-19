@@ -1,0 +1,13 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "806e85a270661d12453745254473db3a49026d14",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Reviewer reran pnpm vitest run tests/sprint-01-docs-spike-skeleton/gallery-manifest-dual-emit.test.ts on 806e85a: exit 0, 2/2 pass, git status --porcelain -- apps/docs/src/data/ empty. Byte-identity: git hash-object == HEAD blob 336f07c2dce74c378baa0b8a147496dd83cabcc4, sha256 matches RED restored-sha and GREEN evidence. RED genuine: unmodified test 2/2 pass exit 0 while git status shows ' D apps/docs/src/data/families.json'."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Reviewer reran full lane: 10 files / 22 tests pass, vitest_exit=0, tree clean for apps/docs/src/data/ afterward."},
+    {"id": "DONE-WHEN-typecheck-lint", "satisfied": true, "evidence": "pnpm typecheck exit=0; biome ci on touched path exit=0."},
+    {"id": "DONE-WHEN-scope", "satisfied": true, "evidence": "diff-tree shows exactly M gallery-manifest-dual-emit.test.ts + 11 A files under .tmp/FIX-SHELL-001-1/cycle-1/. Nothing else."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Clean 11-insertion hygiene fix mirroring the mandated deliv-03-112 reference exactly (snapshot readFileSync before wipe cases at :103-107, writeFileSync restore at :123, one widened import). No assertion, skip, or dual-emit expectation touched — purely additive guard lines. All three implementer assumptions verified (no-try/finally gap byte-for-byte the reference's own shape; RED proven by file content stronger than line count; rmSync only inside second it block). All four gates independently reproduced by reviewer."
+}

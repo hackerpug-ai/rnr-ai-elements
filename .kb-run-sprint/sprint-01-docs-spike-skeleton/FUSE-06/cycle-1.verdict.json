@@ -1,0 +1,18 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Greped Gate 1 rerun: exit 0, 10 passed/2 nojs skips, all 56 links 200. dist/registry/index.html: 56 rows 39/11/6 name-for-name, note names public/r/, bases+bulk-add precede table. But fails inside full lane — see summary."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Greped Gate 2 rerun: exit 0, 2 passed/1 nojs skip. dist: 58 copy buttons (56 rows + 2 bases), 56 distinct absolute-URL nativewind commands, no short/relative forms."},
+    {"id": "TC-1", "satisfied": true, "evidence": "Gate 1 rerun exit 0; spec computes expectations from real registry-items.json at run time (ledger.spec.ts:48-54); dist row count 56."},
+    {"id": "TC-2", "satisfied": true, "evidence": "Gate 1 rerun; note matches /generated at build/i + public/r/; compareDocumentPosition DOM-order probe in spec (ledger.spec.ts:144-152); dist order verified."},
+    {"id": "TC-3", "satisfied": true, "evidence": "Gate 1 links test passed on all 3 projects; 39 hrefs == /components/{item}; both family anchors exist as section ids on dist /components index."},
+    {"id": "TC-4", "satisfied": true, "evidence": "Gate 2 rerun; clipboard == displayed text character-for-character via toBe; regex matches boundary-contract absolute form (ledger.spec.ts:62-63, 290-309)."},
+    {"id": "TC-5", "satisfied": true, "evidence": "Unguarded zero-JS test forces javaScriptEnabled:false context (ledger.spec.ts:161-179); passed on all projects in greped run."},
+    {"id": "BLOCKER-lane-module-scope-read", "satisfied": false, "evidence": "The real lane `pnpm e2e:docs` (FUSE-12's CI lane) exits 1 deterministically — 2/2 repro on branch, green on main at 4fd63e5. ledger.spec.ts:54 reads src/data/registry-items.json at module scope; deliv-03-112-file-completeness.spec.ts rmSyncs src/data (and public/r) mid-run before prebuild regen, so mobile/nojs workers ENOENT at import (2 failed, 8 did-not-run). The implementer only ran greped gates, never the full lane. Systemic root cause — deliv-03's destructive cases racing concurrent readers, same latent hazard in component-page.spec.ts:69 on main — is outside FUSE-06's writeAllowed.",
+     "fix": "Bounded existence-retry read in ledger.spec.ts (the FUSE-07-accepted ENOENT-bridge pattern: retry reads of the generated artifact for a deadline, then rethrow — real absence still fails). Systemic lane serialization routed to orchestrator FIX.",
+     "fix_location": "in_scope"}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "fail"},
+  "summary": "Page is genuine: generated from the real artifact, zero stubs, scope exactly the two allowed files, real RED (404/locator timeouts pre-page) and GREEN evidence, typecheck/biome/greped Gates 1-2 all rerun green by me, dist spot-checked end to end. BLOCKER: the real lane `pnpm e2e:docs` exits 1 deterministically — ledger.spec.ts reads src/data/registry-items.json at module scope while deliv-03 rmSyncs src/data mid-run in a parallel worker (2 failed, 8 did-not-run). Fix in scope: bounded existence-retry read in ledger.spec.ts. Systemic root cause (destructive cases racing concurrent readers; latent in component-page.spec.ts:69 on main) is outside FUSE-06's writeAllowed and needs an orchestrator FIX. Task file annotated."
+}

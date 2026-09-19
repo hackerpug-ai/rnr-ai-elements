@@ -1,0 +1,160 @@
+---
+/**
+ * MarkdownLayout — the shared authored-document shell (CAP-DOCS-01): section
+ * navigation, PageHeader, the Prose-wrapped article, the Toc rail, and the
+ * source edit link, composed inside DocsLayout. Receives validated frontmatter
+ * (title/description), the source-derived heading records, the publication
+ * navigation, and the manuscript's recorded source path. The rendered article
+ * (the <Content /> component) arrives as the default slot so MarkdownLayout
+ * stays renderer-agnostic for .md and .mdx.
+ */
+import DocsLayout from './DocsLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Prose from '../components/Prose.astro';
+import Toc from '../components/Toc.astro';
+import type { DocsSection, SectionNavGroup } from '../lib/docs-navigation';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  section: DocsSection;
+  headings: Heading[];
+  nav: SectionNavGroup[];
+  /** GitHub edit destination identifying the manuscript's recorded path. */
+  editUrl: string;
+  /** The current entry id (for the nav's aria-current). */
+  id: string;
+}
+
+const { title, description, section, headings, nav, editUrl, id } = Astro.props;
+
+const SECTION_LABELS: Record<DocsSection, string> = {
+  'getting-started': 'Getting started',
+  guides: 'Guides',
+  porting: 'Porting',
+};
+---
+
+<DocsLayout title={`${title} — RNR AI Elements`}>
+  <Fragment slot="head">
+    <meta name="description" content={description} />
+  </Fragment>
+  <div class="markdown-doc">
+    <aside class="markdown-doc__nav">
+      <nav class="docs-nav" data-docs-nav aria-label="Documentation">
+        {
+          nav.map((group) => (
+            <section class="docs-nav__section">
+              <h2 class="docs-nav__section-title">{SECTION_LABELS[group.section]}</h2>
+              <ul class="docs-nav__list">
+                {group.entries.map((entry) => (
+                  <li>
+                    <a
+                      href={entry.href}
+                      aria-current={entry.id === id ? 'page' : undefined}
+                    >
+                      {entry.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </nav>
+    </aside>
+
+    <main
+      class="markdown-doc__body"
+      data-pagefind-body
+      data-pagefind-meta={`section:${section}`}
+    >
+      <PageHeader title={title} description={description} />
+      <Prose><slot /></Prose>
+      <a class="markdown-doc__edit" href={editUrl}>Edit this page</a>
+    </main>
+
+    <aside class="markdown-doc__toc">
+      <Toc headings={headings} />
+    </aside>
+  </div>
+</DocsLayout>
+
+<style>
+  .markdown-doc {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .docs-nav__section {
+    margin-block-end: 1rem;
+  }
+  .docs-nav__section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.25rem;
+  }
+  .docs-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .docs-nav__list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.5rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .docs-nav__list a:hover {
+    color: var(--foreground);
+    background: var(--accent);
+  }
+  .docs-nav__list a[aria-current='page'] {
+    color: var(--foreground);
+    background: var(--secondary);
+  }
+  .markdown-doc__edit {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    margin-block-start: 1.5rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+  .markdown-doc__edit:hover {
+    color: var(--primary);
+  }
+
+  /* >=lg: sidebar + body; the rail stays off-canvas below xl. */
+  @media (min-width: 64rem) {
+    .markdown-doc {
+      grid-template-columns: var(--layout-sidebar-w) minmax(0, 1fr);
+    }
+  }
+  /* >=xl: the on-this-page rail joins on the right. */
+  @media (min-width: 80rem) {
+    .markdown-doc {
+      grid-template-columns: var(--layout-sidebar-w) minmax(0, 1fr) var(--layout-toc-w);
+    }
+    .markdown-doc__toc {
+      position: sticky;
+      top: calc(var(--layout-header-h) + 1rem);
+      align-self: start;
+    }
+  }
+</style>

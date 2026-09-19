@@ -1,0 +1,68 @@
+{
+  "verdict": "APPROVED",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Gate grep 3/3 projects exit 0. dist conversation HTML carries both absolute-URL commands; install is first section ([item].astro:75); decoded source byte-matches 8086/8086 chars; grep max-height = 0; 0 preview panels."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Gate grep 6/6 exit 0. Pager uses modulo over family.itemNames ([item].astro:42-44) — cross-family impossible by construction; walk test proves per-family set equality both directions, all hrefs 200."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Gate grep 3/3 exit 0. Index renders 9 ordered family sections from families.json; test asserts 56 names exactly once and all 39 /components/{item} hrefs return 200."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Spec asserts h1==title, description, version chip (root package.json = 0.2.1), category, engine chips toHaveText(engines), Expo Go verdict (spec.ts:102-113). Passed in all 3 projects."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Spec asserts main > section[data-section] nth(0) has data-section=install and both labeled commands with copy buttons on all 39 pages (spec.ts:145-152)."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "0 [data-preview-panel] elements, scoped placeholder regex (avoids TextInput-prop false positives), served HTML must not match /max-height/i on all 39 (spec.ts:156-167)."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "6 sampled pages (conversation + every 8th) byte-compare Code views against same-origin /r/nativewind/{item}.json files[].content (spec.ts:170-194); I independently confirmed decoded byte-match in dist."
+    },
+    {
+      "id": "TC-5",
+      "satisfied": true,
+      "evidence": "7 pure-component families verified in dataset; walk asserts set equality, both prev/next stay in family, every href 200 (spec.ts:197-243)."
+    },
+    {
+      "id": "TC-6",
+      "satisfied": true,
+      "evidence": "Section ids == 9 family ids, member lists == families.json order, union == 56 names each exactly once, ui/lib names render non-link spans (spec.ts:245-289)."
+    },
+    {
+      "id": "ENOENT-BRIDGE",
+      "satisfied": true,
+      "evidence": "ACCEPT. Bridge is test-harness-only (spec.ts:12-24): retries ENOENT reads of generated fixtures for 15s, then rethrows — a real absence fails collection, never passes. Production pages hard-import registry-items.json ([item].astro:15); absent dataset fails the build, no silent render. Regeneration-race resilience, not oracle weakening."
+    },
+    {
+      "id": "SCOPE",
+      "satisfied": true,
+      "evidence": "git diff 09487a8..5cb0cdf touches exactly the 3 writeAllowed files plus .tmp/FUSE-07 evidence; no writes to src/data, public/r, or wave-mate files."
+    },
+    {
+      "id": "RED-EVIDENCE",
+      "satisfied": true,
+      "evidence": ".tmp/FUSE-07/cycle-1/red/run.log: 9 failed (3 tests x 3 projects) with 404s on /components/conversation and /components — genuine pre-implementation RED."
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Clean implementation. Pages are genuinely generated: getStaticPaths filters registry-items.json to 39 registry:component entries; index and pager derive from families.json — nothing hand-written, no mocks, no skips of FUSE-07 tests (the lane's 5 skips are FUSE-09 nojs clipboard and pre-existing deliv/home specs). I re-ran everything sequentially per the self-race ruling: typecheck exit 0, biome exit 0, all three gate greps exit 0 across desktop/mobile/nojs (FUSE-07 tests run unguarded in nojs), full e2e:docs exit 0 (25 passed), full vitest 645/645 exit 0. I independently byte-verified the conversation source in dist (8086/8086 decoded) plus both absolute-URL install commands. {engine} substitution mirrors rewriteSource and is drift-guarded by the same-origin byte-compare. The ENOENT bridge is spec-fixture-only, retries ENOENT, rethrows after deadline — the build fails closed on a missing dataset."
+}

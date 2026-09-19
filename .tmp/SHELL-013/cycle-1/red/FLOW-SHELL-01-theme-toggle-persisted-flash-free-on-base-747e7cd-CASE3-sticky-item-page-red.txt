@@ -1,0 +1,53 @@
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+  1) [chromium-desktop] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.boundingBox: Test ended.
+    Call log:
+      - waiting for locator('header.site-header')
+
+
+      181 |   await stickyPage.evaluate('window.scrollTo(0, 1000)');
+      182 |   await stickyPage.waitForFunction('window.scrollY === 1000');
+    > 183 |   const headerBox = await stickyPage.locator('header.site-header').boundingBox();
+          |                                                                    ^
+      184 |   expect(headerBox, 'the sticky site header must render').toBeTruthy();
+      185 |   expect(
+      186 |     Math.abs(headerBox?.y ?? -1),
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-013/tests/sprint-02-shell-hero/theme-toggle.spec.ts:183:68
+
+    Error Context: test-results/sprint-02-shell-hero-theme-e5c5b-toggle-persisted-flash-free-chromium-desktop/error-context.md
+
+
+[2/3] [chromium-mobile] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+  2) [chromium-mobile] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.boundingBox: Test ended.
+    Call log:
+      - waiting for locator('header.site-header')
+
+
+      181 |   await stickyPage.evaluate('window.scrollTo(0, 1000)');
+      182 |   await stickyPage.waitForFunction('window.scrollY === 1000');
+    > 183 |   const headerBox = await stickyPage.locator('header.site-header').boundingBox();
+          |                                                                    ^
+      184 |   expect(headerBox, 'the sticky site header must render').toBeTruthy();
+      185 |   expect(
+      186 |     Math.abs(headerBox?.y ?? -1),
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-013/tests/sprint-02-shell-hero/theme-toggle.spec.ts:183:68
+
+    Error Context: test-results/sprint-02-shell-hero-theme-e5c5b-toggle-persisted-flash-free-chromium-mobile/error-context.md
+
+
+[3/3] [chromium-nojs] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+  2 failed
+    [chromium-desktop] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free 
+    [chromium-mobile] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:74:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free 
+  1 skipped
+exit=1

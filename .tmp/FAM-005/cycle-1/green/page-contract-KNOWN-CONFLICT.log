@@ -1,0 +1,33 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-03-family-browse/FAM-005
+
+ ❯ tests/sprint-03-family-browse/page-contract.test.ts (2 tests | 1 failed) 13ms
+   × FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid, no 56-name oracle remains, GEND-14/GEND-15 bodies byte-identical 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-03-family-browse/page-contract.test.ts > FAM-003-supersede-contract: FUSE-07 block asserts the 7-section/39-card grid, no 56-name oracle remains, GEND-14/GEND-15 bodies byte-identical
+AssertionError: FLOW-GEND-14 body byte-identical to pre-task: expected 'ab81c00bf80919a236f48165c35c10f6e23d8…' to be 'c62714b4f45293df2dd2ee2d323ad07ac8790…' // Object.is equality
+
+Expected: "c62714b4f45293df2dd2ee2d323ad07ac87903e64ea60b1cd6d59c8240839817"
+Received: "ab81c00bf80919a236f48165c35c10f6e23d8b08ac081ebf02ae76054d4e4e45"
+
+ ❯ tests/sprint-03-family-browse/page-contract.test.ts:98:74
+     96|     "test('FUSE-07-components-index",
+     97|   );
+     98|   expect(sha256(gend14), 'FLOW-GEND-14 body byte-identical to pre-task…
+       |                                                                          ^
+     99|     'c62714b4f45293df2dd2ee2d323ad07ac87903e64ea60b1cd6d59c8240839817',
+    100|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  13:13:16
+   Duration  240ms (transform 32ms, setup 0ms, import 51ms, tests 13ms, environment 0ms)
+

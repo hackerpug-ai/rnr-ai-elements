@@ -26,16 +26,21 @@ export type PromptInputError = { code: PromptInputErrorCode; message: string };
 export type PickerKind = 'media' | 'file' | 'camera';
 
 /**
- * expo-image-picker's asset shape, narrowed to the members the mapping touches — the
- * same interface the registry's ambient boundary declares. Both launch paths (library
- * and camera) map through ONE function so a camera shot produces byte-identical
- * records to a library pick and lands in the SAME validated add() pipeline.
+ * expo-image-picker's asset shape, narrowed to the members the mapping touches. The
+ * metadata trio is OPTIONAL because the real Expo 57 ImagePickerAsset declares it
+ * optional (fileName?: string | null, mimeType?: string, fileSize?: number) — the
+ * picker may leave any of them unmeasured, so a required field here breaks every
+ * consumer compiling against the SDK. The registry's ambient boundary still declares
+ * the trio required-but-nullable; this superset accepts that too (required is
+ * assignable to optional). Both launch paths (library and camera) map through ONE
+ * function so a camera shot produces byte-identical records to a library pick and
+ * lands in the SAME validated add() pipeline.
  */
 export type ImagePickerAssetShape = {
   uri: string;
-  fileName: string | null;
-  mimeType: string | null;
-  fileSize: number | null;
+  fileName?: string | null;
+  mimeType?: string | null;
+  fileSize?: number | null;
 };
 
 /** The record-side twin of the web's file-input mapping: uri→url, name→filename,
@@ -64,6 +69,7 @@ export function makeAttachmentId(): string {
  * MIME types with `image/*` wildcards. (The browser's extension forms — ".pdf" — have
  * no native-picker meaning and are not supported.) Case-insensitive on both sides.
  */
+// fallow-ignore-next-line unused-export
 export function acceptsMimeType(mediaType: string, accept: string): boolean {
   const needle = mediaType.trim().toLowerCase();
   if (!needle) return false;
@@ -102,6 +108,7 @@ const filterOut = <T>(
  * stage order; the component fires onError for each (the web's "once per stage"). An
  * all-rejected accept stage short-circuits and nothing later runs.
  */
+// fallow-ignore-next-line complexity
 export function validateAttachments(
   files: PromptInputAttachmentData[],
   opts: {

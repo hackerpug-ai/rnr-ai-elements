@@ -1,0 +1,226 @@
+
+Running 15 tests using 1 worker
+
+[1/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[2/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[3/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+  1) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "home"
+    Received: null
+
+      182 |   // The DocsLayout home variant: the shell header renders, and the home body
+      183 |   // suppresses the sidebar/ToC regions (no aside, no ToC landmark).
+    > 184 |   expect(await page.locator('body').getAttribute('data-layout')).toBe('home');
+          |                                                                  ^
+      185 |   await expect(page.locator('header.site-header')).toBeVisible();
+      186 |   await expect(page.locator('aside')).toHaveCount(0);
+      187 |   await expect(page.locator('[data-toc]')).toHaveCount(0);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:184:66
+
+    Error Context: test-results/home-FLOW-GEND-01-home-her-45a07-the-DocsLayout-home-variant-chromium-desktop/error-context.md
+
+
+[4/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+  2) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine]')
+    Expected: 2
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine]') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      234 |
+      235 |   // Both engine panels stay in the served DOM; exactly one is active.
+    > 236 |   await expect(page.locator(HERO_PANELS)).toHaveCount(2);
+          |                                           ^
+      237 |   await expect(page.locator(`${HERO} div[role=tabpanel][data-engine="nativewind"]`)).toHaveCount(1);
+      238 |   await expect(page.locator(`${HERO} div[role=tabpanel][data-engine="uniwind"]`)).toHaveCount(1);
+      239 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:236:43
+
+    Error Context: test-results/home-FLOW-GEND-02-hero-ins-ccce1-active-panel-engine-command-chromium-desktop/error-context.md
+
+
+[5/15] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+  3) [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine="nativewind"] code') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      271 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      272 |     const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    > 273 |     await expect(panelCode).toHaveCount(1);
+          |                             ^
+      274 |     await expect(panelCode).toBeVisible();
+      275 |     expect((await panelCode.textContent())?.trim()).toBe(ENGINE_COMMANDS[engine]);
+      276 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:273:29
+
+    Error Context: test-results/home-FLOW-GEND-02-hero-ins-9771c--commands-selectable-on-200-chromium-desktop/error-context.md
+
+
+[6/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[7/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[8/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+  4) [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "home"
+    Received: null
+
+      182 |   // The DocsLayout home variant: the shell header renders, and the home body
+      183 |   // suppresses the sidebar/ToC regions (no aside, no ToC landmark).
+    > 184 |   expect(await page.locator('body').getAttribute('data-layout')).toBe('home');
+          |                                                                  ^
+      185 |   await expect(page.locator('header.site-header')).toBeVisible();
+      186 |   await expect(page.locator('aside')).toHaveCount(0);
+      187 |   await expect(page.locator('[data-toc]')).toHaveCount(0);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:184:66
+
+    Error Context: test-results/home-FLOW-GEND-01-home-her-45a07-the-DocsLayout-home-variant-chromium-mobile/error-context.md
+
+
+[9/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+  5) [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine]')
+    Expected: 2
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine]') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      234 |
+      235 |   // Both engine panels stay in the served DOM; exactly one is active.
+    > 236 |   await expect(page.locator(HERO_PANELS)).toHaveCount(2);
+          |                                           ^
+      237 |   await expect(page.locator(`${HERO} div[role=tabpanel][data-engine="nativewind"]`)).toHaveCount(1);
+      238 |   await expect(page.locator(`${HERO} div[role=tabpanel][data-engine="uniwind"]`)).toHaveCount(1);
+      239 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:236:43
+
+    Error Context: test-results/home-FLOW-GEND-02-hero-ins-ccce1-active-panel-engine-command-chromium-mobile/error-context.md
+
+
+[10/15] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+  6) [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine="nativewind"] code') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      271 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      272 |     const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    > 273 |     await expect(panelCode).toHaveCount(1);
+          |                             ^
+      274 |     await expect(panelCode).toBeVisible();
+      275 |     expect((await panelCode.textContent())?.trim()).toBe(ENGINE_COMMANDS[engine]);
+      276 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:273:29
+
+    Error Context: test-results/home-FLOW-GEND-02-hero-ins-9771c--commands-selectable-on-200-chromium-mobile/error-context.md
+
+
+[11/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[12/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[13/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+  7) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "home"
+    Received: null
+
+      182 |   // The DocsLayout home variant: the shell header renders, and the home body
+      183 |   // suppresses the sidebar/ToC regions (no aside, no ToC landmark).
+    > 184 |   expect(await page.locator('body').getAttribute('data-layout')).toBe('home');
+          |                                                                  ^
+      185 |   await expect(page.locator('header.site-header')).toBeVisible();
+      186 |   await expect(page.locator('aside')).toHaveCount(0);
+      187 |   await expect(page.locator('[data-toc]')).toHaveCount(0);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:184:66
+
+    Error Context: test-results/home-FLOW-GEND-01-home-her-45a07-the-DocsLayout-home-variant-chromium-nojs/error-context.md
+
+
+[14/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[15/15] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+  8) [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('main.hero div[role=tabpanel][data-engine="nativewind"] code') with timeout 5000ms
+      - waiting for locator('main.hero div[role=tabpanel][data-engine="nativewind"] code')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      271 |   for (const engine of ['nativewind', 'uniwind'] as const) {
+      272 |     const panelCode = noJsPage.locator(`${HERO} div[role=tabpanel][data-engine="${engine}"] code`);
+    > 273 |     await expect(panelCode).toHaveCount(1);
+          |                             ^
+      274 |     await expect(panelCode).toBeVisible();
+      275 |     expect((await panelCode.textContent())?.trim()).toBe(ENGINE_COMMANDS[engine]);
+      276 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-02-shell-hero/SHELL-007/tests/sprint-01-docs-spike-skeleton/home.spec.ts:273:29
+
+    Error Context: test-results/home-FLOW-GEND-02-hero-ins-9771c--commands-selectable-on-200-chromium-nojs/error-context.md
+
+
+  8 failed
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant 
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command 
+    [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200 
+    [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant 
+    [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:221:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command 
+    [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200 
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant 
+    [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:260:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200 
+  2 skipped
+  5 passed (30.6s)

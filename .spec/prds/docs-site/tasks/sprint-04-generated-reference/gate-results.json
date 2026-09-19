@@ -1,0 +1,138 @@
+{
+  "sprint": "sprint-04-generated-reference",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-04-generated-reference",
+    "sprint_slug": "sprint-04-generated-reference"
+  },
+  "run_id": "2026-09-14T01:36:55Z",
+  "verdict": "pass",
+  "steps_total": 11,
+  "steps_executed": 11,
+  "steps_passed": 11,
+  "ui_driver": "none",
+  "exec_surface": "surface:86 (9133FA36-7AAD-4C51-9A6D-33E5063DC7CA)",
+  "qa_surface_id": "4D04AC79-43C2-448E-A3CE-91EA40FB9F08",
+  "steps": [
+    {
+      "n": 1,
+      "text": "At the repo root run `pnpm e2e:docs` \u2014 it exits 0 with retries: 0: the ordered chain completes with every lane green including the NEW sprin",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 1 exit 0 (151s); flows played: GEND-14, GEND-15-family-pager, GEND-20-exact-absolute-url-command-copy, GEND-21-dependency-panel-peers, GEND-34-props-table-generated, GEND-35-code-view-byte-identical-to-shipped-source, SHELL-13-engine-tab-persists-across-pages, SHELL-14-tab-panels-in-initial-html; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step1.log",
+      "duration_ms": 151415
+    },
+    {
+      "n": 2,
+      "text": "Run the reference-page-anatomy spec \u2014 3 passed (chromium-desktop, chromium-mobile, chromium-nojs); evidence JSON asserts across all 39 pages",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 2 exit 0 (11s); flows played: GEND-14; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step2.log",
+      "duration_ms": 11144
+    },
+    {
+      "n": 3,
+      "text": "Run the family-pager spec \u2014 3 passed; evidence records set(pages_reachable_via_pager) == set(family_members) for each of the seven families ",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 3 exit 0 (5s); flows played: GEND-15-family-pager; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step3.log",
+      "duration_ms": 5097
+    },
+    {
+      "n": 4,
+      "text": "Run the exact-absolute-url-command-copy spec \u2014 3 passed; every one of the 39 component pages yields, per engine tab, a one-click copy matchi",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 4 exit 0 (96s); flows played: GEND-20-exact-absolute-url-command-copy; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step4.log",
+      "duration_ms": 96841
+    },
+    {
+      "n": 5,
+      "text": "Run the dependency-panel-peers spec \u2014 3 passed; panels on shimmer and conversation equal registry dependencies + engine-resolved registryDep",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 5 exit 0 (8s); flows played: GEND-21-dependency-panel-peers; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step5.log",
+      "duration_ms": 8140
+    },
+    {
+      "n": 6,
+      "text": "Run the props-table-generated spec \u2014 3 passed; props_tables == 39 in the evidence JSON, every table Name/Type/Default/Description headers an",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 6 exit 0 (9s); flows played: GEND-34-props-table-generated; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step6.log",
+      "duration_ms": 9133
+    },
+    {
+      "n": 7,
+      "text": "Run the code-view-byte-identical spec \u2014 3 passed; >=5 sampled multi-file items byte-match the Code view text against files[] fetched from ht",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 7 exit 0 (7s); flows played: GEND-35-code-view-byte-identical-to-shipped-source; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step7.log",
+      "duration_ms": 7105
+    },
+    {
+      "n": 8,
+      "text": "Run the engine-tab-persistence spec \u2014 3 passed (chromium-nojs asserts the stacked server-rendered fallback); uniwind selection persists acro",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 8 exit 0 (10s); flows played: SHELL-13-engine-tab-persists-across-pages; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step8.log",
+      "duration_ms": 10168
+    },
+    {
+      "n": 9,
+      "text": "Run the tab-panels-in-initial-html spec \u2014 3 passed; raw pre-JS HTML contains both engine /r/ literal strings inside server-rendered tab pane",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 9 exit 0 (7s); flows played: SHELL-14-tab-panels-in-initial-html; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step9.log",
+      "duration_ms": 7131
+    },
+    {
+      "n": 10,
+      "text": "Over `astro preview` open http://localhost:4321/components/conversation and read the props table, dependency panel, theming note + usage sni",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 10 exit 0 (35s); flows played: GEND-14, GEND-21-dependency-panel-peers, GEND-34-props-table-generated, GEND-35-code-view-byte-identical-to-shipped-source; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step10.log",
+      "duration_ms": 35336
+    },
+    {
+      "n": 11,
+      "text": "At a 390px viewport check the FLOW-GEND-14 mobile frame: props table stacked cards, dependency table horizontal scroll with sticky first col",
+      "type": "terminal",
+      "method": "locked-flow",
+      "executed": true,
+      "result": "pass",
+      "evidence": "run_flow --step 11 exit 0 (11s); flows played: GEND-14; all bound flows PASS (exit_code 0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok)",
+      "log": ".spec/prds/docs-site/tasks/sprint-04-generated-reference/.gate-evidence/2026-09-14T01:36:55Z/step11.log",
+      "duration_ms": 11165
+    }
+  ]
+}

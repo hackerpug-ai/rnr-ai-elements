@@ -1,0 +1,136 @@
+@@GATE-META step=step8 cmd_sha=29bdbb3832b7f5d59baa6e31557de2c010bb20220f995a091d985c79d1eb97df@@
++ python3 /Users/justinrich/Projects/brain/tools/gate-evidence/run_flow.py --sprint-dir /Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-01-docs-spike-skeleton --step 8
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-01-home-hero-evaluation-contract
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+  3 passed (2.3s)
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): exit=0 artifact_fresh=False surface_ok=True coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-01-home-hero-evaluation-contract': no captured artifact on disk
+      - flow 'FLOW-GEND-01-home-hero-evaluation-contract': artifact was not created or changed by this playback
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + home screenshot under test-results/)
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-02-hero-install-command-copy
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[2/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[3/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[4/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[5/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[6/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[7/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[8/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[9/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+  2 skipped
+  7 passed (4.0s)
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): exit=0 artifact_fresh=False surface_ok=True coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-02-hero-install-command-copy': no captured artifact on disk
+      - flow 'FLOW-GEND-02-hero-install-command-copy': artifact was not created or changed by this playback
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + hero-copy screenshot under test-results/)
+[run_flow] 0/2 flows PASS; not met: FLOW-GEND-01-home-hero-evaluation-contract=FAIL, FLOW-GEND-02-hero-install-command-copy=FAIL
+@@GATE-EXIT=1@@
+
+=== replay (artifact repaired to junit.xml) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-01-home-hero-evaluation-contract
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+  3 passed (2.1s)
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): exit=0 artifact_fresh=False surface_ok=True coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-01-home-hero-evaluation-contract': no captured artifact on disk
+      - flow 'FLOW-GEND-01-home-hero-evaluation-contract': artifact was not created or changed by this playback
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + home screenshot under test-results/)
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-02-hero-install-command-copy
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[2/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[3/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[4/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[5/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[6/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[7/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[8/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[9/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+  2 skipped
+  7 passed (2.6s)
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): exit=0 artifact_fresh=False surface_ok=True coldboot_ok=True red_proof_ok=True → FAIL
+      - flow 'FLOW-GEND-02-hero-install-command-copy': no captured artifact on disk
+      - flow 'FLOW-GEND-02-hero-install-command-copy': artifact was not created or changed by this playback
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/ (HTML report + hero-copy screenshot under test-results/)
+[run_flow] 0/2 flows PASS; not met: FLOW-GEND-01-home-hero-evaluation-contract=FAIL, FLOW-GEND-02-hero-install-command-copy=FAIL
+@@GATE-EXIT=1@@
+
+=== replay 2 (artifact=junit.xml) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=41f519dea484c32e37ed5d61f5d04ed4b842791d+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-01-home-hero-evaluation-contract
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+  3 passed (2.0s)
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-02-hero-install-command-copy
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[2/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[3/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[4/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[5/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[6/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[7/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[8/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[9/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+  2 skipped
+  7 passed (2.6s)
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 2/2 flows PASS
+@@GATE-EXIT=0@@
+
+=== final refresh (post FIX-FUSE-07-1 merge, final tree) ===
+[run_flow] sprint=sprint-01-docs-spike-skeleton root=/Users/justinrich/Projects/rnr-ai-elements head=6d1e06d930acf40fbc9993c575c59392c6789796+dirty expect=green flows=2/10
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-01-home-hero-evaluation-contract
+
+Running 3 tests using 1 worker
+
+[1/3] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[2/3] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+[3/3] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:165:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, resolving CTAs
+  3 passed (2.1s)
+[run_flow] FLOW-GEND-01-home-hero-evaluation-contract (steps 8): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): $ pnpm playwright test tests/sprint-01-docs-spike-skeleton/home.spec.ts --grep FLOW-GEND-02-hero-install-command-copy
+
+Running 9 tests using 1 worker
+
+[1/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[2/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[3/9] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[4/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[5/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[6/9] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+[7/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[8/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:202:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact nativewind command
+[9/9] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:231:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders the full command selectable on 200
+  2 skipped
+  7 passed (2.5s)
+[run_flow] FLOW-GEND-02-hero-install-command-copy (steps 8): exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True → PASS
+      artifact: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/playwright-report/junit.xml
+[run_flow] 2/2 flows PASS
+@@GATE-EXIT=0@@
