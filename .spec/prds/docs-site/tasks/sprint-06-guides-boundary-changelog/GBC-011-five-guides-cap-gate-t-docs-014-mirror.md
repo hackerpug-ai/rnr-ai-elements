@@ -15,8 +15,8 @@ RED_GREEN_REQUIRED: yes
 ---
 ## Critical Constraints
 MUST:
-- fail the build when >5 guides-section entries exist, naming the file (e.g. guides/migrating-from-v0.md) and the five-page launch cap
-- pass with exactly 5 guides-section entries and print `[docs-data] guides: 5 guides — cap satisfied`
+- fail the build when the non-reserved guides-section entry count differs from 5 in either direction (a sixth guide or a 4-guide tree), naming the file (e.g. guides/migrating-from-v0.md) and the five-page launch cap; the reserved `theming` slug (re-sectioned to getting-started by GBC-001) never counts toward the cap
+- pass with exactly 5 non-reserved guides-section entries and print `[docs-data] guides: 5 guides — cap satisfied` (the success line asserts count === 5 exactly — the floor is enforced, not just the ceiling)
 - wire the assertion into the /guides/[slug] route getStaticPaths so every static build enforces it
 - write a RED-first vitest drill that builds the real site, writes a sixth guide, asserts failure, restores, asserts green
 NEVER:
@@ -29,7 +29,7 @@ STRICTLY:
 
 ## Specification
 Objective: Enforce the five-page guides cap as a build-time gate so a sixth guide can never ship.
-Success state: A sixth guides/migrating-from-v0.md fixture fails the build naming the file and the cap; the five-guide set builds green with /guides listing exactly 5.
+Success state: A sixth guides/migrating-from-v0.md fixture (and separately a 4-guide tree) fails the build naming the file and the cap; the five-guide set builds green with /guides listing exactly 5.
 
 ## Acceptance Criteria
 ### AC-1: A sixth guide is rejected at the five-page cap

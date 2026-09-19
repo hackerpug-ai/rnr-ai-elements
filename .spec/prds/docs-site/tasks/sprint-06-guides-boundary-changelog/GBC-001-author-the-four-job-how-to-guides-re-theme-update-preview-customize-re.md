@@ -16,14 +16,21 @@ RED_GREEN_REQUIRED: no
 ## Critical Constraints
 MUST:
 - Author each guide in the TR-12 Guide template: 'This guide shows you how to {goal}' + prerequisites + numbered imperative steps each with an expected observable result + next steps.
-- Restate engine facts exactly (Tailwind v4 + @theme → uniwind; nativewind v3 → nativewind tree) with no inversion; link out to /docs/theming as the token-map reference rather than duplicating it.
+- Restate engine facts exactly (Tailwind v4 + @theme → the uniwind tree; Tailwind v3 → the nativewind tree, NativeWind 4.2.6) with no inversion; link out to /docs/theming as the token-map reference rather than duplicating it.
 - Repoint apps/docs/src/lib/seam-map.ts SEAM_LINK_TARGETS to /guides/customize-rendering#rendermarkdown and #textclasscontext.
-- Use section: guides frontmatter with unique order 1..4 so the five-guide cap and the /guides index can resolve them deterministically.
+- Use section: guides frontmatter with unique order 1..4 among the non-reserved guides-section entries (GBC-002's troubleshooting guide takes order 5) so the five-guide cap and the /guides index can resolve them deterministically.
+- Re-section apps/docs/src/content/docs/theming.mdx to getting-started (reserved slug keeps /docs/theming) so the five-guide cap counts exactly the five real guides.
+- Name where theme tokens live per engine in the re-theme guide (@theme in global.css for the uniwind tree vs the config-token path for the nativewind tree — theming.mdx is the reference).
+- Name the four dev-client opt-in items (or link the DevClientMatrix) inside the preview guide's Expo Go scope.
+- Cover both renderMarkdown call sites (message and reasoning) in the customize-rendering guide.
+- Re-run the sprint-05 e2e lane that asserts seam Callout targets after the seam-map repoint, before merge.
 NEVER:
 - Never author a sixth guide or a guide for engine choice or porting (Installation and /porting own those).
 - Never hand-type a code snippet that is not extracted from or typechecked against a real file (apps/example or the registry).
 - Never change apps/docs/src/content.config.ts, apps/docs/src/pages/**, or the registry source.
 - Never present a stub, placeholder, or 'coming soon' as a complete how-to.
+- Never print 'nativewind v3' or 'NativeWind 3' as version claims — v3 is the Tailwind major on that path (NativeWind is 4.2.6).
+- Never describe registry version pinning — the registry publishes unversioned URLs; document the CLI's existing-file overwrite prompt in update-installed-items instead.
 STRICTLY:
 - Strictly keep the token-map reference on /docs/theming; the re-theme guide links, it does not copy.
 - Strictly use the literal absolute-URL add form in update-installed-items (T-DOCS-012).
@@ -67,7 +74,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
         NEGATIVE_CONTROL: would fail if ['the add command is absent, short-name, relative, or templated after page load']
         EVIDENCE: file_artifact
         - ACTION: ['Open /guides/update-installed-items', 'Inspect the visible install command']
-          MUST_OBSERVE: ["the literal string 'npx @react-native-reusables/cli@latest add'", 'an absolute-URL form matching https://rnraielements.com/r/{engine}/{item}.json']
+          MUST_OBSERVE: ["the literal string 'npx @react-native-reusables/cli@latest add'", 'an absolute-URL form matching https://rnraielements.com/r/{engine}/{item}.json', 'a goal sentence matching /This guide shows you how to/']
           MUST_NOT_OBSERVE: ['a short-name add', 'a relative URL']
 
 ### AC-3: customize-rendering documents both seams and is the seam target
@@ -85,7 +92,7 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
         NEGATIVE_CONTROL: would fail if ['the guide omits one seam, or seam-map.ts still points at /docs/theming#']
         EVIDENCE: file_artifact
         - ACTION: ['Open /guides/customize-rendering', 'Inspect apps/docs/src/lib/seam-map.ts SEAM_LINK_TARGETS', 'Open a seam-using component page and read its seam Callout link']
-          MUST_OBSERVE: ["both 'renderMarkdown' and 'TextClassContext' documented in the guide", 'SEAM_LINK_TARGETS pointing at /guides/customize-rendering#rendermarkdown and #textclasscontext']
+          MUST_OBSERVE: ["both 'renderMarkdown' and 'TextClassContext' documented in the guide", 'SEAM_LINK_TARGETS pointing at /guides/customize-rendering#rendermarkdown and #textclasscontext', 'a goal sentence matching /This guide shows you how to/']
           MUST_NOT_OBSERVE: ['seam targets still pointing at /docs/theming#rendermarkdown or #textclasscontext']
 
 ### AC-4: preview guide reachable and Expo Go-scoped
@@ -103,13 +110,13 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
         NEGATIVE_CONTROL: would fail if ['the guide is not linked from /guides, or describes a dev-client-only item as an Expo Go preview']
         EVIDENCE: file_artifact
         - ACTION: ['Open /guides and follow the preview guide link', 'Read the guide body']
-          MUST_OBSERVE: ['HTTP 200 at /guides/preview-on-device', "'Expo Go' in the guide body"]
+          MUST_OBSERVE: ['HTTP 200 at /guides/preview-on-device', "'Expo Go' in the guide body", 'the four dev-client opt-in items named or the DevClientMatrix linked', 'a goal sentence matching /This guide shows you how to/']
           MUST_NOT_OBSERVE: ['a dev-client-only instruction mislabeled as an Expo Go preview']
 
 ### AC-5: guides restate engine facts without inversion
   GIVEN: the authored guides
   WHEN:  a reviewer reads their engine statements
-  THEN:  Tailwind v4 + @theme implies uniwind and nativewind v3 implies the nativewind tree, with no inverted claim
+  THEN:  Tailwind v4 + @theme pairs with the uniwind tree and Tailwind v3 with the nativewind tree (NativeWind 4.2.6), with no inverted claim
   FLOW_REF: FLOW-DOCS-03-five-guides-index
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview at http://localhost:4321
@@ -118,21 +125,23 @@ Success state: A visitor opens /guides and each of /guides/re-theme, /guides/upd
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
-        NEGATIVE_CONTROL: would fail if ["a guide restates 'Tailwind v4 + @theme implies the nativewind tree' or 'nativewind v3 implies uniwind'"]
+        NEGATIVE_CONTROL: would fail if ["a guide restates 'Tailwind v4 + @theme implies the nativewind tree' or 'Tailwind v3 implies uniwind'", "any guide prints the literal 'nativewind v3' or 'NativeWind 3' as a version claim"]
         EVIDENCE: file_artifact
         - ACTION: ['Read the engine statements across the four guides']
-          MUST_OBSERVE: ["'Tailwind v4' + '@theme' adjacent to 'uniwind'", "'nativewind v3' adjacent to 'nativewind tree'"]
-          MUST_NOT_OBSERVE: ["'Tailwind v4' + '@theme' adjacent to 'nativewind'", "'nativewind v3' adjacent to 'uniwind'"]
+          MUST_OBSERVE: ["'Tailwind v4' and '@theme' in the same sentence as 'uniwind'", "'Tailwind v3' in the same sentence as 'nativewind tree'"]
+          MUST_NOT_OBSERVE: ["'Tailwind v4' and '@theme' in the same sentence as 'nativewind tree'", "'Tailwind v3' in the same sentence as 'uniwind'", "the literal strings 'nativewind v3' or 'NativeWind 3' as version claims"]
 
 ## Test Criteria
 - TC-1: The re-theme guide returns 200, is listed on /guides, and contains oklch and @theme.  (maps_to: AC-1)
 - TC-2: The update guide contains the literal npx @react-native-reusables/cli@latest add command in absolute-URL form.  (maps_to: AC-2)
 - TC-3: The customize-rendering guide documents both seams and seam-map.ts targets the guide.  (maps_to: AC-3)
 - TC-4: The preview guide is linked from /guides and is Expo Go-scoped.  (maps_to: AC-4)
-- TC-5: No guide inverts the engine facts; Tailwind v4 + @theme pairs with uniwind and nativewind v3 with the nativewind tree.  (maps_to: AC-5)
+- TC-5: No guide inverts the engine facts; Tailwind v4 + @theme pairs with the uniwind tree and Tailwind v3 with the nativewind tree; no 'nativewind v3'/'NativeWind 3' version claim appears.  (maps_to: AC-5)
 
 ## Reading List
 - .spec/prds/docs-site/11-technical-requirements/12-content-standards.md [PRIMARY PATTERN] — Guide template, terminology lock, snippet/link gates
+- AGENTS.md [PRIMARY] — engine-parity contract, Expo Go vs dev-client split, and the warning that the RNR Rosetta theming.md documents the Nativewind path and misleads
+- apps/docs/src/content/docs/installation.mdx — canonical engine phrasing to copy (NativeWind 4.2.6 pairs with Tailwind v3)
 - apps/docs/src/content/docs/theming.mdx — token map and the two seams the guides reference
 - apps/docs/src/content/docs/dark-mode.md — existing getting-started prose style to imitate
 - apps/docs/src/content.config.ts — section/order frontmatter schema the guide files must satisfy
@@ -145,6 +154,7 @@ WRITE-ALLOWED:
 - apps/docs/src/content/docs/guides/preview-on-device.md (NEW)
 - apps/docs/src/content/docs/guides/customize-rendering.md (NEW)
 - apps/docs/src/lib/seam-map.ts (SEAM_LINK_TARGETS repoint only)
+- apps/docs/src/content/docs/theming.mdx (re-section to getting-started only)
 WRITE-PROHIBITED:
 - packages/registry/**
 - apps/docs/src/pages/**
@@ -403,7 +413,7 @@ Blocks:     ['GBC-002']
       "id": "AC-5",
       "type": "acceptance_criterion",
       "primary": false,
-      "description": "GIVEN the authored guides WHEN a reviewer reads their engine statements THEN Tailwind v4 + @theme implies uniwind and nativewind v3 implies the nativewind tree, with no inverted claim",
+      "description": "GIVEN the authored guides WHEN a reviewer reads their engine statements THEN Tailwind v4 + @theme pairs with the uniwind tree and Tailwind v3 with the nativewind tree (NativeWind 4.2.6), with no inverted claim",
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
@@ -419,7 +429,7 @@ Blocks:     ['GBC-002']
         "verification_service": "built dist over astro preview at http://localhost:4321",
         "negative_control": {
           "would_fail_if": [
-            "a guide restates 'Tailwind v4 + @theme implies the nativewind tree' or 'nativewind v3 implies uniwind'"
+            "a guide restates 'Tailwind v4 + @theme implies the nativewind tree' or 'Tailwind v3 implies uniwind', or any guide prints the literal 'nativewind v3' or 'NativeWind 3' as a version claim"
           ]
         },
         "evidence": {
@@ -437,12 +447,13 @@ Blocks:     ['GBC-002']
             },
             "end_state": {
               "must_observe": [
-                "'Tailwind v4' + '@theme' adjacent to 'uniwind'",
-                "'nativewind v3' adjacent to 'nativewind tree'"
+                "'Tailwind v4' and '@theme' in the same sentence as 'uniwind'",
+                "'Tailwind v3' in the same sentence as 'nativewind tree'"
               ],
               "must_not_observe": [
-                "'Tailwind v4' + '@theme' adjacent to 'nativewind'",
-                "'nativewind v3' adjacent to 'uniwind'"
+                "'Tailwind v4' and '@theme' in the same sentence as 'nativewind tree'",
+                "'Tailwind v3' in the same sentence as 'uniwind'",
+                "the literal strings 'nativewind v3' or 'NativeWind 3' as version claims"
               ]
             }
           }
@@ -509,7 +520,7 @@ Blocks:     ['GBC-002']
       "id": "TC-5",
       "type": "test_criterion",
       "primary": false,
-      "description": "No guide inverts the engine facts; Tailwind v4 + @theme pairs with uniwind and nativewind v3 with the nativewind tree.",
+      "description": "No guide inverts the engine facts; Tailwind v4 + @theme pairs with the uniwind tree and Tailwind v3 with the nativewind tree; no 'nativewind v3'/'NativeWind 3' version claim appears.",
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",

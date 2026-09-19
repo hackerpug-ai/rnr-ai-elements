@@ -15,7 +15,7 @@ RED_GREEN_REQUIRED: no
 ---
 ## Critical Constraints
 MUST:
-- Author four distinct symptom-cause-fix entries: short-name collision (DOM imports after add), wrong-engine-tree symptoms, Expo Go crash on the 4 opt-in items (move to dev client), markdown streaming crash.
+- Author four distinct symptom-cause-fix entries: short-name collision (DOM imports after add), wrong-engine-tree symptoms (styles silently missing after installing the nativewind tree into a Tailwind v4/uniwind app), Expo Go crash on the 4 opt-in items (move to dev client), markdown streaming crash.
 - Give one fix per symptom and link each entry to its canonical owning page.
 - Wire inbound links: add a link to /guides/troubleshooting on Installation and on the DependencyPanel footer Callout.
 - Set section: guides, order 5 so the five-guide set completes without exceeding the cap.
@@ -67,7 +67,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
         NEGATIVE_CONTROL: would fail if ['the DependencyPanel footer Callout links only /registry, or Installation lacks the link']
         EVIDENCE: file_artifact
         - ACTION: ['Open a component page and read its dependency panel footer', 'Open Installation and find the troubleshooting link']
-          MUST_OBSERVE: ['a /guides/troubleshooting link in the dependency-panel footer', 'a /guides/troubleshooting link on Installation (once Sprint 05 has landed it)']
+          MUST_OBSERVE: ['a /guides/troubleshooting link in the dependency-panel footer', 'a /guides/troubleshooting link on Installation']
           MUST_NOT_OBSERVE: ['the dependency panel footer linking only /registry with no troubleshooting link']
 
 ### AC-3: short-name collision entry names the DOM-import cause
@@ -140,7 +140,7 @@ Success state: A visitor opens /guides/troubleshooting and reads four distinct s
 ## Guardrails
 WRITE-ALLOWED:
 - apps/docs/src/content/docs/guides/troubleshooting.md (NEW)
-- apps/docs/src/content/docs/installation.md (add a troubleshooting link; Sprint 05 owned — coordinate)
+- apps/docs/src/content/docs/installation.mdx (add a troubleshooting link; Sprint 05 owned — coordinate)
 - apps/docs/src/components/DependencyPanel.astro (footer Callout: add a /guides/troubleshooting link alongside /registry)
 WRITE-PROHIBITED:
 - packages/registry/**
