@@ -1,10 +1,11 @@
 # ORI-RN-005 — evidence
 
-The independent NativeWind live-chat proof. **Cycle-2 state: the canonical run is
-GREEN — 3/3 platforms, 5/5 legs** (run `ORI-RN-005-1789778781976`, produced through
-the exact task verify command `pnpm exec vitest run
-tests/sprint-05-orient-search/nativewind-live-example.test.ts -t
-ORI-RN-005-live-three-platforms`).
+The independent NativeWind live-chat proof. **ALL FOUR task verify commands are
+GREEN.** The canonical AC-2 run (`ORI-RN-005-1789778781976`, root of this
+directory) and the AC-3 selector run (`ORI-RN-005-1789808618192`, under
+`ac3-run/`) each passed 3/3 platforms, 5/5 legs through the exact vitest commands
+in the task file, with 24 sanitized provider records apiece (20 completed + 4 real
+mid-stream aborts, all `gpt-4.1-mini-2025-04-14`).
 
 ## The canonical run
 
@@ -88,6 +89,22 @@ the fix could be verified. Attempt C concluded with an Android stop-timing race 
 coordinate taps landing after the essays' natural end) and one aborted-marker-record
 anomaly — the same classes that pass in other runs of the identical driver. No
 external kills occurred in cycle 3; every attempt concluded and tore down cleanly.
+
+## Cycles 4-6: the evidence-discriminating stop-turn retry
+
+Cycle 4 added the bounded, record-proven stop-turn drive retry (re-drive ONLY when
+the records show that drive's essay reached a terminal completed/error outcome with
+no abort; verified aborts never re-drive; missing records never re-drive; every
+decision logs STOP-RETRY-EVIDENCE / STOP-RETRY-EXHAUSTED with its record query).
+Cycle 4 also pinpointed the provider's intermittent short-essay serving (~1.5s /
+<=68-delta completions vs the 421-527-delta essays the iOS stops abort) and cycle 5
+raised the drive bound to 6 per leg, which reliably carried Android. Cycle 5's iOS
+legs exhausted with observed null (the send never dispatched — the reserved
+simulator's IME channel degraded under ~20 marathon runs); the coordinator's full
+simulator reboot restored it, and cycle 6's run — the committed cycle-5 driver,
+byte-identical — passed the AC-3 selector end to end (all five legs, 4 real
+mid-stream aborts). Attempt logs for every cycle live under
+`.tmp/ORI-RN-005/cycle-{3,4,5,6}/`.
 
 The pinned Expo Go 57.0.9 Android APK lives at
 `~/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk`; if the scratch
