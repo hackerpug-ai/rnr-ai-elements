@@ -1,0 +1,159 @@
+{
+  "flows": [
+    {
+      "id": "FLOW-DOCS-03-five-guides-index",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-03",
+      "manual_physical": false,
+      "gate_steps": [],
+      "desc": null,
+      "run_cmd": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "test": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-03-five-guides-index/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-03-five-guides-index/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "FLOW-DOCS-04-boundary-ownership-tables",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-04",
+      "manual_physical": false,
+      "gate_steps": [],
+      "desc": null,
+      "run_cmd": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "test": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-04-boundary-ownership-tables/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-04-boundary-ownership-tables/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "FLOW-DOCS-05-porting-map-and-prior-art",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-05",
+      "manual_physical": false,
+      "gate_steps": [],
+      "desc": null,
+      "run_cmd": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "test": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-05-porting-map-and-prior-art/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-05-porting-map-and-prior-art/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "FLOW-DOCS-06-changelog-release-pages",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-06",
+      "manual_physical": false,
+      "gate_steps": [],
+      "desc": null,
+      "run_cmd": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "test": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-06-changelog-release-pages/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-06-changelog-release-pages/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "journeys/docs-integrator-arc",
+      "type": "core",
+      "scope": "journey",
+      "uc_refs": [
+        "UC-DOCS-01",
+        "UC-DOCS-02",
+        "UC-DOCS-04",
+        "UC-GEND-04",
+        "UC-GEND-07",
+        "UC-SHELL-03"
+      ],
+      "manual_physical": false,
+      "gate_steps": [],
+      "desc": null,
+      "run_cmd": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc",
+      "test": "tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-integrator-arc/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-integrator-arc/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "journeys/docs-themer-arc",
+      "type": "core",
+      "scope": "journey",
+      "uc_refs": [
+        "UC-DOCS-01",
+        "UC-DOCS-03",
+        "UC-GEND-03",
+        "UC-SHELL-01"
+      ],
+      "manual_physical": false,
+      "gate_steps": [],
+      "desc": null,
+      "run_cmd": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc",
+      "test": "tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-themer-arc/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-themer-arc/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    }
+  ],
+  "deferred_journeys": [
+    {
+      "id": "journeys/docs-contributor-arc",
+      "covers_ucs": [
+        "UC-DELIV-01",
+        "UC-DOCS-05",
+        "UC-EXT-02",
+        "UC-EXT-03",
+        "UC-GEND-07"
+      ],
+      "outstanding_ucs": [
+        "UC-EXT-02",
+        "UC-EXT-03"
+      ]
+    },
+    {
+      "id": "journeys/docs-evaluator-arc",
+      "covers_ucs": [
+        "UC-DOCS-06",
+        "UC-GEND-01",
+        "UC-GEND-02",
+        "UC-GEND-03",
+        "UC-GEND-05",
+        "UC-GEND-06"
+      ],
+      "outstanding_ucs": [
+        "UC-GEND-05"
+      ]
+    }
+  ],
+  "derived_from": {
+    "scenarios": ".spec/scenarios",
+    "scope": [
+      "UC-DOCS-03",
+      "UC-DOCS-04",
+      "UC-DOCS-05",
+      "UC-DOCS-06"
+    ],
+    "prior_scope": [
+      "UC-DELIV-01",
+      "UC-DOCS-01",
+      "UC-DOCS-02",
+      "UC-GEND-01",
+      "UC-GEND-02",
+      "UC-GEND-03",
+      "UC-GEND-04",
+      "UC-GEND-06",
+      "UC-GEND-07",
+      "UC-SHELL-01",
+      "UC-SHELL-02",
+      "UC-SHELL-03"
+    ]
+  }
+}
