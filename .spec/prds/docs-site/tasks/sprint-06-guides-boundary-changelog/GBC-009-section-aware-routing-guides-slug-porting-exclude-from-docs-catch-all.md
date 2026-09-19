@@ -16,6 +16,8 @@ RED_GREEN_REQUIRED: yes
 ## Critical Constraints
 MUST:
 - make publishedDocs section-aware (the one href derivation the catch-all, guides route, porting route, and sidebar nav all read)
+- make assertUniqueDestinations derive section-aware destinations (id -> href per section) so cross-section same-id entries are legal while same-destination still fails
+- keep RESERVED_DOC_SLUGS dropping before section grouping (current behavior in docs-navigation.ts) and keep guide files flat (single-segment filenames) — the single-segment [slug] route never matches a param containing /
 - scope the docs/[...id].astro catch-all to getting-started entries only
 - add /guides/[slug].astro rendering guides-section entries through MarkdownLayout with section='guides'
 - add /porting.astro rendering exactly one porting-section entry through MarkdownLayout with section='porting'
@@ -25,7 +27,7 @@ NEVER:
 - render a guides-section entry at /docs/{slug} via the catch-all
 - allow 0 or >1 porting entries to build silently
 STRICTLY:
-- getting-started -> /docs/{id}, guides -> /guides/{id}, porting -> /porting
+- getting-started -> /docs/{id}, guides -> /guides/{basename(id)} (strip the `guides/` directory prefix — idFromFile joins path segments, so `guides/re-theme` must publish at /guides/re-theme, never /guides/guides/re-theme), porting -> /porting
 - a zero- or multi-porting count fails the build naming the count
 
 ## Specification
@@ -45,8 +47,8 @@ Success state: Over the built preview, /guides/{any-slug} and /porting each retu
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index: guides publish at /guides/{slug} with no /docs alias
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
-        MUST_OBSERVE: ['/guides/{slug} 200 for each guide', '/docs/{guide-slug} 404 (no alias)']
-        MUST_NOT_OBSERVE: ['a guide reachable at /docs/{slug}']
+        MUST_OBSERVE: ['/guides/{slug} 200 for each guide', '/docs/{guide-slug} 404 (no alias)', '/docs/guides/{slug} 404 (no nested alias)']
+        MUST_NOT_OBSERVE: ['a guide reachable at /docs/{slug}', 'a guide reachable at /docs/guides/{slug}', 'a doubled /guides/guides/{slug} segment']
 
 ### AC-2: Porting publishes at /porting (exactly one entry)
   GIVEN: the single porting-section entry (porting.md)
@@ -79,7 +81,7 @@ Success state: Over the built preview, /guides/{any-slug} and /porting each retu
         MUST_NOT_OBSERVE: ['exit 0 with 0 or 2+ porting entries']
 
 ## Test Criteria
-- TC-1: publishedDocs emits section-aware hrefs (getting-started /docs/{id}, guides /guides/{id}, porting /porting)  (maps_to: AC-1)
+- TC-1: publishedDocs emits section-aware hrefs (getting-started /docs/{id}, guides /guides/{basename(id)}, porting /porting)  (maps_to: AC-1)
 - TC-2: the docs catch-all no longer generates /docs/{id} for guides or porting sections  (maps_to: AC-1)
 - TC-3: porting is exactly one entry, enforced at build  (maps_to: AC-3)
 
@@ -132,7 +134,7 @@ Blocks:     ['GBC-010', 'GBC-011', 'GBC-013', 'GBC-014']
   "fixtures": {
     "guides_section_entries": "five guides-section docs entries (authored by techwriting) publish at /guides/{slug}",
     "single_porting_entry": "one porting-section entry publishes at /porting",
-    "duplicate_destination": "a guides entry also reachable at /docs/{slug} fails the build via prerenderConflictBehavior"
+    "duplicate_destination": "a guides entry also reachable at /docs/{slug} fails the build via the publishedDocs section filter + assertUniqueDestinations (the real guards in docs-navigation.ts — there is no prerenderConflictBehavior in a fully static build)"
   },
   "requirements": [
     {
