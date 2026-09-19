@@ -18,6 +18,8 @@ MUST:
 - style every row through var(--*) tokens only (no hex literals)
 - render zero-JS static anchors (no <script>, no island)
 - give each row a >=44px min-height touch target
+- define the Props/slot surface in the Design section (rows via the default slot or a typed rows prop — ONE composition model, no baked per-page variants) and expose data-index-list-row on every row as the test hook
+- assert the 44px target via boundingBox in specs (a screenshot cannot measure)
 - match the SectionHeader / Chip / ComponentCard visual language
 NEVER:
 - never emit a per-variant sibling file (IndexListGuides.astro / IndexListChangelog.astro)
@@ -25,7 +27,8 @@ NEVER:
 - never hardcode hex/rgb color values
 - never require client JavaScript to render a row
 STRICTLY:
-- prop-driven variants only (one markup, one stylesheet)
+- one row markup: an li whose title <a> is stretched over the row via ::after (the >=44px target); count Chip and touched-component links render as siblings inside the li — never an <a> inside an <a> (invalid HTML; browsers close the outer anchor and every row assertion then tests broken markup)
+- token provenance (var(--*) use, no hex literals) is verified by a source grep TC, not by computed styles — the DOM resolves vars and cannot distinguish a token from a literal
 - scroll-margin-block-start calc(var(--layout-header-h) + 1rem) on any anchorable row
 - title color var(--foreground), description var(--muted-foreground), divider var(--border), hover fill var(--accent), radius var(--radius-md)
 
@@ -73,7 +76,7 @@ Success state: The built /guides and /changelog pages each render IndexList rows
 ### AC-3: row-anatomy
   GIVEN: a guide entry row renders on /guides
   WHEN:  the row is inspected
-  THEN:  it is an anchor composed of a linked title and a description with a >=44px min-height touch target
+  THEN:  it is an li row whose linked title anchor is stretched over the row (::after) with a >=44px min-height touch target, description and meta as siblings
   FLOW_REF: FLOW-DOCS-03-five-guides-index
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview
@@ -82,11 +85,11 @@ Success state: The built /guides and /changelog pages each render IndexList rows
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
-        NEGATIVE_CONTROL: would fail if ['the row is not an anchor, is shorter than 44px, or lacks a link target']
-        EVIDENCE: screenshot
+        NEGATIVE_CONTROL: would fail if ['the row lacks a stretched title anchor, is shorter than 44px, nests an <a> inside an <a>, or lacks a link target']
+        EVIDENCE: file_artifact (boundingBox measurement + DOM query)
         - ACTION: ['Inspect a guide row on /guides']
-          MUST_OBSERVE: ['row is an <a> anchor', 'row min-height >= 44px', 'title and description both present']
-          MUST_NOT_OBSERVE: ['row min-height < 44px', 'row with no link target']
+          MUST_OBSERVE: ['row is an li with a stretched title <a> covering it', 'row boundingBox height >= 44px', 'data-index-list-row present', 'title and description both present', 'zero <a> descendants of an <a>']
+          MUST_NOT_OBSERVE: ['row min-height < 44px', 'row with no link target', 'an anchor nested inside an anchor']
 
 ### AC-4: touched-component-links
   GIVEN: a changelog entry lists touched components (message, conversation, reasoning)
@@ -111,12 +114,11 @@ Success state: The built /guides and /changelog pages each render IndexList rows
   WHEN:  the component source is inspected
   THEN:  only var(--*) tokens are used (no hex literals) and no <script> island is emitted
   FLOW_REF: FLOW-DOCS-03-five-guides-index
-  TEST_TIER: e2e
-  VERIFICATION_SERVICE: built dist over astro preview
-  SURFACE_POLICY: .spec/e2e-policy/surface.json
+  TEST_TIER: unit
+  VERIFICATION_SERVICE: rg source scan over apps/docs/src/components/IndexList.astro
   TEST_FILE: tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts
   TEST_FUNCTION: FLOW-DOCS-03-five-guides-index
-  VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
+  VERIFY: sh -c 'rg -n "#[0-9a-fA-F]{3,8}|<script" apps/docs/src/components/IndexList.astro; test $? -eq 1'
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['IndexList.astro contains hex/rgb literals or a <script> island']
         EVIDENCE: file_artifact
@@ -127,7 +129,7 @@ Success state: The built /guides and /changelog pages each render IndexList rows
 ## Test Criteria
 - TC-1: /guides renders exactly 5 IndexList rows  (maps_to: AC-1)
 - TC-2: /changelog rows are strictly descending by date  (maps_to: AC-2)
-- TC-3: each row is an anchor with min-height >= 44px  (maps_to: AC-3)
+- TC-3: each row is an li with a stretched title anchor, min-height >= 44px via boundingBox, no nested anchors  (maps_to: AC-3)
 - TC-4: changelog touched-component links resolve to 200 pages  (maps_to: AC-4)
 - TC-5: IndexList.astro contains no hex literal and no script tag  (maps_to: AC-5)
 

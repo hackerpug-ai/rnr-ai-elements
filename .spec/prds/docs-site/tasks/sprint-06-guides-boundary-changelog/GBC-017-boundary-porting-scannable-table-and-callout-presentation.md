@@ -16,7 +16,9 @@ RED_GREEN_REQUIRED: no
 ## Critical Constraints
 MUST:
 - style markdown tables in Prose so every claim string lands inside td/th
-- match DataTable's visual language (var(--muted) zebra, var(--border) dividers, sticky thead, muted caption)
+- match DataTable's visual language (var(--muted) zebra, var(--border) dividers, sticky thead offset top calc(var(--layout-header-h) + 0.25rem) so it pins below the site header, muted caption) — declared a known twin of DataTable.astro's table chrome: keep in lockstep, comment says so
+- render th with scope="col" on every Prose table plus a muted caption (accessibility floor)
+- set td{overflow-wrap:anywhere} and a first-column max-width below 48rem so sentence-length deviation cells wrap instead of blowing the layout
 - render the boundary owns/doesn't-own split and the gaps section as tables, never prose
 - render the porting mapping table with a 'Deviation' column and the not-ported list
 - keep the boundary tables canonical to /docs/owns-vs-does-not-own
@@ -24,10 +26,10 @@ NEVER:
 - never render boundary claims as prose paragraphs
 - never duplicate the boundary tables on /porting
 - never author the table cell content (techwriting owns content)
-- never change the markdown-doc page kind (astro owns md vs mdx)
+- never change the markdown-doc page kind (GBC-003 re-authors the boundary page as .mdx, which is what makes the info Callout composable; this task consumes, never converts)
 STRICTLY:
 - >=2 tables on /docs/owns-vs-does-not-own (T-DOCS-019)
-- horizontal-scroll wrapper with a pinned first column below 48rem
+- horizontal scroll via the native pattern :global(.prose table){display:block;overflow-x:auto} in Prose.astro scoped styles — reachable from the one write-allowed file, no wrapper element or rehype plugin needed; NO pinned first column (cut: the mapping table is ~5 rows and the boundary tables ~7 claims — DataTable needed pinning for 56 mono-key rows, these do not)
 - token-only styling, zero JS
 
 ## Specification
@@ -128,7 +130,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
 ### AC-6: scannable-table-styling
   GIVEN: a markdown table renders inside the Prose article wrapper
   WHEN:  the table is inspected
-  THEN:  it shows zebra striping via var(--muted), var(--border) row dividers, and a sticky header row, with a horizontal-scroll wrapper and pinned first column below 48rem
+  THEN:  it shows zebra striping, var(--border) row dividers, a sticky header row offset below the site header, th scope=col, a muted caption, and horizontal scroll via the table's own display:block/overflow-x:auto
   FLOW_REF: FLOW-DOCS-05-porting-map-and-prior-art
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview
@@ -137,11 +139,11 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
   TEST_FUNCTION: FLOW-DOCS-05-porting-map-and-prior-art
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art
   SCENARIO:
-        NEGATIVE_CONTROL: would fail if ['unstyled default browser tables or hex literals in the table styles']
-        EVIDENCE: screenshot
-        - ACTION: ['Inspect a markdown table in Prose']
-          MUST_OBSERVE: ['zebra striping on even rows (var(--muted))', 'row dividers via var(--border)', 'sticky thead']
-          MUST_NOT_OBSERVE: ['unstyled default browser tables', 'hex color literals in the table styles']
+        NEGATIVE_CONTROL: would fail if ['unstyled default browser tables', 'a table wider than its container without scroll', 'a missing caption or th scope']
+        EVIDENCE: file_artifact (computed-style assertions)
+        - ACTION: ['Inspect a markdown table in Prose via computed styles']
+          MUST_OBSERVE: ['computed background on even rows (zebra)', 'computed border on row dividers', 'computed position:sticky on thead with a top offset', 'computed overflow-x:auto/display:block on the table', 'th scope=col present', 'caption present']
+          MUST_NOT_OBSERVE: ['unstyled default browser tables', 'a screenshot standing in for a computed-style check']
 
 ## Test Criteria
 - TC-1: /docs/owns-vs-does-not-own renders >=2 tables with claims in td/th  (maps_to: AC-1)
@@ -149,7 +151,7 @@ Success state: The built /docs/owns-vs-does-not-own and /porting render boundary
 - TC-3: boundary page has a gaps section with >=1 item and names react-native-reusables  (maps_to: AC-3)
 - TC-4: boundary tables render only on /docs/owns-vs-does-not-own  (maps_to: AC-4)
 - TC-5: example-app anchor resolves non-404  (maps_to: AC-5)
-- TC-6: markdown tables in Prose render with zebra/border/sticky styling and no hex literals  (maps_to: AC-6)
+- TC-6: markdown tables in Prose render with computed zebra/border/sticky(scroll-offset)/scroll styling, th scope=col, and captions; hex-literal absence is a source grep over Prose.astro (not observable via computed styles)  (maps_to: AC-6)
 
 ## Reading List
 - apps/docs/src/components/DataTable.astro
@@ -178,7 +180,7 @@ Anti-pattern: Do not render boundary claims as prose; do not author table conten
 - pnpm playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables
 
 ## Dependencies
-Depends on: none
+Depends on: ['GBC-003', 'GBC-004', 'GBC-009']
 Blocks:     none
 
 <!-- REQUIREMENT-CONTRACT v1 -->
@@ -449,7 +451,7 @@ Blocks:     none
       "id": "AC-6",
       "type": "acceptance_criterion",
       "primary": false,
-      "description": "GIVEN a markdown table in Prose WHEN inspected THEN it shows zebra/border/sticky styling with a horizontal-scroll wrapper and pinned first column below 48rem",
+      "description": "GIVEN a markdown table in Prose WHEN inspected via computed styles THEN it shows zebra/border/sticky(offset) styling, th scope=col, caption, and horizontal scroll via the table's own display:block/overflow-x:auto",
       "flow_ref": "FLOW-DOCS-05-porting-map-and-prior-art",
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
       "test_function": "FLOW-DOCS-05-porting-map-and-prior-art",
@@ -465,11 +467,11 @@ Blocks:     none
         "verification_service": "built dist over astro preview",
         "negative_control": {
           "would_fail_if": [
-            "unstyled default browser tables or hex literals in the table styles"
+            "unstyled default browser tables", "a table wider than its container without scroll", "a missing caption or th scope"
           ]
         },
         "evidence": {
-          "artifact_type": "screenshot",
+          "artifact_type": "file_artifact",
           "required_capture": true
         },
         "cases": [

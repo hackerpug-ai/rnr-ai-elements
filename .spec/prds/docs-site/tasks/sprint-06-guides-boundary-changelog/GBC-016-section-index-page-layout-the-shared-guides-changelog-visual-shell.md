@@ -18,7 +18,7 @@ MUST:
 - compose PageHeader (title + one-line description)
 - compose a SectionHeader (anchored h2 + count Chip) reusing SectionHeader.astro
 - render the IndexList rows via the default slot
-- supply the docs-section nav (getting-started / guides / porting) since DocsLayout renders no sidebar
+- supply the docs-section nav (getting-started / guides / porting) since DocsLayout renders no sidebar — by extracting DocsNav.astro from MarkdownLayout's inline nav (Rule of 2: two consumers) and having MarkdownLayout consume the extraction; composing MarkdownLayout directly is NOT the path (it hard-renders a mandatory Edit-this-page link)
 - collapse to a single column below lg
 NEVER:
 - never render a ToC rail on a section-index page
@@ -38,7 +38,7 @@ Success state: Both /guides and /changelog render the identical shell (PageHeade
 ### AC-1: guides-section-index-shell [PRIMARY]
   GIVEN: the built site is served and the five guides are present
   WHEN:  a visitor opens /guides
-  THEN:  a PageHeader titled 'Guides', a SectionHeader reading 'All guides (5)', and exactly 5 IndexList rows render, with no ToC rail
+  THEN:  a PageHeader titled 'Guides', a SectionHeader whose h2 reads 'All guides' with a sibling count Chip of 5, and exactly 5 IndexList rows render, with no ToC rail (SectionHeader renders h2 + separate Chip — a literal 'All guides (5)' string never exists in the DOM)
   FLOW_REF: FLOW-DOCS-03-five-guides-index
   TEST_TIER: e2e
   VERIFICATION_SERVICE: built dist over astro preview
@@ -48,9 +48,9 @@ Success state: Both /guides and /changelog render the identical shell (PageHeade
   VERIFY: pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index
   SCENARIO:
         NEGATIVE_CONTROL: would fail if ['the ToC rail renders or the SectionHeader count chip is missing']
-        EVIDENCE: screenshot
+        EVIDENCE: file_artifact (DOM query)
         - ACTION: ['Open /guides']
-          MUST_OBSERVE: ["PageHeader title 'Guides'", "SectionHeader 'All guides (5)' with a count Chip", 'exactly 5 IndexList rows']
+          MUST_OBSERVE: ["PageHeader title 'Guides'", "SectionHeader h2 text 'All guides'", 'sibling count Chip with value 5', 'exactly 5 IndexList rows']
           MUST_NOT_OBSERVE: ["an 'On this page' ToC rail", 'a guides SectionHeader missing its count Chip']
 
 ### AC-2: changelog-section-index-shell [PRIMARY]
@@ -126,7 +126,7 @@ Success state: Both /guides and /changelog render the identical shell (PageHeade
           MUST_NOT_OBSERVE: ['a section-index page with no docs nav']
 
 ## Test Criteria
-- TC-1: /guides renders PageHeader + SectionHeader 'All guides (5)' + 5 rows  (maps_to: AC-1)
+- TC-1: /guides renders PageHeader + SectionHeader h2 'All guides' + Chip 5 + 5 rows  (maps_to: AC-1)
 - TC-2: /changelog renders PageHeader 'Changelog' + SectionHeader 'Releases' + descending rows  (maps_to: AC-2)
 - TC-3: no ToC rail on either section-index page  (maps_to: AC-3)
 - TC-4: single-column below 64rem with docs nav present  (maps_to: AC-4)
@@ -141,6 +141,8 @@ Success state: Both /guides and /changelog render the identical shell (PageHeade
 ## Guardrails
 WRITE-ALLOWED:
 - apps/docs/src/layouts/SectionIndexLayout.astro (NEW)
+- apps/docs/src/components/DocsNav.astro (NEW — extracted from MarkdownLayout's inline nav)
+- apps/docs/src/layouts/MarkdownLayout.astro (MODIFY — consume DocsNav, byte-identical rendered nav)
 WRITE-PROHIBITED:
 - apps/docs/src/pages/guides.astro
 - apps/docs/src/pages/changelog/**
@@ -178,7 +180,7 @@ Blocks:     none
       "id": "AC-1",
       "type": "acceptance_criterion",
       "primary": true,
-      "description": "GIVEN the built site and five guides WHEN a visitor opens /guides THEN PageHeader 'Guides' + SectionHeader 'All guides (5)' + 5 IndexList rows render with no ToC",
+      "description": "GIVEN the built site and five guides WHEN a visitor opens /guides THEN PageHeader 'Guides' + SectionHeader h2 'All guides' with count Chip 5 + 5 IndexList rows render with no ToC",
       "flow_ref": "FLOW-DOCS-03-five-guides-index",
       "test_file": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
       "test_function": "FLOW-DOCS-03-five-guides-index",
@@ -213,7 +215,7 @@ Blocks:     none
             "end_state": {
               "must_observe": [
                 "PageHeader title 'Guides'",
-                "SectionHeader 'All guides (5)' with a count Chip",
+                "SectionHeader h2 'All guides' + count Chip 5",
                 "exactly 5 IndexList rows"
               ],
               "must_not_observe": [
@@ -423,7 +425,7 @@ Blocks:     none
     {
       "id": "TC-1",
       "type": "test_criterion",
-      "description": "/guides renders PageHeader + SectionHeader 'All guides (5)' + 5 rows",
+      "description": "/guides renders PageHeader + SectionHeader h2 'All guides' + Chip 5 + 5 rows",
       "maps_to_ac": "AC-1",
       "verify": "pnpm playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index"
     },
