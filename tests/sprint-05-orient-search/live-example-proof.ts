@@ -525,7 +525,13 @@ function startDeviceObserver(
 
 type RecordingHandle = { stop: () => Promise<string[]> };
 
-/** iOS: simctl recordVideo finalizes the file on SIGINT. */
+/**
+ * iOS: simctl recordVideo finalizes the file on SIGINT. The stop promise is
+ * BOUNDED: the recorder child can exit on its own mid-phase (a simctl hiccup),
+ * and a listener attached after that exit never fires — an unbounded wait there
+ * hung a full matrix run after its legs had all passed. Already-exited children
+ * resolve immediately; a 20s timer backstops a child that ignores SIGINT/SIGKILL.
+ */
 function startIosRecording(udid: string, outPath: string): RecordingHandle {
   mkdirSync(dirnameOf(outPath), { recursive: true });
   const child = spawn(
@@ -539,11 +545,24 @@ function startIosRecording(udid: string, outPath: string): RecordingHandle {
   return {
     stop: () =>
       new Promise<string[]>((resolveStop) => {
-        child.on('exit', () => resolveStop(existsSync(outPath) ? [outPath] : []));
+        let settled = false;
+        const finish = (): void => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(backstop);
+          resolveStop(existsSync(outPath) ? [outPath] : []);
+        };
+        const backstop = setTimeout(finish, 20_000);
+        backstop.unref();
+        if (child.exitCode !== null || child.signalCode !== null) {
+          finish();
+        } else {
+          child.once('exit', finish);
+        }
         child.kill('SIGINT');
         setTimeout(() => {
-          if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
-        }, 20_000).unref();
+          if (!settled) child.kill('SIGKILL');
+        }, 19_000).unref();
       }),
   };
 }
