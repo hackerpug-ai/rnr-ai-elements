@@ -45,6 +45,7 @@ import { createHash } from 'node:crypto';
 import {
   appendFileSync,
   copyFileSync,
+  cpSync,
   existsSync,
   mkdirSync,
   readdirSync,
@@ -59,6 +60,10 @@ import { basename, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { type Browser, chromium } from '@playwright/test';
+
+import { RECORD_PREFIX } from '../../apps/example/server/chat';
+import { loadServerEnv } from '../../apps/example/server/env';
+import { createChatServer } from '../../apps/example/server/index';
 
 import {
   type BackendLaunchOptions,
@@ -223,10 +228,11 @@ type RecordSink = {
 };
 
 /**
- * Decorates the ORI-AI-001 owned-backend handle: every parsed provider record is
- * journaled (with the moment this orchestrator observed it) and pushed into the
- * phase sink; every lifecycle operation (stop/restart) is journaled. Delegates all
- * behavior to the real handle — this wrapper observes, never overrides.
+ * Decorates a backend handle (the owner-process adapter): every parsed provider
+ * record is journaled (with the moment this orchestrator observed it) and pushed
+ * into the phase sink; every lifecycle operation (stop/restart) is journaled.
+ * Delegates all behavior to the real handle — this wrapper observes, never
+ * overrides.
  */
 class RecordingBackend implements OwnedBackendHandle {
   /** How many of the inner handle's records this wrapper has already journaled.
@@ -235,11 +241,12 @@ class RecordingBackend implements OwnedBackendHandle {
   private seenCount = 0;
 
   constructor(
-    private readonly inner: OwnedBackendHandle,
+    private inner: OwnedBackendHandle,
     private readonly journal: EvidenceJournal,
     private readonly sink: RecordSink,
     private readonly engine: Engine,
     private readonly phase: string,
+    private readonly backendPort: number,
   ) {}
 
   get launchIdentity(): string {
@@ -252,7 +259,7 @@ class RecordingBackend implements OwnedBackendHandle {
     return this.inner.host;
   }
   get port(): number {
-    return this.inner.port;
+    return this.backendPort;
   }
   get model(): string {
     return this.inner.model;
@@ -307,20 +314,32 @@ class RecordingBackend implements OwnedBackendHandle {
   }
 
   async stop(): Promise<void> {
-    this.journal.emit('backend-stop', { engine: this.engine, phase: this.phase, port: this.port });
+    this.journal.emit('backend-stop', {
+      engine: this.engine,
+      phase: this.phase,
+      port: this.backendPort,
+    });
     await this.inner.stop();
   }
 
   async restart(options: BackendLaunchOptions = {}): Promise<OwnedBackendHandle> {
+    const nextModel = options.model ?? this.model;
     this.journal.emit('backend-restart', {
       engine: this.engine,
       phase: this.phase,
-      port: this.port,
-      model: options.model ?? this.model,
+      port: this.backendPort,
+      model: nextModel,
     });
     const next = await this.inner.restart(options);
     this.sink.gen.value += 1;
-    return new RecordingBackend(next, this.journal, this.sink, this.engine, this.phase);
+    return new RecordingBackend(
+      next,
+      this.journal,
+      this.sink,
+      this.engine,
+      this.phase,
+      this.backendPort,
+    );
   }
 
   async selectModel(model: string): Promise<OwnedBackendHandle> {
@@ -328,40 +347,28 @@ class RecordingBackend implements OwnedBackendHandle {
   }
 }
 
-async function launchRecordingBackend(
+/**
+ * The phase backend: the real server hosted by a dedicated owner process (see
+ * runBackendOwner) and wrapped in the journaling RecordingBackend. The owner's
+ * command line does not match the ORI-RN-005 driver's entry-reap heuristic, so the
+ * caller-passed backend survives the driver's orphan cleanup and serves from the
+ * first leg's first fetch.
+ */
+async function makePhaseBackend(
   journal: EvidenceJournal,
   sink: RecordSink,
   engine: Engine,
   phase: string,
   model: string,
+  phaseRoot: string,
 ): Promise<RecordingBackend> {
-  const backend = new RecordingBackend(
-    await launchOwnedBackend({
-      host: '127.0.0.1',
-      port: ENGINE_PORTS[engine].backend,
-      model,
-      maxOutputTokens: 4096,
-    }),
+  const owner = await spawnBackendOwner(
     journal,
-    sink,
-    engine,
-    phase,
+    ENGINE_PORTS[engine].backend,
+    model,
+    join(phaseRoot, `${phase}-backend`),
   );
-  journal.emit('backend-launch', {
-    engine,
-    phase,
-    port: backend.port,
-    model: backend.model,
-    pid: backend.pid,
-    started: backend.started,
-    generation: sink.gen.value,
-  });
-  if (!backend.started) {
-    throw new Error(
-      `owned backend failed to start for ${engine}/${phase}: ${backend.stderrText().slice(-2000)}`,
-    );
-  }
-  return backend;
+  return new RecordingBackend(owner, journal, sink, engine, phase, ENGINE_PORTS[engine].backend);
 }
 
 function makeSink(): RecordSink {
@@ -924,8 +931,15 @@ async function invokeDriver(
   });
 }
 
-/** The newest web export the driver's live phase produced (real bytes, reused). */
-function findWebDist(engine: Engine): string | null {
+/**
+ * The newest web export the driver's live phase produced (real bytes, reused). The
+ * orchestrator preserves a copy in the phase root right after the live phase — the
+ * scratch reaper can remove tmpdir dists mid-run (the attempt-4 finding), which
+ * orphaned the web-self phase; the phase-root copy is the fallback.
+ */
+function findWebDist(engine: Engine, phaseRoot: string): string | null {
+  const kept = join(phaseRoot, 'web-dist');
+  if (existsSync(join(kept, 'index.html'))) return kept;
   let best: { dir: string; mtime: number } | null = null;
   for (const entry of readdirSync(tmpdir())) {
     if (!entry.startsWith(DIST_PREFIX[engine])) continue;
@@ -1592,7 +1606,7 @@ async function runEnginePhases(
     if (options.platforms.includes('ios')) {
       resetMaestroIosDriver(options.iosUdid, journal, 'pre-reject');
     }
-    const backend = await launchRecordingBackend(journal, sink, engine, 'reject', rejectModel);
+    const backend = await makePhaseBackend(journal, sink, engine, 'reject', rejectModel, phaseRoot);
     const runId = `${options.runId}-reject`;
     let driverRun: DriverRunResult | null = null;
     let phaseError: string | null = null;
@@ -1649,7 +1663,7 @@ async function runEnginePhases(
     if (options.platforms.includes('ios')) {
       resetMaestroIosDriver(options.iosUdid, journal, 'pre-live');
     }
-    const backend = await launchRecordingBackend(journal, sink, engine, 'live', DEFAULT_MODEL);
+    const backend = await makePhaseBackend(journal, sink, engine, 'live', DEFAULT_MODEL, phaseRoot);
     const runId = `${options.runId}-live`;
     const hasNative = options.platforms.includes('ios') || options.platforms.includes('android');
 
@@ -1690,6 +1704,17 @@ async function runEnginePhases(
       phaseError = error instanceof Error ? error.message : String(error);
     }
     backend.records();
+
+    // Preserve the driver's fresh web export inside the phase root: the scratch
+    // reaper can remove tmpdir dists mid-run (the attempt-4 finding), which would
+    // orphan the web-self phase that serves these exact bytes next.
+    const keptDist = join(phaseRoot, 'web-dist');
+    const freshDist = findWebDist(engine, phaseRoot);
+    if (freshDist !== null && freshDist !== keptDist) {
+      rmSync(keptDist, { recursive: true, force: true });
+      cpSync(freshDist, keptDist, { recursive: true });
+      journal.emit('web-dist-preserved', { engine, source: freshDist });
+    }
 
     if (observer !== null) {
       const observed = await observer.stop();
@@ -1748,7 +1773,7 @@ async function runEnginePhases(
   /* ---------- WEB-SELF: one real Chromium session on the driver's export ------- */
   if (options.platforms.includes('web')) {
     journal.emit('phase-start', { engine, phase: 'web-self', model: DEFAULT_MODEL });
-    const dist = findWebDist(engine);
+    const dist = findWebDist(engine, phaseRoot);
     if (dist === null) {
       phases.push({
         engine,
@@ -1774,7 +1799,7 @@ async function runEnginePhases(
           if (current !== null) await current.stop();
           stopOwnedPort(ENGINE_PORTS[engine].backend, journal, 'web-self');
           await waitForPortFree(ENGINE_PORTS[engine].backend, 8000);
-          current = new RecordingBackend(
+          const next = new RecordingBackend(
             await launchOwnedBackend({
               host: '127.0.0.1',
               port: ENGINE_PORTS[engine].backend,
@@ -1785,8 +1810,10 @@ async function runEnginePhases(
             sink,
             engine,
             'web-self',
+            ENGINE_PORTS[engine].backend,
           );
-          if (!current.started) throw new Error('web-self backend failed to start');
+          if (!next.started) throw new Error('web-self backend failed to start');
+          current = next;
           journal.emit('backend-launch', {
             engine,
             phase: 'web-self',
@@ -2407,6 +2434,379 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
   return { runId: options.runId, ok, targets: validation.acceptedTargets, failures };
 }
 
+/* ---------------------------------------------------------- backend owner -- */
+
+type OwnerStatus = { ts: string; kind: 'listening' | 'stopped'; model: string };
+
+/**
+ * Hosts the REAL example backend (createChatServer from apps/example/server) in a
+ * dedicated process. The ORI-RN-005 driver's entry reap kills listeners whose command
+ * line contains `server/index.ts` (its orphan heuristic); this owner legitimately
+ * hosts the same real server code from the orchestrator's own module, so a
+ * caller-passed backend is not mistaken for an orphan — no kill, no heal, no race
+ * with the driver's first marker fetch. The server's sanitized stdout record lines
+ * are appended to a file the in-process adapter tails; stop/restart/model-restore
+ * arrive as command-file lines.
+ */
+// fallow-ignore-next-line complexity
+async function runBackendOwner(params: {
+  port: number;
+  model: string;
+  recordsOut: string;
+  cmdIn: string;
+  statusOut: string;
+  webOrigin: string;
+}): Promise<void> {
+  let lineBuffer = '';
+  const originalWrite = process.stdout.write.bind(process.stdout);
+  // fallow-ignore-next-line complexity
+  const capture = (
+    chunk: string | Uint8Array,
+    encoding?: BufferEncoding,
+    cb?: (error?: Error | null) => void,
+  ): boolean => {
+    lineBuffer += typeof chunk === 'string' ? chunk : Buffer.from(chunk).toString('utf8');
+    let nl = lineBuffer.indexOf('\n');
+    while (nl !== -1) {
+      const line = lineBuffer.slice(0, nl).trim();
+      lineBuffer = lineBuffer.slice(nl + 1);
+      if (line.startsWith(RECORD_PREFIX)) {
+        try {
+          const record = JSON.parse(line.slice(RECORD_PREFIX.length)) as BackendRecord;
+          appendFileSync(params.recordsOut, `${JSON.stringify(record)}\n`);
+        } catch {
+          // partial line — dropped, never fabricated
+        }
+      }
+      nl = lineBuffer.indexOf('\n');
+    }
+    return encoding === undefined && cb === undefined
+      ? originalWrite(chunk)
+      : encoding !== undefined && cb === undefined
+        ? originalWrite(chunk, encoding)
+        : originalWrite(chunk, encoding ?? 'utf8', cb);
+  };
+  process.stdout.write = capture as typeof process.stdout.write;
+
+  const emitStatus = (kind: 'listening' | 'stopped', model: string): void => {
+    const status: OwnerStatus = { ts: nowIso(), kind, model };
+    appendFileSync(params.statusOut, `${JSON.stringify(status)}\n`);
+  };
+
+  let server: ReturnType<typeof createChatServer> | null = null;
+  const serve = (model: string): void => {
+    process.env.EXAMPLE_CHAT_MODEL = model;
+    process.env.EXAMPLE_CHAT_HOST = '127.0.0.1';
+    process.env.EXAMPLE_CHAT_PORT = String(params.port);
+    process.env.EXAMPLE_CHAT_WEB_ORIGIN = params.webOrigin;
+    process.env.EXAMPLE_CHAT_MAX_OUTPUT_TOKENS = '4096';
+    const loaded = loadServerEnv(process.env);
+    if (!loaded.ok) {
+      originalWrite(`owner: server env rejected: ${loaded.diagnostic}\n`);
+      process.exitCode = 1;
+      return;
+    }
+    server = createChatServer(loaded.config);
+    server.on('error', (error: Error) => {
+      originalWrite(`owner: server error: ${error.message}\n`);
+      process.exitCode = 1;
+    });
+    server.listen(params.port, '127.0.0.1', () => {
+      emitStatus('listening', model);
+    });
+  };
+
+  let cmdCursor = 0;
+  let currentModel = params.model;
+  serve(currentModel);
+
+  // fallow-ignore-next-line complexity
+  const handleCommands = (): void => {
+    try {
+      const stat = statSync(params.cmdIn);
+      if (stat.size <= cmdCursor) return;
+      const fdText = readFileSync(params.cmdIn, 'utf8');
+      const fresh = fdText.slice(cmdCursor);
+      cmdCursor = fdText.length;
+      for (const line of fresh.split('\n')) {
+        if (line.trim().length === 0) continue;
+        let cmd: { op?: unknown; model?: unknown };
+        try {
+          cmd = JSON.parse(line) as { op?: unknown; model?: unknown };
+        } catch {
+          continue;
+        }
+        if (cmd.op === 'stop') {
+          const closing = server;
+          server = null;
+          if (closing !== null) {
+            closing.closeAllConnections();
+            closing.close(() => emitStatus('stopped', currentModel));
+          } else {
+            emitStatus('stopped', currentModel);
+          }
+        } else if (cmd.op === 'restart') {
+          const nextModel = typeof cmd.model === 'string' ? cmd.model : currentModel;
+          const closing = server;
+          server = null;
+          const relisten = (): void => {
+            currentModel = nextModel;
+            serve(nextModel);
+          };
+          if (closing !== null) {
+            closing.closeAllConnections();
+            closing.close(relisten);
+          } else {
+            relisten();
+          }
+        }
+      }
+    } catch {
+      // command file not created yet — nothing to do
+    }
+  };
+  const timer = setInterval(handleCommands, 150);
+  timer.unref();
+  const shutdown = (): void => {
+    clearInterval(timer);
+    const closing = server;
+    server = null;
+    closing?.close(() => process.exit(0));
+    setTimeout(() => process.exit(0), 3000).unref();
+  };
+  process.on('SIGTERM', shutdown);
+  process.on('SIGINT', shutdown);
+  // Keep the owner alive until signaled.
+  setInterval(() => {}, 1 << 30);
+}
+
+/**
+ * The in-process OwnedBackendHandle over the owner process: records are tailed from
+ * the owner's record file; stop/restart are command-file round-trips awaited on the
+ * owner's status file.
+ */
+class OwnerBackendHandle implements OwnedBackendHandle {
+  private exitCodeValue: number | null = null;
+  private exitSignalValue: string | null = null;
+  private modelValue: string;
+  private cmdSeq = 0;
+
+  constructor(
+    private readonly child: ChildProcess,
+    private readonly backendPort: number,
+    model: string,
+    private readonly recordsPath: string,
+    private readonly cmdPath: string,
+    private readonly statusPath: string,
+    private readonly stderrPath: string,
+  ) {
+    this.modelValue = model;
+    child.on('exit', (code, signal) => {
+      this.exitCodeValue = code;
+      this.exitSignalValue = signal;
+    });
+  }
+
+  get launchIdentity(): string {
+    return `ori-ai-002-backend-owner-${this.child.pid ?? 'unknown'}`;
+  }
+  get origin(): string {
+    return `http://127.0.0.1:${this.backendPort}`;
+  }
+  get host(): string {
+    return '127.0.0.1';
+  }
+  get port(): number {
+    return this.backendPort;
+  }
+  get model(): string {
+    return this.modelValue;
+  }
+  get pid(): number | null {
+    return this.child.pid ?? null;
+  }
+  get started(): boolean {
+    if (this.exitCodeValue !== null || this.exitSignalValue !== null) return false;
+    return this.lastStatus()?.kind === 'listening';
+  }
+  get exitCode(): number | null {
+    return this.exitCodeValue;
+  }
+  get exitSignal(): string | null {
+    return this.exitSignalValue;
+  }
+  stderrText(): string {
+    try {
+      return readFileSync(this.stderrPath, 'utf8');
+    } catch {
+      return '';
+    }
+  }
+  stdoutText(): string {
+    try {
+      return readFileSync(this.recordsPath, 'utf8');
+    } catch {
+      return '';
+    }
+  }
+
+  private lastStatus(): OwnerStatus | null {
+    try {
+      const lines = readFileSync(this.statusPath, 'utf8')
+        .split('\n')
+        .filter((line) => line.trim().length > 0);
+      if (lines.length === 0) return null;
+      return JSON.parse(lines[lines.length - 1]) as OwnerStatus;
+    } catch {
+      return null;
+    }
+  }
+
+  private parseRecords(): BackendRecord[] {
+    try {
+      return readFileSync(this.recordsPath, 'utf8')
+        .split('\n')
+        .filter((line) => line.trim().length > 0)
+        .map((line) => JSON.parse(line) as BackendRecord);
+    } catch {
+      return [];
+    }
+  }
+
+  records(): BackendRecord[] {
+    return this.parseRecords();
+  }
+
+  async waitForRecord(requestId: string, timeoutMs: number): Promise<BackendRecord | null> {
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const found = this.parseRecords().find((record) => record.requestId === requestId);
+      if (found !== undefined) return found;
+      await sleep(150);
+    }
+    return null;
+  }
+
+  private sendCommand(op: 'stop' | 'restart', model?: string): void {
+    this.cmdSeq += 1;
+    appendFileSync(this.cmdPath, `${JSON.stringify({ id: this.cmdSeq, op, model })}\n`);
+  }
+
+  private async awaitStatus(
+    kind: 'listening' | 'stopped',
+    model: string | null,
+    timeoutMs: number,
+  ): Promise<OwnerStatus | null> {
+    const deadline = Date.now() + timeoutMs;
+    while (Date.now() < deadline) {
+      const status = this.lastStatus();
+      if (status !== null && status.kind === kind && (model === null || status.model === model)) {
+        return status;
+      }
+      await sleep(150);
+    }
+    return null;
+  }
+
+  async stop(): Promise<void> {
+    if (this.exitCodeValue !== null || this.exitSignalValue !== null) return;
+    this.sendCommand('stop');
+    await this.awaitStatus('stopped', null, 10_000);
+  }
+
+  async restart(options: BackendLaunchOptions = {}): Promise<OwnedBackendHandle> {
+    const nextModel = options.model ?? this.modelValue;
+    this.sendCommand('restart', nextModel);
+    const status = await this.awaitStatus('listening', nextModel, 15_000);
+    if (status === null) {
+      throw new Error(`backend owner did not relisten on ${nextModel} within 15s`);
+    }
+    this.modelValue = nextModel;
+    return new OwnerBackendHandle(
+      this.child,
+      this.backendPort,
+      nextModel,
+      this.recordsPath,
+      this.cmdPath,
+      this.statusPath,
+      this.stderrPath,
+    );
+  }
+
+  async selectModel(model: string): Promise<OwnedBackendHandle> {
+    return this.restart({ model });
+  }
+}
+
+/** Spawns the backend owner and resolves once the real server is listening. */
+async function spawnBackendOwner(
+  journal: EvidenceJournal,
+  port: number,
+  model: string,
+  ownerDir: string,
+): Promise<OwnerBackendHandle> {
+  mkdirSync(ownerDir, { recursive: true });
+  const recordsOut = join(ownerDir, 'backend-records.jsonl');
+  const cmdIn = join(ownerDir, 'backend-cmd.jsonl');
+  const statusOut = join(ownerDir, 'backend-status.jsonl');
+  const stderrPath = join(ownerDir, 'backend-stderr.log');
+  for (const path of [recordsOut, cmdIn, statusOut, stderrPath]) writeFileSync(path, '');
+  const env: NodeJS.ProcessEnv = { ...process.env };
+  delete env.NODE_ENV;
+  const child = spawn(
+    process.execPath,
+    [
+      TSX_CLI,
+      ORCHESTRATOR_PATH,
+      '--backend-owner',
+      '--port',
+      String(port),
+      '--model',
+      model,
+      '--records-out',
+      recordsOut,
+      '--cmd-in',
+      cmdIn,
+      '--status-out',
+      statusOut,
+      '--web-origin',
+      'http://localhost:8081',
+    ],
+    { cwd: REPO_ROOT, env, stdio: ['ignore', 'ignore', 'pipe'] },
+  );
+  child.stderr?.on('data', (chunk: Buffer) => {
+    appendFileSync(stderrPath, chunk.toString('utf8'));
+  });
+  const handle = new OwnerBackendHandle(
+    child,
+    port,
+    model,
+    recordsOut,
+    cmdIn,
+    statusOut,
+    stderrPath,
+  );
+  const deadline = Date.now() + 20_000;
+  while (Date.now() < deadline && !handle.started) {
+    if (handle.exitCode !== null || handle.exitSignal !== null) break;
+    await sleep(200);
+  }
+  journal.emit('backend-owner-launch', {
+    port,
+    model,
+    pid: child.pid,
+    started: handle.started,
+    stderr: handle.stderrText().slice(-500),
+  });
+  if (!handle.started) {
+    child.kill('SIGTERM');
+    throw new Error(
+      `backend owner failed to listen on ${port}: ${handle.stderrText().slice(-1000)}`,
+    );
+  }
+  return handle;
+}
+
 /* ----------------------------------------------------------------- validator -- */
 
 export type ValidationResult = {
@@ -2500,7 +2900,13 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
     string,
     { engine?: unknown; platform?: unknown; artifacts?: Record<string, string> }
   >;
-  const serverRecords = new Map<string, { model: string; outcome: string; text_hash: string }>();
+  /**
+   * Request ids legitimately REPEAT across phases (the app reuses one chat id), so a
+   * last-write-wins map would let a later aborted record veto an earlier completed
+   * one for the same id (attempt-4 false rejection). Each id accumulates the SET of
+   * outcomes and models it was observed with.
+   */
+  const serverRecords = new Map<string, { outcomes: Set<string>; models: Set<string> }>();
   const eventsPath = join(dir, 'server-events.jsonl');
   if (!existsSync(eventsPath)) {
     rejections.push('server-events.jsonl is missing');
@@ -2518,11 +2924,14 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
           };
         };
         if (event.kind === 'record' && event.record !== undefined) {
-          serverRecords.set(String(event.record.requestId), {
-            model: String(event.record.providerModel),
-            outcome: String(event.record.outcome),
-            text_hash: String(event.record.textHash),
-          });
+          const id = String(event.record.requestId);
+          const entry = serverRecords.get(id) ?? {
+            outcomes: new Set<string>(),
+            models: new Set<string>(),
+          };
+          entry.outcomes.add(String(event.record.outcome));
+          entry.models.add(String(event.record.providerModel));
+          serverRecords.set(id, entry);
         }
       } catch {
         rejections.push('server-events.jsonl contains an unparseable line');
@@ -2611,9 +3020,9 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
           rejections.push(
             `${target}: request ${requestId} has no server-events record (correlation mismatch)`,
           );
-        } else if (server.outcome !== 'completed') {
+        } else if (!server.outcomes.has('completed')) {
           rejections.push(
-            `${target}: request ${requestId} is ${server.outcome} in server-events, not completed`,
+            `${target}: request ${requestId} never completed in server-events (outcomes: ${[...server.outcomes].join(',')})`,
           );
         }
       }
@@ -2635,11 +3044,11 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
     } else {
       for (const requestId of rejectIds) {
         const server = serverRecords.get(requestId);
-        if (server === undefined || server.outcome !== 'error') {
+        if (server === undefined || !server.outcomes.has('error')) {
           rejections.push(
             `${target}: rejected request ${requestId} is not an error record in server-events`,
           );
-        } else if (!server.model.startsWith('rnr-s05-nonexistent-')) {
+        } else if (![...server.models].some((m) => m.startsWith('rnr-s05-nonexistent-'))) {
           rejections.push(
             `${target}: rejected request ${requestId} did not use the nonexistent model`,
           );
@@ -2714,8 +3123,35 @@ function flag(name: string): string | undefined {
   return index >= 0 ? argv[index + 1] : undefined;
 }
 
+/**
+ * Drops `--require=` shims from NODE_OPTIONS whose target files no longer exist.
+ * The agent-scratch reaper removes such shim files mid-session; a dangling require
+ * kills EVERY node child that inherits it (owners, observers, driver-spawned Metro)
+ * before it can run — the attempt-7 owner died exactly so.
+ */
+function sanitizeNodeOptions(): void {
+  const raw = process.env.NODE_OPTIONS;
+  if (raw === undefined || raw.length === 0) return;
+  const kept = raw
+    .split(/\s+/)
+    .filter((part) => {
+      if (!part.startsWith('--require=')) return true;
+      const target = part.slice('--require='.length).replace(/^["']|["']$/g, '');
+      return target.length > 0 && existsSync(target);
+    })
+    .join(' ');
+  if (kept !== raw) {
+    if (kept.length > 0) {
+      process.env.NODE_OPTIONS = kept;
+    } else {
+      delete process.env.NODE_OPTIONS;
+    }
+  }
+}
+
 // fallow-ignore-next-line complexity
 async function main(): Promise<void> {
+  sanitizeNodeOptions();
   if (flag('--observe') !== undefined) {
     const platform = (flag('--platform') ?? 'ios') as 'ios' | 'android';
     const deviceId = flag('--device') ?? '';
@@ -2725,6 +3161,28 @@ async function main(): Promise<void> {
       throw new Error('observer mode requires --device and --out');
     }
     await observeDeviceLoop({ platform, deviceId, outPath: out, growthShot });
+    return;
+  }
+
+  if (flag('--backend-owner') !== undefined) {
+    const port = Number(flag('--port') ?? '0');
+    const model = flag('--model') ?? '';
+    const recordsOut = flag('--records-out') ?? '';
+    const cmdIn = flag('--cmd-in') ?? '';
+    const statusOut = flag('--status-out') ?? '';
+    const webOrigin = flag('--web-origin') ?? 'http://localhost:8081';
+    if (
+      port === 0 ||
+      model.length === 0 ||
+      recordsOut.length === 0 ||
+      cmdIn.length === 0 ||
+      statusOut.length === 0
+    ) {
+      throw new Error(
+        'backend-owner mode requires --port --model --records-out --cmd-in --status-out',
+      );
+    }
+    await runBackendOwner({ port, model, recordsOut, cmdIn, statusOut, webOrigin });
     return;
   }
 
