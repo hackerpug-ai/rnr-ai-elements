@@ -906,6 +906,64 @@ type DriverRunResult = {
   completed: boolean;
 };
 
+/** The pinned Expo Go APK the native drivers require at a hardcoded scratch path. */
+const EXPO_GO_APK_PATH = join(
+  process.env.HOME ?? '',
+  '.cache',
+  'agent-scratch',
+  'opencode',
+  'ori-rn-003',
+  'Expo-Go-57.0.9.apk',
+);
+
+/**
+ * The agent-scratch reaper periodically deletes this path (twice in one session);
+ * both native drivers hardcode it and `installExpoGoAndroid` throws if the file is
+ * absent even when Expo Go is already installed on the emulator. Before every driver
+ * invocation, restore the pinned APK from the official expo/expo-go-releases
+ * GitHub release when missing — the exact restore procedure the ORI-RN-005
+ * evidence documents for this reaper.
+ */
+function ensureExpoGoApk(journal: EvidenceJournal): void {
+  if (existsSync(EXPO_GO_APK_PATH) && statSync(EXPO_GO_APK_PATH).size > 10_000_000) return;
+  mkdirSync(dirnameOf(EXPO_GO_APK_PATH), { recursive: true });
+  const tmp = `${EXPO_GO_APK_PATH}.download`;
+  const res = spawnSync(
+    'curl',
+    [
+      '-sL',
+      '--max-time',
+      '300',
+      '-o',
+      tmp,
+      'https://github.com/expo/expo-go-releases/releases/download/Expo-Go-57.0.9/Expo-Go-57.0.9.apk',
+    ],
+    { encoding: 'utf8', timeout: 330_000 },
+  );
+  const ok =
+    res.status === 0 &&
+    existsSync(tmp) &&
+    statSync(tmp).size > 10_000_000 &&
+    sha256(readFileSync(tmp)) ===
+      '14c18828a3d04e43922245920bd941b978fd1c7a5aec88a0188032f0bb4972ce';
+  if (ok) {
+    copyFileSync(tmp, EXPO_GO_APK_PATH);
+    journal.emit('expo-go-apk-restored', { path: EXPO_GO_APK_PATH, bytes: statSync(tmp).size });
+  } else {
+    journal.emit('expo-go-apk-restore-failed', {
+      path: EXPO_GO_APK_PATH,
+      curl_status: res.status,
+      size: existsSync(tmp) ? statSync(tmp).size : 0,
+    });
+  }
+  rmSync(tmp, { force: true });
+  if (!ok) {
+    throw new Error(
+      `missing prerequisite: could not restore the pinned Expo Go APK at ${EXPO_GO_APK_PATH}`,
+    );
+  }
+}
+
 async function invokeDriver(
   engine: Engine,
   args: { platforms: Platform[]; runId: string; backend: OwnedBackendHandle; outputDir: string },
@@ -1455,7 +1513,9 @@ function writePortLedger(entries: Record<string, string>): void {
 }
 
 function portListening(port: number): boolean {
-  const res = spawnSync('lsof', ['-nP', '-iTCP', `:${port}`, '-sTCP:LISTEN'], {
+  // -iTCP:<port> MUST be a single argument: lsof silently rejects the split form,
+  // which made every occupancy check blind (stale listeners were never reaped).
+  const res = spawnSync('lsof', ['-nP', `-iTCP:${port}`, '-sTCP:LISTEN'], {
     encoding: 'utf8',
     timeout: 15_000,
   });
@@ -1611,6 +1671,7 @@ async function runEnginePhases(
     let driverRun: DriverRunResult | null = null;
     let phaseError: string | null = null;
     try {
+      ensureExpoGoApk(journal);
       driverRun = await invokeDriver(engine, {
         platforms: options.platforms,
         runId,
@@ -1694,6 +1755,7 @@ async function runEnginePhases(
     let driverRun: DriverRunResult | null = null;
     let phaseError: string | null = null;
     try {
+      ensureExpoGoApk(journal);
       driverRun = await invokeDriver(engine, {
         platforms: options.platforms,
         runId,
@@ -2436,7 +2498,7 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
 
 /* ---------------------------------------------------------- backend owner -- */
 
-type OwnerStatus = { ts: string; kind: 'listening' | 'stopped'; model: string };
+type OwnerStatus = { ts: string; kind: 'listening' | 'stopped' | 'alive'; model: string };
 
 /**
  * Hosts the REAL example backend (createChatServer from apps/example/server) in a
@@ -2488,10 +2550,14 @@ async function runBackendOwner(params: {
   };
   process.stdout.write = capture as typeof process.stdout.write;
 
-  const emitStatus = (kind: 'listening' | 'stopped', model: string): void => {
+  const emitStatus = (kind: 'listening' | 'stopped' | 'alive', model: string): void => {
     const status: OwnerStatus = { ts: nowIso(), kind, model };
     appendFileSync(params.statusOut, `${JSON.stringify(status)}\n`);
   };
+
+  // First-act liveness marker: distinguishes a child that died before dispatch
+  // (no `alive` line) from one that died inside serve (alive, never listening).
+  emitStatus('alive', params.model);
 
   let server: ReturnType<typeof createChatServer> | null = null;
   const serve = (model: string): void => {
@@ -2751,8 +2817,18 @@ async function spawnBackendOwner(
   const statusOut = join(ownerDir, 'backend-status.jsonl');
   const stderrPath = join(ownerDir, 'backend-stderr.log');
   for (const path of [recordsOut, cmdIn, statusOut, stderrPath]) writeFileSync(path, '');
-  const env: NodeJS.ProcessEnv = { ...process.env };
-  delete env.NODE_ENV;
+  /**
+   * Minimal explicit env: this machine's shell env has repeatedly poisoned spawned
+   * node children mid-session (a reaper removed a cmux NODE_OPTIONS --require shim
+   * and every inheriting child died before running). The owner needs exactly these
+   * variables — inheritance is the failure surface, so it is removed.
+   */
+  const env: NodeJS.ProcessEnv = {
+    PATH: process.env.PATH ?? '',
+    HOME: process.env.HOME ?? '',
+    TMPDIR: process.env.TMPDIR ?? '',
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY ?? '',
+  };
   const child = spawn(
     process.execPath,
     [
