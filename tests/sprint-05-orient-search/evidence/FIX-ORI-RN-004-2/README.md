@@ -95,7 +95,21 @@ and `completed: false` — pre-existing semantics, deliberately untouched.
 
 ## Gates
 
-- `pnpm exec tsx tests/sprint-05-orient-search/web-leg-orchestration-proof.test.ts` — exit 0 (GREEN above)
-- full three-platform matrix, AC-5 compiler case, `pnpm typecheck`, scoped
-  Biome — see the task commit messages and `.tmp/FIX-ORI-RN-004-2/` for their
-  captured outputs.
+- `pnpm exec tsx tests/sprint-05-orient-search/web-leg-orchestration-proof.test.ts` — exit 0 (GREEN above).
+- Full three-platform matrix
+  `pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios,android,web`
+  — exit 0; run `ORI-RN-004-1789967419357` recorded 3/3 platforms passed
+  (ios light/dark, android light/dark, web — the web leg completing under the
+  full orchestrated sequence), 63 heartbeat entries, 24 real provider records
+  (20 completed + 4 aborted). Captured under `.tmp/FIX-ORI-RN-004-2/matrix-*`.
+- AC-5 compiler case `--case ORI-RN-004-AC-5-live-import-graph-compiler` —
+  exit 0, all assertions true (`.tmp/FIX-ORI-RN-004-2/compiler-*`).
+- `pnpm typecheck` — exit 0 (`.tmp/FIX-ORI-RN-004-2/typecheck.log`).
+- Scoped `pnpm exec biome ci tests/sprint-05-orient-search/support/live-example-proof.test.ts`
+  — exit 0 in a clean environment (`.tmp/FIX-ORI-RN-004-2/biome.log`); the
+  direct pnpm-wrapped invocation in the shimmed agent shell dies with the
+  documented `Linter process terminated abnormally` environmental failure.
+- Refreshed driver side effects (screenshots, retry-state captures, manifest,
+  correlation, metro log, compiler outputs, heartbeat log) are committed with
+  the rerun under `tests/sprint-05-orient-search/evidence/ORI-RN-004/`;
+  `git diff --name-only` reports 0 paths outside the four allowlist entries.
