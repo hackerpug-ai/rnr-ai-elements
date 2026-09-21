@@ -1,0 +1,125 @@
+{
+  "task": "ORI-RN-004",
+  "run_id": "FIX-ORI-RN-004-2-1789964243256",
+  "candidate_head_sha": "5d2f79eac26a0f19d2a5c345ae46667f5c24e230",
+  "generated_at": "2026-09-21T04:17:42.391Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios,android,web"
+  ],
+  "source_sha": {
+    "app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4000,
+    "record_count": 5
+  },
+  "passed_platforms": 1,
+  "completed": false,
+  "legs": [
+    {
+      "platform": "web",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-004:FIX-ORI-RN-004-2-1789964243256:web",
+        "url": "http://127.0.0.1:8406",
+        "drive_result": {
+          "emptyStateVisible": true,
+          "markerSubmitted": true,
+          "inputCleared": true,
+          "assistantResponded": true,
+          "stopControlVisible": true,
+          "followUpRecallVisible": true,
+          "retryControlVisible": true,
+          "retryErrorSanitized": true,
+          "retryCompleted": true,
+          "retrySingleUserTurn": true
+        },
+        "backend_records": [
+          {
+            "requestId": "fix-ori-rn-004-2-invitro-1789964217192",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_05aa12f6b49824fe006ab0afba05bc87d0820955d0d35277a2",
+            "callId": "call-xrA8I1vM2Dg8w6xNL0CN0wiP",
+            "outcome": "completed",
+            "deltaCount": 2710,
+            "inputTokens": 88,
+            "outputTokens": 2712,
+            "totalTokens": 2800,
+            "textHash": "57b7214c51a330fff825f58b09bf809a7c243cf1160bf27bf0f25985027432fa",
+            "durationMs": 21301,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "lx0aYtuWFWQ0frF1",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0b3b2371edbc466d006ab0afdb35b087d088bfeb4e097514ab",
+            "callId": "call-JoDQ8WNY7jZvqybPB7HRMvoL",
+            "outcome": "completed",
+            "deltaCount": 38,
+            "inputTokens": 62,
+            "outputTokens": 39,
+            "totalTokens": 101,
+            "textHash": "6bac05d8df586a7044d60430c8997fe5460bdc6b34a87a83e7a5095cdea0eb7e",
+            "durationMs": 2264,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "lx0aYtuWFWQ0frF1",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0b3b2371edbc466d006ab0afdd3c5487d081183e2a957157e7",
+            "callId": "call-8lJ78mx3Vjii648hW4H7dSeS",
+            "outcome": "completed",
+            "deltaCount": 81,
+            "inputTokens": 145,
+            "outputTokens": 82,
+            "totalTokens": 227,
+            "textHash": "0f01be69794a086ee6fee7e4bac1a8614a79f56906931dbf61a6b80e21f46cca",
+            "durationMs": 1186,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "lx0aYtuWFWQ0frF1",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0b3b2371edbc466d006ab0afdea07487d0b600090441313172",
+            "callId": "call-a9K2p94X6BkffPEoIQSQOArA",
+            "outcome": "completed",
+            "deltaCount": 31,
+            "inputTokens": 243,
+            "outputTokens": 32,
+            "totalTokens": 275,
+            "textHash": "665374fedaf4b2e074772a974430191c8046ee189eb1d70cb6a3c858bab42181",
+            "durationMs": 854,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "lx0aYtuWFWQ0frF1",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0b3b2371edbc466d006ab0afe58d2487d0a848384633ad4b64",
+            "callId": "call-3ubb1T8StPJt3ArwME5oeofK",
+            "outcome": "completed",
+            "deltaCount": 2,
+            "inputTokens": 343,
+            "outputTokens": 3,
+            "totalTokens": 346,
+            "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+            "durationMs": 777,
+            "errorText": null,
+            "activeGenerations": 0
+          }
+        ],
+        "retry_request_id": "lx0aYtuWFWQ0frF1"
+      }
+    }
+  ]
+}

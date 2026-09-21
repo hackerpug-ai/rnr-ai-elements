@@ -31,7 +31,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { request as httpRequest } from 'node:http';
-import { connect as netConnect, type Socket } from 'node:net';
+import { connect as netConnect, Socket } from 'node:net';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -147,6 +147,9 @@ async function abortOneRealStream(backend: OwnedBackendHandle): Promise<boolean>
         });
         response.once('aborted', () => resolveAbortProbe());
         response.once('end', () => resolveAbortProbe());
+        // The server-side abort can reset the connection after our destroy —
+        // never let a late socket error crash the harness.
+        response.on('error', () => resolveAbortProbe());
       },
     );
     req.on('error', () => resolveAbortProbe());
@@ -166,22 +169,44 @@ async function abortOneRealStream(backend: OwnedBackendHandle): Promise<boolean>
  * complete but whose body never completes. The proxy's real request handler
  * awaits body chunks, so the connection is open and active — the server cannot
  * finish closing while it exists, and only the peer (or a forced connection
- * destruction) ends it.
+ * destruction) ends it. Retries transient connect refusals a bounded number of
+ * times; a persistent failure rejects legibly instead of crashing the harness.
  */
-function openHeldPartialBodyRequest(port: number): Socket {
-  const sock = netConnect({ host: BACKEND_HOST, port });
-  sock.write(
-    [
-      'POST /api/chat HTTP/1.1',
-      `Host: ${BACKEND_HOST}:${port}`,
-      'content-type: application/json',
-      'content-length: 2048',
-      '',
-      '',
-    ].join('\r\n'),
+async function openHeldPartialBodyRequest(port: number): Promise<Socket> {
+  let lastError: Error | null = null;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const outcome = await new Promise<Socket | Error>((resolveAttempt) => {
+      const sock = netConnect({ host: BACKEND_HOST, port });
+      const settle = (result: Socket | Error): void => {
+        sock.removeAllListeners('error');
+        sock.removeAllListeners('connect');
+        resolveAttempt(result);
+      };
+      sock.once('error', (error: Error) => settle(error));
+      sock.once('connect', () => {
+        sock.write(
+          [
+            'POST /api/chat HTTP/1.1',
+            `Host: ${BACKEND_HOST}:${port}`,
+            'content-type: application/json',
+            'content-length: 2048',
+            '',
+            '',
+          ].join('\r\n'),
+        );
+        sock.write('{"id":"held","messages":['); // partial body — never completed
+        settle(sock);
+        // A server-side reset later in the probe must stay handled.
+        sock.on('error', () => {});
+      });
+    });
+    if (outcome instanceof Socket) return outcome;
+    lastError = outcome;
+    await sleep(1000);
+  }
+  throw new Error(
+    `held connection could not reach ${BACKEND_HOST}:${port} after retries: ${lastError?.message}`,
   );
-  sock.write('{"id":"held","messages":['); // partial body — never completed
-  return sock;
 }
 
 /**
@@ -203,53 +228,59 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
 
   const session = new BackendSession(backend);
   const served = await serveWithChatProxy(distDir, PROXY_PORT, session);
-  const held = openHeldPartialBodyRequest(PROXY_PORT);
+  let held: Socket | null = null;
+  try {
+    held = await openHeldPartialBodyRequest(PROXY_PORT);
 
-  const closeStartedAt = Date.now();
-  let closeResolvedMs: number | null = null;
-  const closing = stopServer(served);
-  closing.then(
-    () => {
-      closeResolvedMs = Date.now() - closeStartedAt;
-    },
-    () => {
-      closeResolvedMs = Date.now() - closeStartedAt;
-    },
-  );
-  let unresolvedAfterMs: number | null = null;
-  while (Date.now() - closeStartedAt < IN_VITRO_OBSERVE_MS) {
-    if (closeResolvedMs !== null) break;
-    await sleep(1000);
-  }
-  let resolution: InVitroResult['close_resolution'];
-  if (closeResolvedMs !== null) {
-    resolution = 'within-observation';
-  } else {
-    unresolvedAfterMs = Date.now() - closeStartedAt;
-    // Pre-fix, close completes ONLY when the peer departs: end the probe's own
-    // connection to release the run and record that fact. Post-fix the bound +
-    // forced connection destruction has normally already resolved the wait.
-    held.destroy();
-    await Promise.race([closing.finally(() => {}), sleep(30_000)]);
-    if (closeResolvedMs !== null) {
-      resolution = 'peer-departure';
-    } else {
-      resolution = 'unresolved-even-after-peer-departure';
+    const closeStartedAt = Date.now();
+    let closeResolvedMs: number | null = null;
+    const closing = stopServer(served);
+    closing.then(
+      () => {
+        closeResolvedMs = Date.now() - closeStartedAt;
+      },
+      () => {
+        closeResolvedMs = Date.now() - closeStartedAt;
+      },
+    );
+    let unresolvedAfterMs: number | null = null;
+    while (Date.now() - closeStartedAt < IN_VITRO_OBSERVE_MS) {
+      if (closeResolvedMs !== null) break;
+      await sleep(1000);
     }
-  }
-  held.destroy();
+    let resolution: InVitroResult['close_resolution'];
+    if (closeResolvedMs !== null) {
+      resolution = 'within-observation';
+    } else {
+      unresolvedAfterMs = Date.now() - closeStartedAt;
+      // Pre-fix, close completes ONLY when the peer departs: end the probe's own
+      // connection to release the run and record that fact. Post-fix the bound +
+      // forced connection destruction has normally already resolved the wait.
+      held.destroy();
+      await Promise.race([closing.finally(() => {}), sleep(30_000)]);
+      if (closeResolvedMs !== null) {
+        resolution = 'peer-departure';
+      } else {
+        resolution = 'unresolved-even-after-peer-departure';
+      }
+    }
 
-  return {
-    serve_url: served.url,
-    proxy_port: served.port,
-    abort_probe: { request: 'direct-owned-backend', aborted_record: abortedRecord },
-    held_connection: 'partial-body-post',
-    close_unresolved_after_ms: unresolvedAfterMs,
-    close_resolved_ms: closeResolvedMs,
-    close_resolution: resolution,
-    started_at: startedAt,
-    ended_at: new Date().toISOString(),
-  };
+    return {
+      serve_url: served.url,
+      proxy_port: served.port,
+      abort_probe: { request: 'direct-owned-backend', aborted_record: abortedRecord },
+      held_connection: 'partial-body-post',
+      close_unresolved_after_ms: unresolvedAfterMs,
+      close_resolved_ms: closeResolvedMs,
+      close_resolution: resolution,
+      started_at: startedAt,
+      ended_at: new Date().toISOString(),
+    };
+  } finally {
+    held?.destroy();
+    // Bounded: a pre-fix close that somehow still pends must not hang the harness.
+    await Promise.race([stopServer(served).catch(() => {}), sleep(30_000)]);
+  }
 }
 
 /* -------------------------------------------------- phase B: live web leg -- */
@@ -551,7 +582,9 @@ if (isMain) {
     })
     .catch((e: unknown) => {
       console.error(e instanceof Error ? e.stack : String(e));
-      process.exitCode = 2;
+      // The finally already stopped this harness's recorded children; exit
+      // explicitly so no leaked handle can idle the process after a failure.
+      process.exit(2);
     });
 }
 

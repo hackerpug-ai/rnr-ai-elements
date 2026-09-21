@@ -1,0 +1,65 @@
+[phase-a] in-vitro lifecycle probe: {"serve_url":"http://127.0.0.1:8406","proxy_port":8406,"sse_first_chunk_ms":41,"close_unresolved_after_ms":null,"close_resolved_ms":25280,"close_resolution":"within-observation","started_at":"2026-09-21T04:16:57.187Z","ended_at":"2026-09-21T04:17:23.256Z"}
+[phase-b] live orchestration seam: {"run_id":"FIX-ORI-RN-004-2-1789964243256","options_backend_not_null":true,"web_leg_status":"passed","all_run_platform_legs_passed":true,"manifest":{"path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/run-manifest.json","run_id_matches":true,"key_set_frozen":true,"web_leg_status":"passed","passed_platforms":1,"completed_field":false},"correlation":{"path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/provider-correlation.json","run_id_matches":true,"record_count":5,"completed_count":5,"aborted_count":0},"heartbeat":{"source_path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/heartbeat.log","copied_path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/.tmp/FIX-ORI-RN-004-2/heartbeat.log","run_entry_count":0,"web_step_entry_count":0,"timestamps_ordered":true,"first_steps":[],"last_steps":[]},"diagnostic":null}
+{
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/web-leg-orchestration-proof.test.ts",
+  "candidate_head_sha": "5d2f79eac26a0f19d2a5c345ae46667f5c24e230",
+  "watchdog_budget_ms": 900000,
+  "in_vitro_unbounded_threshold_ms": 60000,
+  "generated_at": "2026-09-21T04:17:42.419Z",
+  "assertions": {
+    "in_vitro_close_bounded": true,
+    "web_leg_passed": true,
+    "all_run_platform_legs_passed": true,
+    "manifest_fresh_for_run": true,
+    "manifest_key_set_frozen": true,
+    "correlation_fresh_for_run": true,
+    "correlation_records": false,
+    "heartbeat_at_least_8_ordered": false
+  },
+  "failures": [
+    "correlation_records failed (observed: {\"run_id\":\"FIX-ORI-RN-004-2-1789964243256\",\"options_backend_not_null\":true,\"web_leg_status\":\"passed\",\"all_run_platform_legs_passed\":true,\"manifest\":{\"path\":\"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/run-manifest.json\",\"run_id_matches\":true,\"key_set_frozen\":true,\"web_leg_status\":\"passed\",\"passed_platforms\":1,\"completed_field\":false},\"correlation\":{\"path\":\"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/provider-correlation.json\",\"run_id_matches\":true,\"record_count\":5,\"completed_count\":5,\"aborted_count\":0},\"heartbeat\":{\"source_path\":\"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/heartbeat.log\",\"copied_path\":\"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/.tmp/FIX-ORI-RN-004-2/heartbeat.log\",\"run_entry_count\":0,\"web_step_entry_count\":0,\"timestamps_ordered\":true,\"first_steps\":[],\"last_steps\":[]},\"diagnostic\":null})",
+    "heartbeat coverage insufficient: 0 web entries, ordered=true (need >= 8 ordered, emitted by the running driver)"
+  ],
+  "in_vitro": {
+    "serve_url": "http://127.0.0.1:8406",
+    "proxy_port": 8406,
+    "sse_first_chunk_ms": 41,
+    "close_unresolved_after_ms": null,
+    "close_resolved_ms": 25280,
+    "close_resolution": "within-observation",
+    "started_at": "2026-09-21T04:16:57.187Z",
+    "ended_at": "2026-09-21T04:17:23.256Z"
+  },
+  "live": {
+    "run_id": "FIX-ORI-RN-004-2-1789964243256",
+    "options_backend_not_null": true,
+    "web_leg_status": "passed",
+    "all_run_platform_legs_passed": true,
+    "manifest": {
+      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/run-manifest.json",
+      "run_id_matches": true,
+      "key_set_frozen": true,
+      "web_leg_status": "passed",
+      "passed_platforms": 1,
+      "completed_field": false
+    },
+    "correlation": {
+      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/provider-correlation.json",
+      "run_id_matches": true,
+      "record_count": 5,
+      "completed_count": 5,
+      "aborted_count": 0
+    },
+    "heartbeat": {
+      "source_path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/heartbeat.log",
+      "copied_path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/.tmp/FIX-ORI-RN-004-2/heartbeat.log",
+      "run_entry_count": 0,
+      "web_step_entry_count": 0,
+      "timestamps_ordered": true,
+      "first_steps": [],
+      "last_steps": []
+    },
+    "diagnostic": null
+  },
+  "expected_exit_code": 1
+}
