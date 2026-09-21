@@ -158,7 +158,7 @@ function assertBackendReady(backend: OwnedBackendHandle): void {
  * manifest/correlation retain the full sanitized record set, and exposes the live
  * handle the legs should talk to.
  */
-class BackendSession {
+export class BackendSession {
   private readonly handles: OwnedBackendHandle[];
   private currentHandle: OwnedBackendHandle;
 
@@ -1243,7 +1243,7 @@ const MIME: Record<string, string> = {
  * same origin — the browser never crosses origins, so no CORS preflight is required.
  * The upstream SSE response is streamed back verbatim.
  */
-function serveWithChatProxy(
+export function serveWithChatProxy(
   distDir: string,
   port: number,
   session: BackendSession,
@@ -1301,7 +1301,7 @@ function serveWithChatProxy(
   });
 }
 
-function stopServer(handle: { server: Server } | null): Promise<void> {
+export function stopServer(handle: { server: Server } | null): Promise<void> {
   return new Promise((resolveStop) => {
     if (!handle) return resolveStop();
     handle.server.close(() => resolveStop());
