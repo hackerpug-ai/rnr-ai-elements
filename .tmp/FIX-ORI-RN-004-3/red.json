@@ -1,0 +1,35 @@
+{
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts --mode red",
+  "mode": "red",
+  "candidate_head_sha": "f734705c548d0c4e8e6f91fbfe258f9227c9d865",
+  "run_id": "FIX-ORI-RN-004-3-RED-1789983328148",
+  "watchdog_budget_ms": 900000,
+  "wedge_observe_ms": 180000,
+  "divergence_note": "The live 30-minute stall of run ORI-AI-002-1789975643876 did not reproduce in a healthy event loop (isolation probes: a frozen or killed browser child makes every Playwright op reject within its 30 s in-process timeout, and every boundWait/leg-budget timer fires), so the RED reproduces the observed PROCESS STATE over the real driver code with the real adapter: the child frozen at the backend/stop/start heartbeat — alive, silent past every 120 s segment bound, no restart issued, no manifest — which is the only signature consistent with all observations of the orchestrated run.",
+  "freeze": {
+    "froze_at": "2026-09-21T09:35:38.255Z",
+    "stop_heartbeat_seen_at": "2026-09-21T09:35:38.250Z",
+    "stop_heartbeat_seen_step": "backend/stop/start",
+    "observed_silence_ms": 180628,
+    "heartbeats_after_freeze": 0
+  },
+  "adapter": {
+    "dir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-red-1789983328148",
+    "stop_commands": 1,
+    "restart_commands": 0,
+    "cmd_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-red-1789983328148/backend-cmd.jsonl",
+    "status_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-red-1789983328148/backend-status.jsonl",
+    "records_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-red-1789983328148/backend-records.jsonl"
+  },
+  "backend_restarted_entries": 0,
+  "manifest_written_for_run": false,
+  "child": {
+    "exit_code": null,
+    "signal": "SIGKILL",
+    "watchdog_fired": false,
+    "log_path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-red-1789983328148/child-stdio.log"
+  },
+  "stall_captured": true,
+  "started_at": "2026-09-21T09:35:28.235Z",
+  "ended_at": "2026-09-21T09:38:39.203Z"
+}
