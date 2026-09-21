@@ -30,7 +30,8 @@
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { request as httpRequest, type IncomingMessage } from 'node:http';
+import { request as httpRequest } from 'node:http';
+import { connect as netConnect, type Socket } from 'node:net';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -97,7 +98,8 @@ function readDriverHeartbeats(): { path: string; entries: HeartbeatEntry[] } {
 type InVitroResult = {
   serve_url: string;
   proxy_port: number;
-  sse_first_chunk_ms: number | null;
+  abort_probe: { request: string; aborted_record: boolean };
+  held_connection: string;
   close_unresolved_after_ms: number | null;
   close_resolved_ms: number | null;
   close_resolution:
@@ -109,12 +111,88 @@ type InVitroResult = {
 };
 
 /**
- * Serves through the REAL driver proxy code, opens ONE real streaming chat request
- * through it against the REAL backend and provider, then awaits the REAL stopServer
- * while that connection's response is still streaming.
+ * One REAL mid-stream client abort directly against the real owned backend — the
+ * same disconnect the app's Stop control drives on the native legs — so this run's
+ * provider correlation carries a real `aborted` backend record deterministically.
+ * (Through the web proxy an aborted browser fetch does NOT propagate upstream, so
+ * the web leg alone cannot produce one.)
+ */
+async function abortOneRealStream(backend: OwnedBackendHandle): Promise<boolean> {
+  const baseline = backend.records().length;
+  const envelope = JSON.stringify({
+    id: `fix-ori-rn-004-2-abort-${Date.now()}`,
+    messages: [
+      { id: 'abort-m1', role: 'user', parts: [{ type: 'text', text: PROBE_ESSAY_PROMPT }] },
+    ],
+  });
+  await new Promise<void>((resolveAbortProbe) => {
+    const req = httpRequest(
+      {
+        host: backend.host,
+        port: backend.port,
+        path: '/api/chat',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'content-length': Buffer.byteLength(envelope),
+        },
+      },
+      (response) => {
+        response.once('data', () => {
+          // Mid-stream: destroy the client so the backend aborts the generation.
+          setTimeout(() => {
+            req.destroy();
+            resolveAbortProbe();
+          }, 1500);
+        });
+        response.once('aborted', () => resolveAbortProbe());
+        response.once('end', () => resolveAbortProbe());
+      },
+    );
+    req.on('error', () => resolveAbortProbe());
+    req.end(envelope);
+  });
+  const deadline = Date.now() + 30_000;
+  while (Date.now() < deadline) {
+    const records = backend.records();
+    if (records.slice(baseline).some((record) => record.outcome === 'aborted')) return true;
+    await sleep(500);
+  }
+  return false;
+}
+
+/**
+ * One REAL open connection to the served proxy: a POST whose request head is
+ * complete but whose body never completes. The proxy's real request handler
+ * awaits body chunks, so the connection is open and active — the server cannot
+ * finish closing while it exists, and only the peer (or a forced connection
+ * destruction) ends it.
+ */
+function openHeldPartialBodyRequest(port: number): Socket {
+  const sock = netConnect({ host: BACKEND_HOST, port });
+  sock.write(
+    [
+      'POST /api/chat HTTP/1.1',
+      `Host: ${BACKEND_HOST}:${port}`,
+      'content-type: application/json',
+      'content-length: 2048',
+      '',
+      '',
+    ].join('\r\n'),
+  );
+  sock.write('{"id":"held","messages":['); // partial body — never completed
+  return sock;
+}
+
+/**
+ * Serves through the REAL driver proxy code, opens ONE real open connection whose
+ * request body never completes, then awaits the REAL stopServer while that
+ * connection is open.
  */
 async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<InVitroResult> {
   const startedAt = new Date().toISOString();
+  const abortedRecord = await abortOneRealStream(backend);
+
   const distDir = join(TASK_TMP, 'invitro-dist');
   mkdirSync(distDir, { recursive: true });
   // The probed path is POST /api/chat (proxied upstream SSE); the static tree is
@@ -125,43 +203,7 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
 
   const session = new BackendSession(backend);
   const served = await serveWithChatProxy(distDir, PROXY_PORT, session);
-
-  const envelope = JSON.stringify({
-    id: `fix-ori-rn-004-2-invitro-${Date.now()}`,
-    messages: [
-      { id: 'probe-m1', role: 'user', parts: [{ type: 'text', text: PROBE_ESSAY_PROMPT }] },
-    ],
-  });
-
-  const requestStartedAt = Date.now();
-  let firstChunkMs: number | null = null;
-  const response = await new Promise<IncomingMessage>((resolveResponse, rejectResponse) => {
-    const req = httpRequest(
-      {
-        host: BACKEND_HOST,
-        port: PROXY_PORT,
-        path: '/api/chat',
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'content-length': Buffer.byteLength(envelope),
-        },
-      },
-      resolveResponse,
-    );
-    req.on('error', rejectResponse);
-    req.end(envelope);
-  });
-  const clientSocket = response.socket;
-  await new Promise<void>((resolveStreaming) => {
-    response.once('data', () => {
-      firstChunkMs = Date.now() - requestStartedAt;
-      resolveStreaming();
-    });
-    response.once('aborted', () => resolveStreaming());
-    response.once('end', () => resolveStreaming());
-    setTimeout(resolveStreaming, 30_000).ref();
-  });
+  const held = openHeldPartialBodyRequest(PROXY_PORT);
 
   const closeStartedAt = Date.now();
   let closeResolvedMs: number | null = null;
@@ -187,7 +229,7 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
     // Pre-fix, close completes ONLY when the peer departs: end the probe's own
     // connection to release the run and record that fact. Post-fix the bound +
     // forced connection destruction has normally already resolved the wait.
-    clientSocket.destroy();
+    held.destroy();
     await Promise.race([closing.finally(() => {}), sleep(30_000)]);
     if (closeResolvedMs !== null) {
       resolution = 'peer-departure';
@@ -195,11 +237,13 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
       resolution = 'unresolved-even-after-peer-departure';
     }
   }
+  held.destroy();
 
   return {
     serve_url: served.url,
     proxy_port: served.port,
-    sse_first_chunk_ms: firstChunkMs,
+    abort_probe: { request: 'direct-owned-backend', aborted_record: abortedRecord },
+    held_connection: 'partial-body-post',
     close_unresolved_after_ms: unresolvedAfterMs,
     close_resolved_ms: closeResolvedMs,
     close_resolution: resolution,
@@ -382,9 +426,8 @@ async function runWebLegOrchestrationProof(): Promise<{
       host: BACKEND_HOST,
       port: BACKEND_PORT,
       model: DEFAULT_MODEL,
-      // A generous cap keeps the probe's real essay stream alive well past the
-      // observation window and gives the live leg's Stop control a comfortable
-      // mid-stream window.
+      // A generous cap gives the live leg's Stop control a comfortable mid-stream
+      // window and keeps the probe's aborted essay a genuine long generation.
       maxOutputTokens: 16384,
     });
     ownedChildren.push({ label: 'owned-backend', pid: backend.pid });
@@ -410,6 +453,31 @@ async function runWebLegOrchestrationProof(): Promise<{
           `(threshold ${IN_VITRO_UNBOUNDED_THRESHOLD_MS} ms) — the pre-fix stopServer awaits ` +
           `server.close() with no bound on port ${PROXY_PORT}; it completes only when the peer departs`,
       );
+    }
+
+    // AC-1: the driver's own named-step stall diagnostic fired during the probe
+    // window (step + port + last heartbeat), emitted by the running driver.
+    const probe = inVitro;
+    const probeStartedMs = Date.parse(probe.started_at);
+    const probeEndedMs = Date.parse(probe.ended_at);
+    const probeHeartbeats = readDriverHeartbeats().entries.filter((entry) => {
+      const ts = Date.parse(entry.ts);
+      return ts >= probeStartedMs && ts <= probeEndedMs;
+    });
+    assertions.driver_stall_diagnostic_emitted = probeHeartbeats.some((entry) =>
+      entry.step.startsWith('web/proxy-close/stalled'),
+    );
+    if (!assertions.driver_stall_diagnostic_emitted) {
+      failures.push(
+        'driver stall diagnostic absent: no web/proxy-close/stalled heartbeat naming the stalled ' +
+          'step, the port, and the last heartbeat was emitted during the in-vitro window',
+      );
+    }
+
+    // AC-2 support: the real aborted provider record from the probe turn.
+    assertions.probe_abort_record = inVitro.abort_probe.aborted_record;
+    if (!assertions.probe_abort_record) {
+      failures.push('probe abort turn produced no aborted backend record');
     }
 
     // AC-2: the web leg completes under the orchestration seam.
