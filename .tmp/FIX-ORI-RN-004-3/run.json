@@ -1,0 +1,27 @@
+{
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts",
+  "candidate_head_sha": "f734705c548d0c4e8e6f91fbfe258f9227c9d865",
+  "generated_at": "2026-09-21T10:27:29.501Z",
+  "runs": [
+    {
+      "label": "forced-stall",
+      "run_id": "FIX-ORI-RN-004-3-STALL-1789986300416",
+      "exit_code": 1
+    },
+    {
+      "label": "green-web-leg",
+      "run_id": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+      "exit_code": 0
+    },
+    {
+      "label": "matrix",
+      "run_id": "FIX-ORI-RN-004-3-MATRIX-1789986449929",
+      "exit_code": 0
+    }
+  ],
+  "watchdog_budgets_ms": {
+    "web": 900000,
+    "matrix": 8460000
+  },
+  "matrix_command": "pnpm exec tsx tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts --matrix ios,android,web"
+}
