@@ -2778,6 +2778,20 @@ class OwnerBackendHandle implements OwnedBackendHandle {
     if (this.exitCodeValue !== null || this.exitSignalValue !== null) return;
     this.sendCommand('stop');
     await this.awaitStatus('stopped', null, 10_000);
+    // Teardown ownership: with options.backend set the driver stops only ITS restart
+    // child — the owner process itself is ours to reap, or it lingers on the port.
+    this.child.kill('SIGTERM');
+    await new Promise<void>((resolveWait) => {
+      if (this.exitCodeValue !== null || this.exitSignalValue !== null) resolveWait();
+      const deadline = Date.now() + 5000;
+      const poll = setInterval(() => {
+        if (this.exitCodeValue !== null || this.exitSignalValue !== null || Date.now() > deadline) {
+          clearInterval(poll);
+          resolveWait();
+        }
+      }, 100);
+    });
+    if (this.exitCodeValue === null && this.exitSignalValue === null) this.child.kill('SIGKILL');
   }
 
   async restart(options: BackendLaunchOptions = {}): Promise<OwnedBackendHandle> {
@@ -2805,6 +2819,7 @@ class OwnerBackendHandle implements OwnedBackendHandle {
 }
 
 /** Spawns the backend owner and resolves once the real server is listening. */
+// fallow-ignore-next-line complexity
 async function spawnBackendOwner(
   journal: EvidenceJournal,
   port: number,
@@ -2817,6 +2832,13 @@ async function spawnBackendOwner(
   const statusOut = join(ownerDir, 'backend-status.jsonl');
   const stderrPath = join(ownerDir, 'backend-stderr.log');
   for (const path of [recordsOut, cmdIn, statusOut, stderrPath]) writeFileSync(path, '');
+  // The port is ledger-owned by this task; a holder here is our own orphan from a
+  // crashed prior phase — reap it (with a fixed portListening, the check is real).
+  if (portListening(port)) {
+    journal.emit('backend-owner-port-preclear', { port });
+    stopOwnedPort(port, journal, 'owner-spawn');
+    await waitForPortFree(port, 8000);
+  }
   /**
    * Minimal explicit env: this machine's shell env has repeatedly poisoned spawned
    * node children mid-session (a reaper removed a cmux NODE_OPTIONS --require shim
