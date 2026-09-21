@@ -210,9 +210,66 @@ async function openHeldPartialBodyRequest(port: number): Promise<Socket> {
 }
 
 /**
- * Serves through the REAL driver proxy code, opens ONE real open connection whose
- * request body never completes, then awaits the REAL stopServer while that
- * connection is open.
+ * Opens real streaming chat requests through the proxy and LEAVES them open.
+ * Once a proxied SSE response has streamed its first data the connection is
+ * ACTIVE (response in flight): the idle-connection sweep cannot end it and only
+ * the close bound's forced connection destruction can. Two run concurrently so
+ * the bound fires even if one essay finishes early. `firstChunk` resolves when
+ * at least one stream has delivered data.
+ */
+function openHeldSseStreams(
+  port: number,
+  count: number,
+): {
+  destroyAll: () => void;
+  firstChunk: Promise<boolean>;
+} {
+  const requests: ReturnType<typeof httpRequest>[] = [];
+  let signalFirstChunk: (() => void) | null = null;
+  const firstChunk = new Promise<boolean>((resolveFirst) => {
+    signalFirstChunk = () => resolveFirst(true);
+  });
+  for (let index = 0; index < count; index += 1) {
+    const envelope = JSON.stringify({
+      id: `fix-ori-rn-004-2-held-sse-${Date.now()}-${index}`,
+      messages: [
+        { id: `held-m${index}`, role: 'user', parts: [{ type: 'text', text: PROBE_ESSAY_PROMPT }] },
+      ],
+    });
+    const req = httpRequest(
+      {
+        host: BACKEND_HOST,
+        port,
+        path: '/api/chat',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'content-length': Buffer.byteLength(envelope),
+        },
+      },
+      (response) => {
+        // Consume quietly; the point is the open, active connection.
+        response.once('data', () => signalFirstChunk?.());
+        response.resume();
+        response.on('error', () => {});
+      },
+    );
+    req.on('error', () => {});
+    req.end(envelope);
+    requests.push(req);
+  }
+  return {
+    destroyAll: () => {
+      for (const req of requests) req.destroy();
+    },
+    firstChunk,
+  };
+}
+
+/**
+ * Serves through the REAL driver proxy code, opens real open connections (a POST
+ * whose body never completes, plus in-flight SSE streams), then awaits the REAL
+ * stopServer while those connections are open.
  */
 async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<InVitroResult> {
   const startedAt = new Date().toISOString();
@@ -231,6 +288,10 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
   let held: Socket | null = null;
   try {
     held = await openHeldPartialBodyRequest(PROXY_PORT);
+    const sseStreams = openHeldSseStreams(PROXY_PORT, 2);
+    // Wait until at least one proxied SSE response is actively streaming — an
+    // active (in-flight) response is what the idle sweep cannot destroy.
+    await Promise.race([sseStreams.firstChunk, sleep(30_000)]);
 
     const closeStartedAt = Date.now();
     let closeResolvedMs: number | null = null;
@@ -254,9 +315,10 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
     } else {
       unresolvedAfterMs = Date.now() - closeStartedAt;
       // Pre-fix, close completes ONLY when the peer departs: end the probe's own
-      // connection to release the run and record that fact. Post-fix the bound +
+      // connections to release the run and record that fact. Post-fix the bound +
       // forced connection destruction has normally already resolved the wait.
       held.destroy();
+      sseStreams.destroyAll();
       await Promise.race([closing.finally(() => {}), sleep(30_000)]);
       if (closeResolvedMs !== null) {
         resolution = 'peer-departure';
@@ -269,7 +331,7 @@ async function runInVitroLifecycleProbe(backend: OwnedBackendHandle): Promise<In
       serve_url: served.url,
       proxy_port: served.port,
       abort_probe: { request: 'direct-owned-backend', aborted_record: abortedRecord },
-      held_connection: 'partial-body-post',
+      held_connection: 'partial-body-post+2-active-sse-streams',
       close_unresolved_after_ms: unresolvedAfterMs,
       close_resolved_ms: closeResolvedMs,
       close_resolution: resolution,

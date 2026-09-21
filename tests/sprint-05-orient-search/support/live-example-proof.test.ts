@@ -26,7 +26,7 @@
  * origin (a reverse proxy in the serving layer — real forwarding, never a mock).
  */
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createServer, type Server } from 'node:http';
 import { tmpdir } from 'node:os';
 import { extname, join, resolve } from 'node:path';
@@ -72,6 +72,23 @@ const BACKEND_HOST = '127.0.0.1';
 const BACKEND_PORT = 4000;
 const METRO_PORT = 8095;
 const WEB_PORT = 8406;
+
+/**
+ * FIX-ORI-RN-004-2 — per-wait bounds (ms): every lifecycle await in the leg
+ * pipeline carries an explicit bound, so a stalled condition fails fast with a
+ * named-step diagnostic instead of the silent, childless, manifest-less idle
+ * observed in orchestrated run ORI-AI-002-1789929365070.
+ */
+const WAIT_BOUND_PROXY_LISTEN_MS = 30_000;
+const WAIT_BOUND_PROXY_CLOSE_MS = 20_000;
+const WAIT_BOUND_BROWSER_MS = 30_000;
+const WAIT_BOUND_BACKEND_OP_MS = 120_000;
+/** Per-leg wall-clock budgets (ms) — a leg that exceeds its budget fails fast. */
+const LEG_BUDGET_MS: Record<Platform, number> = {
+  web: 840_000,
+  ios: 2_400_000,
+  android: 2_400_000,
+};
 
 type Platform = 'ios' | 'android' | 'web';
 type LegStatus = 'passed' | 'failed' | 'blocked';
@@ -129,6 +146,139 @@ function run(cmd: string, cwd: string, timeoutMs = 600_000): { exit: number; out
   return runShell(cmd, cwd, timeoutMs);
 }
 
+/* ------------------------------------------- FIX-ORI-RN-004-2 heartbeats -- */
+
+/**
+ * One heartbeat record: emitted by the RUNNING driver at every leg phase and
+ * phase transition, appended to the evidence log and the console. The run field
+ * scopes entries to the runLiveExampleProof invocation that emitted them, so a
+ * harness (or an orchestrator) can assert per-run coverage and ordering.
+ */
+export type HeartbeatEntry = {
+  seq: number;
+  ts: string;
+  run: string;
+  step: string;
+  detail?: string;
+};
+
+const HEARTBEAT_LOG = join(EVIDENCE_ROOT, 'heartbeat.log');
+const heartbeatEntries: HeartbeatEntry[] = [];
+let heartbeatRun = 'none';
+
+function heartbeat(step: string, detail?: string): void {
+  const entry: HeartbeatEntry = {
+    seq: heartbeatEntries.length + 1,
+    ts: nowIso(),
+    run: heartbeatRun,
+    step,
+  };
+  if (detail !== undefined) entry.detail = detail;
+  heartbeatEntries.push(entry);
+  try {
+    mkdirSync(EVIDENCE_ROOT, { recursive: true });
+    appendFileSync(HEARTBEAT_LOG, `${JSON.stringify(entry)}\n`);
+  } catch {
+    /* evidence write is best-effort; the in-memory record still counts */
+  }
+  console.error(`[heartbeat ${entry.ts}] ${step}${detail !== undefined ? ` — ${detail}` : ''}`);
+}
+
+/** The heartbeat records emitted so far, in emission order. */
+export function heartbeatRecords(): HeartbeatEntry[] {
+  return [...heartbeatEntries];
+}
+
+function lastHeartbeatText(): string {
+  const last = heartbeatEntries[heartbeatEntries.length - 1];
+  return last === undefined ? 'none' : `${last.ts} ${last.step}`;
+}
+
+/** A stall diagnosed by a bounded wait — the message names step, port, last heartbeat. */
+export class StallError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'StallError';
+  }
+}
+
+/**
+ * Races `start()` against an explicit bound. On expiry the waiter rejects with a
+ * StallError whose diagnostic names the stalled step, the port, and the last
+ * heartbeat timestamp — never a silent idle. `onExpiry` runs best-effort
+ * force-teardown (e.g. destroying all server connections) before the rejection.
+ */
+async function boundWait<T>(
+  step: string,
+  port: number | null,
+  boundMs: number,
+  start: () => Promise<T>,
+  onExpiry?: () => void,
+): Promise<T> {
+  heartbeat(`${step}/start`, port !== null ? `port=${port}` : undefined);
+  const operation = start();
+  // The race may be decided by the bound; never leave a dangling rejection.
+  operation.catch(() => {});
+  return await new Promise<T>((resolveOperation, rejectOperation) => {
+    const timer = setTimeout(() => {
+      const detail =
+        `stalled await: step=${step}${port !== null ? ` port=${port}` : ''} boundMs=${boundMs} ` +
+        `lastHeartbeat=${lastHeartbeatText()}`;
+      heartbeat(`${step}/stalled`, detail);
+      try {
+        onExpiry?.();
+      } catch {
+        /* best-effort force */
+      }
+      rejectOperation(new StallError(detail));
+    }, boundMs);
+    operation.then(
+      (value) => {
+        clearTimeout(timer);
+        heartbeat(`${step}/done`);
+        resolveOperation(value);
+      },
+      (error: unknown) => {
+        clearTimeout(timer);
+        heartbeat(`${step}/error`, error instanceof Error ? error.message : String(error));
+        rejectOperation(error);
+      },
+    );
+  });
+}
+
+/**
+ * Races a whole leg against its wall-clock budget. A leg that exceeds the budget
+ * rejects with a StallError whose diagnostic names the platform, the budget, and
+ * the last heartbeat — runAllLegs converts that to a failed outcome and the run
+ * continues to the remaining legs and still writes its manifest.
+ */
+async function withLegBudget<T>(platform: Platform, legRun: () => Promise<T>): Promise<T> {
+  const budgetMs = LEG_BUDGET_MS[platform];
+  heartbeat(`leg/${platform}/budget-start`, `budgetMs=${budgetMs}`);
+  const operation = legRun();
+  operation.catch(() => {});
+  return await new Promise<T>((resolveLeg, rejectLeg) => {
+    const timer = setTimeout(() => {
+      const detail =
+        `leg budget exhausted: leg=${platform} budgetMs=${budgetMs} ` +
+        `lastHeartbeat=${lastHeartbeatText()}`;
+      heartbeat(`leg/${platform}/budget-exhausted`, detail);
+      rejectLeg(new StallError(detail));
+    }, budgetMs);
+    operation.then(
+      (value) => {
+        clearTimeout(timer);
+        resolveLeg(value);
+      },
+      (error: unknown) => {
+        clearTimeout(timer);
+        rejectLeg(error);
+      },
+    );
+  });
+}
+
 /* ------------------------------------------------------- owned backend -- */
 
 async function ensureBackend(options: ProofOptions): Promise<OwnedBackendHandle> {
@@ -176,12 +326,28 @@ export class BackendSession {
     return this.handles[0];
   }
 
+  /**
+   * Bounded stop: a CALLER-PROVIDED handle may be a cross-process adapter whose
+   * stop can pend forever (the orchestrated-stall class). The bound turns that
+   * into a StallError naming the step, the backend port, and the last heartbeat.
+   */
   async stop(): Promise<void> {
-    await this.currentHandle.stop();
+    await boundWait('backend/stop', this.currentHandle.port, WAIT_BOUND_BACKEND_OP_MS, async () => {
+      await this.currentHandle.stop();
+    });
   }
 
   async restart(): Promise<void> {
-    this.currentHandle = await this.currentHandle.restart();
+    this.currentHandle = await boundWait(
+      'backend/restart',
+      this.currentHandle.port,
+      WAIT_BOUND_BACKEND_OP_MS,
+      async () => {
+        const next = await this.currentHandle.restart();
+        heartbeat('backend/restarted', `${next.host}:${next.port}`);
+        return next;
+      },
+    );
     this.handles.push(this.currentHandle);
   }
 
@@ -1248,6 +1414,7 @@ export function serveWithChatProxy(
   port: number,
   session: BackendSession,
 ): Promise<{ server: Server; url: string; port: number }> {
+  heartbeat('web/proxy-listen', `127.0.0.1:${port}`);
   return new Promise((resolveServe, reject) => {
     // fallow-ignore-next-line complexity
     const server = createServer(async (req, res) => {
@@ -1294,17 +1461,63 @@ export function serveWithChatProxy(
         res.end('not found');
       }
     });
-    server.on('error', reject);
+    const listenTimer = setTimeout(() => {
+      const detail =
+        `stalled await: step=web/proxy-listen port=${port} ` +
+        `boundMs=${WAIT_BOUND_PROXY_LISTEN_MS} lastHeartbeat=${lastHeartbeatText()}`;
+      heartbeat('web/proxy-listen/stalled', detail);
+      server.closeAllConnections();
+      server.close();
+      reject(new StallError(detail));
+    }, WAIT_BOUND_PROXY_LISTEN_MS);
+    server.on('error', (error) => {
+      clearTimeout(listenTimer);
+      reject(error);
+    });
     server.listen(port, '127.0.0.1', () => {
+      clearTimeout(listenTimer);
+      heartbeat('web/proxy-listening', `127.0.0.1:${port}`);
       resolveServe({ server, port, url: `http://127.0.0.1:${port}` });
     });
   });
 }
 
+/**
+ * Bounded proxy shutdown. Node completes server.close()'s callback only after
+ * EVERY connection to the proxy has ended — an idle keep-alive socket or an
+ * open request whose body never completes blocks it forever, and pre-fix the
+ * driver simply waited (the demonstrated unbounded await). Now: idle
+ * connections are closed up front, and if the callback is still unresolved at
+ * the bound, all connections are destroyed and the shutdown resolves with the
+ * stall recorded as a heartbeat diagnostic naming the step and the port.
+ */
 export function stopServer(handle: { server: Server } | null): Promise<void> {
+  if (!handle) return Promise.resolve();
+  const address = handle.server.address();
+  const port = typeof address === 'object' && address !== null ? address.port : null;
+  heartbeat('web/proxy-close/start', port !== null ? `port=${port}` : undefined);
   return new Promise((resolveStop) => {
-    if (!handle) return resolveStop();
-    handle.server.close(() => resolveStop());
+    let settled = false;
+    const finish = (how: string): void => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(closeTimer);
+      heartbeat('web/proxy-close/done', `${how}${port !== null ? ` port=${port}` : ''}`);
+      resolveStop();
+    };
+    handle.server.closeIdleConnections();
+    handle.server.close(() => finish('close-callback'));
+    const closeTimer = setTimeout(() => {
+      const detail =
+        `stalled await: step=web/proxy-close port=${port ?? 'unknown'} ` +
+        `boundMs=${WAIT_BOUND_PROXY_CLOSE_MS} lastHeartbeat=${lastHeartbeatText()}`;
+      heartbeat('web/proxy-close/stalled', detail);
+      handle.server.closeAllConnections();
+      // Give the destroyed-connections close callback a short grace to fire
+      // normally, then resolve regardless — the listener is closed and every
+      // connection is destroyed; nothing may keep the pipeline waiting.
+      setTimeout(() => finish('forced-close-all-connections'), 2_000);
+    }, WAIT_BOUND_PROXY_CLOSE_MS);
   });
 }
 
@@ -1327,7 +1540,12 @@ type WebLegResult = {
 async function launchChromiumBrowser(): Promise<Browser> {
   const removedCreds = stripCredentialEnv();
   try {
-    return await chromium.launch({ headless: true });
+    return await boundWait(
+      'web/chromium-launch',
+      null,
+      60_000,
+      async () => await chromium.launch({ headless: true }),
+    );
   } finally {
     restoreCredentialEnv(removedCreds);
   }
@@ -1364,6 +1582,7 @@ async function driveLiveWeb(
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
   try {
+    heartbeat('web/drive/start', url);
     await page.goto(`${url}/live-chat`, { waitUntil: 'networkidle', timeout: 60_000 });
 
     await page
@@ -1374,6 +1593,7 @@ async function driveLiveWeb(
       .getByText('Start a conversation', { exact: true })
       .isVisible()
       .catch(() => false);
+    heartbeat('web/drive/empty-state-checked', `visible=${result.emptyStateVisible}`);
 
     const textarea = page.getByLabel('Message', { exact: true });
     await textarea.click().catch(() => {});
@@ -1390,6 +1610,7 @@ async function driveLiveWeb(
       .getByText(marker, { exact: true })
       .isVisible()
       .catch(() => false);
+    heartbeat('web/drive/marker-turn-checked', `submitted=${result.markerSubmitted}`);
 
     // Seed turn: submit the SAME seed prompt the native legs submit (it asks for
     // "three short facts about rain"), then await its real streamed reply. The old
@@ -1414,6 +1635,7 @@ async function driveLiveWeb(
       .first()
       .isVisible()
       .catch(() => false);
+    heartbeat('web/drive/seed-reply-checked', `responded=${result.assistantResponded}`);
 
     // Contextual follow-up (marker is NOT repeated in the prompt).
     await textarea.fill(followUp);
@@ -1431,6 +1653,7 @@ async function driveLiveWeb(
       .then(() => true)
       .catch(() => false);
     result.followUpRecallVisible = recall;
+    heartbeat('web/drive/follow-up-checked', `recall=${recall}`);
 
     // Active stop: submit a long prompt and catch the stop control mid-stream.
     await textarea.fill(LONG_PROMPT);
@@ -1444,6 +1667,7 @@ async function driveLiveWeb(
       .getByLabel('Send message', { exact: true })
       .waitFor({ timeout: 30_000 })
       .catch(() => {});
+    heartbeat('web/drive/stop-turn-checked', `stopControlVisible=${result.stopControlVisible}`);
 
     // Endpoint loss + retry (AC-3 case 2): stop the OWNED backend, submit a fresh
     // probe turn, observe the sanitized alert + accessible Retry, restart the same
@@ -1474,11 +1698,19 @@ async function driveLiveWeb(
         .getByText(RETRY_PROBE_PROMPT, { exact: true })
         .count()
         .catch(() => 0)) === 1;
+    heartbeat(
+      'web/drive/retry-checked',
+      `completed=${result.retryCompleted} singleUserTurn=${result.retrySingleUserTurn}`,
+    );
   } catch (e) {
     result.error = e instanceof Error ? e.message : String(e);
+    heartbeat('web/drive/error', result.error);
   } finally {
-    await context.close().catch(() => {});
+    await boundWait('web/context-close', null, WAIT_BOUND_BROWSER_MS, async () => {
+      await context.close().catch(() => {});
+    });
   }
+  heartbeat('web/drive/end');
   return result;
 }
 
@@ -1684,6 +1916,7 @@ async function runAllLegs(options: ProofOptions, session: BackendSession): Promi
   let metro: MetroHandle | null = null;
   try {
     if (reservations) {
+      heartbeat('legs/native-prep/start');
       installExpoGoIos(reservations.ios.id);
       installExpoGoAndroid(
         reservations.android.id,
@@ -1701,32 +1934,50 @@ async function runAllLegs(options: ProofOptions, session: BackendSession): Promi
         `http://${BACKEND_HOST}:${BACKEND_PORT}`,
         join(EVIDENCE_ROOT, 'metro.log'),
       );
+      heartbeat('legs/native-prep/end', `metroPort=${METRO_PORT}`);
     }
 
     for (const platform of platforms) {
-      if (platform === 'web') {
-        legs.push(await runWebLeg(session, runId));
-      } else if (platform === 'ios') {
-        if (!reservations) throw new Error('no iOS reservation');
-        legs.push(
-          ...(await runNativeLeg(platform, reservations.ios, metro as MetroHandle, session, runId)),
-        );
-      } else {
-        if (!reservations) throw new Error('no Android reservation');
-        legs.push(
-          ...(await runNativeLeg(
+      heartbeat(`legs/${platform}/start`);
+      try {
+        if (platform === 'web') {
+          legs.push(await withLegBudget('web', () => runWebLeg(session, runId)));
+        } else if (platform === 'ios') {
+          if (!reservations) throw new Error('no iOS reservation');
+          legs.push(
+            ...(await withLegBudget('ios', () =>
+              runNativeLeg(platform, reservations.ios, metro as MetroHandle, session, runId),
+            )),
+          );
+        } else {
+          if (!reservations) throw new Error('no Android reservation');
+          legs.push(
+            ...(await withLegBudget('android', () =>
+              runNativeLeg(platform, reservations.android, metro as MetroHandle, session, runId),
+            )),
+          );
+        }
+      } catch (e) {
+        if (e instanceof StallError) {
+          // The leg budget fired: record the named-step failure and continue —
+          // the remaining legs still run and the manifest is still written.
+          legs.push({
             platform,
-            reservations.android,
-            metro as MetroHandle,
-            session,
-            runId,
-          )),
-        );
+            status: 'failed',
+            diagnostic: e.message,
+            evidence: { stall: e.message, last_heartbeat: lastHeartbeatText() },
+          });
+        } else {
+          throw e;
+        }
       }
+      heartbeat(`legs/${platform}/end`);
     }
   } finally {
+    heartbeat('legs/teardown/start');
     if (metro) stopMetro(metro);
     if (reservations) removeBackendReverse(BACKEND_PORT);
+    heartbeat('legs/teardown/end');
   }
 
   return legs;
@@ -1754,47 +2005,70 @@ async function runWebLeg(session: BackendSession, runId: string): Promise<LegOut
   const marker = markerFor(runId, 'web');
   const legDir = join(EVIDENCE_ROOT, 'web');
   mkdirSync(legDir, { recursive: true });
+  heartbeat('web/leg/start', `runId=${runId}`);
 
-  const exported = exportExampleWeb();
-  if (exported.exit !== 0) {
-    return {
-      platform: 'web',
-      status: 'blocked',
-      diagnostic: `expo export --platform web failed:\n${exported.output.slice(-3000)}`,
-      evidence: { marker, export_exit: exported.exit, export_log: exported.output.slice(-4000) },
-    };
-  }
-
-  const served = await serveWithChatProxy(exported.distDir, WEB_PORT, session);
   try {
-    const browser = await launchChromiumBrowser();
-    try {
-      const result = await driveLiveWeb(
-        browser,
-        served.url,
-        marker,
-        seedPromptFor(marker),
-        FOLLOW_UP_PROMPT,
-        session,
-      );
-      const passed = webLegPassed(result);
+    heartbeat('web/export/start');
+    const exported = exportExampleWeb();
+    heartbeat('web/export/end', `exit=${exported.exit}`);
+    if (exported.exit !== 0) {
       return {
         platform: 'web',
-        status: passed ? 'passed' : 'failed',
-        diagnostic: passed ? undefined : JSON.stringify(result),
-        evidence: {
-          marker,
-          url: served.url,
-          drive_result: result,
-          backend_records: session.allRecords().slice(-5),
-          retry_request_id: session.current.records()[0]?.requestId ?? null,
-        },
+        status: 'blocked',
+        diagnostic: `expo export --platform web failed:\n${exported.output.slice(-3000)}`,
+        evidence: { marker, export_exit: exported.exit, export_log: exported.output.slice(-4000) },
       };
-    } finally {
-      await browser.close().catch(() => {});
     }
+
+    const served = await serveWithChatProxy(exported.distDir, WEB_PORT, session);
+    try {
+      const browser = await launchChromiumBrowser();
+      try {
+        const result = await driveLiveWeb(
+          browser,
+          served.url,
+          marker,
+          seedPromptFor(marker),
+          FOLLOW_UP_PROMPT,
+          session,
+        );
+        const passed = webLegPassed(result);
+        return {
+          platform: 'web',
+          status: passed ? 'passed' : 'failed',
+          diagnostic: passed ? undefined : JSON.stringify(result),
+          evidence: {
+            marker,
+            url: served.url,
+            drive_result: result,
+            backend_records: session.allRecords().slice(-5),
+            retry_request_id: session.current.records()[0]?.requestId ?? null,
+          },
+        };
+      } finally {
+        await boundWait('web/browser-close', null, WAIT_BOUND_BROWSER_MS, async () => {
+          await browser.close().catch(() => {});
+        });
+      }
+    } finally {
+      await stopServer(served);
+    }
+  } catch (e) {
+    // A StallError is the bounded-wait diagnostic itself: surface it as the
+    // leg's failure (naming the step, port, and last heartbeat) so the run
+    // records the stall and still writes its manifest — never an idle hang.
+    return {
+      platform: 'web',
+      status: 'failed',
+      diagnostic: e instanceof Error ? e.message : String(e),
+      evidence: {
+        marker,
+        stall: e instanceof StallError,
+        last_heartbeat: lastHeartbeatText(),
+      },
+    };
   } finally {
-    await stopServer(served);
+    heartbeat('web/leg/end');
   }
 }
 
@@ -1816,25 +2090,52 @@ async function runLiveExampleProof(options: ProofOptions): Promise<ProofResult> 
   validateOptions(options);
   const outputDir = options.outputDir ?? EVIDENCE_ROOT;
   mkdirSync(outputDir, { recursive: true });
+  const previousHeartbeatRun = heartbeatRun;
+  heartbeatRun = runId;
+  heartbeat(
+    'pipeline/start',
+    `platforms=${options.platforms.join(',')} backendPassed=${options.backend !== undefined}`,
+  );
 
-  const backend = await ensureBackend(options);
-  assertBackendReady(backend);
-  const session = new BackendSession(backend);
-
-  let legs: LegOutcome[];
   try {
-    legs = await runAllLegs(options, session);
-  } finally {
-    // Stop what we own: a caller-passed handle we never replaced stays theirs.
-    if (!options.backend || session.current !== session.initial) {
-      await session.stop();
+    const backend = await ensureBackend(options);
+    assertBackendReady(backend);
+    const session = new BackendSession(backend);
+
+    let legs: LegOutcome[];
+    try {
+      legs = await runAllLegs(options, session);
+    } finally {
+      // Stop what we own: a caller-passed handle we never replaced stays theirs.
+      // BOUNDED: with a caller-provided adapter handle this await previously had
+      // no bound — an unconfirming stop stranded the run here AFTER every child
+      // was already gone (no metro, no chromium, no manifest), the exact silent
+      // idle of orchestrated run ORI-AI-002-1789929365070. Now it fails fast
+      // with a named-step diagnostic and the manifest is still written.
+      if (!options.backend || session.current !== session.initial) {
+        try {
+          await session.stop();
+        } catch (e) {
+          heartbeat(
+            'pipeline/final-backend-stop/stalled',
+            e instanceof Error ? e.message : String(e),
+          );
+        }
+      }
     }
+
+    const { passed, completed } = countPlatformsPassed(legs);
+    writeManifest(runId, legs, passed, completed, session);
+    heartbeat(
+      'pipeline/manifest-written',
+      `passed=${passed} completed=${completed} heartbeatEntries=${heartbeatEntries.length}`,
+    );
+
+    return { runId, legs, completed };
+  } finally {
+    heartbeat('pipeline/end');
+    heartbeatRun = previousHeartbeatRun;
   }
-
-  const { passed, completed } = countPlatformsPassed(legs);
-  writeManifest(runId, legs, passed, completed, session);
-
-  return { runId, legs, completed };
 }
 
 function writeManifest(
