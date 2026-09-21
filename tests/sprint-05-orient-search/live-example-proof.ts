@@ -345,6 +345,12 @@ class RecordingBackend implements OwnedBackendHandle {
   async selectModel(model: string): Promise<OwnedBackendHandle> {
     return this.restart({ model });
   }
+
+  /** Phase-teardown: reap the owner process behind the adapter, if any. */
+  disposeOwner(): void {
+    const inner = this.inner as unknown as { dispose?: () => void };
+    if (typeof inner.dispose === 'function') inner.dispose();
+  }
 }
 
 /**
@@ -1684,6 +1690,7 @@ async function runEnginePhases(
     backend.records();
     if (backend.started) await backend.stop();
     stopOwnedPort(ENGINE_PORTS[engine].backend, journal, 'reject');
+    backend.disposeOwner();
     artifacts.rejectLegs = driverRun?.legs ?? [];
     phases.push({
       engine,
@@ -1801,6 +1808,7 @@ async function runEnginePhases(
     }
     if (backend.started) await backend.stop();
     stopOwnedPort(ENGINE_PORTS[engine].backend, journal, 'live');
+    backend.disposeOwner();
 
     artifacts.liveLegs = driverRun?.legs ?? [];
     phases.push({
@@ -2778,20 +2786,20 @@ class OwnerBackendHandle implements OwnedBackendHandle {
     if (this.exitCodeValue !== null || this.exitSignalValue !== null) return;
     this.sendCommand('stop');
     await this.awaitStatus('stopped', null, 10_000);
-    // Teardown ownership: with options.backend set the driver stops only ITS restart
-    // child — the owner process itself is ours to reap, or it lingers on the port.
+  }
+
+  /**
+   * Phase-teardown ownership: with options.backend set the driver stops only ITS
+   * restart child — the owner PROCESS is ours to reap, or it lingers after its
+   * server closes. Deliberately NOT part of stop(): the driver's endpoint-loss
+   * legs legitimately call stop() mid-leg and then restart() on the same owner.
+   */
+  dispose(): void {
+    if (this.exitCodeValue !== null || this.exitSignalValue !== null) return;
     this.child.kill('SIGTERM');
-    await new Promise<void>((resolveWait) => {
-      if (this.exitCodeValue !== null || this.exitSignalValue !== null) resolveWait();
-      const deadline = Date.now() + 5000;
-      const poll = setInterval(() => {
-        if (this.exitCodeValue !== null || this.exitSignalValue !== null || Date.now() > deadline) {
-          clearInterval(poll);
-          resolveWait();
-        }
-      }, 100);
-    });
-    if (this.exitCodeValue === null && this.exitSignalValue === null) this.child.kill('SIGKILL');
+    setTimeout(() => {
+      if (this.exitCodeValue === null && this.exitSignalValue === null) this.child.kill('SIGKILL');
+    }, 5000).unref();
   }
 
   async restart(options: BackendLaunchOptions = {}): Promise<OwnedBackendHandle> {
