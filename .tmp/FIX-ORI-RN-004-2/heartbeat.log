@@ -1,37 +1,37 @@
-{"seq":8,"ts":"2026-09-21T05:05:05.970Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"pipeline/start","detail":"platforms=web backendPassed=true"}
-{"seq":9,"ts":"2026-09-21T05:05:05.971Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"legs/web/start"}
-{"seq":10,"ts":"2026-09-21T05:05:05.971Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"leg/web/budget-start","detail":"budgetMs=840000"}
-{"seq":11,"ts":"2026-09-21T05:05:05.972Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/leg/start","detail":"runId=FIX-ORI-RN-004-2-1789967105966"}
-{"seq":12,"ts":"2026-09-21T05:05:05.972Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/export/start"}
-{"seq":13,"ts":"2026-09-21T05:05:17.148Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/export/end","detail":"exit=0"}
-{"seq":14,"ts":"2026-09-21T05:05:17.148Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/proxy-listen","detail":"127.0.0.1:8406"}
-{"seq":15,"ts":"2026-09-21T05:05:17.151Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/proxy-listening","detail":"127.0.0.1:8406"}
-{"seq":16,"ts":"2026-09-21T05:05:17.151Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/chromium-launch/start"}
-{"seq":17,"ts":"2026-09-21T05:05:17.352Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/chromium-launch/done"}
-{"seq":18,"ts":"2026-09-21T05:05:17.414Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/start","detail":"http://127.0.0.1:8406"}
-{"seq":19,"ts":"2026-09-21T05:05:18.040Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/empty-state-checked","detail":"visible=true"}
-{"seq":20,"ts":"2026-09-21T05:05:18.226Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/marker-turn-checked","detail":"submitted=true"}
-{"seq":21,"ts":"2026-09-21T05:05:19.594Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/seed-reply-checked","detail":"responded=true"}
-{"seq":22,"ts":"2026-09-21T05:05:20.966Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/follow-up-checked","detail":"recall=true"}
-{"seq":23,"ts":"2026-09-21T05:05:22.375Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/stop-turn-checked","detail":"stopControlVisible=true"}
-{"seq":24,"ts":"2026-09-21T05:05:22.376Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/stop/start","detail":"port=4000"}
-{"seq":25,"ts":"2026-09-21T05:05:27.428Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/stop/done"}
-{"seq":26,"ts":"2026-09-21T05:05:27.497Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/restart/start","detail":"port=4000"}
-{"seq":27,"ts":"2026-09-21T05:05:27.754Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/restarted","detail":"127.0.0.1:4000"}
-{"seq":28,"ts":"2026-09-21T05:05:27.754Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/restart/done"}
-{"seq":29,"ts":"2026-09-21T05:05:28.774Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/retry-checked","detail":"completed=true singleUserTurn=true"}
-{"seq":30,"ts":"2026-09-21T05:05:28.774Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/context-close/start"}
-{"seq":31,"ts":"2026-09-21T05:05:28.777Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/context-close/done"}
-{"seq":32,"ts":"2026-09-21T05:05:28.777Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/drive/end"}
-{"seq":33,"ts":"2026-09-21T05:05:28.777Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/browser-close/start"}
-{"seq":34,"ts":"2026-09-21T05:05:28.794Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/browser-close/done"}
-{"seq":35,"ts":"2026-09-21T05:05:28.794Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/proxy-close/start","detail":"port=8406"}
-{"seq":36,"ts":"2026-09-21T05:05:28.794Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/proxy-close/done","detail":"close-callback port=8406"}
-{"seq":37,"ts":"2026-09-21T05:05:28.795Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"web/leg/end"}
-{"seq":38,"ts":"2026-09-21T05:05:28.795Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"legs/web/end"}
-{"seq":39,"ts":"2026-09-21T05:05:28.795Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"legs/teardown/start"}
-{"seq":40,"ts":"2026-09-21T05:05:28.795Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"legs/teardown/end"}
-{"seq":41,"ts":"2026-09-21T05:05:28.795Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/stop/start","detail":"port=4000"}
-{"seq":42,"ts":"2026-09-21T05:05:28.848Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"backend/stop/done"}
-{"seq":43,"ts":"2026-09-21T05:05:28.877Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"pipeline/manifest-written","detail":"passed=1 completed=false heartbeatEntries=42"}
-{"seq":44,"ts":"2026-09-21T05:05:28.877Z","run":"FIX-ORI-RN-004-2-1789967105966","step":"pipeline/end"}
+{"seq":8,"ts":"2026-09-21T05:44:42.845Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"pipeline/start","detail":"platforms=web backendPassed=true"}
+{"seq":9,"ts":"2026-09-21T05:44:42.845Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"legs/web/start"}
+{"seq":10,"ts":"2026-09-21T05:44:42.845Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"leg/web/budget-start","detail":"budgetMs=840000"}
+{"seq":11,"ts":"2026-09-21T05:44:42.846Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/leg/start","detail":"runId=FIX-ORI-RN-004-2-1789969482845"}
+{"seq":12,"ts":"2026-09-21T05:44:42.846Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/export/start"}
+{"seq":13,"ts":"2026-09-21T05:44:47.263Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/export/end","detail":"exit=0"}
+{"seq":14,"ts":"2026-09-21T05:44:47.263Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/proxy-listen","detail":"127.0.0.1:8406"}
+{"seq":15,"ts":"2026-09-21T05:44:47.265Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/proxy-listening","detail":"127.0.0.1:8406"}
+{"seq":16,"ts":"2026-09-21T05:44:47.266Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/chromium-launch/start"}
+{"seq":17,"ts":"2026-09-21T05:44:47.533Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/chromium-launch/done"}
+{"seq":18,"ts":"2026-09-21T05:44:47.666Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/start","detail":"http://127.0.0.1:8406"}
+{"seq":19,"ts":"2026-09-21T05:44:48.269Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/empty-state-checked","detail":"visible=true"}
+{"seq":20,"ts":"2026-09-21T05:44:48.439Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/marker-turn-checked","detail":"submitted=true"}
+{"seq":21,"ts":"2026-09-21T05:44:50.244Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/seed-reply-checked","detail":"responded=true"}
+{"seq":22,"ts":"2026-09-21T05:44:52.062Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/follow-up-checked","detail":"recall=true"}
+{"seq":23,"ts":"2026-09-21T05:44:53.409Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/stop-turn-checked","detail":"stopControlVisible=true"}
+{"seq":24,"ts":"2026-09-21T05:44:53.409Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/stop/start","detail":"port=4000"}
+{"seq":25,"ts":"2026-09-21T05:44:58.462Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/stop/done"}
+{"seq":26,"ts":"2026-09-21T05:44:58.518Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/restart/start","detail":"port=4000"}
+{"seq":27,"ts":"2026-09-21T05:44:58.824Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/restarted","detail":"127.0.0.1:4000"}
+{"seq":28,"ts":"2026-09-21T05:44:58.825Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/restart/done"}
+{"seq":29,"ts":"2026-09-21T05:44:59.845Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/retry-checked","detail":"completed=true singleUserTurn=true"}
+{"seq":30,"ts":"2026-09-21T05:44:59.845Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/context-close/start"}
+{"seq":31,"ts":"2026-09-21T05:44:59.850Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/context-close/done"}
+{"seq":32,"ts":"2026-09-21T05:44:59.850Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/drive/end"}
+{"seq":33,"ts":"2026-09-21T05:44:59.850Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/browser-close/start"}
+{"seq":34,"ts":"2026-09-21T05:44:59.870Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/browser-close/done"}
+{"seq":35,"ts":"2026-09-21T05:44:59.870Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/proxy-close/start","detail":"port=8406"}
+{"seq":36,"ts":"2026-09-21T05:44:59.870Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/proxy-close/done","detail":"close-callback port=8406"}
+{"seq":37,"ts":"2026-09-21T05:44:59.870Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"web/leg/end"}
+{"seq":38,"ts":"2026-09-21T05:44:59.871Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"legs/web/end"}
+{"seq":39,"ts":"2026-09-21T05:44:59.871Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"legs/teardown/start"}
+{"seq":40,"ts":"2026-09-21T05:44:59.871Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"legs/teardown/end"}
+{"seq":41,"ts":"2026-09-21T05:44:59.871Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/stop/start","detail":"port=4000"}
+{"seq":42,"ts":"2026-09-21T05:44:59.921Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"backend/stop/done"}
+{"seq":43,"ts":"2026-09-21T05:44:59.956Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"pipeline/manifest-written","detail":"passed=1 completed=false heartbeatEntries=42"}
+{"seq":44,"ts":"2026-09-21T05:44:59.956Z","run":"FIX-ORI-RN-004-2-1789969482845","step":"pipeline/end"}

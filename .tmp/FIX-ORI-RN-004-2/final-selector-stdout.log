@@ -1,0 +1,80 @@
+[phase-a] in-vitro lifecycle probe: {"serve_url":"http://127.0.0.1:8406","proxy_port":8406,"abort_probe":{"request":"direct-owned-backend","aborted_record":true},"held_connection":"partial-body-post+2-active-sse-streams","close_unresolved_after_ms":null,"close_resolved_ms":20002,"close_resolution":"within-observation","started_at":"2026-09-21T05:44:20.759Z","ended_at":"2026-09-21T05:44:42.844Z"}
+[phase-b] live orchestration seam: {"run_id":"FIX-ORI-RN-004-2-1789969482845","options_backend_not_null":true,"web_leg_status":"passed","all_run_platform_legs_passed":true,"manifest":{"path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/run-manifest.json","run_id_matches":true,"key_set_frozen":true,"web_leg_status":"passed","passed_platforms":1,"completed_field":false},"correlation":{"path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/provider-correlation.json","run_id_matches":true,"record_count":7,"completed_count":6,"aborted_count":1},"heartbeat":{"source_path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/heartbeat.log","copied_path":"/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/.tmp/FIX-ORI-RN-004-2/heartbeat.log","run_entry_count":37,"web_step_entry_count":22,"timestamps_ordered":true,"first_steps":["pipeline/start","legs/web/start","leg/web/budget-start","web/leg/start","web/export/start"],"last_steps":["legs/teardown/end","backend/stop/start","backend/stop/done","pipeline/manifest-written","pipeline/end"]},"diagnostic":null}
+{
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/web-leg-orchestration-proof.test.ts",
+  "candidate_head_sha": "b0e1a37811465ac2c7790fa2fa3ba8d38b847d23",
+  "watchdog_budget_ms": 900000,
+  "in_vitro_unbounded_threshold_ms": 60000,
+  "generated_at": "2026-09-21T05:44:59.983Z",
+  "assertions": {
+    "in_vitro_close_bounded": true,
+    "driver_stall_diagnostic_emitted": true,
+    "probe_abort_record": true,
+    "web_leg_passed": true,
+    "all_run_platform_legs_passed": true,
+    "manifest_fresh_for_run": true,
+    "manifest_key_set_frozen": true,
+    "correlation_fresh_for_run": true,
+    "correlation_records": true,
+    "heartbeat_at_least_8_ordered": true
+  },
+  "failures": [],
+  "in_vitro": {
+    "serve_url": "http://127.0.0.1:8406",
+    "proxy_port": 8406,
+    "abort_probe": {
+      "request": "direct-owned-backend",
+      "aborted_record": true
+    },
+    "held_connection": "partial-body-post+2-active-sse-streams",
+    "close_unresolved_after_ms": null,
+    "close_resolved_ms": 20002,
+    "close_resolution": "within-observation",
+    "started_at": "2026-09-21T05:44:20.759Z",
+    "ended_at": "2026-09-21T05:44:42.844Z"
+  },
+  "live": {
+    "run_id": "FIX-ORI-RN-004-2-1789969482845",
+    "options_backend_not_null": true,
+    "web_leg_status": "passed",
+    "all_run_platform_legs_passed": true,
+    "manifest": {
+      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/run-manifest.json",
+      "run_id_matches": true,
+      "key_set_frozen": true,
+      "web_leg_status": "passed",
+      "passed_platforms": 1,
+      "completed_field": false
+    },
+    "correlation": {
+      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/provider-correlation.json",
+      "run_id_matches": true,
+      "record_count": 7,
+      "completed_count": 6,
+      "aborted_count": 1
+    },
+    "heartbeat": {
+      "source_path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/tests/sprint-05-orient-search/evidence/ORI-RN-004/heartbeat.log",
+      "copied_path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-2/.tmp/FIX-ORI-RN-004-2/heartbeat.log",
+      "run_entry_count": 37,
+      "web_step_entry_count": 22,
+      "timestamps_ordered": true,
+      "first_steps": [
+        "pipeline/start",
+        "legs/web/start",
+        "leg/web/budget-start",
+        "web/leg/start",
+        "web/export/start"
+      ],
+      "last_steps": [
+        "legs/teardown/end",
+        "backend/stop/start",
+        "backend/stop/done",
+        "pipeline/manifest-written",
+        "pipeline/end"
+      ]
+    },
+    "diagnostic": null
+  },
+  "expected_exit_code": 0
+}

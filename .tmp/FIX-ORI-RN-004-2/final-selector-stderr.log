@@ -1,0 +1,44 @@
+[heartbeat 2026-09-21T05:44:22.793Z] web/proxy-listen — 127.0.0.1:8406
+[heartbeat 2026-09-21T05:44:22.797Z] web/proxy-listening — 127.0.0.1:8406
+[heartbeat 2026-09-21T05:44:22.823Z] web/proxy-close/start — port=8406
+[heartbeat 2026-09-21T05:44:42.825Z] web/proxy-close/stalled — stalled await: step=web/proxy-close port=8406 boundMs=20000 lastHeartbeat=2026-09-21T05:44:22.823Z web/proxy-close/start
+[heartbeat 2026-09-21T05:44:42.825Z] web/proxy-close/done — close-callback port=8406
+[heartbeat 2026-09-21T05:44:42.844Z] web/proxy-close/start
+[heartbeat 2026-09-21T05:44:42.844Z] web/proxy-close/done — close-callback
+[heartbeat 2026-09-21T05:44:42.845Z] pipeline/start — platforms=web backendPassed=true
+[heartbeat 2026-09-21T05:44:42.845Z] legs/web/start
+[heartbeat 2026-09-21T05:44:42.845Z] leg/web/budget-start — budgetMs=840000
+[heartbeat 2026-09-21T05:44:42.846Z] web/leg/start — runId=FIX-ORI-RN-004-2-1789969482845
+[heartbeat 2026-09-21T05:44:42.846Z] web/export/start
+[heartbeat 2026-09-21T05:44:47.263Z] web/export/end — exit=0
+[heartbeat 2026-09-21T05:44:47.263Z] web/proxy-listen — 127.0.0.1:8406
+[heartbeat 2026-09-21T05:44:47.265Z] web/proxy-listening — 127.0.0.1:8406
+[heartbeat 2026-09-21T05:44:47.266Z] web/chromium-launch/start
+[heartbeat 2026-09-21T05:44:47.533Z] web/chromium-launch/done
+[heartbeat 2026-09-21T05:44:47.666Z] web/drive/start — http://127.0.0.1:8406
+[heartbeat 2026-09-21T05:44:48.269Z] web/drive/empty-state-checked — visible=true
+[heartbeat 2026-09-21T05:44:48.439Z] web/drive/marker-turn-checked — submitted=true
+[heartbeat 2026-09-21T05:44:50.244Z] web/drive/seed-reply-checked — responded=true
+[heartbeat 2026-09-21T05:44:52.062Z] web/drive/follow-up-checked — recall=true
+[heartbeat 2026-09-21T05:44:53.409Z] web/drive/stop-turn-checked — stopControlVisible=true
+[heartbeat 2026-09-21T05:44:53.409Z] backend/stop/start — port=4000
+[heartbeat 2026-09-21T05:44:58.462Z] backend/stop/done
+[heartbeat 2026-09-21T05:44:58.518Z] backend/restart/start — port=4000
+[heartbeat 2026-09-21T05:44:58.824Z] backend/restarted — 127.0.0.1:4000
+[heartbeat 2026-09-21T05:44:58.825Z] backend/restart/done
+[heartbeat 2026-09-21T05:44:59.845Z] web/drive/retry-checked — completed=true singleUserTurn=true
+[heartbeat 2026-09-21T05:44:59.845Z] web/context-close/start
+[heartbeat 2026-09-21T05:44:59.850Z] web/context-close/done
+[heartbeat 2026-09-21T05:44:59.850Z] web/drive/end
+[heartbeat 2026-09-21T05:44:59.850Z] web/browser-close/start
+[heartbeat 2026-09-21T05:44:59.870Z] web/browser-close/done
+[heartbeat 2026-09-21T05:44:59.870Z] web/proxy-close/start — port=8406
+[heartbeat 2026-09-21T05:44:59.870Z] web/proxy-close/done — close-callback port=8406
+[heartbeat 2026-09-21T05:44:59.870Z] web/leg/end
+[heartbeat 2026-09-21T05:44:59.871Z] legs/web/end
+[heartbeat 2026-09-21T05:44:59.871Z] legs/teardown/start
+[heartbeat 2026-09-21T05:44:59.871Z] legs/teardown/end
+[heartbeat 2026-09-21T05:44:59.871Z] backend/stop/start — port=4000
+[heartbeat 2026-09-21T05:44:59.921Z] backend/stop/done
+[heartbeat 2026-09-21T05:44:59.956Z] pipeline/manifest-written — passed=1 completed=false heartbeatEntries=42
+[heartbeat 2026-09-21T05:44:59.956Z] pipeline/end
