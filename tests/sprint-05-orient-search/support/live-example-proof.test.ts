@@ -83,6 +83,23 @@ const WAIT_BOUND_PROXY_LISTEN_MS = 30_000;
 const WAIT_BOUND_PROXY_CLOSE_MS = 20_000;
 const WAIT_BOUND_BROWSER_MS = 30_000;
 const WAIT_BOUND_BACKEND_OP_MS = 120_000;
+/**
+ * FIX-ORI-RN-004-3 — per-segment bounds (ms) for every await between the
+ * endpoint-loss `backend/stop/*` family and `backend/restarted`. Run
+ * ORI-AI-002-1789975643876 stalled exactly in that window: the stop completed
+ * through the caller's options.backend handle (heartbeat `backend/stop/start`
+ * at 08:04:18) and the restart was never issued — no heartbeat, no driver-side
+ * bound, and no diagnostic existed between them (the five post-stop Playwright
+ * ops relied entirely on Playwright's own in-process timeout, invisible to this
+ * driver's heartbeat log). Every segment in the window now emits its own
+ * start/done heartbeat pair and carries an explicit bound. Caveat recorded in
+ * FIX-ORI-RN-004-2's handoff and still true: a segment whose internals are
+ * synchronous spawnSync calls blocks the event loop while it runs, so a bound
+ * cannot fire mid-sync — the caller-handle harness's outer watchdog covers that
+ * frozen-loop class; these bounds cover every yielding segment.
+ */
+const WAIT_BOUND_WEB_SEGMENT_MS = 60_000;
+const WAIT_BOUND_NATIVE_SEGMENT_MS = 120_000;
 /** Per-leg wall-clock budgets (ms) — a leg that exceeds its budget fails fast. */
 const LEG_BUDGET_MS: Record<Platform, number> = {
   web: 840_000,
@@ -1329,10 +1346,29 @@ async function runAndroidInputFlow(
   const retryPrep = prepareTurn('retry probe', RETRY_PROBE_PROMPT);
   if (retryPrep) return retryPrep;
   await session.stop();
-  if (!dismissThenTap(serial, 'Send message')) {
+  // FIX-ORI-RN-004-3: the post-stop decision segments (probe send, Retry wait,
+  // Retry tap, retry record gate) are individually bounded and heartbeated
+  // (`android/endpoint-loss/*`). Their internals are synchronous spawnSync /
+  // deadline loops, so the bound bites at the next event-loop yield — the
+  // frozen-loop class is the harness watchdog's job — but every segment now
+  // leaves its own start/done heartbeat between `backend/stop/*` and
+  // `backend/restarted`, so no gap in this window is silent.
+  const sent = await boundWait(
+    'android/endpoint-loss/probe-send',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => dismissThenTap(serial, 'Send message'),
+  );
+  if (!sent) {
     return fail(`could not tap "Send message" (retry probe) ${stateSummary(serial)}`);
   }
-  if (!waitForText(serial, 'Retry', 60_000)) {
+  const retryVisible = await boundWait(
+    'android/endpoint-loss/retry-wait',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => waitForText(serial, 'Retry', 60_000),
+  );
+  if (!retryVisible) {
     return fail(`no accessible Retry control after endpoint loss ${stateSummary(serial)}`);
   }
   if (hierarchyContains(serial, 'sk-') || hierarchyContains(serial, 'OPENAI_API_KEY')) {
@@ -1341,10 +1377,22 @@ async function runAndroidInputFlow(
   logs.push('OK: endpoint loss surfaced a sanitized error with an accessible Retry');
   await session.restart();
   assertBackendReady(session.current);
-  if (!dismissThenTap(serial, 'Retry')) {
+  const retryTapped = await boundWait(
+    'android/endpoint-loss/retry-tap',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => dismissThenTap(serial, 'Retry'),
+  );
+  if (!retryTapped) {
     return fail(`could not tap "Retry" ${stateSummary(serial)}`);
   }
-  if (!(await waitForRecordOutcome(session.current, 0, 'completed', 120_000))) {
+  const retryCompleted = await boundWait(
+    'android/endpoint-loss/retry-record',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => waitForRecordOutcome(session.current, 0, 'completed', 120_000),
+  );
+  if (!retryCompleted) {
     return fail(
       `retry never produced a completed provider record — observed: ${JSON.stringify(
         session.current.records(),
@@ -1674,24 +1722,77 @@ async function driveLiveWeb(
     // owned endpoint, retry the retained turn, and gate on a NEW completed provider
     // record — the probe text must appear exactly once (regenerate does not
     // duplicate the retained user turn).
+    //
+    // FIX-ORI-RN-004-3: every segment between `session.stop()` completing and
+    // `session.restart()` being issued (and the retry tap after it) is individually
+    // bounded and heartbeated (`web/endpoint-loss/*`). Pre-fix this window was
+    // silent: the fill/send/Retry-wait/alert-read awaits carried no driver-side
+    // bound and emitted no heartbeat, so a segment that never returned left the
+    // run parked after the `backend/stop/*` family with nothing firing — the
+    // orchestrated run ORI-AI-002-1789975643876 stall. Each boundWait names its
+    // segment, the backend port, its bound, and the last heartbeat; onExpiry
+    // closes the page best-effort so a wedged op cannot outlive its bound.
     await session.stop();
-    await textarea.fill(RETRY_PROBE_PROMPT);
-    await send.click().catch(() => {});
+    const forcePageClose = (): void => {
+      page.close().catch(() => {});
+    };
+    await boundWait(
+      'web/endpoint-loss/probe-fill',
+      BACKEND_PORT,
+      WAIT_BOUND_WEB_SEGMENT_MS,
+      async () => {
+        await textarea.fill(RETRY_PROBE_PROMPT);
+      },
+      forcePageClose,
+    );
+    await boundWait(
+      'web/endpoint-loss/probe-send',
+      BACKEND_PORT,
+      WAIT_BOUND_WEB_SEGMENT_MS,
+      async () => {
+        await send.click().catch(() => {});
+      },
+      forcePageClose,
+    );
     const retry = page.getByLabel('Retry', { exact: true });
-    await retry.waitFor({ timeout: 30_000 }).catch(() => {});
+    await boundWait(
+      'web/endpoint-loss/retry-wait',
+      BACKEND_PORT,
+      WAIT_BOUND_WEB_SEGMENT_MS,
+      async () => {
+        await retry.waitFor({ timeout: 30_000 }).catch(() => {});
+      },
+      forcePageClose,
+    );
     result.retryControlVisible = await retry.isVisible().catch(() => false);
-    const alertText = await page
-      .getByRole('alert')
-      .first()
-      .textContent()
-      .catch(() => null);
-    result.retryErrorSanitized =
-      alertText !== null &&
-      alertText.length > 0 &&
-      !alertText.includes('sk-') &&
-      !alertText.includes('OPENAI_API_KEY');
+    await boundWait(
+      'web/endpoint-loss/alert-read',
+      BACKEND_PORT,
+      WAIT_BOUND_WEB_SEGMENT_MS,
+      async () => {
+        const alertText = await page
+          .getByRole('alert')
+          .first()
+          .textContent()
+          .catch(() => null);
+        result.retryErrorSanitized =
+          alertText !== null &&
+          alertText.length > 0 &&
+          !alertText.includes('sk-') &&
+          !alertText.includes('OPENAI_API_KEY');
+      },
+      forcePageClose,
+    );
     await session.restart();
-    await retry.click().catch(() => {});
+    await boundWait(
+      'web/endpoint-loss/retry-click',
+      BACKEND_PORT,
+      WAIT_BOUND_WEB_SEGMENT_MS,
+      async () => {
+        await retry.click().catch(() => {});
+      },
+      forcePageClose,
+    );
     result.retryCompleted = await waitForRecordOutcome(session.current, 0, 'completed', 120_000);
     result.retrySingleUserTurn =
       (await page
@@ -1732,10 +1833,25 @@ async function runIosEndpointLossRetry(
 ): Promise<{ ok: boolean; log: string }> {
   dismissLogBox(deviceId);
   await session.stop();
-  if (!maestroTypeAndSend(deviceId, RETRY_PROBE_PROMPT)) {
+  // FIX-ORI-RN-004-3: bounded, heartbeated post-stop decision segments
+  // (`ios/endpoint-loss/*`) between `backend/stop/*` and `backend/restarted` —
+  // same rationale as the android/web windows; see WAIT_BOUND_WEB_SEGMENT_MS.
+  const sent = await boundWait(
+    'ios/endpoint-loss/probe-type-send',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => maestroTypeAndSend(deviceId, RETRY_PROBE_PROMPT),
+  );
+  if (!sent) {
     return { ok: false, log: 'could not type + send the retry probe (maestro flow failed)' };
   }
-  if (!waitForText(deviceId, 'Retry', 60_000)) {
+  const retryVisible = await boundWait(
+    'ios/endpoint-loss/retry-wait',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => waitForText(deviceId, 'Retry', 60_000),
+  );
+  if (!retryVisible) {
     return { ok: false, log: 'no accessible Retry control after endpoint loss' };
   }
   if (hierarchyContains(deviceId, 'sk-') || hierarchyContains(deviceId, 'OPENAI_API_KEY')) {
@@ -1743,10 +1859,22 @@ async function runIosEndpointLossRetry(
   }
   await session.restart();
   assertBackendReady(session.current);
-  if (!dismissThenTap(deviceId, 'Retry')) {
+  const retryTapped = await boundWait(
+    'ios/endpoint-loss/retry-tap',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => dismissThenTap(deviceId, 'Retry'),
+  );
+  if (!retryTapped) {
     return { ok: false, log: 'could not tap "Retry"' };
   }
-  if (!(await waitForRecordOutcome(session.current, 0, 'completed', 120_000))) {
+  const retryCompleted = await boundWait(
+    'ios/endpoint-loss/retry-record',
+    BACKEND_PORT,
+    WAIT_BOUND_NATIVE_SEGMENT_MS,
+    async () => waitForRecordOutcome(session.current, 0, 'completed', 120_000),
+  );
+  if (!retryCompleted) {
     return {
       ok: false,
       log: `retry never produced a completed provider record — observed: ${JSON.stringify(

@@ -1,0 +1,400 @@
+{
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts",
+  "harness_exit_code": 0,
+  "candidate_head_sha": "f734705c548d0c4e8e6f91fbfe258f9227c9d865",
+  "watchdog_budget_ms": 900000,
+  "generated_at": "2026-09-21T10:27:29.481Z",
+  "forced_stall": {
+    "label": "forced-stall",
+    "run_id": "FIX-ORI-RN-004-3-STALL-1789986300416",
+    "child_exit_code": 1,
+    "assertions": {
+      "child_exited_nonzero": true,
+      "stop_stalled_diagnostic_fired": true,
+      "stall_bounded_within_120s": true,
+      "diagnostic_names_step_port_bound_last_heartbeat": true,
+      "manifest_still_written": true,
+      "adapter_stop_commanded": true,
+      "no_watchdog_fire": true
+    },
+    "failures": []
+  },
+  "green": {
+    "run_id": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+    "options_backend_not_null": true,
+    "child_exit_code": 0,
+    "abort_probe": {
+      "performed": true,
+      "aborted_record": true,
+      "request_path": "http://127.0.0.1:4000/api/chat"
+    },
+    "adapter": {
+      "dir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-green-1789986430709",
+      "cmd_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-green-1789986430709/backend-cmd.jsonl",
+      "status_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-green-1789986430709/backend-status.jsonl",
+      "records_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-green-1789986430709/backend-records.jsonl"
+    },
+    "assertions": {
+      "adapter_stop_commanded": true,
+      "adapter_restart_commanded": true,
+      "heartbeat_stop_start_present": true,
+      "heartbeat_stop_done_present": true,
+      "heartbeat_segment_entries_present": true,
+      "heartbeat_backend_restarted_present": true,
+      "heartbeat_chain_ordered": true,
+      "heartbeat_timestamps_ordered": true,
+      "heartbeat_window_entry_count_gte_3": true,
+      "heartbeat_no_silent_gap_over_bound": true,
+      "manifest_run_id_matches": true,
+      "manifest_web_leg_passed": true,
+      "correlation_run_id_matches": true,
+      "correlation_records": true,
+      "child_exit_zero": true,
+      "child_result_backend_not_null": true,
+      "abort_probe_recorded": true,
+      "no_watchdog_fire": true
+    },
+    "heartbeat_slice": [
+      {
+        "seq": 1,
+        "ts": "2026-09-21T10:27:13.374Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "pipeline/start",
+        "detail": "platforms=web backendPassed=true"
+      },
+      {
+        "seq": 2,
+        "ts": "2026-09-21T10:27:13.375Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "legs/web/start"
+      },
+      {
+        "seq": 3,
+        "ts": "2026-09-21T10:27:13.376Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "leg/web/budget-start",
+        "detail": "budgetMs=840000"
+      },
+      {
+        "seq": 4,
+        "ts": "2026-09-21T10:27:13.376Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/leg/start",
+        "detail": "runId=FIX-ORI-RN-004-3-GREEN-1789986430709"
+      },
+      {
+        "seq": 5,
+        "ts": "2026-09-21T10:27:13.376Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/export/start"
+      },
+      {
+        "seq": 6,
+        "ts": "2026-09-21T10:27:16.659Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/export/end",
+        "detail": "exit=0"
+      },
+      {
+        "seq": 7,
+        "ts": "2026-09-21T10:27:16.659Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/proxy-listen",
+        "detail": "127.0.0.1:8406"
+      },
+      {
+        "seq": 8,
+        "ts": "2026-09-21T10:27:16.662Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/proxy-listening",
+        "detail": "127.0.0.1:8406"
+      },
+      {
+        "seq": 9,
+        "ts": "2026-09-21T10:27:16.662Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/chromium-launch/start"
+      },
+      {
+        "seq": 10,
+        "ts": "2026-09-21T10:27:16.781Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/chromium-launch/done"
+      },
+      {
+        "seq": 11,
+        "ts": "2026-09-21T10:27:16.829Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/start",
+        "detail": "http://127.0.0.1:8406"
+      },
+      {
+        "seq": 12,
+        "ts": "2026-09-21T10:27:17.401Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/empty-state-checked",
+        "detail": "visible=true"
+      },
+      {
+        "seq": 13,
+        "ts": "2026-09-21T10:27:17.518Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/marker-turn-checked",
+        "detail": "submitted=true"
+      },
+      {
+        "seq": 14,
+        "ts": "2026-09-21T10:27:19.841Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/seed-reply-checked",
+        "detail": "responded=true"
+      },
+      {
+        "seq": 15,
+        "ts": "2026-09-21T10:27:21.654Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/follow-up-checked",
+        "detail": "recall=true"
+      },
+      {
+        "seq": 16,
+        "ts": "2026-09-21T10:27:22.999Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/stop-turn-checked",
+        "detail": "stopControlVisible=true"
+      },
+      {
+        "seq": 17,
+        "ts": "2026-09-21T10:27:22.999Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/stop/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 18,
+        "ts": "2026-09-21T10:27:28.052Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/stop/done"
+      },
+      {
+        "seq": 19,
+        "ts": "2026-09-21T10:27:28.052Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/probe-fill/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 20,
+        "ts": "2026-09-21T10:27:28.059Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/probe-fill/done"
+      },
+      {
+        "seq": 21,
+        "ts": "2026-09-21T10:27:28.059Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/probe-send/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 22,
+        "ts": "2026-09-21T10:27:28.101Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/probe-send/done"
+      },
+      {
+        "seq": 23,
+        "ts": "2026-09-21T10:27:28.101Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/retry-wait/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 24,
+        "ts": "2026-09-21T10:27:28.123Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/retry-wait/done"
+      },
+      {
+        "seq": 25,
+        "ts": "2026-09-21T10:27:28.124Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/alert-read/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 26,
+        "ts": "2026-09-21T10:27:28.125Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/alert-read/done"
+      },
+      {
+        "seq": 27,
+        "ts": "2026-09-21T10:27:28.126Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/restart/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 28,
+        "ts": "2026-09-21T10:27:28.333Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/restarted",
+        "detail": "127.0.0.1:4000"
+      },
+      {
+        "seq": 29,
+        "ts": "2026-09-21T10:27:28.333Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/restart/done"
+      },
+      {
+        "seq": 30,
+        "ts": "2026-09-21T10:27:28.333Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/retry-click/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 31,
+        "ts": "2026-09-21T10:27:28.349Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/endpoint-loss/retry-click/done"
+      },
+      {
+        "seq": 32,
+        "ts": "2026-09-21T10:27:29.353Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/retry-checked",
+        "detail": "completed=true singleUserTurn=true"
+      },
+      {
+        "seq": 33,
+        "ts": "2026-09-21T10:27:29.353Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/context-close/start"
+      },
+      {
+        "seq": 34,
+        "ts": "2026-09-21T10:27:29.357Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/context-close/done"
+      },
+      {
+        "seq": 35,
+        "ts": "2026-09-21T10:27:29.357Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/drive/end"
+      },
+      {
+        "seq": 36,
+        "ts": "2026-09-21T10:27:29.358Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/browser-close/start"
+      },
+      {
+        "seq": 37,
+        "ts": "2026-09-21T10:27:29.374Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/browser-close/done"
+      },
+      {
+        "seq": 38,
+        "ts": "2026-09-21T10:27:29.374Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/proxy-close/start",
+        "detail": "port=8406"
+      },
+      {
+        "seq": 39,
+        "ts": "2026-09-21T10:27:29.374Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/proxy-close/done",
+        "detail": "close-callback port=8406"
+      },
+      {
+        "seq": 40,
+        "ts": "2026-09-21T10:27:29.375Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "web/leg/end"
+      },
+      {
+        "seq": 41,
+        "ts": "2026-09-21T10:27:29.375Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "legs/web/end"
+      },
+      {
+        "seq": 42,
+        "ts": "2026-09-21T10:27:29.375Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "legs/teardown/start"
+      },
+      {
+        "seq": 43,
+        "ts": "2026-09-21T10:27:29.375Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "legs/teardown/end"
+      },
+      {
+        "seq": 44,
+        "ts": "2026-09-21T10:27:29.375Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/stop/start",
+        "detail": "port=4000"
+      },
+      {
+        "seq": 45,
+        "ts": "2026-09-21T10:27:29.427Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "backend/stop/done"
+      },
+      {
+        "seq": 46,
+        "ts": "2026-09-21T10:27:29.452Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "pipeline/manifest-written",
+        "detail": "passed=1 completed=false heartbeatEntries=45"
+      },
+      {
+        "seq": 47,
+        "ts": "2026-09-21T10:27:29.452Z",
+        "run": "FIX-ORI-RN-004-3-GREEN-1789986430709",
+        "step": "pipeline/end"
+      }
+    ],
+    "heartbeat_window_max_gap_ms": 5053
+  },
+  "failures": [],
+  "matrix_command": "pnpm exec tsx tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts --matrix ios,android,web",
+  "matrix_harness_exit_code": 0,
+  "matrix_watchdog_budget_ms": 8460000,
+  "matrix": {
+    "run_id": "FIX-ORI-RN-004-3-MATRIX-1789986449929",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "child_exit_code": 0,
+    "options_backend_not_null": true,
+    "adapter": {
+      "dir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-matrix-1789986449929",
+      "cmd_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-matrix-1789986449929/backend-cmd.jsonl",
+      "status_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-matrix-1789986449929/backend-status.jsonl",
+      "records_file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-3/.tmp/FIX-ORI-RN-004-3/adapter-matrix-1789986449929/backend-records.jsonl"
+    },
+    "assertions": {
+      "child_exit_zero": true,
+      "manifest_run_id_matches": true,
+      "all_three_platforms_passed": true,
+      "adapter_restart_commands_gte_legs": true,
+      "adapter_stop_commanded": true,
+      "heartbeat_backend_restarted_entries_gte_legs": true,
+      "heartbeat_timestamps_ordered": true,
+      "child_result_backend_not_null": true,
+      "no_watchdog_fire": true
+    }
+  },
+  "matrix_failures": []
+}
