@@ -1,0 +1,39 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "4d174065ecb988b9e73164140b81b958d8e78598",
+  "reviewer": "aisdk-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Reviewer tip run: 37 nonempty real deltas; nonce retained through SDK-history follow-up whose new user message omits it; resp_* provider IDs, model gpt-4.1-mini-2025-04-14, totalTokens>0, textHash matching streamed text. A canned stream cannot produce this."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "400×8 / 413 / 405×2 with provider record count frozen during rejections; invalid launches exit 1 pre-listen; occupied-port case preserves placeholder PID."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Nonexistent model via fixed official endpoint → sanitized error (no raw provider error, no key); recovery → completed; abort after first delta → aborted with activeGenerations=0; normal close cannot abort (writableEnded guard index.ts:113-117)."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Both strict tsconfigs exit 0; pins match installed node_modules (ai 7.0.89, @ai-sdk/react 4.0.92, @ai-sdk/openai 4.0.66, zod 4.6.1); LanguageModelV4 proven empirically by real streamed runs; hook contract verified (transport/expo-fetch/throttle 50/empty transcript/7 members/clearError→regenerate); teardown stopped all owned children."
+    },
+    {
+      "id": "TC-1..TC-4",
+      "satisfied": true,
+      "evidence": "Covered by the AC selector runs above, all re-run by reviewer with fresh evidence."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Reviewer independently re-ran all gates at tip: 4/4 against the real OpenAI Responses endpoint with fresh evidence (37 real deltas, nonce retention, provider correlation), ten rejection statuses with zero provider dispatch, sanitized bad-model error, genuine abort + recovery, complete teardown. No stubs/mocks/canned streams; no credential exposure anywhere (base URL hard-fixed against OPENAI_BASE_URL redirection); RED canonical and command-hash bound. Non-blocking: biome.json's includes do not cover apps/example/** (outside write allowlist; strict compilers cover the graphs)."
+}

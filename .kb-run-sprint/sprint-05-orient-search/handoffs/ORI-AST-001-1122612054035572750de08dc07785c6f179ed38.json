@@ -1,0 +1,38 @@
+{
+  "task": "ORI-AST-001",
+  "commit_sha": "1122612054035572750de08dc07785c6f179ed38",
+  "done": "Landed the authored-docs collection shell and prose routing contract: the `docs` glob collection with a zod schema (title/description/section/order/optional draft), the `/docs/[...id]` catch-all route rendering through `render(entry)` into MarkdownLayout, the PageHeader/Toc/Prose semantic components, the docs-navigation publication contract (draft filtering, reserved `theming` slug exclusion, deterministic sort, and a deterministic duplicate-destination gate over raw source files), `@astrojs/mdx` + `astro-expressive-code` with both code themes mapped to `html.light` (no media query), `prerenderConflictBehavior: 'error'`, and the copy-button payload-trim correction; AC-1/AC-2/AC-4(copy) are green with real loader/build/browser/clipboard evidence and AC-3 stays RED by design until the ORI-CONT manuscripts land.",
+  "deviations": [
+    "`apps/docs/src/lib/docs-navigation.ts` detects duplicate destinations by reading the raw source files and re-deriving ids with `github-slugger` (`assertUniqueDestinations`) instead of trusting `getCollection`, because the store is a Map keyed by id (dedupes same-slug sources) and the loader's own `DuplicateContentEntrySlugError` races under concurrent file processing.",
+    "`apps/docs/astro.config.mjs:18` sets `prerenderConflictBehavior: 'error'`, a global Astro 6.0 config the task's deliverable list did not name, so both the loader-level duplicate-slug collision and any catch-all-vs-static route collision fail the build.",
+    "`github-slugger` was promoted to a direct docs devDependency (the task's 'Ask first' listed only MDX/Expressive Code) because it was already a transitive dependency of Astro and is the exact id rule the deterministic collision gate must match.",
+    "`MarkdownLayout.astro` takes `editUrl` rather than a `sourcePath` prop — the route computes the GitHub edit URL and the unused `sourcePath` prop was dropped to satisfy fallow's unused-component-prop gate.",
+    "`DocsLayout.astro` and `Header.astro` were left unmodified (composed, not edited) even though writeAllowed lists them, matching the BOUNDARY 'compose the existing DocsLayout/Header' over the deliverable enumeration."
+  ],
+  "concerns": [
+    "The scratch-copy test harness symlinks `node_modules` into the owned copy, which shares Astro's default `cacheDir` (`./node_modules/.astro`) with the real tree — the test clears it per build for isolation, but any future test that forgets this will see stale content sync or leak scratch entries into the real cache.",
+    "`tests/sprint-05-orient-search/docs-collection.test.ts` AC-4 is ~210 lines and suppresses `fallow-ignore-next-line complexity`; its idle-reset poll (3s ceiling vs the 2s reset timer) and two sequential preview servers (4321 + 4322) are timing-brittle spots.",
+    "The Expressive Code theme binding (`themeCssSelector` → `.light`, producing `:root.light .expressive-code`) silently breaks if the site's theme class mechanism ever moves off `html.light`.",
+    "`assertUniqueDestinations` must stay byte-compatible with Astro's `getContentEntryIdAndSlug` github-slugger derivation; an Astro id-generation change would drift the collision gate from the real loader."
+  ],
+  "findings": [
+    "Astro 7.3's glob loader processes files concurrently (`pLimit(10)`), so its own duplicate-slug warning races and can silently emit one route — the task's assumption that the real loader's collision diagnostic suffices is wrong.",
+    "Astro's default build-mode `cacheDir` is `./node_modules/.astro`, not `.astro/`, which is what makes scratch copies share content state with the real tree.",
+    "`render(entry)` returns `{ Content, headings, remarkPluginFrontmatter }` and `getCollection('docs')` entries expose a typed `filePath`, so edit-link source paths need no custom slug field.",
+    "`astro check` cannot run without `@astrojs/check` (not installed); the docs app is actually typechecked via `tsc -p apps/docs/tsconfig.json` plus the Astro compiler during build.",
+    "Astro's schema-failure diagnostic already satisfies AC-1's 'source ID and offending field' without any custom validation.",
+    "`// fallow-ignore-next-line complexity` directives are load-bearing for the `fallow audit --base HEAD` gate even in files outside fallow's `entry` globs — the reviewer's 'inert' note was empirically disproven."
+  ],
+  "scope_impact": [
+    {"target": "ORI-AST-003", "found": "the reserved `theming` slug is a module-private `RESERVED_DOC_SLUGS` in docs-navigation.ts, and `publishedDocs`/`sectionNavigation` already exclude it from the catch-all", "change": "when ORI-AST-003 binds the real TokenTable route adapter it must consume (or re-export) that reserved contract so the static `/docs/theming` route stays the single destination."},
+    {"target": "ORI-CONT-001", "found": "the collection schema enforces exact frontmatter shape and the catch-all derives ids from filenames", "change": "the six manuscripts must live under `apps/docs/src/content/docs/` with title/description/section/order (and optional draft), and a manuscript slugged `theming` will get no catch-all route."},
+    {"target": "ORI-AST-005", "found": "CopyButton now copies `command.textContent` untrimmed (apps/docs/src/scripts/copy-button.ts:36)", "change": "authored-code source byte-comparison must compare untrimmed bytes including the terminal newline, matching the served-source contract."},
+    {"target": "ORI-AST-004", "found": "each authored docs page renders `<main data-pagefind-body data-pagefind-meta=\"section:<section>\">`", "change": "Pagefind indexing for docs consumes that body/meta region, so the search input must read those attributes rather than a separate index artifact."},
+    {"target": "ROADMAP", "found": "root `pnpm typecheck` imports generated `apps/docs/src/data/registry-items.json`", "change": "fresh-worktree CI must hydrate (`pnpm install --frozen-lockfile` → `pnpm -w run gallery:manifest` → `pnpm --filter @rnr-ai-elements/docs prebuild`) before typecheck/gates."}
+  ],
+  "feedback": [
+    "The 'Ask first: any dependency beyond MDX/Expressive Code' conflicted with AC-2's collision requirement — reliable duplicate-destination detection needed github-slugger (already transitive); the task should pre-authorize id-derivation tooling for the publication gate.",
+    "The fixture's 'production published-entry input intended for search' was ambiguous — I read it as the `data-pagefind-body`/`data-pagefind-meta` region (matching the component pages), but a build-emitted JSON search index was a plausible alternate reading and does not exist yet.",
+    "The `astro check` verification gate is unrunnable without `@astrojs/check`, which is not a declared dependency; the docs typecheck should be stated as `tsc -p apps/docs/tsconfig.json`."
+  ]
+}

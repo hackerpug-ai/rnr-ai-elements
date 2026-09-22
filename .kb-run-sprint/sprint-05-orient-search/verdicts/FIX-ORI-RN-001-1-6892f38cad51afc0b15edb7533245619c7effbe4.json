@@ -1,0 +1,14 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "6892f38cad51afc0b15edb7533245619c7effbe4",
+  "reviewer": "ghactions-reviewer",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "git diff main...6892f38 on .fallowrc.json is exactly one added line '+ \"packages/docs-snippets/**\",' as the first ignorePatterns entry; every other byte identical ($schema, minimumVersion, entry, all 8 original patterns); no ignoreDependencies key. pnpm check:fallow at tip exits 0. RED double-sourced in committed evidence: red.txt (scratch template copy, exit 1, 97 unused + 8 dev/optional, 9 clone groups incl. packages/docs-snippets/*) and sibling-red-baseline.txt (sibling ORI-RN-001 worktree verbatim, exit 1, 10 clone groups / 769 lines matching doc baseline); green.txt shows exit 0 with the same templates present."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Independent reviewer drill: (1) doc-literal unused-export probe in evidence dir exits 0 — inert, verifying the implementer's substitution claim first-hand; (2) reviewer-authored unresolved-import probe OUTSIDE packages/docs-snippets/** makes pnpm check:fallow exit 1 naming the probe; (3) same-broken probe inside packages/docs-snippets/** is fully suppressed while the outside probe still fails — path-scoping proven in both directions; (4) byte-exact restore verified by sha256 of git status --porcelain -uall and git ls-files -s before/after, exit 0 re-confirmed, nothing committed. The substitution exercises the same FAIL-severity gate pathway and does not weaken the control."},
+    {"id": "SCOPE", "satisfied": true, "evidence": "git diff main...6892f38 --name-only lists exactly: .fallowrc.json, tests/sprint-05-orient-search/evidence/FIX-ORI-RN-001-1/** (9 files), .tmp/FIX-ORI-RN-001-1/** (2 files) — all three declared SCOPE paths; working tree clean at 6892f38."},
+    {"id": "GATES", "satisfied": true, "evidence": "pnpm check:fallow exit 0 at committed tip; pnpm typecheck exit 0; pnpm lint exit 0 (139 files, 4 infos, 0 errors)."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "not_required"},
+  "summary": "Single-line, correctly-scoped exemption verified end-to-end against the real fallow binary: the diff adds only 'packages/docs-snippets/**' as the first ignorePatterns entry with every other byte unchanged, the committed RED/GREEN evidence is double-sourced and internally consistent, and the independent AC-2 drill proved the gate still bites outside the exemption (exit 1 naming the reviewer's own probe) while findings inside it are suppressed — including an inside-exemption probe the implementer's drill did not run. The unresolved-import substitution for the doc's literal probes is justified (literal probes exit 0 inertly; substitution exercises the identical FAIL-severity gate pathway). Tree restored byte-exact (sha256-verified), nothing committed, all gates green. APPROVED."
+}

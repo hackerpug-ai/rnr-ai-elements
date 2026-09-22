@@ -1,0 +1,13 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "737729dbc30b09cf67646f8759f6edaf2227a035",
+  "reviewer": "react-native-reusables-reviewer",
+  "review_type": "task-document",
+  "findings": [
+    {"id": "DOC-F10", "severity": "non-blocking", "detail": "CLOSED. prepare.ts L235-236 selects fresh-vs-reverify by existsSync(<evidence>/asset-manifest.json) with no --force/--fresh flag; the committed 10d7f1de manifest exists, so the destructive rm pre-step is required and now appears in AC-3 VERIFY, the CRITICAL CONSTRAINT, both allowlist listings, and the gates deploy line. Recoverable: the old manifest is committed at 7973ccd and in HEAD's object store; the evidence tree is excluded from prepare.ts's source/clean-tree gates (L128/136/163)."},
+    {"id": "DOC-F11", "severity": "non-blocking", "detail": "CLOSED. The false claim is gone; the real mechanism is stated (prepare writes asset-manifest.json + build.json only; release.json is the attended-deploy receipt re-recorded after wrangler deploy with new version identity and conversation_assets from the fresh manifest), and the re-record step is inserted in AC-3 VERIFY between wrangler deploy and the --receipt invocation."},
+    {"id": "DOC-F12", "severity": "non-blocking", "detail": "CLOSED. DONE WHEN AC-1 now prints the token form in registry.json and the engine-substituted form https://rnraielements.com/r/<engine>/<item-name>.json in public/r/**."},
+    {"id": "DOC-F14", "severity": "non-blocking", "detail": "NO REGRESSION. className oracle, supersession constraint, scoped vitest gate, two-regex split, <item-name>, evidence allowlist, ordered build, no-repeat-bypass, RNR wording, and all measured counts (56/32/64/19/48/146/14) intact. Cycle-3 Amendments entry present; single-file markdown commit; BASE_COMMIT/CORRECTION_COMMIT still ancestors."}
+  ],
+  "summary": "Approved. Both blocking findings are closed with correct mechanics verified directly against prepare.ts and public-http.test.ts. The destructive rm is safe (old manifest committed at 7973ccd, path allowlisted, evidence tree excluded from prepare.ts's own gates). No previously-closed finding regressed; the AC-3 deploy proof is now executable end to end."
+}

@@ -1,0 +1,39 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "5548a4b56d15c0c0ed99f0263bbcbd342f5352b5",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "engine-state-contract.spec.ts:200-316 real message page click+keyboard; RED 4-of-8 unique IDs/null root engine; GREEN both groups+storage+root agree, 8 unique IDs, ArrowLeft/Right wrap, URL unchanged. Reviewer re-ran: pass."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "pre-paint via init-script MutationObserver; bogus/empty/absent resolve to nativewind; real Chromium --disable-local-storage denial (fixture verified genuine) still switches groups+root; uniwind click replaces malformed storage. Re-ran: pass."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "window __softProbe proves ClientRouter; engine+theme persist across swap/reload/fresh-tab; html.light/html.dark complementary both directions; real clipboard equals uniwind command; 3 swap cycles then one click = one activation. Re-ran: pass."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "raw HTTP 200 on / and /components/message with complete nativewind+uniwind commands (8 unique raw tab/panel IDs in dist); JS-disabled shows both panels stacked; no registry fetch constructs panels."
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "scratch Astro consumer built from candidate TabGroup.astro+tab-group.ts; pnpm click displays pnpm command while storage+root stay uniwind (RED showed pnpm leaked pre-fix); engine change syncs only engine groups. Re-ran: pass."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. One validated engine contract (resolveEngine nativewind/uniwind-only, nativewind default) shared by DocsLayout pre-paint script and tab-group island; ClientRouter with window-guarded data-astro-rerun pre-paint script derives html.dark as complement of html.light (theme-toggle.ts untouched). Slot-content digest group IDs sound (slots render once, sha256 deterministic, distinct content distinct prefixes). Reviewer independently reproduced all gates at tip: build 61 pages, typecheck 0, lint 0 (4 pre-existing infos), Playwright 15/15 across desktop/mobile/nojs; RED genuine behavioral (5 failed with concrete values). No stubs/skips/mocks/weakened assertions."
+}

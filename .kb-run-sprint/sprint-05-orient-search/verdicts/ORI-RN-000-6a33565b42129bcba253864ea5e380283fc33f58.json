@@ -1,0 +1,14 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "6a33565b42129bcba253864ea5e380283fc33f58",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Independent reproduction in scratch: main's mapper → tsc exit 2 with TS2345 ('string | null | undefined' not assignable to 'string | null'); candidate mapper → exit 0, zero diagnostics, real expo-image-picker@57.0.16 resolved via tsconfig paths (declaration verified at ImagePicker.types.d.ts:269,274,303 — all three fields optional), workspace tsc 6.0.3. `vitest run ... -t ORI-RN-000-AC-1-real-sdk` → 1 passed, exit 0. No casts/ambient/suppression (grep clean)."},
+    {"id": "AC-2", "satisfied": true, "evidence": "public/r/nativewind/prompt-input.json mapper target byte-matches source (SHA-256 c483e0ee… both), compiles exit 0 against the real SDK. `pnpm registry:build` exit 0 leaves git tree clean — artifacts are generated, not hand-edited. Per-AC verify → 1 passed, exit 0."},
+    {"id": "AC-3", "satisfied": true, "evidence": "public/r/uniwind/prompt-input.json mapper byte-matches source and compiles exit 0; staleRejectionCheck runs the real scripts/check-registry-fresh.ts over an isolated scratch copy with a reverted mapper → exit 1 naming public/r/uniwind/prompt-input.json; `pnpm check:registry` exit 0 (56 items x 2 engines = 114 files fresh). Per-AC verify → 1 passed, exit 0."},
+    {"id": "AC-4", "satisfied": true, "evidence": "Production export asserted for full (photo.png/image/png/2048), omitted and null inputs (filename='Image', mediaType='', size undefined, pi- identity, distinct ids); removed-fallback mutation control exits 1 = detected, correctly labeled sensitivity. Git diff proves runtime body byte-unchanged. Per-AC verify → 1 passed, exit 0; existing tests/prompt-input.test.ts 29/29."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Clean type-only FIX, verified end-to-end against real surfaces. The single production hunk widens ImagePickerAssetShape's fileName/mimeType/fileSize to optional-nullable, matching the real Expo 57 declaration I read in the installed package; runtime mapping and nullish fallbacks are byte-unchanged. RED evidence is genuine (bound to pre-fix HEAD f1efc71 and a source SHA matching main exactly, with real TS2345 diagnostics) and I independently reproduced RED→GREEN in my own scratch with the pinned tsc 6.0.3. Both engine artifacts were regenerated through the real build (idempotent — rebuild leaves the tree clean), byte-match source, and compile against the real SDK; the freshness gate passes over the repo and provably rejects an isolated stale mapper. All four per-AC commands, registry build/freshness, typecheck, lint, and the 29-test regression pass on the candidate. No stubs, suppressions, or scope violations; the mutation control is correctly labeled sensitivity, not the original defect."
+}

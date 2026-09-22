@@ -1,0 +1,43 @@
+{
+  "task": "ORI-RN-002",
+  "commit_sha": "716820deca100fdf758fda3a86de23f1f0ca34ed",
+  "done": "Delivered the single source-backed seed-data chat screen: a 24-turn alternating transcript, an engine-agnostic quickstart-screen.tsx composing Conversation/Message/PromptInput with no AI SDK or markdown dependency, two thin engine entrypoints importing the identical shared source, and a 5-test suite (real compiler + hash identity + source-shape) with RED/GREEN and evidence proving both consumers compile the shared bytes at SHA-256 equality.",
+  "deviations": [
+    "The scroll button is positioned via a hand-rolled absolutely-positioned wrapper with inline `style={{ bottom: composerHeight + 12 }}` measured through `onLayout` on PromptInput (packages/docs-snippets/shared/quickstart-screen.tsx:59-67), because ConversationScrollButton accepts only a `className` (no dynamic style) and packages/registry/conversation.tsx is writeProhibited, so the design standard's 'above the measured composer' could not be met with a plain class.",
+    "The RED is an import-time 'Cannot find module ../../packages/docs-snippets/shared/quickstart-messages' (the test's top-level seed import), not a consumer-compiler TS2307 diagnostic, which mirrors the ORI-RN-001 precedent but does not literally satisfy gate #1's 'source absence alone is not functional RED' wording."
+  ],
+  "concerns": [
+    "The composer measurement couples the screen to PromptInput spreading ViewProps; if its root ever stops forwarding `onLayout`, composerHeight stays 0 and the scroll button silently drops onto the composer with no test to catch it.",
+    "The `bottom: composerHeight + 12` gap and the `pointerEvents=\"box-none\"` wrapper are unproven at runtime and are exactly what ORI-RN-003 must observe on device before AC-3 can pass."
+  ],
+  "findings": [
+    "`PromptInputMessage` is re-exported from `@/components/ai/prompt-input` (prompt-input.tsx:100-105), so `import { type PromptInputMessage }` resolves and typechecks in both consumers.",
+    "`.fallowrc.json` ignores `packages/docs-snippets/**`, which is the only reason the two near-identical engine entrypoints do not trip clone-group findings; any future fallow scope that includes docs-snippets will flag them as duplication.",
+    "Root `tsc --noEmit` fails with TS2307 on `apps/docs/src/data/registry-items.json` until `pnpm -w run gallery:manifest && pnpm --filter @rnr-ai-elements/docs prebuild` runs, so any dependent task running `pnpm typecheck` must hydrate the docs data first."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-RN-003",
+      "found": "The scroll-button offset above the measured composer is the one AC-3 fact the compile tier cannot observe, and it is a hand-rolled wrapper rather than registry-provided behavior.",
+      "change": "Verify on iOS+Android that ConversationScrollButton sits above the composer with zero overlap as the composer grows, and that PromptInput's onLayout fires so the measured bottom offset is non-zero."
+    },
+    {
+      "target": "ORI-CONT-003",
+      "found": "No docs resolver or tutorial currently reads packages/docs-snippets/shared/{quickstart-screen.tsx,quickstart-messages.ts}, so the AC-1 'resolver output / displayed source' identity is a design invariant, not an implemented wiring.",
+      "change": "Wire the tutorial's displayed source to read the same committed shared files and document the single-source invariant, since no test asserts that wiring today."
+    },
+    {
+      "target": "GATE:FLOW-DOCS-02-quickstart-chat-screen",
+      "found": "The four `-t ORI-RN-002-AC-{2,3,4}-*` vitest invocations assert source shape only, not the runtime ACs (scroll, keyboard, light/dark), because rendering belongs to ORI-RN-003.",
+      "change": "Treat AC-2/3/4 evidence as sourced from ORI-RN-003's six-target device/browser observations, not from those `-t` runs, which only seed the runtime proof."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "ConversationScrollButton's className-only API forces every consumer to hand-roll the above-composer offset, which is brittle and duplicated.",
+      "change": "Consider a follow-up registry item that exposes a style/offset seam on ConversationScrollButton (or measures the composer inside Conversation) so consumers do not each reimplement the measurement."
+    }
+  ],
+  "feedback": [
+    "Record the scroll-button measurement wrapper as a known consumer-side pattern in the tutorial, since it is the one non-obvious step a learner following the quickstart would otherwise get wrong."
+  ]
+}

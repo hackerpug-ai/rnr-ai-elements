@@ -1,0 +1,65 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "0b9cd49adcd816aeff53b8838de92f8320818155",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "apps/example/lib/live-chat-config.ts:69-72 reads process.env.EXPO_PUBLIC_API_BASE_URL directly; resolveLiveChatConfig seam byte-identical (git diff 001488cd..0b9cd49a shows only getLiveChatConfig changed, +1/-2). Seam unit test re-run by reviewer: `pnpm exec vitest run tests/sprint-05-orient-search/live-example-api.test.ts` -> 4 PASS 0 FAIL. Web proof re-run (`--platforms web --run-id REVIEW-C6WEB`): leg passed, emptyStateVisible/markerSubmitted/inputCleared/assistantResponded/followUpRecallVisible/stopControlVisible all true, 3 completed gpt-4.1-mini-2025-04-14 records via the same-origin proxy. RED committed at .tmp/FIX-ORI-RN-004-1/cycle-1/red/web-red.out + web-red-manifest.json (all booleans false, getByLabel('Message') timeout pre-fix)."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Android proof re-run on emulator-5554 (`--platforms android --run-id REVIEW-C6ANDROID`): BOTH appearances passed with per-turn gates 'OK: marker submitted, echoed, and its reply completed' / 'OK: seed reply streamed to a completed provider record' / 'OK: follow-up streamed to a completed provider record' / 'OK: active stop aborted the stream (aborted provider record)'; provider-correlation: 3 completed + 1 aborted per appearance (light abort at 0 deltas; dark at 218). Screenshot shows reviewer run-id marker in transcript. sendEnabled asserted after typing and focus asserted before typing (live-example-proof.test.ts:546-556); stop turn hot-path coordinate send+stop with zero device reads (lines 629-676). Root cause recorded per amended charter: bisect committed under tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/android-input-isolation/ \u2014 'NOT a code bug, driver-side' in evidence README; app.json and use-live-chat.ts untouched."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "iOS re-run (`--platforms ios --run-id REVIEW-C6IOS`): light+dark passed (maestro_exit 0, marker in hierarchy, 3 completed + 1 aborted records each). AC-5 compiler case re-run: passed=true, scoped exit 0, route+screen+message+conversation in program, negative control holds. `pnpm typecheck` exit 0. `pnpm lint` exit 0 reproduced via CLEAN-ENV route (`env -i HOME=... PATH=/usr/bin:/bin:<node-dir> node_modules/.bin/biome ci .` -> exit 0, 4 pre-existing infos; direct agent-shell lint OOMs exit 254 as documented). Scoped gate `tsc --noEmit -p tsconfig.live-chat.json` exit 0. Whole-example `tsc --noEmit` exit 2 retained verbatim; all 76 errors confined to files byte-identical between base 001488cd and HEAD \u2014 inherited, not introduced."
+    },
+    {
+      "id": "RED",
+      "satisfied": true,
+      "evidence": "Cycle-6 RED is a real RED for a driver-hardening change: (1) source-verified at 61e56f55 \u2014 committed driver's stream gates are waitForText('Send message') waits (lines 501/534) that its own comments say never flip during streaming, and backend records were never used for gating; (2) cycle-4 capture on disk shows the same committed driver PASSING with 8 completed / 0 aborted records \u2014 a false green; (3) committed attempt-1 manifest (cycle-6/green/attempt1/) shows the reworked gates hard-failing a lost stop race (both legs failed, zero aborted), proving the new verdict tracks reality. Charter's original REDs (web not-configured, android button disabled) committed in cycle-1. Note: cycle-4/cycle-5 .tmp artifacts cited by the RED README are uncommitted scratch on disk only."
+    },
+    {
+      "id": "SCOPE",
+      "satisfied": true,
+      "evidence": "git diff --name-only 001488cd..0b9cd49a: product/test code limited to apps/example/lib/live-chat-config.ts + tests/sprint-05-orient-search/support/live-example-proof.test.ts (both WRITE-ALLOWED); remainder is evidence/FIX-ORI-RN-004-1/** and .tmp/FIX-ORI-RN-004-1/**. app.json and use-live-chat.ts untouched. .spec/** carries the documented cycle amendment commits (sanctioned reviewer-findings->amendment process) plus three bookkeeping commits (11a3248a, 443c5be8, f75c0a57) \u2014 reviewer read every diff; none weakens this task's ACs; all three verified already ancestors of main."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Diff shape exact (const env alias removed, direct member access only); resolveLiveChatConfig untouched; vitest 4/4 PASS."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Web RED (cycle-1) + GREEN pair (tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-1/web-green-manifest.json + web-green-provider-correlation.json) committed; reviewer re-run confirms with the strictly-stronger seed-prompt fix (assistantResponded true)."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Android GREEN re-verified by reviewer's own run; bisect evidence committed under android-input-isolation/; RED chain per the RED requirement."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "iOS + compiler case pass (reviewer re-runs); changed-path scope per SCOPE."
+    },
+    {
+      "id": "TC-5",
+      "satisfied": true,
+      "evidence": "typecheck exit 0, lint exit 0 (clean-env route), whole-example diagnostic retained with exit 2 verbatim; pre-existing status proven by empty diff on all error files between base and HEAD. Minor: evidence README's final 'Gates' bullet is stale (claims typecheck fails on the sprint-04 contract test; in this tree typecheck exits 0) \u2014 the cycle-6 green README is the accurate one."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Cycle 6 closes the four prior review cycles for real. The only product change remains the sanctioned Defect A fix (direct process.env read, seam intact); Defect B resolved as a driver-side defect with committed bisect/isolation evidence, leaving app.json and use-live-chat.ts untouched. The reworked driver hard-gates every Android turn on a NEW terminal backend record, asserts Send-enabled and focus, handles LogBox/shade/IME off device state, and the stop turn's coordinate hot path removed the ~25s race window. Reviewer re-ran the entire battery against the live stack (emulator-5554, iPhone 17 sim, real backend + OpenAI, Chromium over the real export): web, android light+dark, ios light+dark, AC-5 compiler case, typecheck, clean-env lint, and seam unit test all pass; whole-example tsc exit 2 is inherited (error files unchanged since base). No stubs, no weakened assertions. Three non-blocking notes for landing: uncommitted cycle-4/cycle-5 .tmp RED artifacts (leave worktree, note it), stale evidence README typecheck bullet, and three foreign .spec bookkeeping commits on the branch \u2014 all verified already ancestors of main."
+}

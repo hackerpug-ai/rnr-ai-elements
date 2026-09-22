@@ -1,0 +1,68 @@
+{
+  "task": "ORI-CONT-005",
+  "commit_sha": "36f46aaa9400567bb273e7a5c47679dffe2f11ad",
+  "done": "Landed the four-file scope at 36f46aa (merged to main as a1739e9): explanation-quadrant boundary page at /docs/owns-vs-does-not-own (getting-started section, order 50) assigning AI UI compositions to the library and the five model responsibilities to the consumer with source-matched renderMarkdown/dev-client prose, factual recovery copy at apps/docs/src/content/system/not-found.md outside the docs collection, a four-test Playwright spec (ORI-CONT-005-AC-1..4) over the real preview in desktop/mobile/nojs, and an evidence artifact recording RED 12/12 -> GREEN 12/12, typecheck 0, lint 0.",
+  "deviations": [
+    "AC-3's contracted third internal link /components/streamdown is absent from the page because that route 404s in the real build (verified by curl and by dist inspection) and every path to create it is write-prohibited; the test asserts only real destinations and the evidence file section 7 records the gap as the task's blocker.",
+    "The 'Search documentation' action label is carried as an imperative sentence in the recovery copy ('Search documentation for the topic you need, or start from one of these pages:') rather than a bare control label; ORI-AST-009/ORI-VIS-005 bind the header search control to this string."
+  ],
+  "concerns": [
+    "Playwright's reuseExistingServer plus the shared localhost:4321 preview let concurrent sibling sessions (observed ORI-AST-002, PIDs 95460/82559/19690 serving their own worktree's dist) silently answer this task's tests — my first GREEN and one RED were corrupted that way, and every downstream preview-based task in this sprint is exposed to the same invisible wrong-tree hazard.",
+    "Astro's content-layer store persists in apps/docs/node_modules/.astro and replays deleted collection files across builds: after moving my markdown out, astro build still emitted /docs/owns-vs-does-not-own (62 pages) from the stale store, which initially faked both RED and GREEN until I cleared apps/docs/.astro, apps/docs/dist, AND apps/docs/node_modules/.astro before every build.",
+    "The boundary page deliberately ships prose plus a bulleted five-responsibility list, not the 'ownership tables' that ORI-CONT-004's SC-ORI-CONT-004-4 wording says its verifier will read — tables are Sprint 06 scope per my task contract, so a strict literal reading of that scenario would false-fail the Sprint 05 slice."
+  ],
+  "findings": [
+    "tests/harness/docs-preview.ts:67 waitForAstroPageLoad calls page.evaluate, which hangs until the 30s timeout in the chromium-nojs project (JavaScript disabled) — no-JS specs must skip it; my spec gates on testInfo.project.name === 'chromium-nojs', and a nojs-safe harness variant would prevent every future spec from rediscovering this.",
+    "Playwright requires the first test-callback argument to be a destructuring pattern while Biome forbids the empty pattern — filesystem-only tests must use async () with no parameters, and testInfo-dependent captures then need a separate shared-capture helper (precedent: tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:183).",
+    "pnpm lint (biome ci .) enforces formatting, not just lint rules — npx biome check can pass while biome ci fails on 'File content differs from formatting output'; run biome format --write on new spec files before gating.",
+    "Spec-file paths to repo sources must resolve via new URL('../../'+rel, import.meta.url) — import.meta.dir is Bun-only and a one-level '../' silently points inside tests/, producing ENOENT reds for the wrong reason.",
+    "False source oracles are easy here: message.tsx:25 names react-native-enriched-markdown in a doc comment, so a string-includes absence check fails; assert the import graph (regex on from '...') when the claim is 'the core does not depend on the native module'."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-AST-004",
+      "found": "AC-1 requires visiting /components/streamdown as one of five item destinations that return HTTP 200.",
+      "change": "Unsatisfiable until a streamdown destination exists (verified 404); either land the destination fix first or amend its AC to drop that URL."
+    },
+    {
+      "target": "ORI-VIS-003",
+      "found": "AC-2 requires the query 'streamdown' to produce a readable result naming the /components/streamdown destination.",
+      "change": "Same destination dependency; note the boundary prose is already indexable for 'streamdown', 'renderMarkdown' and 'dev client' (all appear in explanatory paragraphs)."
+    },
+    {
+      "target": "ORI-AST-010",
+      "found": "Its AC-3 (FLOW-SHELL-07) requires Enter on a streamdown search result to reach /components/streamdown with 200 and matching content.",
+      "change": "Blocked on the same missing destination; the prose side of its query needs (renderMarkdown/streamdown/dev client explanations) is delivered and indexed via data-pagefind-body on the boundary page."
+    },
+    {
+      "target": "GATE:FLOW-SHELL-07-cmdk-open-search-navigate",
+      "found": "Gate steps at human-flows.json:730 and human-flows.json:742 require visiting /components/streamdown as one of 'five existing item destinations'.",
+      "change": "That gate step stays RED until the destination lands; recommend the orchestrator own the fix as an astro-side task (a docs-owned integration page under apps/docs/src/pages or an extension of the item fan-out in scripts/docs-data/prebuild.ts, accepting that gates.ts deliberately treats matrix names as non-items) with any registry-level streamdown item owned separately by a registry task — both were outside my write scope; one-line content edit on my page adds the link once it resolves."
+    },
+    {
+      "target": "ORI-CONT-004",
+      "found": "It consumes my boundary page for Introduction's ownership link and its scenario text expects 'ownership tables', and it will later point the example sentence at apps/example/docs/live-chat.md.",
+      "change": "Expect prose plus the bulleted five-responsibility list (not tables) for Sprint 05, and after the live integration lands update the final section's example link/target sentence in owns-vs-does-not-own.md per its own contract."
+    },
+    {
+      "target": "ORI-VIS-005",
+      "found": "It composes the branded missing-page surface from my not-found.md, whose source carries exactly two markdown links (Introduction, Browse components) plus the Search documentation imperative sentence.",
+      "change": "Bind the branded search control to the 'Search documentation' label and keep the two direct links intact so the no-JavaScript recovery floor and the AC-4 'exactly two links' source contract both hold."
+    },
+    {
+      "target": "ORI-CONT-001",
+      "found": "I took section 'getting-started', order 50 in the docs collection for owns-vs-does-not-own.",
+      "change": "Pick order values that leave 50 free (or accept id-tiebreak ordering — sort is section, then order, then id; collisions are tolerated, not errors)."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "Sprint 06 retains the full scannable ownership tables and complete gap inventory for UC-DOCS-04.",
+      "change": "No second boundary page was created; Sprint 06 work should extend /docs/owns-vs-does-not-own (or replace its list with tables) rather than adding a parallel boundary route, per the no-duplicate-boundary constraint."
+    }
+  ],
+  "feedback": [
+    "Give each parallel task its own preview port (or add strict ownership verification before reuseExistingServer accepts a listener) — a foreign dist answering your tests is undetectable from test output alone and cost this task several invalid cycle captures.",
+    "Extend the ordered docs build chain (pnpm e2e:docs or prebuild) to clear apps/docs/.astro, apps/docs/dist, and apps/docs/node_modules/.astro before astro build so content-collection RED/GREEN can never be satisfied by a replayed Astro content store.",
+    "Add a nojs-safe page-load helper to tests/harness/docs-preview.ts so chromium-nojs specs stop timing out inside waitForAstroPageLoad's page.evaluate."
+  ]
+}

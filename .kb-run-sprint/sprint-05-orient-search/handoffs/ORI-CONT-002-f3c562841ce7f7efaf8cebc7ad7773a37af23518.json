@@ -1,0 +1,52 @@
+{
+  "task": "ORI-CONT-002",
+  "commit_sha": "f3c562841ce7f7efaf8cebc7ad7773a37af23518",
+  "done": "Authored apps/docs/src/content/docs/theming.mdx (reference, guides/1) and dark-mode.md (explanation, getting-started/4) from current sources with a task-owned real-file contract (tests/sprint-05-orient-search/theming-manuscript.test.ts, 4 selectors RED-first, 8 mutation controls) plus tests/sprint-05-orient-search/evidence/ORI-CONT-002-content-review.md; all four selectors and the task suite exit 0 with observed values, pnpm typecheck and biome ci exit 0, and only the four allowlisted paths changed.",
+  "deviations": [
+    "cycle-1/red/*.txt were recaptured once with the final contract after the test file was revised (draft-contract RED outputs replaced in place); GREEN captures were never overwritten and the RED failure mode is unchanged (functional missing-manuscript assertion)."
+  ],
+  "concerns": [
+    "apps/docs/src/content/docs/theming.mdx:14 carries a bare unimported `<TokenTable />` that no Astro render() components mapping can bind, so the first route that renders it without a binding mechanism will throw a ReferenceError; it is safe today only because docs-navigation.ts:48 excludes the reserved theming slug, and astro build was not a gate in this task, so the first post-merge build should confirm the exclusion still keeps it unrendered.",
+    "The contract resolves js-yaml by globbing node_modules/.pnpm/js-yaml@* and github-slugger through apps/docs/node_modules/github-slugger, so a lockfile change that removes either package fails the suite for a dependency reason rather than a content reason.",
+    "theming.mdx:22-31 now byte-couples the nine --color-* lines of apps/example/global.css to the manuscript fence, so any edit to that consumer @theme block fails ORI-CONT-002-engine-provenance until the manuscript is updated in the same change.",
+    "81 timestamped mutation-copy files were committed under .tmp/ORI-CONT-002/ because the task rules require git add -f of that root, including two interim debug runs from before the contract was finalized."
+  ],
+  "findings": [
+    "The workspace pnpm store contains no importable full MDX parser (no remark-parse, remark-mdx, mdast-util-from-markdown, or @mdx-js entry), so the contract parses frontmatter with the store's js-yaml and derives heading anchors with the docs app's own github-slugger copy.",
+    "apps/docs/src/content/docs/ did not exist before this commit; ORI-AST-001 landed the collection shell and catch-all only, and this task created the directory with its first two manuscripts.",
+    "The seam-map's rendermarkdown marker is a source-text scan (apps/docs/src/lib/seam-map.ts:29) that matches context.tsx:52 only because a comment names the seam precedent, while the real prop owners are message.tsx:104 and reasoning.tsx:185.",
+    "Anchor targets must come from exact heading text: `## TextClassContext` and `## renderMarkdown` (theming.mdx:40,44) slugify to textclasscontext and rendermarkdown; DocsLayout's global section[id]/h2[id]/h3[id] rule supplies the sticky-header offset.",
+    "The example app tracks the device scheme through Uniwind's useUniwind() (apps/example/app/index.tsx:112, _layout.tsx:16), not useColorScheme."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-AST-003",
+      "found": "theming.mdx:14 declares exactly one `<TokenTable />` with no import and Astro MDX has no render-time component-mapping parameter, so the manuscript cannot be rendered as-is by the catch-all contract.",
+      "change": "Design the adapter's binding mechanism explicitly (the reserved-slug exclusion in docs-navigation.ts:48 is module-private and must be consumed or re-exported), and keep the heading texts TextClassContext and renderMarkdown unchanged."
+    },
+    {
+      "target": "GATE:FLOW-DOCS-01-theming-and-section-nav",
+      "found": "The rendered /docs/theming page needs a CLI link for step 2 to follow, but theming.mdx:48 deliberately links only /docs/dark-mode.",
+      "change": "Supply the /docs/cli onward link on the Theming page (route adapter or content amendment) and confirm the oklch occurrences and paired --primary values come from the TokenTable rendering."
+    },
+    {
+      "target": "ORI-CONT-001",
+      "found": "dark-mode.md:20 links /docs/installation and /docs/cli, whose ids derive from filenames, and this task fixed dark-mode at order 4 assuming introduction=1, installation=2, cli=3.",
+      "change": "Name the manuscripts exactly installation.md and cli.md under apps/docs/src/content/docs/ and adopt order 1/2/3 or accept id-tiebreak ordering."
+    },
+    {
+      "target": "ORI-CONT-004",
+      "found": "The browser-reading proof will read the adapted Theming route and both manuscripts through the real collection.",
+      "change": "Assert the preserved anchors against heading text TextClassContext and renderMarkdown (not the old static route's markup) and treat numeric token observations as TokenTable output."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "apps/example/global.css's @theme color lines are now provenance-coupled to theming.mdx:22-31, and dark-mode.md:16 pins the rnr-theme storage key and resolution order against DocsLayout.astro and theme-toggle.ts.",
+      "change": "Route any future edit of the consumer @theme block or theme-resolution script through a manuscript update in the same change."
+    }
+  ],
+  "feedback": [
+    "The plan's verification service wording 'authored Markdown/MDX parser' names no available parser; naming the acceptable parser set would remove the store-path resolution each content task reinvents.",
+    "Mutation scratch writes one timestamped copy per selector run, so evidence directories grow quickly; a fixed filename per named mutation would keep the same proof with less committed noise."
+  ]
+}

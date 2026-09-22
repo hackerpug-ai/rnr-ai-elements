@@ -1,0 +1,42 @@
+{
+  "task": "ORI-RN-004",
+  "commit_sha": "7e66cd5999b264064eb88bace6e97f0dfedc0125",
+  "done": "Landed the hardened AC-3 case-2 transcript-count oracle in tests/sprint-05-orient-search/support/live-example-proof.test.ts (transcriptProbeCount near :777, dismissIosKeyboardByTap near :590, maestroScrollUntilVisible direction DOWN near :639, innermost-match hierarchyElementCount near :564), refreshed every artifact under tests/sprint-05-orient-search/evidence/ORI-RN-004/ plus the README, and committed the cycle-3 RED/GREEN lineage under .tmp/ORI-RN-004/cycle-3/ — final GREEN run ORI-RN-004-C3F-1789744559 on the committed source passed 3/3 platforms (all five legs, exactly 1 retained probe turn each, backend 20 completed + 4 aborted + 0 error), with AC-5 re-proven and typecheck/biome/fallow all exit 0.",
+  "deviations": [
+    "Kept the UI transcript-count as the AC-3 case-2 oracle instead of switching to backend record counts as the dispatch context hinted, because the AC's end state ('leaves exactly 1 user turn', must_not_observe 'a duplicated retained user turn') is a UI observation and the backend completed-record gates already run alongside it.",
+    "Credential-shaped env vars are stripped by temporarily mutating process.env around Metro/expo-export/Chromium/tsc spawns (live-example-proof.test.ts:~264 and call sites), because the spawn call sites that would take an explicit env live in writeProhibited support files (native-session.ts:313, quickstart-consumer.ts).",
+    "The evidence dirs gained retry-state.png captures per native leg (and transient retry-state-hierarchy.txt on failed attempts), which the task's exact-path list does not name but the evidence/ORI-RN-004/{ios,android}/ allowlist covers."
+  ],
+  "concerns": [
+    "The iOS oracle leans on three environment behaviors that are not contractual — Maestro's hideKeyboard being a no-op, the unhandled-tap dismissal through keyboardShouldPersistTaps=\"handled\", and the inverted list's self-re-park race (probe visible at t0/t4, oldest turns back at t8 with zero input) — so any Expo/RN/Maestro upgrade can shift which channel wins; channels 2-4 are the cushion but watch for 'exhausted'.",
+    "Vision OCR is unreliable on some of these captures (it read 0 on frames whose pixels plainly contained the text once), so it is only the last-resort channel and never decides alone.",
+    "The harness's image viewer served cached renditions keyed by basename twice during verification and misrepresented captures, so any future eyeballing of evidence must be done with local pixel reads (histogram/OCR), not the viewer.",
+    "A concurrent session edited this worktree's driver mid-run twice and a duplicate driver run fought attempts 2-4 over the same devices and port 4000 — single-writer isolation for this task's worktree was not actually enforced during cycle 3."
+  ],
+  "findings": [
+    "On iOS, Maestro's text matcher cannot see RN Fabric Text nodes that lack explicit accessibility labels (assertVisible/scrollUntilVisible/tapOn by text all fail for transcript bubbles) while `maestro hierarchy` does carry them in accessibilityText — so iOS transcript assertions must read the hierarchy dump, not element selectors.",
+    "Maestro's scrollUntilVisible direction is CONTENT direction (DOWN reveals lower content, per docs and two passing Android runs), contradicting the gesture-direction reading a mid-session edit applied when it flipped the driver to UP and broke the attempt-4 Android legs.",
+    "RN aggregates descendant accessibility labels onto container elements, so one rendered bubble matches at both the list-cell wrapper and the inner Text — the exactly-1 oracle must count innermost matches or iOS reads a phantom 2.",
+    "Maestro's hideKeyboard command does NOT dismiss this app's iOS keyboard; a coordinate tap on the unhandled transcript region does, which matters because a raised keyboard eats ~40% of the screen, covers the scroll affordance, and swallows gestures below ~60% height.",
+    "The pinned Expo Go 57.0.9 APK scratch cache (~/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk) is machine-local and was missing this cycle — it was restored from the official expo/expo-go-releases GitHub release, and the driver will hard-fail again on any fresh machine that lacks it.",
+    "The whole-example `tsc --noEmit` diagnostic remains exit 2 from pre-existing gallery/server errors outside this task's allowlist, unchanged and retained unsuppressed in example-package-typecheck.txt."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-CONT-004",
+      "found": "The locked flow's spec tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts does not exist on any branch (never committed), so this task's Verify-list Playwright command cannot run at this position in the dependency graph.",
+      "change": "Either sequence that command after ORI-CONT-004 lands the spec, or mark it conditional in this task's verify list; the captured evidence lives at .tmp/ORI-RN-004/cycle-3/playwright-flowdocs02-missing-spec.log."
+    },
+    {
+      "target": "ORI-RN-005",
+      "found": "The transcriptProbeCount oracle and its iOS/Android keyboard, shade, direction, and label-aggregation findings are directly reusable by any later task that must read the virtualized Conversation on native.",
+      "change": "Consume tests/sprint-05-orient-search/support/live-example-proof.test.ts's helpers and the README's oracle notes instead of re-deriving them against the live-chat consumer screen."
+    }
+  ],
+  "feedback": [
+    "The Verify list contains a command whose target file is another task's future output, which forces an honest 'cannot run' note rather than a green check — scope verify commands to artifacts that exist at the task's dependency position.",
+    "The dispatch context's suggestion that backend record counts are the ground truth would have weakened the AC's UI-level 'exactly 1 user turn' oracle — treat the AC's observable end state, not backend telemetry, as the arbiter when the two conflict.",
+    "Device reservations (RNR_S05_IOS_UDID / RNR_S05_ANDROID_SERIAL) were unset in the dispatched shell and had to be reconstructed from ORI-RN-003's evidence — bake the reserved identities into the dispatch environment.",
+    "The task file's exact evidence-path list omits the per-leg retry-state.png the oracle naturally produces; naming planned evidence files up front would avoid the deviation judgment call."
+  ]
+}

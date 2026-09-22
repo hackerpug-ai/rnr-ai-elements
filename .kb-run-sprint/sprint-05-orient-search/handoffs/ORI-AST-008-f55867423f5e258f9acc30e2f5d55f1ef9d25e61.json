@@ -1,0 +1,29 @@
+{
+  "task": "ORI-AST-008",
+  "commit_sha": "f55867423f5e258f9acc30e2f5d55f1ef9d25e61",
+  "done": "Landed the all-56-item reference fan-out in `apps/docs/src/pages/components/[item].astro` (getStaticPaths no longer filters `registry:component`; a `item.props &&` guard drops the entire Props section for the 17 null-props ui/lib records; `data-pagefind-body` + `data-pagefind-meta=\"category:…\"` are on the item `<main>`), plus the task-owned browser spec `tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts` (5 ACs, 15/15 across chromium-desktop/mobile/nojs) and the evidence manifest `tests/sprint-05-orient-search/evidence/ORI-AST-008/manifest.json`; the build now emits 61 pages with the 39-card seven-family browse index untouched.",
+  "deviations": [
+    "Added `// fallow-ignore-next-line complexity` (with a one-line justification) above each of the five test functions in `tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts` — not in the task's design standards, but required to pass the new pre-commit fallow gate; the reviewer confirmed they suppress only the inherent 17–56-item enumeration complexity and hide no defects.",
+    "Fixed two test-authoring bugs inherited from the prior interrupted attempt rather than preserving them: the QR aria-label was read off `<aside data-qr-panel>` instead of its inner `[role=\"img\"]`, and the source-bytes 'remains nativewind' anchor used `includes('/nativewind/')` (false for ui/lib sources) — replaced with a no-uniwind-import-path assertion backed by the byte-compare."
+  ],
+  "concerns": [
+    "The REF-009 TC-8 commit-identity assertion (`tests/sprint-04-generated-reference/item-page-contract.test.ts:337-350`) is structurally fragile: any later task that edits `[item].astro` alone (as this one correctly did) breaks it again, so it will keep recurring unless its semantics are relaxed.",
+    "The full `pnpm exec vitest run` is destructive and very slow — the drill tests (`drill-item-count.ts` / `drill-enrichment.ts`) rmSync `apps/docs/src/data/dev-client-matrix.json` and regenerate `registry-items.json` mid-run and only restore them on clean completion, so an interrupted/killed run leaves the data dir broken and the next `prebuild` fails with a GateError."
+  ],
+  "findings": [
+    "The pre-commit fallow gate (landed 2026-09-13 in `9424cb4`, `righthook.yml` + `.fallowrc.json`) flags enumerative e2e spec functions as CRITICAL complexity even though the sprint-04 spec files with identical structure predate the gate, so every subsequent enumerative spec task will hit it.",
+    "The `qrcode` 'unlisted dependency' fallow finding is pre-existing and not this task's: `qrcode` was added as a root devDependency in `9a76f57` but `[item].astro` imports it without it being in `apps/docs/package.json`.",
+    "`apps/docs/src/data/registry-items.json` is generated (untracked) but `apps/docs/src/data/dev-client-matrix.json` is a committed prebuild INPUT, so after a killed vitest run the correct recovery order is `git checkout -- apps/docs/src/data/dev-client-matrix.json` THEN `prebuild` (prebuild first fails the matrix gate)."
+  ],
+  "scope_impact": [
+    {
+      "target": "FIX:<REF-009 commit-identity>",
+      "found": "`tests/sprint-04-generated-reference/item-page-contract.test.ts:337-350` asserts `lastCommitFor('apps/docs/src/pages/components/[item].astro')` equals the last-commit of `component-page.spec.ts`, `page-contract.test.ts`, and `item-page-contract.test.ts`, which is now false because this task's allowlisted edit moved `[item].astro` to a newer commit.",
+      "change": "Relax the assertion to check only that the three re-pinned files (`component-page.spec.ts`, `page-contract.test.ts`, `item-page-contract.test.ts`) share one commit among themselves, and replace the `[item].astro` equality with a 'page change is committed' existence check (`not.toBe('')`) — it is a sprint-04 re-pin artifact, not a property any later `[item].astro` task can preserve."
+    }
+  ],
+  "feedback": [
+    "The task's EVIDENCE GATES (lines 281-291) do not list `pnpm exec vitest run`, but the harness Verify section does; the task file should state explicitly that only the 8 listed gates are task-required so implementers don't burn time on the slow/destructive full vitest lane that their `.spec.ts` change cannot affect.",
+    "The manifest hash (`test_spec_sha256`) is easy to record stale if computed before the spec is finalized through lint/fallow suppressions — the task should note the hash must be computed on the final committed blob, which is exactly what the cycle-2 reviewer flagged."
+  ]
+}

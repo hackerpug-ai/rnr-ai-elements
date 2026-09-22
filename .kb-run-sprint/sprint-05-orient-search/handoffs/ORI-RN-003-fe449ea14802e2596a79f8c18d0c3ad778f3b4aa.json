@@ -1,0 +1,38 @@
+{
+  "task": "ORI-RN-003",
+  "commit_sha": "fe449ea14802e2596a79f8c18d0c3ad778f3b4aa",
+  "done": "The six-target proof harness (quickstart-proof.test.ts with exported runQuickstartProof + CLI, native-session.ts device/Metro/Maestro lifecycle, quickstart-web.ts export+serve+Chromium, and quickstart-expo-go.maestro.yaml) landed at fe449ea and merged to main as 40a319b; cycle-3 re-ran all six engine/platform legs GREEN on real Expo Go (nativewind/uniwind x ios/android/web, light+dark on native) with the callback-disconnection negative control passing, and the run-manifest.json, 8 native screenshots, metro logs, per-leg session.json, negative-control.json, and cycle-1/2/3 evidence are committed under tests/sprint-05-orient-search/evidence/ORI-RN-003/ and .tmp/ORI-RN-003/.",
+  "deviations": [
+    "The task file's 'six legs' is implemented as 10 evidence outcomes (native legs fan out light+dark) with `completed` computed as all six engine x platform groups green in countPassedLegs (tests/sprint-05-orient-search/support/quickstart-proof.test.ts:495-500), not six raw outcomes.",
+    "The task file's linear 'execute the quickstart' was wrong: the first two executions surfaced two registry defects outside WRITE-ALLOWED (a missing react-native-css-interop direct dep, then a ring-* css-interop runtime race), each requiring a FIX task before the proof could go green.",
+    "`composer_visible` is a string-membership heuristic, not a programmatic clearance measurement (tests/sprint-05-orient-search/support/quickstart-proof.test.ts:151-152)."
+  ],
+  "concerns": [
+    "`composer_visible`'s second disjunct `hierarchy.includes('Message')` is near-tautological (matches almost any message), so the keyboard/safe-area clearance is only truly proven by the screenshots + Maestro, not by that flag.",
+    "FIX-ORI-RN-003-2 swaps `ring-2` (outer box-shadow) for a 2px `borderWidth` - an accepted approximation, but a visual regression from the original focus ring that should be re-verified on-device as the registry evolves.",
+    "The Expo Go dev-menu onboarding (Continue/Close) is dismissed by optional taps (tests/sprint-05-orient-search/quickstart-expo-go.maestro.yaml:26-32); if Expo Go changes its first-launch flow those taps silently no-op and the flow fails at the seed canary with no explicit diagnostic."
+  ],
+  "findings": [
+    "The nativewind consumer had two stacked defects - a missing `react-native-css-interop` direct dep (Metro bundle failure) masking a `ring-*` css-interop runtime race - each only observable after the prior was fixed.",
+    "The 'Couldn't find a navigation context' trigger is the `ring-*` utility family on the conditional className (`ring-2` width alone reproduces), NOT the opacity shorthands my first diagnosis named; this was disproved by FIX-ORI-RN-003-2's implementer via an on-device probe bisection (probe-{a,b,c,d,e}, branch FIX-ORI-RN-003-2-impl commit 2ce0997).",
+    "`input-group` is not a top-level recipe item - it arrives transitively via `prompt-input.json`'s registryDependencies pinned to an immutable v0.2.1 git-tag URL, so a localhost host substitution cannot change where it is fetched.",
+    "RN 0.86.3's @react-native/normalize-colors returns null for the CSS Color 4 slash-alpha form `hsl(... / ...)`, silently dropping the color; the comma-form `hsla(...)` is required and the scripted gates cannot catch the slash form."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-RN-002",
+      "found": "AC-3's status-bar clause is false on Android light for both engines (black bar, no chrome), pointing at Expo Go/emulator SystemUI chrome rather than the harness",
+      "change": "resolve the status-bar/chrome expectation in ORI-RN-002 before ORI-CONT-004 leans on AC-3"
+    },
+    {
+      "target": "AC-5 / EVIDENCE CONTRACT",
+      "found": "the run-manifest omits child PIDs, registry/public-response hashes, per-consumer CLI + resolved versions, tsc exit, and consumer roots that the EVIDENCE CONTRACT names",
+      "change": "either capture those fields in writeManifest (tests/sprint-05-orient-search/support/quickstart-proof.test.ts:492) or amend the contract to drop them"
+    }
+  ],
+  "feedback": [
+    "The task file treated 'execute the quickstart' as a straightforward run when the real deliverable was the proof harness itself (with full TDD/fallow/typecheck treatment) and the first runs surfaced registry defects outside WRITE-ALLOWED - say up front that a blocked leg becomes a FIX task rather than a skip.",
+    "'Six legs' is ambiguous against the appearance matrix (10 outcomes, native = light+dark); the completion criterion should spell out that a native leg is green only when both its light and dark runs pass.",
+    "AC-1's missing/busy-reservation negative path is specified but never required to be executed/recorded; add a DONE-WHEN bullet that the negative path be run once and its output committed."
+  ]
+}

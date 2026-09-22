@@ -1,0 +1,24 @@
+{
+  "task": "ORI-RN-000",
+  "commit_sha": "6a33565b42129bcba253864ea5e380283fc33f58",
+  "done": "Widened ImagePickerAssetShape's three metadata fields to optional-nullable (fileName?: string | null, mimeType?: string | null, fileSize?: number | null) in packages/registry/src/components/ai/prompt-input.logic.ts:66-71, matching the real Expo 57 SDK; runtime mapping unchanged. Regenerated public/r/nativewind/prompt-input.json and public/r/uniwind/prompt-input.json via pnpm registry:build. Added tests/sprint-05-orient-search/prompt-input-sdk57.test.ts (4 integration+unit ACs) plus tests/sprint-05-orient-search/support/verify-prompt-input-sdk57.ts (scratch-workspace SDK compilation helper, stale-artifact rejection proof, mutation sensitivity control). All gates green: vitest 4/4, registry:build fresh (56 items × 2 engines), typecheck, lint, existing prompt-input.test.ts regression. Evidence captured in tests/sprint-05-orient-search/evidence/ORI-RN-000/ (RED TS2345 diagnostics pre-fix, GREEN after, registry-hashes.json binding candidate SHA + versions + SHA-256s).",
+  "deviations": [],
+  "concerns": [
+    "The AC-4 mutation sensitivity check (removed-fallback control) is a scratch-only proof, never runs in CI — if the production 'Image' fallback at packages/registry/src/components/ai/prompt-input.logic.ts:80 is ever removed, only that one test detects it.",
+    "The helper's staleRejectionCheck creates an isolated scratch root with symlinks to packages/registry/src; if the symlink target moves or the src/ tree is deeply restructured, the freshness proof may break (not the gate itself, just the test's negative control)."
+  ],
+  "findings": [
+    "The workspace pins TypeScript at two versions: packages/registry declares ~6.0.3 (what registry sources typecheck with), root package.json declares 7.0.2 (what root tsconfig uses). The proofs resolved 6.0.3 from packages/registry/node_modules/.bin/tsc since that's the compiler the shipped mapper compiles with.",
+    "The ambient boundary packages/registry/types/rnr-boundary.d.ts:425-430 still declares the trio as required-but-nullable (fileName: string | null, not optional); this is correct (the widened production parameter accepts it) but means the codebase has two ImagePickerAsset-shaped type definitions — the production superset and the boundary subset.",
+    "The real Expo 57 SDK's mimeType field is typed `mimeType?: string` (not `?: string | null`), while fileName and fileSize are `?: string | null` and `?: number` — slight nullability inconsistency within the SDK itself; the mapper accepts all three as optional-nullable.",
+    "The registry:build script at packages/registry/scripts/build-registry.ts:140-173 fans out to both engines in a single invocation and the fan-out is deterministic (no per-engine side effects, no timestamps), which is why the freshness gate can byte-compare the emitted JSON against a fresh in-memory build.",
+    "pnpm install --frozen-lockfile in a fresh worktree takes ~8s; each vitest test with real SDK compilation takes ~1-2s (tsc subprocess + scratch workspace materialization), so RED→GREEN→evidence capture is ~10-15s total."
+  ],
+  "scope_impact": [],
+  "feedback": [
+    "The task file was clear and complete; the fixture descriptions (sdk57_workspace, mapper_inputs) and the shared-fixture JSON block were excellent guides.",
+    "The unit_test_justified field in AC-4's JSON made it immediately clear why a unit test was acceptable there (pure value transformation), preventing any 'why isn't this integration?' confusion.",
+    "The write_allowed list was accurate and complete; no file outside it needed touching.",
+    "Minor: the Specification section says 'Do not use an ambient declaration ... to hide the mismatch' but could also explicitly state 'Do not change the ambient boundary in packages/registry/types/rnr-boundary.d.ts' and explain why we keep both type definitions (the boundary is what our own typecheck sees; consumers get the real SDK, and the widened production type accepts both)."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "fe449ea14802e2596a79f8c18d0c3ad778f3b4aa",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "run-manifest.json: completed=true, passed_legs=6, 10 records covering all six engine/platform combos (native light+dark). Real devices iPhone 17 iOS 26.3 81487B1E and Pixel_7_API_34; prepareConsumer mkdtemp's fresh roots and runs the committed recipe verbatim against https://rnraielements.com. No leg skipped."},
+    {"id": "AC-2", "satisfied": true, "evidence": "Each record carries a run-bound marker with older_seed and seed_count=24; Maestro scroll/input/tap/scroll steps COMPLETED; web drive_result all true. Screenshots show exactly one new user bubble and an empty composer."},
+    {"id": "AC-3", "satisfied": true, "evidence": "8 native captures read as images: composer above the open keyboard and home indicator, list height > 0, light/dark content flip, marker present in every capture. Caveats F-1/F-2."},
+    {"id": "AC-4", "satisfied": true, "evidence": "negative-control.json: original_hash == committed source hash, mutated_hash differs, restored_hash == original; the real .replace('onSubmit={handleSubmit}') in a disposable consumer; disconnected_marker_visible=false, restored_marker_visible=true."},
+    {"id": "AC-5", "satisfied": true, "evidence": "Manifest binds run_id, candidate_head_sha 7165cb5 (== HEAD at run time), canonical source hashes byte-equal to committed sources, device reservations, exact command, per-leg observations; helper rejects repeated runId, non-full matrix, source-hash mismatch. Caveat F-3."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "non-blocking", "detail": "AC-3 status-bar clause not satisfied on Android light for both engines (black bar, no chrome). Both engines identical -> Expo Go/emulator SystemUI chrome, not the harness. Route to ORI-RN-002 before ORI-CONT-004 leans on AC-3."},
+    {"id": "F-2", "severity": "non-blocking", "detail": "AC-3 clearance is not programmatically measured; composer_visible's second disjunct is near-tautological. Real proof is screenshots + Maestro."},
+    {"id": "F-3", "severity": "non-blocking", "detail": "Manifest omits child PIDs, registry/public-response hashes, per-consumer CLI + resolved versions, tsc exit, consumer roots that AC-5/EVIDENCE CONTRACT names (harness holds them in-process)."},
+    {"id": "F-4", "severity": "non-blocking", "detail": "Negative-control dir retains only negative-control.json; the mutation diff and captured failing/restored stdout are not committed. Mutation is genuinely real."},
+    {"id": "F-5", "severity": "non-blocking", "detail": "AC-1's missing/busy-reservation negative path is implemented but never executed and recorded."},
+    {"id": "F-6", "severity": "non-blocking", "detail": "Web legs capture booleans only, no screenshot, though AC-2 declares artifact_type screenshot. Drive is real."},
+    {"id": "F-7", "severity": "non-blocking", "detail": "Evidence screenshot paths are absolute machine-local; store repo-relative for portability."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "not_required"},
+  "summary": "The six-leg matrix is genuinely evidenced. Gates: typecheck exit 0, lint exit 0, check:registry exit 0 (114 fresh). Manifest completed=true, 6/6 legs, bound to run_id ORI-RN-003-2026-09-16T02-26-26-076Z and candidate_head_sha 7165cb5 (HEAD at run time). The cycle-2 blocker is provably gone: nativewind metro.log has 0 navigation-context errors where cycle-2 had 4. All 8 screenshots read; negative control real (mutated != original, restored == original). Scope clean; live registry serves the fixed input-group. Seven non-blocking findings; F-1 should route to ORI-RN-002."
+}

@@ -1,0 +1,11 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "6fce7d885543bf7981a8ea7907fbb99bb4e63947",
+  "reviewer": "react-native-reusables-reviewer",
+  "review_type": "task-document",
+  "findings": [
+    {"id": "DOC-8", "severity": "non-blocking", "detail": "TC-1 wording nit: 'no ring-* utility remains' could make a naive grep match border-ring. Suggest 'no ring-* WIDTH/COLOR utility remains (ring-2, ring-ring/50 gone); border-ring is a border-* utility and stays'."},
+    {"id": "DOC-9", "severity": "non-blocking", "detail": "The claim that border-ring is 'overridden by focusedStyle.borderColor at render' is asserted rather than probed (probe-b tested border-ring alone, not competing with a same-property style prop). Consequence is cosmetic-only and the required focused-composer screenshot asserts the 50% alpha, so it is caught. Suggest softening to 'expected to be overridden'."}
+  ],
+  "summary": "Corrected diagnosis independently verified from the raw probe artifacts on branch FIX-ORI-RN-003-2-impl (2ce0997): probe-c (focused && 'ring-2') is the sole failure (navigation_context_error_present true, maestro_exit 1); probe-a/b/d/e all pass with completed Maestro focus/type/send flows. Probes a-d are byte-identical except the single conditional term. The corrected fix is charter-legal (remove ring-2/ring-ring/50; hoisted focusedStyle borderWidth:2 + comma-form hsla borderColor at 0.5; dark:bg-input/30 stays as a proven-clean class), the visual consequence is stated honestly as an accepted approximation, GREEN covers nativewind iOS AND Android light+dark plus uniwind/web, and DOC-1..DOC-7 are preserved. Source is still unfixed (line 35 retains ring-2), so the premise holds."
+}

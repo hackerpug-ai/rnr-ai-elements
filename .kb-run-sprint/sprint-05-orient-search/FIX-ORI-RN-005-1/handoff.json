@@ -1,0 +1,38 @@
+{
+  "task": "FIX-ORI-RN-005-1",
+  "commit_sha": "de21fa6c1f0a8565641d6db3593f3327668ceeb5",
+  "done": "Landed the planner's charter bytes verbatim as 32dc9316 (TASK-FIX-ORI-RN-005-1.md, SPRINT.md, ROADMAP.md, shasum-verified against the /tmp sources) and the implementation as de21fa6c on kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-005-1, merged to main as 4be2db3f: apps/example/components/live-chat-screen.tsx swaps useUniwind for React Native's useColorScheme with identical === 'dark' ? 'dark' : 'light' narrowing, packages/docs-snippets/nativewind/lib/theme.ts adds the export keyword to THEME, and .tmp/FIX-ORI-RN-005-1/ carries the self-classifying consumer-compile-proof.ts harness plus red.json (functional RED: exactly TS2307 'uniwind' at live-chat-screen.tsx:5:28 and TS2459 'THEME' at 21:10, zero other errors, 5/5 SHA-256 pairs), green.json (tsc exit 0, expo-doctor 21/21, uniwind absent from the dependency tree), preserved-checks.json, run.json, and selector logs — all produced by the real public recipe over HTTPS (RNR CLI 1.0.0), Expo's resolver (ai@7.0.89, @ai-sdk/react@4.0.92), and the fresh consumer's own TypeScript compiler, with the consumer root removed on every exit path.",
+  "deviations": [
+    "The git line-diff of packages/docs-snippets/nativewind/lib/theme.ts is +1/-1 rather than AC-2's literal '1 insertion, 0 deletions' because the export keyword is added to the existing 'const THEME = {' line per BOUNDARY CONTRACT #2, and an in-line keyword addition cannot register as a pure line insertion (packages/docs-snippets/nativewind/lib/theme.ts:8).",
+    "The literal preserved biome command structurally exits 1 instead of the charter's anticipated silent exit 0: biome 2.5.11's ci errors on 'No files were processed' because biome.json's files.includes omits both touched paths (biome.json:6-18), so the harness records it with caveatConfirmed=true and gates on the explicit coverage run instead.",
+    "The explicit lint-coverage oracle uses the repository's linter rules only (formatter and organizeImports disabled) because full formatter enforcement would demand reformatting a file the repository deliberately keeps unlinted, violating the 'nothing else changes' boundary (.tmp/FIX-ORI-RN-005-1/lint/biome.json).",
+    "The first GREEN attempt failed on pre-existing formatter drift and is archived as green-attempt-1.superseded.json plus its selector log rather than overwritten, preserving the audit trail of the harness fix.",
+    "The charter's parenthetical claim that ORI-RN-002's seed screen does not import THEME is stale — apps/example/app/index.tsx:39 imports it — but it resolves to apps/example's own exporting copy (apps/example/lib/theme.ts:9), so the boundary contract's no-action conclusion still holds."
+  ],
+  "concerns": [
+    "apps/example/components/ui/icon.tsx:5 imports withUniwind, making it a third uniwind import site in apps/example beyond the two AC-1 names — pre-existing, a registry component never compiled in the NativeWind consumer, but the AC's 'only at _layout.tsx and index.tsx' phrasing is factually wrong as written.",
+    "The unused 'import * as React from react' at apps/example/components/live-chat-screen.tsx:2 surfaces as a biome warning under the repo's linter rules and was left in place per the minimal-diff boundary; the first task that brings apps/example under biome will need to clean it.",
+    "Fresh kb-run-sprint worktrees still require the gitignored generated-data chain (pnpm registry:build && pnpm gallery:manifest && pnpm exec tsx scripts/docs-data/prebuild.ts) before the righthook pre-commit typecheck job passes, which cost one failed commit cycle here.",
+    "The pnpm-wrapped biome intermittently dies locally with 'Linter process terminated abnormally' (hit once during the individual preserved-command runs); the direct ./node_modules/.bin/biome binary is reliable and CI-equivalent, so keep using it for local gates."
+  ],
+  "findings": [
+    "The recipe-reconciled consumer resolves to expo 57.0.24, react-native 0.86.3, typescript 6.0.3, nativewind 4.2.6, and tailwindcss 3.4.19 — patch versions drift forward of the template's ~57.0.19 literals, so ORI-RN-005's rerun should expect these (recorded in red.json/green.json resolvedVersions).",
+    "expo-doctor passes 21/21 even while the overlaid canonical sources fail tsc, confirming doctor validates configuration and never compilation — only the consumer's own tsc is the compile oracle.",
+    "biome --config-path resolves files.includes relative to the config file's directory, so scratch lint configs must live inside the repo tree; the harness anchors its config at .tmp/FIX-ORI-RN-005-1/lint/biome.json for that reason.",
+    "TypeScript 7 (the root typescript 7.0.2) refuses single-file tsc invocations when a tsconfig is present without --ignoreConfig, which is the documented way to preflight harness files cheaply.",
+    "ORI-RN-005's parked branch carries the ai/@ai-sdk/react pins inside packages/docs-snippets/nativewind/package.json while this task's harness installs them via 'npx expo install' after the recipe — both paths resolved to the identical ai 7.0.89 and @ai-sdk/react 4.0.92, so the rerun and the merge are consistent, but the package.json diff will read differently than the harness receipts.",
+    "The RNR CLI resolved to 1.0.0 for both runs and the served registry item hashes for conversation/message/prompt-input/item/sheet are pinned in red.json and green.json under consumer.registrySha256, binding the exact bytes the recipe installed."
+  ],
+  "scope_impact": [
+    { "target": "ORI-RN-005", "found": "Its cycle-1 blocked legs were caused by exactly the two compile errors this task fixed, and nothing else in its write scope needed changing.", "change": "The registered session can rerun its blocked install/live legs with zero further edits to its in-flight files, using .tmp/FIX-ORI-RN-005-1/consumer-compile-proof.ts as a pre-flight compile check." },
+    { "target": "ORI-AI-002", "found": "The six-target matrix's NativeWind consumer leg was gated on the same two errors.", "change": "That leg is unblocked; expected resolved versions are in the findings above." },
+    { "target": "GATE:FLOW-DOCS-02", "found": "Quickstart gate step 3 (the live example run) depended on the canonical sources compiling in the NativeWind consumer.", "change": "The compile precondition is now green; the gate still needs ORI-RN-005's device/web reruns, which remain that task's scope." },
+    { "target": "ROADMAP", "found": "The planner's wave-9c bytes added this task and its dependencies to ROADMAP.md and SPRINT.md.", "change": "Landed byte-identical in charter commit 32dc9316; no further roadmap edits were made by the implementer." }
+  ],
+  "feedback": [
+    "Charter ACs should separate semantic deltas from line-diff arithmetic — the '+1 insertion, 0 deletions' phrasing was unsatisfiable as written for an in-line keyword addition and forced a documented deviation.",
+    "Charters should not forecast unobserved tool behavior — the 'silent exit 0' biome assumption inverted into a structural exit 1 under biome 2.5.11, and the caveat clause is what saved the AC's intent.",
+    "Provenance instructions should name the identifier's kind and its on-disk artifact up front (agent id with its task output path vs parent session id); the ambiguity cost a full fail-closed round trip that a one-line path would have prevented.",
+    "Baking the generated-data prebuild chain into worktree bootstrap (or relaxing the pre-commit typecheck for fresh worktrees) would remove a guaranteed failed-commit cycle from every dispatched implementer."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "af2ffc1f29ebbd04c0b5f981b77715800e410912",
+  "reviewer": "react-native-reusables-reviewer",
+  "review_type": "task-document",
+  "findings": [
+    {
+      "id": "DOC-5",
+      "severity": "blocking",
+      "detail": "The amendment introduced a prescriptive defect: the charter's ONLY concrete code example for the replacement is a color string React Native cannot parse, and the charter's gates cannot detect the resulting silent visual regression. CODING STANDARDS line 264 now prescribes `const wrapperStyle = scheme === 'dark' ? { backgroundColor: 'hsl(0 0% 14.9% / 0.3)' } : undefined;`. Running the pinned engine's own normalizer (`require('@react-native/normalize-colors@0.86.3')`): `hsl(0 0% 14.9% / 0.3)` returns null; react-native@0.86.3 Libraries/StyleSheet/processColor.js:27 returns null when normalizeColor returns null, so the value is dropped and the dark input background does not render. The existing line 65 form `hsl(0 0% 63.9%)` DOES parse; the slash-alpha CSS Color 4 syntax is the trap. Fix: (a) use the comma form `hsla(0, 0%, 14.9%, 0.3)` for the 30% input background and `hsla(300, 0%, 45%, 0.5)` for the 50% ring (both normalize to valid colors AND satisfy check:tokens via its hsla?->hsl( normalization); (b) add an explicit rule forbidding CSS Color 4 slash-alpha syntax in this file with the reason; (c) make the pinned 30%/50% appearance observable - add a dark-mode device screenshot of the focused composer (nativewind iOS/Android) to AC-3 evidence, or state plainly that the 30%/50% appearance is confirmed only by the on-device visual sign-off."
+    },
+    {
+      "id": "DOC-6",
+      "severity": "non-blocking",
+      "detail": "Residual of DOC-4. `public/r/nativewind/prompt-input.json` carries registryDependencies including an absolute URL `https://raw.githubusercontent.com/hackerpug-ai/rnr-ai-elements/v0.2.1/public/r/nativewind/input-group.json` - input-group is NOT a top-level install item; it arrives transitively from the immutable v0.2.1 git tag. Substituting the top-level install host to localhost therefore does not change where input-group is fetched from. Fix: state that the localhost substitution pins only the top-level items and that input-group is pinned by the v0.2.1 tag URL, or (cleaner) drop the localhost mechanism and pin the RED/GREEN replay by overwriting the consumer's components/ui/input-group.tsx with the pre-fix / fixed source respectively."
+    }
+  ],
+  "summary": "Three of four prior findings are genuinely closed (DOC-1 check:tokens, DOC-2 check:contract + hoisted style, DOC-3 nativewind web). Not approved: the remediation introduced a new blocking defect - the prescriptive example `hsl(0 0% 14.9% / 0.3)` is rejected by @react-native/normalize-colors@0.86.3 (returns null, processColor.js:27 drops it), silently losing the dark input background while passing every named gate. The comma form hsla(0, 0%, 14.9%, 0.3) is both RN-valid and token-gate-clean. DOC-6 is a non-blocking wording correction to the RED/GREEN pinning."
+}

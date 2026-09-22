@@ -1,0 +1,33 @@
+{
+  "task": "ORI-AST-006",
+  "commit_sha": "ab8935974b71724cec2d948786404c9ca23a660f",
+  "done": "Shipped scripts/docs-data/check-dist-links.ts (production emitted-HTML link gate) plus four tokenized integration tests and the RED/GREEN evidence manifest, all committed and merged.",
+  "deviations": [],
+  "concerns": [
+    "The default checker run is exit-1 on today's real build because the /registry ledger emits two genuinely broken canonical-origin links, so ORI-CI-002 must not gate CI on it until both fixes land.",
+    "The PRD route map declares four 301 redirects (/docs, /install, /quickstart, /theming) that are not yet configured in astro.config.mjs, so the checker's redirect-document recognition is only exercised against fixture redirects, not real emitted ones."
+  ],
+  "findings": [
+    "The real /registry ledger bulk-add section links the bare engine base URLs https://rnraielements.com/r/nativewind and /r/uniwind (apps/docs/src/pages/registry.astro:18-19), both of which return 404 on the deployed site; the checker correctly flags both with source registry/index.html.",
+    "The checker's default required-reference set (5 URLs) was derived from the PRD prior-art/reference declarations and live-verified 200, but the plan never pinned the exact list, so a future manuscript adding a new authoritative reference needs either a --required addition or a set update in the checker.",
+    "The 'complete build exits 0' success state is blocked by the two bare base URLs plus the six not-yet-landed ORI-CONT manuscripts, so the checker cannot demonstrate a clean pass over the real dist until both resolve."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-AST-002",
+      "found": "The registry ledger page (apps/docs/src/pages/registry.astro:18-19) emits the two bare engine-base-URL links that 404 on the deployed site.",
+      "change": "Owner of the ledger page should either drop the <a href> wrapper around the copyable base URLs or point them at a resolvable target so the checker passes over the real build."
+    },
+    {
+      "target": "ORI-CI-002",
+      "found": "The checker command is ready to consume after HTML emission but will exit nonzero on the current real dist due to the bare-base-URL 404s.",
+      "change": "CI must wire the checker only after the bare-base-URL fix and the ORI-CONT manuscripts land, otherwise the post-HTML gate is permanently red."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "The fixed sprint gate's 'complete build passes the real checker' success state depends on the registry ledger fix and the un-landed manuscripts.",
+      "change": "Re-sequence the link-gate GREEN to run once ORI-AST-002 (ledger) and ORI-CONT-* (manuscripts) have landed, rather than as an immediate CI assertion."
+    }
+  ],
+  "feedback": []
+}

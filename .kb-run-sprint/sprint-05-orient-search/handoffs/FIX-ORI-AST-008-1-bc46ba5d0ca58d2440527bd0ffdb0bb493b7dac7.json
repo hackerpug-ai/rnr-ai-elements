@@ -1,0 +1,28 @@
+{
+  "task": "FIX-ORI-AST-008-1",
+  "commit_sha": "bc46ba5d0ca58d2440527bd0ffdb0bb493b7dac7",
+  "done": "Relaxed the REF-009 TC-8 commit-identity clause in `tests/sprint-04-generated-reference/item-page-contract.test.ts:346` so it asserts `specCommit === contractCommit` (the two non-lane re-pin files `component-page.spec.ts` and `page-contract.test.ts` share one commit) while `pageCommit` stays a non-empty committed-SHA existence check and the sha256 pins (lines 320-327) stay frozen; the corresponding FIX doc `.spec/prds/docs-site/tasks/sprint-05-orient-search/FIX-ORI-AST-008-1.md` was amended to the same two-file invariant with a self-reference rationale and an `## Amendments` note, all committed across `3567cfe` (doc), `2d39313` (code), and `b6a52f9`/`bc46ba5` (evidence) and merged as `744f658`.",
+  "deviations": [
+    "Dropped the `laneCommit` computation entirely (not just the assertion) because removing the lane file from the invariant made that local dead code that biome/tsc would flag under the strict config.",
+    "The final assertion is `expect(specCommit, 'the two re-pin files share one commit').toBe(contractCommit)` rather than the doc's original `new Set([specCommit, contractCommit, laneCommit]).size === 1`, because the Set-trio was the self-defeating form that permanently re-broke on its own commit."
+  ],
+  "concerns": [
+    "`lastCommitFor` at `tests/sprint-04-generated-reference/item-page-contract.test.ts:76` (`git log -1 -- ':(literal)<path>'`) makes any commit-identity assertion that includes the file being committed in the same lane self-referential, so this class of defect will recur for any future lane that edits a file it commit-identity-references.",
+    "AC-2's mutation had to re-add the `laneCommit` computation to restore the exact old `.toEqual` form, which briefly exercises a variable the fixed file no longer has — acceptable since the point is proving the OLD assertion fails, but a reviewer could misread it as an incomplete mutation."
+  ],
+  "findings": [
+    "A commit-identity invariant must never include the lane file's own last-commit, because that commit moves the moment the lane commits — the original trio (`spec/contract/lane` all share one hash) is structurally unfixable, not just incidentally broken.",
+    "Fresh sprint worktrees are unprovisioned: no `node_modules` and no generated data files (`apps/docs/src/data/registry-items.json`, `gallery-manifest.json`), so `pnpm typecheck` and the test's `registryComponents()` fail on setup until `pnpm install --frozen-lockfile` then `pnpm -w run gallery:manifest && pnpm --filter @rnr-ai-elements/docs prebuild` run."
+  ],
+  "scope_impact": [
+    {
+      "target": "ROADMAP",
+      "found": "The REF-009 TC-8 re-pin contract and any sibling commit-identity assertions use last-commit equality, which self-breaks whenever the asserted file is edited in a later lane.",
+      "change": "Future commit-identity contracts should assert only non-lane files' shared commit (or use `git merge-base --is-ancestor` for a descendant check) instead of `git log -1` equality on any file a downstream task may legitimately edit."
+    }
+  ],
+  "feedback": [
+    "The FIX doc I authored originally prescribed the self-defeating trio invariant — the doc should have flagged that `laneCommit` (the lane file) moves on every lane edit and cannot be part of a stable shared-commit invariant.",
+    "The GREEN evidence must be captured against the COMMITTED tip, not pre-commit: cycle-1's GREEN was recorded before the commit and never re-verified at the committed state, which is exactly how the self-reference slipped through review — the task's evidence instructions should state 'verify the committed tip, not the pre-commit tree'."
+  ]
+}

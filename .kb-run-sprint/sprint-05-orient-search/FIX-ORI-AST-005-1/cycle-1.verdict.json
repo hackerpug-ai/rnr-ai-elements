@@ -1,0 +1,16 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "443c5be8fb8ff533eb16457d3966afa0de1483aa",
+  "reviewer": "astro-reviewer",
+  "review_type": "task-document",
+  "findings": [
+    {"id": "DOC-7", "severity": "blocking", "detail": "ORI-CONT-003 charter L25: '> Dependency phase: after ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-AST-005, ORI-RN-002, ORI-AI-002' still names ORI-AST-005 - the exact edge this commit removed - and lists 6 predecessors against 5 actual deps at L373. This re-asserts the deadlock in the implementer-facing header. Fix: drop ORI-AST-005 from L25."},
+    {"id": "DOC-8", "severity": "blocking", "detail": "ORI-CONT-003 charter L328: 'All six dependencies provide reviewed source, snippet, app, endpoint and package contracts.' Actual declared list is now 5. Fix: 'six' -> 'five'."},
+    {"id": "DOC-9", "severity": "blocking", "detail": "ORI-CONT-001 charter L22 ('After all seven depends_on contracts are delivered'), L201 ('Confirm the seven dependency contracts'), L239 ('All seven prerequisite contracts and real command-install evidence are available') assert 7; the declared list at L291 is now 6. Fix: all three 'seven' -> 'six'."},
+    {"id": "DOC-10", "severity": "blocking", "detail": "ORI-AST-005 charter L29: '> Priority: P1 - Points: 5 - Type: BUILD - Dependency phase: After ORI-AST-001' still declares one dependency while L333 declares three. Fix: name ORI-AST-001, ORI-CONT-001, ORI-CONT-003 (or post-content-gate phrasing)."},
+    {"id": "DOC-11", "severity": "non-blocking", "detail": "Pre-existing: ORI-RN-001 L217 asserts AST-005 consumes its committed sources, but AST-005 declares no ORI-RN-001 edge. Wave ordering covers it (RN-001 w3 << AST-005 w10). Flag only."},
+    {"id": "DOC-12", "severity": "non-blocking", "detail": "AST-005's AC-1 fixture requires CSS examples authored by ORI-CONT-002, which is not a declared dep (w4 << w10 covers it). Consider declaring the edge in a later planning pass."},
+    {"id": "DOC-13", "severity": "non-blocking", "detail": "Commit message overstates completion (only one of CONT-003's two 'six' instances was fixed; CONT-001's count prose and both 'Dependency phase' headers unmentioned)."}
+  ],
+  "summary": "Graph surgery correct and complete: zero cycles, AST-005 declares AST-001/CONT-001/CONT-003, CONT-001/003 no longer declare AST-005, all 36 waves match computed longest-path depth, CI-002 correctly at 12, exactly 10 lines changed across 4 markdown files with every AC/TC/scenario and requirement-contract line byte-identical, scope clean, hook bypass honest. But the correction was only half-propagated into prose: CONT-003 L25 still names the removed edge and counts 6, CONT-003 L328 says 'six' vs 5, CONT-001 says 'seven' at L22/L201/L239 vs 6, AST-005 L29 still says 'After ORI-AST-001'. Four single-token/clause edits; no re-planning needed."
+}

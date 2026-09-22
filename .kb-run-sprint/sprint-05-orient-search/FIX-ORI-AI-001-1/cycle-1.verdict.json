@@ -1,0 +1,40 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "755edeae8c7f6e4186122eaf70f824d347a25327",
+  "reviewer": "aisdk-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Hash-bound RED then GREEN on the real stack, both independently re-run. RED (pre-fix hook sha 6c2e8f6a = main's file): vitest fails AC-1 with 5 real problems; server record {outcome:error, responseId:null, deltaCount:0, durationMs:380}; captured regenerate body carries damaged history (stale msg_ itemId on aborted partial). GREEN (fixed hook sha 1f747a7d): {outcome:completed, responseId:resp_06dc..., deltaCount:2, totalTokens:344}, duplicatedItemIds:[] in every captured body, probeUserTurns:1, restarted-backend record count 1. Reviewer's own locked-selector re-run PASSED with equivalent anchors (resp_012c5648..., 2 deltas, 229 tokens, 0 dup, 1 probe user turn, retryOrder clearError,regenerate)."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Follow-up leg answerContainsNonce:true in committed evidence and reviewer re-run; seed's legitimate msg_ itemId passes through sanitizer unchanged (asserted as outgoing-itemIds-subset-of-state-ids); scoped compiler 'pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json' exit 0 reproduced; public hook contract diff-verified unchanged; full-run tallies 3 completed + 1 aborted, 3 distinct resp_ ids; diff touches exactly apps/example/lib/use-live-chat.ts, the new driver, and .tmp/FIX-ORI-AI-001-1/**."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Same selector and identical driver sha (36a7a813) across RED and GREEN; only the hook sha differs (6c2e8f6a vs 1f747a7d), proving RED ran the pre-fix candidate. RED failure is functional (real provider rejection recorded by the server); GREEN delivers unique itemIds, a fresh real request (restarted backend's own record with new resp_ id, usage, deltas) and exactly 1 retained user turn."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Nonce retained in contextual follow-up (both runs); legitimate unique itemIds unchanged in all submit bodies; scoped compiler exit 0; git diff main...commit name-only shows only writeAllowed paths; server/**, app/**, package.json, pnpm-lock.yaml, .spec/**, .kb-run-sprint/** untouched."
+    },
+    {
+      "id": "ASSUMPTIONS",
+      "satisfied": true,
+      "evidence": "1) '1 error record' sound: endpoint-loss turn cannot produce a server record (client 'fetch failed' captured); charter's RED step places the error record at the rejected regenerate; across RED+GREEN leg tallies 2 completed + 1 error. 2) Request-id distinctness sound: installed ai@7.0.89 sends id=chatId (in-run distinctness impossible by construction); evidenced via restarted backend's fresh record + RED-vs-GREEN request-id distinctness, mirroring reviewed ORI-RN-004 web-leg oracle. 3) Streaming-id strip sound and forced: RED run had 0 duplicated itemIds yet was rejected ('Item with id ... not found' from unfinished-stream ids); no text removed (732-char partial preserved as content), no legitimate id stripped \u2014 'equivalent uniqueness-preserving transform' clause covers it. 4) Lazy expo/fetch import is Boundary Contract 4's named enabler; computed specifiers are a loader mechanism to real installed dist builds (ai 7.0.89 dist verified) \u2014 real Chat/DefaultChatTransport/hook exports under test, not mocks. Reviewer gap-closure: exercised the dedup branch directly against the real exported sanitizeOutgoingChatMessages \u2014 duplicate dropped, legitimate id kept, text preserved."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Real, minimal, transport-seam sanitize in apps/example/lib/use-live-chat.ts: keep first occurrence of each OpenAI itemId, drop stale duplicate entries, strip itemIds from text parts still 'streaming' (text sent as content) \u2014 wired through prepareSanitizedSendMessagesRequest reproducing the installed transport's default body except sanitized messages (verified against ai@7.0.89 source). RED functional and hash-bound to the pre-fix hook (real provider rejection, error record, 0 deltas, 380ms); GREEN and reviewer's independent locked-selector re-run pass every anchor. All four charter interpretations are the only physically available means of proving the same discriminators, backed by quoted real evidence and reviewed precedent. Root tsc, biome ci, fallow reproduced green; whole-example tsc exit 2 pre-existing by unchanged inputs and excluded from acceptance. Non-blocking: the duplicate-variant live capture lives in ORI-RN-004's reviewed blocked-report evidence plus uncommitted probe output rather than this task's own RED capture; committing probe outputs would have made the evidence self-contained."
+}

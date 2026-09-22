@@ -1,0 +1,16 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "f75c0a57608a91d2b446bad02d39d615bb40b7c6",
+  "reviewer": "astro-reviewer",
+  "review_type": "task-document",
+  "findings": [
+    {"id": "DOC-7", "severity": "non-blocking", "detail": "CLOSED. CONT-003 L25 header drops ORI-AST-005; 5 IDs set-equal to the L373 list."},
+    {"id": "DOC-8", "severity": "non-blocking", "detail": "CLOSED. CONT-003 L328 'six' -> 'five' matching its 5-item list."},
+    {"id": "DOC-9", "severity": "non-blocking", "detail": "CLOSED. CONT-001 L22/L201/L239 'seven' -> 'six' matching its 6-item list."},
+    {"id": "DOC-10", "severity": "non-blocking", "detail": "CLOSED. AST-005 L29 names ORI-AST-001, ORI-CONT-001, ORI-CONT-003, matching L333/L335."},
+    {"id": "DOC-11", "severity": "non-blocking", "detail": "CARRIED. ORI-RN-001's undeclared consume edge for AST-005 is wave-covered (w3 vs w10); disclosed in the commit body."},
+    {"id": "DOC-12", "severity": "non-blocking", "detail": "CARRIED. ORI-CONT-002 supplies AST-005's CSS fixture without a declared edge; wave-covered (w4 vs w10); disclosed."},
+    {"id": "DOC-13", "severity": "non-blocking", "detail": "CLOSED. Commit message lists the exact six changed lines and the unchanged claims hold."}
+  ],
+  "summary": "All four blocking findings closed with exact verified edits. Six intended lines across three charters; SPRINT.md, human-flows.json and gate-plan.json byte-identical to parent; AC/TC/scenario and requirement-contract lines hash-identical; graph still acyclic with all 36 waves equal to computed longest-path depth. APPROVED."
+}
