@@ -923,7 +923,7 @@ async function waitForRecordOutcome(
  * must surface immediately so the caller can drive the app's own Retry control — a
  * completed-only gate just burns its whole timeout against a dead turn.
  */
-async function awaitTerminalRecord(
+export async function awaitTerminalRecord(
   backend: OwnedBackendHandle,
   baseline: number,
   timeoutMs: number,
@@ -951,7 +951,7 @@ async function awaitTerminalRecord(
  * nonempty length — the "at least 2 distinct nonempty assistant text lengths before
  * completion" oracle.
  */
-async function sampleAssistantTextGrowth(
+export async function sampleAssistantTextGrowth(
   deviceId: string,
   backend: OwnedBackendHandle,
   baseline: number,
@@ -1220,10 +1220,13 @@ async function runAndroidInputFlow(
           if (!waitForText(serial, 'Retry', 60_000)) {
             return fail(`no accessible Retry after the ${label} provider error`);
           }
+          // Baseline BEFORE the Retry tap (FIX-ORI-AI-002-1): the retry's record
+          // can land during dismissThenTap's flow window; the failed turn's error
+          // record already sits below this baseline.
+          const retryBaseline = session.current.records().length;
           if (!dismissThenTap(serial, 'Retry')) {
             return fail(`could not tap "Retry" after the ${label} provider error`);
           }
-          const retryBaseline = session.current.records().length;
           const retryOutcome = await awaitTerminalRecord(session.current, retryBaseline, 120_000);
           if (retryOutcome === 'completed') {
             recovered = true;
@@ -1250,10 +1253,13 @@ async function runAndroidInputFlow(
           if (!waitForText(serial, 'Retry', 60_000)) {
             return fail(`no accessible Retry after the ${label} provider error`);
           }
+          // Baseline BEFORE the Retry tap (FIX-ORI-AI-002-1): the retry's record
+          // can land during dismissThenTap's flow window; the failed turn's error
+          // record already sits below this baseline.
+          const retryBaseline = session.current.records().length;
           if (!dismissThenTap(serial, 'Retry')) {
             return fail(`could not tap "Retry" after the ${label} provider error`);
           }
-          const retryBaseline = session.current.records().length;
           const retryOutcome = await awaitTerminalRecord(session.current, retryBaseline, 120_000);
           if (retryOutcome === 'completed') {
             recovered = true;
@@ -1570,8 +1576,20 @@ async function runIosInputFlow(
     }
     return null;
   };
-  const awaitTurn = async (label: string, sample: boolean): Promise<MaestroResult | null> => {
-    const baseline = session.current.records().length;
+  /**
+   * The records baseline MUST be captured by the caller BEFORE the paired
+   * sendTurn flow issues the request (FIX-ORI-AI-002-1): a one-off maestro flow's
+   * window can outlast the provider reply (ORI-AI-002's caller-composed runs saw
+   * marker replies complete in ~1.7 s inside a 30-90 s flow teardown), so a
+   * record landing during the send window sits at or before an await-time
+   * baseline and the `records.length > baseline` predicate never fires — the
+   * same ordering the stop-turn drives below already use.
+   */
+  const awaitTurn = async (
+    label: string,
+    sample: boolean,
+    baseline: number,
+  ): Promise<MaestroResult | null> => {
     if (sample) {
       const sampled = await sampleAssistantTextGrowth(deviceId, session.current, baseline, 120_000);
       for (const n of sampled.lengths) {
@@ -1603,10 +1621,13 @@ async function runIosInputFlow(
       if (!waitForText(deviceId, 'Retry', 60_000)) {
         return fail(`no accessible Retry after the ${label} provider error`);
       }
+      // Baseline BEFORE the Retry tap (FIX-ORI-AI-002-1): the retry's record can
+      // land during dismissThenTap's flow window; the failed turn's error record
+      // already sits below this baseline, so only the retry's new record crosses.
+      const retryBaseline = session.current.records().length;
       if (!dismissThenTap(deviceId, 'Retry')) {
         return fail(`could not tap "Retry" after the ${label} provider error`);
       }
-      const retryBaseline = session.current.records().length;
       const retryOutcome = await awaitTerminalRecord(session.current, retryBaseline, 120_000);
       if (retryOutcome === 'completed') return null;
       // Provider errors arrive in bursts (rate-limit windows); a bounded backoff
@@ -1618,9 +1639,10 @@ async function runIosInputFlow(
     );
   };
 
+  const markerBaseline = session.current.records().length;
   let turn = await sendTurn('marker', marker);
   if (turn) return { result: turn, growth };
-  turn = await awaitTurn('marker', false);
+  turn = await awaitTurn('marker', false, markerBaseline);
   if (turn) return { result: turn, growth };
   // Dismiss the composer's keyboard BEFORE reading the transcript: with the IME up the
   // viewport shrinks and the inverted list's virtualization window shifts, which can
@@ -1631,9 +1653,10 @@ async function runIosInputFlow(
   }
   logs.push('OK: marker submitted, echoed, and its reply completed');
 
+  const seedBaseline = session.current.records().length;
   turn = await sendTurn('seed', seedPrompt);
   if (turn) return { result: turn, growth };
-  turn = await awaitTurn('seed', true);
+  turn = await awaitTurn('seed', true, seedBaseline);
   if (turn) return { result: turn, growth };
   logs.push(
     `OK: seed reply streamed to a completed provider record (growth samples: ${growth.join(', ') || 'none'})`,
@@ -1641,9 +1664,10 @@ async function runIosInputFlow(
   dismissIosKeyboardByTap(deviceId);
   const recallBaselineTexts = markerTexts(deviceId, marker);
 
+  const followUpBaseline = session.current.records().length;
   turn = await sendTurn('follow-up', followUp);
   if (turn) return { result: turn, growth };
-  turn = await awaitTurn('follow-up', false);
+  turn = await awaitTurn('follow-up', false, followUpBaseline);
   if (turn) return { result: turn, growth };
   dismissIosKeyboardByTap(deviceId);
   if (!waitForNewMarkerText(deviceId, marker, recallBaselineTexts, 120_000)) {
