@@ -139,6 +139,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | FIX-ORI-RN-004-2 | Make the Uniwind live-proof driver's web leg complete under orchestration | react-native-reusables-implementer | 3 | 8 | ORI-RN-004, ORI-AI-001 |
 | FIX-ORI-RN-004-3 | Un-stick the driver's caller-backend restart after the endpoint-loss stop | react-native-reusables-implementer | 3 | 8 | ORI-RN-004, FIX-ORI-RN-004-2 |
 | ORI-AI-002 | Prove the composed worked example against the real provider | aisdk-implementer | 5 | 8 | ORI-AI-001, ORI-RN-004, ORI-RN-005 |
+| FIX-ORI-AI-002-1 | Take the NativeWind driver's turn records baselines before each send flow | react-native-reusables-implementer | 2 | 12 | ORI-RN-005, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3 |
 | ORI-CONT-003 | Author the single seed-data quickstart and its live-example run handoff | techwriting-implementer | 5 | 9 | ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002 |
 | ORI-AST-004 | Navigate the built docs through a lazily loaded Pagefind dialog | astro-implementer | 5 | 10 | ORI-AST-001, ORI-AST-002, ORI-AST-003, ORI-AST-008, ORI-CONT-001, ORI-CONT-003, ORI-CONT-005 |
 | ORI-AST-006 | Reject broken links in the built documentation | astro-implementer | 3 | 4 | ORI-AST-001 |
@@ -159,7 +160,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-DEP-002 | Verify the accepted candidate's real Cloudflare version and 404 recovery | cloudflare-workers-implementer | 2 | 19 | ORI-DEP-001, ORI-CI-004, ORI-AST-009, ORI-VIS-005 |
 | ORI-DEP-003 | Publish and verify the completed Sprint 05 docs at the apex | cloudflare-workers-implementer | 3 | 20 | ORI-DEP-001, ORI-DEP-002, ORI-CI-004 |
 
-**Total: 40 tasks / 141 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2 and FIX-ORI-RN-004-3, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix and ask-wave11-add-caller-backend-restart-fix). Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 41 tasks / 143 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3 and FIX-ORI-AI-002-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix and ask-wave12-add-nativewind-baseline-ordering-fix). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -285,6 +286,8 @@ The following filenames are derived from each exact task ID and title. Each char
 - [TASK-FIX-ORI-RN-005-1.md](./TASK-FIX-ORI-RN-005-1.md)
 
 - [ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md](./ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md)
+
+- [TASK-FIX-ORI-AI-002-1.md](./TASK-FIX-ORI-AI-002-1.md)
 
 - [ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md](./ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md)
 
