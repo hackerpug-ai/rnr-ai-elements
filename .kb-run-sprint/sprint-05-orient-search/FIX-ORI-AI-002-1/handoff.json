@@ -1,0 +1,42 @@
+{
+  "task": "FIX-ORI-AI-002-1",
+  "commit_sha": "7abe195a7110d52fc73b92505d9faeeb876e25a7",
+  "done": "Landed at 7abe195a (merged to main as 6b2017b9): the NativeWind driver now captures all six conversational-turn records baselines before their issuing flows — the three iOS pairs at tests/sprint-05-orient-search/support/nativewind-live-example.ts:1639 (marker), :1653 (seed), :1664 (follow-up) passing the baseline into awaitTurn(label, sample, baseline), plus the iOS handleTerminal retry (~:1621) and both Android retry recoveries (~:1223, ~:1253) before their Retry taps — with the predicates, terminal-outcome sets, the consumed interface, and the already-correct captures unchanged, awaitTerminalRecord/sampleAssistantTextGrowth additively exported, the new caller-composed harness tests/sprint-05-orient-search/nativewind-baseline-ordering-proof.test.ts (live RED/GREEN lane, recorded in-vitro fallback, --matrix regression mode, literal source inspection), and the evidence set (.tmp/FIX-ORI-AI-002-1/{red,green,run}.json, evidence/FIX-ORI-AI-002-1/README.md, refreshed evidence/ORI-RN-005 side effects) all committed; the exact selector exited 1 pre-fix via the contracted in-vitro fallback and 0 post-fix with both iOS appearance legs passed and exactly 6 pre-flow captures, re-verified at the committed SHA (run FIX-ORI-AI-002-1-1790182543712), and every regression gate is green (matrix run ORI-RN-005-1790180609945 exit 0/completed true/all legs passed, install-exact-source, pnpm typecheck, scoped biome ci).",
+  "deviations": [
+    "The harness serves the caller backend in-process via createChatServer (apps/example/server) instead of through support/live-backend.ts's launchOwnedBackend as the task file prescribed, because the driver's reapOwnedOrphans (tests/sprint-05-orient-search/support/nativewind-live-example.ts:422) kills any port-4010 listener whose command line carries server/index.ts — exactly what launchOwnedBackend spawns (tests/sprint-05-orient-search/support/live-backend.ts:155) — before options.backend is honored.",
+    "The RED evidence is the contracted in-vitro fallback (red.json kind red-in-vitro), not the live marker-turn failure the AC-1 end_state presents as primary, because the light-load ios-only run lets the maestro send flow return before the ~1.2-3.7s replies complete; the fallback, its live-divergence note, and the real-predicate divergence are all recorded in red.json.",
+    "I copied the gitignored generated build artifact apps/docs/src/data/registry-items.json from the primary checkout into the worktree (never committed, present in no diff) so pnpm typecheck could run, after stash-proving the failure pre-existing at 93d8ceda."
+  ],
+  "concerns": [
+    "The fix's live proof under matrix-class load happens only in ORI-AI-002's re-dispatch — if that load ever stops widening the maestro window the pre-fix failure will not reproduce live, and the in-vitro seam does not exercise the maestro/record composition itself.",
+    "The harness's InProcessOwnedBackend stop()/restart() reimplements the BackendSession contract (per-generation records, restart returns a new handle, graceful close bounded at 55s) and could drift silently if the driver's endpoint-loss phase changes (tests/sprint-05-orient-search/nativewind-baseline-ordering-proof.test.ts, InProcessOwnedBackend/serve).",
+    "inspectDriverSource is deliberately literal regex-over-source per the AC's literal-counts requirement, so a benign driver reformat or variable rename can fail the GREEN gate spuriously even with the ordering still correct.",
+    "The first GREEN run bound candidate_head_sha 93d8ceda (pre-commit working tree) until the 7abe195a re-run re-bound it, so anyone reading only green.json should cross-check run.json's final record for the sha binding."
+  ],
+  "findings": [
+    "The driver requires the pinned Expo Go APK file to exist even for ios-only runs — installExpoGoAndroid checks existsSync(apkPath) before checking installation (tests/sprint-05-orient-search/support/native-session.ts:289) and the driver preps both platforms regardless of options.platforms — and the APK was absent on this machine (restored from the official expo/expo-go-releases GitHub release, tag Expo-Go-57.0.9, to the documented cache path).",
+    "Any caller-provided options.backend backed by a launchOwnedBackend spawn is deterministically killed by the driver's orphan reap before the first leg (tests/sprint-05-orient-search/support/nativewind-live-example.ts:422-446 against tests/sprint-05-orient-search/support/live-backend.ts:155), so the task file's 'create the owned backend through the real support/live-backend.ts handle' is not mechanically satisfiable for this driver; ORI-AI-002's committed runner survives only because its owner process serves createChatServer in-process.",
+    "apps/example/server/index.ts:166 calls main() unguarded at module scope, so importing the server module starts a listener unless the env is neutered at import time; the harness hides OPENAI_API_KEY during the dynamic import so loadServerEnv fails harmlessly and no stray server binds.",
+    "The records-baseline race is load-dependent, not deterministic: ORI-AI-002's 3/3 reproductions ran inside the six-target matrix's parallel recording/OCR load (30-90s maestro send-flow teardown), while a light ios-only caller-composed run passes both legs even pre-fix.",
+    "A fresh worktree lacks the gitignored generated apps/docs/src/data/registry-items.json, so pnpm typecheck fails there on sprint-04's import (pre-existing, stash-proven at 93d8ceda) — fresh-worktree tasks need it copied or regenerated before the static gate can pass.",
+    "The canonical three-platform matrix produces 5 legs (ios x2, android x2, web x1), not 6; countPlatformsPassed's completed===3 is what binds the gate, and the AC was right to say 'every leg passed' without a count."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-AI-002",
+      "found": "The NativeWind marker-turn baseline race only reproduces under matrix-class load; a light ios-only caller-composed invocation passes both legs even pre-fix (this task's RED had to use the in-vitro lane).",
+      "change": "No file changes — but its re-dispatch should run the full six-target marathon (real matrix load) to exercise the fixed live path, and any future isolated NativeWind rerun should expect the marker turn to pass regardless of this fix."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "Fresh worktrees lack both the gitignored generated registry-items.json (gates pnpm typecheck) and the pinned Expo Go 57.0.9 APK cache (the driver requires the file on disk even for ios-only runs; it was absent and had to be restored from expo/expo-go-releases).",
+      "change": "Record both as sprint-level environment prerequisites for worktree-based tasks: restore the APK from the expo/expo-go-releases release tag Expo-Go-57.0.9 to ~/.cache/agent-scratch/opencode/ori-rn-003/, and copy or regenerate apps/docs/src/data/registry-items.json before pnpm typecheck."
+    }
+  ],
+  "feedback": [
+    "The instruction to create the owned backend 'through the real support/live-backend.ts handle' is not mechanically satisfiable for this driver (the entry-reap kills that exact spawn shape) — next time name the in-process/owner-process serving constraint explicitly, as ORI-AI-002's runner already embodies it.",
+    "AC-1's end_state presents the live marker-turn failure as the pre-fix must_observe while the in-vitro fallback exists only in prose — write the fallback's end_state with equal standing so the RED shape is unambiguous.",
+    "The fixture should state that the pinned Expo Go APK file is required on disk even for ios-only invocations, since the driver checks the path before installation and preps both platforms regardless of platforms.",
+    "The task pinned the ios-only watchdog (<= 3600s) but left the matrix outer watchdog unstated — record a canonical budget (this harness used 10800s) so reruns are comparable."
+  ]
+}
