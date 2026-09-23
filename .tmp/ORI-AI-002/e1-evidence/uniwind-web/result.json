@@ -1,0 +1,37 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-E1-NOREC",
+  "engine": "uniwind",
+  "platform": "web",
+  "native": false,
+  "device": "chromium (headless, real served export)",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-E1-NOREC-reject",
+      "legs": []
+    },
+    "live": {
+      "run_id": "ORI-AI-002-E1-NOREC-live",
+      "legs": []
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 0
+  },
+  "context": {
+    "followup_answer_contains_nonce": false,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 0
+  },
+  "correlation": {},
+  "stop_proof": {},
+  "retry_after_failure": [],
+  "endpoint_loss": {},
+  "provider_rejection": {},
+  "source": {
+    "repo_head": "f41cb20518afb7e7849731749b2d916677d70f9a",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

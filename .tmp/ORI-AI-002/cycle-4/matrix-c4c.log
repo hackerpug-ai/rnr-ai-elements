@@ -1,0 +1,20 @@
+node:net:1926
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EINVAL: invalid argument /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/.tmp/ori-ai-002-scratch/tsx-501/65754.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1926:21)
+    at listenInCluster (node:net:2005:12)
+    at Server.listen (node:net:2127:5)
+    at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/cli.mjs:55:542 {
+  code: 'EINVAL',
+  errno: -22,
+  syscall: 'listen',
+  address: '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/.tmp/ori-ai-002-scratch/tsx-501/65754.pipe',
+  port: -1
+}
+
+Node.js v24.14.0

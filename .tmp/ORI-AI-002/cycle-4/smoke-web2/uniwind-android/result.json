@@ -1,0 +1,120 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-1790112117119",
+  "engine": "uniwind",
+  "platform": "android",
+  "native": true,
+  "device": "emulator-5554",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-1790112117119-reject",
+      "legs": []
+    },
+    "live": {
+      "run_id": "ORI-AI-002-1790112117119-live",
+      "legs": []
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 0
+  },
+  "context": {
+    "followup_answer_contains_nonce": false,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 2
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja"
+    ],
+    "response_ids": [
+      "resp_00bebb20abec22fe006ab2f2ea432c87d181631778cf798756",
+      "resp_00bebb20abec22fe006ab2f2ec3e2c87d18787002bbb51637b",
+      "resp_00bebb20abec22fe006ab2f2ee8dc487d1bcf5dd43011ec913",
+      "resp_00bebb20abec22fe006ab2f2ea432c87d181631778cf798756",
+      "resp_00bebb20abec22fe006ab2f2ec3e2c87d18787002bbb51637b",
+      "resp_00bebb20abec22fe006ab2f2ee8dc487d1bcf5dd43011ec913"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 207
+      },
+      {
+        "total_tokens": 252
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 207
+      },
+      {
+        "total_tokens": 252
+      }
+    ],
+    "text_hashes_recorded": [
+      "6370de702bafa0ccf228115e0edead427d2d273940d5a8d5ba02eece0d24c7b2",
+      "d595089bea2c6623811d5200d95a087496a6c8913fc4a3f8c0b1b6c620bd83ce",
+      "afd06a3fd8559eaa71d4dbef1c6280ad4821ef810f279ce482971f78fa567b72",
+      "6370de702bafa0ccf228115e0edead427d2d273940d5a8d5ba02eece0d24c7b2",
+      "d595089bea2c6623811d5200d95a087496a6c8913fc4a3f8c0b1b6c620bd83ce",
+      "afd06a3fd8559eaa71d4dbef1c6280ad4821ef810f279ce482971f78fa567b72"
+    ],
+    "web_raw_text_hash_match": null
+  },
+  "stop_proof": {
+    "aborted_request_id": null,
+    "delta_count_at_abort": 0,
+    "completed_before_stop": false,
+    "source": "driver-flow"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": false,
+      "single_user_turn": false,
+      "request_id": "t3LVSRXhToHXQ1Ja"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": false,
+    "sanitized": false,
+    "retry_completed": false,
+    "single_user_turn": false
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-1790112117119",
+    "rejected_request_ids": [
+      "pokl36Wr36vaVvZX",
+      "pokl36Wr36vaVvZX",
+      "pokl36Wr36vaVvZX",
+      "pokl36Wr36vaVvZX"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja"
+    ]
+  },
+  "source": {
+    "repo_head": "bb9cc0d6cf739e251e91cc2462f9ed570c6dcf3c",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

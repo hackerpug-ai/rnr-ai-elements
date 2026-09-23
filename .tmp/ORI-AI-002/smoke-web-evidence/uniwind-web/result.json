@@ -1,0 +1,250 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-SMOKEWEBA",
+  "engine": "uniwind",
+  "platform": "web",
+  "native": false,
+  "device": "chromium (headless, real served export)",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "ORI-AI-002:ORI-AI-002-SMOKEWEBA:uniwind:web",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-SMOKEWEBA-reject",
+      "legs": [
+        {
+          "platform": "web",
+          "status": "failed",
+          "diagnostic": "{\"emptyStateVisible\":true,\"markerSubmitted\":true,\"inputCleared\":true,\"assistantResponded\":true,\"stopControlVisible\":false,\"followUpRecallVisible\":true,\"retryControlVisible\":true,\"retryErrorSanitized\":true,\"retryCompleted\":false,\"retrySingleUserTurn\":true}",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-SMOKEWEBA-reject:web",
+            "url": "http://127.0.0.1:8406",
+            "drive_result": {
+              "emptyStateVisible": true,
+              "markerSubmitted": true,
+              "inputCleared": true,
+              "assistantResponded": true,
+              "stopControlVisible": false,
+              "followUpRecallVisible": true,
+              "retryControlVisible": true,
+              "retryErrorSanitized": true,
+              "retryCompleted": false,
+              "retrySingleUserTurn": true
+            },
+            "backend_records": [
+              {
+                "requestId": "ggcmi1EJdw0d9f1O",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-SMOKEWEBA",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 464,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "ggcmi1EJdw0d9f1O",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-SMOKEWEBA",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 456,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              }
+            ],
+            "retry_request_id": "ggcmi1EJdw0d9f1O"
+          }
+        }
+      ]
+    },
+    "live": {
+      "run_id": "ORI-AI-002-SMOKEWEBA-live",
+      "legs": [
+        {
+          "platform": "web",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-SMOKEWEBA-live:web",
+            "url": "http://127.0.0.1:8406",
+            "drive_result": {
+              "emptyStateVisible": true,
+              "markerSubmitted": true,
+              "inputCleared": true,
+              "assistantResponded": true,
+              "stopControlVisible": true,
+              "followUpRecallVisible": true,
+              "retryControlVisible": true,
+              "retryErrorSanitized": true,
+              "retryCompleted": true,
+              "retrySingleUserTurn": true
+            },
+            "backend_records": [
+              {
+                "requestId": "SL4b3bLnVTTu5M5d",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0afdbc7aa0057e5f006aae98a80b8087d0b293152fcd8da9f5",
+                "callId": "call-tcTI6H3rnzmMSNUUIvQFxfbs",
+                "outcome": "completed",
+                "deltaCount": 103,
+                "inputTokens": 58,
+                "outputTokens": 104,
+                "totalTokens": 162,
+                "textHash": "fc3b4076c76879d0947657f68c87cf87b7baf807a69e12dc79eeaa59a4f56a06",
+                "durationMs": 1465,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "SL4b3bLnVTTu5M5d",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0afdbc7aa0057e5f006aae98a9bf9087d0ac48e2b03e0fcc2a",
+                "callId": "call-ybkx6VO9jWk6tkT9AxoCLPi4",
+                "outcome": "completed",
+                "deltaCount": 77,
+                "inputTokens": 202,
+                "outputTokens": 78,
+                "totalTokens": 280,
+                "textHash": "bc960c8ea374710b3949d9ffd3a5fc3851cfa50d775665362abdd627bd9bfc69",
+                "durationMs": 1312,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "SL4b3bLnVTTu5M5d",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0afdbc7aa0057e5f006aae98ab92a487d0b70f12711fa48532",
+                "callId": "call-9h3Yc86h6YmbnBveOF03yg01",
+                "outcome": "completed",
+                "deltaCount": 27,
+                "inputTokens": 296,
+                "outputTokens": 28,
+                "totalTokens": 324,
+                "textHash": "9427599e272e2bbfdb0a88ea2559a56184d67afda5d68499dbcb9ddfe44633da",
+                "durationMs": 793,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "SL4b3bLnVTTu5M5d",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0afdbc7aa0057e5f006aae98b2706487d08aacbbdd7ff2e84a",
+                "callId": "call-q6hBlZayz1CgcwSg9nKsrulI",
+                "outcome": "completed",
+                "deltaCount": 2,
+                "inputTokens": 392,
+                "outputTokens": 3,
+                "totalTokens": 395,
+                "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+                "durationMs": 1064,
+                "errorText": null,
+                "activeGenerations": 0
+              }
+            ],
+            "retry_request_id": "SL4b3bLnVTTu5M5d"
+          }
+        }
+      ]
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 139
+  },
+  "context": {
+    "followup_answer_contains_nonce": true,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 1
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d"
+    ],
+    "response_ids": [
+      "resp_0afdbc7aa0057e5f006aae98b2706487d08aacbbdd7ff2e84a",
+      "resp_0afdbc7aa0057e5f006aae98a80b8087d0b293152fcd8da9f5",
+      "resp_0afdbc7aa0057e5f006aae98a9bf9087d0ac48e2b03e0fcc2a",
+      "resp_0afdbc7aa0057e5f006aae98ab92a487d0b70f12711fa48532"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 162
+      },
+      {
+        "total_tokens": 280
+      },
+      {
+        "total_tokens": 324
+      }
+    ],
+    "text_hashes_recorded": [
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "fc3b4076c76879d0947657f68c87cf87b7baf807a69e12dc79eeaa59a4f56a06",
+      "bc960c8ea374710b3949d9ffd3a5fc3851cfa50d775665362abdd627bd9bfc69",
+      "9427599e272e2bbfdb0a88ea2559a56184d67afda5d68499dbcb9ddfe44633da"
+    ],
+    "web_raw_text_hash_match": true
+  },
+  "stop_proof": {
+    "aborted_request_id": "PJz0hdWFG6w3D2E2",
+    "delta_count_at_abort": 15,
+    "completed_before_stop": false,
+    "source": "web-self"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "provider-rejection",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "PJz0hdWFG6w3D2E2"
+    },
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "PJz0hdWFG6w3D2E2"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": true,
+    "sanitized": true,
+    "retry_completed": true,
+    "single_user_turn": true
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-SMOKEWEBA",
+    "rejected_request_ids": [
+      "ggcmi1EJdw0d9f1O",
+      "ggcmi1EJdw0d9f1O"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "PJz0hdWFG6w3D2E2",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d"
+    ]
+  },
+  "source": {
+    "repo_head": "cf02a2402dfa92a89cae747e1774ee062b2ac881",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

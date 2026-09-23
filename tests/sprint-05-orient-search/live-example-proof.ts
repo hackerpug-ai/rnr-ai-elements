@@ -57,6 +57,7 @@ import {
 import { createServer, type Server } from 'node:http';
 import { tmpdir } from 'node:os';
 import { basename, extname, join, resolve } from 'node:path';
+import { Readable } from 'node:stream';
 import { fileURLToPath } from 'node:url';
 
 import { type Browser, chromium } from '@playwright/test';
@@ -616,6 +617,19 @@ function startAndroidRecording(serial: string, dir: string): RecordingHandle {
         timeout: 30_000,
       });
       await Promise.race([runner, sleep(90_000)]);
+      // The in-flight segment's `adb pull` can land on disk after the race
+      // above resolves; the pulled FILES are the real footage, so return what
+      // the directory holds rather than the loop's in-memory tally.
+      try {
+        const onDisk = readdirSync(dir)
+          .filter((name) => /^seg-\d+\.mp4$/.test(name))
+          .sort()
+          .map((name) => join(dir, name))
+          .filter((path) => statSync(path).size > 0);
+        if (onDisk.length > 0) return onDisk;
+      } catch {
+        // directory unreadable — fall through to the in-memory tally
+      }
       return [...segments];
     },
   };
@@ -813,36 +827,54 @@ function serveTeeingProxy(
             res.end();
             return;
           }
+          // Bridge the WHATWG body into a Node Readable this proxy owns and
+          // attach an error listener BEFORE consuming. The async-iterator
+          // detaches its own error listener between resolved reads, so an
+          // upstream killed mid-body (the endpoint-loss `backend/stop` during
+          // a still-streaming turn) could otherwise surface as an unhandled
+          // 'error' event and take down the whole orchestrator process — the
+          // cycle-3/cycle-4 marathon crash at `backend/stop/start`.
+          const bodyStream = Readable.fromWeb(
+            upstreamRes.body as Parameters<typeof Readable.fromWeb>[0],
+          );
+          let upstreamTerminated: string | null = null;
+          bodyStream.once('error', (error: Error) => {
+            upstreamTerminated = error.message;
+          });
           let sseBuffer = '';
           let cumulative = '';
-          for await (const chunk of upstreamRes.body) {
-            const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
-            res.write(buf);
-            sseBuffer += buf.toString('utf8');
-            let nl = sseBuffer.indexOf('\n');
-            while (nl !== -1) {
-              const line = sseBuffer.slice(0, nl).trim();
-              sseBuffer = sseBuffer.slice(nl + 1);
-              if (line.startsWith('data:')) {
-                try {
-                  const frame = JSON.parse(line.slice(5).trim()) as {
-                    type?: unknown;
-                    delta?: unknown;
-                  };
-                  if (frame.type === 'text-delta' && typeof frame.delta === 'string') {
-                    cumulative += frame.delta;
-                    tee.deltas.push({ ts: nowIso(), cumulative });
-                    journal.emit('web-stream-delta', {
-                      request_id: tee.request.envelope_id,
-                      cumulative_length: cumulative.length,
-                    });
+          try {
+            for await (const chunk of bodyStream) {
+              const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+              res.write(buf);
+              sseBuffer += buf.toString('utf8');
+              let nl = sseBuffer.indexOf('\n');
+              while (nl !== -1) {
+                const line = sseBuffer.slice(0, nl).trim();
+                sseBuffer = sseBuffer.slice(nl + 1);
+                if (line.startsWith('data:')) {
+                  try {
+                    const frame = JSON.parse(line.slice(5).trim()) as {
+                      type?: unknown;
+                      delta?: unknown;
+                    };
+                    if (frame.type === 'text-delta' && typeof frame.delta === 'string') {
+                      cumulative += frame.delta;
+                      tee.deltas.push({ ts: nowIso(), cumulative });
+                      journal.emit('web-stream-delta', {
+                        request_id: tee.request.envelope_id,
+                        cumulative_length: cumulative.length,
+                      });
+                    }
+                  } catch {
+                    // non-JSON frame (keepalive) — nothing to extract
                   }
-                } catch {
-                  // non-JSON frame (keepalive) — nothing to extract
                 }
+                nl = sseBuffer.indexOf('\n');
               }
-              nl = sseBuffer.indexOf('\n');
             }
+          } catch (error) {
+            upstreamTerminated ??= error instanceof Error ? error.message : String(error);
           }
           res.end();
           journal.emit('web-stream-end', {
@@ -850,6 +882,7 @@ function serveTeeingProxy(
             status: tee.status,
             raw_text: cumulative,
             raw_text_sha256: sha256(cumulative),
+            upstream_terminated: upstreamTerminated,
           });
           return;
         }
@@ -1601,6 +1634,18 @@ async function verifyRestoredModel(
       }),
     });
     void res.status;
+    // Drain the streaming body to completion BEFORE the finally-clause backend
+    // stop. An unconsumed response body whose server is killed mid-flight emits
+    // an unhandled 'error' on its Readable — the same crash class as the teeing
+    // proxy's upstream death.
+    try {
+      for await (const chunk of res.body ?? []) {
+        void chunk;
+      }
+    } catch {
+      // The backend record below is the oracle; a drained-body transport error
+      // is surfaced by waitForRecord instead.
+    }
     const record = await backend.waitForRecord(requestId, 30_000);
     journal.emit('restore-verification', { port, record });
     return record;
@@ -1611,6 +1656,82 @@ async function verifyRestoredModel(
 
 /** The maestro XCUITest runner app on the reserved iOS simulator. */
 const MAESTRO_IOS_RUNNER = 'dev.mobile.maestro-driver-iosUITests.xctrunner';
+
+/**
+ * Mid-matrix refresh of the RESERVED devices only (the ORI-RN-005-documented
+ * full-reboot remedy). The first engine's phases wear them — maestro JVM/
+ * XCUITest churn on iOS, screenrecord churn on Android — and the second
+ * engine's first marker send then stalls in-app past the drivers' fixed 120s
+ * terminal-record window (observed twice: c4e and c4g, nativewind-ios marker
+ * completing ~2min after the maestro send on a freshly booted simulator that
+ * had since absorbed a full uniwind matrix). Rebooting between engines keeps
+ * each engine's first send on rested hardware. The unrelated booted simulator
+ * is never touched; the reserved emulator keeps its installed apps (cold boot
+ * skips the snapshot, not the userdata).
+ */
+async function refreshReservedDevices(
+  journal: EvidenceJournal,
+  options: MatrixOptions,
+): Promise<void> {
+  journal.emit('device-refresh-start', {
+    ios_udid: options.iosUdid,
+    android_serial: options.androidSerial,
+  });
+  spawnSync('pkill', ['-f', 'maestro'], { encoding: 'utf8', timeout: 15_000 });
+
+  spawnSync('xcrun', ['simctl', 'shutdown', options.iosUdid], {
+    encoding: 'utf8',
+    timeout: 60_000,
+  });
+  spawnSync('xcrun', ['simctl', 'boot', options.iosUdid], {
+    encoding: 'utf8',
+    timeout: 60_000,
+  });
+  const bootstatus = spawnSync('xcrun', ['simctl', 'bootstatus', options.iosUdid, '-b'], {
+    encoding: 'utf8',
+    timeout: 240_000,
+  });
+
+  spawnSync(ADB, ['-s', options.androidSerial, 'emu', 'kill'], {
+    encoding: 'utf8',
+    timeout: 30_000,
+  });
+  await sleep(8000);
+  const relaunch = spawn(
+    join(ANDROID_SDK, 'emulator', 'emulator'),
+    ['-avd', 'Pixel_7_API_34', '-port', '5554', '-no-snapshot-load'],
+    { stdio: 'ignore', detached: true },
+  );
+  relaunch.unref();
+  const androidDeadline = Date.now() + 300_000;
+  let androidReady = false;
+  while (Date.now() < androidDeadline) {
+    const res = spawnSync(
+      ADB,
+      ['-s', options.androidSerial, 'shell', 'getprop', 'sys.boot_completed'],
+      {
+        encoding: 'utf8',
+        timeout: 15_000,
+      },
+    );
+    if (`${res.stdout ?? ''}`.trim() === '1') {
+      androidReady = true;
+      break;
+    }
+    await sleep(5000);
+  }
+  await sleep(30_000); // package-manager settle after boot_completed
+
+  journal.emit('device-refresh-end', {
+    ios_bootstatus: bootstatus.status,
+    android_ready: androidReady,
+  });
+  if (!androidReady) {
+    throw new Error(
+      `reserved android device ${options.androidSerial} did not boot within 300s of the mid-matrix refresh`,
+    );
+  }
+}
 
 /**
  * Resets the maestro iOS driver channel between phases. A failed maestro flow
@@ -1704,6 +1825,11 @@ async function runEnginePhases(
       engine,
       phase: 'reject',
       completed: driverRun?.completed ?? false,
+      legs: (driverRun?.legs ?? []).map((leg) => ({
+        platform: leg.platform,
+        status: leg.status,
+        diagnostic: leg.diagnostic ?? null,
+      })),
       error_records: sink.records
         .filter((r) => r.phase === 'reject' && r.record.outcome === 'error')
         .map((r) => r.record.requestId),
@@ -1824,6 +1950,11 @@ async function runEnginePhases(
       phase: 'live',
       completed: driverRun?.completed ?? false,
       record_count: sink.records.filter((r) => r.phase === 'live').length,
+      legs: (driverRun?.legs ?? []).map((leg) => ({
+        platform: leg.platform,
+        status: leg.status,
+        diagnostic: leg.diagnostic ?? null,
+      })),
     });
     for (const platform of options.platforms) {
       const shot = firstExisting([
@@ -2331,6 +2462,9 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
   const engineArtifacts: Record<string, EngineArtifacts> = {};
   try {
     for (const engine of options.engines) {
+      if (options.engines.indexOf(engine) > 0) {
+        await refreshReservedDevices(journal, options);
+      }
       journal.emit('engine-start', { engine });
       engineArtifacts[engine] = await runEnginePhases(engine, options, journal);
       allPhases.push(...engineArtifacts[engine].phases);
@@ -2518,6 +2652,9 @@ type OwnerStatus = { ts: string; kind: 'listening' | 'stopped' | 'alive'; model:
  * are appended to a file the in-process adapter tails; stop/restart/model-restore
  * arrive as command-file lines.
  */
+/** Owner-side graceful close bound; the driver bounds backend/stop at 120s. */
+const GRACEFUL_CLOSE_BOUND_MS = 60_000;
+
 // fallow-ignore-next-line complexity
 async function runBackendOwner(params: {
   port: number;
@@ -2594,6 +2731,37 @@ async function runBackendOwner(params: {
   let currentModel = params.model;
   serve(currentModel);
 
+  /**
+   * Graceful, bounded backend close. `closeAllConnections()` destroys sockets
+   * mid-response, and an SSE body killed mid-flight surfaces as an unhandled
+   * 'error' in whichever client holds the stream (the web leg's teeing proxy
+   * has an orphaned stop-turn stream in flight at exactly this moment — the
+   * browser Stop is not propagated upstream, by documented driver behavior).
+   * `server.close()` lets in-flight responses finish and reaps idle keep-alive
+   * sockets; the force timeout preserves the abortive fallback so a stuck
+   * stream can never hold a phase hostage (the driver bounds backend/stop at
+   * 120s; this bound must stay well under it).
+   */
+  const closeBackendGracefully = (
+    closing: ReturnType<typeof createChatServer>,
+    done: () => void,
+  ): void => {
+    let settled = false;
+    const finish = (): void => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(forceTimer);
+      done();
+    };
+    const forceTimer = setTimeout(() => {
+      originalWrite(
+        `owner: graceful close exceeded ${GRACEFUL_CLOSE_BOUND_MS}ms — forcing connections closed\n`,
+      );
+      closing.closeAllConnections();
+    }, GRACEFUL_CLOSE_BOUND_MS);
+    closing.close(() => finish());
+  };
+
   // fallow-ignore-next-line complexity
   const handleCommands = (): void => {
     try {
@@ -2614,8 +2782,7 @@ async function runBackendOwner(params: {
           const closing = server;
           server = null;
           if (closing !== null) {
-            closing.closeAllConnections();
-            closing.close(() => emitStatus('stopped', currentModel));
+            closeBackendGracefully(closing, () => emitStatus('stopped', currentModel));
           } else {
             emitStatus('stopped', currentModel);
           }
@@ -2628,8 +2795,7 @@ async function runBackendOwner(params: {
             serve(nextModel);
           };
           if (closing !== null) {
-            closing.closeAllConnections();
-            closing.close(relisten);
+            closeBackendGracefully(closing, relisten);
           } else {
             relisten();
           }

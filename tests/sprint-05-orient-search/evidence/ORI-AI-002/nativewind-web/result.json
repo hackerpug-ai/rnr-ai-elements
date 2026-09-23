@@ -1,0 +1,243 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-1790137909633",
+  "engine": "nativewind",
+  "platform": "web",
+  "native": false,
+  "device": "chromium (headless, real served export)",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-1790137909633-reject",
+      "legs": [
+        {
+          "platform": "web",
+          "status": "failed",
+          "diagnostic": "{\"emptyStateVisible\":true,\"markerSubmitted\":true,\"inputCleared\":true,\"assistantResponded\":true,\"growthSamples\":[46,48],\"followUpRecallVisible\":false,\"stopControlVisible\":false,\"retryControlVisible\":true,\"retryErrorSanitized\":true,\"retryCompleted\":false,\"retrySingleUserTurn\":true}",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-1790137909633-reject:web",
+            "url": "http://127.0.0.1:8408",
+            "drive_result": {
+              "emptyStateVisible": true,
+              "markerSubmitted": true,
+              "inputCleared": true,
+              "assistantResponded": true,
+              "growthSamples": [
+                46,
+                48
+              ],
+              "followUpRecallVisible": false,
+              "stopControlVisible": false,
+              "retryControlVisible": true,
+              "retryErrorSanitized": true,
+              "retryCompleted": false,
+              "retrySingleUserTurn": true
+            },
+            "backend_records": [
+              {
+                "requestId": "obX7GGywGpFAXUpm",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790137909633",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 296,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "Lob139Z7kbxsMmJU",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790137909633",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 321,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "Lob139Z7kbxsMmJU",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790137909633",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 248,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "Lob139Z7kbxsMmJU",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790137909633",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 371,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "Lob139Z7kbxsMmJU",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790137909633",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 266,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              }
+            ],
+            "retry_request_id": "iMCGLTkWXtVYTceI"
+          }
+        }
+      ]
+    },
+    "live": {
+      "run_id": "ORI-AI-002-1790137909633-live",
+      "legs": [
+        {
+          "platform": "web",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-1790137909633-live:web",
+            "url": "http://127.0.0.1:8408",
+            "drive_result": {
+              "emptyStateVisible": true,
+              "markerSubmitted": true,
+              "inputCleared": true,
+              "assistantResponded": true,
+              "growthSamples": [
+                84,
+                124,
+                44,
+                234,
+                71,
+                126
+              ],
+              "followUpRecallVisible": true,
+              "stopControlVisible": true,
+              "retryControlVisible": true,
+              "retryErrorSanitized": true,
+              "retryCompleted": true,
+              "retrySingleUserTurn": true
+            },
+            "backend_records": [
+              {
+                "requestId": "osIL2iKJXwV5ZAgx",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0edfed1be123f103006ab36810e66487d0a0966d7674acd6d4",
+                "callId": "call-MclJ5NwcUbLxoWrPcLteA5ZW",
+                "outcome": "completed",
+                "deltaCount": 2,
+                "inputTokens": 435,
+                "outputTokens": 3,
+                "totalTokens": 438,
+                "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+                "durationMs": 985,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "GFU3QgRys3AgcRrL",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0e92003436ce0b08006ab36846a3d487d0aa261bc54fcf1cc8",
+                "callId": "call-OMIaIyoYOO7H0J5AJX2zoxTP",
+                "outcome": "completed",
+                "deltaCount": 35,
+                "inputTokens": 59,
+                "outputTokens": 36,
+                "totalTokens": 95,
+                "textHash": "c72959c190d7e8dcc2a83163960bf687d5ea70e5f1e5cb082faec40fb98b31d4",
+                "durationMs": 1123,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "GFU3QgRys3AgcRrL",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0e92003436ce0b08006ab36847e63c87d0bed07ded6abab45e",
+                "callId": "call-1vx0xTn29z4bvBcNoXLYjzXE",
+                "outcome": "completed",
+                "deltaCount": 66,
+                "inputTokens": 133,
+                "outputTokens": 67,
+                "totalTokens": 200,
+                "textHash": "fa314d099fef6f3e563a5427c17c52298117787e0f210ab3e30d047ab5145b6e",
+                "durationMs": 1375,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "GFU3QgRys3AgcRrL",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0e92003436ce0b08006ab36849b2d487d0ad86a5b7567b3bd4",
+                "callId": "call-sK884hyAQtFTGB0a8ZIiYfwp",
+                "outcome": "completed",
+                "deltaCount": 27,
+                "inputTokens": 214,
+                "outputTokens": 28,
+                "totalTokens": 242,
+                "textHash": "b53c12b29560c724552a1351e5b1a185909fb8dcdd7b68179436a8818111357c",
+                "durationMs": 954,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "GFU3QgRys3AgcRrL",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_0e92003436ce0b08006ab3684b108487d09ec0fdfb24ae8e8e",
+                "callId": "call-0c4qnfiKVZj5AbHDNYOQxmLF",
+                "outcome": "completed",
+                "deltaCount": 1306,
+                "inputTokens": 299,
+                "outputTokens": 1307,
+                "totalTokens": 1606,
+                "textHash": "ee5864bb1660746c3e865a15dc57ceb6a519dfd4a37eb547a0adbe81e508b93e",
+                "durationMs": 9206,
+                "errorText": null,
+                "activeGenerations": 0
+              }
+            ],
+            "retry_request_id": "yLaOffI8tw1zVVPw"
+          }
+        }
+      ]
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 0
+  },
+  "context": {
+    "followup_answer_contains_nonce": false,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 0
+  },
+  "correlation": {},
+  "stop_proof": {},
+  "retry_after_failure": [],
+  "endpoint_loss": {},
+  "provider_rejection": {},
+  "source": {
+    "repo_head": "bb9cc0d6cf739e251e91cc2462f9ed570c6dcf3c",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

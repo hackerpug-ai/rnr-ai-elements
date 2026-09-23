@@ -1,0 +1,89 @@
+invalid server configuration: EXAMPLE_CHAT_MODEL: Invalid input: expected string, received undefined; EXAMPLE_CHAT_WEB_ORIGIN: Invalid input: expected string, received undefined
+[heartbeat 2026-09-21T06:44:15.580Z] pipeline/start — platforms=ios,android,web backendPassed=true
+[heartbeat 2026-09-21T06:44:15.743Z] legs/native-prep/start
+[heartbeat 2026-09-21T06:44:19.064Z] legs/native-prep/end — metroPort=8095
+[heartbeat 2026-09-21T06:44:19.064Z] legs/ios/start
+[heartbeat 2026-09-21T06:44:19.064Z] leg/ios/budget-start — budgetMs=2400000
+[heartbeat 2026-09-21T06:47:48.333Z] legs/ios/end
+[heartbeat 2026-09-21T06:47:48.334Z] legs/android/start
+[heartbeat 2026-09-21T06:47:48.334Z] leg/android/budget-start — budgetMs=2400000
+[heartbeat 2026-09-21T06:54:20.659Z] legs/android/end
+[heartbeat 2026-09-21T06:54:20.660Z] legs/web/start
+[heartbeat 2026-09-21T06:54:20.660Z] leg/web/budget-start — budgetMs=840000
+[heartbeat 2026-09-21T06:54:20.662Z] web/leg/start — runId=ORI-AI-002-1789973051863-reject
+[heartbeat 2026-09-21T06:54:20.662Z] web/export/start
+[heartbeat 2026-09-21T06:54:24.653Z] web/export/end — exit=0
+[heartbeat 2026-09-21T06:54:24.654Z] web/proxy-listen — 127.0.0.1:8406
+[heartbeat 2026-09-21T06:54:24.657Z] web/proxy-listening — 127.0.0.1:8406
+[heartbeat 2026-09-21T06:54:24.657Z] web/chromium-launch/start
+[heartbeat 2026-09-21T06:54:24.790Z] web/chromium-launch/done
+[heartbeat 2026-09-21T06:54:24.835Z] web/drive/start — http://127.0.0.1:8406
+[heartbeat 2026-09-21T06:54:25.424Z] web/drive/empty-state-checked — visible=true
+[heartbeat 2026-09-21T06:54:25.533Z] web/drive/marker-turn-checked — submitted=true
+[heartbeat 2026-09-21T06:55:25.556Z] web/drive/seed-reply-checked — responded=true
+[heartbeat 2026-09-21T06:56:25.569Z] web/drive/follow-up-checked — recall=true
+[heartbeat 2026-09-21T06:57:55.586Z] web/drive/stop-turn-checked — stopControlVisible=false
+[heartbeat 2026-09-21T06:57:55.587Z] backend/stop/start — port=4000
+[heartbeat 2026-09-21T06:57:58.887Z] backend/stop/done
+[heartbeat 2026-09-21T06:58:28.896Z] backend/restart/start — port=4000
+[heartbeat 2026-09-21T06:58:43.914Z] backend/restart/error — backend owner did not relisten on rnr-s05-nonexistent-ORI-AI-002-1789973051863 within 15s
+[heartbeat 2026-09-21T06:58:43.914Z] web/drive/error — backend owner did not relisten on rnr-s05-nonexistent-ORI-AI-002-1789973051863 within 15s
+[heartbeat 2026-09-21T06:58:43.914Z] web/context-close/start
+[heartbeat 2026-09-21T06:58:43.918Z] web/context-close/done
+[heartbeat 2026-09-21T06:58:43.918Z] web/drive/end
+[heartbeat 2026-09-21T06:58:43.918Z] web/browser-close/start
+[heartbeat 2026-09-21T06:58:43.935Z] web/browser-close/done
+[heartbeat 2026-09-21T06:58:43.936Z] web/proxy-close/start — port=8406
+[heartbeat 2026-09-21T06:58:43.936Z] web/proxy-close/done — close-callback port=8406
+[heartbeat 2026-09-21T06:58:43.936Z] web/leg/end
+[heartbeat 2026-09-21T06:58:43.936Z] legs/web/end
+[heartbeat 2026-09-21T06:58:43.936Z] legs/teardown/start
+[heartbeat 2026-09-21T06:58:43.961Z] legs/teardown/end
+[heartbeat 2026-09-21T06:58:43.987Z] pipeline/manifest-written — passed=0 completed=false heartbeatEntries=40
+[heartbeat 2026-09-21T06:58:43.987Z] pipeline/end
+[heartbeat 2026-09-21T06:58:53.286Z] pipeline/start — platforms=ios,android,web backendPassed=true
+[heartbeat 2026-09-21T06:58:53.399Z] legs/native-prep/start
+[heartbeat 2026-09-21T06:58:56.654Z] legs/native-prep/end — metroPort=8095
+[heartbeat 2026-09-21T06:58:56.654Z] legs/ios/start
+[heartbeat 2026-09-21T06:58:56.654Z] leg/ios/budget-start — budgetMs=2400000
+[heartbeat 2026-09-21T07:01:43.528Z] legs/ios/end
+[heartbeat 2026-09-21T07:01:43.529Z] legs/android/start
+[heartbeat 2026-09-21T07:01:43.529Z] leg/android/budget-start — budgetMs=2400000
+[heartbeat 2026-09-21T07:07:48.413Z] backend/stop/start — port=4000
+[heartbeat 2026-09-21T07:07:51.715Z] backend/stop/done
+[heartbeat 2026-09-21T07:08:29.944Z] backend/restart/start — port=4000
+[heartbeat 2026-09-21T07:08:44.964Z] backend/restart/error — backend owner did not relisten on gpt-4.1-mini-2025-04-14 within 15s
+[heartbeat 2026-09-21T07:12:13.073Z] legs/android/end
+[heartbeat 2026-09-21T07:12:13.078Z] legs/web/start
+[heartbeat 2026-09-21T07:12:13.078Z] leg/web/budget-start — budgetMs=840000
+[heartbeat 2026-09-21T07:12:13.078Z] web/leg/start — runId=ORI-AI-002-1789973051863-live
+[heartbeat 2026-09-21T07:12:13.079Z] web/export/start
+[heartbeat 2026-09-21T07:12:17.677Z] web/export/end — exit=0
+[heartbeat 2026-09-21T07:12:17.677Z] web/proxy-listen — 127.0.0.1:8406
+[heartbeat 2026-09-21T07:12:17.679Z] web/proxy-listening — 127.0.0.1:8406
+[heartbeat 2026-09-21T07:12:17.679Z] web/chromium-launch/start
+[heartbeat 2026-09-21T07:12:17.918Z] web/chromium-launch/done
+[heartbeat 2026-09-21T07:12:18.040Z] web/drive/start — http://127.0.0.1:8406
+[heartbeat 2026-09-21T07:12:18.635Z] web/drive/empty-state-checked — visible=true
+[heartbeat 2026-09-21T07:12:18.792Z] web/drive/marker-turn-checked — submitted=true
+[heartbeat 2026-09-21T07:13:18.804Z] web/drive/seed-reply-checked — responded=true
+[heartbeat 2026-09-21T07:14:18.813Z] web/drive/follow-up-checked — recall=true
+[heartbeat 2026-09-21T07:15:48.824Z] web/drive/stop-turn-checked — stopControlVisible=false
+[heartbeat 2026-09-21T07:15:48.825Z] backend/stop/start — port=4000
+[heartbeat 2026-09-21T07:15:48.826Z] backend/stop/done
+[heartbeat 2026-09-21T07:16:18.834Z] backend/restart/start — port=4000
+[heartbeat 2026-09-21T07:16:33.852Z] backend/restart/error — backend owner did not relisten on gpt-4.1-mini-2025-04-14 within 15s
+[heartbeat 2026-09-21T07:16:33.853Z] web/drive/error — backend owner did not relisten on gpt-4.1-mini-2025-04-14 within 15s
+[heartbeat 2026-09-21T07:16:33.853Z] web/context-close/start
+[heartbeat 2026-09-21T07:16:33.858Z] web/context-close/done
+[heartbeat 2026-09-21T07:16:33.858Z] web/drive/end
+[heartbeat 2026-09-21T07:16:33.859Z] web/browser-close/start
+[heartbeat 2026-09-21T07:16:33.876Z] web/browser-close/done
+[heartbeat 2026-09-21T07:16:33.876Z] web/proxy-close/start — port=8406
+[heartbeat 2026-09-21T07:16:33.876Z] web/proxy-close/done — close-callback port=8406
+[heartbeat 2026-09-21T07:16:33.876Z] web/leg/end
+[heartbeat 2026-09-21T07:16:33.876Z] legs/web/end
+[heartbeat 2026-09-21T07:16:33.877Z] legs/teardown/start
+[heartbeat 2026-09-21T07:16:33.900Z] legs/teardown/end
+[heartbeat 2026-09-21T07:16:33.927Z] pipeline/manifest-written — passed=0 completed=false heartbeatEntries=86
+[heartbeat 2026-09-21T07:16:33.927Z] pipeline/end
