@@ -1,0 +1,96 @@
+{
+  "mode": "default",
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/nativewind-baseline-ordering-proof.test.ts",
+  "run_id": "FIX-ORI-AI-002-1-1790177896274",
+  "watchdog_ms": 3600000,
+  "child": {
+    "code": 0,
+    "signal": null,
+    "watchdog_fired": false,
+    "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-AI-002-1/.tmp/FIX-ORI-AI-002-1/live/FIX-ORI-AI-002-1-1790177896274/child-stdio.log"
+  },
+  "manifest_run_id": "FIX-ORI-AI-002-1-1790177896274",
+  "manifest_run_id_matches": true,
+  "options_backend_not_null": true,
+  "ios_legs_passed": 2,
+  "marker_signature": {
+    "failed_legs_with_signature": 0,
+    "completed_record_channel": "none",
+    "completed_record_present": false
+  },
+  "source_inspection": {
+    "clean": true,
+    "pre_flow_conversational_captures": 6,
+    "checks": [
+      {
+        "name": "awaitTurn has no await-time records().length capture",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "awaitTurn receives the baseline argument",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "iOS marker baseline captured before sendTurn and passed to awaitTurn",
+        "ok": true,
+        "detail": "capture-before-send=true baseline-arg=true"
+      },
+      {
+        "name": "iOS seed baseline captured before sendTurn and passed to awaitTurn",
+        "ok": true,
+        "detail": "capture-before-send=true baseline-arg=true"
+      },
+      {
+        "name": "iOS follow-up baseline captured before sendTurn and passed to awaitTurn",
+        "ok": true,
+        "detail": "capture-before-send=true baseline-arg=true"
+      },
+      {
+        "name": "iOS handleTerminal retry baseline captured before the Retry tap",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "both Android retry baselines captured before their Retry tap",
+        "ok": true,
+        "detail": "matches=2 (need exactly 2)"
+      },
+      {
+        "name": "Android runTurn send baseline still captured before the send tap",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "both stop-turn drive baselines still precede their flows",
+        "ok": true,
+        "detail": "android=true ios=true"
+      },
+      {
+        "name": "terminal predicate keeps the records.length > baseline guard",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "growth sampler keeps its records.length > baseline guard",
+        "ok": true,
+        "detail": ""
+      }
+    ]
+  },
+  "child_error": null,
+  "growth_samples": {
+    "ios": [
+      368,
+      85,
+      122,
+      72,
+      234
+    ]
+  },
+  "exit": 0,
+  "kind": "green",
+  "manifest_completed": false,
+  "note": "manifest.completed may legitimately be false for an ios-only run — assertions key on legs[].status"
+}
