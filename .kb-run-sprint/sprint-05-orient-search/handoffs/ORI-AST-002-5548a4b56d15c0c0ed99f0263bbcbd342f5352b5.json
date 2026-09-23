@@ -1,0 +1,56 @@
+{
+  "task": "ORI-AST-002",
+  "commit_sha": "5548a4b56d15c0c0ed99f0263bbcbd342f5352b5",
+  "done": "Shipped the one shared engine contract (validated nativewind/uniwind, nativewind default) across every engine group, rnr-engine storage, and root data-engine, plus ClientRouter in the shared layout and a complementary html.dark marker, proven by five real-browser AC tests (15/15 green across desktop/mobile/no-JS) and clean typecheck/lint/build/scenario-validation gates.",
+  "deviations": [
+    "The plan's reading list assumed the panels stayed under a plain <slot> render, but hashing slot content via Astro.slots.render in frontmatter consumed child-component script hoisting (copy-button.ts vanished from the bundle), so TabGroup.astro renders each panel once and re-injects via set:html (apps/docs/src/components/islands/TabGroup.astro).",
+    "The spec said only 'derive html.dark from the same resolved boolean', but ThemeToggle clicks flip only html.light (theme-toggle.ts is writeProhibited), so DocsLayout.astro adds a window-guarded MutationObserver to keep html.dark complementary (apps/docs/src/layouts/DocsLayout.astro).",
+    "Storage denial is enforced with Chromium's real --disable-local-storage switch (window.localStorage becomes null/throws) rather than any Storage prototype patch, per the fixture's no-monkey-patch rule (tests/sprint-05-orient-search/engine-state-contract.spec.ts)."
+  ],
+  "concerns": [
+    "The deterministic content-digest group prefix would collide if two groups ever render byte-identical slot content on one page, so any new co-located TabGroup with identical panels must pass an explicit `group` prop (apps/docs/src/components/islands/TabGroup.astro).",
+    "The AC-5 scratch consumer symlinks node_modules and relies on TabGroup.astro's relative <script src=\"../../scripts/tab-group.ts\"> path, so relocating tab-group.ts silently breaks that fixture.",
+    "The html.dark MutationObserver observes documentElement class changes and is a tiny runtime cost on every theme toggle, but it is the only non-invasive way to mirror ThemeToggle's light-class flip."
+  ],
+  "findings": [
+    "Astro's Astro.slots.render() hoists child-component scripts into a discarded render, so any frontmatter slot-render that is not re-emitted via set:html drops those islands from the bundle (apps/docs/src/components/islands/TabGroup.astro).",
+    "Chromium --disable-local-storage makes window.localStorage null and throws on property access, which is a genuinely real (non-patched) storage-denial fixture for island recovery tests.",
+    "The repo's root tsconfig carries no DOM lib, so every Playwright page.evaluate DOM/localStorage read must use the globalThis-as-unknown facade typing already used in tests/harness/docs-preview.ts."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-AST-007",
+      "found": "The registry ledger's own engine tabs and copy commands must join the same root data-engine + rnr-engine + data-persistent contract this task landed, or the ledger will drift from the component pages.",
+      "change": "Wire the ledger engine selection through document.documentElement.dataset.engine and rnr-engine (the tab-group island's engineGroups() sync) and give the ledger's TabGroup an explicit `group` prop to avoid the digest path."
+    },
+    {
+      "target": "ORI-AST-003",
+      "found": "A complementary html.dark class now exists alongside html.light, and ClientRouter is active, so the live TokenTable theme flip must read/reflect both markers rather than assuming only html.light exists.",
+      "change": "Bind the TokenTable swatch flip to the same resolved light boolean (html.light authoritative, html.dark complementary) so it stays correct after soft navigation."
+    },
+    {
+      "target": "ORI-AST-010",
+      "found": "Engine synchronization, unique IDs, root data-engine, and no-JS stacked panels are now the real message-page behavior, but the locked FLOW-SHELL-13/14 steps still target /docs/installation content that ORI-CONT has not landed.",
+      "change": "Re-run the journey proofs against /components/message now (support behavior is in place), and defer the /docs/installation legs until ORI-CONT-001/003 manuscripts exist."
+    },
+    {
+      "target": "GATE:FLOW-SHELL-13",
+      "found": "Engine-tab persistence across pages is support-ready (cross-group sync + rnr-engine + pre-paint data-engine), but the gate step opens /docs/installation which does not yet exist.",
+      "change": "Hold the journey gate on ORI-CONT content; the underlying engine-persistence mechanism is already proven by ORI-AST-002's AC-1/AC-2/AC-3."
+    },
+    {
+      "target": "GATE:FLOW-SHELL-14",
+      "found": "Both engine panels in initial HTML with unique tab/panel IDs is now true on the real component pages (8 unique IDs, no-JS stacked/readable), but the gate fetches /docs/installation's raw body.",
+      "change": "Point the no-JS/raw-HTTP assertion at a real component page until the installation manuscript lands, or keep the gate RED pending ORI-CONT."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "The sprint-04 lane test engine-tab-persists-across-pages.spec.ts asserts aria-selected persistence but predates the unique group-ID scheme and root data-engine; it may need its selectors updated to the new prefixed IDs.",
+      "change": "Verify the sprint-04 engine-tab spec still passes against the prefixed tab/panel IDs and the synchronized engineGroups() behavior before it runs again."
+    }
+  ],
+  "feedback": [
+    "The spec's 'derive html.dark from the same resolved boolean' under-specified the ThemeToggle interaction (theme-toggle.ts only flips html.light); future theme work should state the observer/lifecycle contract explicitly.",
+    "The engine-state contract (data-engine root, rnr-engine storage, data-persistent attribute) is now load-bearing for three dependent tasks; consider documenting it in 11-technical-requirements so ORI-AST-003/007/010 consume it without re-deriving it."
+  ]
+}

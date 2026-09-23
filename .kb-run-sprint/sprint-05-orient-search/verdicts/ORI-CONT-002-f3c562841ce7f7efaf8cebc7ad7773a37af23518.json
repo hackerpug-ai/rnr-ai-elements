@@ -1,0 +1,34 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "f3c562841ce7f7efaf8cebc7ad7773a37af23518",
+  "reviewer": "techwriting-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "theming.mdx headings slug to exactly #textclasscontext/#rendermarkdown; four copy-stable phrases present; renderMarkdown verified in MessageResponseProps (message.tsx:104) and ReasoningContentProps (reasoning.tsx:185), absent from ContextProps; plain-Text fallbacks verified; mutations fail naming mismatch."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Exactly one <TokenTable /> binding, zero imports; zero palette literals in body (derived at runtime from real sources); --code-background/--code-foreground docs-specific and labeled; oklch-vs-HSL boundary stated; duplicate-binding and copied --primary mutations fail."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "No-config claim scoped to Uniwind/Tailwind v4/@theme; NativeWind 4↔Tailwind v3 with real config path verified (darkMode class, preset, hsl(var(--primary))); reviewer measured the @theme fence: 839 bytes, byte-exact substring of apps/example/global.css; altered-byte/source-path mutations fail."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Resolution order matches DocsLayout inline script exactly (rnr-theme → prefers-color-scheme → dark); toggle persistence verified; no numbered lesson, no .dark/color-scheme claim (correction owned by Astro workstream), no rendered-proof claim; empty-body/renamed-storage-key mutations fail."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Both manuscripts quadrant-pure with every technical claim verified against real sources (seam attribution, engine pairings, 839-byte byte-exact @theme example, resolution order matching DocsLayout exactly). Reviewer re-ran typecheck, biome, all four selectors, and the task suite at tip (all pass), reproduced GREEN observed values, validated 8 discriminating mutation controls, and confirmed evidence hashes bind to tip files. RED is a genuine functional failure captured before GREEN. Scope: four allowlisted files plus task-owned .tmp evidence."
+}

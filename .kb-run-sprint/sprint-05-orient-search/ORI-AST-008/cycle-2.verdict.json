@@ -1,0 +1,67 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "f55867423f5e258f9acc30e2f5d55f1ef9d25e61",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "apps/docs/src/pages/components/[item].astro:42-48 (getStaticPaths fans all 56 items, no registry:component filter); apps/docs/src/pages/components/[item].astro:168-178 (Props section omitted entirely when item.props is null). Spec tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:221-299 asserts 17 routes 200, h1/description/usage/category equal the real dataset, props-section count 0, and pager targets kbd->/components/breadcrumb, mono->/components/markdown. `pnpm exec playwright test tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts --grep ORI-AST-008-destinations` exit 0 (3 passed)."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Spec :303-445 runs an explicit javaScriptEnabled:true context with grantClipboardPermissions, clicks both engine tabs on kbd/mono, reads real navigator.clipboard.readText() (4 values equal `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/{engine}/{item}.json`), asserts kbd dependency resolves to .../r/{engine}/text.json and mono renders the empty-dependency state ([data-deps-empty]=1, [data-deps-packages]=0); a javaScriptEnabled:false context reads both full engine commands and clicks the next pager to HTTP 200. `--grep ORI-AST-008-engine-copy` exit 0 (3 passed)."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Spec :447-517 fetches each live /r/nativewind/{item}.json and byte-compares figure textContent === files[].content with zero normalization (assertSourceBytes), asserts served file order equals dataset sourceFiles, and after selecting uniwind for install asserts the Source region still contains no '@/registry/uniwind/' path. `--grep ORI-AST-008-source-bytes` exit 0 (3 passed)."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Spec :519-644 asserts all 56 destinations HTTP 200, exactly 39 main a[data-card] browse cards across 7 family sections (summed 39), no browse cards for UI/lib names, sampled conversation/message/tool preserve section order [install,dependencies,source,props,theming,usage], dataset props rows, usage, theming note, QR aria-label, in-family pagers and served source bytes; message retains its /docs/theming#rendermarkdown seam link. `--grep ORI-AST-008-component-regression` exit 0 (3 passed). Independent browse tests tests/sprint-03-family-browse (19 passed) and tests/sprint-02-shell-hero/item-pages-build.test.ts (2 passed) also green."
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "apps/docs/src/pages/components/[item].astro:58-59 derives pagefindCategory from item.type (registry:component->components, else type.replace('registry:','')), :123-127 puts data-pagefind-body + data-pagefind-meta on <main>. Spec :646-726 asserts 56 documents each with exactly one main[data-pagefind-body], category attribute equal to the type-derived value, counts {components:39, ui:11, lib:6}, kbd=ui/mono=lib/message=components, 0 data-pagefind-ignore inside the body, component props rows present, and renderMarkdown searchable in message. `--grep ORI-AST-008-search-metadata` exit 0 (3 passed)."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Maps to AC-1; `pnpm exec playwright test tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts --grep ORI-AST-008-destinations` exit 0, 3 passed (chromium-desktop/mobile/nojs)."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Maps to AC-2; `--grep ORI-AST-008-engine-copy` exit 0, 3 passed."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Maps to AC-3; `--grep ORI-AST-008-source-bytes` exit 0, 3 passed."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Maps to AC-4; `--grep ORI-AST-008-component-regression` exit 0, 3 passed."
+    },
+    {
+      "id": "TC-5",
+      "satisfied": true,
+      "evidence": "Maps to AC-5; `--grep ORI-AST-008-search-metadata` exit 0, 3 passed."
+    },
+    {
+      "id": "OUT-OF-SCOPE: REF-009 TC-8 commit-identity (tests/sprint-04-generated-reference/item-page-contract.test.ts)",
+      "satisfied": false,
+      "evidence": "`pnpm exec vitest run tests/sprint-04-generated-reference/item-page-contract.test.ts` on candidate f558674 -> 1 failed / 3 passed; AssertionError at tests/sprint-04-generated-reference/item-page-contract.test.ts:346 ('the re-pins share the page commit'): pageCommit=f05d82c86de19891b3b2b5920d3f5831d06dd5b1 (this task's in-scope [item].astro edit) vs [b70a5c4,b70a5c4,b70a5c4] for the three re-pin paths. Same command on main aea2631 -> 4 passed. The whole sprint-04-generated-reference dir is 1 failed / 39 passed. Root cause is this task's legitimate, allowlisted edit to [item].astro invalidating a cross-task commit-identity invariant whose assertion lives in a file NOT in this task's write_allowed list; it is not an AC/TC of ORI-AST-008 and cannot be fixed here without writing outside scope.",
+      "fix": "In tests/sprint-04-generated-reference/item-page-contract.test.ts, re-pin the TC-8 last-commit clause (line ~339-349) so it no longer requires apps/docs/src/pages/components/[item].astro to share a last-commit hash with tests/sprint-01-docs-spike-skeleton/component-page.spec.ts, tests/sprint-03-family-browse/page-contract.test.ts and the lane file — e.g. assert the three re-pin paths share one commit and that the page commit is a descendant (or simply that pageCommit is non-empty and the sha256 body pins still match).",
+      "fix_location": "tests/sprint-04-generated-reference/item-page-contract.test.ts"
+    }
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "Cycle-2 remediates cycle-1 finding (a) cleanly: the committed manifest.json now records test_spec_sha256=d355b145... which equals `git show f558674:tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts | shasum -a 256`, a real captured_at of 2026-09-14T23:26:57Z that falls between the f05d82c code commit (23:11:48Z) and the f558674 evidence commit (23:29:01Z), a cycle-2 GREEN run whose cited spec line numbers (221/303/447/519/646) match the committed spec exactly, and template/families/registry-items/lockfile/surface/coldboot hashes that all recompute to the recorded values. The implementation diff is exactly the three allowlisted paths (getStaticPaths fans all 56, type-derived pagefindCategory + data-pagefind-body/meta, null-props Props-section omission) with no prohibited path touched, no stubs, no skips, no mocks, and no weakened assertions (expect.soft failures still fail the test). All five ACs and five TCs pass independently: typecheck and lint exit 0, the docs build produces 61 pages, the task spec is 15/15 green, and gates 4/5 (FLOW-GEND-14 anatomy, FLOW-GEND-35 byte-identity) pass 3/3 each. The only remaining failure is cycle-1 finding (b), the REF-009 TC-8 commit-identity clause in tests/sprint-04-generated-reference/item-page-contract.test.ts, which fails only on the candidate because this task's allowlisted [item].astro edit changed that file's last-commit hash; that failing file is outside write_allowed and the item is not an ORI-AST-008 requirement, so it is recorded with fix_location outside scope and does not block approval. Minor non-blocking note: the manifest's candidate_commit records f05d82c (the code commit) rather than f558674; since f558674 changes only evidence, this is defensible and consistent with cycle-1's own framing."
+}

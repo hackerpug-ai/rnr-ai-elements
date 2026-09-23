@@ -1,0 +1,39 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "ab8935974b71724cec2d948786404c9ca23a660f",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Baseline (real 61-page build + seeded not-yet-landed routes) exits 0: 67 html files / 1195 internal links; 3-form target resolution identical; meta-refresh redirect recognized and destination validated. Reviewer re-ran vitest 4/4."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Five deletion drills (message doc, boundary doc, /404 target, redirect destination, /_astro asset) each exit nonzero naming source+URL; restorations re-pass; empty/absent dist fail; baseline SHA unchanged."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Fragment resolution against real id=/name= anchors incl. encoded forms; removing row-message's id yields exit 1 'fragment #row-message not found'; restoring re-passes."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Real HTTP only: unique nonexistent github.com path; ordinary 404 warns exit 0 while all 5 default required references 2xx; same URL via --required hard-fails exit 1; severity keyed to declared URL across redirects; 30s bound, dedupe, no unbounded retries."
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "Reviewer re-ran at tip: typecheck 0, biome 0, vitest 4/4, default checker on unmodified dist exit 1 with exactly the two documented real findings (bare engine-base-URL 404s, out of scope per ORI-AST-002/007); manifest hashes match commit."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Real 495-line emitted-site link gate: 3-form internal resolution, fragment validation against actual anchors, meta-refresh redirect recognition with cycle guard, real bounded HTTP with declared-URL-keyed warning/hard severity. All four integration tests spawn the production CLI over real build copies; genuine RED against a stub; reviewer reproduced 4/4 plus the real-dist exit 1. The two bare-engine-base-URL 404s are correctly reported and legitimately out of scope; the scratch fixture masks nothing (checker proves the real break)."
+}

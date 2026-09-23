@@ -1,0 +1,34 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "36f46aaa9400567bb273e7a5c47679dffe2f11ad",
+  "reviewer": "techwriting-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Reviewer rebuilt clean (62 pages) and ran the suite: 12/12 across chromium-desktop/mobile/nojs; /docs/owns-vs-does-not-own 200; five consumer-responsibility strings and 'makes no provider calls and executes no tools' verified; no Coming soon."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Source-matched: renderMarkdown + plain-Text fallbacks in message.tsx/reasoning.tsx; dev-client-matrix peers (streamdown 4 incl. worklets, enriched-markdown 1) match prose; Expo Go/dev-client facts match AGENTS.md; omit/supply example rendered; repaired-either-way accurate."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "SATISFIED WITH CORRECTLY ROUTED DEVIATION: /docs/theming#rendermarkdown and /components/message resolve (reviewer curl); contracted third link /components/streamdown omitted — reviewer reproduced the 404, confirmed no streamdown registry item among 56, all creation paths writeProhibited, and AC-3's own negative control forbids linking absent targets; same gap asserted by ORI-AST-004/VIS-003/AST-010 and human-flows.json:730,742 (sprint-level gap; one-line re-add left to sprint owner)."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "not-found.md parsed from actual bytes: H1 Page not found; cause 'could not be found'; action 'Search documentation'; exactly two links Introduction→/docs/introduction and Browse components→/components; src/content/system not src/content/docs; quadrant how-to, usable without JS."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Independently verified at tip: clean rebuild 62 pages, 12/12 suite re-run, typecheck/lint 0 (4 infos pre-existing in untouched file), every factual claim source-matched. The single deviation (omitting AC-3's contracted /components/streamdown link) is correctly routed: reviewer reproduced the 404 and confirmed the destination cannot be created within write scope while AC-3's own negative control forbids dead links — blocker-plus-omit with a documented one-line re-add is right, not NEEDS_FIXES. Quadrants pure, style conforms, RED 12/12 and GREEN 12/12 genuine."
+}

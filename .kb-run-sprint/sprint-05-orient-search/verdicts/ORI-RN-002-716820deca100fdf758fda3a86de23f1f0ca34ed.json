@@ -1,0 +1,39 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "716820deca100fdf758fda3a86de23f1f0ca34ed",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Reviewer ran the exact task test at tip (5/5, 65s): real clean consumers via literal public recipe, real tsc exit 0 both engines; SHA-256 independently verified identical across committed source, manifest, and both consumer copies (quickstart-screen 270a1c14…, quickstart-messages fba7e684…)."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "24 chronological turns, IDs seed-01..24, 12/12 alternating, exact boundary strings; submit appends exactly one user turn; no .reverse(), no assistant fabrication, no AI SDK; empty/whitespace rejection verified in registry source."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "PromptInput inside Conversation's KeyboardAvoidingView (no second KAV); ConversationScrollButton inside context (useConversation throws outside) lifted by onLayout-measured composer height, bottom-0 override via cn merge, pointerEvents box-none; runtime bounds inspection correctly left to ORI-RN-003."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "MessageResponse string-typed default renders RNR Text (Expo Go-clean); no renderMarkdown injection (test asserts absence), no bare strings; theme from ORI-RN-001 root providers present in both installed consumers."
+    },
+    {
+      "id": "GATES",
+      "satisfied": true,
+      "evidence": "RED genuine (TS2307-class failure before source existed; GREEN 5/5 in 61s; reviewer reproduced 5/5 in 65s); typecheck pass; scoped biome exit 0; validate_scenario 0 violations; diff confined to writeAllowed; no on-device claims."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Delivers exactly what the task owns: one engine-agnostic shared screen over real registry components plus two thin entrypoints and a compiler test driving real public-registry installs and real consumer tsc. Reviewer independently verified single-source byte identity at the committed tip, reproduced GREEN, confirmed genuine RED, and ran validate_scenario (0 findings). No stubs, mocks, fabricated replies, AI SDK wiring, or on-device claims; runtime proof correctly left to ORI-RN-003/CONT-004. Non-blocking: biome.json globs do not cover packages/docs-snippets/** (pre-existing)."
+}

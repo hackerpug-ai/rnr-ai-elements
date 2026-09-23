@@ -1,0 +1,29 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "8751ad26e03da07970fccd82ae8866b70132de1f",
+  "reviewer": "react-native-reusables-reviewer",
+  "review_type": "task-document",
+  "findings": [
+    {
+      "id": "DOC-1",
+      "severity": "blocking",
+      "detail": "The charter omits the token-law gate that specifically polices the file being edited, and its prescribed fix can fail it with no authorized remedy. `pnpm check:tokens` runs in CI (.github/workflows/ci.yml:72) but is absent from VERIFICATION GATES (lines 205-209) and from AC-1/TC-2's VERIFY. `scripts/check-tokens.ts:88-92` holds the only exception for this file - tokens ['#737373','#a3a3a3','hsl('] - so ONLY hsl(...)/hsla(...) literals pass; probed the real findRawColorTokens: '#2626264d', rgba(...), rgb(...), oklch(...) all fail, as does a hex value inside a COMMENT (the gate scans comments by design, line 98), which is the comment shape the charter's own CODING STANDARDS tells the implementer to mirror. Because scripts/check-tokens.ts is not in WRITE-ALLOWED and DONE-WHEN requires 'Only SCOPE files modified', an implementer who trips it must either violate scope or ship red CI. Fix: add `tokens: pnpm check:tokens` to VERIFICATION GATES, add it to AC-1's VERIFY and TC-2, and constrain the replacement literal form explicitly - require hsl(...) (the sole covered form) and forbid naming new hex/rgb/oklch values even in comments; alternatively add scripts/check-tokens.ts to WRITE-ALLOWED for one narrowly-scoped TOKEN_EXCEPTIONS entry with a written reason."
+    },
+    {
+      "id": "DOC-2",
+      "severity": "blocking",
+      "detail": "The charter prescribes a `style` prop without the constraint that keeps it contract-legal, and omits `pnpm check:contract` (CI .github/workflows/ci.yml:74). The styling contract's `inline-static-style-literal` rule globs packages/registry/src/**/*.tsx with no exclude and forbids `style={{` followed by backgroundColor|borderColor|borderRadius|color|fontSize|padding|margin|flex + `:`. An inline `style={{ backgroundColor: ... }}` / `style={{ borderColor: ... }}` is FORBIDDEN; a hoisted object (style={wrapperStyle}) or a hoisted ternary (style={scheme === 'dark' ? darkStyle : undefined}) passes. The charter says only 'a plain RN style object driven by useColorScheme()', so the natural inline implementation passes all four DONE-WHEN bullets and fails CI. Fix: add `contract: pnpm check:contract` to VERIFICATION GATES and AC-1's VERIFY, and state the constraint explicitly - compute the wrapper style object outside the JSX (const + style={wrapperStyle}) so the replacement satisfies inline-static-style-literal; do not write style={{ backgroundColor: ... }} inline. Also name the existing mustInclude check `input-group-placeholder-parity`, which pins line 65 byte-exact."
+    },
+    {
+      "id": "DOC-3",
+      "severity": "non-blocking",
+      "detail": "AC-3 claims to prove 'NO regression on uniwind iOS/Android and nativewind/uniwind web', but its VERIFY only runs `pnpm storybook:web`, which resolves to `pnpm --filter harness storybook:web` = `ENGINE=uniwind storybook dev -p 6006` - uniwind web only. The nativewind web leg is therefore unproven by the listed commands even though the package provides it (apps/harness has storybook:web:nativewind and apps/harness-nativewind has storybook:web). Fix: add `pnpm --filter harness storybook:web:nativewind` (or `pnpm --filter harness-nativewind storybook:web`) to AC-3's VERIFY."
+    },
+    {
+      "id": "DOC-4",
+      "severity": "non-blocking",
+      "detail": "The RED replay as written is not durable. It instructs installing the live rnraielements.com/r/nativewind/* items 'including the unfixed input-group'; once this fix is built, committed and deployed, the live registry serves the FIXED item and the same replay yields GREEN, so the RED stops reproducing. Fix: pin the RED to a locally-served pre-fix snapshot - serve this commit's public/r/nativewind (or the pre-fix commit's) on a local port and install from that URL - rather than depending on the deployed registry's current content."
+    }
+  ],
+  "summary": "The charter's defect location and diagnosis are accurate and honestly scoped; its WRITE-ALLOWED is essentially correct. Not approved because the charter's definition of done is not the CI definition of done: two CI-enforced styling gates run on exactly this file and are never named (pnpm check:tokens, whose per-file exception admits only hsl(...) literals; pnpm check:contract, whose inline-static-style-literal rule forbids the natural inline style={{ backgroundColor: ... }} form the charter prescribes). The fix can satisfy every DONE-WHEN bullet, land, and go red in CI with no authorized write path to remedy it."
+}

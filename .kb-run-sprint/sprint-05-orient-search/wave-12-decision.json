@@ -1,0 +1,67 @@
+{
+  "item_id": "ORI-AI-002:blocked:4:scope_impact:0:b58225ed54c8cd24cee2b340817c4ccfe4acfdfc50846497a2b58bab40dffedb",
+  "wave_id": "wave-12",
+  "source_task": "ORI-AI-002",
+  "source_kind": "blocked",
+  "report_sha256": "b58225ed54c8cd24cee2b340817c4ccfe4acfdfc50846497a2b58bab40dffedb",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "add",
+  "answers": [
+    {
+      "question": 1,
+      "answer": true,
+      "reason": "Names the exact file and defect: tests/sprint-05-orient-search/support/nativewind-live-example.ts awaitTurn captures its records baseline after sendTurn returns (~line 1574), while the same file's stop-turn drives correctly baseline before the flow (~line 1677); marker/seed/follow-up turns lose records landing during iOS maestro teardown.",
+      "evidence": [
+        {
+          "path": "tests/sprint-05-orient-search/support/nativewind-live-example.ts",
+          "sha256": "6e21c81fd595b022043a8c3493c1f388a74a9720e30b5a07d7abc77a5efae490"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "answer": false,
+      "reason": "Not a reviewer finding; an implementer's blocked-report scope_impact naming an outside-allowlist defect.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/ORI-AI-002/cycle-4.blocked.json",
+          "sha256": "b58225ed54c8cd24cee2b340817c4ccfe4acfdfc50846497a2b58bab40dffedb"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "answer": true,
+      "reason": "In-flight sprint task ORI-AI-002 cannot conclude its six-target matrix verify until this driver defect is fixed; no pending task owns support/nativewind-live-example.ts.",
+      "evidence": [
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md",
+          "sha256": "8b6e33d1e9ecd24814e83496182df2fa85ed90420b2781d231884bb66b9c9ebd"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "answer": false,
+      "reason": "Mechanical one-line baseline-ordering fix in an existing support file; changes no gate step, no product behavior the PRD leaves open, and no files outside the sprint's scope.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/ORI-AI-002/cycle-4.blocked.json",
+          "sha256": "b58225ed54c8cd24cee2b340817c4ccfe4acfdfc50846497a2b58bab40dffedb"
+        }
+      ]
+    },
+    {
+      "question": 5,
+      "answer": true,
+      "reason": "Verified against source in the ORI-AI-002 worktree: awaitTurn at line ~1574 takes baseline after sendTurn; stop-turn loop at ~1677 takes baseline before the maestro flow; call sites 1621-1623/1634-1636/1644-1646 send-then-await. The defect is real and deterministic (3/3 iOS reproductions, record present in observed list while predicate never fires).",
+      "evidence": [
+        {
+          "path": "tests/sprint-05-orient-search/support/nativewind-live-example.ts",
+          "sha256": "6e21c81fd595b022043a8c3493c1f388a74a9720e30b5a07d7abc77a5efae490"
+        }
+      ]
+    }
+  ]
+}

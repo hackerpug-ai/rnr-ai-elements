@@ -1,0 +1,17 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "80f910601f26c483a57853701d601c8b37e942ca",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {"id": "AC-1", "satisfied": true, "evidence": "Diff is one hunk (-2/+1) in getLiveChatConfig only; resolveLiveChatConfig byte-identical; no app.json/use-live-chat.ts/scratch route. Mechanism verified from babel-preset-expo@57.0.10 inline-env-vars.js (only MemberExpression visitors keyed on process.env.X; no bare-process.env visitor) and the preset wiring (configs/expo.js:47; getIsProd = caller.isDev === false). RED/GREEN independently reproduced by the reviewer with its own script against git-sourced pre/post sources: RED keeps the alias and emits no literal; GREEN inlines EXPO_PUBLIC_API_BASE_URL: \"http://127.0.0.1:4000\". Seam test 4/4 against a real provider; pnpm lint exit 0; scoped tsconfig.live-chat.json tsc exit 0; pnpm typecheck exit 0 once the gitignored registry-items.json exists."}
+  ],
+  "findings": [
+    {"id": "F-1", "severity": "non-blocking", "detail": "DEFERRED: the parent FIX-ORI-RN-004-1 AC-1 round-trip leg and the '/live-chat no longer renders not configured' assertion are NOT demonstrated on this branch because the ORI-RN-004 driver/route/screen/maestro files are absent (branch is based on main, not ORI-RN-004 @ 001488c). Carry the web round-trip forward to the parent FIX; do not treat the parent AC-1 as fully closed."},
+    {"id": "F-2", "severity": "non-blocking", "detail": "EVIDENCE HYGIENE: the raw full-export dist bundles were cleaned, so the bundle greps are recorded summaries; the reviewer mitigated by statically verifying the preset wiring and independently reproducing the per-module transform (committed and re-runnable)."},
+    {"id": "F-3", "severity": "non-blocking", "detail": "IGNORE-RULE PORTABILITY: apps/example/.env is ignored only by the local untracked .git/info/exclude; committed .gitignore files cover only .env*.local. On a fresh clone it would be untracked-but-not-ignored. Recommend adding .env to apps/example/.gitignore."},
+    {"id": "F-4", "severity": "non-blocking", "detail": "REVIEWER-SIDE SECURITY INCIDENT: the reviewer's own verification command echoed the ambient OPENAI_API_KEY into the transcript. The commit and evidence contain no secret. RECOMMEND rotating that key and scrubbing the transcript."}
+  ],
+  "stubs": [],
+  "verification": {"typecheck": "pass", "lint": "pass", "tests": "pass"},
+  "summary": "The change is minimal and correct: a single 2-line hunk removing the const env = process.env alias so the inline-env-vars plugin can rewrite the direct read, leaving the pure seam byte-identical and touching no other product file. Mechanism verified from the plugin source and the preset wiring; RED/GREEN independently reproduced. Approved on the stated bar, with the parent task's web round-trip leg carried forward, plus evidence-hygiene, .gitignore-portability, and a reviewer-side key-exposure note."
+}

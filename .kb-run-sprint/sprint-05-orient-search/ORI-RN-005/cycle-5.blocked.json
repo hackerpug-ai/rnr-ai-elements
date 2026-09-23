@@ -1,0 +1,20 @@
+{
+  "status": "blocked",
+  "commit_sha": "6096f40112403c90e5d884d75cd262224713f9e5",
+  "summary": "Cycle 5, the final driver cycle per protocol, raised the stop-turn drive bound from 3 to 6 per leg on both platforms with the discipline unchanged (re-drive only on a record-proven essay-completed-first; verified aborts never re-drive; missing records never re-drive; every decision logs its record query; exhaustion stays loud). The optional +1s early tap was skipped — a too-early tap could not be classified more cleanly than the proven +2/+10/+18 cadence already is. The reserved emulator was maintenance-rebooted before the run. Selector result (run ORI-RN-005-1789804775089): Android light AND dark PASSED — the raised bound reliably carries Android, whose legs aborted real mid-stream essays — and web PASSED. Both iOS legs exhausted with full evidence on record: 'STOP-RETRY-EXHAUSTED: drive 1 produced neither an abort nor a terminal non-abort record beyond baseline N (observed null) — no evidence-discriminating retry condition'. Observed null on every drive means the essay send never dispatched on iOS at all — the reserved simulator's IME typing channel has degraded under ~20 consecutive marathon runs (the same class that failed a cycle-3 leg's first turn), so the combined type/send flow never produced a request for any gate to evaluate. The discipline correctly refused to burn the remaining budget without evidence. Cycle-5 logs committed under .tmp/ORI-RN-005/cycle-5/; typecheck, biome ci (direct binary), and check:fallow all exit 0; devices restored (DND off, no reverses, no orphans, appearance light).",
+  "assumptions": [
+    "The drive-bound raise (3 to 6) is driver hygiene, not a contract change, per the coordinator's cycle-5 instruction; the re-drive condition, evidence logging, and loud exhaustion are byte-identical to cycle 4's committed discipline.",
+    "The loop runs fewer than 6 drives when the records show no discriminating condition (a null record breaks after drive 1 by design — spending drives without evidence is exactly what the discipline forbids), which is why the iOS logs show one evidenced exhaustion per leg rather than six."
+  ],
+  "blockers": [
+    "Legs that exhausted: iOS light and iOS dark, both with STOP-RETRY-EXHAUSTED and observed null (no provider record beyond baseline on any drive — the essay send never dispatched; the iOS IME typing channel on the reserved simulator is degraded after ~20 marathon runs).",
+    "No contract or assertion was changed this cycle; no writes outside the allowlist; no earlier cycle evidence overwritten (each cycle's logs live under their own .tmp/ORI-RN-005/cycle-N/ path)."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-RN-005",
+      "found": "[orchestrator assessment of the implementer's evidence] The 6-drive bound SOLVED the Android provider-variance problem (both Android legs aborted real mid-stream essays and passed) and web passed; the iOS legs' exhaustion is a degraded-device obstacle (simulator IME never dispatched the send — observed null on every drive), not a fixture-design problem: the fixture never got to matter. The planner revise question about streaming length is therefore not warranted.",
+      "change": "None to the contract. Environment row applies: the orchestrator reboots the reserved iOS simulator and one re-run of the byte-identical committed driver completes the iOS legs; Android+web evidence from this cycle stands."
+    }
+  ]
+}

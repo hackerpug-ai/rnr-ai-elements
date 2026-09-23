@@ -1,0 +1,14 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "e1c33f94704ecd5a3ab0c73b01b593da3b129fa9",
+  "reviewer": "react-native-reusables-reviewer",
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "requirements_note": "full per-AC evidence in reviewer response; selector/compiler-case/typecheck/biome re-run by reviewer, matrix on committed evidence (3/3, 5 restarts, 107 ordered heartbeats) plus reviewer web-leg rerun",
+  "summary": "Fix real and oracle holds: every post-stop segment bounded (60s/120s) and heartbeated, stop bound proven by a live adapter hang firing backend/stop/stalled at ~120s, RED honest (in-vitro freeze at pre-fix SHA with divergence + failed first attempt preserved), no stubs (hangStop + SIGSTOP are sanctioned negative controls over real services), interface byte-identical, 21 paths inside allowlist. Non-blocking: correlation entry counts inflated ~3x by adapter view duplication (25 unique matrix round-trips; thresholds hold on uniques); green.json candidate_head_sha records pre-fix HEAD (fix uncommitted at run time), proven by post-fix-only heartbeat literals and committed-tree rerun."
+}

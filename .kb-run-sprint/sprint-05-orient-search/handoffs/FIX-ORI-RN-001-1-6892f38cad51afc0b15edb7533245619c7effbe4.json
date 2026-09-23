@@ -1,0 +1,20 @@
+{
+  "task": "FIX-ORI-RN-001-1",
+  "commit_sha": "6892f38cad51afc0b15edb7533245619c7effbe4",
+  "done": "Added exactly one glob — packages/docs-snippets/** — as the first entry of .fallowrc.json ignorePatterns (every other byte unchanged), so the righthook pre-commit fallow job exits 0 on the ORI-RN-001 consumer templates (97 template deps invisible to repo-scoped static analysis + intentional cross-engine duplication) while the gate still bites everywhere else; the non-weakening drill (probe outside the exemption exits 1, byte-exact restore) is committed under tests/sprint-05-orient-search/evidence/FIX-ORI-RN-001-1/ and .tmp/FIX-ORI-RN-001-1/.",
+  "deviations": [
+    "The AC-2 probe uses an unresolved-import (FAIL-severity unlisted-dependency) instead of the doc's literal examples because fallow 3.25.0 audit --base HEAD is non-production and the literal probes exit 0 inertly from a tests/ location; the reviewer independently confirmed both the inertness and that the substituted probe exercises the identical gate pathway, and additionally proved an inside-exemption probe is suppressed (path-scoping in both directions)."
+  ],
+  "concerns": [
+    "packages/docs-snippets/** is now wholly fallow-exempt: any future task adding files under that path silently widens the dead-code/duplication blind spot; keep template additions intentional.",
+    "The gate is new-only (audit --base HEAD) — pre-existing findings elsewhere in the repo are not what this exemption hides."
+  ],
+  "findings": [
+    "fallow 3.25.0 audit (non-production) cannot see template package.json dependency usage at all from a tests/ location: only workspace roots and packages/** are analyzed for unused deps, unused-exports need --production-dead-code, and duplication is warn-level — probe designs for this gate must use FAIL-severity findings (e.g. unresolved imports) to be meaningful.",
+    "The fallow binary on PATH was a stale global 2.88.2; the gate runs the pinned 3.25.0 via pnpm check:fallow (node_modules/.bin) — always invoke the gate through pnpm."
+  ],
+  "scope_impact": [],
+  "feedback": [
+    "FIX docs prescribing gate-probe mechanics should pin the probe to a finding class the gate actually emits at FAIL severity in the probe's location — the doc's literal examples were unexecutable as written."
+  ]
+}
