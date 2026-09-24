@@ -1,0 +1,65 @@
+---
+// fallow-ignore-file unused-file
+/**
+ * SourceSnippet — ORI-AST-005: source-addressed code display with byte-exact
+ * copy. Dark-work component: no page imports it yet (pages/content are
+ * outside this task's write scope; wiring belongs to the CI/docs-build
+ * owner), and its proof is the task's byte-fidelity build, which renders it
+ * in a real docs build and drives it in a real browser.
+ *
+ * `code` is the exact selected source bytes (a whole committed file or
+ * a named region of one); the provenance attributes (doc/snippet/source/
+ * region) let the authored-snippet gate's `--check-emitted` comparison
+ * re-resolve the selection from the committed source and reject any drift
+ * between the built output and the source. Composes the UNMODIFIED
+ * rnr-copy-button island, whose handler writes the displayed <code>
+ * textContent to the clipboard verbatim — zero trimming, zero normalization,
+ * zero JS inside this component. Tokens only.
+ */
+import CopyButton from './islands/CopyButton.astro';
+
+interface Props {
+  /** The authored document (or proof page) identity the snippet belongs to. */
+  doc: string;
+  /** The snippet identity the gate's bindings resolve. */
+  snippet: string;
+  /** Repo-relative committed source path the bytes were selected from. */
+  source: string;
+  /** The exact selected source bytes — never trimmed or reformatted. */
+  code: string;
+  /** Optional region label when the selection is a named region, not a whole file. */
+  region?: string;
+  label?: string;
+}
+
+const { doc, snippet, source, code, region, label = 'Copy source' } = Astro.props;
+---
+
+<div
+  class="source-snippet"
+  data-source-snippet
+  data-doc={doc}
+  data-snippet={snippet}
+  data-source={source}
+  data-region={region}
+>
+  <CopyButton command={code} label={label} />
+</div>
+
+<style>
+  .source-snippet {
+    background: var(--code-background);
+    color: var(--code-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+  }
+
+  /* The code surface — grows with content, never height-limited, and keeps
+     every byte (indentation and terminal newline included) visible. */
+  :global(.source-snippet .copy-button__command) {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: var(--font-mono);
+  }
+</style>

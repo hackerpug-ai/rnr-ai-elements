@@ -1,0 +1,44 @@
+PASS (0) FAIL (1) skipped (3)
+
+1. ORI-AST-005 authored snippet gate ORI-AST-005-byte-fidelity: rendered and clipboard bytes equal the selected source and one-byte emission drift fails
+   AssertionError: astro build exited 1
+   12:35:55 [content] Syncing content
+   12:35:55 [content] Synced content
+   12:35:55 [types] Generated 283ms
+   12:35:55 [build] output: "static"
+   12:35:55 [build] mode: "static"
+   12:35:55 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ast-005-docs-yCNGB7/docs/dist/
+   12:35:55 [build] Collecting build info...
+   12:35:55 [build] ✓ Completed in 319ms.
+   12:35:55 [build] Building static entrypoints...
+   
+   12:35:55 [ERROR] [vite] ✗ Build failed in 82ms
+   [UNRESOLVED_IMPORT] Could not resolve '../components/SourceSnippet.astro' in src/pages/source-snippet-proof.astro
+      ╭─[ src/pages/source-snippet-proof.astro:4:27 ]
+      │
+    4 │ import SourceSnippet from "../components/SourceSnippet.astro";
+      │                           ─────────────────┬─────────────────  
+      │                                            ╰─────────────────── Module not found.
+      │ 
+      │ Help: 'src/pages/source-snippet-proof.astro' is imported by the following path:
+      │         - src/pages/source-snippet-proof.astro
+      │         - \0virtual:astro:page:src/pages/source-snippet-proof@_@astro
+      │         - \0virtual:astro:pages
+      │         - \0virtual:astro:manifest
+      │         - ../../../../Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/entrypoints/prerender.js
+   ───╯
+   
+     Location:
+       /Users/justinrich/.cache/agent-scratch/ori-ast-005-docs-yCNGB7/docs/src/pages/source-snippet-proof.astro:4:26
+   : expected 1 to be +0 // Object.is equality
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/tests/sprint-05-orient-search/authored-snippet-gate.test.ts:478:11
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+       at new Promise (<anonymous>)
+       at runWithCancel (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+       at new Promise (<anonymous>)
+       at runWithTimeout (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2956:64
+[full output: ~/Library/Application Support/rtk/tee/1790274955_vitest_run.log]

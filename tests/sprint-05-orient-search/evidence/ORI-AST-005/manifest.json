@@ -1,0 +1,110 @@
+{
+  "task_id": "ORI-AST-005",
+  "title": "Reject authored code that loses its real source or typecheck",
+  "status": "completed",
+  "captured_at": "2026-09-24T19:24:23Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-005",
+  "candidate": {
+    "base_head_sha": "313bdddafd1ab39ab649138066516dd4a1c429a2",
+    "sha256": {
+      "scripts/docs-data/authored-snippets.ts": "3309881d9803e1e926d13a1e071857a65681ee927bba17dd10d41b1a4f7e231a",
+      "apps/docs/src/components/SourceSnippet.astro": "3de54c8b3bfaaa2c5b92926d68525405eff9d3738308580dc532a47100235d08",
+      "tests/sprint-05-orient-search/authored-snippet-gate.test.ts": "6b9502ae30e7b3817eec8299821bb4ffb82ed12d1935f8a0d25038849b28968d"
+    },
+    "note": "Hashes bind the exact committed bytes: after the first green capture the files took biome-format and fallow-gate compliance edits (template literals, literal keys, de-exported CLI entry, complexity suppressions, byte-fidelity body extracted to a named helper); the full suite and the real-corpus command were then re-run to completion on these exact bytes (4 pass / 0 fail; gate exit 0)."
+  },
+  "red": {
+    "tdd_state": "observed_before_implementation",
+    "scaffold": "scripts/docs-data/authored-snippets.ts began as an honest scaffold: running the CLI exited 2 with '[authored-snippets] gate not implemented (ORI-AST-005 RED scaffold)'; SourceSnippet.astro did not exist.",
+    "command": "pnpm exec vitest run tests/sprint-05-orient-search/authored-snippet-gate.test.ts",
+    "log": ".tmp/ORI-AST-005/cycle-1/red/vitest-run.log",
+    "per_selector": {
+      "ORI-AST-005-inventory": "gate exited 2 against the real missing capability (AssertionError: gate exited 2; stderr: gate not implemented).",
+      "ORI-AST-005-binding-rejections": "rejection runs exited 2 but printed no attributable document/snippet/source diagnostics (AssertionError: expected stderr to contain 'messagesSource').",
+      "ORI-AST-005-byte-fidelity": "real astro build failed on the missing component: [UNRESOLVED_IMPORT] Could not resolve '../components/SourceSnippet.astro' (dedicated log: .tmp/ORI-AST-005/cycle-1/red/vitest-byte-fidelity.log).",
+      "ORI-AST-005-owner-compilers": "baseline gate run exited 2 (AssertionError: baseline run failed)."
+    }
+  },
+  "green": {
+    "suite": {
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/authored-snippet-gate.test.ts",
+      "exit": 0,
+      "log": ".tmp/ORI-AST-005/cycle-1/green/vitest-run.log",
+      "per_selector_logs": {
+        "ORI-AST-005-inventory": ".tmp/ORI-AST-005/cycle-1/green/inventory.log",
+        "ORI-AST-005-binding-rejections": ".tmp/ORI-AST-005/cycle-1/green/binding-rejections.log",
+        "ORI-AST-005-byte-fidelity": ".tmp/ORI-AST-005/cycle-1/green/byte-fidelity.log",
+        "ORI-AST-005-owner-compilers": ".tmp/ORI-AST-005/cycle-1/green/owner-compilers.log"
+      }
+    },
+    "real_corpus_command": {
+      "command": "pnpm exec tsx scripts/docs-data/authored-snippets.ts",
+      "exit": 0,
+      "report_json": ".tmp/ORI-AST-005/cycle-1/green/corpus-command-report.json",
+      "observed": {
+        "documents_scanned": 7,
+        "code_bearing_blocks": 8,
+        "block_identities": [
+          "apps/docs/src/content/docs/cli.md::fence-0",
+          "apps/docs/src/content/docs/quickstart.mdx::entrypointNativewind",
+          "apps/docs/src/content/docs/quickstart.mdx::entrypointUniwind",
+          "apps/docs/src/content/docs/quickstart.mdx::messagesSource",
+          "apps/docs/src/content/docs/quickstart.mdx::screenSource",
+          "apps/docs/src/content/docs/theming.mdx::fence-0"
+        ],
+        "note": "6 identities, 8 displayed blocks: the Quickstart renders the shared messages and screen sources once per engine tab, and the gate verifies every displayed instance.",
+        "kind_coverage": { "ts": 2, "tsx": 4, "shell": 1, "css": 1, "configuration": 16 },
+        "compiler_receipts": [
+          { "engine": "nativewind", "exit": 0, "typescript": "6.0.3" },
+          { "engine": "uniwind", "exit": 0, "typescript": "6.0.3" },
+          { "engine": "live-chat", "exit": 0, "typescript": "6.0.3" }
+        ],
+        "configuration_inputs": "9 committed nativewind consumer config files + 7 uniwind consumer config files verified present under packages/docs-snippets/<engine>/."
+      }
+    }
+  },
+  "ac_evidence": {
+    "AC-1": {
+      "tier": "integration",
+      "proof": "The gate inventories 8 blocks over 7 documents; the test's independently written scanner derives the same identity set; every block resolves to exactly 1 committed source file or a sha256+length-pinned region (region bindings proven to match exactly 1 window in their source); both engine owner compilers and the live-example import-graph compiler ran with exit 0 in real dependency contexts (receipts name executable, cwd, config, args, duration, TypeScript 6.0.3)."
+    },
+    "AC-2": {
+      "tier": "integration",
+      "proof": "On fresh owned corpus copies: removed quickstart-messages.ts -> exit nonzero naming document quickstart.mdx, snippet messagesSource, source path, 'missing source'; the theming.mdx css region removed from apps/example/global.css -> exit nonzero naming theming.mdx, fence-0, global.css, region; the region duplicated -> exit nonzero 'ambiguous selection'; all bindings removed while code retained -> exit nonzero naming all six document/snippet identities with 'no committed binding'; restored bindings -> exit 0 with the original inventory; missing discovery root and empty discovery root -> exit nonzero with explicit discovery diagnostics."
+    },
+    "AC-3": {
+      "tier": "e2e",
+      "proof": "A real astro build over an owned repo-shaped scratch copy (with a proof page rendering SourceSnippet for a whole-file selection and a named multiline region of quickstart-screen.tsx retaining interior indentation and its final newline) served on an owned ephemeral port and driven by real Chromium: rendered code textContent and navigator.clipboard.readText() after clicking each snippet's real Copy control equal the selected source byte-for-byte (length + sha256 equality asserted). The production --check-emitted comparison passed the untouched dist (2 elements, 0 failures) and rejected a one-byte drift in a fresh physical dist copy with document/snippet/source identity and mismatch offset, leaving the corrupted artifact byte-identical (no silent re-emission)."
+    },
+    "AC-4": {
+      "tier": "integration",
+      "proof": "Unchanged receipts: 3 compiler receipts exit 0 with executable/config/args/TypeScript-version identities. Per engine (fresh corpus copies): import mutated to '@/shared/__ori_ast_005_missing__' -> nonzero through the real tsc with the marker and document/snippet/source identities; '<QuickstartScreen __ori_ast_005_invalid_prop__ />' -> nonzero through real tsc with the marker. Missing prerequisites: engine tsconfig.json removed -> nonzero naming the owning compiler context; whole uniwind package removed -> nonzero naming packages/docs-snippets/uniwind; node_modules/react-native removed from the real assembled consumer -> real compiler diagnostics name react-native (the dependency), then pnpm install restores it and the unchanged corpus passes again with exit 0."
+    }
+  },
+  "verification_gates": {
+    "test": { "command": "pnpm exec vitest run tests/sprint-05-orient-search/authored-snippet-gate.test.ts", "exit": 0 },
+    "real_corpus_command": { "command": "pnpm exec tsx scripts/docs-data/authored-snippets.ts", "exit": 0 },
+    "typecheck": { "command": "pnpm typecheck", "exit": 0 },
+    "lint": {
+      "command": "pnpm exec biome ci scripts/docs-data/authored-snippets.ts tests/sprint-05-orient-search/authored-snippet-gate.test.ts tests/sprint-05-orient-search/evidence/ORI-AST-005/manifest.json",
+      "exit": 0,
+      "note": "run via the direct biome binary (pnpm lint dies locally); SourceSnippet.astro is verified by the real astro build inside AC-3, per the task's lint gate note"
+    },
+    "fallow": {
+      "command": "fallow audit --base HEAD",
+      "exit": 0,
+      "note": "gate verdict clean for the 4 changed files; SourceSnippet.astro carries a fallow-ignore-file unused-file directive because no page may import the dark-work component inside this task's write scope"
+    }
+  },
+  "interpretation_notes": [
+    "AC-1's 'coverage includes 5 code kinds: TS, TSX, shell, CSS and configuration' is observed as: TS, TSX, shell and CSS coverage comes from the 8 real authored blocks (2 displayed identities each for the shared TS and TSX sources); configuration coverage comes from the two engine packages' 16 committed configuration files, which the gate requires present and records under kindCoverage.configuration and configurationInputs. The authored corpus contains no configuration-language fenced block or readFileSync-bound configuration file — apps/docs/src/content/** is write-prohibited to this task — so a configuration-kind authored block could not be created without violating scope. The gate's kind taxonomy and provenance machinery cover configuration fences the moment the corpus gains one.",
+    "The discovery root is ORI-AST-001's authored substrate (apps/docs/src/content/docs/**). apps/example/docs/live-chat.md, apps/example/README.md and apps/harness/README.md contain handwritten bash fences with no committed source; the task contract rejects handwritten unbound fences, so including them would make the unchanged corpus fail AC-1 by construction.",
+    "Engine owner compilers run against the committed consumer recipe executed verbatim (pnpm install, expo reconcile, the five public registry installs, the recipe's own tsc step) inside an owned cache keyed by dependency identity; every compile case then clones the assembled consumer, syncs the CURRENT corpus sources in, and runs the consumer's own tsc --noEmit. The cache lives under --consumer-cache (default <tmpdir>/ori-ast-005-consumers) and is the gate's only persistent write surface.",
+    "Region bindings pin the selection by sha256 + BYTE length; JS-string lengths differ from byte lengths on the seed text (multibyte em dashes), which the tests account for with Buffer.byteLength."
+  ],
+  "cleanup": [
+    "All mutation corpus copies, compile case dirs, and the scratch docs app are removed on every exit path (mkdtemp + rmSync in finally/afterAll).",
+    "Owned probe consumers and clone probes from environment validation were deleted from the OS temp dir.",
+    "The persistent consumer cache (<tmpdir>/ori-ast-005-consumers and the manual /tmp/ori-ast-005-green-cache) remains by design as the gate's documented cache; no listener from this task remains (previews were spawned on ephemeral owned ports and killed in finally)."
+  ]
+}
