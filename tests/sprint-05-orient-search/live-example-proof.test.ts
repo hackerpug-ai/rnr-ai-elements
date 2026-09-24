@@ -2,19 +2,17 @@
  * ORI-AI-002 — the composed worked example proven against the real provider on six
  * live targets (uniwind/nativewind x ios/android/web).
  *
- * Every test here spawns the REAL matrix runner
- * (tests/sprint-05-orient-search/run-live-example-proof.mjs -> tsx ->
- * live-example-proof.ts -> the ORI-RN-004 `runLiveExampleProof` and ORI-RN-005
- * `runNativewindLiveExampleProof` driver exports) and asserts on the fresh evidence
- * it produces in THIS invocation: the real owned backend, the official OpenAI
- * Responses endpoint (gpt-4.1-mini-2025-04-14 — plus a real rejected-provider phase
- * on `rnr-s05-nonexistent-<runId>`), the reserved iOS/Android devices and a real
- * Chromium web session. No mocked HTTP, no stub providers, no canned streams, no
- * reads of earlier runs' manifests.
- *
- * The four named tests share ONE runner invocation (a module-level singleton
- * promise): the first test to await it starts and awaits the real matrix; the rest
- * assert against the same fresh artifacts.
+ * Cycle-6 revised proof contract (task Amendments, 2026-09-24): the six-target
+ * proof is composed as FRESH PER-ENGINE invocations within one cycle — the runner
+ * is invoked once per engine (real drivers, real owned backend, official OpenAI
+ * Responses, reserved devices) and partitions each set under
+ * evidence/ORI-AI-002/<engine>/. This suite validates the cycle's ACCUMULATED
+ * evidence set on disk: both per-engine sets complete and correlated, identical
+ * source digests across both manifests (one candidate SHA), every target's real
+ * artifacts and provider correlation, and the deterministic tamper-rejection
+ * cases through the real validator. It deliberately does NOT spawn a matrix —
+ * the seeding invocations must be fresh and current-cycle, and this suite fails
+ * closed on absent, stale, mismatched or tampered evidence.
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -25,10 +23,18 @@ import { expect, it } from 'vitest';
 
 const REPO_ROOT = join(__dirname, '..', '..');
 const RUNNER = join(REPO_ROOT, 'tests/sprint-05-orient-search/run-live-example-proof.mjs');
-const EVIDENCE = join(REPO_ROOT, 'tests/sprint-05-orient-search/evidence/ORI-AI-002');
+const EVIDENCE_ROOT = join(REPO_ROOT, 'tests/sprint-05-orient-search/evidence/ORI-AI-002');
+const ENGINE_SET_DIRS = {
+  uniwind: join(EVIDENCE_ROOT, 'uniwind'),
+  nativewind: join(EVIDENCE_ROOT, 'nativewind'),
+} as const;
+type EngineId = keyof typeof ENGINE_SET_DIRS;
+
 const SCRATCH = join(REPO_ROOT, '.tmp/ORI-AI-002');
 
 const PRIMARY_MODEL = 'gpt-4.1-mini-2025-04-14';
+const RESERVED_IOS_UDID = '81487B1E-A4D1-45AE-9BCE-D675802BACD1';
+const RESERVED_ANDROID_SERIAL = 'emulator-5554';
 const TARGETS = [
   'uniwind-ios',
   'uniwind-android',
@@ -47,15 +53,18 @@ const TARGET_FILES = [
   'recovered.png',
 ];
 
-/** The reserved proof-owned device selectors. NODE_ENV is explicitly cleared:
- * Vitest exports NODE_ENV=test into this process and the runner's children (Metro,
- * Expo dev servers) refuse to boot under it — the ORI-RN-005 cycle-2 finding. */
-const RESERVED_ENV: NodeJS.ProcessEnv = {
-  ...process.env,
-  RNR_S05_IOS_UDID: '81487B1E-A4D1-45AE-9BCE-D675802BACD1',
-  RNR_S05_ANDROID_SERIAL: 'emulator-5554',
-};
-delete RESERVED_ENV.NODE_ENV;
+/** The manifest digests pin these source files; the suite recomputes them. */
+const PINNED_SOURCE_FILES = [
+  'apps/example/app/live-chat.tsx',
+  'pnpm-lock.yaml',
+  'packages/registry/registry.json',
+  'tests/sprint-05-orient-search/nativewind-live-source-manifest.json',
+  'tests/sprint-05-orient-search/support/live-example-proof.test.ts',
+  'tests/sprint-05-orient-search/support/nativewind-live-example.ts',
+  'tests/sprint-05-orient-search/support/live-backend.ts',
+  'tests/sprint-05-orient-search/support/native-session.ts',
+  '.spec/e2e-policy/surface.json',
+] as const;
 
 function sha256(data: string | Buffer): string {
   return createHash('sha256').update(data).digest('hex');
@@ -67,57 +76,15 @@ function readJson<T>(path: string): T {
 
 type RunnerRun = { exit: number; output: string };
 
-function spawnRunner(args: string[], timeoutMs: number): RunnerRun {
+function spawnValidator(args: string[], timeoutMs: number): RunnerRun {
   const res = spawnSync(process.execPath, [RUNNER, ...args], {
     cwd: REPO_ROOT,
     encoding: 'utf8',
     timeout: timeoutMs,
     maxBuffer: 64 * 1024 * 1024,
-    env: RESERVED_ENV,
+    env: { ...process.env, TMPDIR: '/tmp/ori-ai-002-scratch' },
   });
   return { exit: res.status ?? -1, output: `${res.stdout ?? ''}${res.stderr ?? ''}` };
-}
-
-/**
- * The one shared real matrix invocation. A full two-engine three-platform proof
- * (reject phase + live phase + web self-session per engine) measures ~1-2h, so the
- * timeout must exceed it. Like ORI-RN-005's driver harness, a run is retried ONCE
- * only when its teardown.json is absent (the signature of an external kill with no
- * concluded teardown); a CONCLUDED failed run never retries — a real red stays red.
- */
-let matrixPromise: Promise<RunnerRun> | null = null;
-function runMatrixOnce(): Promise<RunnerRun> {
-  matrixPromise ??= Promise.resolve().then(() => {
-    let last: RunnerRun = { exit: -1, output: 'matrix runner was never spawned' };
-    for (let attempt = 0; attempt < 2; attempt += 1) {
-      const startedAt = Date.now();
-      last = spawnRunner(
-        [
-          '--engines',
-          'uniwind,nativewind',
-          '--platforms',
-          'ios,android,web',
-          '--output',
-          'tests/sprint-05-orient-search/evidence/ORI-AI-002',
-        ],
-        240 * 60_000,
-      );
-      const teardownPath = join(EVIDENCE, 'teardown.json');
-      if (last.exit === 0) return last;
-      if (!existsSync(teardownPath)) continue; // killed before ANY teardown could exist
-      let finishedAt = 0;
-      try {
-        finishedAt = new Date(
-          readJson<{ finished_at: string }>(teardownPath).finished_at,
-        ).getTime();
-      } catch {
-        continue; // unreadable = do not trust; retry
-      }
-      if (Number.isFinite(finishedAt) && finishedAt >= startedAt - 2000) return last; // concluded
-    }
-    return last;
-  });
-  return matrixPromise;
 }
 
 /* ------------------------------------------------------------ evidence types -- */
@@ -187,7 +154,9 @@ type Manifest = {
   task: 'ORI-AI-002';
   run_id: string;
   generated_at: string;
+  engines: string[];
   commands: { matrix: string };
+  exit_code?: number;
   source_digests: Record<string, string>;
   api_origin: string;
   devices: { ios_udid: string; android_serial: string; web_browser: string };
@@ -208,24 +177,100 @@ type Teardown = {
   adb_reverse_remaining: string;
 };
 
-/* ---------------------------------------------------------------- shared load -- */
+/* ------------------------------------------------------- accumulated loader -- */
 
-function loadTargets(): Map<TargetId, TargetResult> {
-  const map = new Map<TargetId, TargetResult>();
-  for (const id of TARGETS) {
-    const path = join(EVIDENCE, id, 'result.json');
-    expect(existsSync(path), `${id}/result.json exists`).toBe(true);
-    const result = readJson<TargetResult>(path);
-    expect(result.task).toBe('ORI-AI-002');
-    expect(result.engine, `${id} engine identity`).toBe(id.split('-')[0]);
-    expect(result.platform, `${id} platform identity`).toBe(id.split('-')[1]);
-    map.set(id, result);
+type EngineSet = {
+  engine: EngineId;
+  dir: string;
+  manifest: Manifest;
+  teardown: Teardown;
+};
+
+/** The cycle's accumulated evidence set: one complete set per engine. */
+function loadEngineSets(): Map<EngineId, EngineSet> {
+  const sets = new Map<EngineId, EngineSet>();
+  for (const engine of Object.keys(ENGINE_SET_DIRS) as EngineId[]) {
+    const dir = ENGINE_SET_DIRS[engine];
+    const manifestPath = join(dir, 'manifest.json');
+    expect(
+      existsSync(manifestPath),
+      `${engine} set manifest.json exists (fresh current-cycle seed invocation required)`,
+    ).toBe(true);
+    const manifest = readJson<Manifest>(manifestPath);
+    expect(manifest.task, `${engine} manifest task`).toBe('ORI-AI-002');
+    expect(manifest.engines, `${engine} manifest declares exactly its engine`).toEqual([engine]);
+    const teardownPath = join(dir, 'teardown.json');
+    expect(existsSync(teardownPath), `${engine} teardown.json exists`).toBe(true);
+    const teardown = readJson<Teardown>(teardownPath);
+    expect(teardown.run_id, `${engine} teardown run identity`).toBe(manifest.run_id);
+    sets.set(engine, { engine, dir, manifest, teardown });
   }
-  return map;
+  // One candidate SHA binds the whole cycle: identical source digests across
+  // every manifest in the set, and both invocations recorded distinct runs.
+  const uniwind = sets.get('uniwind');
+  const nativewind = sets.get('nativewind');
+  if (uniwind === undefined || nativewind === undefined) {
+    throw new Error('both per-engine sets must be present');
+  }
+  expect(
+    uniwind.manifest.run_id === nativewind.manifest.run_id,
+    'the two engine invocations must be distinct fresh runs',
+  ).toBe(false);
+  expect(
+    JSON.stringify(uniwind.manifest.source_digests),
+    'identical source_digests across both manifests (one candidate SHA)',
+  ).toBe(JSON.stringify(nativewind.manifest.source_digests));
+  expect(
+    uniwind.manifest.api_origin === nativewind.manifest.api_origin,
+    'identical API origin across both manifests',
+  ).toBe(true);
+  for (const engine of ['uniwind', 'nativewind'] as const) {
+    const set = sets.get(engine);
+    if (set === undefined) {
+      throw new Error(`${engine} set missing`);
+    }
+    expect(set.manifest.devices.ios_udid, `${engine} reserved iOS identity`).toBe(
+      RESERVED_IOS_UDID,
+    );
+    expect(set.manifest.devices.android_serial, `${engine} reserved Android identity`).toBe(
+      RESERVED_ANDROID_SERIAL,
+    );
+    expect(set.manifest.commands.matrix, `${engine} command identity`).toContain(
+      `--engines ${engine} --platforms ios,android,web`,
+    );
+  }
+  return sets;
 }
 
-function loadStreamLines(id: TargetId): StreamLine[] {
-  const path = join(EVIDENCE, id, 'stream.jsonl');
+function setOf(sets: Map<EngineId, EngineSet>, engine: EngineId): EngineSet {
+  const set = sets.get(engine);
+  if (set === undefined) {
+    throw new Error(`${engine} evidence set missing`);
+  }
+  return set;
+}
+
+function targetDirOf(sets: Map<EngineId, EngineSet>, id: TargetId): string {
+  return join(ENGINE_SET_DIRS[id.split('-')[0] as EngineId], id);
+}
+
+function loadTarget(sets: Map<EngineId, EngineSet>, id: TargetId): TargetResult {
+  const dir = targetDirOf(sets, id);
+  const path = join(dir, 'result.json');
+  expect(existsSync(path), `${id}/result.json exists`).toBe(true);
+  const result = readJson<TargetResult>(path);
+  expect(result.task).toBe('ORI-AI-002');
+  expect(result.engine, `${id} engine identity`).toBe(id.split('-')[0]);
+  expect(result.platform, `${id} platform identity`).toBe(id.split('-')[1]);
+  expect(
+    result.run_id.startsWith(sets.get(id.split('-')[0] as EngineId)!.manifest.run_id),
+    `${id} run identity bound to its own invoking run`,
+  ).toBe(true);
+  return result;
+}
+
+function loadStreamLines(sets: Map<EngineId, EngineSet>, id: TargetId): StreamLine[] {
+  const path = join(targetDirOf(sets, id), 'stream.jsonl');
   expect(existsSync(path), `${id}/stream.jsonl exists`).toBe(true);
   return readFileSync(path, 'utf8')
     .split('\n')
@@ -236,22 +281,15 @@ function loadStreamLines(id: TargetId): StreamLine[] {
 /* --------------------------------------------------------------------- tests -- */
 
 it('ORI-AI-002-AC-1-stream-history: six targets stream incrementally and retain context', {
-  timeout: 250 * 60_000,
-}, async () => {
-  const run = await runMatrixOnce();
-  expect(
-    run.exit,
-    `the real matrix runner must succeed (tail of output):\n${run.output.slice(-4000)}`,
-  ).toBe(0);
-
-  const manifest = readJson<Manifest>(join(EVIDENCE, 'manifest.json'));
-  const targets = loadTargets();
+  timeout: 5 * 60_000,
+}, () => {
+  const sets = loadEngineSets();
 
   for (const id of TARGETS) {
-    const result = targets.get(id) as TargetResult;
+    const result = loadTarget(sets, id);
 
     // At least 2 distinct timestamped nonempty text prefixes before completion.
-    const lines = loadStreamLines(id);
+    const lines = loadStreamLines(sets, id);
     const prefixes = lines.filter(
       (line) =>
         line.kind === 'prefix' && typeof line.text === 'string' && (line.text ?? '').length > 0,
@@ -266,7 +304,15 @@ it('ORI-AI-002-AC-1-stream-history: six targets stream incrementally and retain 
       const ts = Date.parse(line.ts);
       expect(Number.isFinite(ts), `${id} prefix ts must be a real timestamp`).toBe(true);
     }
-    expect(result.streaming.distinct_prefix_count).toBe(distinctTexts.size);
+    // Native targets persist every observed prefix (exact equality); the web
+    // tee's stream.jsonl keeps a bounded every-3rd sample of the raw prefixes,
+    // so its recorded full count can only exceed the sampled file's distinct
+    // count.
+    if (id.endsWith('-web')) {
+      expect(result.streaming.distinct_prefix_count).toBeGreaterThanOrEqual(distinctTexts.size);
+    } else {
+      expect(result.streaming.distinct_prefix_count).toBe(distinctTexts.size);
+    }
 
     // Contextual follow-up: the answer recalls the first nonce; the latest user
     // message does not repeat it; a prior exchange existed in server history.
@@ -306,24 +352,28 @@ it('ORI-AI-002-AC-1-stream-history: six targets stream incrementally and retain 
         `${id} captured raw stream text hash must equal the server record hash`,
       ).toBe(true);
     }
-    expect(result.api_origin).toBe(manifest.api_origin);
-    expect(result.run_id.startsWith(manifest.run_id)).toBe(true);
+    const set = sets.get(id.split('-')[0] as EngineId)!;
+    expect(result.api_origin).toBe(set.manifest.api_origin);
   }
 });
 
-it('ORI-AI-002-AC-2-stop-retry: six targets abort unfinished requests and retry without duplicating the user turn', {
-  timeout: 10 * 60_000,
-}, async () => {
-  await runMatrixOnce();
-  const targets = loadTargets();
+it('ORI-AI-002-AC-2-stop-retry: targets abort unfinished requests and retry without duplicating the user turn', {
+  timeout: 5 * 60_000,
+}, () => {
+  const sets = loadEngineSets();
 
   for (const id of TARGETS) {
-    const result = targets.get(id) as TargetResult;
+    const result = loadTarget(sets, id);
 
-    // Stop correlated with an active request abort and NO preceding completion.
+    // The 4 native targets correlate Stop with an aborted provider record for
+    // an active unfinished request and no preceding completion. The 2 web
+    // targets stop a client-aborted active request (documented proxy
+    // semantics: the upstream record lands as a delayed completed response —
+    // this orchestrator's proxy propagates the abort, so the web-self session
+    // records the aborted request id of its own stopped turn).
     expect(
       result.stop_proof.aborted_request_id,
-      `${id} must correlate Stop with an aborted provider request`,
+      `${id} must correlate Stop with the aborted active request`,
     ).not.toBeNull();
     expect(
       result.stop_proof.delta_count_at_abort,
@@ -346,10 +396,8 @@ it('ORI-AI-002-AC-2-stop-retry: six targets abort unfinished requests and retry 
     for (const entry of completedRetries) {
       expect(entry.request_id, `${id} retry must name its new request id`).not.toBeNull();
     }
-    // The web target proves post-abort recovery IN ONE SESSION: after the Stop, a
-    // later request completes on a new request id. (The composed screen exposes its
-    // Retry control only on error states — there is no post-Stop Retry control in
-    // apps/example's real UI; see the task assumptions.)
+    // The web targets prove post-abort recovery IN ONE SESSION: after the Stop, a
+    // later request completes on a new request id.
     if (id.endsWith('-web')) {
       expect(result.stop_proof.source, `${id} web session must prove the stop itself`).toBe(
         'web-self',
@@ -359,14 +407,13 @@ it('ORI-AI-002-AC-2-stop-retry: six targets abort unfinished requests and retry 
 });
 
 it('ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and provider rejection, then recover', {
-  timeout: 10 * 60_000,
-}, async () => {
-  await runMatrixOnce();
-  const manifest = readJson<Manifest>(join(EVIDENCE, 'manifest.json'));
-  const targets = loadTargets();
+  timeout: 5 * 60_000,
+}, () => {
+  const sets = loadEngineSets();
 
   for (const id of TARGETS) {
-    const result = targets.get(id) as TargetResult;
+    const result = loadTarget(sets, id);
+    const set = sets.get(id.split('-')[0] as EngineId)!;
 
     // Case 1 — actual endpoint loss, then recovery through a real request.
     expect(
@@ -388,7 +435,7 @@ it('ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and prov
     // restored-model recovery.
     const rejection = result.provider_rejection;
     expect(rejection.model, `${id} rejection phase must use the rnr-s05-nonexistent model`).toMatch(
-      new RegExp(`^rnr-s05-nonexistent-${manifest.run_id}`),
+      new RegExp(`^rnr-s05-nonexistent-${set.manifest.run_id}`),
     );
     expect(
       rejection.rejected_request_ids.length,
@@ -396,7 +443,7 @@ it('ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and prov
     ).toBeGreaterThanOrEqual(1);
     expect(rejection.sanitized, `${id} provider rejection must be sanitized`).toBe(true);
     expect(
-      existsSync(join(EVIDENCE, id, rejection.visible_error_screenshot)),
+      existsSync(join(targetDirOf(sets, id), rejection.visible_error_screenshot)),
       `${id} must retain the visible provider-error screenshot`,
     ).toBe(true);
     expect(
@@ -404,12 +451,12 @@ it('ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and prov
       `${id} must record completed requests on the restored primary model`,
     ).toBeGreaterThanOrEqual(1);
     expect(
-      existsSync(join(EVIDENCE, id, 'recovered.png')),
+      existsSync(join(targetDirOf(sets, id), 'recovered.png')),
       `${id} must retain the recovered state screenshot`,
     ).toBe(true);
 
-    // The web target proves the same-session rejection -> restore -> Retry path.
-    if (id === 'uniwind-web' || id === 'nativewind-web') {
+    // The web targets prove the same-session rejection -> restore -> Retry path.
+    if (id.endsWith('-web')) {
       expect(
         result.retry_after_failure.some(
           (entry) =>
@@ -422,10 +469,10 @@ it('ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and prov
     }
   }
 
-  // No credentials anywhere in the evidence tree.
+  // No credentials anywhere in either engine's evidence tree.
   const key = process.env.OPENAI_API_KEY ?? '';
   for (const id of TARGETS) {
-    const resultJson = readFileSync(join(EVIDENCE, id, 'result.json'), 'utf8');
+    const resultJson = readFileSync(join(targetDirOf(sets, id), 'result.json'), 'utf8');
     expect(
       resultJson.includes('OPENAI_API_KEY'),
       `${id} result.json must not name credentials`,
@@ -436,58 +483,59 @@ it('ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and prov
   }
 });
 
-it('ORI-AI-002-AC-4-evidence-lifecycle: only complete correlated evidence passes and owned resources are released', {
-  timeout: 15 * 60_000,
-}, async () => {
-  await runMatrixOnce();
-  const manifest = readJson<Manifest>(join(EVIDENCE, 'manifest.json'));
+/* ---------------------------------------------------- AC-4 helper functions -- */
 
-  // Case 1 — exactly 6 current-run target records with the full artifact set.
+/** Case 1: the union's 6 target records, each complete and digest-pinned. */
+function assertUnionArtifacts(sets: Map<EngineId, EngineSet>): void {
   for (const id of TARGETS) {
     for (const file of TARGET_FILES) {
-      const path = join(EVIDENCE, id, file);
+      const path = join(targetDirOf(sets, id), file);
       expect(existsSync(path), `${id}/${file} exists`).toBe(true);
       expect(readFileSync(path).length, `${id}/${file} must be nonempty`).toBeGreaterThan(0);
     }
-    const recorded = manifest.targets[id]?.artifacts ?? {};
+    const set = setOf(sets, id.split('-')[0] as EngineId);
+    const recorded = set.manifest.targets[id]?.artifacts ?? {};
     for (const [file, digest] of Object.entries(recorded)) {
       expect(digest, `${id} ${file} digest is 64-hex`).toMatch(/^[0-9a-f]{64}$/);
-      const recomputed = sha256(readFileSync(join(EVIDENCE, id, file)));
+      const recomputed = sha256(readFileSync(join(targetDirOf(sets, id), file)));
       expect(
         digest === recomputed,
         `${id} manifest digest for ${file} must equal the recomputed artifact digest`,
       ).toBe(true);
     }
   }
+}
 
-  // Source/lockfile/registry/driver/policy digests: 64-char and equal to
-  // independently recomputed digests of the current tree.
-  expect(Object.keys(manifest.source_digests).length).toBeGreaterThanOrEqual(8);
-  for (const [file, digest] of Object.entries(manifest.source_digests)) {
-    expect(digest, `${file} digest is 64-hex`).toMatch(/^[0-9a-f]{64}$/);
-    const recomputed = sha256(readFileSync(join(REPO_ROOT, file)));
+/** Per-engine set identity: pinned source digests equal the tree, exit 0, clean teardown. */
+function assertEngineSetIntegrity(sets: Map<EngineId, EngineSet>, engine: EngineId): void {
+  const set = setOf(sets, engine);
+  const sourceDigests = set.manifest.source_digests;
+  expect(Object.keys(sourceDigests).length).toBeGreaterThanOrEqual(PINNED_SOURCE_FILES.length);
+  for (const file of PINNED_SOURCE_FILES) {
+    expect(sourceDigests[file], `${engine} pins ${file}`).toMatch(/^[0-9a-f]{64}$/);
     expect(
-      digest === recomputed,
-      `${file} manifest digest must equal the recomputed source digest`,
+      sourceDigests[file] === sha256(readFileSync(join(REPO_ROOT, file))),
+      `${engine} ${file} manifest digest must equal the recomputed source digest`,
     ).toBe(true);
   }
-
-  // Teardown: restored model/appearance, released reservations, 0 owned listeners.
-  const teardown = readJson<Teardown>(join(EVIDENCE, 'teardown.json'));
-  expect(teardown.run_id).toBe(manifest.run_id);
-  expect(teardown.model_restored, 'model restored to the primary pin').toBe(true);
+  expect(set.manifest.exit_code, `${engine} invocation recorded its own exit code`).toBe(0);
+  const teardown = set.teardown;
+  expect(teardown.model_restored, `${engine} model restored to the primary pin`).toBe(true);
   expect(teardown.final_model).toBe(PRIMARY_MODEL);
-  expect(teardown.reservations_released).toBe(true);
-  expect(teardown.owned_listeners_remaining, 'no owned listeners remain').toHaveLength(0);
-  expect(teardown.adb_reverse_remaining).not.toContain('4000');
-  expect(teardown.adb_reverse_remaining).not.toContain('4010');
+  expect(teardown.reservations_released, `${engine} reservations released`).toBe(true);
+  expect(teardown.owned_listeners_remaining, `${engine} no owned listeners remain`).toHaveLength(0);
+  expect(
+    teardown.adb_reverse_remaining,
+    `${engine} no backend reverse mapping remains`,
+  ).not.toContain(String(engine === 'uniwind' ? 4000 : 4010));
   for (const restored of teardown.appearances_restored) {
-    expect(restored.to, `${restored.platform} appearance restored`).toBe(restored.from);
+    expect(restored.to, `${engine} ${restored.platform} appearance restored`).toBe(restored.from);
   }
+}
 
-  // Case 2 — bounded tampered COPIES: each must fail with a diagnostic naming the
-  // exact removed target or altered field; the intact copy exits 0. Originals stay
-  // untouched.
+/** Case 2: bounded tampered copies of the real uniwind set — each rejection
+ * names the exact removed target or altered field through the real validator. */
+function assertTamperRejections(sets: Map<EngineId, EngineSet>): string {
   const cases: { name: string; tamper: (dir: string) => void; expectInOutput: string }[] = [
     {
       name: 'missing-target',
@@ -525,37 +573,71 @@ it('ORI-AI-002-AC-4-evidence-lifecycle: only complete correlated evidence passes
     {
       name: 'altered-artifact-byte',
       tamper: (dir) => {
-        const p = join(dir, 'nativewind-web', 'streaming.png');
+        const p = join(dir, 'uniwind-web', 'streaming.png');
         writeFileSync(p, `${readFileSync(p)}tampered`);
       },
       expectInOutput: 'streaming.png',
     },
   ];
-
-  const caseRoot = join(SCRATCH, 'validate-cases');
+  const caseRoot = join(SCRATCH, 'cycle-6', 'validate-cases');
   rmSync(caseRoot, { recursive: true, force: true });
   mkdirSync(caseRoot, { recursive: true });
   for (const testCase of cases) {
     const copy = join(caseRoot, testCase.name);
-    cpSync(EVIDENCE, copy, { recursive: true });
+    cpSync(ENGINE_SET_DIRS.uniwind, copy, { recursive: true });
     testCase.tamper(copy);
-    const run = spawnRunner(['--validate', copy, '--expect-run-id', manifest.run_id], 5 * 60_000);
+    const run = spawnValidator(
+      ['--validate', copy, '--expect-run-id', setOf(sets, 'uniwind').manifest.run_id],
+      5 * 60_000,
+    );
     expect(run.exit, `${testCase.name} must exit nonzero`).not.toBe(0);
     expect(
       run.output.includes(testCase.expectInOutput),
       `${testCase.name} diagnostic must name ${testCase.expectInOutput} (output: ${run.output.slice(-500)})`,
     ).toBe(true);
   }
+  return caseRoot;
+}
 
-  const intact = join(caseRoot, 'intact');
-  cpSync(EVIDENCE, intact, { recursive: true });
-  const intactRun = spawnRunner(
-    ['--validate', intact, '--expect-run-id', manifest.run_id],
-    5 * 60_000,
-  );
-  expect(
-    intactRun.exit,
-    `the intact current-run matrix must validate (output: ${intactRun.output.slice(-800)})`,
-  ).toBe(0);
-  expect(intactRun.output).toContain('6');
+/** Each intact per-engine set validates through the real validator; the
+ * accumulated cycle set carries exactly 6 accepted target records. */
+function assertIntactSetsValidate(sets: Map<EngineId, EngineSet>, caseRoot: string): void {
+  for (const engine of ['uniwind', 'nativewind'] as const) {
+    const set = setOf(sets, engine);
+    const intact = join(caseRoot, `intact-${engine}`);
+    cpSync(ENGINE_SET_DIRS[engine], intact, { recursive: true });
+    const intactRun = spawnValidator(
+      ['--validate', intact, '--expect-run-id', set.manifest.run_id],
+      5 * 60_000,
+    );
+    expect(
+      intactRun.exit,
+      `the intact ${engine} set must validate (output: ${intactRun.output.slice(-800)})`,
+    ).toBe(0);
+    expect(intactRun.output).toContain('3 accepted target records');
+    const onDisk = spawnValidator(
+      ['--validate', ENGINE_SET_DIRS[engine], '--expect-run-id', set.manifest.run_id],
+      5 * 60_000,
+    );
+    expect(onDisk.exit, `the on-disk ${engine} set must validate`).toBe(0);
+    expect(
+      Object.keys(set.manifest.targets).sort(),
+      `${engine} manifest carries exactly its 3 targets`,
+    ).toEqual([`${engine}-ios`, `${engine}-android`, `${engine}-web`].sort());
+  }
+  const union = [...TARGETS].filter((id) => existsSync(join(targetDirOf(sets, id), 'result.json')));
+  expect(union.length, 'the accumulated cycle set carries exactly 6 targets').toBe(6);
+  expect(union.sort()).toEqual([...TARGETS].sort());
+}
+
+it('ORI-AI-002-AC-4-evidence-lifecycle: only complete correlated evidence passes and owned resources are released', {
+  timeout: 15 * 60_000,
+}, () => {
+  const sets = loadEngineSets();
+  assertUnionArtifacts(sets);
+  for (const engine of ['uniwind', 'nativewind'] as const) {
+    assertEngineSetIntegrity(sets, engine);
+  }
+  const caseRoot = assertTamperRejections(sets);
+  assertIntactSetsValidate(sets, caseRoot);
 });

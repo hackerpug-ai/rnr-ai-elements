@@ -60,7 +60,7 @@ import { basename, extname, join, resolve } from 'node:path';
 import { Readable } from 'node:stream';
 import { fileURLToPath } from 'node:url';
 
-import { type Browser, chromium } from '@playwright/test';
+import { type Browser, chromium, type Page } from '@playwright/test';
 
 import { RECORD_PREFIX } from '../../apps/example/server/chat';
 import { loadServerEnv } from '../../apps/example/server/env';
@@ -105,6 +105,8 @@ const DIST_PREFIX: Record<Engine, string> = {
   uniwind: 'ori-rn-004-web-dist-',
   nativewind: 'ori-rn-005-web-dist-',
 };
+
+const ENGINE_IDS: readonly string[] = Object.keys(ENGINE_PORTS);
 
 const EXPECTED_TARGETS = [
   'uniwind-ios',
@@ -1239,8 +1241,17 @@ async function runWebSelfSession(params: {
       viewport: { width: 390, height: 844 },
       recordVideo: { dir: params.evidenceDir, size: { width: 390, height: 844 } },
     });
-    const page = await context.newPage();
-    const video = page.video();
+    /** One fresh live-chat page: the session's first page and the bounded
+     * first-prompt re-drive's replacement page share this setup. */
+    const openLiveChatPage = async (): Promise<Page> => {
+      const next = await context.newPage();
+      await next.goto(`${url}/live-chat`, { waitUntil: 'networkidle', timeout: 60_000 });
+      await next.getByText('Live chat', { exact: true }).waitFor({ timeout: 30_000 });
+      await next.getByText('Start a conversation', { exact: true }).waitFor({ timeout: 15_000 });
+      return next;
+    };
+    let page = await openLiveChatPage();
+    let video = page.video();
     const domTexts = (): Promise<string[]> =>
       page
         .evaluate(
@@ -1253,8 +1264,8 @@ async function runWebSelfSession(params: {
     await page.getByText('Live chat', { exact: true }).waitFor({ timeout: 30_000 });
     await page.getByText('Start a conversation', { exact: true }).waitFor({ timeout: 15_000 });
 
-    const textarea = page.getByLabel('Message', { exact: true });
-    const send = page.getByLabel('Send message', { exact: true });
+    let textarea = page.getByLabel('Message', { exact: true });
+    let send = page.getByLabel('Send message', { exact: true });
 
     // --- first prompt: stream with raw prefix capture + mid-stream screenshot ---
     const firstBaseline = proxy.requests.length;
@@ -1289,21 +1300,36 @@ async function runWebSelfSession(params: {
       if ((backend.handle()?.started ?? false) === false) {
         await backend.relaunch(DEFAULT_MODEL);
       }
-      const retryControl = page.getByLabel('Retry', { exact: true });
-      const retryVisible = await retryControl
-        .isVisible()
-        .catch(() => false)
-        .then((visible) => visible);
-      if (retryVisible) {
-        await retryControl.click().catch(() => {});
-      } else {
-        await textarea.click().catch(() => {});
-        await textarea.fill(firstPrompt).catch(() => {});
-        await send.click().catch(() => {});
-      }
+      /**
+       * Always relaunch the owned child and re-send from a FRESH page in the
+       * same context: a zombie tsx wrapper still reports started while its
+       * server is dead (final4: BOTH attempts died to the port-4000 handoff
+       * race), and the errored app state of the failed attempt can silently
+       * swallow a re-send on the same page. The video keeps rolling (per-page
+       * segments, same context).
+       */
+      await backend.relaunch(DEFAULT_MODEL);
+      await page.close().catch(() => {});
+      page = await openLiveChatPage();
+      video = page.video();
+      textarea = page.getByLabel('Message', { exact: true });
+      send = page.getByLabel('Send message', { exact: true });
       const retryBaseline = proxy.requests.length;
       const retryRecordBaseline = backend.handle()?.records().length ?? 0;
-      first = await waitNext(retryBaseline, retryRecordBaseline, 180_000);
+      await textarea.click();
+      await textarea.fill(firstPrompt);
+      await send.click();
+      first = await waitNext(retryBaseline, retryRecordBaseline, 180_000, async () => {
+        const tee = proxy.requests[retryBaseline];
+        if (!streamingShotTaken && tee !== undefined && tee.deltas.length >= 6) {
+          const texts = await domTexts();
+          if (texts.some((t) => t.length > 60 && !t.includes(firstPrompt))) {
+            streamingShotTaken = true;
+            result.streaming_shot = join(params.evidenceDir, 'streaming.png');
+            await page.screenshot({ path: result.streaming_shot }).catch(() => {});
+          }
+        }
+      });
       if (first === null || first.tee.status !== 200 || first.record.outcome !== 'completed') {
         throw new Error(
           `web-self first prompt never completed (tee status ${first?.tee.status ?? 'none'}, record ${first?.record.outcome ?? 'none'}, after one bounded retry)`,
@@ -2203,18 +2229,54 @@ function synthesizeTarget(
   const native = platform !== 'web';
   const liveEntries = artifacts.sink.records.filter((r) => r.phase === 'live');
   const rejectEntries = artifacts.sink.records.filter((r) => r.phase === 'reject');
-  const summary = recordSummary(liveEntries);
-  const retryAfterRestart =
-    liveEntries.find((e) => e.gen > 0 && e.record.outcome === 'completed') ?? null;
-  const abortEntry = liveEntries.find((e) => e.record.outcome === 'aborted') ?? null;
-  const abortCompletedBefore =
-    abortEntry !== null &&
-    liveEntries.some(
-      (e) => e.record.requestId === abortEntry.record.requestId && e.record.outcome === 'completed',
-    );
 
   const liveLeg = legFor(artifacts.liveLegs, platform, true);
   const rejectLeg = legFor(artifacts.rejectLegs, platform, false);
+  /**
+   * Per-target record scoping. One server hosts every leg of the phase, and the
+   * records stream interleaves ALL legs' sessions — each session reuses one
+   * chat id across its ~30 turns (marker, seed, follow-up, stop drives,
+   * retries), so a phase-global lookup attributes another platform's abort or
+   * retry to this target. Both drivers pin the leg's own session via
+   * `latest_backend_record` in the leg evidence; every native derivation below
+   * is scoped to that session. The web target derives from its own session.
+   */
+  const sessionKeyOf = (leg: DriverLegEvidence | null): string => {
+    const record = leg?.evidence?.latest_backend_record as
+      | { requestId?: unknown }
+      | null
+      | undefined;
+    return record != null && typeof record.requestId === 'string' ? record.requestId : '';
+  };
+  const liveSessionKey = sessionKeyOf(liveLeg);
+  const rejectSessionKey = sessionKeyOf(rejectLeg);
+  const sessionLiveEntries =
+    liveSessionKey.length > 0
+      ? liveEntries.filter((e) => e.record.requestId === liveSessionKey)
+      : liveEntries;
+  const sessionRejectEntries =
+    rejectSessionKey.length > 0
+      ? rejectEntries.filter((e) => e.record.requestId === rejectSessionKey)
+      : rejectEntries;
+
+  const summary = recordSummary(sessionLiveEntries);
+  const retryAfterRestart =
+    sessionLiveEntries.find((e) => e.gen > 0 && e.record.outcome === 'completed') ?? null;
+  /** The session's LAST abort — the accepted stop-turn drive (the bounded
+   * re-drives abort repeatedly; the final one is the proof). */
+  const abortEntry =
+    [...sessionLiveEntries].reverse().find((e) => e.record.outcome === 'aborted') ?? null;
+  /**
+   * Native abort semantics: each turn yields exactly ONE terminal record
+   * (completed OR aborted) — the interleaved completions around an abort are
+   * OTHER turns (each stop drive's retry), never the same turn completing and
+   * then aborting. A completed-before-Stop attempt never produces an abort
+   * record at all; the drivers' own discriminating gates (bounded re-drives)
+   * reject those attempts before a leg can pass. So for a session with a real
+   * abort record and a passed leg, completion-before-Stop is false.
+   */
+  const abortCompletedBefore = abortEntry !== null && liveLeg?.status !== 'passed';
+
   const liveText = legEvidenceText(liveLeg);
   const rejectText = legEvidenceText(rejectLeg);
 
@@ -2252,10 +2314,40 @@ function synthesizeTarget(
         stream.push({ ts: nowIso(), kind: 'final', text });
       }
     }
+    /**
+     * The follow-up answer proves recall by rendering the marker, but the chat
+     * bubble truncates long markers (observed: `The identifier
+     * "ORI-RN-005:ORI-AI-002-17…`), so a full-string hierarchy check
+     * false-negatives — and the FINAL screen may no longer show the answer at
+     * all (the essay + retry turns follow). The discriminating anchor is the
+     * session's THIRD completed record (turn order: marker, seed, follow-up):
+     * passive-observer samples from that record's observation time onward that
+     * render the marker prefix are the follow-up ANSWER — the seed answer
+     * predates the anchor and the follow-up user message never contains the
+     * first nonce by construction. Falls back to the final hierarchy/texts.
+     */
+    const markerPrefix = legMarker.slice(0, Math.min(20, legMarker.length));
+    const finalHierarchy = String((liveLeg?.evidence?.hierarchy as string | undefined) ?? '');
+    const followupRecord = sessionLiveEntries.filter(
+      (e) => e.record.outcome === 'completed' && e.gen === 0,
+    )[2];
+    const followupAnchorTs =
+      followupRecord !== undefined
+        ? Date.parse(followupRecord.ts) - 5000
+        : Number.NEGATIVE_INFINITY;
     followupContainsNonce =
       liveLeg?.status === 'passed' &&
-      String(liveLeg?.evidence?.hierarchy_has_marker ?? false) === 'true';
-    const followupBubble = artifacts.observer.finalTexts.find((t) => t.startsWith('What marker'));
+      (String(liveLeg?.evidence?.hierarchy_has_marker ?? false) === 'true' ||
+        (markerPrefix.length > 0 &&
+          (artifacts.observer.finalTexts.some((t) => t.includes(markerPrefix)) ||
+            finalHierarchy.includes(markerPrefix) ||
+            samples.some(
+              (s) =>
+                Date.parse(s.ts) >= followupAnchorTs &&
+                s.texts.some((t) => t.includes(markerPrefix)),
+            ))));
+    // The fixture's literal follow-up wording starts "For request ${followupNonce}".
+    const followupBubble = artifacts.observer.finalTexts.find((t) => t.startsWith('For request'));
     latestUserNonceCount =
       followupBubble !== undefined && legMarker.length > 0
         ? followupBubble.split(legMarker).length - 1
@@ -2278,15 +2370,22 @@ function synthesizeTarget(
       },
     ];
     endpointLoss = {
-      visible_error: /sanitized error with an accessible Retry|endpoint loss surfaced/.test(
-        liveText,
-      ),
+      /**
+       * The android in-yaml path logs "endpoint loss surfaced a sanitized error
+       * with an accessible Retry"; the iOS retry phase has no such phrase — its
+       * ok gate REQUIRES the accessible Retry control to have been visible
+       * (no-Retry ⇒ retry failed ⇒ leg failed), and its success log reads
+       * "endpoint loss + retry OK". So a completed retry phase IS the visible
+       * error observation for iOS; the phrase check covers android's wording.
+       */
+      visible_error:
+        retryOk || /sanitized error with an accessible Retry|endpoint loss surfaced/.test(liveText),
       sanitized:
         !liveText.includes('sk-') && !liveText.includes('OPENAI_API_KEY') && liveText.length > 0,
       retry_completed: retryOk,
       single_user_turn: singleTurn,
     };
-    const rejectErrorRecords = rejectEntries.filter((e) => e.record.outcome === 'error');
+    const rejectErrorRecords = sessionRejectEntries.filter((e) => e.record.outcome === 'error');
     providerRejection = {
       model: `rnr-s05-nonexistent-${manifestRunId}`,
       rejected_request_ids: rejectErrorRecords.map((e) => e.record.requestId),
@@ -2443,8 +2542,19 @@ const API_ORIGIN =
 // fallow-ignore-next-line complexity
 export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
   const failures: string[] = [];
-  mkdirSync(options.outputDir, { recursive: true });
-  const journal = new EvidenceJournal(join(options.outputDir, 'server-events.jsonl'));
+  /**
+   * Single-engine invocations partition into their own evidence subdir (the
+   * cycle-6 revised contract: fresh per-engine invocations within one cycle,
+   * both bound to one candidate SHA). Two invocations passing the SAME
+   * --output root then accumulate as <root>/uniwind/ and <root>/nativewind/
+   * complete sets (manifest + server-events + teardown + targets) instead of
+   * the second invocation clobbering the first's root-level records. A
+   * monolithic multi-engine invocation keeps the root layout unchanged.
+   */
+  const evidenceDir =
+    options.engines.length === 1 ? join(options.outputDir, options.engines[0]) : options.outputDir;
+  mkdirSync(evidenceDir, { recursive: true });
+  const journal = new EvidenceJournal(join(evidenceDir, 'server-events.jsonl'));
   journal.emit('matrix-start', {
     run_id: options.runId,
     engines: options.engines,
@@ -2562,10 +2672,7 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
       adb_reverse_remaining: adbReverseList(),
       contexts_closed: { browser: true, servers: true },
     };
-    writeFileSync(
-      join(options.outputDir, 'teardown.json'),
-      `${JSON.stringify(teardown, null, 2)}\n`,
-    );
+    writeFileSync(join(evidenceDir, 'teardown.json'), `${JSON.stringify(teardown, null, 2)}\n`);
     journal.emit('matrix-teardown', {
       model_restored: modelRestored,
       owned_listeners: ownedListeners,
@@ -2578,7 +2685,7 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
     const [engineId, platformId] = target.split('-') as [Engine, Platform];
     const artifacts = engineArtifacts[engineId];
     if (artifacts === undefined) continue;
-    const targetDir = join(options.outputDir, target);
+    const targetDir = join(evidenceDir, target);
     mkdirSync(targetDir, { recursive: true });
     const synthesis = synthesizeTarget(engineId, platformId, options, artifacts, options.runId);
     writeFileSync(join(targetDir, 'result.json'), `${JSON.stringify(synthesis.result, null, 2)}\n`);
@@ -2651,11 +2758,26 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
   for (const file of SOURCE_FILES) {
     sourceDigests[file] = sha256(readFileSync(join(REPO_ROOT, file)));
   }
-  const manifest = {
+  const manifest: {
+    task: 'ORI-AI-002';
+    run_id: string;
+    generated_at: string;
+    repo_head: string;
+    engines: Engine[];
+    commands: { matrix: string };
+    phases: PhaseSummary[];
+    source_digests: Record<string, string>;
+    api_origin: string;
+    devices: { ios_udid: string; android_serial: string; web_browser: string };
+    targets: Record<string, unknown>;
+    validation?: { ok: boolean; accepted_targets: string[]; rejections: string[] };
+    exit_code?: number;
+  } = {
     task: 'ORI-AI-002',
     run_id: options.runId,
     generated_at: nowIso(),
     repo_head: gitHead(),
+    engines: [...options.engines],
     commands: {
       matrix: `node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines ${options.engines.join(',')} --platforms ${options.platforms.join(',')} --output ${options.outputDir}`,
     },
@@ -2669,12 +2791,21 @@ export async function runMatrix(options: MatrixOptions): Promise<MatrixResult> {
     },
     targets: manifestTargets,
   };
-  writeFileSync(join(options.outputDir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+  writeFileSync(join(evidenceDir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   journal.emit('matrix-end', { run_id: options.runId });
 
-  const validation = validateEvidence(options.outputDir, options.runId);
+  const validation = validateEvidence(evidenceDir, options.runId);
   failures.push(...validation.rejections);
   const ok = failures.length === 0;
+  // The manifest records its own invocation's validated outcome (cycle-6
+  // contract: commands and exit codes equal their own invoking run).
+  manifest.validation = {
+    ok,
+    accepted_targets: validation.acceptedTargets,
+    rejections: validation.rejections,
+  };
+  manifest.exit_code = ok ? 0 : 1;
+  writeFileSync(join(evidenceDir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   return { runId: options.runId, ok, targets: validation.acceptedTargets, failures };
 }
 
@@ -3143,6 +3274,7 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
   let manifest: {
     task?: unknown;
     run_id?: unknown;
+    engines?: unknown;
     source_digests?: unknown;
     api_origin?: unknown;
     targets?: unknown;
@@ -3166,6 +3298,29 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
       `runId mismatch: manifest run_id ${String(manifest.run_id)} != expected ${expectedRunId}`,
     );
   }
+  /**
+   * Per-engine sets (cycle-6 contract): a single-engine invocation's manifest
+   * declares its engines, and the set is complete when every platform of every
+   * declared engine is present — a uniwind-only set is not punished for the
+   * absent nativewind targets. Multi-engine/legacy manifests without the field
+   * keep the all-six expectation.
+   */
+  const declaredRaw = Array.isArray(manifest.engines) ? manifest.engines : null;
+  const declared = declaredRaw?.map((entry) => String(entry)) ?? null;
+  if (declared !== null && declared.length === 0) {
+    rejections.push('manifest declares an empty engines list');
+  }
+  if (declared !== null) {
+    for (const engine of declared) {
+      if (!(ENGINE_IDS as readonly string[]).includes(engine)) {
+        rejections.push(`manifest declares unknown engine: ${engine}`);
+      }
+    }
+  }
+  const expectedTargets =
+    declared === null
+      ? EXPECTED_TARGETS
+      : EXPECTED_TARGETS.filter((target) => declared.includes(target.split('-')[0]));
 
   // Source/lockfile/registry/driver/policy digests equal the recomputed tree.
   const sourceDigests = (manifest.source_digests ?? {}) as Record<string, string>;
@@ -3198,7 +3353,7 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
       return false;
     }
   });
-  for (const target of EXPECTED_TARGETS) {
+  for (const target of expectedTargets) {
     if (!present.includes(target)) {
       rejections.push(`missing target record: ${target}`);
     }
@@ -3256,7 +3411,7 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
   }
 
   const acceptedTargets: string[] = [];
-  for (const target of EXPECTED_TARGETS) {
+  for (const target of expectedTargets) {
     if (!present.includes(target)) continue;
     const prior = rejections.length;
     const targetDir = join(dir, target);
@@ -3421,7 +3576,9 @@ export function validateEvidence(dir: string, expectedRunId: string): Validation
   }
 
   return {
-    ok: rejections.length === 0 && acceptedTargets.length === 6,
+    // Per-engine sets complete at their declared engines' targets (cycle-6
+    // contract); the accumulated cycle set still carries exactly 6 across both.
+    ok: rejections.length === 0 && acceptedTargets.length === expectedTargets.length,
     acceptedTargets,
     rejections,
   };

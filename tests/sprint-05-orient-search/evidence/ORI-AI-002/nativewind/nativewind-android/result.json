@@ -1,0 +1,383 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-1790256894249",
+  "engine": "nativewind",
+  "platform": "android",
+  "native": true,
+  "device": "emulator-5554",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "ORI-RN-005:ORI-AI-002-1790256894249-live:android",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-1790256894249-reject",
+      "legs": [
+        {
+          "platform": "android",
+          "status": "failed",
+          "diagnostic": "52b855\",\"durationMs\":1128,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":285,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":363,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":417,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":247,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":266,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":279,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":294,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":238,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0}]",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-1790256894249-reject:android",
+            "appearance": "light",
+            "flow_exit": 1,
+            "flow_output": "OK: composer ready, transcript empty\nWARN: marker turn errored at the provider — driving the app's Retry\nFAIL: marker retry never produced a completed provider record — observed: [{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":1128,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":285,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":363,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":417,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":247,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":266,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":279,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":294,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":238,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0}]",
+            "assistant_text_growth": [],
+            "screenshot": "/tmp/ori-ai-002-scratch/ori-ai-002-ORI-AI-002-1790256894249-nativewind/reject/android/light/screenshot.png",
+            "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,2400]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,2337]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.LinearLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,136][1080,2337]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"false\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"host.exp.exponent:id/action_bar_root\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[0,136][1080,2337]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"android:id/content\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[0,136][1080,2337]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"android.widget.FrameLayout\",\n                \"important-for-accessibility\" : \"false\",\n                \"error\" : \"\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"text\" : \"\",\n                  \"accessibilityText\" : \"\",\n                  \"hintText\" : \"\",\n                  \"ignoreBoundsFiltering\" : \"false\",\n                  \"resource-id\" : \"\",\n                  \"clickable\" : \"false\",\n                  \"bounds\" : \"[0,136][1080,2337]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"checked\" : \"false\",\n                  \"scrollable\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"class\" : \"android.widget.FrameLayout\",\n                  \"important-for-accessibility\" : \"false\",\n                  \"error\" : \"\"\n                },\n                \"children\" : [ {\n             ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": {
+              "requestId": "oDN58v58ynTtejka",
+              "provider": "openai",
+              "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790256894249",
+              "responseId": null,
+              "callId": null,
+              "outcome": "error",
+              "deltaCount": 0,
+              "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "durationMs": 238,
+              "errorText": "An error occurred while generating the response.",
+              "activeGenerations": 0
+            }
+          }
+        },
+        {
+          "platform": "android",
+          "status": "failed",
+          "diagnostic": "852b855\",\"durationMs\":417,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":247,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":266,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":279,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":294,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":238,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"dAP3mbH5Pzlyw9ae\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":342,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"dAP3mbH5Pzlyw9ae\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":312,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"dAP3mbH5Pzlyw9ae\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":549,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0}]",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-1790256894249-reject:android",
+            "appearance": "dark",
+            "flow_exit": 1,
+            "flow_output": "nse.\",\"activeGenerations\":0},{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":285,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"QcTCKRhLidnfdjFZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":363,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":417,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":247,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"jcSkVopMw3snH0FB\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":266,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":279,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":294,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"oDN58v58ynTtejka\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":238,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"dAP3mbH5Pzlyw9ae\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":342,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"dAP3mbH5Pzlyw9ae\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":312,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"dAP3mbH5Pzlyw9ae\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-1790256894249\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":549,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0}]",
+            "assistant_text_growth": [],
+            "screenshot": "/tmp/ori-ai-002-scratch/ori-ai-002-ORI-AI-002-1790256894249-nativewind/reject/android/dark/screenshot.png",
+            "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,136]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_launch_animation_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ ],\n        \"clickable\" : false,\n        \"enabled\" : true,\n        \"focused\" : false,\n        \"checked\" : false,\n        \"selected\" : false\n      }, {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"com.android.systemui:id/status_bar\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,0][1080,136]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"true\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"com.android.systemui:id/status_bar_contents\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[47,0][1027,136]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"com.android.systemui:id/status_bar_start_side_container\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[47,1][454,136]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"andr",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": {
+              "requestId": "dAP3mbH5Pzlyw9ae",
+              "provider": "openai",
+              "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790256894249",
+              "responseId": null,
+              "callId": null,
+              "outcome": "error",
+              "deltaCount": 0,
+              "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "durationMs": 549,
+              "errorText": "An error occurred while generating the response.",
+              "activeGenerations": 0
+            }
+          }
+        }
+      ]
+    },
+    "live": {
+      "run_id": "ORI-AI-002-1790256894249-live",
+      "legs": [
+        {
+          "platform": "android",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-1790256894249-live:android",
+            "appearance": "light",
+            "flow_exit": 0,
+            "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 129, 88, 105, 48, 50, 51)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 3-text baseline)\nOK: coordinate send + stop tap at 954,2232\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (p84yUxGKDKTAYGmn) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+            "assistant_text_growth": [
+              129,
+              88,
+              105,
+              48,
+              50,
+              51,
+              75,
+              234
+            ],
+            "screenshot": "/tmp/ori-ai-002-scratch/ori-ai-002-ORI-AI-002-1790256894249-nativewind/live/android/light/screenshot.png",
+            "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,2400]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,2337]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.LinearLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,136][1080,2337]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"false\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"host.exp.exponent:id/action_bar_root\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[0,136][1080,2337]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"android:id/content\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[0,136][1080,2337]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"android.widget.FrameLayout\",\n                \"important-for-accessibility\" : \"false\",\n                \"error\" : \"\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"text\" : \"\",\n                  \"accessibilityText\" : \"\",\n                  \"hintText\" : \"\",\n                  \"ignoreBoundsFiltering\" : \"false\",\n                  \"resource-id\" : \"\",\n                  \"clickable\" : \"false\",\n                  \"bounds\" : \"[0,136][1080,2337]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"checked\" : \"false\",\n                  \"scrollable\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"class\" : \"android.widget.FrameLayout\",\n                  \"important-for-accessibility\" : \"false\",\n                  \"error\" : \"\"\n                },\n                \"children\" : [ {\n             ",
+            "hierarchy_has_marker": false,
+            "latest_backend_record": {
+              "requestId": "SRg7bYwzXrGYaYg4",
+              "provider": "openai",
+              "providerModel": "gpt-4.1-mini-2025-04-14",
+              "responseId": "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26",
+              "callId": "call-A68MoMjP8OOrVEGK3YKGB2eM",
+              "outcome": "completed",
+              "deltaCount": 2,
+              "inputTokens": 415,
+              "outputTokens": 3,
+              "totalTokens": 418,
+              "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+              "durationMs": 1202,
+              "errorText": null,
+              "activeGenerations": 0
+            }
+          }
+        },
+        {
+          "platform": "android",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-1790256894249-live:android",
+            "appearance": "dark",
+            "flow_exit": 0,
+            "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 50, 51, 133, 88, 249, 48)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)\nOK: coordinate send + stop tap at 954,2232\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (p84yUxGKDKTAYGmn) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+            "assistant_text_growth": [
+              50,
+              51,
+              133,
+              88,
+              249,
+              48,
+              72
+            ],
+            "screenshot": "/tmp/ori-ai-002-scratch/ori-ai-002-ORI-AI-002-1790256894249-nativewind/live/android/dark/screenshot.png",
+            "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,136]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_launch_animation_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ ],\n        \"clickable\" : false,\n        \"enabled\" : true,\n        \"focused\" : false,\n        \"checked\" : false,\n        \"selected\" : false\n      }, {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"com.android.systemui:id/status_bar_container\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,136]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.FrameLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"com.android.systemui:id/status_bar\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,0][1080,136]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"true\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"com.android.systemui:id/status_bar_contents\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[47,0][1027,136]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"com.android.systemui:id/status_bar_start_side_container\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[47,1][454,136]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"andr",
+            "hierarchy_has_marker": false,
+            "latest_backend_record": {
+              "requestId": "DCMMdQ9W1g7Sdftf",
+              "provider": "openai",
+              "providerModel": "gpt-4.1-mini-2025-04-14",
+              "responseId": "resp_07cff77ba4e9f6c3006ab52fdcf8a887d091ee1076967a10ed",
+              "callId": "call-kcANwMX1uypmwiF1Z0nHi5qJ",
+              "outcome": "completed",
+              "deltaCount": 2,
+              "inputTokens": 482,
+              "outputTokens": 3,
+              "totalTokens": 485,
+              "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+              "durationMs": 843,
+              "errorText": null,
+              "activeGenerations": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 74
+  },
+  "context": {
+    "followup_answer_contains_nonce": true,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 2
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4"
+    ],
+    "response_ids": [
+      "resp_065a06d354a39fac006ab52d60006487d09792e31dd92ecf0a",
+      "resp_065a06d354a39fac006ab52d9739ec87d0a2f5f886d31a90c5",
+      "resp_065a06d354a39fac006ab52dcee50487d0911fa11f2381b2f1",
+      "resp_065a06d354a39fac006ab52d60006487d09792e31dd92ecf0a",
+      "resp_065a06d354a39fac006ab52d9739ec87d0a2f5f886d31a90c5",
+      "resp_065a06d354a39fac006ab52dcee50487d0911fa11f2381b2f1",
+      "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26",
+      "resp_065a06d354a39fac006ab52d60006487d09792e31dd92ecf0a",
+      "resp_065a06d354a39fac006ab52d9739ec87d0a2f5f886d31a90c5",
+      "resp_065a06d354a39fac006ab52dcee50487d0911fa11f2381b2f1",
+      "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26",
+      "resp_065a06d354a39fac006ab52d60006487d09792e31dd92ecf0a",
+      "resp_065a06d354a39fac006ab52d9739ec87d0a2f5f886d31a90c5",
+      "resp_065a06d354a39fac006ab52dcee50487d0911fa11f2381b2f1",
+      "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26",
+      "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26",
+      "resp_065a06d354a39fac006ab52d60006487d09792e31dd92ecf0a",
+      "resp_065a06d354a39fac006ab52d9739ec87d0a2f5f886d31a90c5",
+      "resp_065a06d354a39fac006ab52dcee50487d0911fa11f2381b2f1",
+      "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26",
+      "resp_065a06d354a39fac006ab52d60006487d09792e31dd92ecf0a",
+      "resp_065a06d354a39fac006ab52d9739ec87d0a2f5f886d31a90c5",
+      "resp_065a06d354a39fac006ab52dcee50487d0911fa11f2381b2f1",
+      "resp_065a06d354a39fac006ab52e686e5c87d095e6cc7bd4327f26"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 92
+      },
+      {
+        "total_tokens": 200
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 92
+      },
+      {
+        "total_tokens": 200
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 418
+      },
+      {
+        "total_tokens": 92
+      },
+      {
+        "total_tokens": 200
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 418
+      },
+      {
+        "total_tokens": 92
+      },
+      {
+        "total_tokens": 200
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 418
+      },
+      {
+        "total_tokens": 418
+      },
+      {
+        "total_tokens": 92
+      },
+      {
+        "total_tokens": 200
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 418
+      },
+      {
+        "total_tokens": 92
+      },
+      {
+        "total_tokens": 200
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 418
+      }
+    ],
+    "text_hashes_recorded": [
+      "5992adae2473d4db211d69bb0083c0664ee9bddf9c4912aaa1536df12ff142d6",
+      "54a6b955abf87c8362e1cd180d897fdcc23c0c3432e81d5ec04233a995dc4a2d",
+      "bca8b6d5da5323224a03e11b3fb4d31958c7bf2896d3e69bed67955caea5254a",
+      "5992adae2473d4db211d69bb0083c0664ee9bddf9c4912aaa1536df12ff142d6",
+      "54a6b955abf87c8362e1cd180d897fdcc23c0c3432e81d5ec04233a995dc4a2d",
+      "bca8b6d5da5323224a03e11b3fb4d31958c7bf2896d3e69bed67955caea5254a",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "5992adae2473d4db211d69bb0083c0664ee9bddf9c4912aaa1536df12ff142d6",
+      "54a6b955abf87c8362e1cd180d897fdcc23c0c3432e81d5ec04233a995dc4a2d",
+      "bca8b6d5da5323224a03e11b3fb4d31958c7bf2896d3e69bed67955caea5254a",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "5992adae2473d4db211d69bb0083c0664ee9bddf9c4912aaa1536df12ff142d6",
+      "54a6b955abf87c8362e1cd180d897fdcc23c0c3432e81d5ec04233a995dc4a2d",
+      "bca8b6d5da5323224a03e11b3fb4d31958c7bf2896d3e69bed67955caea5254a",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "5992adae2473d4db211d69bb0083c0664ee9bddf9c4912aaa1536df12ff142d6",
+      "54a6b955abf87c8362e1cd180d897fdcc23c0c3432e81d5ec04233a995dc4a2d",
+      "bca8b6d5da5323224a03e11b3fb4d31958c7bf2896d3e69bed67955caea5254a",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "5992adae2473d4db211d69bb0083c0664ee9bddf9c4912aaa1536df12ff142d6",
+      "54a6b955abf87c8362e1cd180d897fdcc23c0c3432e81d5ec04233a995dc4a2d",
+      "bca8b6d5da5323224a03e11b3fb4d31958c7bf2896d3e69bed67955caea5254a",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c"
+    ],
+    "web_raw_text_hash_match": null
+  },
+  "stop_proof": {
+    "aborted_request_id": "SRg7bYwzXrGYaYg4",
+    "delta_count_at_abort": 103,
+    "completed_before_stop": false,
+    "source": "driver-flow"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "SRg7bYwzXrGYaYg4"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": true,
+    "sanitized": true,
+    "retry_completed": true,
+    "single_user_turn": true
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-1790256894249",
+    "rejected_request_ids": [
+      "oDN58v58ynTtejka",
+      "oDN58v58ynTtejka",
+      "oDN58v58ynTtejka",
+      "oDN58v58ynTtejka",
+      "oDN58v58ynTtejka",
+      "oDN58v58ynTtejka"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4",
+      "SRg7bYwzXrGYaYg4"
+    ]
+  },
+  "source": {
+    "repo_head": "89e5be8d155e56dc6e9abf1a30a159fdb5caa133",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}
