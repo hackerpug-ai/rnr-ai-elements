@@ -37,7 +37,7 @@ Implement the three task-owned proof files and write evidence only within the ex
 > Sprint: [SPRINT.md](./SPRINT.md)
 > Planned date: 2026-09-14
 > Source SHA: 38034e972490945b684f5bd5a706bca0479dc659
-> AGENT: planner=aisdk-planner | implementer=aisdk-implementer | reviewer=aisdk-reviewer
+AGENT: planner=aisdk-planner | implementer=aisdk-implementer | reviewer=aisdk-reviewer
 > Progress: 0/4 acceptance criteria complete; all TDD_STATE values are none.
 > Artifact status: planned_output_not_observed
 
