@@ -11763,6 +11763,11 @@
         "state": "landed",
         "task": "ORI-AI-001"
       },
+      "7e1555cc77088c1d0bcfbe5c587fefea43e85a10e7c3fc1b86925acfa66df335": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-CONT-003"
+      },
       "93e040ae8836055fcb43a80ff1e6fd0686b4440d867435dae5e666e54f6ed35a": {
         "kind": "complete-task",
         "state": "landed",
@@ -14961,8 +14966,21 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-002"
     },
     "ORI-CONT-003": {
+      "approved_sha": "227802236f34b54b0d9c5fe59f3c56d69ddceb8b",
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-CONT-003",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "227802236f34b54b0d9c5fe59f3c56d69ddceb8b",
+        "before_head": "3635ba6226704b7803f685ebba386074fa5cd4a0",
+        "desired_sha256": "d9dcdcb8713786af93fa1646185d5a316a8e944993fb62bfd77c4935aa64f7ab",
+        "expected_task_sha256": "10c49d4191f6ee98a9730da4ea1fe58663b6cc65e14af8604ff5e40759b0ac7e",
+        "handoff_sha256": "102ddfbd1f0da774a1e0002fc8701d70a2901045ed185b00f8f60c9b3c77deb7",
+        "landed_on": "main",
+        "landed_trunk_sha": "313bdddafd1ab39ab649138066516dd4a1c429a2",
+        "metadata_commit_sha": "313bdddafd1ab39ab649138066516dd4a1c429a2",
+        "operation_id": "7e1555cc77088c1d0bcfbe5c587fefea43e85a10e7c3fc1b86925acfa66df335",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-CONT-001",
@@ -14972,6 +14990,94 @@
         "ORI-AI-002"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CONT-003-227802236f34b54b0d9c5fe59f3c56d69ddceb8b.json",
+        "payload": {
+          "commit_sha": "227802236f34b54b0d9c5fe59f3c56d69ddceb8b",
+          "concerns": [
+            "Metro cache hazard for every future export of apps/example: a fresh export with a different EXPO_PUBLIC_API_BASE_URL can silently re-serve the previous run's inlined base URL (observed: a fresh 8411 export still serving a stale 56715 bake) — anything exporting the example (ORI-CONT-004, CI) must isolate the cache per run or use fixed ports like the landed drivers do.",
+            "The guide's Web instructions state the same-origin rule and point to the landed harness's serveWithChatProxy (tests/sprint-05-orient-search/support/live-example-proof.test.ts) as the reference forwarder rather than a productized serve script, so a human reader must bring their own forwarder — a turnkey web path would need a new app-side script outside this task's allowlist.",
+            "The README-preservation oracle is per-line containment against git show HEAD:, not byte-contiguity, because an additions-only edit can never contain the original contiguously — future README edits in later tasks should stay additions-only or re-base that oracle.",
+            "AC-4's turn correlation matches the sha256 of the tee-captured stream text against record.textHash because the app reuses ONE chat id per session (the ORI-AI-002 finding), so two turns with byte-identical streamed text would collide — the discriminator is content, not identity.",
+            "The conclusion link targets github.com/hackerpug-ai/rnr-ai-elements/tree/main/apps/example, which resolves now, but the guide it leads into (apps/example/docs/live-chat.md) only resolves on main after this merge — the same 404-until-merge warning class as the Edit-page links (dist link gate warns, does not fail)."
+          ],
+          "deviations": [
+            "The tutorial displays the executed recipe's exact item set as three commands (conversation verbatim; message alone; prompt-input+item+sheet in one invocation) instead of the recipe's two-line form, to satisfy AC-2's 'Separate required Message and composed PromptInput installs' wording — the installed item set is identical to packages/docs-snippets/commands/<engine>.sh.",
+            "Quickstart frontmatter uses order 2.5 to sit between Installation (2) and CLI (3), because cli.md and dark-mode.md are write-prohibited to this task; the schema's z.number() accepts the float, navigation sorts correctly, and ORI-CONT-001's nav-order assertions still hold.",
+            "AC-3 and AC-4 run their real-service proof once on chromium-desktop and early-return on chromium-mobile/chromium-nojs (all content assertions still run on all three projects), mirroring the locked flows' --project=chromium-desktop discipline and avoiding triple-paying two public-registry installs per project.",
+            "The empty-composer negative case dispatches a DOM-level click on Send message rather than an actionability click, because the send control is deliberately inert while the composer is empty and a real click would wait forever — the inertness is the no-op being proven (tests/sprint-05-orient-search/quickstart-content.spec.ts:663).",
+            "The AC-4 web export runs under a per-run Metro cache dir (TMPDIR under /tmp/ori-cont-003-scratch/metro/<run>) because Metro's transform cache does not key on EXPO_PUBLIC_* values — without it the export re-served a previous run's inlined base URL.",
+            "No authored page links to /docs/quickstart yet: installation.mdx's Next-steps section is write-prohibited to this task, so the tutorial is currently reachable only through section navigation."
+          ],
+          "done": "Landed the sprint's single seed-data Quickstart tutorial (apps/docs/src/content/docs/quickstart.mdx: named Expo Go seed-data result before step 1, seven imperative we-steps each ending in an observable result, every code block inside engine panels with sources read at build time from the RN-owned packages/docs-snippets files — byte-equal, no hand copy — and a useChat-adjacent conclusion link to the apps/example tree URL), the live-example run how-to (apps/example/docs/live-chat.md: server-only credential variable names, the verified pnpm exec tsx startup command, per-platform endpoint rules derived from the implementation, symptom-cause-fix remedies), and an additions-only README route distinction plus guide link with every original line preserved against git HEAD. The task-owned tests/sprint-05-orient-search/quickstart-content.spec.ts ran RED at trunk 8c3cc30e (8 failures, all the real '/docs/quickstart must serve HTTP 200' assertion) and GREEN 12/12 across all three Playwright projects: AC-3 installed two independent clean Expo 57 consumers through the DISPLAYED public commands (24 seed turns to 25 with exactly one ORI-CONT-003 marker, composer cleared, empty-submit no-op, tsc and expo-doctor exit 0 on both engines) and AC-4 drove the real /live-chat screen against the official OpenAI Responses endpoint at gpt-4.1-mini-2025-04-14 (57 deltas, tee stream sha256 equal to the server record's textHash, contextual marker recall, genuine Failed-to-fetch on endpoint loss, Retry completing a fresh provider request with exactly one retained turn, credentials never leaving the server). Evidence lives in tests/sprint-05-orient-search/evidence/ORI-CONT-003-content-review.md and the committed .tmp/ORI-CONT-003/cycle-1 red/green runs, captures, and five screenshots; scenario validator, docs build (67 pages), dist link gate (0 errors), pnpm typecheck, pnpm lint, and the fallow pre-commit gate are all clean.",
+          "feedback": [
+            "The build-time source-import requirement had no in-repo MDX precedent and its ESM-section pitfalls (export-only statements, expression comments, process.cwd() resolution) cost three build iterations — a short recipe in the content standards would save the next author that.",
+            "AC-2's 'matches source hashes' should state explicitly that the hash input is the DISPLAYED post-HTML text compared against raw file bytes, since that is the only honest oracle and it proved byte-exact including trailing newlines.",
+            "Binding the heavy real-service ACs to chromium-desktop-only was an implementer judgment call documented in the evidence report — charters for content tasks with e2e-tier local proofs should state the single-project discipline up front so reviewers do not meet it as a deviation.",
+            "The task named five writable paths but the docs data hydration chain (registry:build, gallery:manifest, prebuild) is a silent precondition for both the build and typecheck in a fresh worktree — bake that into the dispatch environment notes for downstream tasks."
+          ],
+          "findings": [
+            "MDX program blocks only continue through import/export statements: a plain const or a JS block comment ends the ESM section and the remainder parses as prose (breaking the build at the first brace) — use export const declarations and {/* */} expression comments.",
+            "TabGroup named slots work from MDX via <div slot=\"engine\"> children: the quickstart page is the repo's first MDX-to-TabGroup precedent (installation.mdx only uses InstallCommand, which wraps its slots internally in .astro).",
+            "The shared screen source legitimately contains the SEED_MESSAGES import, so content-based panel classifiers must key on 'export const SEED_MESSAGES' — a loose includes() double-matches the messages and screen blocks.",
+            "The registry prompt-input item imports @/components/ui/item and @/components/ui/sheet in its installed source but declares neither in registryDependencies — consumers must install item and sheet explicitly, which is exactly why the executed recipe carries five items.",
+            "spawnSync with a timeout kills the shell but orphans pnpm-to-tsx grandchildren — server-probe children need a supervised detached process group killed via process.kill(-pid) so the whole chain dies.",
+            "Playwright actionability semantics: clicking a control that is deliberately inert (the disabled send button) hangs until the test timeout, while dispatchEvent('click') fires the real DOM event and lets the disabled-control no-op be observed.",
+            "launchOwnedBackend.restart() returns a NEW handle — keeping the old variable reads an empty record log against a dead server and leaks the relaunched server on port 4000 (one such orphan from a mid-cycle iteration had to be identified via lsof and killed before the recorded GREEN run).",
+            "Astro's served <code> textContent for CodeBlock is byte-exact to the prop string, including trailing newlines — the displayed-source hash oracles compare raw file bytes with no normalization."
+          ],
+          "scope_impact": [
+            {
+              "change": "Consume quickstart-content.spec.ts's reusable patterns (crawlTurns union oracle, displayed-command extraction from the built panels, recordForStreamText hash correlation) and isolate the Metro cache per run or pin fixed web ports before exporting the example.",
+              "found": "The integrated gate will re-execute the tutorial's installs and re-export apps/example, hitting both the three-command regrouping and the Metro cache hazard (a fresh export with different EXPO_PUBLIC_API_BASE_URL re-serves a stale inlined URL).",
+              "target": "ORI-CONT-004"
+            },
+            {
+              "change": "Treat MDX export-const-sourced CodeBlock content as source-backed (as this spec already hash-verifies per engine) when building the authored-code-loses-its-real-source gate.",
+              "found": "The quickstart displays code exclusively through CodeBlock props fed by build-time readFileSync of the RN-owned files — there are no fenced code blocks on the tutorial — so a fenced-block-scanning authored-code gate would see nothing to verify.",
+              "target": "ORI-AST-005"
+            },
+            {
+              "change": "Adopt the distQuickstartRoutes pattern for the CI duplicate/noncanonical-tutorial gate so the check is build-output-derived, not manuscript-glob-derived.",
+              "found": "The 'exactly one tutorial' oracle already exists in task-local form: dist route-slug scan plus a single nav link to /docs/quickstart (tests/sprint-05-orient-search/quickstart-content.spec.ts:177).",
+              "target": "ORI-CI-001"
+            },
+            {
+              "change": "Record the flow RED against this merge's parent (8c3cc30e) or re-derive it from the committed .tmp/ORI-CONT-003/cycle-1/red/run.txt, and isolate or pin export caches in the flow's web legs.",
+              "found": "The flow's RED must be recorded against pre-quickstart trunk, which no longer exists after this merge, and its web legs inherit the Metro cache hazard when they export with non-fixed ports.",
+              "target": "GATE:FLOW-DOCS-02-quickstart-chat-screen"
+            },
+            {
+              "change": "Either declare item and sheet in prompt-input's registryDependencies so the CLI resolves them transitively, or document the manual co-install requirement on the item's reference page and in the CLI contract.",
+              "found": "The prompt-input registry item's source imports two registry items (ui/item, ui/sheet) that its registryDependencies omit, forcing every consumer to know and co-install them manually.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-CONT-003"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-cont-003-impl@session-a251722f",
+          "response_id": "digest:102ddfbd1f0da774a1e0002fc8701d70a2901045ed185b00f8f60c9b3c77deb7",
+          "response_receipt": {
+            "agent": "techwriting-implementer",
+            "dispatch_handle": "ori-cont-003-impl@session-a251722f",
+            "payload_sha256": "102ddfbd1f0da774a1e0002fc8701d70a2901045ed185b00f8f60c9b3c77deb7",
+            "response_id": "digest:102ddfbd1f0da774a1e0002fc8701d70a2901045ed185b00f8f60c9b3c77deb7",
+            "session_id": "ori-cont-003-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CONT-003-227802236f34b54b0d9c5fe59f3c56d69ddceb8b-62842ba277d7ccbb2a0ba43b81eef39da5e7f26387b20c6b6d0b06f81a55d2af.response.json",
+          "response_receipt_sha256": "62842ba277d7ccbb2a0ba43b81eef39da5e7f26387b20c6b6d0b06f81a55d2af",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-cont-003-impl@session-a251722f"
+        },
+        "sha256": "102ddfbd1f0da774a1e0002fc8701d70a2901045ed185b00f8f60c9b3c77deb7"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:102ddfbd1f0da774a1e0002fc8701d70a2901045ed185b00f8f60c9b3c77deb7",
+        "status": "received"
+      },
       "implementer": "techwriting-implementer",
       "implementer_session": {
         "dispatch_handle": "ori-cont-003-impl@session-a251722f",
@@ -14987,11 +15093,30 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md",
         "task_sha256": "10c49d4191f6ee98a9730da4ea1fe58663b6cc65e14af8604ff5e40759b0ac7e"
       },
+      "landing": {
+        "approved_sha": "227802236f34b54b0d9c5fe59f3c56d69ddceb8b",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "3635ba6226704b7803f685ebba386074fa5cd4a0",
+        "review_receipt": {
+          "agent": "techwriting-reviewer",
+          "dispatch_handle": "ori-cont-003-rev@session-a251722f",
+          "payload_sha256": "567d67f646df6d423e831980595201f22cf7e53df88a5af0ecc4e1faa21afdc4",
+          "response_id": "digest:567d67f646df6d423e831980595201f22cf7e53df88a5af0ecc4e1faa21afdc4",
+          "session_id": "ori-cont-003-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "bd77590bfe70288fa2f238754a0c5410894af2b2216eb75da9d77fcc2c41a546",
+        "reviewer": "techwriting-reviewer",
+        "reviewer_dispatch_handle": "ori-cont-003-rev@session-a251722f",
+        "reviewer_response_id": "digest:567d67f646df6d423e831980595201f22cf7e53df88a5af0ecc4e1faa21afdc4",
+        "reviewer_session": "ori-cont-003-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "567d67f646df6d423e831980595201f22cf7e53df88a5af0ecc4e1faa21afdc4"
+      },
       "last_findings": null,
-      "merge_sha": null,
+      "merge_sha": "3635ba6226704b7803f685ebba386074fa5cd4a0",
       "points": 5,
       "reviewer": "techwriting-reviewer",
-      "status": "in_progress",
+      "status": "completed",
       "wave": 9,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003"
     },
