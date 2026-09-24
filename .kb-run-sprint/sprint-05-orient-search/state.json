@@ -13954,6 +13954,11 @@
         "state": "landed",
         "task": "FIX-ORI-RN-001-1"
       },
+      "b2cbea5ad13b712148986d2061033155df51495d2bbb85f61af92d1f053d09c0": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "FIX-ORI-CI-001-1"
+      },
       "c7e7460d033e6f8789f00d7630b803bea858d26a86317692402a2e5b2348a24b": {
         "kind": "complete-task",
         "state": "landed",
@@ -14384,7 +14389,86 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-AST-008-1-impl"
     },
     "FIX-ORI-CI-001-1": {
+      "approved_sha": "ccf9d95909b0cd2827aa01ca072c8f654529f8ce",
+      "completion": {
+        "approved_sha": "ccf9d95909b0cd2827aa01ca072c8f654529f8ce",
+        "before_head": "cf5f3c1b79a38bf3ad19a3d9ae5f5cdda64e8aa2",
+        "desired_sha256": "318564ae9817c06a0fe4e131a408ecceeb351e5ec8ef8b012e83cd26b265b953",
+        "expected_task_sha256": "ab33b7f5f8a6500d2b74da3071baf1d5e19e2ca084b3c2ba346978f0941c6c8d",
+        "handoff_sha256": "6fa97d86b2b09897c8b21d0ad6a1e2691404c33655b7fdd1990057a6398212b3",
+        "landed_on": "main",
+        "landed_trunk_sha": "b4b1b3c3a65365cd938f6c021ee20aeadeb03e2e",
+        "metadata_commit_sha": "b4b1b3c3a65365cd938f6c021ee20aeadeb03e2e",
+        "operation_id": "b2cbea5ad13b712148986d2061033155df51495d2bbb85f61af92d1f053d09c0",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-CI-001-1.md"
+      },
       "created_by_ask": "ask-wave16c-add-quickstart-tutorial-designation",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/FIX-ORI-CI-001-1-ccf9d95909b0cd2827aa01ca072c8f654529f8ce.json",
+        "payload": {
+          "commit_sha": "ccf9d95909b0cd2827aa01ca072c8f654529f8ce",
+          "concerns": [
+            "In the removal scratch copy the regenerated docs.schema.json still carries 'tutorial' (the schema declaration persists there), so the removal-copy oracle is the frontmatter carrier count, not the schema-json count — the harness comments this at the runRemovalCopy oracle and records both numbers in green.json.",
+            "The invalid-value diagnostic in green.json/run.json embeds ANSI escape sequences because it is captured verbatim from real build output; strip escapes before substring-matching it in downstream tooling.",
+            "Scratch copies symlink node_modules back to the candidate worktree, so a scratch build shares the real node_modules/.astro cache path; the harness clears it before every scratch build, but a future harness running scratch builds concurrently with a build in the same worktree could thrash that cache.",
+            "Scratch copies exclude tests/sprint-05-orient-search/evidence; if a future docs build or prebuild ever reads that directory, the scratch shape diverges from the candidate and the harness filter at tests/sprint-05-orient-search/tutorial-designation-proof.test.ts:76 must be revisited."
+          ],
+          "deviations": [
+            "The charter's regenerated-types anchor (content.d.ts contains 'tutorial' >= 1) is unsatisfiable under Astro 7 — content.d.ts only emits InferEntrySchema<\"docs\"> references (0 occurrences post-change) — so the harness records both content.d.ts per the charter and the literal-carrying build-regenerated apps/docs/.astro/collections/docs.schema.json (0 in RED → 1 in GREEN), anchored at tests/sprint-05-orient-search/tutorial-designation-proof.test.ts:63.",
+            "The scope check diffs against HEAD minus the task-owned new files (the harness and .tmp/FIX-ORI-CI-001-1/) rather than the charter's literal 'git diff --name-only reports exactly the two files', because the literal form is staging-state dependent once the harness and evidence are staged; see tests/sprint-05-orient-search/tutorial-designation-proof.test.ts:255.",
+            "The harness's RED exit code is 1 (its exactly-1 designation assertion fails on the gap) while red.json records the build itself as green at 67 pages — consistent with the charter's 'gap recorded as an absence', stated here so a reviewer does not mistake the nonzero selector exit for a failed build."
+          ],
+          "done": "Landed on the task branch at ccf9d959 and merged to main as cf5f3c1b: exactly two product lines — tutorial: true added to apps/docs/src/content/docs/quickstart.mdx frontmatter and tutorial: z.boolean().optional() added to the apps/docs/src/content.config.ts docs schema — plus the task-owned proof harness tests/sprint-05-orient-search/tutorial-designation-proof.test.ts (runTutorialDesignationProof) and the three evidence files .tmp/FIX-ORI-CI-001-1/{red,green,run}.json, all bound to candidate 8ece2a6c and final harness sha256 6e7d68cc08626b72. RED ran on the byte-identical pre-change tree (the two lines stash-stashed): the real pnpm --filter @rnr-ai-elements/docs build exits 0 at the literal '67 page(s) built' with 0 designation occurrences in the frontmatter, schema, .astro/content.d.ts, and .astro/collections/docs.schema.json, and the selector exits 1 on the exactly-1 assertion. GREEN: build exit 0 at the same 67 pages, exactly 1 designation and 1 schema field, fresh Quickstart HTML, the sync-regenerated collection schema carrying the field, removal scratch copy exit 0 at 67 pages with 0 frontmatter carriers, and invalid-value scratch copy (tutorial: 'yes') exit 1 with the verbatim [InvalidContentEntryDataError] docs → quickstart tutorial diagnostic; scratch roots cleaned on success and failure; typecheck, scoped biome, and fallow all exit 0. The single-tutorial gate stays unwired — [...id].astro byte-unchanged and scripts/docs-data/single-tutorial.ts absent — so ORI-CI-001 cycle 2 is unblocked against a count of 1.",
+          "feedback": [
+            "Author the harness lint- and fallow-clean BEFORE the first RED capture: this cycle's RED/GREEN evidence had to be regenerated several times because biome's useTemplate fixes and a fallow complexity finding forced harness edits after evidence capture, and the three evidence files must all bind the same harness sha256 to be mechanically verifiable.",
+            "The full-repo-shaped scratch copy with symlinked node_modules plus a cache clear is a cheap, faithful way to run the identical composite build command over mutated content — worth promoting to the sprint's shared test conventions alongside the existing docs-collection.test.ts precedent.",
+            "Charter evidence anchors that depend on generated-file contents should be validated against the toolchain version at planning time (one grep of the regenerated file would have caught the content.d.ts mismatch) — it cost several multi-minute build cycles here."
+          ],
+          "findings": [
+            "Under Astro 7 the build-regenerated literal-carrying artifact for collection schema fields is .astro/collections/docs.schema.json, not .astro/content.d.ts — any future task asserting generated-types content should key on the schema.json.",
+            "The real build's page-count literal is printed as '67 page(s) built' and the harness parses it with /(\\d+) page\\(s\\) built/; the AC invariant is RED/GREEN equality, so trunk legitimately adding or removing docs pages later does not break the harness.",
+            "The invalid-value build failure surfaces as [InvalidContentEntryDataError] naming the docs collection, the quickstart source, and the tutorial field path — ORI-CI-001's gate work can reuse this exact diagnostic shape.",
+            "Full-repo biome via pnpm-wrapped invocation dies environmentally in shimmed agent shells (exit 254, 'Linter process terminated abnormally'); the working shapes are the righthook pre-commit and env -i clean-env invocations, and clean-env 'biome ci .' exits 0 with only the biome.json 'recommended' deprecation info (non-fatal).",
+            "The fallow pre-commit gate excludes inherited findings (74 inherited dead-code issues were excluded) but fails on any NEW finding, including one function exceeding its size/complexity thresholds — the harness had to be decomposed (runScratchNegativePair at tests/sprint-05-orient-search/tutorial-designation-proof.test.ts:433, phaseSummary at tests/sprint-05-orient-search/tutorial-designation-proof.test.ts:474) before the gate went green.",
+            "Fresh-worktree setup order that made every gate judgeable: pnpm install, pnpm registry:build, pnpm gallery:manifest, pnpm --filter @rnr-ai-elements/docs prebuild — the gitignored apps/docs/src/data/registry-items.json is absent otherwise and pnpm typecheck fails on it."
+          ],
+          "scope_impact": [
+            {
+              "change": "Treat .astro/collections/docs.schema.json occurrence counts (recorded in red.json/green.json/run.json alongside the content.d.ts counts) as the verification key for the regenerated-types assertion in review and any future re-runs of the selector.",
+              "found": "Boundary contract 4 and the reviewer verification key pin the regenerated-types assertion to apps/docs/.astro/content.d.ts, which Astro 7 never fills with field-name literals.",
+              "target": "FIX-ORI-CI-001-1"
+            },
+            {
+              "change": "Cycle 2 can wire assertSinglePublishedTutorial into [...id].astro against a count of 1 and reuse the captured [InvalidContentEntryDataError] docs → quickstart tutorial diagnostic for its six evidence files; when its branch merges main, the identical schema line reconciles with no conflict.",
+              "found": "Cycle 2's prerequisite now holds on main (count observes 1; the schema field is live and coupled to the frontmatter key through the real loader, with the failure diagnostic shape proven), but the plan's merge note predates the verified diagnostic.",
+              "target": "ORI-CI-001"
+            }
+          ],
+          "task": "FIX-ORI-CI-001-1"
+        },
+        "provenance": {
+          "dispatch_handle": "fix-ci001-1-impl@session-a251722f",
+          "response_id": "digest:6fa97d86b2b09897c8b21d0ad6a1e2691404c33655b7fdd1990057a6398212b3",
+          "response_receipt": {
+            "agent": "astro-implementer",
+            "dispatch_handle": "fix-ci001-1-impl@session-a251722f",
+            "payload_sha256": "6fa97d86b2b09897c8b21d0ad6a1e2691404c33655b7fdd1990057a6398212b3",
+            "response_id": "digest:6fa97d86b2b09897c8b21d0ad6a1e2691404c33655b7fdd1990057a6398212b3",
+            "session_id": "fix-ci001-1-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/FIX-ORI-CI-001-1-ccf9d95909b0cd2827aa01ca072c8f654529f8ce-6930a542984e8dfa59985cc86b316c460b01e1b71d3c44120b55cc78bae76b60.response.json",
+          "response_receipt_sha256": "6930a542984e8dfa59985cc86b316c460b01e1b71d3c44120b55cc78bae76b60",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "fix-ci001-1-impl@session-a251722f"
+        },
+        "sha256": "6fa97d86b2b09897c8b21d0ad6a1e2691404c33655b7fdd1990057a6398212b3"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:6fa97d86b2b09897c8b21d0ad6a1e2691404c33655b7fdd1990057a6398212b3",
+        "status": "received"
+      },
       "implementer_session": {
         "dispatch_handle": "fix-ci001-1-impl@session-a251722f",
         "dispatch_receipt": {
@@ -14399,8 +14483,28 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-CI-001-1.md",
         "task_sha256": "ab33b7f5f8a6500d2b74da3071baf1d5e19e2ca084b3c2ba346978f0941c6c8d"
       },
+      "landing": {
+        "approved_sha": "ccf9d95909b0cd2827aa01ca072c8f654529f8ce",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "cf5f3c1b79a38bf3ad19a3d9ae5f5cdda64e8aa2",
+        "review_receipt": {
+          "agent": "astro-reviewer",
+          "dispatch_handle": "fix-ci001-1-rev@session-a251722f",
+          "payload_sha256": "91739cbed4ef47e9d1af30c8d77875c0d2a9073a5e03ac79e10d3d76a10dabed",
+          "response_id": "digest:91739cbed4ef47e9d1af30c8d77875c0d2a9073a5e03ac79e10d3d76a10dabed",
+          "session_id": "fix-ci001-1-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "f65dbdcb9fc79ce8e6aaa45c20bcfab33f8d1bb4d9513e8fb5afe37a07d7bec6",
+        "reviewer": "astro-reviewer",
+        "reviewer_dispatch_handle": "fix-ci001-1-rev@session-a251722f",
+        "reviewer_response_id": "digest:91739cbed4ef47e9d1af30c8d77875c0d2a9073a5e03ac79e10d3d76a10dabed",
+        "reviewer_session": "fix-ci001-1-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "91739cbed4ef47e9d1af30c8d77875c0d2a9073a5e03ac79e10d3d76a10dabed"
+      },
+      "merge_sha": "cf5f3c1b79a38bf3ad19a3d9ae5f5cdda64e8aa2",
       "planner": "astro-planner",
-      "status": "in_progress",
+      "status": "completed",
       "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-CI-001-1.md"
     },
     "FIX-ORI-DEP-001-1": {
