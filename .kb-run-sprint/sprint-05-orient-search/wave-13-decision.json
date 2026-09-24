@@ -1,0 +1,17 @@
+{
+  "item_id": "ORI-AI-002:blocked:5:scope_impact:0:b16e4dfb20e55b1f2a9d4b3d379bad5420ddf6a97933e7dc4d2a63549d1ee217",
+  "wave_id": "wave-13",
+  "source_task": "ORI-AI-002",
+  "source_kind": "blocked",
+  "report_sha256": "b16e4dfb20e55b1f2a9d4b3d379bad5420ddf6a97933e7dc4d2a63549d1ee217",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "revise",
+  "answers": [
+    {"question": 1, "answer": true, "reason": "Names the exact contract defect: the task's How-to-verify block requires one monolithic six-target matrix command to conclude green plus a vitest suite that spawns its own fresh full matrix, while the sprint gate's step-3 language only requires fresh current-invocation proof for all six engine/platform combinations bound to candidate and source hashes.", "evidence": [{"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md", "sha256": "8b6e33d1e9ecd24814e83496182df2fa85ed90420b2781d231884bb66b9c9ebd"}]},
+    {"question": 2, "answer": false, "reason": "Not a reviewer finding; an implementer's blocked-report scope_impact after five cycles.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-AI-002/cycle-5.blocked.json", "sha256": "b16e4dfb20e55b1f2a9d4b3d379bad5420ddf6a97933e7dc4d2a63549d1ee217"}]},
+    {"question": 3, "answer": true, "reason": "18 pending tasks in this sprint depend on ORI-AI-002 through the CONT-003 chain; the gate step 3 exercises this task.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-AI-002/cycle-5.blocked.json", "sha256": "b16e4dfb20e55b1f2a9d4b3d379bad5420ddf6a97933e7dc4d2a63549d1ee217"}]},
+    {"question": 4, "answer": false, "reason": "The revise changes only the task's operationalization of proof (per-engine fresh invocations in one cycle bound to one candidate SHA; vitest validates the accumulated set). The gate's own words are unchanged and still satisfied; no product behavior the PRD leaves open is decided. Human explicitly approved this replan direction in session.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-AI-002/cycle-5.blocked.json", "sha256": "b16e4dfb20e55b1f2a9d4b3d379bad5420ddf6a97933e7dc4d2a63549d1ee217"}]},
+    {"question": 5, "answer": true, "reason": "Verified in the run ledger: c5a and c5c concluded 3/3 completed=true this cycle against the merged driver fix; c5b/c5d died on oracle-shape legs (nondiscriminating stop turn; web-leg oracle flake with retryCompleted=true), c5e externally interrupted. The task file's verify block is the thing that cannot conclude, not the product.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-AI-002/cycle-5.blocked.json", "sha256": "b16e4dfb20e55b1f2a9d4b3d379bad5420ddf6a97933e7dc4d2a63549d1ee217"}]}
+  ]
+}
