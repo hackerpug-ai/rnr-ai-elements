@@ -22,6 +22,7 @@ const docs = defineCollection({
     section: z.enum(['getting-started', 'guides', 'porting']),
     order: z.number(),
     draft: z.boolean().optional(),
+    tutorial: z.boolean().optional(),
   }),
 });
 
