@@ -8,12 +8,12 @@ import { describe, expect, it } from 'vitest';
  * FUSE-09-island-budget — AC-2 island budget accounting over the REAL
  * apps/docs/src tree on disk.
  *
- * Boundary contract: exactly five vanilla custom elements site-wide. Four are
- * registered so far — `rnr-copy-button` (FUSE-09), `rnr-theme-toggle`
- * (SHELL-003), `rnr-tab-group` (SHELL-004) and `rnr-ledger-filter` (FAM-004).
- * So the whole docs source must contain exactly FOUR customElements.define
- * calls naming those tags, and zero client-framework imports
- * (react/svelte/vue/preact/solid).
+ * Boundary contract: exactly five vanilla custom elements site-wide, per the
+ * ORI-AST-004 supersession. The five registered islands — `rnr-copy-button`
+ * (FUSE-09), `rnr-theme-toggle` (SHELL-003), `rnr-tab-group` (SHELL-004),
+ * `rnr-ledger-filter` (FAM-004) and `rnr-search-dialog` (ORI-AST-004) — are
+ * the whole docs source's customElements.define calls, and there are zero
+ * client-framework imports (react/svelte/vue/preact/solid).
  *
  * UNIT_TEST_JUSTIFIED: pure static source scan — file reads only, no runtime
  * behavior, no network, no rendering.
@@ -24,6 +24,7 @@ const ELEMENT_NAME = 'rnr-copy-button';
 const TAB_ELEMENT_NAME = 'rnr-tab-group';
 const THEME_ELEMENT_NAME = 'rnr-theme-toggle';
 const FILTER_ELEMENT_NAME = 'rnr-ledger-filter';
+const SEARCH_ELEMENT_NAME = 'rnr-search-dialog';
 
 function collectSourceFiles(dir: string, found: string[] = []): string[] {
   for (const entry of readdirSync(dir)) {
@@ -42,7 +43,7 @@ const FRAMEWORK_IMPORT =
   /(?:^|\n)\s*(?:import|export)\s[^;]*?from\s*['"](react|react-dom|svelte|vue|preact|solid-js)(?:\/[\w.-]+)*['"]|(?:^|\n)\s*import\s*\(\s*['"](react|react-dom|svelte|vue|preact|solid-js)(?:\/[\w.-]+)*['"]\s*\)/g;
 
 describe('FUSE-09 island budget', () => {
-  it('FUSE-09-island-budget: exactly four customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle, rnr-ledger-filter), zero framework imports', () => {
+  it('FUSE-09-island-budget: exactly five customElements.define (rnr-copy-button, rnr-tab-group, rnr-theme-toggle, rnr-ledger-filter, rnr-search-dialog), zero framework imports', () => {
     const files = collectSourceFiles(SRC_ROOT);
     expect(files.length).toBeGreaterThan(0);
 
@@ -67,6 +68,7 @@ describe('FUSE-09 island budget', () => {
     expect(defineSites).toEqual([
       { file: expect.stringContaining('copy-button.ts'), tag: ELEMENT_NAME },
       { file: expect.stringContaining('ledger-filter.ts'), tag: FILTER_ELEMENT_NAME },
+      { file: expect.stringContaining('search-dialog.ts'), tag: SEARCH_ELEMENT_NAME },
       { file: expect.stringContaining('tab-group.ts'), tag: TAB_ELEMENT_NAME },
       { file: expect.stringContaining('theme-toggle.ts'), tag: THEME_ELEMENT_NAME },
     ]);

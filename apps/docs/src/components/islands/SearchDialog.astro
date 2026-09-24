@@ -1,0 +1,179 @@
+---
+/**
+ * SearchDialog — island 5/5 (ORI-AST-004). A `<rnr-search-dialog>` element
+ * the bundled island script upgrades: on connect it relocates itself into
+ * the Header's `[data-search-slot]` mount, un-hides the mount, and wires the
+ * trigger. The panel is a NATIVE `<dialog>` — `showModal()` gives the
+ * top layer, `aria-modal`, and focus containment for free, and the island
+ * script opens it synchronously on activation so visibility never waits on
+ * the Pagefind index (which is lazy-imported from the same origin on first
+ * open only; see scripts/search-dialog.ts).
+ *
+ * Zero-JS fallback: the element never upgrades and `:not(:defined)` keeps it
+ * hidden — the Header mount keeps its `hidden` attribute and the site stays
+ * fully navigable through ordinary links. Results markup is empty here and
+ * is built exclusively by the script through createElement/textContent.
+ * ORI-VIS-003/ORI-VIS-005 own later presentation work; this chrome stays in
+ * the existing token vocabulary.
+ *
+ * `data-pagefind-ignore` keeps the dialog chrome out of the index even if a
+ * future layout moves it — the data-pagefind-body regions already exclude it.
+ */
+---
+
+<rnr-search-dialog class="search-dialog" data-pagefind-ignore>
+  <button
+    type="button"
+    class="search-dialog__trigger"
+    aria-haspopup="dialog"
+    aria-label="Search documentation"
+  >
+    Search
+  </button>
+  <dialog class="search-dialog__panel" aria-modal="true" aria-label="Search documentation">
+    <form class="search-dialog__form" role="search">
+      <input
+        class="search-dialog__input"
+        type="search"
+        placeholder="Search docs and components…"
+        aria-label="Search documentation"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </form>
+    <p class="search-dialog__status" role="status" aria-live="polite" data-search-status></p>
+    <div class="search-dialog__scroll">
+      <p class="search-dialog__loading" data-search-loading hidden>Loading search…</p>
+      <p class="search-dialog__empty" data-search-empty hidden>
+        No results for “<span data-search-empty-query></span>”. Try a component name or a docs
+        term.
+      </p>
+      <p class="search-dialog__error" data-search-error hidden>
+        Search is unavailable right now. Check your connection and try again.
+      </p>
+      <div class="search-dialog__results" data-search-results hidden></div>
+    </div>
+  </dialog>
+</rnr-search-dialog>
+
+<script src="../../scripts/search-dialog.ts"></script>
+
+<style>
+  /* An un-upgraded custom element is inert; hide it rather than ship a fake
+     control to zero-JS visitors (upgrades to visible once defined). */
+  rnr-search-dialog:not(:defined) {
+    display: none;
+  }
+  .search-dialog {
+    display: inline-flex;
+    align-items: center;
+  }
+  .search-dialog__trigger {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.75rem;
+    font: inherit;
+    color: var(--muted-foreground);
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+  .search-dialog__trigger:hover {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+
+  /* The panel floats over the page canvas on the native top layer; the
+     backdrop is token-derived (no raw colors) and calms under reduced
+     motion with every other transition. */
+  .search-dialog__panel {
+    width: min(40rem, calc(100vw - 2rem));
+    max-height: min(32rem, calc(100vh - 6rem));
+    padding: 0;
+    color: var(--popover-foreground);
+    background: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .search-dialog__panel::backdrop {
+    background: color-mix(in oklab, var(--foreground) 40%, transparent);
+  }
+
+  .search-dialog__form {
+    border-bottom: 1px solid var(--border);
+  }
+  .search-dialog__input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font: inherit;
+    color: var(--popover-foreground);
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+  .search-dialog__status {
+    min-height: 1.55rem;
+    padding: 0.25rem 1rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .search-dialog__scroll {
+    max-height: 24rem;
+    padding: 0 0.5rem 0.75rem;
+    overflow-y: auto;
+  }
+  .search-dialog__loading,
+  .search-dialog__empty,
+  .search-dialog__error {
+    padding: 0.5rem;
+    color: var(--muted-foreground);
+  }
+  .search-dialog__error {
+    color: var(--destructive);
+  }
+  .search-dialog__group-label {
+    padding: 0.5rem 0.5rem 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+  }
+  .search-dialog__result {
+    display: grid;
+    gap: 0.125rem;
+    padding: 0.5rem;
+    color: var(--popover-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .search-dialog__result:hover {
+    background: var(--accent);
+  }
+  .search-dialog__result[data-active='true'] {
+    background: var(--accent);
+    outline: 1px solid var(--ring);
+  }
+  .search-dialog__result-title {
+    font-weight: 600;
+  }
+  .search-dialog__result-excerpt {
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+  }
+  .search-dialog__result-kind {
+    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+    color: var(--muted-foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-dialog__panel,
+    .search-dialog__panel::backdrop {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+{
+  "task_id": "ORI-AST-004",
+  "title": "Navigate the built docs through a lazily loaded Pagefind dialog",
+  "status": "implemented_pending_destination_decision",
+  "captured_at": "SET_AT_GREEN",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004",
+  "run": {
+    "run_id": "SET_AT_GREEN",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "index_command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+    "browser": {
+      "engine": "chromium",
+      "projects": ["chromium-desktop", "chromium-mobile", "chromium-nojs"],
+      "javascript_disabled_projects": ["chromium-nojs"]
+    },
+    "hashes": "SET_AT_GREEN",
+    "commands": {
+      "build": {
+        "command": "pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build",
+        "note": "67 pages + the fifth island; ordered chain before the task-owned indexer."
+      },
+      "index": {
+        "command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+        "note": "Real Pagefind 1.5.2 (pnpm dlx, pinned) over completed dist; fail-closed destination check first; 63 pages indexed (56 items + 7 docs)."
+      },
+      "red": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/search-contract.spec.ts --grep FLOW-SHELL-15-search-contract-before-recovery",
+        "exit_code": 1,
+        "observed": "10/15 cases fail at the missing search surface (locator('[data-search-slot] button') never appears; no dialog, no Pagefind activation); 5/5 chromium-nojs cases pass because the no-JavaScript surface contract (hidden trigger, working links, zero pagefind requests) already holds on the preimplementation candidate.",
+        "captured_at": ".tmp/ORI-AST-004/cycle-1/red/"
+      },
+      "green": "SET_AT_GREEN"
+    }
+  },
+  "acceptance": "SET_AT_GREEN",
+  "known_blockers": "SET_AT_GREEN"
+}

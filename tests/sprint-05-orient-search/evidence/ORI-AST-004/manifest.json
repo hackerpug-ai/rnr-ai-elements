@@ -1,0 +1,91 @@
+{
+  "task_id": "ORI-AST-004",
+  "title": "Navigate the built docs through a lazily loaded Pagefind dialog",
+  "status": "implemented_blocked_on_pending_streamdown_destination_decision",
+  "captured_at": "2026-09-24T20:16:23Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004",
+  "run": {
+    "run_id": "ori-ast-004-cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "index_command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+    "browser": {
+      "engine": "chromium",
+      "projects": [
+        "chromium-desktop",
+        "chromium-mobile",
+        "chromium-nojs"
+      ],
+      "javascript_disabled_projects": [
+        "chromium-nojs"
+      ]
+    },
+    "hashes": {
+      "base_commit": "313bdddafd1ab39ab649138066516dd4a1c429a2",
+      "lockfile_sha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+      "surface_policy_sha256": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+      "coldboot_policy_sha256": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+      "pagefind_entry_sha256": "fe24043b4592bac821f03ce2235e140239bd3f437ecc48a353aee8c6980f5396",
+      "test_spec_sha256": "55fd6bdc610f0d126b7fd9e2200a4cb45c5f3feef47e41de8344a9bf8574476d",
+      "pagefind_version": "1.5.2 (pinned; resolved through pnpm dlx \u2014 no package.json or lockfile change)"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 67
+      },
+      "index": {
+        "command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+        "exit_code": 0,
+        "observed": "fail-closed destination check passes (56 items + 7 docs); real Pagefind CLI indexes 63 pages, 7269 words; pagefind-entry.json reports 63 pages across 1 language."
+      },
+      "red": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/search-contract.spec.ts --grep FLOW-SHELL-15-search-contract-before-recovery",
+        "exit_code": 1,
+        "observed": "10/15 cases fail at the missing search surface (locator('[data-search-slot] button') never resolves; no dialog, no Pagefind activation); 5/5 chromium-nojs cases pass because the no-JavaScript surface contract already holds pre-implementation.",
+        "captured_at": ".tmp/ORI-AST-004/cycle-1/red/",
+        "canonical_store": ".tmp/sprint-05-orient-search/e2e-evidence/FLOW-SHELL-15-search-contract-before-recovery.red (run_flow.py --expect red, CI=1, cmd_sha=0f945627ebd92ee95b6a960c2ca4ae8e56f834d50c7b0765dd84658e7d38da42)"
+      },
+      "green": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/search-contract.spec.ts --grep FLOW-SHELL-15-search-contract-before-recovery",
+        "exit_code": 1,
+        "passed": 7,
+        "failed": 8,
+        "observed": "ALL 8 failures are the single pinned /components/streamdown destination leg ('could not activate /components/streamdown/; results were [/docs/owns-vs-does-not-own/, /docs/installation/]' or 'a result for /components/streamdown/ must exist'). Every other contracted behavior passes within those cases before the pinned leg and outright in the 7 passing cases: 0 pre-activation Pagefind requests across browse/hover/soft-nav; dialog open within 300ms (island in-page clock and transport clock); same-origin pagefind.js loads exactly once; real index chunks load with the first query; unchanged reopen adds 0 requests; initialization survives ClientRouter soft navigation with one shortcut opening exactly one dialog; grouped components/ui/lib/pages results with matching aria-live counts; ArrowDown/Up selection changes; Escape restores invoker focus; genuine empty state and recovery; literal HTML-shaped query creates zero nodes/attributes; real offline failure produces exactly one visible error plus captured requestfailed; five-item/three-doc destination tours return HTTP 200 with source-matching titles."
+      }
+    },
+    "supplementary_gates": {
+      "search_index_vitest": "pnpm exec vitest run tests/sprint-05-orient-search/search-index.test.ts \u2014 5/5 pass (model coverage 56+7; real indexer exit 0; props/verdict/hidden-engine-panel text inside data-pagefind-body regions; fail-closed scratch removal names /components/conversation)",
+      "island_budget_vitest": "pnpm exec vitest run tests/sprint-01-docs-spike-skeleton/island-budget.test.ts \u2014 3/3 pass (exactly five customElements.define incl. rnr-search-dialog; zero framework imports; theme/tab contracts preserved)",
+      "typecheck": "pnpm typecheck \u2014 exit 0 (root tsc covers scripts/ and tests/, not Astro templates)",
+      "lint": "./node_modules/@biomejs/biome/bin/biome ci . \u2014 exit 0 (4 pre-existing warnings in untouched files); pnpm lint script dies locally (biome OOM), binary used directly"
+    }
+  },
+  "acceptance": {
+    "AC-1": "partially proven: boundary (renderMarkdown, dev client), prop (nearBottomThreshold), verdict ('runs in Expo Go' searchable; distinctive emitted phrase finds Conversation), direct pointer click of a rendered result, categories components/ui/lib/pages all observed; four of five item destinations and all three doc destinations return HTTP 200 with matching titles through real searches. NOT proven: the /components/streamdown destination leg \u2014 no such destination exists in the candidate.",
+    "AC-2": "proven (chromium-desktop + chromium-mobile): 0 pre-activation requests, <=300ms open, single same-origin module request, unchanged reopen adds 0 requests, initialization survives soft navigation.",
+    "AC-3": "partially proven: dialog count/focus/aria-live match, arrow selection, Escape invoker-focus restoration, shortcut reopen, Enter-through-island navigation all pass; no-JavaScript surface (working links, zero Pagefind requests, hidden trigger) passes on chromium-nojs. NOT proven: the Enter leg to /components/streamdown.",
+    "AC-4": "partially proven: run-specific no-match empty state and recovery, literal HTML-shaped query creates zero DOM, real offline failure (context.setOffline) yields exactly one visible error plus captured requestfailed with <=300ms open and invoker focus restored, fresh online search works. NOT proven: the final online follow to /components/streamdown."
+  },
+  "known_blockers": [
+    {
+      "blocker": "/components/streamdown does not exist in the built candidate (no streamdown registry item among the 56; verified 404 by dist inspection, curl, and the real index \u2014 searching 'streamdown' returns only /docs/owns-vs-does-not-own/ and /docs/installation/).",
+      "decision_owner": "human (wave-4 ruling: 'the two honest options \u2014 create a docs-owned destination vs amend three tasks' ACs plus gate steps human-flows.json:730,742 \u2014 change what the gate proves. Do not choose.')",
+      "unblocks": "ORI-AST-004 streamdown legs (AC-1/2/3/4), ORI-VIS-003 AC-2, ORI-AST-010 gate steps, FLOW-SHELL-07/08 journey legs"
+    },
+    {
+      "blocker": "run order hazard: any astro build (including island-budget.test.ts's SHELL-003 chain) wipes dist/pagefind; the task-owned indexer must run after the last build before any preview-backed lane. CI owns this ordering; locally the final gate order is island-budget -> search-index -> playwright.",
+      "unblocks": "deterministic local runs"
+    }
+  ],
+  "references": [
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-15-search-contract-before-recovery/run.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-15-search-contract-before-recovery/proof.red",
+    ".tmp/ORI-AST-004/cycle-1/red/",
+    ".tmp/ORI-AST-004/cycle-1/green/",
+    ".tmp/ORI-AST-004/captures/"
+  ]
+}
