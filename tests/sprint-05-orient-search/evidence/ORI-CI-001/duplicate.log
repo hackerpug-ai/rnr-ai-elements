@@ -1,0 +1,578 @@
+=== ORI-CI-001 run b22a9cdd-de46-43ec-9258-2f0bc847f8fe 2026-09-24T19:25:14.243Z — duplicatePublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd
+exit code: 1
+duration ms: 211
+dist observations: {"ori-ci-001-second-tutorial":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 prebuild: `tsx ../../scripts/docs-data/prebuild.ts`
+Exit status 1
+
+--- stderr ---
+node:internal/modules/cjs/loader:1459
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/node_modules/tsx/dist/cli.mjs'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.14.0
+
+=== ORI-CI-001 run b22a9cdd-de46-43ec-9258-2f0bc847f8fe 2026-09-24T19:25:14.243Z — duplicateUnpublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd
+exit code: 1
+duration ms: 210
+dist observations: {"ori-ci-001-second-tutorial":false,"quickstart":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 prebuild: `tsx ../../scripts/docs-data/prebuild.ts`
+Exit status 1
+
+--- stderr ---
+node:internal/modules/cjs/loader:1459
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/node_modules/tsx/dist/cli.mjs'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.14.0
+
+=== ORI-CI-001 run acbc6030-2e3d-4c72-8d06-728f7ac576fe 2026-09-24T19:29:41.697Z — duplicatePublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+exit code: 1
+duration ms: 5255
+dist observations: {"ori-ci-001-second-tutorial":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:29:20 [content] Syncing content
+13:29:20 [content] Synced content
+13:29:20 [types] Generated 241ms
+13:29:20 [build] output: "static"
+13:29:20 [build] mode: "static"
+13:29:20 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs/dist/
+13:29:20 [build] Collecting build info...
+13:29:20 [build] ✓ Completed in 277ms.
+13:29:20 [build] Building static entrypoints...
+13:29:20 [vite] ✓ built in 166ms
+13:29:20 [vite] ✓ built in 29ms
+13:29:20 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published tutorial sources are ["ori-ci-001-second-tutorial", "quickstart"]; observed 2 versus 1
+  Location:
+    /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/scripts/docs-data/single-tutorial.ts:161:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
+=== ORI-CI-001 run acbc6030-2e3d-4c72-8d06-728f7ac576fe 2026-09-24T19:29:41.697Z — duplicateUnpublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+exit code: 0
+duration ms: 5479
+dist observations: {"ori-ci-001-second-tutorial":false,"quickstart":true}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:29:25 [content] Syncing content
+13:29:25 [content] Synced content
+13:29:25 [types] Generated 235ms
+13:29:25 [build] output: "static"
+13:29:25 [build] mode: "static"
+13:29:25 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs/dist/
+13:29:25 [build] Collecting build info...
+13:29:25 [build] ✓ Completed in 272ms.
+13:29:25 [build] Building static entrypoints...
+13:29:26 [vite] ✓ built in 169ms
+13:29:26 [vite] ✓ built in 29ms
+13:29:26 [build] Rearranging server assets...
+
+ generating static routes 
+13:29:26   ├─ /components/shimmer/index.html (+9ms) 
+13:29:26   ├─ /components/checkpoint/index.html (+2ms) 
+13:29:26   ├─ /components/image/index.html (+1ms) 
+13:29:26   ├─ /components/persona/index.html (+2ms) 
+13:29:26   ├─ /components/speech-input/index.html (+6ms) 
+13:29:26   ├─ /components/kbd/index.html (+1ms) 
+13:29:26   ├─ /components/breadcrumb/index.html (+1ms) 
+13:29:26   ├─ /components/button-group/index.html (+1ms) 
+13:29:26   ├─ /components/slider/index.html (+1ms) 
+13:29:26   ├─ /components/table/index.html (+1ms) 
+13:29:26   ├─ /components/command/index.html (+1ms) 
+13:29:26   ├─ /components/mono/index.html (+1ms) 
+13:29:26   ├─ /components/markdown/index.html (+1ms) 
+13:29:26   ├─ /components/code-block/index.html (+1ms) 
+13:29:26   ├─ /components/conversation/index.html (+1ms) 
+13:29:26   ├─ /components/message/index.html (+1ms) 
+13:29:26   ├─ /components/prompt-input/index.html (+1ms) 
+13:29:26   ├─ /components/empty/index.html (+1ms) 
+13:29:26   ├─ /components/item/index.html (+1ms) 
+13:29:26   ├─ /components/input-group/index.html (+1ms) 
+13:29:26   ├─ /components/sheet/index.html (+1ms) 
+13:29:26   ├─ /components/suggestion/index.html (+1ms) 
+13:29:26   ├─ /components/status/index.html (+1ms) 
+13:29:26   ├─ /components/reasoning-lifecycle/index.html (+1ms) 
+13:29:26   ├─ /components/tool/index.html (+1ms) 
+13:29:26   ├─ /components/reasoning/index.html (+1ms) 
+13:29:26   ├─ /components/task/index.html (+1ms) 
+13:29:26   ├─ /components/question/index.html (+1ms) 
+13:29:26   ├─ /components/agent/index.html (+1ms) 
+13:29:26   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:29:26   ├─ /components/plan/index.html (+1ms) 
+13:29:26   ├─ /components/confirmation/index.html (+1ms) 
+13:29:26   ├─ /components/queue/index.html (+1ms) 
+13:29:26   ├─ /components/url/index.html (+1ms) 
+13:29:26   ├─ /components/sources/index.html (+1ms) 
+13:29:26   ├─ /components/inline-citation/index.html (+1ms) 
+13:29:26   ├─ /components/artifact/index.html (+1ms) 
+13:29:26   ├─ /components/snippet/index.html (+1ms) 
+13:29:26   ├─ /components/commit/index.html (+1ms) 
+13:29:26   ├─ /components/attachments/index.html (+1ms) 
+13:29:26   ├─ /components/context/index.html (+1ms) 
+13:29:26   ├─ /components/open-in-chat/index.html (+1ms) 
+13:29:26   ├─ /components/model-selector/index.html (+1ms) 
+13:29:26   ├─ /components/mic-selector/index.html (+1ms) 
+13:29:26   ├─ /components/voice-selector/index.html (+1ms) 
+13:29:26   ├─ /components/audio-player/index.html (+1ms) 
+13:29:26   ├─ /components/transcription/index.html (+1ms) 
+13:29:26   ├─ /components/terminal/index.html (+1ms) 
+13:29:26   ├─ /components/file-tree/index.html (+1ms) 
+13:29:26   ├─ /components/environment-variables/index.html (+1ms) 
+13:29:26   ├─ /components/package-info/index.html (+1ms) 
+13:29:26   ├─ /components/stack-trace-parser/index.html (+1ms) 
+13:29:26   ├─ /components/stack-trace/index.html (+1ms) 
+13:29:26   ├─ /components/schema-display/index.html (+1ms) 
+13:29:26   ├─ /components/test-results/index.html (+4ms) 
+13:29:26   ├─ /components/web-preview/index.html (+1ms) 
+13:29:26   ├─ /components/index.html (+3ms) 
+13:29:26   ├─ /docs/theming/index.html (+5ms) 
+13:29:26   ├─ /docs/introduction/index.html (+1ms) 
+13:29:26   ├─ /docs/installation/index.html (+1ms) 
+13:29:26   ├─ /docs/quickstart/index.html (+2ms) 
+13:29:26   ├─ /docs/cli/index.html (+1ms) 
+13:29:26   ├─ /docs/dark-mode/index.html (+1ms) 
+13:29:26   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+13:29:26   ├─ /islands/copy-button/index.html (+1ms) 
+13:29:26   ├─ /registry/index.html (+2ms) 
+13:29:26   ├─ /index.html (+1ms) 
+13:29:26 ✓ Completed in 119ms.
+
+13:29:26 [build] ✓ Completed in 337ms.
+13:29:26 [build] 67 page(s) built in 610ms
+13:29:26 [build] Complete!
+
+--- stderr ---
+
+=== ORI-CI-001 run ccc5fd5b-4f4a-4db9-a161-91a69e2fd8e8 2026-09-24T19:34:33.166Z — duplicatePublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+exit code: 1
+duration ms: 5423
+dist observations: {"ori-ci-001-second-tutorial":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:34:11 [content] Syncing content
+13:34:11 [content] Synced content
+13:34:11 [types] Generated 249ms
+13:34:11 [build] output: "static"
+13:34:11 [build] mode: "static"
+13:34:11 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs/dist/
+13:34:11 [build] Collecting build info...
+13:34:11 [build] ✓ Completed in 286ms.
+13:34:11 [build] Building static entrypoints...
+13:34:11 [vite] ✓ built in 172ms
+13:34:11 [vite] ✓ built in 59ms
+13:34:11 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published tutorial sources are ["ori-ci-001-second-tutorial", "quickstart"]; observed 2 versus 1
+  Location:
+    /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/scripts/docs-data/single-tutorial.ts:161:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
+=== ORI-CI-001 run ccc5fd5b-4f4a-4db9-a161-91a69e2fd8e8 2026-09-24T19:34:33.166Z — duplicateUnpublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+exit code: 0
+duration ms: 5323
+dist observations: {"ori-ci-001-second-tutorial":false,"quickstart":true}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:34:16 [content] Syncing content
+13:34:16 [content] Synced content
+13:34:16 [types] Generated 233ms
+13:34:16 [build] output: "static"
+13:34:16 [build] mode: "static"
+13:34:16 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs/dist/
+13:34:16 [build] Collecting build info...
+13:34:16 [build] ✓ Completed in 272ms.
+13:34:16 [build] Building static entrypoints...
+13:34:16 [vite] ✓ built in 167ms
+13:34:16 [vite] ✓ built in 30ms
+13:34:16 [build] Rearranging server assets...
+
+ generating static routes 
+13:34:16   ├─ /components/shimmer/index.html (+9ms) 
+13:34:16   ├─ /components/checkpoint/index.html (+2ms) 
+13:34:16   ├─ /components/image/index.html (+1ms) 
+13:34:16   ├─ /components/persona/index.html (+1ms) 
+13:34:16   ├─ /components/speech-input/index.html (+1ms) 
+13:34:16   ├─ /components/kbd/index.html (+5ms) 
+13:34:16   ├─ /components/breadcrumb/index.html (+2ms) 
+13:34:16   ├─ /components/button-group/index.html (+1ms) 
+13:34:16   ├─ /components/slider/index.html (+1ms) 
+13:34:16   ├─ /components/table/index.html (+1ms) 
+13:34:16   ├─ /components/command/index.html (+1ms) 
+13:34:16   ├─ /components/mono/index.html (+1ms) 
+13:34:16   ├─ /components/markdown/index.html (+1ms) 
+13:34:16   ├─ /components/code-block/index.html (+1ms) 
+13:34:16   ├─ /components/conversation/index.html (+1ms) 
+13:34:16   ├─ /components/message/index.html (+1ms) 
+13:34:16   ├─ /components/prompt-input/index.html (+1ms) 
+13:34:16   ├─ /components/empty/index.html (+1ms) 
+13:34:16   ├─ /components/item/index.html (+1ms) 
+13:34:16   ├─ /components/input-group/index.html (+1ms) 
+13:34:16   ├─ /components/sheet/index.html (+1ms) 
+13:34:16   ├─ /components/suggestion/index.html (+1ms) 
+13:34:16   ├─ /components/status/index.html (+1ms) 
+13:34:16   ├─ /components/reasoning-lifecycle/index.html (+1ms) 
+13:34:16   ├─ /components/tool/index.html (+1ms) 
+13:34:16   ├─ /components/reasoning/index.html (+1ms) 
+13:34:16   ├─ /components/task/index.html (+1ms) 
+13:34:16   ├─ /components/question/index.html (+1ms) 
+13:34:16   ├─ /components/agent/index.html (+1ms) 
+13:34:16   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:34:16   ├─ /components/plan/index.html (+1ms) 
+13:34:16   ├─ /components/confirmation/index.html (+1ms) 
+13:34:16   ├─ /components/queue/index.html (+1ms) 
+13:34:16   ├─ /components/url/index.html (+1ms) 
+13:34:16   ├─ /components/sources/index.html (+1ms) 
+13:34:16   ├─ /components/inline-citation/index.html (+1ms) 
+13:34:16   ├─ /components/artifact/index.html (+1ms) 
+13:34:16   ├─ /components/snippet/index.html (+1ms) 
+13:34:16   ├─ /components/commit/index.html (+1ms) 
+13:34:16   ├─ /components/attachments/index.html (+1ms) 
+13:34:16   ├─ /components/context/index.html (+1ms) 
+13:34:16   ├─ /components/open-in-chat/index.html (+1ms) 
+13:34:16   ├─ /components/model-selector/index.html (+1ms) 
+13:34:16   ├─ /components/mic-selector/index.html (+1ms) 
+13:34:16   ├─ /components/voice-selector/index.html (+1ms) 
+13:34:16   ├─ /components/audio-player/index.html (+1ms) 
+13:34:16   ├─ /components/transcription/index.html (+1ms) 
+13:34:16   ├─ /components/terminal/index.html (+1ms) 
+13:34:16   ├─ /components/file-tree/index.html (+1ms) 
+13:34:16   ├─ /components/environment-variables/index.html (+1ms) 
+13:34:16   ├─ /components/package-info/index.html (+1ms) 
+13:34:16   ├─ /components/stack-trace-parser/index.html (+1ms) 
+13:34:16   ├─ /components/stack-trace/index.html (+1ms) 
+13:34:16   ├─ /components/schema-display/index.html (+1ms) 
+13:34:16   ├─ /components/test-results/index.html (+1ms) 
+13:34:16   ├─ /components/web-preview/index.html (+1ms) 
+13:34:16   ├─ /components/index.html (+6ms) 
+13:34:16   ├─ /docs/theming/index.html (+5ms) 
+13:34:16   ├─ /docs/introduction/index.html (+1ms) 
+13:34:16   ├─ /docs/installation/index.html (+11ms) 
+13:34:16   ├─ /docs/quickstart/index.html (+2ms) 
+13:34:16   ├─ /docs/cli/index.html (+1ms) 
+13:34:16   ├─ /docs/dark-mode/index.html (+0ms) 
+13:34:16   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+13:34:16   ├─ /islands/copy-button/index.html (+1ms) 
+13:34:16   ├─ /registry/index.html (+2ms) 
+13:34:16   ├─ /index.html (+1ms) 
+13:34:16 ✓ Completed in 130ms.
+
+13:34:16 [build] ✓ Completed in 348ms.
+13:34:16 [build] 67 page(s) built in 620ms
+13:34:16 [build] Complete!
+
+--- stderr ---
+
+=== ORI-CI-001 run c1289c0e-ce7d-4c86-8232-e9a2cb217d1f 2026-09-24T19:38:27.368Z — duplicatePublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+exit code: 1
+duration ms: 5560
+dist observations: {"ori-ci-001-second-tutorial":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:38:03 [content] Syncing content
+13:38:03 [content] Synced content
+13:38:03 [types] Generated 240ms
+13:38:03 [build] output: "static"
+13:38:03 [build] mode: "static"
+13:38:03 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs/dist/
+13:38:03 [build] Collecting build info...
+13:38:03 [build] ✓ Completed in 278ms.
+13:38:03 [build] Building static entrypoints...
+13:38:04 [vite] ✓ built in 247ms
+13:38:04 [vite] ✓ built in 35ms
+13:38:04 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published tutorial sources are ["ori-ci-001-second-tutorial", "quickstart"]; observed 2 versus 1
+  Location:
+    /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/scripts/docs-data/single-tutorial.ts:168:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
+=== ORI-CI-001 run c1289c0e-ce7d-4c86-8232-e9a2cb217d1f 2026-09-24T19:38:27.368Z — duplicateUnpublished ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+exit code: 0
+duration ms: 6162
+dist observations: {"ori-ci-001-second-tutorial":false,"quickstart":true}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:38:10 [content] Syncing content
+13:38:10 [content] Synced content
+13:38:10 [types] Generated 273ms
+13:38:10 [build] output: "static"
+13:38:10 [build] mode: "static"
+13:38:10 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs/dist/
+13:38:10 [build] Collecting build info...
+13:38:10 [build] ✓ Completed in 316ms.
+13:38:10 [build] Building static entrypoints...
+13:38:10 [vite] ✓ built in 183ms
+13:38:10 [vite] ✓ built in 26ms
+13:38:10 [build] Rearranging server assets...
+
+ generating static routes 
+13:38:10   ├─ /components/shimmer/index.html (+11ms) 
+13:38:10   ├─ /components/checkpoint/index.html (+2ms) 
+13:38:10   ├─ /components/image/index.html (+2ms) 
+13:38:10   ├─ /components/persona/index.html (+2ms) 
+13:38:10   ├─ /components/speech-input/index.html (+6ms) 
+13:38:10   ├─ /components/kbd/index.html (+1ms) 
+13:38:10   ├─ /components/breadcrumb/index.html (+1ms) 
+13:38:10   ├─ /components/button-group/index.html (+1ms) 
+13:38:10   ├─ /components/slider/index.html (+1ms) 
+13:38:10   ├─ /components/table/index.html (+1ms) 
+13:38:10   ├─ /components/command/index.html (+1ms) 
+13:38:10   ├─ /components/mono/index.html (+1ms) 
+13:38:10   ├─ /components/markdown/index.html (+1ms) 
+13:38:10   ├─ /components/code-block/index.html (+1ms) 
+13:38:10   ├─ /components/conversation/index.html (+1ms) 
+13:38:10   ├─ /components/message/index.html (+1ms) 
+13:38:10   ├─ /components/prompt-input/index.html (+1ms) 
+13:38:10   ├─ /components/empty/index.html (+1ms) 
+13:38:10   ├─ /components/item/index.html (+1ms) 
+13:38:10   ├─ /components/input-group/index.html (+1ms) 
+13:38:10   ├─ /components/sheet/index.html (+1ms) 
+13:38:10   ├─ /components/suggestion/index.html (+1ms) 
+13:38:10   ├─ /components/status/index.html (+1ms) 
+13:38:10   ├─ /components/reasoning-lifecycle/index.html (+2ms) 
+13:38:10   ├─ /components/tool/index.html (+1ms) 
+13:38:10   ├─ /components/reasoning/index.html (+1ms) 
+13:38:10   ├─ /components/task/index.html (+1ms) 
+13:38:10   ├─ /components/question/index.html (+1ms) 
+13:38:10   ├─ /components/agent/index.html (+1ms) 
+13:38:10   ├─ /components/chain-of-thought/index.html (+1ms) 
+13:38:10   ├─ /components/plan/index.html (+1ms) 
+13:38:10   ├─ /components/confirmation/index.html (+2ms) 
+13:38:10   ├─ /components/queue/index.html (+1ms) 
+13:38:10   ├─ /components/url/index.html (+1ms) 
+13:38:10   ├─ /components/sources/index.html (+1ms) 
+13:38:10   ├─ /components/inline-citation/index.html (+1ms) 
+13:38:10   ├─ /components/artifact/index.html (+1ms) 
+13:38:10   ├─ /components/snippet/index.html (+1ms) 
+13:38:10   ├─ /components/commit/index.html (+1ms) 
+13:38:10   ├─ /components/attachments/index.html (+1ms) 
+13:38:10   ├─ /components/context/index.html (+1ms) 
+13:38:10   ├─ /components/open-in-chat/index.html (+1ms) 
+13:38:10   ├─ /components/model-selector/index.html (+1ms) 
+13:38:10   ├─ /components/mic-selector/index.html (+1ms) 
+13:38:10   ├─ /components/voice-selector/index.html (+1ms) 
+13:38:10   ├─ /components/audio-player/index.html (+1ms) 
+13:38:10   ├─ /components/transcription/index.html (+1ms) 
+13:38:10   ├─ /components/terminal/index.html (+1ms) 
+13:38:10   ├─ /components/file-tree/index.html (+1ms) 
+13:38:10   ├─ /components/environment-variables/index.html (+1ms) 
+13:38:10   ├─ /components/package-info/index.html (+1ms) 
+13:38:10   ├─ /components/stack-trace-parser/index.html (+1ms) 
+13:38:10   ├─ /components/stack-trace/index.html (+1ms) 
+13:38:10   ├─ /components/schema-display/index.html (+1ms) 
+13:38:10   ├─ /components/test-results/index.html (+1ms) 
+13:38:10   ├─ /components/web-preview/index.html (+4ms) 
+13:38:10   ├─ /components/index.html (+3ms) 
+13:38:10   ├─ /docs/theming/index.html (+5ms) 
+13:38:10   ├─ /docs/introduction/index.html (+1ms) 
+13:38:10   ├─ /docs/installation/index.html (+2ms) 
+13:38:10   ├─ /docs/quickstart/index.html (+2ms) 
+13:38:10   ├─ /docs/cli/index.html (+1ms) 
+13:38:10   ├─ /docs/dark-mode/index.html (+1ms) 
+13:38:10   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+13:38:10   ├─ /islands/copy-button/index.html (+1ms) 
+13:38:10   ├─ /registry/index.html (+2ms) 
+13:38:10   ├─ /index.html (+1ms) 
+13:38:10 ✓ Completed in 123ms.
+
+13:38:10 [build] ✓ Completed in 355ms.
+13:38:10 [build] 67 page(s) built in 672ms
+13:38:10 [build] Complete!
+
+--- stderr ---
+

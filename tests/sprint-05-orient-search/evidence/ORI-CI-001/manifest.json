@@ -1,0 +1,380 @@
+{
+  "runs": [
+    {
+      "runId": "b22a9cdd-de46-43ec-9258-2f0bc847f8fe",
+      "recordedAt": "2026-09-24T19:25:14.243Z",
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001",
+        "headSha": "bc4b84c1028855102f61967b9bf85eb8cacd22ae",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+      },
+      "sourceHashes": {
+        "gateModule": "28662940f24a649de9c4cf2742ce499c8c6cb34462d6276638412f57be6c7196",
+        "routeFile": "338035822c82edc79cea1cebc21b8ef0fd114b733eafeb38fbe7a44bd5da74b8",
+        "contentConfig": "685c4144d50651616a2b9f1715ec8d189891e86f0ed33f16d53bd1cf43cf83cf",
+        "testFile": "5b7eaeccebba518dc6f1d9b2c998a608cac875efe099d97e7cf3dc40b83fbf74",
+        "quickstartSource": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd"
+      },
+      "quickstart": {
+        "sourceTitle": "Quickstart",
+        "builtH1": "",
+        "htmlSha256": ""
+      },
+      "observed": {
+        "quickstartSourceId": "quickstart",
+        "quickstartRoute": "/docs/quickstart",
+        "duplicateSlug": "ori-ci-001-second-tutorial",
+        "movedSlug": "ori-ci-001-moved-tutorial",
+        "duplicatePublication": "published (no draft field)",
+        "duplicateUnpublishedPublication": "draft: true in frontmatter"
+      },
+      "commands": [
+        {
+          "label": "positive",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd",
+          "exitCode": 1,
+          "durationMs": 431
+        },
+        {
+          "label": "duplicatePublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd",
+          "exitCode": 1,
+          "durationMs": 211
+        },
+        {
+          "label": "duplicateUnpublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd",
+          "exitCode": 1,
+          "durationMs": 210
+        },
+        {
+          "label": "missing",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd",
+          "exitCode": 1,
+          "durationMs": 209
+        },
+        {
+          "label": "noncanonical",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd",
+          "exitCode": 1,
+          "durationMs": 213
+        },
+        {
+          "label": "restored",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd",
+          "exitCode": 1,
+          "durationMs": 209
+        }
+      ],
+      "contentHashComparisons": {
+        "baselineFiles": {
+          "cli.md": "ae5a3bd50a021b51fcc55768fc31ff57ca83a68589442ff36d00f22b779ad252",
+          "dark-mode.md": "978dc3c903381dc9aeba107a9d41b3f4589a8a51a4004770be3af32f61a3d374",
+          "installation.mdx": "783d832710b793054d5c0cf2496efa86aa4ba7cb79140c03e25b6f66a8df54e1",
+          "introduction.md": "317d150dd3451c53bf511c95f459024baca24624733ea6927736bfc6ee56a494",
+          "owns-vs-does-not-own.md": "ca23e0ab23beb4520db19885942b4e81f2053de2e1b1e4e170c6140f12f6e133",
+          "quickstart.mdx": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
+          "theming.mdx": "943d15402bfa26171dcc37cdcec9c7733ae3b3c0c5a114194f116293848cbc80"
+        },
+        "scratchRestoredMatchesBaseline": true,
+        "candidateUnchanged": true
+      },
+      "fatal": null,
+      "logHashes": {
+        "positive.log": "4155b1092496789adf727c690095afa6419e3096ce299637d07ba4ad03ecaf34",
+        "duplicate.log": "26b28d52220473d331dcaf08a9a6b9fb4ca80f44a31a0cc7ff003311e68cfd7c",
+        "missing.log": "f9a09636f4431c974ae1bf5a250089483f1e9a80cb1e88c6fb39e7fe107180c9",
+        "noncanonical.log": "ac7b6b52741c0c61d2c5c1944986bd572afc7b37f33cd92926362e82a15ae0cc",
+        "restored.log": "8e7c75f398aafd168a3235be676d9910325ce7c19a4de346d4f7fd13fe6bc39b"
+      }
+    },
+    {
+      "runId": "acbc6030-2e3d-4c72-8d06-728f7ac576fe",
+      "recordedAt": "2026-09-24T19:29:41.698Z",
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001",
+        "headSha": "bc4b84c1028855102f61967b9bf85eb8cacd22ae",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+      },
+      "sourceHashes": {
+        "gateModule": "28662940f24a649de9c4cf2742ce499c8c6cb34462d6276638412f57be6c7196",
+        "routeFile": "338035822c82edc79cea1cebc21b8ef0fd114b733eafeb38fbe7a44bd5da74b8",
+        "contentConfig": "685c4144d50651616a2b9f1715ec8d189891e86f0ed33f16d53bd1cf43cf83cf",
+        "testFile": "bb138f975e34f57b13ca6d4a8d219de056aa3b544e053aae31997ae51883e04d",
+        "quickstartSource": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd"
+      },
+      "quickstart": {
+        "sourceTitle": "Quickstart",
+        "builtH1": "",
+        "htmlSha256": "3df55275de6bb16b7a663ffaa79a78c9c33f416821406dfb723dde920cf9d358"
+      },
+      "observed": {
+        "quickstartSourceId": "quickstart",
+        "quickstartRoute": "/docs/quickstart",
+        "duplicateSlug": "ori-ci-001-second-tutorial",
+        "movedSlug": "ori-ci-001-moved-tutorial",
+        "duplicatePublication": "published (no draft field)",
+        "duplicateUnpublishedPublication": "draft: true in frontmatter"
+      },
+      "commands": [
+        {
+          "label": "positive",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030",
+          "exitCode": 0,
+          "durationMs": 6411
+        },
+        {
+          "label": "duplicatePublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030",
+          "exitCode": 1,
+          "durationMs": 5255
+        },
+        {
+          "label": "duplicateUnpublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030",
+          "exitCode": 0,
+          "durationMs": 5479
+        },
+        {
+          "label": "missing",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030",
+          "exitCode": 1,
+          "durationMs": 5309
+        },
+        {
+          "label": "noncanonical",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030",
+          "exitCode": 1,
+          "durationMs": 5005
+        },
+        {
+          "label": "restored",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030",
+          "exitCode": 0,
+          "durationMs": 5062
+        }
+      ],
+      "contentHashComparisons": {
+        "baselineFiles": {
+          "cli.md": "ae5a3bd50a021b51fcc55768fc31ff57ca83a68589442ff36d00f22b779ad252",
+          "dark-mode.md": "978dc3c903381dc9aeba107a9d41b3f4589a8a51a4004770be3af32f61a3d374",
+          "installation.mdx": "783d832710b793054d5c0cf2496efa86aa4ba7cb79140c03e25b6f66a8df54e1",
+          "introduction.md": "317d150dd3451c53bf511c95f459024baca24624733ea6927736bfc6ee56a494",
+          "owns-vs-does-not-own.md": "ca23e0ab23beb4520db19885942b4e81f2053de2e1b1e4e170c6140f12f6e133",
+          "quickstart.mdx": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
+          "theming.mdx": "943d15402bfa26171dcc37cdcec9c7733ae3b3c0c5a114194f116293848cbc80"
+        },
+        "scratchRestoredMatchesBaseline": true,
+        "candidateUnchanged": true
+      },
+      "fatal": null,
+      "logHashes": {
+        "positive.log": "05270c223b1a04aa09dadf3443a1a02b6b8aace81c4580cc16754cf131cd38c5",
+        "duplicate.log": "e18e8d9d815ecaef065af783b410116c0aecaae94c88de082a0f0a5d5aaea7f6",
+        "missing.log": "0bbd3ffae83267b8b449c0d0468a9a90f99bf23cf9f2143dbc740ea5d99f0c04",
+        "noncanonical.log": "d29b8681e3dea756542526ca64f0ddd371c4e6749ab133089c38907452080a19",
+        "restored.log": "b37a24cad801e03ab3c09790a785e72771f79e240e6e9a98d531b2ac9e472aa9"
+      }
+    },
+    {
+      "runId": "ccc5fd5b-4f4a-4db9-a161-91a69e2fd8e8",
+      "recordedAt": "2026-09-24T19:34:33.167Z",
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001",
+        "headSha": "bc4b84c1028855102f61967b9bf85eb8cacd22ae",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+      },
+      "sourceHashes": {
+        "gateModule": "28662940f24a649de9c4cf2742ce499c8c6cb34462d6276638412f57be6c7196",
+        "routeFile": "338035822c82edc79cea1cebc21b8ef0fd114b733eafeb38fbe7a44bd5da74b8",
+        "contentConfig": "685c4144d50651616a2b9f1715ec8d189891e86f0ed33f16d53bd1cf43cf83cf",
+        "testFile": "1842a1e032500280d88899f084c39d1d53104bc187dd69a10f27960482d5eba4",
+        "quickstartSource": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd"
+      },
+      "quickstart": {
+        "sourceTitle": "Quickstart",
+        "builtH1": "Quickstart",
+        "htmlSha256": "3df55275de6bb16b7a663ffaa79a78c9c33f416821406dfb723dde920cf9d358"
+      },
+      "observed": {
+        "quickstartSourceId": "quickstart",
+        "quickstartRoute": "/docs/quickstart",
+        "duplicateSlug": "ori-ci-001-second-tutorial",
+        "movedSlug": "ori-ci-001-moved-tutorial",
+        "duplicatePublication": "published (no draft field)",
+        "duplicateUnpublishedPublication": "draft: true in frontmatter"
+      },
+      "commands": [
+        {
+          "label": "positive",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b",
+          "exitCode": 0,
+          "durationMs": 6644
+        },
+        {
+          "label": "duplicatePublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b",
+          "exitCode": 1,
+          "durationMs": 5423
+        },
+        {
+          "label": "duplicateUnpublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b",
+          "exitCode": 0,
+          "durationMs": 5323
+        },
+        {
+          "label": "missing",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b",
+          "exitCode": 1,
+          "durationMs": 5462
+        },
+        {
+          "label": "noncanonical",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b",
+          "exitCode": 1,
+          "durationMs": 5430
+        },
+        {
+          "label": "restored",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b",
+          "exitCode": 0,
+          "durationMs": 5312
+        }
+      ],
+      "contentHashComparisons": {
+        "baselineFiles": {
+          "cli.md": "ae5a3bd50a021b51fcc55768fc31ff57ca83a68589442ff36d00f22b779ad252",
+          "dark-mode.md": "978dc3c903381dc9aeba107a9d41b3f4589a8a51a4004770be3af32f61a3d374",
+          "installation.mdx": "783d832710b793054d5c0cf2496efa86aa4ba7cb79140c03e25b6f66a8df54e1",
+          "introduction.md": "317d150dd3451c53bf511c95f459024baca24624733ea6927736bfc6ee56a494",
+          "owns-vs-does-not-own.md": "ca23e0ab23beb4520db19885942b4e81f2053de2e1b1e4e170c6140f12f6e133",
+          "quickstart.mdx": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
+          "theming.mdx": "943d15402bfa26171dcc37cdcec9c7733ae3b3c0c5a114194f116293848cbc80"
+        },
+        "scratchRestoredMatchesBaseline": true,
+        "candidateUnchanged": true
+      },
+      "fatal": null,
+      "logHashes": {
+        "positive.log": "560297a64f44dc05cee93ed036948ea630e086e0144c40dbc5f3f664990e7731",
+        "duplicate.log": "ca53215ad87a80e98befb64c9e7742f17814d1c72490e2d1c3af90b0e21c96d8",
+        "missing.log": "090e353e906dc2a2e9c1804a8608b4d5e84c346b12ee35e5d6ee9eb624ade9c3",
+        "noncanonical.log": "b8a7b5386305e26e942a58d590b2ffb1bbfaaebe311ead281d3b8575b07ab1b6",
+        "restored.log": "59ae577661fb513a4576ed6a0cb3a4367855039a3565f2848e9fcd3960886dbe"
+      }
+    },
+    {
+      "runId": "c1289c0e-ce7d-4c86-8232-e9a2cb217d1f",
+      "recordedAt": "2026-09-24T19:38:27.369Z",
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001",
+        "headSha": "bc4b84c1028855102f61967b9bf85eb8cacd22ae",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+      },
+      "sourceHashes": {
+        "gateModule": "d194ed2cf700680b23b9cece6da78709da639124fcda02e95b9691a7a5f3370e",
+        "routeFile": "338035822c82edc79cea1cebc21b8ef0fd114b733eafeb38fbe7a44bd5da74b8",
+        "contentConfig": "685c4144d50651616a2b9f1715ec8d189891e86f0ed33f16d53bd1cf43cf83cf",
+        "testFile": "8198cc76641c6b41524e102481bc17f08acedacda38b201f53884cabfb216878",
+        "quickstartSource": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd"
+      },
+      "quickstart": {
+        "sourceTitle": "Quickstart",
+        "builtH1": "Quickstart",
+        "htmlSha256": "3df55275de6bb16b7a663ffaa79a78c9c33f416821406dfb723dde920cf9d358"
+      },
+      "observed": {
+        "quickstartSourceId": "quickstart",
+        "quickstartRoute": "/docs/quickstart",
+        "duplicateSlug": "ori-ci-001-second-tutorial",
+        "movedSlug": "ori-ci-001-moved-tutorial",
+        "duplicatePublication": "published (no draft field)",
+        "duplicateUnpublishedPublication": "draft: true in frontmatter"
+      },
+      "commands": [
+        {
+          "label": "positive",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e",
+          "exitCode": 0,
+          "durationMs": 7822
+        },
+        {
+          "label": "duplicatePublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e",
+          "exitCode": 1,
+          "durationMs": 5560
+        },
+        {
+          "label": "duplicateUnpublished",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e",
+          "exitCode": 0,
+          "durationMs": 6162
+        },
+        {
+          "label": "missing",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e",
+          "exitCode": 1,
+          "durationMs": 5912
+        },
+        {
+          "label": "noncanonical",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e",
+          "exitCode": 1,
+          "durationMs": 5597
+        },
+        {
+          "label": "restored",
+          "command": "pnpm --filter @rnr-ai-elements/docs build",
+          "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e",
+          "exitCode": 0,
+          "durationMs": 5382
+        }
+      ],
+      "contentHashComparisons": {
+        "baselineFiles": {
+          "cli.md": "ae5a3bd50a021b51fcc55768fc31ff57ca83a68589442ff36d00f22b779ad252",
+          "dark-mode.md": "978dc3c903381dc9aeba107a9d41b3f4589a8a51a4004770be3af32f61a3d374",
+          "installation.mdx": "783d832710b793054d5c0cf2496efa86aa4ba7cb79140c03e25b6f66a8df54e1",
+          "introduction.md": "317d150dd3451c53bf511c95f459024baca24624733ea6927736bfc6ee56a494",
+          "owns-vs-does-not-own.md": "ca23e0ab23beb4520db19885942b4e81f2053de2e1b1e4e170c6140f12f6e133",
+          "quickstart.mdx": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
+          "theming.mdx": "943d15402bfa26171dcc37cdcec9c7733ae3b3c0c5a114194f116293848cbc80"
+        },
+        "scratchRestoredMatchesBaseline": true,
+        "candidateUnchanged": true
+      },
+      "fatal": null,
+      "logHashes": {
+        "positive.log": "0630a700fb4d1bf00765f142ffc91d4eab364dbfe244d4cb837856be96a30360",
+        "duplicate.log": "d9ddbc29ebfc32e75cc2f15f1560b4fba3a521a3e77d8098e7ac731945a0bab3",
+        "missing.log": "f0c9d277cc0e05035e9e52672acbda8f979545eb3654c001b5fb693de4b3ebd1",
+        "noncanonical.log": "4dc02950e443143bdbd7fd12144e7df8dc23d6ec07049c071a2daa78c0076abc",
+        "restored.log": "b539a8f9dd1cdb0aab71e70f9d73a3dbbfceb09a972383cd998a20b28208c62b"
+      }
+    }
+  ]
+}
