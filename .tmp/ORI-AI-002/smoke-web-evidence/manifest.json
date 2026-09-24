@@ -1,0 +1,90 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-SMOKEWEBA",
+  "generated_at": "2026-09-19T14:14:27.256Z",
+  "repo_head": "cf02a2402dfa92a89cae747e1774ee062b2ac881",
+  "commands": {
+    "matrix": "node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines uniwind --platforms web --output .tmp/ORI-AI-002/smoke-web-evidence"
+  },
+  "phases": [
+    {
+      "engine": "uniwind",
+      "phase": "reject",
+      "driver": "runLiveExampleProof",
+      "run_id": "ORI-AI-002-SMOKEWEBA-reject",
+      "completed": false,
+      "error": null
+    },
+    {
+      "engine": "uniwind",
+      "phase": "live",
+      "driver": "runLiveExampleProof",
+      "run_id": "ORI-AI-002-SMOKEWEBA-live",
+      "completed": false,
+      "error": null
+    },
+    {
+      "engine": "uniwind",
+      "phase": "web-self",
+      "driver": "web-self-session",
+      "run_id": "ORI-AI-002-SMOKEWEBA-web-self",
+      "completed": true,
+      "error": null
+    }
+  ],
+  "source_digests": {
+    "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+    "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "packages/registry/registry.json": "6de89f9f6af05e11cf8f707ce73c18845e631ebbfc1309aa158bf05cad67e1e0",
+    "tests/sprint-05-orient-search/nativewind-live-source-manifest.json": "df55fff78536c26d34e77b272f93c7447b5602914a2f76655906f3a54e067a1d",
+    "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "ad3aef81b24fc58f8f4b58702b9d7a17882c9a77620d77a5ce85973ab1626c95",
+    "tests/sprint-05-orient-search/support/nativewind-live-example.ts": "6e21c81fd595b022043a8c3493c1f388a74a9720e30b5a07d7abc77a5efae490",
+    "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+    "tests/sprint-05-orient-search/support/native-session.ts": "7e1b4e0e2b35044a6b52d22c77c36584c5e8e414fb6d16ddf25399d48b6d13ae",
+    ".spec/e2e-policy/surface.json": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b"
+  },
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "devices": {
+    "ios_udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+    "android_serial": "emulator-5554",
+    "web_browser": "chromium (playwright, headless)"
+  },
+  "targets": {
+    "uniwind-ios": {
+      "engine": "uniwind",
+      "platform": "ios",
+      "native": true,
+      "artifacts": {
+        "stream.jsonl": "60794427c84850133cae73a09dbbb5227a98241d2fd358f1ef72b223b456b057",
+        "screen-recording.mp4": "(missing)",
+        "streaming.png": "(missing)",
+        "recovered.png": "(missing)",
+        "result.json": "06986f550f52bccef9e5241e52a37e0b78f38690465f20e09b8ecf254a124a6a"
+      }
+    },
+    "uniwind-android": {
+      "engine": "uniwind",
+      "platform": "android",
+      "native": true,
+      "artifacts": {
+        "stream.jsonl": "60794427c84850133cae73a09dbbb5227a98241d2fd358f1ef72b223b456b057",
+        "screen-recording.mp4": "(missing)",
+        "streaming.png": "(missing)",
+        "recovered.png": "(missing)",
+        "result.json": "46d218a0ec4d17dc562c7b76aa857f3b23a2bdc8ea994670e196553be22db69f"
+      }
+    },
+    "uniwind-web": {
+      "engine": "uniwind",
+      "platform": "web",
+      "native": false,
+      "artifacts": {
+        "stream.jsonl": "f7b89569bb7c542e06953f412e5afda3301600056958c1e70742530aea74ad88",
+        "screen-recording.mp4": "9e6b3ca4fc4af3767a998cb091e919cee226c2584886741a897d31b85f494507",
+        "streaming.png": "f5503aa963e4c4895a20d23267bb9535621b6074f05410cdf5c7830c381fb8b8",
+        "recovered.png": "99203c2432380d1c17114654ff8158655807981e84de91199cc1b17cf30e7c4f",
+        "result.json": "64d18b24c29dbbe121568a5af77d317e9eaba43f844e756405e727bbba97d0f1"
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+PASS (0) FAIL (4)
+
+1. ORI-AI-002-AC-1-stream-history: six targets stream incrementally and retain context
+   AssertionError: the real matrix runner must succeed (tail of output):
+   node:internal/modules/cjs/loader:1459
+     throw err;
+     ^
+   
+   Error: Cannot find module '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/run-live-example-proof.mjs'
+       at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+       at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+       at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+       at Module._load (node:internal/modules/cjs/loader:1242:25)
+       at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+       at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+       at node:internal/main/run_main_module:33:47 {
+     code: 'MODULE_NOT_FOUND',
+     requireStack: []
+   }
+   
+   Node.js v24.14.0
+   : expected 1 to be +0 // Object.is equality
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:240:7
+       at processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+2. ORI-AI-002-AC-2-stop-retry: six targets abort unfinished requests and retry without duplicating the user turn
+   AssertionError: uniwind-ios/result.json exists: expected false to be true // Object.is equality
+       at loadTargets (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:211:58)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:314:19
+       at processTicksAndRejections (node:internal/process/task_queues:104:5)
+3. ORI-AI-002-AC-3-error-recovery: six targets show real endpoint loss and provider rejection, then recover
+   Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/evidence/ORI-AI-002/manifest.json'
+       at readFileSync (node:fs:440:20)
+       at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:59:21)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:357:20
+       at processTicksAndRejections (node:internal/process/task_queues:104:5)
+4. ORI-AI-002-AC-4-evidence-lifecycle: only complete correlated evidence passes and owned resources are released
+   Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/evidence/ORI-AI-002/manifest.json'
+       at readFileSync (node:fs:440:20)
+       at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:59:21)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/live-example-proof.test.ts:418:20
+       at processTicksAndRejections (node:internal/process/task_queues:104:5)
+[full output: ~/Library/Application Support/rtk/tee/1789818379_vitest_run.log]

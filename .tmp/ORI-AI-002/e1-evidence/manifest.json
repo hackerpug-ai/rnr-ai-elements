@@ -1,0 +1,82 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-E1-NOREC",
+  "generated_at": "2026-09-19T17:45:11.185Z",
+  "repo_head": "f41cb20518afb7e7849731749b2d916677d70f9a",
+  "commands": {
+    "matrix": "node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines uniwind --platforms ios --output .tmp/ORI-AI-002/e1-evidence"
+  },
+  "phases": [
+    {
+      "engine": "uniwind",
+      "phase": "reject",
+      "driver": "runLiveExampleProof",
+      "run_id": "ORI-AI-002-E1-NOREC-reject",
+      "completed": false,
+      "error": null
+    },
+    {
+      "engine": "uniwind",
+      "phase": "live",
+      "driver": "runLiveExampleProof",
+      "run_id": "ORI-AI-002-E1-NOREC-live",
+      "completed": false,
+      "error": null
+    }
+  ],
+  "source_digests": {
+    "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+    "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "packages/registry/registry.json": "6de89f9f6af05e11cf8f707ce73c18845e631ebbfc1309aa158bf05cad67e1e0",
+    "tests/sprint-05-orient-search/nativewind-live-source-manifest.json": "df55fff78536c26d34e77b272f93c7447b5602914a2f76655906f3a54e067a1d",
+    "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "ad3aef81b24fc58f8f4b58702b9d7a17882c9a77620d77a5ce85973ab1626c95",
+    "tests/sprint-05-orient-search/support/nativewind-live-example.ts": "6e21c81fd595b022043a8c3493c1f388a74a9720e30b5a07d7abc77a5efae490",
+    "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+    "tests/sprint-05-orient-search/support/native-session.ts": "7e1b4e0e2b35044a6b52d22c77c36584c5e8e414fb6d16ddf25399d48b6d13ae",
+    ".spec/e2e-policy/surface.json": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b"
+  },
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "devices": {
+    "ios_udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+    "android_serial": "emulator-5554",
+    "web_browser": "chromium (playwright, headless)"
+  },
+  "targets": {
+    "uniwind-ios": {
+      "engine": "uniwind",
+      "platform": "ios",
+      "native": true,
+      "artifacts": {
+        "stream.jsonl": "66b9c17c98a3c21bb37a84a9b52676937d94ede88af119422a3e64cc3a146e27",
+        "screen-recording.mp4": "a8e3b7b187800b6be13a5a3eb8ca8e8424446113a1aa583a6635cff605975b57",
+        "streaming.png": "87dd1666f1829dfb678e619f8ce86a87482e5559aaeb63cfc802485da3b2f6a5",
+        "recovered.png": "0424ab66b8edde20ce1241e13c822f17d8372a5918e31937344962d247450de2",
+        "result.json": "5b0f3958f240e928f737de304af9c42b0047509c00c70d03863b85bd53856a07"
+      }
+    },
+    "uniwind-android": {
+      "engine": "uniwind",
+      "platform": "android",
+      "native": true,
+      "artifacts": {
+        "stream.jsonl": "2a574fae4edcf7cc6b9d105fb428b3cdaba53d5c83956dd7cb76de5f4aca0e8c",
+        "screen-recording.mp4": "222aa5ff90b2e0b5d83d5274011c4901eb7f6592f245c222c4940c08d3a77060",
+        "streaming.png": "acb0444173415a9898dbb90bb52ffc53154334ab1eeafc48d08a79bdccdf3cc1",
+        "recovered.png": "(missing)",
+        "result.json": "bdba5af8f0a844c25360feaf2d5df969165ff352221463d4d748f4bf802a8308"
+      }
+    },
+    "uniwind-web": {
+      "engine": "uniwind",
+      "platform": "web",
+      "native": false,
+      "artifacts": {
+        "stream.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "screen-recording.mp4": "(missing)",
+        "streaming.png": "(missing)",
+        "recovered.png": "(missing)",
+        "result.json": "832724bbdc4c0f459875cc09c7d3033cf45b8b4b1b54768572cc250483b9d82b"
+      }
+    }
+  }
+}

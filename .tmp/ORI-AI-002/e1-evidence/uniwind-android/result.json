@@ -1,0 +1,68 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-E1-NOREC",
+  "engine": "uniwind",
+  "platform": "android",
+  "native": true,
+  "device": "emulator-5554",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-E1-NOREC-reject",
+      "legs": []
+    },
+    "live": {
+      "run_id": "ORI-AI-002-E1-NOREC-live",
+      "legs": []
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 0
+  },
+  "context": {
+    "followup_answer_contains_nonce": false,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 2
+  },
+  "correlation": {
+    "completed_request_ids": [],
+    "response_ids": [],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": false,
+    "usage_samples": [],
+    "text_hashes_recorded": [],
+    "web_raw_text_hash_match": null
+  },
+  "stop_proof": {
+    "aborted_request_id": null,
+    "delta_count_at_abort": 0,
+    "completed_before_stop": false,
+    "source": "driver-flow"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": false,
+      "single_user_turn": false,
+      "request_id": null
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": false,
+    "sanitized": false,
+    "retry_completed": false,
+    "single_user_turn": false
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-E1-NOREC",
+    "rejected_request_ids": [],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": []
+  },
+  "source": {
+    "repo_head": "f41cb20518afb7e7849731749b2d916677d70f9a",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

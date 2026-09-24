@@ -1,0 +1,104 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-SMOKEWEBA",
+  "engine": "uniwind",
+  "platform": "ios",
+  "native": true,
+  "device": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-SMOKEWEBA-reject",
+      "legs": []
+    },
+    "live": {
+      "run_id": "ORI-AI-002-SMOKEWEBA-live",
+      "legs": []
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 0
+  },
+  "context": {
+    "followup_answer_contains_nonce": false,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 2
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d"
+    ],
+    "response_ids": [
+      "resp_0afdbc7aa0057e5f006aae98b2706487d08aacbbdd7ff2e84a",
+      "resp_0afdbc7aa0057e5f006aae98a80b8087d0b293152fcd8da9f5",
+      "resp_0afdbc7aa0057e5f006aae98a9bf9087d0ac48e2b03e0fcc2a",
+      "resp_0afdbc7aa0057e5f006aae98ab92a487d0b70f12711fa48532"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 162
+      },
+      {
+        "total_tokens": 280
+      },
+      {
+        "total_tokens": 324
+      }
+    ],
+    "text_hashes_recorded": [
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "fc3b4076c76879d0947657f68c87cf87b7baf807a69e12dc79eeaa59a4f56a06",
+      "bc960c8ea374710b3949d9ffd3a5fc3851cfa50d775665362abdd627bd9bfc69",
+      "9427599e272e2bbfdb0a88ea2559a56184d67afda5d68499dbcb9ddfe44633da"
+    ],
+    "web_raw_text_hash_match": null
+  },
+  "stop_proof": {
+    "aborted_request_id": null,
+    "delta_count_at_abort": 0,
+    "completed_before_stop": false,
+    "source": "driver-flow"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": false,
+      "single_user_turn": false,
+      "request_id": "SL4b3bLnVTTu5M5d"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": false,
+    "sanitized": false,
+    "retry_completed": false,
+    "single_user_turn": false
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-SMOKEWEBA",
+    "rejected_request_ids": [
+      "ggcmi1EJdw0d9f1O",
+      "ggcmi1EJdw0d9f1O"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d",
+      "SL4b3bLnVTTu5M5d"
+    ]
+  },
+  "source": {
+    "repo_head": "cf02a2402dfa92a89cae747e1774ee062b2ac881",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

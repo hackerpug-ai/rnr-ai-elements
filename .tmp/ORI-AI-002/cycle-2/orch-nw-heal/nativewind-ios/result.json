@@ -1,0 +1,204 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-C2-HEAL",
+  "engine": "nativewind",
+  "platform": "ios",
+  "native": true,
+  "device": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "ORI-RN-005:ORI-AI-002-C2-HEAL-live:ios",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-C2-HEAL-reject",
+      "legs": [
+        {
+          "platform": "ios",
+          "status": "failed",
+          "diagnostic": "OK: composer ready, transcript empty\nFAIL: marker turn ended as no terminal record — observed: []",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-C2-HEAL-reject:ios",
+            "appearance": "light",
+            "flow_exit": 1,
+            "flow_output": "OK: composer ready, transcript empty\nFAIL: marker turn ended as no terminal record — observed: []",
+            "assistant_text_growth": [],
+            "screenshot": "/Users/justinrich/.cache/agent-scratch/ori-ai-002-ORI-AI-002-C2-HEAL-nativewind/reject/ios/light/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": null
+          }
+        },
+        {
+          "platform": "ios",
+          "status": "failed",
+          "diagnostic": "OK: composer ready, transcript empty\nWARN: marker turn errored at the provider — driving the app's Retry\nFAIL: marker retry never produced a completed provider record — observed: [{\"requestId\":\"gOfPKUUwJSHlippZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-C2-HEAL\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":2137,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"gOfPKUUwJSHlippZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-C2-HEAL\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":395,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"gOfPKUUwJSHlippZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-C2-HEAL\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":309,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0}]",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-C2-HEAL-reject:ios",
+            "appearance": "dark",
+            "flow_exit": 1,
+            "flow_output": "OK: composer ready, transcript empty\nWARN: marker turn errored at the provider — driving the app's Retry\nFAIL: marker retry never produced a completed provider record — observed: [{\"requestId\":\"gOfPKUUwJSHlippZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-C2-HEAL\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":2137,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"gOfPKUUwJSHlippZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-C2-HEAL\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":395,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0},{\"requestId\":\"gOfPKUUwJSHlippZ\",\"provider\":\"openai\",\"providerModel\":\"rnr-s05-nonexistent-ORI-AI-002-C2-HEAL\",\"responseId\":null,\"callId\":null,\"outcome\":\"error\",\"deltaCount\":0,\"textHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"durationMs\":309,\"errorText\":\"An error occurred while generating the response.\",\"activeGenerations\":0}]",
+            "assistant_text_growth": [],
+            "screenshot": "/Users/justinrich/.cache/agent-scratch/ori-ai-002-ORI-AI-002-C2-HEAL-nativewind/reject/ios/dark/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": {
+              "requestId": "gOfPKUUwJSHlippZ",
+              "provider": "openai",
+              "providerModel": "rnr-s05-nonexistent-ORI-AI-002-C2-HEAL",
+              "responseId": null,
+              "callId": null,
+              "outcome": "error",
+              "deltaCount": 0,
+              "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "durationMs": 309,
+              "errorText": "An error occurred while generating the response.",
+              "activeGenerations": 0
+            }
+          }
+        }
+      ]
+    },
+    "live": {
+      "run_id": "ORI-AI-002-C2-HEAL-live",
+      "legs": [
+        {
+          "platform": "ios",
+          "status": "failed",
+          "diagnostic": "OK: composer ready, transcript empty\nFAIL: marker turn ended as no terminal record — observed: []",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-C2-HEAL-live:ios",
+            "appearance": "light",
+            "flow_exit": 1,
+            "flow_output": "OK: composer ready, transcript empty\nFAIL: marker turn ended as no terminal record — observed: []",
+            "assistant_text_growth": [],
+            "screenshot": "/Users/justinrich/.cache/agent-scratch/ori-ai-002-ORI-AI-002-C2-HEAL-nativewind/live/ios/light/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": null
+          }
+        },
+        {
+          "platform": "ios",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-005:ORI-AI-002-C2-HEAL-live:ios",
+            "appearance": "dark",
+            "flow_exit": 0,
+            "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 118, 78, 123)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 3-text baseline)\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (R0Gy3wCX00LpLv9h) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+            "assistant_text_growth": [
+              118,
+              78,
+              123,
+              62,
+              234,
+              1151
+            ],
+            "screenshot": "/Users/justinrich/.cache/agent-scratch/ori-ai-002-ORI-AI-002-C2-HEAL-nativewind/live/ios/dark/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": false,
+            "latest_backend_record": {
+              "requestId": "R0Gy3wCX00LpLv9h",
+              "provider": "openai",
+              "providerModel": "gpt-4.1-mini-2025-04-14",
+              "responseId": "resp_0a9ac7090bae3c55006aaf4da2b7a487d0a5e42645ee8529e2",
+              "callId": "call-ZHG0AZ3CheykjlhWqvwl2pNH",
+              "outcome": "completed",
+              "deltaCount": 2,
+              "inputTokens": 510,
+              "outputTokens": 3,
+              "totalTokens": 513,
+              "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+              "durationMs": 960,
+              "errorText": null,
+              "activeGenerations": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 12
+  },
+  "context": {
+    "followup_answer_contains_nonce": false,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 2
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "R0Gy3wCX00LpLv9h",
+      "R0Gy3wCX00LpLv9h",
+      "R0Gy3wCX00LpLv9h",
+      "R0Gy3wCX00LpLv9h"
+    ],
+    "response_ids": [
+      "resp_0a9ac7090bae3c55006aaf4c9ded1887d09e362b3d8894ecf4",
+      "resp_0a9ac7090bae3c55006aaf4cd0461887d0bf09e1012cceb5e4",
+      "resp_0a9ac7090bae3c55006aaf4d0ffeb487d09ab1d597f10bff61",
+      "resp_0a9ac7090bae3c55006aaf4da2b7a487d0a5e42645ee8529e2"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 202
+      },
+      {
+        "total_tokens": 243
+      },
+      {
+        "total_tokens": 513
+      }
+    ],
+    "text_hashes_recorded": [
+      "bb24512dff2017cd66fb952860e0216e612d7b11eb655738450812e7f1b9261a",
+      "a0c7cd36d91e55720d7b1f2e0c037ae3f8ff4d2a26326874817145e9e5c67372",
+      "e173bf35060eace00da05d8bbfd3adc3cdc293bb88bad2e55763ae5e293a908f",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c"
+    ],
+    "web_raw_text_hash_match": null
+  },
+  "stop_proof": {
+    "aborted_request_id": "R0Gy3wCX00LpLv9h",
+    "delta_count_at_abort": 201,
+    "completed_before_stop": true,
+    "source": "driver-flow"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "R0Gy3wCX00LpLv9h"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": true,
+    "sanitized": true,
+    "retry_completed": true,
+    "single_user_turn": true
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-C2-HEAL",
+    "rejected_request_ids": [
+      "gOfPKUUwJSHlippZ",
+      "gOfPKUUwJSHlippZ",
+      "gOfPKUUwJSHlippZ"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "R0Gy3wCX00LpLv9h",
+      "R0Gy3wCX00LpLv9h",
+      "R0Gy3wCX00LpLv9h",
+      "R0Gy3wCX00LpLv9h"
+    ]
+  },
+  "source": {
+    "repo_head": "038ae0e6baaf8f54cc29c327a43a4ea224975266",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

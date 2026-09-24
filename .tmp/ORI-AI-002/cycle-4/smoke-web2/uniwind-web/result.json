@@ -1,0 +1,308 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-1790112117119",
+  "engine": "uniwind",
+  "platform": "web",
+  "native": false,
+  "device": "chromium (headless, real served export)",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "ORI-AI-002:ORI-AI-002-1790112117119:uniwind:web",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-1790112117119-reject",
+      "legs": [
+        {
+          "platform": "web",
+          "status": "failed",
+          "diagnostic": "{\"emptyStateVisible\":true,\"markerSubmitted\":true,\"inputCleared\":true,\"assistantResponded\":true,\"stopControlVisible\":false,\"followUpRecallVisible\":true,\"retryControlVisible\":true,\"retryErrorSanitized\":true,\"retryCompleted\":false,\"retrySingleUserTurn\":true}",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-1790112117119-reject:web",
+            "url": "http://127.0.0.1:8406",
+            "drive_result": {
+              "emptyStateVisible": true,
+              "markerSubmitted": true,
+              "inputCleared": true,
+              "assistantResponded": true,
+              "stopControlVisible": false,
+              "followUpRecallVisible": true,
+              "retryControlVisible": true,
+              "retryErrorSanitized": true,
+              "retryCompleted": false,
+              "retrySingleUserTurn": true
+            },
+            "backend_records": [
+              {
+                "requestId": "pokl36Wr36vaVvZX",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790112117119",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 550,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "pokl36Wr36vaVvZX",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790112117119",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 849,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "pokl36Wr36vaVvZX",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790112117119",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 550,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "pokl36Wr36vaVvZX",
+                "provider": "openai",
+                "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790112117119",
+                "responseId": null,
+                "callId": null,
+                "outcome": "error",
+                "deltaCount": 0,
+                "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "durationMs": 849,
+                "errorText": "An error occurred while generating the response.",
+                "activeGenerations": 0
+              }
+            ],
+            "retry_request_id": "pokl36Wr36vaVvZX"
+          }
+        }
+      ]
+    },
+    "live": {
+      "run_id": "ORI-AI-002-1790112117119-live",
+      "legs": [
+        {
+          "platform": "web",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-1790112117119-live:web",
+            "url": "http://127.0.0.1:8406",
+            "drive_result": {
+              "emptyStateVisible": true,
+              "markerSubmitted": true,
+              "inputCleared": true,
+              "assistantResponded": true,
+              "stopControlVisible": true,
+              "followUpRecallVisible": true,
+              "retryControlVisible": true,
+              "retryErrorSanitized": true,
+              "retryCompleted": true,
+              "retrySingleUserTurn": true
+            },
+            "backend_records": [
+              {
+                "requestId": "t3LVSRXhToHXQ1Ja",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_00bebb20abec22fe006ab2f2ec3e2c87d18787002bbb51637b",
+                "callId": "call-zzsyoOfkw64io56pGFqh3c9b",
+                "outcome": "completed",
+                "deltaCount": 70,
+                "inputTokens": 136,
+                "outputTokens": 71,
+                "totalTokens": 207,
+                "textHash": "d595089bea2c6623811d5200d95a087496a6c8913fc4a3f8c0b1b6c620bd83ce",
+                "durationMs": 2057,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "t3LVSRXhToHXQ1Ja",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_00bebb20abec22fe006ab2f2ee8dc487d1bcf5dd43011ec913",
+                "callId": "call-Sy5Ckt2HAAhzPaXcHUT3IkSi",
+                "outcome": "completed",
+                "deltaCount": 28,
+                "inputTokens": 223,
+                "outputTokens": 29,
+                "totalTokens": 252,
+                "textHash": "afd06a3fd8559eaa71d4dbef1c6280ad4821ef810f279ce482971f78fa567b72",
+                "durationMs": 1626,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "t3LVSRXhToHXQ1Ja",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_00bebb20abec22fe006ab2f2ea432c87d181631778cf798756",
+                "callId": "call-y4hBozAeTAi97gEgbSMhWs44",
+                "outcome": "completed",
+                "deltaCount": 35,
+                "inputTokens": 59,
+                "outputTokens": 36,
+                "totalTokens": 95,
+                "textHash": "6370de702bafa0ccf228115e0edead427d2d273940d5a8d5ba02eece0d24c7b2",
+                "durationMs": 1748,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "t3LVSRXhToHXQ1Ja",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_00bebb20abec22fe006ab2f2ec3e2c87d18787002bbb51637b",
+                "callId": "call-zzsyoOfkw64io56pGFqh3c9b",
+                "outcome": "completed",
+                "deltaCount": 70,
+                "inputTokens": 136,
+                "outputTokens": 71,
+                "totalTokens": 207,
+                "textHash": "d595089bea2c6623811d5200d95a087496a6c8913fc4a3f8c0b1b6c620bd83ce",
+                "durationMs": 2057,
+                "errorText": null,
+                "activeGenerations": 0
+              },
+              {
+                "requestId": "t3LVSRXhToHXQ1Ja",
+                "provider": "openai",
+                "providerModel": "gpt-4.1-mini-2025-04-14",
+                "responseId": "resp_00bebb20abec22fe006ab2f2ee8dc487d1bcf5dd43011ec913",
+                "callId": "call-Sy5Ckt2HAAhzPaXcHUT3IkSi",
+                "outcome": "completed",
+                "deltaCount": 28,
+                "inputTokens": 223,
+                "outputTokens": 29,
+                "totalTokens": 252,
+                "textHash": "afd06a3fd8559eaa71d4dbef1c6280ad4821ef810f279ce482971f78fa567b72",
+                "durationMs": 1626,
+                "errorText": null,
+                "activeGenerations": 0
+              }
+            ],
+            "retry_request_id": "t3LVSRXhToHXQ1Ja"
+          }
+        }
+      ]
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 101
+  },
+  "context": {
+    "followup_answer_contains_nonce": true,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 1
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja"
+    ],
+    "response_ids": [
+      "resp_00bebb20abec22fe006ab2f2ea432c87d181631778cf798756",
+      "resp_00bebb20abec22fe006ab2f2ec3e2c87d18787002bbb51637b",
+      "resp_00bebb20abec22fe006ab2f2ee8dc487d1bcf5dd43011ec913",
+      "resp_00bebb20abec22fe006ab2f2ea432c87d181631778cf798756",
+      "resp_00bebb20abec22fe006ab2f2ec3e2c87d18787002bbb51637b",
+      "resp_00bebb20abec22fe006ab2f2ee8dc487d1bcf5dd43011ec913"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 207
+      },
+      {
+        "total_tokens": 252
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 207
+      },
+      {
+        "total_tokens": 252
+      }
+    ],
+    "text_hashes_recorded": [
+      "6370de702bafa0ccf228115e0edead427d2d273940d5a8d5ba02eece0d24c7b2",
+      "d595089bea2c6623811d5200d95a087496a6c8913fc4a3f8c0b1b6c620bd83ce",
+      "afd06a3fd8559eaa71d4dbef1c6280ad4821ef810f279ce482971f78fa567b72",
+      "6370de702bafa0ccf228115e0edead427d2d273940d5a8d5ba02eece0d24c7b2",
+      "d595089bea2c6623811d5200d95a087496a6c8913fc4a3f8c0b1b6c620bd83ce",
+      "afd06a3fd8559eaa71d4dbef1c6280ad4821ef810f279ce482971f78fa567b72"
+    ],
+    "web_raw_text_hash_match": true
+  },
+  "stop_proof": {
+    "aborted_request_id": "UH4NkYQYpeszthiV",
+    "delta_count_at_abort": 31,
+    "completed_before_stop": false,
+    "source": "web-self"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "provider-rejection",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "UH4NkYQYpeszthiV"
+    },
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "UH4NkYQYpeszthiV"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": true,
+    "sanitized": true,
+    "retry_completed": true,
+    "single_user_turn": true
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-1790112117119",
+    "rejected_request_ids": [
+      "pokl36Wr36vaVvZX",
+      "pokl36Wr36vaVvZX",
+      "pokl36Wr36vaVvZX",
+      "pokl36Wr36vaVvZX"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "UH4NkYQYpeszthiV",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja",
+      "t3LVSRXhToHXQ1Ja"
+    ]
+  },
+  "source": {
+    "repo_head": "bb9cc0d6cf739e251e91cc2462f9ed570c6dcf3c",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}
