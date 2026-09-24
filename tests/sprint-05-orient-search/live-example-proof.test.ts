@@ -93,6 +93,7 @@ type StreamLine = {
   ts: string;
   kind: 'prefix' | 'dom-sample' | 'final' | 'correlation';
   text?: string;
+  texts?: string[];
   length?: number;
   request_id?: string;
   text_hash?: string;
@@ -316,6 +317,44 @@ it('ORI-AI-002-AC-1-stream-history: six targets stream incrementally and retain 
 
     // Contextual follow-up: the answer recalls the first nonce; the latest user
     // message does not repeat it; a prior exchange existed in server history.
+    // For native targets the two context oracles are RE-DERIVED from the
+    // committed stream's own OCR samples — they must discriminate against the
+    // real evidence, not pass on a synthesizer constant:
+    //   - recall: an ANSWER-LEAD line (declarative wording the models emit:
+    //     "gave me the marker", "identifier you provided", "asked me to
+    //     remember") carrying an OCR-tolerant engine-tagged marker fragment —
+    //     the user prompt's imperative "Remember the marker" never matches;
+    //   - latest user message: the drivers' literal "What marker …" bubble,
+    //     OBSERVED in the samples, contains 0 occurrences of the first nonce.
+    if (!id.endsWith('-web')) {
+      const sampleTexts = lines
+        .filter((line) => line.kind === 'dom-sample')
+        .map((line) => line.texts ?? []);
+      const ANSWER_LEAD =
+        /(gave|give) me the marker|asked me to remember|identifier (you )?(provided|is)|with identifier|marker (you|vou) (gave|aave)/i;
+      const ENGINE_TAG = /OR[I1l|][^\w]{0,2}RN/i;
+      expect(
+        sampleTexts.some((texts) =>
+          texts.some((text, i) => {
+            if (!ANSWER_LEAD.test(text)) return false;
+            // The lead and the marker fragment can wrap onto adjacent OCR lines.
+            return [texts[i - 1] ?? '', text, texts[i + 1] ?? ''].some((t) => ENGINE_TAG.test(t));
+          }),
+        ),
+        `${id} committed stream must show the follow-up ANSWER rendering the marker (answer-lead + engine tag)`,
+      ).toBe(true);
+      const domTexts = sampleTexts.flat();
+      const bubbles = domTexts.filter((text) => text.startsWith('What marker'));
+      expect(
+        bubbles.length,
+        `${id} committed stream must observe the "What marker …" follow-up user bubble`,
+      ).toBeGreaterThanOrEqual(1);
+      const fullest = bubbles.sort((a, b) => b.length - a.length)[0] ?? '';
+      expect(
+        fullest.split(result.nonce_first).length - 1,
+        `${id} observed follow-up user bubble must contain 0 occurrences of the first nonce`,
+      ).toBe(0);
+    }
     expect(
       result.context.followup_answer_contains_nonce,
       `${id} follow-up answer must contain the exact first nonce`,

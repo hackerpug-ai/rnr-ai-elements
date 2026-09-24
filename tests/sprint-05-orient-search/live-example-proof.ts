@@ -2317,42 +2317,54 @@ function synthesizeTarget(
     /**
      * The follow-up answer proves recall by rendering the marker, but the chat
      * bubble truncates long markers (observed: `The identifier
-     * "ORI-RN-005:ORI-AI-002-17…`), so a full-string hierarchy check
-     * false-negatives — and the FINAL screen may no longer show the answer at
-     * all (the essay + retry turns follow). The discriminating anchor is the
-     * session's THIRD completed record (turn order: marker, seed, follow-up):
-     * passive-observer samples from that record's observation time onward that
-     * render the marker prefix are the follow-up ANSWER — the seed answer
-     * predates the anchor and the follow-up user message never contains the
-     * first nonce by construction. Falls back to the final hierarchy/texts.
+     * The OCR stream renders the marker as wrapped ~36-char LINES: the nonce
+     * sits on its own line whether it comes from the turn-1 user bubble, the
+     * seed prompt, or the answer, so ANY marker-line match is
+     * non-discriminating (the cycle-6 fallback wrongly passed on bare user
+     * bubble lines). What DOES discriminate is the ANSWER's lead wording —
+     * declarative phrasings OCR renders reliably ("You gave me the marker",
+     * "The identifier you provided is", "asked me to remember the marker")
+     * versus the user prompt's imperative "Remember the marker" — together
+     * with an OCR-tolerant engine-tagged marker fragment in the same line
+     * (OCR mangles the marker inline: "0RI-AI", "vou aave"). The anchor-by-
+     * timestamps idea is dropped: uniwind flow-end flushes give every turn
+     * record one shared journal ts, so it cannot order anything.
      */
-    const markerPrefix = legMarker.slice(0, Math.min(20, legMarker.length));
-    const finalHierarchy = String((liveLeg?.evidence?.hierarchy as string | undefined) ?? '');
-    const followupRecord = sessionLiveEntries.filter(
-      (e) => e.record.outcome === 'completed' && e.gen === 0,
-    )[2];
-    const followupAnchorTs =
-      followupRecord !== undefined
-        ? Date.parse(followupRecord.ts) - 5000
-        : Number.NEGATIVE_INFINITY;
+    const ANSWER_LEAD =
+      /(gave|give) me the marker|asked me to remember|identifier (you )?(provided|is)|with identifier|marker (you|vou) (gave|aave)/i;
+    const ENGINE_TAG = /OR[I1l|][^\w]{0,2}RN/i;
+    const sampleHasAnswerContext = (texts: string[]): boolean =>
+      texts.some((text, i) => {
+        if (!ANSWER_LEAD.test(text)) return false;
+        // The lead and the marker fragment can wrap onto adjacent OCR lines.
+        return [texts[i - 1] ?? '', text, texts[i + 1] ?? ''].some((t) => ENGINE_TAG.test(t));
+      });
     followupContainsNonce =
       liveLeg?.status === 'passed' &&
-      (String(liveLeg?.evidence?.hierarchy_has_marker ?? false) === 'true' ||
-        (markerPrefix.length > 0 &&
-          (artifacts.observer.finalTexts.some((t) => t.includes(markerPrefix)) ||
-            finalHierarchy.includes(markerPrefix) ||
-            samples.some(
-              (s) =>
-                Date.parse(s.ts) >= followupAnchorTs &&
-                s.texts.some((t) => t.includes(markerPrefix)),
-            ))));
-    // The fixture's literal follow-up wording starts "For request ${followupNonce}".
-    const followupBubble = artifacts.observer.finalTexts.find((t) => t.startsWith('For request'));
+      (samples.some((s) => sampleHasAnswerContext(s.texts)) ||
+        artifacts.observer.finalTexts.some((t) => ANSWER_LEAD.test(t) && ENGINE_TAG.test(t)));
+    /**
+     * The follow-up USER bubble, observed: the native drivers' literal wording
+     * is "What marker did I ask you to remember?" (uniwind) / "What marker did
+     * I give you?" (nativewind) — NOT the web session's "For request" prompt.
+     * The bubble renders truncated; the count is an observation of its VISIBLE
+     * text (a nonce repeated into the visible portion would be caught).
+     */
+    const followupBubble = [...samples.flatMap((s) => s.texts), ...artifacts.observer.finalTexts]
+      .filter((t) => t.startsWith('What marker'))
+      .sort((a, b) => b.length - a.length)[0];
     latestUserNonceCount =
       followupBubble !== undefined && legMarker.length > 0
         ? followupBubble.split(legMarker).length - 1
         : 0;
-    priorExchangeCount = 2; // the drivers' fixture: marker turn + seed turn precede the follow-up
+    /** Prior exchanges BEFORE the follow-up, from the session's own turn
+     * records: the generation-0 completed conversational turns minus the
+     * latest (fixture: marker + seed precede the follow-up — counted from the
+     * records this session actually completed, not asserted as a constant). */
+    priorExchangeCount = Math.max(
+      0,
+      sessionLiveEntries.filter((e) => e.record.outcome === 'completed' && e.gen === 0).length - 1,
+    );
     stopProof = {
       aborted_request_id: abortEntry?.record.requestId ?? null,
       delta_count_at_abort: abortEntry?.record.deltaCount ?? 0,
