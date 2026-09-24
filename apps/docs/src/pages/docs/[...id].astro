@@ -11,6 +11,7 @@
  */
 import { getCollection, getEntry, render } from 'astro:content';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import MarkdownLayout from '../../layouts/MarkdownLayout.astro';
 import {
   assertUniqueDestinations,
@@ -31,6 +32,21 @@ export async function getStaticPaths() {
   assertUniqueDestinations(contentDir);
   const entries = await getCollection('docs');
   const typed = entries as unknown as DocsCollectionEntry[];
+  // Single-tutorial gate (UC-DOCS-02): the complete published collection must
+  // carry exactly one tutorial designation at /docs/quickstart, validated over
+  // every entry BEFORE any route filtering, so a draft copy cannot hide a
+  // duplicate and a violation names the offending sources instead of
+  // rendering. The gate module lives outside this Astro project root — a
+  // boundary the bundler refuses to resolve statically — so the route
+  // generator loads it through Node's own ESM loader in the same Node process
+  // that executes this build (native TS stripping; the file is erasable-only
+  // TypeScript).
+  const gate = await import(
+    /* @vite-ignore */ pathToFileURL(
+      join(process.cwd(), '..', '..', 'scripts', 'docs-data', 'single-tutorial.ts'),
+    ).href
+  );
+  gate.assertSinglePublishedTutorial(typed);
   const nav = sectionNavigation(typed);
   const docs = publishedDocs(typed);
   return docs.map((doc) => ({

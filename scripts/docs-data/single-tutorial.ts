@@ -20,13 +20,11 @@
  *   at the canonical destination when the designation is missing (the one
  *   whose designation was lost).
  *
- * Not yet imported anywhere (hence the fallow-ignore-file unused-file
- * directive below): the route-generator wiring in
- * apps/docs/src/pages/docs/[...id].astro is gated on the authored
- * `tutorial: true` designation landing in the Quickstart source — wiring a
- * fail-closed gate before that line exists would fail every real build on the
- * unmodified tree. Remove this directive in the same change that adds the
- * import; fallow reports a stale suppression until it is.
+ * Loaded by the route generator (apps/docs/src/pages/docs/[...id].astro)
+ * through a runtime dynamic import: the module sits outside the Astro project
+ * root, a boundary Astro 7's bundler refuses to resolve statically, so the
+ * static import graph cannot see the real consumer (hence the
+ * fallow-ignore-file unused-file directive below).
  */
 // fallow-ignore-file unused-file
 import { sep } from 'node:path';

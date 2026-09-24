@@ -1,0 +1,193 @@
+=== ORI-CI-001 run b22a9cdd-de46-43ec-9258-2f0bc847f8fe 2026-09-24T19:25:14.243Z — missing ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd
+exit code: 1
+duration ms: 209
+dist observations: {"quickstart":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 prebuild: `tsx ../../scripts/docs-data/prebuild.ts`
+Exit status 1
+
+--- stderr ---
+node:internal/modules/cjs/loader:1459
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790277888298-b22a9cdd/node_modules/tsx/dist/cli.mjs'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1456:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1066:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1071:22)
+    at Module._load (node:internal/modules/cjs/loader:1242:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.14.0
+
+=== ORI-CI-001 run acbc6030-2e3d-4c72-8d06-728f7ac576fe 2026-09-24T19:29:41.697Z — missing ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+exit code: 1
+duration ms: 5309
+dist observations: {"quickstart":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:29:31 [content] Syncing content
+13:29:31 [content] Synced content
+13:29:31 [types] Generated 235ms
+13:29:31 [build] output: "static"
+13:29:31 [build] mode: "static"
+13:29:31 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs/dist/
+13:29:31 [build] Collecting build info...
+13:29:31 [build] ✓ Completed in 272ms.
+13:29:31 [build] Building static entrypoints...
+13:29:31 [vite] ✓ built in 163ms
+13:29:31 [vite] ✓ built in 27ms
+13:29:31 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published entry at the required destination /docs/quickstart is "quickstart" (apps/docs/src/content/docs/quickstart.mdx) but carries no tutorial designation; observed 0 versus 1
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278123892-acbc6030/scripts/docs-data/single-tutorial.ts:161:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
+=== ORI-CI-001 run ccc5fd5b-4f4a-4db9-a161-91a69e2fd8e8 2026-09-24T19:34:33.166Z — missing ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+exit code: 1
+duration ms: 5462
+dist observations: {"quickstart":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:34:21 [content] Syncing content
+13:34:21 [content] Synced content
+13:34:21 [types] Generated 253ms
+13:34:21 [build] output: "static"
+13:34:21 [build] mode: "static"
+13:34:21 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs/dist/
+13:34:21 [build] Collecting build info...
+13:34:21 [build] ✓ Completed in 301ms.
+13:34:21 [build] Building static entrypoints...
+13:34:22 [vite] ✓ built in 180ms
+13:34:22 [vite] ✓ built in 35ms
+13:34:22 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published entry at the required destination /docs/quickstart is "quickstart" (apps/docs/src/content/docs/quickstart.mdx) but carries no tutorial designation; observed 0 versus 1
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278408781-ccc5fd5b/scripts/docs-data/single-tutorial.ts:161:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
+=== ORI-CI-001 run c1289c0e-ce7d-4c86-8232-e9a2cb217d1f 2026-09-24T19:38:27.368Z — missing ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+exit code: 1
+duration ms: 5912
+dist observations: {"quickstart":false}
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+13:38:15 [content] Syncing content
+13:38:15 [content] Synced content
+13:38:15 [types] Generated 265ms
+13:38:15 [build] output: "static"
+13:38:15 [build] mode: "static"
+13:38:15 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs/dist/
+13:38:15 [build] Collecting build info...
+13:38:15 [build] ✓ Completed in 304ms.
+13:38:15 [build] Building static entrypoints...
+13:38:16 [vite] ✓ built in 195ms
+13:38:16 [vite] ✓ built in 39ms
+13:38:16 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published entry at the required destination /docs/quickstart is "quickstart" (apps/docs/src/content/docs/quickstart.mdx) but carries no tutorial designation; observed 0 versus 1
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790278636429-c1289c0e/scripts/docs-data/single-tutorial.ts:168:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
