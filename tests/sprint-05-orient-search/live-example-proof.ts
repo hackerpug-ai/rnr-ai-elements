@@ -2330,9 +2330,15 @@ function synthesizeTarget(
      * timestamps idea is dropped: uniwind flow-end flushes give every turn
      * record one shared journal ts, so it cannot order anything.
      */
+    // Cycle-8 (reviewer-proven oracle): ONLY phrasings that respond to the
+    // follow-up question — 'identifier you provided' / 'with identifier' are
+    // DROPPED because they also match marker-acknowledgment answers of turns
+    // whose PROMPTS contained the marker (the uniwind false-pass path).
     const ANSWER_LEAD =
-      /(gave|give) me the marker|asked me to remember|identifier (you )?(provided|is)|with identifier|marker (you|vou) (gave|aave)/i;
-    const ENGINE_TAG = /OR[I1l|][^\w]{0,2}RN/i;
+      /(gave|give) me the marker|asked me to remember|marker (you|vou) (gave|aave)/i;
+    // Wrap-tolerant: the marker can wrap so the tag continues on the next OCR
+    // line starting past the 'ORI-' break ('RN-004:0RI-…').
+    const ENGINE_TAG = /OR[I1l|][^\w]{0,2}RN|\bRN[-:]?\d/i;
     const sampleHasAnswerContext = (texts: string[]): boolean =>
       texts.some((text, i) => {
         if (!ANSWER_LEAD.test(text)) return false;

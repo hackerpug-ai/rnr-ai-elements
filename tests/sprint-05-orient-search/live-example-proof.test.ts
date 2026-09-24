@@ -330,9 +330,12 @@ it('ORI-AI-002-AC-1-stream-history: six targets stream incrementally and retain 
       const sampleTexts = lines
         .filter((line) => line.kind === 'dom-sample')
         .map((line) => line.texts ?? []);
+      // Cycle-8 (reviewer-proven oracle): only follow-up-answer phrasings —
+      // identifier variants dropped (marker-echo false-pass path); engine tag
+      // wrap-tolerant ('RN-004:0RI-…' continuation lines).
       const ANSWER_LEAD =
-        /(gave|give) me the marker|asked me to remember|identifier (you )?(provided|is)|with identifier|marker (you|vou) (gave|aave)/i;
-      const ENGINE_TAG = /OR[I1l|][^\w]{0,2}RN/i;
+        /(gave|give) me the marker|asked me to remember|marker (you|vou) (gave|aave)/i;
+      const ENGINE_TAG = /OR[I1l|][^\w]{0,2}RN|\bRN[-:]?\d/i;
       expect(
         sampleTexts.some((texts) =>
           texts.some((text, i) => {
