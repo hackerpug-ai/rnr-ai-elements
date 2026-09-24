@@ -1,0 +1,21 @@
+{
+  "status": "blocked",
+  "commit_sha": "41a496019097428987e628863763716776026179",
+  "summary": "Cycle 1 checkpoint landed two green in-scope deliverables: content.config.ts now declares the tutorial metadata contract (tutorial: z.boolean().optional(); behavior-neutral — real pnpm --filter @rnr-ai-elements/docs build exits 0 with 67 pages) and scripts/docs-data/single-tutorial.ts implements the deterministic fail-closed gate (pinned EXPECTED_TUTORIAL_COUNT=1 and CANONICAL_TUTORIAL_DESTINATION=/docs/quickstart, draft!==true publication parity with docs-navigation, complete-collection counting before route filtering, docs-docs-style source-identifying diagnostics for duplicate/missing/noncanonical). A tsx module exercise proved all six decision shapes including exact diagnostic facts. pnpm typecheck and biome pass; pre-commit (biome + fallow) green. The gate is deliberately NOT wired into [...id].astro — see blocker.",
+  "assumptions": [
+    "The tutorial designation must be declared frontmatter metadata: AC-2's negative control bans counting that filters to Quickstart, and the reviewer charter bans classifying prose — so no route-derived or description-derived designation is contract-legal.",
+    "Wiring assertSinglePublishedTutorial into getStaticPaths before publishedDocs is the only contract-conformant integration point, and it must stay unwired until exactly one authored entry carries the designation, because fail-closed counting over today's tree observes 0 versus 1 and would break every docs build (AC-1 explicitly forbids a tutorial-validation failure on the original tree).",
+    "The temporary fallow-ignore-file unused-file directive on the module is self-enforcing: fallow reports stale suppressions, so cycle 2 must remove it in the same change that adds the import.",
+    "No evidence files were written: the six evidence logs require the wired real-build AC runs, which cannot run this cycle."
+  ],
+  "blockers": [
+    "Prerequisite missing: the task requires 'actual Quickstart content with tutorial: true at /docs/quickstart' (fixture real_quickstart_tree, dependency list, boundary contract 5), but apps/docs/src/content/docs/quickstart.mdx (ORI-CONT-003, 22780223) declares only title/description/section/order(2.5) — no tutorial field, and the schema declared none. Authored content is writeProhibited to ORI-CI-001 and changing the prerequisite metadata contract is an Ask-first boundary, so the one-line authored fix needs an orchestrator decision: a planner-owned authored-content change, or an explicit allowlist extension for that single line."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-CI-001",
+      "found": "Boundary contract 5 states 'ORI-CONT-003 authors tutorial: true against the declared schema contract', but ORI-CONT-003's own task file contains no such requirement (its deviations record only order: 2.5) and ORI-AST-001 explicitly scoped tutorial cardinality enforcement out, so the prerequisite chain has a gap: no task ever owned authoring the designation.",
+      "change": "Assign the one-line authored designation (tutorial: true in apps/docs/src/content/docs/quickstart.mdx frontmatter) to a content-authorized task or grant ORI-CI-001 cycle 2 an explicit allowlist extension for exactly that file; then cycle 2 wires the import into [...id].astro (removing the fallow directive), authors the subprocess drill, and captures the six evidence files."
+    }
+  ]
+}

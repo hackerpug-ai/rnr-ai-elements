@@ -1,0 +1,17 @@
+{
+  "item_id": "ORI-CI-001:blocked:1:scope_impact:0:c5805b892ff2b27c31ed4d00a844a66e2fafed3f4fe26547459ee4677c3ccacd",
+  "wave_id": "wave-16",
+  "source_task": "ORI-CI-001",
+  "source_kind": "blocked",
+  "report_sha256": "c5805b892ff2b27c31ed4d00a844a66e2fafed3f4fe26547459ee4677c3ccacd",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "add",
+  "answers": [
+    {"question": 1, "answer": true, "reason": "Names the exact gap: no task ever owned authoring tutorial: true in apps/docs/src/content/docs/quickstart.mdx (verified: frontmatter carries only title/description/section/order 2.5) while ORI-CI-001's contract fixture requires the designation; the one-line fix plus the schema field are precisely scoped.", "evidence": [{"path": "apps/docs/src/content/docs/quickstart.mdx", "sha256": "d18fcb08a7d658216b87eaf93042902fda7a74b2845fd727d3f9112d33c5de18"}]},
+    {"question": 2, "answer": false, "reason": "Not a reviewer finding; an implementer's blocked-report scope_impact naming a missing prerequisite.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-CI-001/cycle-1.blocked.json", "sha256": "c5805b892ff2b27c31ed4d00a844a66e2fafed3f4fe26547459ee4677c3ccacd"}]},
+    {"question": 3, "answer": true, "reason": "In-flight ORI-CI-001 cannot wire its gate until the designation exists; downstream ORI-CI-002 and ORI-CONT-004 depend on CI-001.", "evidence": [{"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md", "sha256": "474118d4c0ee33077255d1c5d801d9b5870942469b53af408c3b3f805524d147"}]},
+    {"question": 4, "answer": false, "reason": "One frontmatter line plus one schema line, both explicitly prescribed by CI-001's own boundary contract; changes no gate step and no product behavior the PRD leaves open.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-CI-001/cycle-1.blocked.json", "sha256": "c5805b892ff2b27c31ed4d00a844a66e2fafed3f4fe26547459ee4677c3ccacd"}]},
+    {"question": 5, "answer": true, "reason": "Verified against trunk: quickstart.mdx lacks the field; CI-001's task file demands 'The actual Quickstart source declares tutorial: true'; ORI-CONT-003's completed task file contains no such requirement — the prerequisite chain genuinely has no owner.", "evidence": [{"path": "apps/docs/src/content/docs/quickstart.mdx", "sha256": "d18fcb08a7d658216b87eaf93042902fda7a74b2845fd727d3f9112d33c5de18"}, {"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md", "sha256": "474118d4c0ee33077255d1c5d801d9b5870942469b53af408c3b3f805524d147"}]}
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "task": "FIX-ORI-CI-001-1",
+  "commands": {
+    "selector": "pnpm exec tsx tests/sprint-05-orient-search/tutorial-designation-proof.test.ts",
+    "build": "pnpm --filter @rnr-ai-elements/docs build",
+    "typecheck": "pnpm typecheck",
+    "biome": "pnpm exec biome ci apps/docs/src/content.config.ts"
+  },
+  "candidate": {
+    "candidate_sha": "8ece2a6c7f953054913793f4bbc0613f7c131886",
+    "quickstart_sha256": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
+    "config_sha256": "a9f9fd3c4af953ed8f7ba5569cbff2f24a30f3c273d2b95bf8b794ccfa3a84e9",
+    "harness_sha256": "6e7d68cc08626b72a7529d195440d30a793424f0a6cfd161647a3dbc854beccb"
+  },
+  "red": {
+    "build_exit": 0,
+    "page_count": 67,
+    "quickstart_tutorial_true_count": 0,
+    "config_tutorial_field_count": 0,
+    "content_dts_tutorial_count": 0,
+    "schema_json_tutorial_count": 0
+  },
+  "green": {
+    "build_exit": 0,
+    "page_count": 67,
+    "quickstart_tutorial_true_count": 1,
+    "config_tutorial_field_count": 1,
+    "content_dts_tutorial_count": 0,
+    "schema_json_tutorial_count": 1,
+    "page_count_equal_to_red": true,
+    "quickstart_html_title": "<title>Quickstart — RNR AI Elements</title>"
+  },
+  "scratch_negative_pair": {
+    "removal": {
+      "root": "/Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/a",
+      "command": "pnpm --filter @rnr-ai-elements/docs build",
+      "exit": 0,
+      "pageCount": 67,
+      "outputTail": "2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/speech-input/index.html\u001b[22m \u001b[2m(+8ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/kbd/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/breadcrumb/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/button-group/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/slider/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/table/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/command/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/mono/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/markdown/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/code-block/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/conversation/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/message/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/prompt-input/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/empty/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/item/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/input-group/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/sheet/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/suggestion/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/status/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/reasoning-lifecycle/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/tool/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/reasoning/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/task/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/question/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/agent/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/chain-of-thought/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/plan/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/confirmation/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/queue/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/url/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/sources/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/inline-citation/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/artifact/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/snippet/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/commit/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/attachments/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/context/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/open-in-chat/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/model-selector/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/mic-selector/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/voice-selector/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/audio-player/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/transcription/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/terminal/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/file-tree/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/environment-variables/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/package-info/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/stack-trace-parser/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/stack-trace/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/schema-display/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/test-results/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/web-preview/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/components/index.html\u001b[22m \u001b[2m(+6ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/theming/index.html\u001b[22m \u001b[2m(+5ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/introduction/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/installation/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/quickstart/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/cli/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/dark-mode/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/docs/owns-vs-does-not-own/index.html\u001b[22m \u001b[2m(+0ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/islands/copy-button/index.html\u001b[22m \u001b[2m(+1ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/registry/index.html\u001b[22m \u001b[2m(+3ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m   \u001b[34m├─\u001b[39m \u001b[2m/index.html\u001b[22m \u001b[2m(+2ms)\u001b[22m \n\u001b[2m12:58:39\u001b[22m \u001b[32m✓ Completed in 124ms.\n\u001b[39m\n\u001b[2m12:58:39\u001b[22m \u001b[34m[build]\u001b[39m \u001b[32m✓ Completed in 309ms.\u001b[39m\n\u001b[2m12:58:39\u001b[22m \u001b[34m[build]\u001b[39m 67 page(s) built in \u001b[1m706ms\u001b[22m\n\u001b[2m12:58:39\u001b[22m \u001b[34m[build]\u001b[39m \u001b[1mComplete!\u001b[22m\n",
+      "timedOut": false,
+      "quickstart_tutorial_true_count": 0,
+      "schema_json_tutorial_count": 1
+    },
+    "invalid": {
+      "root": "/Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b",
+      "exit": 1,
+      "timedOut": false,
+      "diagnostic": "\u001b[31m[InvalidContentEntryDataError]\u001b[39m \u001b[1mdocs → quickstart\u001b[22m data does not match collection schema.\n  \u001b[1mtutorial**: **tutorial\u001b[22m: Expected type `\"boolean\"`, received `\"string\"`\n    \u001b[4m/Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate/apps/docs/src/content/docs/quickstart.mdx:0:0\u001b[24m",
+      "full_output_tail": "\n> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate/apps/docs\n> tsx ../../scripts/docs-data/prebuild.ts\n\n[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92\n\n> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate/apps/docs\n> pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build\n\n\n> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate\n> tsx packages/registry/scripts/build-registry.ts\n\nregistry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/\n\n> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate\n> tsx scripts/build-gallery-manifest.ts\n\ngallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json\n\u001b[2m12:58:45\u001b[22m \u001b[34m[vite]\u001b[39m Re-optimizing dependencies because vite config has changed\n\u001b[2m12:58:45\u001b[22m \u001b[34m[content]\u001b[39m Syncing content\n/Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate/apps/docs:\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build`\nExit status 1\n\u001b[31m[InvalidContentEntryDataError]\u001b[39m \u001b[1mdocs → quickstart\u001b[22m data does not match collection schema.\n\n  \u001b[1mtutorial**: **tutorial\u001b[22m: Expected type `\"boolean\"`, received `\"string\"`\n\n  \u001b[1mHint:\u001b[22m\n\u001b[33m    See \u001b[4mhttps://docs.astro.build/en/guides/content-collections/\u001b[24m for more information on content schemas.\u001b[39m\n  \u001b[1mError reference:\u001b[22m\n    \u001b[36m\u001b[4mhttps://docs.astro.build/en/reference/errors/invalid-content-entry-data-error/\u001b[24m\u001b[39m\n  \u001b[1mLocation:\u001b[22m\n    \u001b[4m/Users/justinrich/.cache/agent-scratch/fix-ori-ci-001-1-19692-1790276312963/b/candidate/apps/docs/src/content/docs/quickstart.mdx:0:0\u001b[24m\n  \u001b[1mStack trace:\u001b[22m\n\u001b[2m    at getEntryData (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CI-001-1/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/content/utils.js:126:9)\n    at async eval (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CI-001-1/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/content/loaders/glob.js:225:13)\u001b[22m\n"
+    }
+  },
+  "static_gates": {
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "exit": 0,
+      "tail": "\n> rnr-ai-elements@0.2.1 typecheck /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CI-001-1\n> tsc --noEmit && pnpm --filter @rnr-ai-elements/registry typecheck\n\n\n> @rnr-ai-elements/registry@0.0.0 typecheck /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CI-001-1/packages/registry\n> tsc --noEmit\n\n"
+    },
+    "biome": {
+      "command": "pnpm exec biome ci apps/docs/src/content.config.ts",
+      "attempts": [
+        {
+          "shape": "pnpm exec",
+          "exit": 0,
+          "stderr": ""
+        }
+      ],
+      "passed": true
+    },
+    "trackedDiff": [
+      ".tmp/FIX-ORI-CI-001-1/green.json",
+      ".tmp/FIX-ORI-CI-001-1/red.json",
+      ".tmp/FIX-ORI-CI-001-1/run.json",
+      "apps/docs/src/content.config.ts",
+      "apps/docs/src/content/docs/quickstart.mdx",
+      "tests/sprint-05-orient-search/tutorial-designation-proof.test.ts"
+    ],
+    "pageRouteUnchanged": true,
+    "gateFileAbsent": true
+  },
+  "scratch_cleanup": "owned os.tmpdir() scratch roots removed on success and failure"
+}
