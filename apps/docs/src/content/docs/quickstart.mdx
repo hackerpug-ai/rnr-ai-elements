@@ -1,0 +1,109 @@
+---
+title: 'Quickstart'
+description: 'The single tutorial: install the conversation family items into your Expo project and drive a seeded chat screen with a working prompt input in Expo Go.'
+section: 'getting-started'
+order: 2.5
+---
+
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import CodeBlock from '../../components/CodeBlock.astro';
+import InstallCommand from '../../components/InstallCommand.astro';
+import TabGroup from '../../components/islands/TabGroup.astro';
+
+export const PANELS = [
+  { engine: 'nativewind', label: 'nativewind' },
+  { engine: 'uniwind', label: 'uniwind' },
+];
+
+export const messagesSource = readFileSync(
+  join(process.cwd(), '../../packages/docs-snippets/shared/quickstart-messages.ts'),
+  'utf8',
+);
+export const screenSource = readFileSync(
+  join(process.cwd(), '../../packages/docs-snippets/shared/quickstart-screen.tsx'),
+  'utf8',
+);
+export const entrypointNativewind = readFileSync(
+  join(process.cwd(), '../../packages/docs-snippets/nativewind/app/index.tsx'),
+  'utf8',
+);
+export const entrypointUniwind = readFileSync(
+  join(process.cwd(), '../../packages/docs-snippets/uniwind/app/index.tsx'),
+  'utf8',
+);
+
+{/* Every displayed source below is the RN-owned executable single source, read at
+build time from the committed files — the tutorial never hand-copies a sample, so
+the bytes a learner copies are the bytes both reference consumers compiled and ran
+on real devices (ORI-RN-002 / ORI-RN-003). */}
+
+
+In this tutorial we build a seed-data chat screen you can open in Expo Go. By the end you will see a scrolling message list seeded with a 24-turn conversation, type into a working prompt input, and watch your own message appear as a new turn — everything runs on seed data, with no model and no network call.
+
+This tutorial does not cover choosing an engine or wiring a real model. Read [Installation](/docs/installation) first if your project is not on an engine yet; the worked example linked at the end shows the live-model path.
+
+## What you need
+
+- An Expo project you can already build and run on your engine — the [Installation](/docs/installation) page sets that up.
+- A terminal at your project root.
+- Expo Go on your phone, or a simulator or emulator on your machine.
+
+Everything this tutorial installs runs in Expo Go — no dev client needed.
+
+## Build the screen
+
+1. We install the Conversation registry item from your engine's tree. Select the tab for your engine, copy the complete command, and run it at your project root. When the CLI finishes, you should see the paths it wrote, starting with `components/ai/conversation.tsx`.
+
+   <InstallCommand item="conversation" />
+
+2. We install the Message registry item. The conversation item does not install it automatically, and the message list needs it. You should see `components/ai/message.tsx` among the paths the CLI reports, along with the peers both items declare.
+
+   <InstallCommand items={['message']} />
+
+3. We install the composed PromptInput together with the Item and Sheet registry items its installed source imports. You should see `components/ai/prompt-input.tsx`, `components/ui/item.tsx`, and `components/ui/sheet.tsx` written into your project by one command.
+
+   <InstallCommand items={['prompt-input', 'item', 'sheet']} />
+
+4. We add the seed transcript at `shared/quickstart-messages.ts`. The file is identical for both engines, so pick either panel and copy the complete source. You should see 24 authored turns in the file, from `Seed turn 01: Plan a weekend walk.` to `Seed turn 24: Ready for your message.`
+
+   <TabGroup panels={PANELS}>
+     <div slot="nativewind">
+       <CodeBlock code={messagesSource} label="Copy quickstart-messages.ts" />
+     </div>
+     <div slot="uniwind">
+       <CodeBlock code={messagesSource} label="Copy quickstart-messages.ts" />
+     </div>
+   </TabGroup>
+
+5. We add the chat screen at `shared/quickstart-screen.tsx`. The same source runs on both engines because every import resolves through your project's `@/` alias into the installed registry items — no engine wrapper, no model call, and the submit handler receives the composed `PromptInputMessage` object, never a plain string. You should see the screen compose Conversation, Message, and PromptInput, with the scroll button lifted above the measured composer.
+
+   <TabGroup panels={PANELS}>
+     <div slot="nativewind">
+       <CodeBlock code={screenSource} label="Copy quickstart-screen.tsx" />
+     </div>
+     <div slot="uniwind">
+       <CodeBlock code={screenSource} label="Copy quickstart-screen.tsx" />
+     </div>
+   </TabGroup>
+
+6. We render the screen from your app's first route. In the reference consumer that route is `app/index.tsx` (expo-router), and each engine's thin entrypoint does exactly one thing: import the shared screen and render it. You should see no other logic in the file you paste.
+
+   <TabGroup panels={PANELS}>
+     <div slot="nativewind">
+       <CodeBlock code={entrypointNativewind} label="Copy app/index.tsx (nativewind)" />
+     </div>
+     <div slot="uniwind">
+       <CodeBlock code={entrypointUniwind} label="Copy app/index.tsx (uniwind)" />
+     </div>
+   </TabGroup>
+
+7. We run the app and open it in Expo Go. Run `npx expo start` at the project root and scan the QR code with Expo Go. You should see the seeded transcript scroll under your thumb, and after you type a message and press send, your message appears exactly once as a new turn and the composer clears.
+
+## Where to go next
+
+This screen is deliberately finite: the transcript is seed data, and the only turns added are the ones you type. When you are ready to send real messages, the worked example in `apps/example` composes the same registry items around AI SDK v7's `useChat` hook, streaming from a small server that keeps your provider credentials off the device — [open the worked example](https://github.com/hackerpug-ai/rnr-ai-elements/tree/main/apps/example) to see the wiring and run it.
+
+- Read the full URL and destination contract: [CLI](/docs/cli)
+- See the whole ownership split before you wire a model: [What the library owns](/docs/owns-vs-does-not-own)
+- Point the items at your tokens: [Theming](/docs/theming)

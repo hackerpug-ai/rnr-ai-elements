@@ -1,0 +1,92 @@
+PASS (4) FAIL (8)
+
+1. ORI-CONT-003-AC-1
+   Error: /docs/quickstart must serve HTTP 200
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m200[39m
+   Received: [31m404[39m
+   
+     153 |   const response = await navigateLocalhost(page, path);
+     154 |   const status = response?.status() ?? 0;
+   > 155 |   expect(status, `${path} must serve HTTP 200`).toBe(200);
+         |                                                 ^
+     156 |   if (status !== 200 || !response) return '';
+     157 |   return await response.text();
+     158 | }
+       at requireOk (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:155:49)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:226:3
+2. ORI-CONT-003-AC-2
+   Error: /docs/quickstart must serve HTTP 200
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m200[39m
+   Received: [31m404[39m
+   
+     153 |   const response = await navigateLocalhost(page, path);
+     154 |   const status = response?.status() ?? 0;
+   > 155 |   expect(status, `${path} must serve HTTP 200`).toBe(200);
+         |                                                 ^
+     156 |   if (status !== 200 || !response) return '';
+     157 |   return await response.text();
+     158 | }
+       at requireOk (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:155:49)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:291:3
+3. ORI-CONT-003-AC-3
+   Error: /docs/quickstart must serve HTTP 200
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m200[39m
+   Received: [31m404[39m
+   
+     153 |   const response = await navigateLocalhost(page, path);
+     154 |   const status = response?.status() ?? 0;
+   > 155 |   expect(status, `${path} must serve HTTP 200`).toBe(200);
+         |                                                 ^
+     156 |   if (status !== 200 || !response) return '';
+     157 |   return await response.text();
+     158 | }
+       at requireOk (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:155:49)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:519:3
+4. ORI-CONT-003-AC-4
+   Error: /docs/quickstart must serve HTTP 200
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m200[39m
+   Received: [31m404[39m
+   
+     153 |   const response = await navigateLocalhost(page, path);
+     154 |   const status = response?.status() ?? 0;
+   > 155 |   expect(status, `${path} must serve HTTP 200`).toBe(200);
+         |                                                 ^
+     156 |   if (status !== 200 || !response) return '';
+     157 |   return await response.text();
+     158 | }
+       at requireOk (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:155:49)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:845:3
+5. ORI-CONT-003-AC-1
+   Error: /docs/quickstart must serve HTTP 200
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m200[39m
+   Received: [31m404[39m
+   
+     153 |   const response = await navigateLocalhost(page, path);
+     154 |   const status = response?.status() ?? 0;
+   > 155 |   expect(status, `${path} must serve HTTP 200`).toBe(200);
+         |                                                 ^
+     156 |   if (status !== 200 || !response) return '';
+     157 |   return await response.text();
+     158 | }
+       at requireOk (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:155:49)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003/tests/sprint-05-orient-search/quickstart-content.spec.ts:226:3
+
+... +3 more failures
+
+Time: 8097ms
+[full output: ~/Library/Application Support/rtk/tee/1790266955_playwright.log]

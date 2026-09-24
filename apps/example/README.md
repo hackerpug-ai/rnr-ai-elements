@@ -13,6 +13,13 @@ instrument: findings about installs are findings about what a real consumer expe
 - `lib/nav-theme.ts` — react-navigation chrome colors from the same token source as `global.css`
 - `components.json` — written by `npx @react-native-reusables/cli@latest init`, not by hand
 
+## Routes
+
+- `/` — the offline fixture-driven screen: no backend, no provider
+- `/live-chat` — the live provider-backed screen
+
+To configure, start, and exercise `/live-chat` against its real streaming backend, read [docs/live-chat.md](docs/live-chat.md). The commands below build the app itself.
+
 ## Run
 
 ```bash
