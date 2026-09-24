@@ -1,0 +1,40 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "1d9d9e783e2316ed1c2c79cc80e788ca758e779d",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independently reran the locked command at HEAD 1d9d9e78 (manifest run c1289c0e-append, my run records headSha 1d9d9e78): positive build exit 0, fresh apps/docs/dist/docs/quickstart/index.html present, decoded builtH1 == frontmatter title ('Quickstart'), and output contains no '[docs-data] single-tutorial' diagnostic. h1==title is structurally sound: PageHeader.astro:16 renders <h1>{title}</h1> from the frontmatter title; the test decodes the five HTML entities. positive.log confirms the real composite build (registry:build + gallery:manifest + astro build with tsx prebuild riding on pnpm build)."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "duplicatePublished: exit 1 with '[docs-data] single-tutorial: item \"tutorial-cardinality\" the published tutorial sources are [\"ori-ci-001-second-tutorial\", \"quickstart\"]; observed 2 versus 1' — both actual source IDs and counts. duplicateUnpublished (copy marked draft: true via the schema's real publication field): exit 0, dist observation {second-tutorial: false, quickstart: true}, no gate diagnostic — publication parity proven (gate filters draft !== true at single-tutorial.ts:126, identical to docs-navigation.ts:74). Reproduced in my run and in implementer runs 2-4."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "missing: exit 1 with 'observed 0 versus 1', naming /docs/quickstart, the exact source ID \"quickstart\", and its repo-relative source path (apps/docs/src/content/docs/quickstart.mdx) — the entry that lost its designation. Failure stack in missing.log shows Module.assertSinglePublishedTutorial at single-tutorial.ts:168 inside the real astro build, so the nonzero exit is caused by the gate, not an earlier stage. Reproduced in my run."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "noncanonical: exit 1 with '[docs-data] canonical-destination: item \"ori-ci-001-moved-tutorial\" the sole published tutorial publishes at /docs/ori-ci-001-moved-tutorial (...) but must publish at /docs/quickstart' — actual source ID, actual route, canonical destination all present. The file rename IS the real route convention (glob slug). Gate stack again proves causality. Reproduced in my run."
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "SHA-256 snapshots over every authored .md/.mdx: scratchRestoredMatchesBaseline true and candidateUnchanged true in all runs including mine; restored rerun of the identical command exits 0 with fresh quickstart HTML and builtH1 == title; dist wiped (dist + .astro) before every build so no cached receipt; scratch root removed in the drill's finally. Residual-mutation loop plus snapshot equality close the leak path."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Gate is real and correctly placed: [...id].astro:44-49 loads scripts/docs-data/single-tutorial.ts via a runtime dynamic import and calls assertSinglePublishedTutorial(typed) on the COMPLETE collection before publishedDocs route filtering, with publication parity (draft !== true) and pinned constants; it is the single invocation site at prerender time (content.config.ts references it only in a comment). I probed the claimed bundler boundary myself in an owned scratch copy: replacing the dynamic import with a static one fails the real build with [UNRESOLVED_IMPORT] Module not found in 115ms, confirming the dynamic Node-ESM-loader shape is necessary (Node 24.14 strips the erasable-only TS natively) rather than a style choice. The drill copies the whole candidate to an owned tmpdir root (symlink-preserving cpSync, .git/.kb-run-sprint/.tmp excluded), wipes dist/.astro, and executes the real 'pnpm --filter @rnr-ai-elements/docs build' six times; every negative case asserts the specific [docs-data] diagnostic text (both IDs / observed-vs-expected / both routes), so an unrelated earlier failure cannot masquerade as proof. I reproduced the locked suite at HEAD: PASS 5/0, and my run appended to the manifest with headSha 1d9d9e78 and the same exit-code pattern (0,1,0,1,1,0) plus h1 'Quickstart'. Evidence identity verified: implementer runs 1-4 record the pre-commit base headSha bc4b84c1, but all five per-file source hashes (gate, route, content.config, test, quickstart source) match the committed bytes exactly, proving the logs came from the tree that became the commit; the 19:25 fast-fail iteration is visible in the manifest rather than hidden. pnpm typecheck exit 0; biome ci exit 0 on 174 files via the direct binary (the pnpm-exec biome shim currently dies at --version machine-wide, including on untouched files in the primary checkout — environmental, not the diff; .astro files are outside biome's configured domain). Write scope is exactly the nine allowlisted files; stub-marker sweep clean. RED discipline is satisfied per contract through the discriminating negatives (requires_red_evidence false, TDD_MODE skipped): each mutation genuinely fails the real build pre-restoration, verified from logs and rerun. No findings requiring fixes."
+}

@@ -13880,6 +13880,11 @@
         "state": "landed",
         "task": "ORI-AST-007"
       },
+      "9481fdc4df8275d4962052da69c9b3c12044054494f3f1775295914bf7ab53c1": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-CI-001"
+      },
       "a28ce36abc56f40233d9164dc2b92a8ce575268eeed102259c9b50a42ed30d58": {
         "kind": "complete-task",
         "state": "landed",
@@ -16942,6 +16947,7 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-010"
     },
     "ORI-CI-001": {
+      "approved_sha": "1d9d9e783e2316ed1c2c79cc80e788ca758e779d",
       "blocked_reports": {
         "1": {
           "cycle": 1,
@@ -16986,12 +16992,97 @@
       },
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-CI-001",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "1d9d9e783e2316ed1c2c79cc80e788ca758e779d",
+        "before_head": "57c970b51afd3368423366912dd290952651ba31",
+        "desired_sha256": "1e4245a0c61b06d151ee152ac08326858cf0db4fbd2b7394db6ed1a3bea95b8b",
+        "expected_task_sha256": "474118d4c0ee33077255d1c5d801d9b5870942469b53af408c3b3f805524d147",
+        "handoff_sha256": "29ed0a995291b71f79419c721d8b43de3fe10059cf24121d856a5215bd831959",
+        "landed_on": "main",
+        "landed_trunk_sha": "9063b4cdc9cdcdac295ca9380b22640edddc95d2",
+        "metadata_commit_sha": "9063b4cdc9cdcdac295ca9380b22640edddc95d2",
+        "operation_id": "9481fdc4df8275d4962052da69c9b3c12044054494f3f1775295914bf7ab53c1",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-AST-001",
         "ORI-CONT-003"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CI-001-1d9d9e783e2316ed1c2c79cc80e788ca758e779d.json",
+        "payload": {
+          "commit_sha": "1d9d9e783e2316ed1c2c79cc80e788ca758e779d",
+          "concerns": [
+            "Every `-t ORI-CI-001-<token>` verify command re-executes the complete drill (six full builds plus a whole-repo copy, ~3.5 minutes warm here), so the reviewer's five literal per-token commands each pay the full cost — budget review and CI time accordingly.",
+            "The runtime import anchors on build-process cwd (apps/docs) resolving ../../scripts/docs-data/single-tutorial.ts; a future change to the docs build cwd or the scripts/ location would fail getStaticPaths with a module-not-found that is NOT a tutorial diagnostic.",
+            "The dynamic import relies on Node's native TypeScript type stripping (default since Node 23.6); pinning CI to an older Node would break the docs build at getStaticPaths rather than at install time.",
+            "os.tmpdir() resolves to ~/.cache/agent-scratch in this sandbox and the drill removes its scratch root only via its own finally block, so a SIGKILL mid-drill would strand a roughly 1.7 GB copy that nothing else reaps."
+          ],
+          "deviations": [
+            "The route generator loads the gate with a runtime dynamic import (/* @vite-ignore */ pathToFileURL(join(process.cwd(), '..', '..', 'scripts', 'docs-data', 'single-tutorial.ts')).href) instead of a static import, because Astro 7's bundler cannot resolve ANY static import escaping the apps/docs project root and the task allowlist contains no writable in-root file that could re-export the module.",
+            "The fallow unused-file directive stays on scripts/docs-data/single-tutorial.ts although cycle 1 planned to remove it with the wiring: fallow's static import graph cannot see the dynamic consumer, so removal fails the pre-commit audit; the directive's comment now documents the dynamic-load reality.",
+            "Every drill build implicitly runs the docs package's prebuild script (tsx prebuild.ts) ahead of registry:build + gallery:manifest + astro build because pnpm auto-runs prebuild before build — the ACs name the command, not its four-stage expansion.",
+            "AC-1's 'decoded title' is observed as the rendered h1 (PageHeader.astro:16) rather than the <title> tag, which by design reads `${title} — RNR AI Elements` and can never equal the source title.",
+            "The committed evidence logs/manifest contain four appended drill invocations, including two earlier harness-defeat runs (a symlink-dropping hand-rolled copy, then an h1 regex that ignored scoped-style attributes) — kept as honest history under the 'append identifiable runs' rule."
+          ],
+          "done": "Landed the fail-closed single-tutorial enforcement (apps/docs/src/pages/docs/[...id].astro invokes assertSinglePublishedTutorial over the complete published collection before any route filtering, loaded from scripts/docs-data/single-tutorial.ts through a prerender-time dynamic import because Astro 7's bundler rejects static out-of-root imports) plus the real-build integration drill (tests/sprint-05-orient-search/single-tutorial-gate.test.ts: one owned fs.cpSync scratch copy per invocation, six real `pnpm --filter @rnr-ai-elements/docs build` executions proving positive, published-duplicate, draft-duplicate, missing-designation, moved-destination, and byte-exact-restored cases with source-identifying diagnostics) and the six appended evidence files with per-run manifest hashes; the locked vitest command exits 0 (PASS 5/0), pnpm typecheck and biome pass, and the merged result builds the docs cleanly at 67 pages.",
+          "feedback": [
+            "The three-file production allowlist assumed [...id].astro could statically import scripts/docs-data; the bundler boundary only surfaced by probing actual builds — Astro charters that wire scripts into app builds should state that boundary up front or pre-authorize an in-root bridge file.",
+            "The drill skeleton (whole-candidate cpSync clone with symlink preservation, N real builds with fresh dist/.astro, byte-hash restoration proof, per-run evidence appends) is reusable for any content-invariant task; extracting it into tests/sprint-05-orient-search/support/ would save the next task the symlink, cwd, and compression lessons.",
+            "The charter's 'Shared setup may run the complete drill once per invocation' clause is load-bearing for cost control — future charters should state explicitly whether reviewers may run the full suite once or must pay the per-token drill cost five times.",
+            "The blocked-checkpoint cycle worked exactly as designed: cycle 1 landed two green behavior-neutral pieces, the orchestrator routed the one-line prerequisite to a FIX task, and the cycle-2 merge reconciled my identical schema line with zero conflicts."
+          ],
+          "findings": [
+            "Astro 7 (rolldown-vite) fails to bundle any static import from apps/docs that escapes the project root — probe-verified with gates.ts and token-map.ts at the identical depth — and unused aliased imports are tree-shaken before resolution, so naive probe builds silently skip resolution and lie about what works.",
+            "readdirSync({ withFileTypes: true }) reports symlinks as neither file nor directory, so a Dirent-based recursive copy silently drops the entire pnpm node_modules symlink fabric and the copied workspace dies at its first bin invocation; fs.cpSync preserves symlinks and copy-on-writes on APFS.",
+            "pnpm implicitly runs any prebuild script before build, so the 'public docs build' is really a four-stage chain (prebuild → registry:build → gallery:manifest → astro build) and failure triage must check the earliest stage.",
+            "Astro 7 scoped styles stamp data-astro-cid-* attributes onto plain elements, so the built page renders `<h1 data-astro-cid-...>` and text oracles over built HTML must match `<h1[^>]*>` and decode entities.",
+            "fallow reports stale suppressions, which makes a temporary ignore directive self-enforcing: the moment the suppressed finding stops firing (here, a future static import) the audit flags the directive and forces its removal."
+          ],
+          "scope_impact": [
+            {
+              "change": "Pin the workflow's required-check or log-grep for content gates on those exact diagnostic strings instead of re-deriving the invariant.",
+              "found": "The public docs build now fails closed on tutorial violations with deterministic markers: `[docs-data] single-tutorial: item \"tutorial-cardinality\" ...; observed N versus 1` and `[docs-data] canonical-destination: item \"<id>\" ... must publish at /docs/quickstart`, emitted at prerender from the real build.",
+              "target": "ORI-CI-002"
+            },
+            {
+              "change": "Content tasks must change the designation only in one atomic edit (remove old + add new together), and content review keeps sole ownership of prose-level tutorial classification.",
+              "found": "Any authored-content change that adds, drafts, renames, or removes the `tutorial: true` designation now fails the public build unless the collection returns to exactly one designated published tutorial at /docs/quickstart, and metadata alone cannot detect an undeclared second tutorial in prose.",
+              "target": "ORI-CONT-004"
+            },
+            {
+              "change": "Record the boundary in the docs technical requirements: either standardize the prerender-time dynamic-import shape for gates, or allowlist one in-root bridge file (e.g. apps/docs/src/lib/gates.ts) for future enforcement tasks.",
+              "found": "scripts/docs-data modules are statically unimportable from apps/docs (project-root bundler boundary), so every future task wiring build-time enforcement into the docs build hits the same dynamic-load or allowlist problem this task solved ad hoc.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-CI-001"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-ci-001-impl@session-a251722f",
+          "response_id": "digest:29ed0a995291b71f79419c721d8b43de3fe10059cf24121d856a5215bd831959",
+          "response_receipt": {
+            "agent": "astro-implementer",
+            "dispatch_handle": "ori-ci-001-impl@session-a251722f",
+            "payload_sha256": "29ed0a995291b71f79419c721d8b43de3fe10059cf24121d856a5215bd831959",
+            "response_id": "digest:29ed0a995291b71f79419c721d8b43de3fe10059cf24121d856a5215bd831959",
+            "session_id": "ori-ci-001-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CI-001-1d9d9e783e2316ed1c2c79cc80e788ca758e779d-fbefaea482426e6de642897af29f7df9eaeccc0124bb086edb03d7663daf7a63.response.json",
+          "response_receipt_sha256": "fbefaea482426e6de642897af29f7df9eaeccc0124bb086edb03d7663daf7a63",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-ci-001-impl@session-a251722f"
+        },
+        "sha256": "29ed0a995291b71f79419c721d8b43de3fe10059cf24121d856a5215bd831959"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:29ed0a995291b71f79419c721d8b43de3fe10059cf24121d856a5215bd831959",
+        "status": "received"
+      },
       "implementer": "astro-implementer",
       "implementer_session": {
         "dispatch_handle": "ori-ci-001-impl@session-a251722f",
@@ -17007,11 +17098,30 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md",
         "task_sha256": "474118d4c0ee33077255d1c5d801d9b5870942469b53af408c3b3f805524d147"
       },
+      "landing": {
+        "approved_sha": "1d9d9e783e2316ed1c2c79cc80e788ca758e779d",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "57c970b51afd3368423366912dd290952651ba31",
+        "review_receipt": {
+          "agent": "astro-reviewer",
+          "dispatch_handle": "ori-ci-001-rev@session-a251722f",
+          "payload_sha256": "06fd8bf731f192e482f237bfa02d85099342a7d3aced0bab2c9c35a640c254c3",
+          "response_id": "digest:06fd8bf731f192e482f237bfa02d85099342a7d3aced0bab2c9c35a640c254c3",
+          "session_id": "ori-ci-001-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "c7a984707f1100e383fc4f7b8699af52ed68cbd87a17fa42aff8ac70eeebfde8",
+        "reviewer": "astro-reviewer",
+        "reviewer_dispatch_handle": "ori-ci-001-rev@session-a251722f",
+        "reviewer_response_id": "digest:06fd8bf731f192e482f237bfa02d85099342a7d3aced0bab2c9c35a640c254c3",
+        "reviewer_session": "ori-ci-001-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "06fd8bf731f192e482f237bfa02d85099342a7d3aced0bab2c9c35a640c254c3"
+      },
       "last_findings": null,
-      "merge_sha": null,
+      "merge_sha": "57c970b51afd3368423366912dd290952651ba31",
       "points": 3,
       "reviewer": "ghactions-reviewer",
-      "status": "in_progress",
+      "status": "completed",
       "wave": 10,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001"
     },
