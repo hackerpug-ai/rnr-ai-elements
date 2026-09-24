@@ -1,0 +1,61 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "394670d7734c932f2ae31d997f101b33082e3f1f",
+  "reviewer": "aisdk-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": false,
+      "evidence": "Streaming and provider correlation are real and strong (distinct timestamped prefixes 47-74 per target; 114/126 resp_ ids on web; web raw-text sha256 === server textHash). But two context oracles are broken for the 4 native targets. (1) live-example-proof.ts:2350 changed the follow-up-bubble lookup from 'What marker' to startsWith('For request') — that is the WEB session's prompt (live-example-proof.ts:1136); the native drivers send 'What marker did I ask you to remember?' (support/live-example-proof.test.ts:151) and 'What marker did I give you?' (support/nativewind-live-example.ts:197). Scan of all 4 native stream.jsonl files: 0 texts start with 'For request'; the real 'What marker' bubbles ARE present (1/18/24/24 hits). So latest_user_message_nonce_occurrences is 0 by construction, never by observation, and the suite's toBe(0) assertion (live-example-proof.test.ts:324-327) cannot fail — an assertion weakened this cycle. (2) The truncation-tolerant recall fallback (live-example-proof.ts:2338-2348) accepts the 20-char marker prefix in ANY screen text; the marker legitimately appears in the turn-1 user bubble, the turn-1 answer (seen in uniwind-ios streaming.png: 'The marker you gave me is ORI-RN-004:...'), and the seed prompt bubble. For uniwind-ios the anchor degenerates: all 5 turn records share journal ts 13:12:24 (records flushed at flow end), so followupAnchorTs = flow-end-5s and the only 2 matching samples land 95s later during stop/retry phases as bare marker lines. The 'history disconnected' negative control would not reliably fail this oracle on native targets.",
+      "fix": "In tests/sprint-05-orient-search/live-example-proof.ts: (a) restore the follow-up-bubble lookup to the drivers' actual wording — find(t => t.startsWith('What marker')) — and search the observer SAMPLES (where the bubble demonstrably is), not just finalTexts; (b) make the anchored recall match answer-shaped text only: require the matched text to contain the marker prefix embedded in a longer string (e.g. length > marker length + 10, or matches a 'marker ... ORI-' answer pattern), excluding the bare marker user bubble; keep the anchor only when the session's completed-turn timestamps are distinct (skip the anchor path when all turn records share one ts, as uniwind-ios flow-end flushes do). Also derive prior_exchange_count for native from real records instead of the hardcoded 2 (live-example-proof.ts:2355) — the suite asserts >= 1 on a constant.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Real backend 'aborted' turn records with 71/145/92/83 (uniwind) and 103/75/103/130 (nativewind) streamed deltas for the stop turns; web-self aborts real at 54/17 deltas through the abort-propagating proxy. Verified per-session that the stop turn has exactly ONE terminal record (requestId is the session id; the old same-id completed+aborted check was structurally always-true once any completed turn existed in the session, so the rederivation at live-example-proof.ts:2278 is a legitimate correction — and the comment's per-turn single-terminal-record claim is empirically true in both engines' journals). Failed stop attempts honestly journaled as separate completed-essay sessions (uniwind j4hYviSQerYcQV5h; nativewind jWQ58frV3G48W65a with a 1157-delta completion). Driver gates fail-closed (android re-drives gated on aborted records, support/live-example-proof.test.ts:1296-1335; iOS accessible-Retry gate at 1851-1855); retry single-user-turn backed by transcript pixel probes (probe.count !== 1 fails the leg)."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Real error records on rnr-s05-nonexistent-<runId> verified in both engines' server-events.jsonl (5 error sessions each; validator cross-checks the nonexistent model per rejected id, live-example-proof.ts:3506-3523); endpoint-loss phases stop the owned backend child and gate on the accessible Retry control before restart; teardown restore-verification carries real provider responses (resp_022ec86a.../resp_065ee377... with real usage 49/4/53 tokens). Independent credential grep over the whole evidence tree: clean. Note: visible_error now derives from retryOk for iOS (live-example-proof.ts:2381) — verified legitimate: the iOS retry phase hard-fails without the visible accessible Retry control, so a passed retry phase implies the error surface was observed."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Independently recomputed: identical source_digests across both manifests and equal to the current tree (all 9 pinned files); distinct run ids (ORI-AI-002-1790254489381 / ORI-AI-002-1790256894249); both manifests declare their engine, record their own validated exit_code 0 with 3 accepted targets each; union = exactly 6 complete target records with all five artifacts (real device-resolution screenshots inspected — uniwind-ios streaming.png shows genuine mid-stream marker echo with Stop control; nativewind-android recovered.png shows the completed essay state; 44-47MB real recordings). Vitest 4/4 re-run by me — the 5 tamper cases exit nonzero through the real validator with named diagnostics, intact sets validate 3/3, teardowns record restore/release/0 listeners/closed contexts. Cycle-6 RED captured before seeding (4 failed / 0 passed on absent sets); earlier cycles' dirs untouched; scope = the two allowlisted code files + evidence + cycle journals (prior-cycle convention). My independent one-engine rerun (uniwind, scratch output dir): both proof pipelines executed ~37 min on the reserved devices, final pipeline passed=3 completed=true with real sessions in its journal (4 abort-bearing gpt-4.1-mini sessions + 5 nonexistent-model rejection sessions) — but the invocation then exited 1 on an unhandled undici socket-close against port 4000 during post-proof teardown, the exact crash class already documented at live-example-proof.ts:1690-1700 and in the implementer's flake ledger (uniwind needed 5 attempts today). The committed green sets are genuine and revalidate; the teardown race lives in the ORI-RN-004-owned session/backend seam.",
+      "fix": "Route the teardown-crash class to its owner: an in-flight fetch against the owned backend (likely the driver session poller, ~101KB records body) is un-drained when the orchestrator stops the backend after pipeline/end; it needs the same body-drain defense verifyRestoredModel already has. Not fixable inside this task's allowlist (support/ files are write-prohibited here).",
+      "fix_location": "tests/sprint-05-orient-search/support/native-session.ts (ORI-RN-004 owner, separately scoped)"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": false,
+      "evidence": "Inherits AC-1: recall oracle non-discriminating and latest-user-message oracle vacuous for the 4 native targets.",
+      "fix": "See AC-1 fix.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Inherits AC-2: real aborts with delta_count > 0 on all 6 targets; retries complete with exactly 1 retained user turn via transcript probes."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Inherits AC-3: real endpoint loss and real provider rejections on the nonexistent model, recovery through real restored-model requests."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Inherits AC-4: validator rejects all 5 tamper classes nonzero with named diagnostics; accepts only the fresh correlated sets; teardown records cleanup of all owned resources."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "The six-target proof is real: both per-engine invocations produced genuine device artifacts, real provider records (aborted stop turns with 71-145 deltas, nonexistent-model rejections, restore-verification responses), one candidate SHA across identical manifest digests, distinct run ids, clean teardowns, and honest RED plus a flake ledger; typecheck, scoped biome (direct binary — the pnpm exec spawn failure is the documented local artifact), and the accumulated-evidence vitest suite all pass under my independent re-run, and my fresh uniwind rerun drove both proof pipelines green on the reserved devices before dying to the documented port-4000 teardown race in the ORI-RN-004-owned seam (exit 1, fail-closed). The session-scoping and completed_before_stop rederivations are legitimate oracle corrections I verified against the raw journals. But AC-1 cannot be approved: this cycle changed the native follow-up-bubble lookup to 'For request' — a wording only the web session sends and that appears zero times in native evidence — making latest_user_message_nonce_occurrences structurally 0 (a weakened assertion), and the truncation-tolerant recall fallback matches marker text in user bubbles rather than the follow-up answer, with a degenerate anchor on uniwind-ios where all turn records share one journal timestamp. Two targeted fixes in live-example-proof.ts (match the drivers' real 'What marker' wording across observer samples; require answer-shaped anchored matches) restore AC-1's discriminating power without touching any other gate."
+}

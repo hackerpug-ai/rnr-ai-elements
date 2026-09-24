@@ -1,0 +1,59 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "79e4f06da2354a5d68c3725ec7636ff741e9a110",
+  "reviewer": "aisdk-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": false,
+      "evidence": "Finding 1 (vacuous latest-user-message oracle) is REPAIRED: the suite now requires the drivers' literal follow-up bubble to be OBSERVED in the committed streams (bubbles >= 1 fails closed; present 1/18/24/24) and counts first-nonce occurrences in its visible text (live-example-proof.test.ts:351-360); the synthesizer mirrors over samples+finalTexts for future runs (live-example-proof.ts:2347-2353). prior_exchange_count is de-constant-ed in the synthesizer (derived from the session's gen-0 completed records). But finding 2 (non-discriminating recall) is only HALF repaired. I replicated the shipped oracle exactly (ANSWER_LEAD/ENGINE_TAG at live-example-proof.test.ts:333-336) and ran a disconnected-recall negative (strip every follow-up-answer phrasing — 'asked me to remember' / '(gave|give|aave) me the marker' / 'marker you/vou gave/aave' — from all samples, leaving everything else): nativewind-ios 23->0 and nativewind-android 17->0 (genuinely discriminating, and all their hits are positioned after the 'What marker' bubble in the same sample), but uniwind-ios 5->5 and uniwind-android 42->30 — BOTH STILL PASS WITH ZERO FOLLOW-UP RECALL. The surviving false-pass path is the 'with identifier' / 'identifier you provided' ANSWER_LEAD alternatives, which match marker-echo answers of turns whose PROMPTS contained the marker: uniwind-ios passes solely on 'ORI-RN-004 with identifier ORI-' lines (13:14:08-13:15:58, a marker-acknowledgment answer of a later turn) while its GENUINE follow-up recall at 13:16:03 ('You asked me to remember the marker ORI-' + wrapped continuation 'RN-004:0RI-AI-002-1790254489381-') FAILS the shipped ENGINE_TAG — the continuation line starts past the 'ORI-' wrap and /OR[I1l|][^\\w]{0,2}RN/ does not match it. So on uniwind-ios the oracle passes for the wrong reason and misses the right evidence. Additionally, the implementer's claim that 'the first same-line-only draft genuinely FAILED against uniwind-ios' is documented nowhere (cycle-7 contains only green/README.md + gate logs, no red/ or draft artifact) and is not reproducible: the same-line variant of the SHIPPED regexes passes all four streams (5/42/23/17 hits).",
+      "fix": "Two one-line changes to ANSWER_LEAD/ENGINE_TAG in BOTH live-example-proof.test.ts (~333) and live-example-proof.ts (~2333): (1) drop the 'identifier (you )?(provided|is)' and 'with identifier' alternatives — keep only '(gave|give) me the marker|asked me to remember|marker (you|vou) (gave|aave)' (phrasings that respond to the follow-up question and cannot come from a turn whose prompt contained the marker); (2) make ENGINE_TAG wrap-tolerant: /OR[I1l|][^\\w]{0,2}RN|\\bRN[-:]?\\d/i (the added alternative matches the wrapped continuation line 'RN-004:0RI-...'). I verified this exact oracle against the four committed streams: real hits 1/12/23/17 (uniwind-ios's single hit IS its genuine 13:16:03 follow-up recall) and the disconnected-recall negative drops ALL FOUR to 0 — discriminating everywhere, still passing the real evidence. No engine re-run needed.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Unchanged from the approved cycle-6 state: real aborted turn records (71-145 deltas) on all 4 native targets, real web-self aborts, fail-closed driver gates, transcript-probe single-turn oracles. The cycle-7 diff touches nothing in the stop/retry paths; committed evidence byte-untouched (git diff 394670d7..79e4f06d -- evidence/ is empty)."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Unchanged from cycle 6: real provider rejections on rnr-s05-nonexistent-<runId>, endpoint-loss phases with accessible-Retry gates, restore verification with real provider responses, credential scan clean. No cycle-7 changes touch these paths."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Committed per-engine evidence sets byte-untouched between 394670d7 and 79e4f06d (verified: empty diff). Suite changes are purely additive (+39 lines; no assertion removed or weakened); the synthesizer DROPPED the weak hierarchy_has_marker path, so future runs' followup derivation is stricter. Gates independently re-run by me at 79e4f06d: vitest 4/4 (exit 0), pnpm typecheck exit 0, scoped biome via direct binary exit 0 (4 pre-existing warnings, same as cycle 6). False-friend grep panel on the new diff: 0 hits. Tamper cases, digest pinning, one-candidate-SHA and teardown checks all still pass under my re-run. Note: the suite's recall assertion currently passes on uniwind for the wrong reason (marker-echo lines) — see AC-1; that is exactly what the fix addresses."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": false,
+      "evidence": "Inherits AC-1: the latest-user-message half is repaired; the follow-up-recall half remains non-discriminating on uniwind-ios and uniwind-android (negative simulation: 5->5 and 42->30).",
+      "fix": "See AC-1 fix (verified discriminating on all four committed streams: 1/12/23/17 real hits, 0 negative hits).",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Inherits AC-2; unchanged, evidence untouched."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Inherits AC-3; unchanged, evidence untouched."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Inherits AC-4; tamper rejection, digest pinning and teardown checks unchanged and green under my independent re-run."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Cycle 7 fully repairs finding 1 (the follow-up bubble is now observed in the committed streams with a fail-closed presence assertion and a real nonce count) and half of finding 2: the answer-lead oracle is genuinely discriminating on both nativewind targets (negative simulation drops them to 0, all hits follow-up-anchored). But it is still non-discriminating on both uniwind targets — uniwind-ios 5->5 and uniwind-android 42->30 under a disconnected-recall negative — because the 'with identifier'/'identifier you provided' lead alternatives match marker-echo answers of turns whose prompts contained the marker, while uniwind-ios's genuine follow-up recall (13:16:03, 'You asked me to remember the marker ORI-' + wrapped 'RN-004:...') fails the shipped engine-tag regex at the wrap boundary; the oracle passes for the wrong reason and misses the right evidence. The claimed same-line-draft failure is undocumented and unreproducible with the shipped regexes. Evidence is byte-untouched, no other assertion changed, gates green under my independent re-run, false-friend panel clean. A proven two-line fix (drop the two identifier lead alternatives; extend the engine tag with \\bRN[-:]?\\d) makes all four targets discriminating while still passing the real streams (1/12/23/17 hits, 0 under the negative) — no engine re-run needed."
+}

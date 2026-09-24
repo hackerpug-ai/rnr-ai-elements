@@ -1,0 +1,55 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "2138d10e970e0d9d54912b6365576ed235bc2d6a",
+  "reviewer": "aisdk-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Both cycle-6 findings now fully resolved. Finding 1 (repaired in cycle 7, re-verified): the suite observes the drivers' literal follow-up bubble in the committed streams with a fail-closed presence assertion (1/18/24/24 observations) and counts first-nonce occurrences in its visible text (live-example-proof.test.ts:330-360). Finding 2 (repaired this cycle): the shipped oracle in BOTH files (live-example-proof.test.ts:334-336, live-example-proof.ts:2337-2341) is byte-identical to the fix I proven in the cycle-7 review — ANSWER_LEAD reduced to the three follow-up-response phrasings (identifier variants dropped) and ENGINE_TAG extended with the wrap-tolerant \\bRN[-:]?\\d alternative. I re-ran the committed discrimination script myself (exit 0): positives 1/12/23/17 — uniwind-ios's single positive IS the genuine 13:16:03 follow-up recall ('You asked me to remember the marker ORI-' + wrapped 'RN-004:0RI-...') — and the disconnected-recall negative drops ALL FOUR targets to 0, matching my own independent cycle-7 replication exactly. The oracle now passes for the right reason and fails the negative control everywhere. The script faithfully implements the shipped regexes (verified line-by-line); the proof and its runnable script are on disk at .tmp/ORI-AI-002/cycle-8/. Remaining NIT (non-blocking): the suite still asserts prior_exchange_count >= 1 against the committed value while the synthesizer derives it for future runs. Streaming prefixes, provider correlation, web payload-derived oracles all unchanged and green."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Unchanged since cycle 6: real aborted turn records (71-145 deltas) on all 4 native targets, real web-self aborts (54/17 deltas), fail-closed stop gates (maestro Stop-control visibility; android re-drives gated on aborted records), retry-with-1-user-turn via transcript pixel probes, failed stop attempts honestly journaled. Evidence byte-untouched across all three cycles (empty diff)."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Unchanged since cycle 6: real provider rejections on rnr-s05-nonexistent-<runId> verified in server-events, endpoint-loss phases with accessible-Retry gates, restore verification with real provider responses and usage, credential scan clean."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Committed per-engine evidence byte-untouched (79e4f06d..2138d10e evidence diff empty; digests revalidated by the suite under my run). Suite changes across cycles are additive; the weak hierarchy_has_marker path is gone from the synthesizer. Gates independently re-run at 2138d10e: vitest 4/4 exit 0, typecheck exit 0, scoped biome (direct binary) exit 0. False-friend grep on the cycle-8 diff: 0 hits. Tamper cases exit nonzero with named diagnostics, intact sets validate 3/3, union = 6 targets, teardowns clean. The cycle-7 undocumented-draft claim is conceded in the cycle-8 red README and superseded by the on-disk runnable proof."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "All six targets: incremental responses (distinct prefixes 47-74), contextual follow-up recall through a discriminating oracle (negatives 0 on all four native streams), follow-up user bubble observed with 0 nonce occurrences, web payload-derived prior-exchange and latest-user checks."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Real aborts with delta_count > 0 on all 6 targets; retries complete new real requests with exactly 1 retained user turn."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Real endpoint loss and real nonexistent-model provider rejections, recovery through real restored-model requests, sanitized errors, no credential leakage."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Validator rejects all five tamper classes nonzero with named diagnostics; accepts only the fresh correlated per-engine sets (3/3 each, union exactly 6, one candidate SHA); teardown records cleanup of all owned resources."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Cycle 8 applies the proven oracle verbatim in both files — ANSWER_LEAD restricted to the three follow-up-response phrasings and ENGINE_TAG made wrap-tolerant — and puts the discrimination proof on disk as a runnable script. I re-ran that script myself (exit 0: positives 1/12/23/17, disconnected-recall negatives 0 on all four native streams, uniwind-ios's single hit being its genuine 13:16:03 recall) and confirmed the script's regexes are byte-identical to the shipped ones. Committed evidence is byte-untouched, the suite changes are additive with the weak paths removed, and vitest 4/4, typecheck, and scoped biome all pass under my independent re-run with a clean false-friend panel. Both review findings are fully resolved with no regressions: the six-target proof's streaming, context, abort, failure-recovery and evidence-lifecycle claims are now backed by genuinely discriminating oracles over real provider/device evidence. APPROVED."
+}

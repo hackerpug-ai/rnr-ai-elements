@@ -11748,6 +11748,11 @@
         "state": "landed",
         "task": "FIX-ORI-RN-005-1"
       },
+      "622ef5864c258fb0e27c57fc3ba7f963cd3c076e527ae330c70e24ea54c0dc3d": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-AI-002"
+      },
       "63c6605e8313201d6e3fc8637a08923d9856a6222121ad7512e9dbc811037d7a": {
         "kind": "complete-task",
         "state": "landed",
@@ -13348,14 +13353,103 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-001"
     },
     "ORI-AI-002": {
+      "approved_sha": "2138d10e970e0d9d54912b6365576ed235bc2d6a",
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-AI-002",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "2138d10e970e0d9d54912b6365576ed235bc2d6a",
+        "before_head": "ae0fb0d846f68edea0b46558690f83fc665a48eb",
+        "desired_sha256": "ceb3e1e2b964928d8283775d5f1043630ab328f3e97bb722e836ae4b55031482",
+        "expected_task_sha256": "0633f396fb35413fc9275d099a9823c7c8b81901ef7f65ed4d1fd583b4df6409",
+        "handoff_sha256": "866c594e298b0be1136b33b098bf0a41c2cbedac68bbaff4cdc40ea54bee01b6",
+        "landed_on": "main",
+        "landed_trunk_sha": "8c3cc30efd134a6b9198c223875c815d13d1dc9d",
+        "metadata_commit_sha": "8c3cc30efd134a6b9198c223875c815d13d1dc9d",
+        "operation_id": "622ef5864c258fb0e27c57fc3ba7f963cd3c076e527ae330c70e24ea54c0dc3d",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md"
+      },
       "depends_on": [
         "ORI-AI-001",
         "ORI-RN-004",
         "ORI-RN-005"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-AI-002-2138d10e970e0d9d54912b6365576ed235bc2d6a.json",
+        "payload": {
+          "commit_sha": "2138d10e970e0d9d54912b6365576ed235bc2d6a",
+          "concerns": [
+            "The recall oracle keys on model answer phrasings ('gave me the marker', 'asked me to remember', 'marker you/vou gave/aave') — a future model or prompt change in wording drifts these lines and false-fails AC-1; the regexes live in three places (synthesizer, suite, proof script) and must move together.",
+            "The ORI-RN-004 web-leg retryControlVisible oracle remains flaky in the wild (three occurrences across cycle 5-6: retryCompleted=true and retrySingleUserTurn=true while the control had already vanished after a successful retry) — every future engine run rerolls it at ~35 minutes per attempt, and it is write-prohibited to this task family.",
+            "The web-self port-4000 handoff race is defended by one bounded re-drive (relaunch + fresh page) but the actual killer of the 1.8-second-old backend child was never identified — the defense converts the race into a pass, it does not explain it.",
+            "The latest-user-message nonce count observes only the VISIBLE portion of the truncated follow-up bubble — line-fragment OCR cannot see a nonce repeated beyond the rendered text, so that oracle is as strong as the screen, not the message.",
+            "Machine-level fragility that silently eats runs: homebrew ffmpeg dyld breakage killed every android recording concat with zero error in the runner, and children must run with a short reaper-free TMPDIR (/tmp/ori-ai-002-scratch) because the worktree path overflows tsx IPC pipes and the agent-scratch reaper deletes mid-run dists."
+          ],
+          "deviations": [
+            "The amendment's literal commands pass the same --output root for both engine invocations, but the runner partitions single-engine invocations into evidence/ORI-AI-002/<engine>/ subdirs (tests/sprint-05-orient-search/live-example-proof.ts:2455) so the two sets accumulate instead of the second clobbering the first's root-level manifest/server-events/teardown.",
+            "Native completed_before_stop=false is delegated to the drivers' passed stop-turn gates rather than independently derived (tests/sprint-05-orient-search/live-example-proof.ts:2244) because the records stream cannot order events — request ids repeat across a session's ~30 turns and journal timestamps are batch-observation times, so an independent derivation would misattribute.",
+            "prior_exchange_count is the session's generation-0 completed turns minus the latest (tests/sprint-05-orient-search/live-example-proof.ts:2360) rather than a server-side history count — the backend never logs message history, only terminal records per turn.",
+            "The vitest suite no longer spawns a matrix (the original contract's shape) but validates accumulated on-disk evidence and re-derives the native context oracles from stream.jsonl dom-samples, per the cycle-6 amendment's explicit fixture-sourcing allowance.",
+            "The suite's transient validate-cases copies and the drivers' evidence-root rewrites are deliberately never committed — they are per-run side effects, and committing them once tripped the repo's fallow pre-commit audit."
+          ],
+          "done": "The six-target provider proof concluded under the cycle-6 revised per-engine contract and was APPROVED at 2138d10e (merged to main as ae0fb0d8): two fresh per-engine invocations bound to one candidate SHA — uniwind run ORI-AI-002-1790254489381 and nativewind run ORI-AI-002-1790256894249, both exit 0 with full artifacts including native screen recordings — are committed as self-contained sets under tests/sprint-05-orient-search/evidence/ORI-AI-002/<engine>/, and the rewritten vitest suite (tests/sprint-05-orient-search/live-example-proof.test.ts) validates the accumulated evidence set on disk (cross-manifest digest identity, per-target artifacts and provider correlation, five tamper cases through the real validator, intact-set validations, teardown cleanliness) with 4/4 passing, typecheck and scoped biome clean. Along the way the runner (tests/sprint-05-orient-search/live-example-proof.ts) gained: graceful bounded backend close (the cycle-3/4 crash fix — an abortive mid-SSE kill crashed the whole orchestrator through unhandled undici errors), an error-listened Readable.fromWeb body bridge in the teeing proxy, per-engine output partitioning with manifest-declared engines and self-recorded exit codes, per-target session-scoped record derivations, the reviewer-proven answer-lead/ENGINE_TAG recall oracle with wrap-tolerant matching, the drivers'-literal-'What marker' bubble oracle, disk-scan android recorder stop, mid-matrix reserved-device refresh, and a hardened web-self first-prompt re-drive; the discrimination proof (positives 1/12/23/17, disconnected-recall negative 0/0/0/0) is committed at .tmp/ORI-AI-002/cycle-8/red/discrimination-proof.txt with its runnable script.",
+          "feedback": [
+            "The original 'How to verify' block was wrong for this environment: one monolithic six-target command plus a vitest suite that spawns its own full matrix meant any single flaky leg re-rolled 1.5-2h — the cycle-6 amendment's per-engine composition with a ~35-minute reroll unit is the shape to write next time.",
+            "The fixture JSON should document that the follow-up prompt wording differs per surface (web session 'For request…' vs native drivers 'What marker did I ask you to remember?' / 'What marker did I give you?') — the divergence silently produced a vacuous oracle that passed review once.",
+            "The task's evidence layout (writeAllowed listing root-level target dirs) predated the per-engine sets; allowing 'evidence/ORI-AI-002/**' explicitly would have avoided re-deriving intent from the amendment's plural-manifest wording.",
+            "Boundaries that say 'the drivers own every device interaction channel' left the passive OCR observer as the only legal independent screen oracle — say so explicitly in future charters, because it dictates what the oracles can and cannot discriminate."
+          ],
+          "findings": [
+            "macOS Vision OCR returns wrapped ~36-char LINES, so a full nonce never matches on screen and the marker always sits alone on its own line whether it came from the user bubble, the seed prompt, or the answer — only answer-lead phrasing with an OCR-tolerant engine tag on the same or adjacent line discriminates (proven at .tmp/ORI-AI-002/cycle-8/red/discrimination-proof.txt).",
+            "The app reuses ONE chat id across a whole session (~30 turns) and one server hosts every leg of a phase, so the records stream interleaves all legs and any phase-global or id-keyed lookup misattributes aborts/retries across platforms — per-target derivations must scope by the drivers' latest_backend_record session pin (tests/sprint-05-orient-search/live-example-proof.ts:2215).",
+            "The journal ts is observation time, not event time — batches share timestamps and uniwind flow-end flushes give every turn one ts, so event ordering must use records-file order, never timestamps.",
+            "The nativewind consumer's web export has no index.html (its only route is /live-chat, exporting live-chat.html plus static routes) — any dist entry-point check must accept both (distHasEntry, tests/sprint-05-orient-search/live-example-proof.ts:1046).",
+            "launchOwnedBackend's pid is the tsx CLI wrapper, and a zombie wrapper still reports started while its server is dead — health checks must probe the listener or the child process, not the handle flag.",
+            "The 'invalid server configuration: EXAMPLE_CHAT_MODEL…' stderr line at the top of every runner log is a non-fatal import-time preamble from the orchestrator module importing the server env validator, and it was misread as a fatal spawn failure twice (cycle-5 review and once by the orchestrator).",
+            "The original monolithic verify contract (one 1.5-2h six-target command plus a vitest suite that respawns its own matrix) could not converge against once-per-several-runs device/driver flakes — five cycles and two landed driver FIXes proved it before the cycle-6 replan (fb58634d) fixed the shape."
+          ],
+          "scope_impact": [
+            {
+              "change": "Gate the web leg on the completed retry record rather than post-hoc control visibility, and add a waitForNewMarkerText-style recall assertion to the yaml (nativewind already has one).",
+              "found": "The uniwind web-leg endpoint-loss oracle samples retryControlVisible after a swallow-timeout wait, failing legs whose retry demonstrably completed (retryCompleted=true, retrySingleUserTurn=true, control already removed), and the big-yaml flow asserts no follow-up marker recall at all — recall proof rests entirely on ORI-AI-002's OCR oracle.",
+              "target": "ORI-RN-004"
+            },
+            {
+              "change": "Expose the real server child (or a listener-probing healthy()) on OwnedBackendHandle so callers can distinguish a live server from a live wrapper.",
+              "found": "support/live-backend.ts exposes the tsx wrapper's pid as `pid` and its LISTENING-line flag as `started`; a zombie wrapper reports started while its grandchild server is dead, which twice defeated health checks at the port-4000 handoff.",
+              "target": "ORI-AI-001"
+            },
+            {
+              "change": "Write per-invocation composition (per-engine/per-platform fresh invocations within one cycle, one candidate SHA, accumulated-evidence validation) into the TEST-task template from the start instead of amending under fire.",
+              "found": "TEST tasks whose verify shape is a single long monolithic invocation plus a self-respawning suite cannot converge on real devices — this task burned five cycles proving it before the per-engine amendment.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-AI-002"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-ai-002-impl@session-a251722f",
+          "response_id": "digest:866c594e298b0be1136b33b098bf0a41c2cbedac68bbaff4cdc40ea54bee01b6",
+          "response_receipt": {
+            "agent": "aisdk-implementer",
+            "dispatch_handle": "ori-ai-002-impl@session-a251722f",
+            "payload_sha256": "866c594e298b0be1136b33b098bf0a41c2cbedac68bbaff4cdc40ea54bee01b6",
+            "response_id": "digest:866c594e298b0be1136b33b098bf0a41c2cbedac68bbaff4cdc40ea54bee01b6",
+            "session_id": "ori-ai-002-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-AI-002-2138d10e970e0d9d54912b6365576ed235bc2d6a-8e42e0d2e03d3f439d5b9cbb049dbb85d445397092569ebc4948bb029ebfb2ae.response.json",
+          "response_receipt_sha256": "8e42e0d2e03d3f439d5b9cbb049dbb85d445397092569ebc4948bb029ebfb2ae",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-ai-002-impl@session-a251722f"
+        },
+        "sha256": "866c594e298b0be1136b33b098bf0a41c2cbedac68bbaff4cdc40ea54bee01b6"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:866c594e298b0be1136b33b098bf0a41c2cbedac68bbaff4cdc40ea54bee01b6",
+        "status": "received"
+      },
       "implementer": "aisdk-implementer",
       "implementer_session": {
         "dispatch_handle": "ori-ai-002-impl@session-a251722f",
@@ -13371,10 +13465,29 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md",
         "task_sha256": "0633f396fb35413fc9275d099a9823c7c8b81901ef7f65ed4d1fd583b4df6409"
       },
-      "merge_sha": null,
+      "landing": {
+        "approved_sha": "2138d10e970e0d9d54912b6365576ed235bc2d6a",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "ae0fb0d846f68edea0b46558690f83fc665a48eb",
+        "review_receipt": {
+          "agent": "aisdk-reviewer",
+          "dispatch_handle": "ori-ai-002-rev@session-a251722f",
+          "payload_sha256": "70b15dd46f5d246c50f7ed46e6b816577b164bfff1e517fd1d23140f1210f750",
+          "response_id": "digest:70b15dd46f5d246c50f7ed46e6b816577b164bfff1e517fd1d23140f1210f750",
+          "session_id": "ori-ai-002-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "1869d94e4724510176f2dbf2c3b0eeb501967318db1ec744049e91a0c025d667",
+        "reviewer": "aisdk-reviewer",
+        "reviewer_dispatch_handle": "ori-ai-002-rev@session-a251722f",
+        "reviewer_response_id": "digest:70b15dd46f5d246c50f7ed46e6b816577b164bfff1e517fd1d23140f1210f750",
+        "reviewer_session": "ori-ai-002-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "70b15dd46f5d246c50f7ed46e6b816577b164bfff1e517fd1d23140f1210f750"
+      },
+      "merge_sha": "ae0fb0d846f68edea0b46558690f83fc665a48eb",
       "points": 5,
       "reviewer": "aisdk-reviewer",
-      "status": "in_progress",
+      "status": "completed",
       "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md",
       "wave": 8,
       "withdrawals": [
@@ -14860,11 +14973,25 @@
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md",
       "implementer": "techwriting-implementer",
+      "implementer_session": {
+        "dispatch_handle": "ori-cont-003-impl@session-a251722f",
+        "dispatch_receipt": {
+          "agent": "techwriting-implementer",
+          "dispatch_handle": "ori-cont-003-impl@session-a251722f",
+          "session_id": "ori-cont-003-impl@session-a251722f",
+          "task": "ORI-CONT-003"
+        },
+        "dispatch_receipt_sha256": "c7dc6d58900af5e3e784e077e7f491b741f8afc34f133e3b89993fb7dbc092c5",
+        "implementer": "techwriting-implementer",
+        "session_id": "ori-cont-003-impl@session-a251722f",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md",
+        "task_sha256": "10c49d4191f6ee98a9730da4ea1fe58663b6cc65e14af8604ff5e40759b0ac7e"
+      },
       "last_findings": null,
       "merge_sha": null,
       "points": 5,
       "reviewer": "techwriting-reviewer",
-      "status": "pending",
+      "status": "in_progress",
       "wave": 9,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003"
     },
