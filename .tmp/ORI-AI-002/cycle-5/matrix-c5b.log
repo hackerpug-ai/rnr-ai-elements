@@ -1,0 +1,150 @@
+invalid server configuration: EXAMPLE_CHAT_MODEL: Invalid input: expected string, received undefined; EXAMPLE_CHAT_WEB_ORIGIN: Invalid input: expected string, received undefined
+[heartbeat 2026-09-23T19:05:51.128Z] pipeline/start — platforms=ios,android,web backendPassed=true
+[heartbeat 2026-09-23T19:05:51.230Z] legs/native-prep/start
+[heartbeat 2026-09-23T19:05:53.438Z] legs/native-prep/end — metroPort=8095
+[heartbeat 2026-09-23T19:05:53.438Z] legs/ios/start
+[heartbeat 2026-09-23T19:05:53.438Z] leg/ios/budget-start — budgetMs=2400000
+[heartbeat 2026-09-23T19:09:07.752Z] legs/ios/end
+[heartbeat 2026-09-23T19:09:07.752Z] legs/android/start
+[heartbeat 2026-09-23T19:09:07.753Z] leg/android/budget-start — budgetMs=2400000
+[heartbeat 2026-09-23T19:15:07.691Z] legs/android/end
+[heartbeat 2026-09-23T19:15:07.692Z] legs/web/start
+[heartbeat 2026-09-23T19:15:07.692Z] leg/web/budget-start — budgetMs=840000
+[heartbeat 2026-09-23T19:15:07.692Z] web/leg/start — runId=ORI-AI-002-1790190347786-reject
+[heartbeat 2026-09-23T19:15:07.693Z] web/export/start
+[heartbeat 2026-09-23T19:15:19.227Z] web/export/end — exit=0
+[heartbeat 2026-09-23T19:15:19.227Z] web/proxy-listen — 127.0.0.1:8406
+[heartbeat 2026-09-23T19:15:19.230Z] web/proxy-listening — 127.0.0.1:8406
+[heartbeat 2026-09-23T19:15:19.230Z] web/chromium-launch/start
+[heartbeat 2026-09-23T19:15:19.424Z] web/chromium-launch/done
+[heartbeat 2026-09-23T19:15:19.521Z] web/drive/start — http://127.0.0.1:8406
+[heartbeat 2026-09-23T19:15:20.092Z] web/drive/empty-state-checked — visible=true
+[heartbeat 2026-09-23T19:15:20.228Z] web/drive/marker-turn-checked — submitted=true
+[heartbeat 2026-09-23T19:16:20.247Z] web/drive/seed-reply-checked — responded=true
+[heartbeat 2026-09-23T19:17:20.258Z] web/drive/follow-up-checked — recall=true
+[heartbeat 2026-09-23T19:18:50.269Z] web/drive/stop-turn-checked — stopControlVisible=false
+[heartbeat 2026-09-23T19:18:50.269Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:18:50.423Z] backend/stop/done
+[heartbeat 2026-09-23T19:18:50.423Z] web/endpoint-loss/probe-fill/start — port=4000
+[heartbeat 2026-09-23T19:18:50.428Z] web/endpoint-loss/probe-fill/done
+[heartbeat 2026-09-23T19:18:50.428Z] web/endpoint-loss/probe-send/start — port=4000
+[heartbeat 2026-09-23T19:19:20.431Z] web/endpoint-loss/probe-send/done
+[heartbeat 2026-09-23T19:19:20.432Z] web/endpoint-loss/retry-wait/start — port=4000
+[heartbeat 2026-09-23T19:19:20.433Z] web/endpoint-loss/retry-wait/done
+[heartbeat 2026-09-23T19:19:20.433Z] web/endpoint-loss/alert-read/start — port=4000
+[heartbeat 2026-09-23T19:19:20.435Z] web/endpoint-loss/alert-read/done
+[heartbeat 2026-09-23T19:19:20.435Z] backend/restart/start — port=4000
+[heartbeat 2026-09-23T19:19:20.587Z] backend/restarted — 127.0.0.1:4000
+[heartbeat 2026-09-23T19:19:20.587Z] backend/restart/done
+[heartbeat 2026-09-23T19:19:20.587Z] web/endpoint-loss/retry-click/start — port=4000
+[heartbeat 2026-09-23T19:19:20.601Z] web/endpoint-loss/retry-click/done
+[heartbeat 2026-09-23T19:21:20.720Z] web/drive/retry-checked — completed=false singleUserTurn=true
+[heartbeat 2026-09-23T19:21:20.721Z] web/context-close/start
+[heartbeat 2026-09-23T19:21:20.725Z] web/context-close/done
+[heartbeat 2026-09-23T19:21:20.725Z] web/drive/end
+[heartbeat 2026-09-23T19:21:20.725Z] web/browser-close/start
+[heartbeat 2026-09-23T19:21:20.741Z] web/browser-close/done
+[heartbeat 2026-09-23T19:21:20.741Z] web/proxy-close/start — port=8406
+[heartbeat 2026-09-23T19:21:20.742Z] web/proxy-close/done — close-callback port=8406
+[heartbeat 2026-09-23T19:21:20.742Z] web/leg/end
+[heartbeat 2026-09-23T19:21:20.742Z] legs/web/end
+[heartbeat 2026-09-23T19:21:20.742Z] legs/teardown/start
+[heartbeat 2026-09-23T19:21:20.765Z] legs/teardown/end
+[heartbeat 2026-09-23T19:21:20.765Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:21:20.916Z] backend/stop/done
+[heartbeat 2026-09-23T19:21:20.949Z] pipeline/manifest-written — passed=0 completed=false heartbeatEntries=53
+[heartbeat 2026-09-23T19:21:20.949Z] pipeline/end
+[heartbeat 2026-09-23T19:21:23.949Z] pipeline/start — platforms=ios,android,web backendPassed=true
+[heartbeat 2026-09-23T19:21:24.083Z] legs/native-prep/start
+[heartbeat 2026-09-23T19:21:26.344Z] legs/native-prep/end — metroPort=8095
+[heartbeat 2026-09-23T19:21:26.344Z] legs/ios/start
+[heartbeat 2026-09-23T19:21:26.344Z] leg/ios/budget-start — budgetMs=2400000
+[heartbeat 2026-09-23T19:22:37.143Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:22:37.298Z] backend/stop/done
+[heartbeat 2026-09-23T19:22:37.298Z] ios/endpoint-loss/probe-type-send/start — port=4000
+[heartbeat 2026-09-23T19:22:50.992Z] ios/endpoint-loss/probe-type-send/done
+[heartbeat 2026-09-23T19:22:50.992Z] ios/endpoint-loss/retry-wait/start — port=4000
+[heartbeat 2026-09-23T19:22:57.158Z] ios/endpoint-loss/retry-wait/done
+[heartbeat 2026-09-23T19:23:09.333Z] backend/restart/start — port=4000
+[heartbeat 2026-09-23T19:23:09.484Z] backend/restarted — 127.0.0.1:4000
+[heartbeat 2026-09-23T19:23:09.484Z] backend/restart/done
+[heartbeat 2026-09-23T19:23:09.484Z] ios/endpoint-loss/retry-tap/start — port=4000
+[heartbeat 2026-09-23T19:23:25.807Z] ios/endpoint-loss/retry-tap/done
+[heartbeat 2026-09-23T19:23:25.807Z] ios/endpoint-loss/retry-record/start — port=4000
+[heartbeat 2026-09-23T19:23:25.807Z] ios/endpoint-loss/retry-record/done
+[heartbeat 2026-09-23T19:27:04.611Z] legs/ios/end
+[heartbeat 2026-09-23T19:27:04.612Z] legs/android/start
+[heartbeat 2026-09-23T19:27:04.612Z] leg/android/budget-start — budgetMs=2400000
+[heartbeat 2026-09-23T19:32:41.130Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:32:41.284Z] backend/stop/done
+[heartbeat 2026-09-23T19:32:41.284Z] android/endpoint-loss/probe-send/start — port=4000
+[heartbeat 2026-09-23T19:33:02.067Z] android/endpoint-loss/probe-send/done
+[heartbeat 2026-09-23T19:33:02.067Z] android/endpoint-loss/retry-wait/start — port=4000
+[heartbeat 2026-09-23T19:33:08.387Z] android/endpoint-loss/retry-wait/done
+[heartbeat 2026-09-23T19:33:20.948Z] backend/restart/start — port=4000
+[heartbeat 2026-09-23T19:33:21.101Z] backend/restarted — 127.0.0.1:4000
+[heartbeat 2026-09-23T19:33:21.101Z] backend/restart/done
+[heartbeat 2026-09-23T19:33:21.101Z] android/endpoint-loss/retry-tap/start — port=4000
+[heartbeat 2026-09-23T19:33:39.052Z] android/endpoint-loss/retry-tap/done
+[heartbeat 2026-09-23T19:33:39.052Z] android/endpoint-loss/retry-record/start — port=4000
+[heartbeat 2026-09-23T19:33:39.053Z] android/endpoint-loss/retry-record/done
+[heartbeat 2026-09-23T19:41:07.767Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:41:07.919Z] backend/stop/done
+[heartbeat 2026-09-23T19:41:07.919Z] android/endpoint-loss/probe-send/start — port=4000
+[heartbeat 2026-09-23T19:41:33.545Z] android/endpoint-loss/probe-send/done
+[heartbeat 2026-09-23T19:41:33.546Z] android/endpoint-loss/retry-wait/start — port=4000
+[heartbeat 2026-09-23T19:41:41.743Z] android/endpoint-loss/retry-wait/done
+[heartbeat 2026-09-23T19:41:58.068Z] backend/restart/start — port=4000
+[heartbeat 2026-09-23T19:41:58.221Z] backend/restarted — 127.0.0.1:4000
+[heartbeat 2026-09-23T19:41:58.222Z] backend/restart/done
+[heartbeat 2026-09-23T19:41:58.222Z] android/endpoint-loss/retry-tap/start — port=4000
+[heartbeat 2026-09-23T19:42:22.611Z] android/endpoint-loss/retry-tap/done
+[heartbeat 2026-09-23T19:42:22.614Z] android/endpoint-loss/retry-record/start — port=4000
+[heartbeat 2026-09-23T19:42:22.615Z] android/endpoint-loss/retry-record/done
+[heartbeat 2026-09-23T19:43:24.819Z] legs/android/end
+[heartbeat 2026-09-23T19:43:24.819Z] legs/web/start
+[heartbeat 2026-09-23T19:43:24.819Z] leg/web/budget-start — budgetMs=840000
+[heartbeat 2026-09-23T19:43:24.819Z] web/leg/start — runId=ORI-AI-002-1790190347786-live
+[heartbeat 2026-09-23T19:43:24.820Z] web/export/start
+[heartbeat 2026-09-23T19:43:32.266Z] web/export/end — exit=0
+[heartbeat 2026-09-23T19:43:32.266Z] web/proxy-listen — 127.0.0.1:8406
+[heartbeat 2026-09-23T19:43:32.269Z] web/proxy-listening — 127.0.0.1:8406
+[heartbeat 2026-09-23T19:43:32.270Z] web/chromium-launch/start
+[heartbeat 2026-09-23T19:43:32.900Z] web/chromium-launch/done
+[heartbeat 2026-09-23T19:43:33.059Z] web/drive/start — http://127.0.0.1:8406
+[heartbeat 2026-09-23T19:43:33.716Z] web/drive/empty-state-checked — visible=true
+[heartbeat 2026-09-23T19:43:33.962Z] web/drive/marker-turn-checked — submitted=true
+[heartbeat 2026-09-23T19:43:36.302Z] web/drive/seed-reply-checked — responded=true
+[heartbeat 2026-09-23T19:43:38.638Z] web/drive/follow-up-checked — recall=true
+[heartbeat 2026-09-23T19:43:40.517Z] web/drive/stop-turn-checked — stopControlVisible=true
+[heartbeat 2026-09-23T19:43:40.518Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:43:50.668Z] backend/stop/done
+[heartbeat 2026-09-23T19:43:50.668Z] web/endpoint-loss/probe-fill/start — port=4000
+[heartbeat 2026-09-23T19:43:50.676Z] web/endpoint-loss/probe-fill/done
+[heartbeat 2026-09-23T19:43:50.676Z] web/endpoint-loss/probe-send/start — port=4000
+[heartbeat 2026-09-23T19:43:50.714Z] web/endpoint-loss/probe-send/done
+[heartbeat 2026-09-23T19:43:50.714Z] web/endpoint-loss/retry-wait/start — port=4000
+[heartbeat 2026-09-23T19:43:50.740Z] web/endpoint-loss/retry-wait/done
+[heartbeat 2026-09-23T19:43:50.741Z] web/endpoint-loss/alert-read/start — port=4000
+[heartbeat 2026-09-23T19:43:50.743Z] web/endpoint-loss/alert-read/done
+[heartbeat 2026-09-23T19:43:50.744Z] backend/restart/start — port=4000
+[heartbeat 2026-09-23T19:43:50.744Z] backend/restarted — 127.0.0.1:4000
+[heartbeat 2026-09-23T19:43:50.744Z] backend/restart/done
+[heartbeat 2026-09-23T19:43:50.744Z] web/endpoint-loss/retry-click/start — port=4000
+[heartbeat 2026-09-23T19:43:50.778Z] web/endpoint-loss/retry-click/done
+[heartbeat 2026-09-23T19:43:50.781Z] web/drive/retry-checked — completed=true singleUserTurn=true
+[heartbeat 2026-09-23T19:43:50.781Z] web/context-close/start
+[heartbeat 2026-09-23T19:43:50.787Z] web/context-close/done
+[heartbeat 2026-09-23T19:43:50.787Z] web/drive/end
+[heartbeat 2026-09-23T19:43:50.789Z] web/browser-close/start
+[heartbeat 2026-09-23T19:43:50.817Z] web/browser-close/done
+[heartbeat 2026-09-23T19:43:50.817Z] web/proxy-close/start — port=8406
+[heartbeat 2026-09-23T19:43:50.817Z] web/proxy-close/done — close-callback port=8406
+[heartbeat 2026-09-23T19:43:50.817Z] web/leg/end
+[heartbeat 2026-09-23T19:43:50.817Z] legs/web/end
+[heartbeat 2026-09-23T19:43:50.817Z] legs/teardown/start
+[heartbeat 2026-09-23T19:43:50.860Z] legs/teardown/end
+[heartbeat 2026-09-23T19:43:50.861Z] backend/stop/start — port=4000
+[heartbeat 2026-09-23T19:43:51.012Z] backend/stop/done
+[heartbeat 2026-09-23T19:43:51.056Z] pipeline/manifest-written — passed=2 completed=false heartbeatEntries=147
+[heartbeat 2026-09-23T19:43:51.056Z] pipeline/end

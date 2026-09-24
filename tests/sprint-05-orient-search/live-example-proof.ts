@@ -1033,10 +1033,19 @@ async function invokeDriver(
  * orchestrator preserves a copy in the phase root right after the live phase — the
  * scratch reaper can remove tmpdir dists mid-run (the attempt-4 finding), which
  * orphaned the web-self phase; the phase-root copy is the fallback.
+ *
+ * Entry-point check: apps/example exports a root route (index.html), but the
+ * nativewind consumer's only route is /live-chat — its export has NO index.html
+ * (live-chat.html + static routes only). Demanding index.html rejected a perfectly
+ * valid nativewind export and orphaned web-self (cycle-5 c5a finding).
  */
+function distHasEntry(dir: string): boolean {
+  return existsSync(join(dir, 'index.html')) || existsSync(join(dir, 'live-chat.html'));
+}
+
 function findWebDist(engine: Engine, phaseRoot: string): string | null {
   const kept = join(phaseRoot, 'web-dist');
-  if (existsSync(join(kept, 'index.html'))) return kept;
+  if (distHasEntry(kept)) return kept;
   let best: { dir: string; mtime: number } | null = null;
   for (const entry of readdirSync(tmpdir())) {
     if (!entry.startsWith(DIST_PREFIX[engine])) continue;
@@ -1049,7 +1058,7 @@ function findWebDist(engine: Engine, phaseRoot: string): string | null {
     }
   }
   if (best === null) return null;
-  return existsSync(join(best.dir, 'index.html')) ? best.dir : null;
+  return distHasEntry(best.dir) ? best.dir : null;
 }
 
 /* -------------------------------------------------------- web self-session -- */
@@ -1254,7 +1263,7 @@ async function runWebSelfSession(params: {
     await textarea.fill(firstPrompt);
     await send.click();
     let streamingShotTaken = false;
-    const first = await waitNext(firstBaseline, firstRecordBaseline, 180_000, async () => {
+    let first = await waitNext(firstBaseline, firstRecordBaseline, 180_000, async () => {
       const tee = proxy.requests[firstBaseline];
       if (!streamingShotTaken && tee !== undefined && tee.deltas.length >= 6) {
         const texts = await domTexts();
@@ -1266,9 +1275,40 @@ async function runWebSelfSession(params: {
       }
     });
     if (first === null || first.tee.status !== 200 || first.record.outcome !== 'completed') {
-      throw new Error(
-        `web-self first prompt never completed (tee status ${first?.tee.status ?? 'none'}, record ${first?.record.outcome ?? 'none'})`,
-      );
+      // Bounded single recovery (c5c finding): the web-self child races the dying
+      // previous phase's backend owner on port 4000 — the first attempt's upstream
+      // can terminate ~2s in with no server record (journal `upstream_terminated`).
+      // Relaunch the owned child and drive the app's OWN Retry control — the same
+      // real-user recovery path the endpoint-loss phase below exercises. One
+      // re-drive, journaled; a second failure stays a failure.
+      journal.emit('web-self-first-prompt-retry', {
+        engine: params.engine,
+        failed_tee_status: proxy.requests[firstBaseline]?.status ?? null,
+        backend_started: backend.handle()?.started ?? false,
+      });
+      if ((backend.handle()?.started ?? false) === false) {
+        await backend.relaunch(DEFAULT_MODEL);
+      }
+      const retryControl = page.getByLabel('Retry', { exact: true });
+      const retryVisible = await retryControl
+        .isVisible()
+        .catch(() => false)
+        .then((visible) => visible);
+      if (retryVisible) {
+        await retryControl.click().catch(() => {});
+      } else {
+        await textarea.click().catch(() => {});
+        await textarea.fill(firstPrompt).catch(() => {});
+        await send.click().catch(() => {});
+      }
+      const retryBaseline = proxy.requests.length;
+      const retryRecordBaseline = backend.handle()?.records().length ?? 0;
+      first = await waitNext(retryBaseline, retryRecordBaseline, 180_000);
+      if (first === null || first.tee.status !== 200 || first.record.outcome !== 'completed') {
+        throw new Error(
+          `web-self first prompt never completed (tee status ${first?.tee.status ?? 'none'}, record ${first?.record.outcome ?? 'none'}, after one bounded retry)`,
+        );
+      }
     }
     result.first_request_id = first.tee.request.envelope_id;
     result.raw_text = first.tee.deltas.at(-1)?.cumulative ?? '';
