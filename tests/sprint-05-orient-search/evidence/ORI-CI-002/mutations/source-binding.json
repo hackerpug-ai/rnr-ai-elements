@@ -1,0 +1,54 @@
+{
+  "runId": "7408c708-0d19-446a-811c-7c1df68f743e",
+  "variant": "source-binding",
+  "command": "pnpm --filter @rnr-ai-elements/docs build",
+  "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/source-binding-7408c708",
+  "targets": [
+    {
+      "path": "scripts/docs-data/authored-snippets.ts",
+      "action": "edit",
+      "baselineSha256": "3309881d9803e1e926d13a1e071857a65681ee927bba17dd10d41b1a4f7e231a",
+      "mutatedSha256": "42ae91d0b701ee524474a2826bbaf040ab76f4c400411fa43759c1b89ad82605",
+      "restoredSha256": "3309881d9803e1e926d13a1e071857a65681ee927bba17dd10d41b1a4f7e231a"
+    }
+  ],
+  "executable": null,
+  "failingBuild": {
+    "exitCode": 1,
+    "signal": null,
+    "durationMs": 4495,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets"
+    ],
+    "diagnostic": "[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92\n    \"[authored-snippets] source binding drift: document apps/docs/src/content/docs/quickstart.mdx snippet messagesSource reads packages/docs-snippets/shared/quickstart-messages.ts but the committed binding pins ./ORI_CI_002_MISSING_SOURCE.tsx\",\n    \"[authored-snippets] source binding drift: document apps/docs/src/content/docs/quickstart.mdx snippet messagesSource reads packages/docs-snippets/shared/quickstart-messages.ts but the committed binding pins ./ORI_CI_002_MISSING_SOURCE.tsx\"\n[authored-snippets] source binding drift: document apps/docs/src/content/docs/quickstart.mdx snippet messagesSource reads packages/docs-snippets/shared/quickstart-messages.ts but the committed binding pins ./ORI_CI_002_MISSING_SOURCE.tsx\n[authored-snippets] source binding drift: document apps/docs/src/content/docs/quickstart.mdx snippet messagesSource reads packages/docs-snippets/shared/quickstart-messages.ts but the committed binding pins ./ORI_CI_002_MISSING_SOURCE.tsx"
+  },
+  "downstreamSuppression": {
+    "astroStarted": false,
+    "searchIndexStarted": false,
+    "checkLinksStarted": false
+  },
+  "restoration": {
+    "byteExact": true
+  },
+  "restoredBuild": {
+    "exitCode": 0,
+    "durationMs": 29260,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index",
+      "check:links"
+    ],
+    "dist": {
+      "docs/introduction/index.html": true,
+      "pagefind/pagefind-entry.json": true,
+      "pagefindNonEmpty": true
+    }
+  }
+}

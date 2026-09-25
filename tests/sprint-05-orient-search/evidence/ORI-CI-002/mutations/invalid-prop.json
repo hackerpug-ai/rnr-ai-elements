@@ -1,0 +1,54 @@
+{
+  "runId": "7408c708-0d19-446a-811c-7c1df68f743e",
+  "variant": "invalid-prop",
+  "command": "pnpm --filter @rnr-ai-elements/docs build",
+  "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708",
+  "targets": [
+    {
+      "path": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "action": "edit",
+      "baselineSha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2",
+      "mutatedSha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae",
+      "restoredSha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    }
+  ],
+  "executable": null,
+  "failingBuild": {
+    "exitCode": 1,
+    "signal": null,
+    "durationMs": 16414,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets"
+    ],
+    "diagnostic": "[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92\n    \"[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx\\nshared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: \\\"user\\\" | \\\"assistant\\\"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.\\n  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.\"\n[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx\nshared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: \"user\" | \"assistant\"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'."
+  },
+  "downstreamSuppression": {
+    "astroStarted": false,
+    "searchIndexStarted": false,
+    "checkLinksStarted": false
+  },
+  "restoration": {
+    "byteExact": true
+  },
+  "restoredBuild": {
+    "exitCode": 0,
+    "durationMs": 42126,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index",
+      "check:links"
+    ],
+    "dist": {
+      "docs/introduction/index.html": true,
+      "pagefind/pagefind-entry.json": true,
+      "pagefindNonEmpty": true
+    }
+  }
+}

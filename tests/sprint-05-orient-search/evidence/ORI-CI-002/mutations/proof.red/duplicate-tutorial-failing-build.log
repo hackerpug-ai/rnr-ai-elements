@@ -1,0 +1,114 @@
+=== ORI-CI-002 run de7a213e-1d2a-45d2-a4cf-e261eb406238 — duplicate-tutorial failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+14:25:47 [content] Syncing content
+14:25:47 [content] Synced content
+14:25:47 [types] Generated 263ms
+14:25:47 [build] output: "static"
+14:25:47 [build] mode: "static"
+14:25:47 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e/apps/docs/dist/
+14:25:47 [build] Collecting build info...
+14:25:47 [build] ✓ Completed in 305ms.
+14:25:47 [build] Building static entrypoints...
+14:25:47 [vite] ✓ built in 184ms
+14:25:47 [vite] ✓ built in 33ms
+14:25:47 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published tutorial sources are ["ori-ci-002-second-tutorial", "quickstart"]; observed 2 versus 1
+  Location:
+    /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-de7a213e/scripts/docs-data/single-tutorial.ts:168:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+
+=== ORI-CI-002 run 7408c708-0d19-446a-811c-7c1df68f743e — duplicate-tutorial failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+14:44:59 [content] Syncing content
+14:44:59 [content] Synced content
+14:44:59 [types] Generated 216ms
+14:44:59 [build] output: "static"
+14:44:59 [build] mode: "static"
+14:44:59 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708/apps/docs/dist/
+14:44:59 [build] Collecting build info...
+14:44:59 [build] ✓ Completed in 252ms.
+14:44:59 [build] Building static entrypoints...
+14:44:59 [vite] ✓ built in 163ms
+14:44:59 [vite] ✓ built in 28ms
+14:44:59 [build] Rearranging server assets...
+
+ generating static routes 
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+[docs-data] single-tutorial: item "tutorial-cardinality" the published tutorial sources are ["ori-ci-002-second-tutorial", "quickstart"]; observed 2 versus 1
+  Location:
+    /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17
+  Stack trace:
+    at Module.assertSinglePublishedTutorial (file:///Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708/scripts/docs-data/single-tutorial.ts:168:36)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+

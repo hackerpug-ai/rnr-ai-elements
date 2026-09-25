@@ -1,0 +1,57 @@
+{
+  "runId": "7408c708-0d19-446a-811c-7c1df68f743e",
+  "variant": "missing-route",
+  "command": "pnpm --filter @rnr-ai-elements/docs build",
+  "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/missing-route-7408c708",
+  "targets": [
+    {
+      "path": "apps/docs/src/content/docs/introduction.md",
+      "action": "edit",
+      "baselineSha256": "317d150dd3451c53bf511c95f459024baca24624733ea6927736bfc6ee56a494",
+      "mutatedSha256": "3f9b302f2474cc28e3b537cabe9654a6e4fa588fca1e374ded986fbbcadf1186",
+      "restoredSha256": "317d150dd3451c53bf511c95f459024baca24624733ea6927736bfc6ee56a494"
+    }
+  ],
+  "executable": null,
+  "failingBuild": {
+    "exitCode": 1,
+    "signal": null,
+    "durationMs": 31525,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index",
+      "check:links"
+    ],
+    "diagnostic": "[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92\n[search-index] 63 expected destinations (56 items, 7 docs) derived from the real sources\n[search-index] all expected destinations emitted under /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/missing-route-7408c708/apps/docs/dist\n[search-index] index complete: 64 pages cover all 63 expected destinations\n[docs-data] link-check: 69 html files, 1552 links (1541 internal, 11 external), 1 error(s), 7 warning(s)\n[docs-data] link-check: warning docs/cli/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/cli.md: external link failed (HTTP 404) (HTTP 404)\n[docs-data] link-check: warning docs/dark-mode/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/dark-mode.md: external link failed (HTTP 404) (HTTP 404)\n[docs-data] link-check: warning docs/installation/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/installation.mdx: external link failed (HTTP 404) (HTTP 404)\n[docs-data] link-check: error docs/introduction/index.html -> /docs/ori-ci-002-missing-route: no such target in the build\n[docs-data] link-check: warning docs/introduction/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/introduction.md: external link failed (HTTP 404) (HTTP 404)\n[docs-data] link-check: warning docs/owns-vs-does-not-own/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/owns-vs-does-not-own.md: external link failed (HTTP 404) (HTTP 404)\n[docs-data] link-check: warning docs/quickstart/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/quickstart.mdx: external link failed (HTTP 404) (HTTP 404)"
+  },
+  "downstreamSuppression": {
+    "astroStarted": true,
+    "searchIndexStarted": true,
+    "checkLinksStarted": true
+  },
+  "restoration": {
+    "byteExact": true
+  },
+  "restoredBuild": {
+    "exitCode": 0,
+    "durationMs": 44877,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index",
+      "check:links"
+    ],
+    "dist": {
+      "docs/introduction/index.html": true,
+      "pagefind/pagefind-entry.json": true,
+      "pagefindNonEmpty": true
+    }
+  }
+}

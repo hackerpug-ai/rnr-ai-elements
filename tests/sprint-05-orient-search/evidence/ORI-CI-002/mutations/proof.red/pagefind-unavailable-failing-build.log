@@ -1,0 +1,640 @@
+=== ORI-CI-002 run de7a213e-1d2a-45d2-a4cf-e261eb406238 — pagefind-unavailable failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": true,
+  "root": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e",
+  "docsRoot": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/owns-vs-does-not-own.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 1,
+    "ts": 2,
+    "tsx": 4,
+    "css": 1,
+    "configuration": 16
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [
+    {
+      "engine": "nativewind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-WgExCa",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 808,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "uniwind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-9886c08d3929eca5/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-uniwind-case-752ZQS",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-9886c08d3929eca5/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 844,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "live-chat",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/example/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/example",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/example/tsconfig.live-chat.json",
+      "args": [
+        "-p",
+        "tsconfig.live-chat.json"
+      ],
+      "exit": 0,
+      "durationMs": 947,
+      "typescriptVersion": "6.0.3"
+    }
+  ],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16",
+    "uniwind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-9886c08d3929eca5"
+  },
+  "emitted": null,
+  "errors": []
+}
+14:28:24 [content] Syncing content
+14:28:24 [content] Synced content
+14:28:24 [types] Generated 267ms
+14:28:24 [build] output: "static"
+14:28:24 [build] mode: "static"
+14:28:24 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/dist/
+14:28:24 [build] Collecting build info...
+14:28:24 [build] ✓ Completed in 312ms.
+14:28:24 [build] Building static entrypoints...
+14:28:25 [vite] ✓ built in 186ms
+14:28:25 [vite] ✓ built in 31ms
+14:28:25 [build] Rearranging server assets...
+
+ generating static routes 
+14:28:25   ├─ /404.html (+10ms) 
+14:28:25   ├─ /components/streamdown/index.html (+2ms) 
+14:28:25   ├─ /components/shimmer/index.html (+6ms) 
+14:28:25   ├─ /components/checkpoint/index.html (+2ms) 
+14:28:25   ├─ /components/image/index.html (+1ms) 
+14:28:25   ├─ /components/persona/index.html (+2ms) 
+14:28:25   ├─ /components/speech-input/index.html (+2ms) 
+14:28:25   ├─ /components/kbd/index.html (+1ms) 
+14:28:25   ├─ /components/breadcrumb/index.html (+1ms) 
+14:28:25   ├─ /components/button-group/index.html (+1ms) 
+14:28:25   ├─ /components/slider/index.html (+1ms) 
+14:28:25   ├─ /components/table/index.html (+1ms) 
+14:28:25   ├─ /components/command/index.html (+1ms) 
+14:28:25   ├─ /components/mono/index.html (+1ms) 
+14:28:25   ├─ /components/markdown/index.html (+1ms) 
+14:28:25   ├─ /components/code-block/index.html (+1ms) 
+14:28:25   ├─ /components/conversation/index.html (+1ms) 
+14:28:25   ├─ /components/message/index.html (+1ms) 
+14:28:25   ├─ /components/prompt-input/index.html (+1ms) 
+14:28:25   ├─ /components/empty/index.html (+1ms) 
+14:28:25   ├─ /components/item/index.html (+1ms) 
+14:28:25   ├─ /components/input-group/index.html (+1ms) 
+14:28:25   ├─ /components/sheet/index.html (+1ms) 
+14:28:25   ├─ /components/suggestion/index.html (+1ms) 
+14:28:25   ├─ /components/status/index.html (+1ms) 
+14:28:25   ├─ /components/reasoning-lifecycle/index.html (+1ms) 
+14:28:25   ├─ /components/tool/index.html (+1ms) 
+14:28:25   ├─ /components/reasoning/index.html (+1ms) 
+14:28:25   ├─ /components/task/index.html (+1ms) 
+14:28:25   ├─ /components/question/index.html (+1ms) 
+14:28:25   ├─ /components/agent/index.html (+1ms) 
+14:28:25   ├─ /components/chain-of-thought/index.html (+1ms) 
+14:28:25   ├─ /components/plan/index.html (+1ms) 
+14:28:25   ├─ /components/confirmation/index.html (+1ms) 
+14:28:25   ├─ /components/queue/index.html (+1ms) 
+14:28:25   ├─ /components/url/index.html (+1ms) 
+14:28:25   ├─ /components/sources/index.html (+1ms) 
+14:28:25   ├─ /components/inline-citation/index.html (+1ms) 
+14:28:25   ├─ /components/artifact/index.html (+1ms) 
+14:28:25   ├─ /components/snippet/index.html (+1ms) 
+14:28:25   ├─ /components/commit/index.html (+1ms) 
+14:28:25   ├─ /components/attachments/index.html (+1ms) 
+14:28:25   ├─ /components/context/index.html (+1ms) 
+14:28:25   ├─ /components/open-in-chat/index.html (+1ms) 
+14:28:25   ├─ /components/model-selector/index.html (+1ms) 
+14:28:25   ├─ /components/mic-selector/index.html (+1ms) 
+14:28:25   ├─ /components/voice-selector/index.html (+1ms) 
+14:28:25   ├─ /components/audio-player/index.html (+1ms) 
+14:28:25   ├─ /components/transcription/index.html (+1ms) 
+14:28:25   ├─ /components/terminal/index.html (+1ms) 
+14:28:25   ├─ /components/file-tree/index.html (+4ms) 
+14:28:25   ├─ /components/environment-variables/index.html (+1ms) 
+14:28:25   ├─ /components/package-info/index.html (+1ms) 
+14:28:25   ├─ /components/stack-trace-parser/index.html (+1ms) 
+14:28:25   ├─ /components/stack-trace/index.html (+1ms) 
+14:28:25   ├─ /components/schema-display/index.html (+1ms) 
+14:28:25   ├─ /components/test-results/index.html (+1ms) 
+14:28:25   ├─ /components/web-preview/index.html (+1ms) 
+14:28:25   ├─ /components/index.html (+3ms) 
+14:28:25   ├─ /docs/theming/index.html (+4ms) 
+14:28:25   ├─ /docs/introduction/index.html (+1ms) 
+14:28:25   ├─ /docs/installation/index.html (+2ms) 
+14:28:25   ├─ /docs/quickstart/index.html (+2ms) 
+14:28:25   ├─ /docs/cli/index.html (+1ms) 
+14:28:25   ├─ /docs/dark-mode/index.html (+0ms) 
+14:28:25   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+14:28:25   ├─ /islands/copy-button/index.html (+1ms) 
+14:28:25   ├─ /registry/index.html (+2ms) 
+14:28:25   ├─ /index.html (+1ms) 
+14:28:25 ✓ Completed in 128ms.
+
+14:28:25 [build] ✓ Completed in 369ms.
+14:28:25 [build] 69 page(s) built in 719ms
+14:28:25 [build] Complete!
+
+> @rnr-ai-elements/docs@0.1.0 search:index /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/search-index.ts
+
+[search-index] 63 expected destinations (56 items, 7 docs) derived from the real sources
+[search-index] all expected destinations emitted under /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs/dist
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/scripts/docs-data/search-index.ts:146
+    throw new Error(`[search-index] pagefind exited ${index.status}\n${index.output}`);
+          ^
+
+Error: [search-index] pagefind exited 1
+
+Failed to run pagefind via the npx wrapper: Error: Failed to install either of [pagefind_extended, pagefind]. Most likely the platform darwin-arm64 is not yet a supported architecture.
+Please open an issue at https://github.com/pagefind/pagefind and paste this error message in full.
+If you believe this package should be compatible with your system,
+you can try downloading a release binary directly from https://github.com/pagefind/pagefind/releases
+Please open an issue at https://github.com/pagefind/pagefind and paste this error message in full.
+
+    at main (/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/scripts/docs-data/search-index.ts:146:11)
+    at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/scripts/docs-data/search-index.ts:173:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.14.0
+
+=== ORI-CI-002 run 7408c708-0d19-446a-811c-7c1df68f743e — pagefind-unavailable failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": true,
+  "root": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708",
+  "docsRoot": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/owns-vs-does-not-own.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 1,
+    "ts": 2,
+    "tsx": 4,
+    "css": 1,
+    "configuration": 16
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [
+    {
+      "engine": "nativewind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-cLO3fQ",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 1084,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "uniwind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-9886c08d3929eca5/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-uniwind-case-uevh82",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-9886c08d3929eca5/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 822,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "live-chat",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/example/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/example",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/example/tsconfig.live-chat.json",
+      "args": [
+        "-p",
+        "tsconfig.live-chat.json"
+      ],
+      "exit": 0,
+      "durationMs": 790,
+      "typescriptVersion": "6.0.3"
+    }
+  ],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16",
+    "uniwind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-9886c08d3929eca5"
+  },
+  "emitted": null,
+  "errors": []
+}
+14:47:23 [content] Syncing content
+14:47:23 [content] Synced content
+14:47:23 [types] Generated 241ms
+14:47:23 [build] output: "static"
+14:47:23 [build] mode: "static"
+14:47:23 [build] directory: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/dist/
+14:47:23 [build] Collecting build info...
+14:47:23 [build] ✓ Completed in 283ms.
+14:47:23 [build] Building static entrypoints...
+14:47:23 [vite] ✓ built in 183ms
+14:47:23 [vite] ✓ built in 33ms
+14:47:23 [build] Rearranging server assets...
+
+ generating static routes 
+14:47:23   ├─ /404.html (+6ms) 
+14:47:23   ├─ /components/streamdown/index.html (+2ms) 
+14:47:23   ├─ /components/shimmer/index.html (+10ms) 
+14:47:23   ├─ /components/checkpoint/index.html (+2ms) 
+14:47:23   ├─ /components/image/index.html (+2ms) 
+14:47:23   ├─ /components/persona/index.html (+1ms) 
+14:47:23   ├─ /components/speech-input/index.html (+2ms) 
+14:47:23   ├─ /components/kbd/index.html (+1ms) 
+14:47:23   ├─ /components/breadcrumb/index.html (+1ms) 
+14:47:23   ├─ /components/button-group/index.html (+1ms) 
+14:47:23   ├─ /components/slider/index.html (+1ms) 
+14:47:23   ├─ /components/table/index.html (+1ms) 
+14:47:23   ├─ /components/command/index.html (+1ms) 
+14:47:23   ├─ /components/mono/index.html (+1ms) 
+14:47:23   ├─ /components/markdown/index.html (+1ms) 
+14:47:23   ├─ /components/code-block/index.html (+1ms) 
+14:47:23   ├─ /components/conversation/index.html (+1ms) 
+14:47:23   ├─ /components/message/index.html (+1ms) 
+14:47:23   ├─ /components/prompt-input/index.html (+1ms) 
+14:47:23   ├─ /components/empty/index.html (+1ms) 
+14:47:23   ├─ /components/item/index.html (+1ms) 
+14:47:23   ├─ /components/input-group/index.html (+1ms) 
+14:47:23   ├─ /components/sheet/index.html (+1ms) 
+14:47:23   ├─ /components/suggestion/index.html (+1ms) 
+14:47:23   ├─ /components/status/index.html (+1ms) 
+14:47:23   ├─ /components/reasoning-lifecycle/index.html (+1ms) 
+14:47:23   ├─ /components/tool/index.html (+1ms) 
+14:47:23   ├─ /components/reasoning/index.html (+1ms) 
+14:47:23   ├─ /components/task/index.html (+1ms) 
+14:47:23   ├─ /components/question/index.html (+1ms) 
+14:47:23   ├─ /components/agent/index.html (+1ms) 
+14:47:23   ├─ /components/chain-of-thought/index.html (+2ms) 
+14:47:23   ├─ /components/plan/index.html (+1ms) 
+14:47:23   ├─ /components/confirmation/index.html (+1ms) 
+14:47:23   ├─ /components/queue/index.html (+1ms) 
+14:47:23   ├─ /components/url/index.html (+1ms) 
+14:47:23   ├─ /components/sources/index.html (+1ms) 
+14:47:23   ├─ /components/inline-citation/index.html (+1ms) 
+14:47:23   ├─ /components/artifact/index.html (+1ms) 
+14:47:23   ├─ /components/snippet/index.html (+1ms) 
+14:47:23   ├─ /components/commit/index.html (+1ms) 
+14:47:23   ├─ /components/attachments/index.html (+1ms) 
+14:47:23   ├─ /components/context/index.html (+1ms) 
+14:47:23   ├─ /components/open-in-chat/index.html (+1ms) 
+14:47:23   ├─ /components/model-selector/index.html (+1ms) 
+14:47:23   ├─ /components/mic-selector/index.html (+1ms) 
+14:47:23   ├─ /components/voice-selector/index.html (+1ms) 
+14:47:23   ├─ /components/audio-player/index.html (+1ms) 
+14:47:23   ├─ /components/transcription/index.html (+1ms) 
+14:47:23   ├─ /components/terminal/index.html (+1ms) 
+14:47:23   ├─ /components/file-tree/index.html (+1ms) 
+14:47:23   ├─ /components/environment-variables/index.html (+4ms) 
+14:47:23   ├─ /components/package-info/index.html (+1ms) 
+14:47:23   ├─ /components/stack-trace-parser/index.html (+1ms) 
+14:47:23   ├─ /components/stack-trace/index.html (+1ms) 
+14:47:23   ├─ /components/schema-display/index.html (+1ms) 
+14:47:23   ├─ /components/test-results/index.html (+1ms) 
+14:47:23   ├─ /components/web-preview/index.html (+1ms) 
+14:47:23   ├─ /components/index.html (+3ms) 
+14:47:23   ├─ /docs/theming/index.html (+5ms) 
+14:47:23   ├─ /docs/introduction/index.html (+1ms) 
+14:47:23   ├─ /docs/installation/index.html (+2ms) 
+14:47:23   ├─ /docs/quickstart/index.html (+3ms) 
+14:47:23   ├─ /docs/cli/index.html (+1ms) 
+14:47:23   ├─ /docs/dark-mode/index.html (+1ms) 
+14:47:23   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+14:47:23   ├─ /islands/copy-button/index.html (+1ms) 
+14:47:23   ├─ /registry/index.html (+3ms) 
+14:47:23   ├─ /index.html (+2ms) 
+14:47:23 ✓ Completed in 129ms.
+
+14:47:23 [build] ✓ Completed in 367ms.
+14:47:23 [build] 69 page(s) built in 685ms
+14:47:23 [build] Complete!
+
+> @rnr-ai-elements/docs@0.1.0 search:index /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs
+> tsx ../../scripts/docs-data/search-index.ts
+
+[search-index] 63 expected destinations (56 items, 7 docs) derived from the real sources
+[search-index] all expected destinations emitted under /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/dist
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/scripts/docs-data/search-index.ts:146
+    throw new Error(`[search-index] pagefind exited ${index.status}\n${index.output}`);
+          ^
+
+Error: [search-index] pagefind exited 1
+
+Failed to run pagefind via the npx wrapper: Error: Failed to install either of [pagefind_extended, pagefind]. Most likely the platform darwin-arm64 is not yet a supported architecture.
+Please open an issue at https://github.com/pagefind/pagefind and paste this error message in full.
+If you believe this package should be compatible with your system,
+you can try downloading a release binary directly from https://github.com/pagefind/pagefind/releases
+Please open an issue at https://github.com/pagefind/pagefind and paste this error message in full.
+
+    at main (/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/scripts/docs-data/search-index.ts:146:11)
+    at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/scripts/docs-data/search-index.ts:173:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.14.0
+

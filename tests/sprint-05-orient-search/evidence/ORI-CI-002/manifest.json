@@ -1,0 +1,164 @@
+{
+  "runs": [
+    {
+      "runId": "d42a9f46-81bf-471f-b5da-283101293486",
+      "recordedAt": "2026-09-25T19:59:24.764Z",
+      "planning": {
+        "sourceSha": "38034e972490945b684f5bd5a706bca0479dc659",
+        "task": "ORI-CI-002"
+      },
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002",
+        "headSha": "8216964f0af04d3f90c224963ed0632bc6fa957e",
+        "gitStatus": "?? tests/sprint-05-orient-search/docs-build-pipeline.test.ts",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "testSha256": "15d6f87e8ed7fb64c7ebf8bf6353baf3a7d4d5e7d3a891cc111d70c40e4c6afc"
+      },
+      "commands": {
+        "publicBuild": "pnpm --filter @rnr-ai-elements/docs build",
+        "standalone": [
+          "pnpm -w run registry:build",
+          "pnpm -w run gallery:manifest",
+          "pnpm --filter @rnr-ai-elements/docs prebuild"
+        ]
+      },
+      "mutationPaths": [],
+      "evidence": {
+        "stageEventsFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/stage-events.jsonl",
+        "stageEventsSha256": "dd7c00b178f0c332b3dba549252f527f870f6426d73a3faec826bdf92a0a50fd",
+        "restoredBuildLog": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/restored-build.log",
+        "receiptHashes": {}
+      },
+      "fatal": "Error: cold candidate build: observed stage starts [prebuild, registry:build, gallery:manifest] do not match the ordered seven-stage chain [registry:build, gallery:manifest, prebuild, check:snippets, astro build, search:index, check:links]\n    at assertOrderedStages (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:401:11)\n    at runDrill (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:764:5)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:968:18"
+    },
+    {
+      "runId": "cac2664a-8bed-4018-a216-6efe2d980158",
+      "recordedAt": "2026-09-25T20:08:48.841Z",
+      "planning": {
+        "sourceSha": "38034e972490945b684f5bd5a706bca0479dc659",
+        "task": "ORI-CI-002"
+      },
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002",
+        "headSha": "8216964f0af04d3f90c224963ed0632bc6fa957e",
+        "gitStatus": "M apps/docs/package.json\n M package.json\n M pnpm-workspace.yaml\n M tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts\n?? tests/sprint-05-orient-search/docs-build-pipeline.test.ts\n?? tests/sprint-05-orient-search/evidence/ORI-CI-002/",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "testSha256": "e9623a5c3461dc06bd142dfb027c95a62010567b26405f14222ee5b6931b6a12"
+      },
+      "commands": {
+        "publicBuild": "pnpm --filter @rnr-ai-elements/docs build",
+        "standalone": [
+          "pnpm -w run registry:build",
+          "pnpm -w run gallery:manifest",
+          "pnpm --filter @rnr-ai-elements/docs prebuild"
+        ]
+      },
+      "mutationPaths": [
+        "scripts/docs-data/authored-snippets.ts",
+        "packages/docs-snippets/shared/quickstart-screen.tsx"
+      ],
+      "evidence": {
+        "stageEventsFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/stage-events.jsonl",
+        "stageEventsSha256": "db7843f60c47c2e9a0d37f27b053a79308a66874215c8ab56adacc9c246a3419",
+        "restoredBuildLog": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/restored-build.log",
+        "receiptHashes": {
+          "source-binding": "a1f069a41d5074876b615d9747b4da79bd437c5774970dc3077fbdba43ff091e",
+          "invalid-prop": "98d978432f2c3775361b9490a9678d8c32c4b472ef21acef03b2bb1166b30b2c"
+        }
+      },
+      "fatal": "Error: mutation target is not unique in /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/missing-route-cac2664a/apps/docs/src/content/docs/introduction.md: ](/docs/cli)\n    at editOnce (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:424:11)\n    at Object.apply (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:449:7)\n    at runVariant (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:654:28)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at runDrill (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:793:5)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:971:18"
+    },
+    {
+      "runId": "de7a213e-1d2a-45d2-a4cf-e261eb406238",
+      "recordedAt": "2026-09-25T20:29:08.449Z",
+      "planning": {
+        "sourceSha": "38034e972490945b684f5bd5a706bca0479dc659",
+        "task": "ORI-CI-002"
+      },
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002",
+        "headSha": "8216964f0af04d3f90c224963ed0632bc6fa957e",
+        "gitStatus": "M apps/docs/package.json\n M package.json\n M pnpm-workspace.yaml\n M tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts\n?? tests/sprint-05-orient-search/docs-build-pipeline.test.ts\n?? tests/sprint-05-orient-search/evidence/ORI-CI-002/",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "testSha256": "14082b645e8cef09f1bd4affacc2ccc4ac484ffedf0a7499629e23a5311090d2"
+      },
+      "commands": {
+        "publicBuild": "pnpm --filter @rnr-ai-elements/docs build",
+        "standalone": [
+          "pnpm -w run registry:build",
+          "pnpm -w run gallery:manifest",
+          "pnpm --filter @rnr-ai-elements/docs prebuild"
+        ]
+      },
+      "mutationPaths": [
+        "scripts/docs-data/authored-snippets.ts",
+        "packages/docs-snippets/shared/quickstart-screen.tsx",
+        "apps/docs/src/content/docs/introduction.md",
+        "apps/docs/src/content/docs/introduction.md",
+        "apps/docs/src/content/docs/ori-ci-002-second-tutorial.mdx",
+        "scripts/docs-data/authored-snippets.ts",
+        "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-de7a213e/ori-ci-002-pnpm-cache/dlx/59e8c6514ca8f73d48af8d03b597541094501606e79c5c4cd362c0ffc92597e5/1a0da4096ab-6a5f/node_modules/.pnpm/@pagefind+darwin-arm64@1.5.2/node_modules/@pagefind/darwin-arm64/bin/pagefind_extended"
+      ],
+      "evidence": {
+        "stageEventsFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/stage-events.jsonl",
+        "stageEventsSha256": "0513f4aba453bfffc7ceebed70c6c903a4d2f4e117972bd1282c1ce705b9a5b2",
+        "restoredBuildLog": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/restored-build.log",
+        "receiptHashes": {
+          "source-binding": "6701d4c3b0fe826e45e312d5ef3907f71900f9019bce5209f518279f5f3bc247",
+          "invalid-prop": "bca0afc5892be3f86017c6170280d1076fa064c6417c9d84d09fc697406bbdba",
+          "missing-route": "2900a1c8bdc0eca3413c301fefb2763c6fee12a03d63f8c1152d1f7547e3a806",
+          "missing-fragment": "0fa41fcdaab9896d19d4027f69b5de46f8d482cfe3839f25604f3488f9001e90",
+          "duplicate-tutorial": "7f1500c6bc7049783037449ca69c42fcea5aefafe5de2eb73c68581301d22ed0",
+          "pagefind-unavailable": "d42bea64b549d02814857bf60c0c6ae90291db2b3d3186d07484b31b8c237f75"
+        }
+      },
+      "fatal": null
+    },
+    {
+      "runId": "7408c708-0d19-446a-811c-7c1df68f743e",
+      "recordedAt": "2026-09-25T20:48:22.718Z",
+      "planning": {
+        "sourceSha": "38034e972490945b684f5bd5a706bca0479dc659",
+        "task": "ORI-CI-002"
+      },
+      "candidate": {
+        "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002",
+        "headSha": "8216964f0af04d3f90c224963ed0632bc6fa957e",
+        "gitStatus": "AM .tmp/ORI-CI-002/cycle-1/green/focused-suite.log\nA  .tmp/ORI-CI-002/cycle-1/red/ordered-public-build.log\nM  apps/docs/package.json\nM  package.json\nM  pnpm-workspace.yaml\nM  tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts\nAM tests/sprint-05-orient-search/docs-build-pipeline.test.ts\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/manifest.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/duplicate-tutorial.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/invalid-prop.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/missing-fragment.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/missing-route.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/pagefind-unavailable.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/drill-fatal.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/duplicate-tutorial-failing-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/invalid-prop-failing-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/missing-fragment-failing-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/missing-route-failing-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/pagefind-unavailable-failing-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/proof.red/source-binding-failing-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/mutations/source-binding.json\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/restored-build.log\nA  tests/sprint-05-orient-search/evidence/ORI-CI-002/stage-events.jsonl",
+        "lockfileSha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "testSha256": "98ea149e37f159cbe2748f1d77cf6bfe2ba00d76641454498a5ccf4fdcbd3080"
+      },
+      "commands": {
+        "publicBuild": "pnpm --filter @rnr-ai-elements/docs build",
+        "standalone": [
+          "pnpm -w run registry:build",
+          "pnpm -w run gallery:manifest",
+          "pnpm --filter @rnr-ai-elements/docs prebuild"
+        ]
+      },
+      "mutationPaths": [
+        "scripts/docs-data/authored-snippets.ts",
+        "packages/docs-snippets/shared/quickstart-screen.tsx",
+        "apps/docs/src/content/docs/introduction.md",
+        "apps/docs/src/content/docs/introduction.md",
+        "apps/docs/src/content/docs/ori-ci-002-second-tutorial.mdx",
+        "scripts/docs-data/authored-snippets.ts",
+        "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/ori-ci-002-pnpm-cache/dlx/59e8c6514ca8f73d48af8d03b597541094501606e79c5c4cd362c0ffc92597e5/1a0da520e18-69c4/node_modules/.pnpm/@pagefind+darwin-arm64@1.5.2/node_modules/@pagefind/darwin-arm64/bin/pagefind_extended"
+      ],
+      "evidence": {
+        "stageEventsFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/stage-events.jsonl",
+        "stageEventsSha256": "b9099d1384a5ec3a6948b251e70e3f9a528e749aaa8223d79515f4b76d3ad6de",
+        "restoredBuildLog": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/evidence/ORI-CI-002/restored-build.log",
+        "receiptHashes": {
+          "source-binding": "d2eb635058d4e260120d8c5c18c70e8175371bbdc9394495daed017d5f0b6251",
+          "invalid-prop": "ab9d89d0c4d59b72ffb924f31b1f7688849516d59646871f2ab899e99fc5237c",
+          "missing-route": "e006eae90ef4cfb91a5261aca30c4a5db215eeffa3448df5b5ae71cd7f1b33f1",
+          "missing-fragment": "ffb78f8b91ada66eed270abfb38992ac4f22877fc7037982d4d26d8c8a7f4782",
+          "duplicate-tutorial": "73c907e97e9cd5bc75037e9b32a92132f8674e14113b3e4de4b825f338026909",
+          "pagefind-unavailable": "0e19ccf4f156162f1f6e3413e66ab62d1f0d1246a1989d29b315bf37f0ffd6d1"
+        }
+      },
+      "fatal": null
+    }
+  ]
+}

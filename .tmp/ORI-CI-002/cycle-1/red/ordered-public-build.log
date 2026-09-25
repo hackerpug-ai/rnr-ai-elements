@@ -1,0 +1,19 @@
+PASS (0) FAIL (1) skipped (3)
+
+1. ORI-CI-002-ordered-public-build
+   AssertionError: drill fatal error: Error: cold candidate build: observed stage starts [prebuild, registry:build, gallery:manifest] do not match the ordered seven-stage chain [registry:build, gallery:manifest, prebuild, check:snippets, astro build, search:index, check:links]
+       at assertOrderedStages (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:401:11)
+       at runDrill (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:764:5)
+       at processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:968:18: expected 'Error: cold candidate build: observed…' to be null
+       at reportOrThrow (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:975:68)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:995:18
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+       at new Promise (<anonymous>)
+       at runWithCancel (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+       at new Promise (<anonymous>)
+       at runWithTimeout (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+[full output: ~/Library/Application Support/rtk/tee/1790366369_vitest_run.log]

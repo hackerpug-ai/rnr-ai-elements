@@ -310,17 +310,18 @@ describe('FLOW-DELIV-01 FUSE-12 lane', () => {
       'docs-e2e must upload the Playwright report from apps/docs/playwright-report/',
     ).toBe(true);
 
-    // Root script: every stage joined by &&, in order, ahead of the Playwright steps.
-    // Splitting on && and matching the exact segment list fails on `;`, `||`, or any
-    // reordering in one assertion.
+    // Root script: every stage joined by &&, in order, ahead of the Playwright
+    // steps. ORI-CI-002 moved registry:build and gallery:manifest INTO the
+    // docs package's public build (the ordered seven-stage content-gate
+    // chain), so the root command is the public build plus the two Playwright
+    // steps. Splitting on && and matching the exact segment list fails on
+    // `;`, `||`, or any reordering in one assertion.
     const pkg = JSON.parse(readFileSync(join(repoRoot, 'package.json'), 'utf8')) as {
       scripts: Record<string, string | undefined>;
     };
     expect(pkg.scripts['e2e:docs'], 'root e2e:docs script is missing').toBeDefined();
     const segments = (pkg.scripts['e2e:docs'] ?? '').split('&&').map((segment) => segment.trim());
     expect(segments, 'the e2e:docs chain must &&-link every stage in order').toEqual([
-      'pnpm registry:build',
-      'pnpm gallery:manifest',
       'pnpm --filter @rnr-ai-elements/docs build',
       'pnpm exec playwright install chromium',
       'pnpm exec playwright test',

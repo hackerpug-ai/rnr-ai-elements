@@ -1,0 +1,14 @@
+=== ORI-CI-002 run d42a9f46-81bf-471f-b5da-283101293486 fatal ===
+Error: cold candidate build: observed stage starts [prebuild, registry:build, gallery:manifest] do not match the ordered seven-stage chain [registry:build, gallery:manifest, prebuild, check:snippets, astro build, search:index, check:links]
+    at assertOrderedStages (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:401:11)
+    at runDrill (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:764:5)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:968:18
+=== ORI-CI-002 run cac2664a-8bed-4018-a216-6efe2d980158 fatal ===
+Error: mutation target is not unique in /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/missing-route-cac2664a/apps/docs/src/content/docs/introduction.md: ](/docs/cli)
+    at editOnce (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:424:11)
+    at Object.apply (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:449:7)
+    at runVariant (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:654:28)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at runDrill (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:793:5)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002/tests/sprint-05-orient-search/docs-build-pipeline.test.ts:971:18

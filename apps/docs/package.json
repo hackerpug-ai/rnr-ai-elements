@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "prebuild": "tsx ../../scripts/docs-data/prebuild.ts",
-    "build": "pnpm -w run registry:build && pnpm -w run gallery:manifest && astro build",
+    "check:snippets": "tsx ../../scripts/docs-data/authored-snippets.ts",
+    "search:index": "tsx ../../scripts/docs-data/search-index.ts",
+    "check:links": "tsx ../../scripts/docs-data/check-dist-links.ts",
+    "build": "pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links",
     "preview": "astro preview"
   },
   "devDependencies": {

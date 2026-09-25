@@ -1,0 +1,519 @@
+=== ORI-CI-002 run cac2664a-8bed-4018-a216-6efe2d980158 — invalid-prop failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": false,
+  "root": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a",
+  "docsRoot": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/owns-vs-does-not-own.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3165,
+      "sha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3165,
+      "sha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 1,
+    "ts": 2,
+    "tsx": 4,
+    "css": 1,
+    "configuration": 16
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16"
+  },
+  "emitted": null,
+  "errors": [
+    "[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-0RuwIR, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-0RuwIR/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx\nshared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: \"user\" | \"assistant\"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.\n  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'."
+  ]
+}
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-cac2664a/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-0RuwIR, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-0RuwIR/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx
+shared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: "user" | "assistant"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.
+  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.
+
+=== ORI-CI-002 run de7a213e-1d2a-45d2-a4cf-e261eb406238 — invalid-prop failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": false,
+  "root": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e",
+  "docsRoot": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/owns-vs-does-not-own.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3165,
+      "sha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3165,
+      "sha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 1,
+    "ts": 2,
+    "tsx": 4,
+    "css": 1,
+    "configuration": 16
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16"
+  },
+  "emitted": null,
+  "errors": [
+    "[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-K5MR3l, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-K5MR3l/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx\nshared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: \"user\" | \"assistant\"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.\n  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'."
+  ]
+}
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-de7a213e/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-K5MR3l, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-K5MR3l/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx
+shared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: "user" | "assistant"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.
+  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.
+
+=== ORI-CI-002 run 7408c708-0d19-446a-811c-7c1df68f743e — invalid-prop failing build ===
+command: pnpm --filter @rnr-ai-elements/docs build
+cwd: /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708
+exit code: 1
+--- stdout ---
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": false,
+  "root": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708",
+  "docsRoot": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/owns-vs-does-not-own.md",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3165,
+      "sha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3165,
+      "sha256": "213bd3d1b4e74294c7b490fef9d2bba66ce1da5b42efaa99aa25829de66af3ae"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 1,
+    "ts": 2,
+    "tsx": 4,
+    "css": 1,
+    "configuration": 16
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-ffa00417d3493d16"
+  },
+  "emitted": null,
+  "errors": [
+    "[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx\nshared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: \"user\" | \"assistant\"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.\n  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'."
+  ]
+}
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/invalid-prop-7408c708/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+--- stderr ---
+[authored-snippets] compiler nativewind: exit 2 (cwd /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc, config /Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-OdvNdc/tsconfig.json) — bound blocks: apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet messagesSource source packages/docs-snippets/shared/quickstart-messages.ts; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet screenSource source packages/docs-snippets/shared/quickstart-screen.tsx; apps/docs/src/content/docs/quickstart.mdx snippet entrypointNativewind source packages/docs-snippets/nativewind/app/index.tsx
+shared/quickstart-screen.tsx(47,37): error TS2322: Type '{ children: Element; from: "user" | "assistant"; oriCi002InvalidProp: boolean; }' is not assignable to type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.
+  Property 'oriCi002InvalidProp' does not exist on type 'IntrinsicAttributes & ViewProps & { from: MessageRole; }'.
+
