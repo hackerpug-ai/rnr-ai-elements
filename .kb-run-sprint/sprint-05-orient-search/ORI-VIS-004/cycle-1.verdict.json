@@ -1,0 +1,71 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "7230130b726b4371c29f6756ac92dd3c4191878e",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Fresh CI=true run of ORI-VIS-004-AC-1 across desktop+mobile+nojs: 3/3 pass, plus my own full-suite run 12/12. Live DOM: conversation row keeps verdict 'runs in Expo Go', uniwind command block visible / nativewind hidden, real clipboard readText == 'npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json' (assertions.json AC-1/chromium-desktop matches), Docs click reaches /components/conversation with h1 'Conversation'. AST-007 filter logic untouched (entire island script lives in write-prohibited apps/docs/src/scripts/ledger-filter.ts, absent from the diff; registry-ledger-controls regression 12/12).",
+      "fix": "",
+      "fix_location": "amend_requirement: AC-1 must_observe 'Exactly 1 matching row named conversation' because the real substring filter over the write-prohibited generated dataset matches ['checkpoint','conversation'] in the component scope — checkpoint's one-line description contains 'conversation' (independently recomputed from registry-items.json + the real oneLineDescription clamp: component-scope ['checkpoint','conversation'], all-scope adds 'empty'). Data (apps/docs/src/data/**) and filter logic (apps/docs/src/scripts/**) are both write-prohibited for this task; the test correctly asserts the dataset-derived match set with every pinned observation on the conversation row."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Fresh CI=true run of ORI-VIS-004-AC-2: 3/3 pass. All 56 rows return after All+clear; facet totals 56/39/11/6 read from the real buttons and pinned by a module-scope dataset sanity check (independently confirmed 56/39/11/6); note contains 'Generated at build from public/r/*.json'; both base URLs visible in section.ledger__bulk-add; 's05-no-ledger-match-zzzz' yields 0 rows + visible nonempty 'No items match that filter.'; replacing with 'conversation' recovers rows and withdraws the no-results message (assertions.json AC-2/chromium-desktop).",
+      "fix": "",
+      "fix_location": "amend_requirement: AC-2 case-2 'restores its 1 matching row' because the all-scope substring match set is ['checkpoint','conversation','empty'] under the same write-prohibited data+filter proof as AC-1; the test asserts the derived count with conversation present and the no-results presentation withdrawn."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Fresh CI=true runs: full project set 3/3 and the AC's mobile-only verify command pass. Live geometry: wrapper scrollWidth-clientWidth > 0 while documentElement overflow == 0; conversation th position sticky and pinned inside wrapper bounds after scrolling to the right edge; Docs control intersects wrapper bounds; headPosition 'sticky'; even-row background == probe-resolved var(--muted) (oklch(0.97 0 0)); .ledger-engine fontFamily == probe-resolved var(--font-mono) (Spline Sans Mono stack) — the pre-migrated .ledger-engine rule in LedgerTable.astro:150 already consumes var(--font-mono), live-asserted rather than trusted. Shared mechanics ride DataTable's pre-existing wrapperClass passthrough (TokenTable idiom); DataTable.astro has ZERO diff (verified byte-identical base..tip). mobile-scroll.png is a genuine Pixel 5 capture (393x727 CSS px at DPR 2.75 = 1081x1999).",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Fresh CI=true run of ORI-VIS-004-AC-4 across all three projects: 3/3 pass. No-JS clause: 56 server-rendered tr[data-filter-text] rows, generated note served, both base URLs present as complete selectable text with scrollWidth-clientWidth == 0 (no truncation); nojs-full-table.png is a 9508px-tall full-document render of the complete ledger. Keyboard clause: Tab walk observed live outline width > 0 and style != none on category:all/component/ui/lib, tab:nativewind, input, tabpanel, and copy controls; uniwind selected via the real roving tablist (Shift+Tab to tabpanel, Shift+Tab to selected tab, ArrowRight moves AND activates per the ARIA pattern), aria-selected='true', background == probe var(--primary) and != nativewind's background.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Per-AC grep verify command run fresh: 'ORI-VIS-004-AC-1' 3 passed on desktop+mobile+nojs.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Per-AC grep verify command run fresh: 'ORI-VIS-004-AC-2' 3 passed.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Mobile-only verify command run fresh: pass (4th invocation, chromium-mobile project).",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Per-AC grep verify command run fresh: 'ORI-VIS-004-AC-4' 3 passed across desktop+mobile+nojs.",
+      "fix": "",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Presentation-only diff verified end to end: LedgerFilter gains a wrapper div plus scoped styles (the island's entire behavioral script lives in untouched, write-prohibited apps/docs/src/scripts/ledger-filter.ts), LedgerTable rides DataTable's pre-existing wrapperClass passthrough with :global rules confined under its unique wrapper (compiled CSS confirms every tab-group restyle selector requires .ledger-toolbar[data-astro-cid-h3k54qbg], so InstallCommand/DependencyPanel TabGroups are untouched), DataTable.astro is byte-identical to base, and registry.astro changes are masthead rhythm only. I independently rebuilt, re-ran the full 12/12 spec plus every per-AC grep command, registry-ledger-controls (12/12), search-contract (15/15), engine-state-contract (15/15 after killing an orphaned VIS-002-worktree astro preview that squatted port 4323 and broke AC-5's scratch-consumer bootstrap — environment, not this diff), typecheck (exit 0) and biome via the direct binary (exit 0; the pnpm-wrapped lint death is the documented local spawn quirk). All six run-identity sha256s match the committed tree, binding the evidence to these exact contents even though its sourceSha field records the pre-commit HEAD (7ff73b83) because the green run preceded the commit — minor hygiene, integrity holds via the file hashes. The three implementer-flagged pre-existing failures are confirmed pre-existing at base by source proof: DataTable.astro identical base..tip (data-table-contract's regex cannot differ), both-engines row rendering and the absent td.ledger-verdict/td.ledger-docs classes both already true at 7ff73b83. Two criteria amended with proof: 'exactly 1 matching row' (AC-1) and 'its 1 matching row' (AC-2) are unachievable against the write-prohibited dataset+substring filter, which matches checkpoint (and empty all-scope) for 'conversation' — the tests assert the dataset-derived sets with every pinned observation on the conversation row. Evidence caveat: this session's harness routed PNG reads to a CDN so I could not eyeball the screenshots; I validated them structurally (valid PNGs, correct viewport/DPR dimensions, 9508px no-JS full ledger) and re-derived every visual claim from live DOM assertions in my own fresh runs. Note for the orchestrator: an orphaned astro preview from the completed VIS-003 worktree still squats port 4322."
+}
