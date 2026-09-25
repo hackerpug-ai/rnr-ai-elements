@@ -22,7 +22,7 @@ Compose `apps/docs/src/pages/404.astro`, author its owned browser probes, and ca
 
 ### Metadata
 
-- Status: Backlog
+> Status: Backlog
 - Assignee: frontend-designer
 - Priority: P2 · Points: 2 · Type: DOCS
 - Dependency phase: After ORI-VIS-001, ORI-VIS-003 and ORI-AST-009

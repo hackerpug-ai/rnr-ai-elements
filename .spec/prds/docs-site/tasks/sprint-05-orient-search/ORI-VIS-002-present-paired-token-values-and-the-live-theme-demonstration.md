@@ -20,8 +20,7 @@ Presentation in TokenTable, shared DataTable and CodeBlock, with real browser pr
 <summary>▸ Full agent specification (TASK-TEMPLATE v5.2 — required reading for implementer + reviewer)</summary>
 
 ## Metadata
-
-Status: Backlog
+> Status: Backlog
 Assignee: frontend-designer
 Priority: P1
 Points: 2

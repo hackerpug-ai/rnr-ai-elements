@@ -17258,6 +17258,11 @@
         "state": "landed",
         "task": "FIX-ORI-RN-004-1"
       },
+      "2d29059fe8f62e970e4bd7c4758ec5eb337737fc6e73fa4ed53ad72c700601b2": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-CI-002"
+      },
       "33f6b6cea57f58b4b8f30011cabf06762d3d9e41e2c105673966854f0ef4c7f2": {
         "kind": "complete-task",
         "state": "landed",
@@ -21228,8 +21233,21 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-001"
     },
     "ORI-CI-002": {
+      "approved_sha": "3573a23792b17c0fb2815b404aa65dd10815e4d7",
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-CI-002",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "3573a23792b17c0fb2815b404aa65dd10815e4d7",
+        "before_head": "c28e40c29c8f86447be7b7963c7928fffaf1d22f",
+        "desired_sha256": "f207c70678feba0ab2642b1c6a093d7444cb1cec2c94c0baf58f01b72cc6e6cc",
+        "expected_task_sha256": "d0779f6a327d251bbfddef2546e2c040d24019adb215e7f80e40edf47971affb",
+        "handoff_sha256": "e6d3c1bc441bea3f2e86d984f35ed6b7e380067c126e85afebb468fdd1a152ff",
+        "landed_on": "main",
+        "landed_trunk_sha": "207e5a2856a3d88216caa52adf95fc86fb89fc1e",
+        "metadata_commit_sha": "207e5a2856a3d88216caa52adf95fc86fb89fc1e",
+        "operation_id": "2d29059fe8f62e970e4bd7c4758ec5eb337737fc6e73fa4ed53ad72c700601b2",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-002-make-the-public-docs-build-execute-every-content-gate-in-order.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-AST-001",
@@ -21244,6 +21262,77 @@
         "ORI-CI-001"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-002-make-the-public-docs-build-execute-every-content-gate-in-order.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CI-002-3573a23792b17c0fb2815b404aa65dd10815e4d7.json",
+        "payload": {
+          "commit_sha": "3573a23792b17c0fb2815b404aa65dd10815e4d7",
+          "concerns": [
+            "ORI-CI-001's single-tutorial-gate.test.ts duplicate and noncanonical tokens are broken on main as of this merge: a copied or renamed tutorial doc now fails check:snippets with unbound-block diagnostics before Astro's tutorial gate, verified empirically with ORI-CI-001's exact mutation.",
+            "The invalid-prop failing-build diagnostic names the compiler case-clone path (ori-ast-005-<engine>-case-*/shared/quickstart-screen.tsx), not the repo-relative source path, so the test asserts on the basename plus the real error TS2322 line rather than a repo path.",
+            "The public build now depends on network when cold: check:links performs real external HTTP (7 ordinary 404 warnings on the github mirror source links, non-fatal) and search:index resolves pagefind through pnpm dlx, so CI and ORI-CI-004 inherit both the dependency and roughly 90s warm build time (up from ~15s for the old three-stage build).",
+            "Stage-start observation matches pnpm 10.32.1 lifecycle header shapes and Astro 7's [build] markers (STAGE_SPECS at tests/sprint-05-orient-search/docs-build-pipeline.test.ts:103), so a pnpm or Astro major bump that changes output shapes will need those regexes updated.",
+            "The righthook pre-commit pnpm lint job failed once with full-repo useLiteralKeys diagnostics that an immediate rerun (direct binary and pnpm lint) showed as clean — transient and unreproduced, but worth watching if CI's lint job ever flakes."
+          ],
+          "deviations": [
+            "The duplicate-tutorial fixture additionally extends COMMITTED_BINDINGS inside its scratch copy of scripts/docs-data/authored-snippets.ts:80 (restored byte-exactly in finally) because the plan's bare quickstart copy would fail check:snippets as unbound blocks before Astro's tutorial gate could fire, and the scenario requires Astro's uniqueness failure.",
+            "The missing-route and missing-fragment mutations anchor on introduction.md's unique ](/docs/theming) and ](/docs/owns-vs-does-not-own) links rather than the ](/docs/cli) or ](/docs/installation) links the plan's prose implies, because those two strings each occur twice in introduction.md and a non-unique anchor killed the first drill attempt.",
+            "TDD_MODE was skipped per the charter but RED evidence was still captured before the script changes (.tmp/ORI-CI-002/cycle-1/red/ordered-public-build.log) per the sprint's RED-before-GREEN rule.",
+            "The evidence files preserve appended run history (the RED run plus one intermediate fatal run with the non-unique anchor) rather than being single-run pristine outputs, per the contract's preserve-prior-evidence clause."
+          ],
+          "done": "Approved at 3573a23792b17c0fb2815b404aa65dd10815e4d7 and merged to main as c9bb5cc51c8eb101d04beafec274522633b37535: the public docs build (apps/docs/package.json:8) now runs the exact seven-stage chain registry:build, gallery:manifest, prebuild, check:snippets, astro build, search:index, check:links with fail-stop semantics; pnpm-workspace.yaml:4 pins enablePrePostScripts:false so prebuild runs exactly once and explicitly; root e2e:docs (package.json:20) reduced to the 3-segment public-build + Playwright form with ci-chain-order's five-segment expectation superseded (tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts:313-327); tests/sprint-05-orient-search/docs-build-pipeline.test.ts proves the chain through the real public command in owned scratch copies (cold ordered build, standalone prebuild trio, six mutation variants each with targeted failing build, byte-exact restoration, fresh green rebuild), with receipts under tests/sprint-05-orient-search/evidence/ORI-CI-002/ and RED/GREEN at .tmp/ORI-CI-002/cycle-1/.",
+          "feedback": [
+            "The exact script-surface contract (the JSON block pinning every build script verbatim) made implementation and review deterministic — keep that pattern for wiring tasks.",
+            "Scenario prose that names exact string mutations should verify anchor uniqueness in the live corpus at plan time; two of the implied anchors in introduction.md were ambiguous and cost one full drill cycle.",
+            "Charters adding an earlier-failing gate should carry an explicit supersedes list covering affected landed drills, not only the root-script expectation, so cross-task breakage lands in scope instead of in the next task's acceptance lane."
+          ],
+          "findings": [
+            "Trunk before this task silently auto-ran prebuild as a pnpm lifecycle hook before the build script body (the RED run observed stage starts [prebuild, registry:build, gallery:manifest]), meaning the old public build double-generated data once per invocation.",
+            "pnpm dlx reuses its cached install dir across invocations and honors an npm_config_cache_dir env redirect, and the pagefind_extended binary inside it is a hardlink to the global store, so copy+rename yields a fixture-private inode that can be made genuinely unavailable without touching the store.",
+            "Astro 7 emits [build] Collecting build info at build start and [build] Complete! at end — there is no 'Building client bundle' line that older Astro docs suggest.",
+            "pnpm config get enable-pre-post-scripts reads the pnpm-workspace.yaml camelCase key and returns false, which is how the test proves the effective lifecycle setting inside the isolated copies."
+          ],
+          "scope_impact": [
+            {
+              "change": "Extend that drill's scratch COMMITTED_BINDINGS for the duplicate/moved doc exactly as ORI-CI-002's duplicate variant does (tests/sprint-05-orient-search/docs-build-pipeline.test.ts planDuplicateTutorial), as a small owner-scoped remediation task.",
+              "found": "single-tutorial-gate.test.ts duplicatePublished and noncanonical drills expect Astro's tutorial-gate diagnostics from the public build, but the new check:snippets stage rejects the copied/renamed tutorial as unbound blocks first (scripts/docs-data/authored-snippets.ts:858), so those two tokens fail under pnpm test.",
+              "target": "ORI-CI-001"
+            },
+            {
+              "change": "Sequence the ORI-CI-001 remediation before ORI-CI-004 acceptance and budget for the longer, network-dependent docs build in its lane.",
+              "found": "Its acceptance lane runs pnpm e2e:docs and pnpm test, which now inherit the ORI-CI-001 breakage above plus a ~90s docs build containing external HTTP link checks and a pnpm dlx pagefind resolution.",
+              "target": "ORI-CI-004"
+            },
+            {
+              "change": "When a task inserts a corpus-wide gate ahead of Astro, scan landed tests that mutate the corpus for outcome-gate assumptions and list them in the new task's Supersedes field.",
+              "found": "The sprint plan's dependency graph treats ORI-CI-002 as a pure wiring task, but its corpus-wide gate reordering changed the observable outcome of an already-landed sibling drill.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-CI-002"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-ci-002-impl@session-a251722f",
+          "response_id": "digest:e6d3c1bc441bea3f2e86d984f35ed6b7e380067c126e85afebb468fdd1a152ff",
+          "response_receipt": {
+            "agent": "ghactions-implementer",
+            "dispatch_handle": "ori-ci-002-impl@session-a251722f",
+            "payload_sha256": "e6d3c1bc441bea3f2e86d984f35ed6b7e380067c126e85afebb468fdd1a152ff",
+            "response_id": "digest:e6d3c1bc441bea3f2e86d984f35ed6b7e380067c126e85afebb468fdd1a152ff",
+            "session_id": "ori-ci-002-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CI-002-3573a23792b17c0fb2815b404aa65dd10815e4d7-07e65a5899c4ad6993aa7692c8679c0331405ed9fd06358361b981c04c99b299.response.json",
+          "response_receipt_sha256": "07e65a5899c4ad6993aa7692c8679c0331405ed9fd06358361b981c04c99b299",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-ci-002-impl@session-a251722f"
+        },
+        "sha256": "e6d3c1bc441bea3f2e86d984f35ed6b7e380067c126e85afebb468fdd1a152ff"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:e6d3c1bc441bea3f2e86d984f35ed6b7e380067c126e85afebb468fdd1a152ff",
+        "status": "received"
+      },
       "implementer": "ghactions-implementer",
       "implementer_session": {
         "dispatch_handle": "ori-ci-002-impl@session-a251722f",
@@ -21259,11 +21348,30 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-002-make-the-public-docs-build-execute-every-content-gate-in-order.md",
         "task_sha256": "9e7a2d8e1efdbe9ec39b3f42870c6886338c8c85068021e2470f7c603e3f5206"
       },
+      "landing": {
+        "approved_sha": "3573a23792b17c0fb2815b404aa65dd10815e4d7",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "c9bb5cc51c8eb101d04beafec274522633b37535",
+        "review_receipt": {
+          "agent": "ghactions-reviewer",
+          "dispatch_handle": "ori-ci-002-rev@session-a251722f",
+          "payload_sha256": "d03ba695c94858fb84efb27985bf968599311a9459f2de9ad0800af3c7dba886",
+          "response_id": "digest:d03ba695c94858fb84efb27985bf968599311a9459f2de9ad0800af3c7dba886",
+          "session_id": "ori-ci-002-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "f3be09067c677d1d99cb449822af488371183dfc568e16c56520c5250b2135ce",
+        "reviewer": "ghactions-reviewer",
+        "reviewer_dispatch_handle": "ori-ci-002-rev@session-a251722f",
+        "reviewer_response_id": "digest:d03ba695c94858fb84efb27985bf968599311a9459f2de9ad0800af3c7dba886",
+        "reviewer_session": "ori-ci-002-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "d03ba695c94858fb84efb27985bf968599311a9459f2de9ad0800af3c7dba886"
+      },
       "last_findings": null,
-      "merge_sha": null,
+      "merge_sha": "c9bb5cc51c8eb101d04beafec274522633b37535",
       "points": 5,
       "reviewer": "ghactions-reviewer",
-      "status": "in_progress",
+      "status": "completed",
       "wave": 12,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-002"
     },

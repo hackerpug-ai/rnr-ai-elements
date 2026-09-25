@@ -21,7 +21,7 @@ Presentation in LedgerTable, DataTable, LedgerFilter and Registry, plus the task
 
 ## Metadata
 
-- Status: Backlog
+> Status: Backlog
 - Assignee: frontend-designer
 - Priority: P1
 - Points: 3

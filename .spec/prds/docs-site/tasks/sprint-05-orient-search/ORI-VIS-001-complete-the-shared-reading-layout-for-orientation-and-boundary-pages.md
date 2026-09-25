@@ -20,8 +20,7 @@ Shared reading presentation, typography and composition in the exact allowlist b
 <summary>▸ Full agent specification (TASK-TEMPLATE v5.2 — required reading for implementer + reviewer)</summary>
 
 ## Metadata
-
-Status: Backlog
+> Status: Backlog
 Assignee: frontend-designer
 Priority: P1
 Points: 5
