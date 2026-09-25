@@ -14,6 +14,10 @@
  *   the LedgerTable's command visibility, and
  * - the text input matching each row's `data-filter-text`.
  *
+ * Presentation (ORI-VIS-004): the three controls read as ONE toolbar — a
+ * bordered card-surface bar they wrap inside in reading order; the text-only
+ * /components form keeps its plain full-width input.
+ *
  * Category and text filtering are ephemeral (client DOM only, never the URL);
  * engine persistence belongs to ORI-AST-002. Empty-state detection counts
  * matching ROWS (not containing sections) so a fully-emptied ledger shows the
@@ -54,45 +58,47 @@ const ENGINE_PANELS = [
 ---
 
 <rnr-ledger-filter class="ledger-filter" role="search" aria-label="Filter the registry ledger" target={target}>
-  {
-    categories && (
-      <div class="ledger-filter__categories" role="group" aria-label="Filter by category">
-        <button
-          type="button"
-          class="ledger-filter__category"
-          data-category-filter="all"
-          aria-pressed="true"
-        >
-          All <span class="ledger-filter__count" data-category-count>{total}</span>
-        </button>
-        {categories.map((facet) => (
+  <div class:list={['ledger-toolbar', !categories && !engine && 'ledger-toolbar--plain']} data-ledger-toolbar>
+    {
+      categories && (
+        <div class="ledger-filter__categories" role="group" aria-label="Filter by category">
           <button
             type="button"
             class="ledger-filter__category"
-            data-category-filter={facet.id}
-            aria-pressed="false"
+            data-category-filter="all"
+            aria-pressed="true"
           >
-            {facet.label} <span class="ledger-filter__count" data-category-count>{facet.count}</span>
+            All <span class="ledger-filter__count" data-category-count>{total}</span>
           </button>
-        ))}
-      </div>
-    )
-  }
-  {
-    engine && (
-      <TabGroup group="registry-ledger-engine" panels={ENGINE_PANELS}>
-        <Fragment slot="nativewind">Showing nativewind install commands.</Fragment>
-        <Fragment slot="uniwind">Showing uniwind install commands.</Fragment>
-      </TabGroup>
-    )
-  }
-  <input
-    type="search"
-    class="ledger-filter__input"
-    placeholder="Filter by name, description, or family"
-    aria-label="Filter by name, description, or family"
-    disabled
-  />
+          {categories.map((facet) => (
+            <button
+              type="button"
+              class="ledger-filter__category"
+              data-category-filter={facet.id}
+              aria-pressed="false"
+            >
+              {facet.label} <span class="ledger-filter__count" data-category-count>{facet.count}</span>
+            </button>
+          ))}
+        </div>
+      )
+    }
+    {
+      engine && (
+        <TabGroup group="registry-ledger-engine" panels={ENGINE_PANELS}>
+          <Fragment slot="nativewind">Showing nativewind install commands.</Fragment>
+          <Fragment slot="uniwind">Showing uniwind install commands.</Fragment>
+        </TabGroup>
+      )
+    }
+    <input
+      type="search"
+      class="ledger-filter__input"
+      placeholder="Filter by name, description, or family"
+      aria-label="Filter by name, description, or family"
+      disabled
+    />
+  </div>
   <p class="ledger-filter__no-results" data-no-results hidden>
     No items match that filter.
   </p>
@@ -110,11 +116,65 @@ const ENGINE_PANELS = [
     display: block;
     margin-block-end: 1.5rem;
   }
+  /* THE toolbar (ORI-VIS-004): category facets, the engine selector and the
+     text filter present as ONE grouped control row — a bordered card-surface
+     bar the three controls wrap inside in reading order (TR-07 R4). The
+     text-only /components form renders the same input as before, unboxed. */
+  .ledger-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    padding: 0.75rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .ledger-toolbar--plain {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+  .ledger-toolbar--plain .ledger-filter__input {
+    flex-basis: 100%;
+  }
   .ledger-filter__categories {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-block-end: 0.75rem;
+  }
+  /* The engine selector inside the toolbar: the TabGroup's standalone
+     border-bottom treatment belongs to install panels — here the group
+     dissolves into the bar so its tabs read as the same chip family as the
+     category facets, and the one visible panel sentence drops to a quiet
+     status line under the controls. The selectors stay :global under this
+     component's unique .ledger-filter namespace (the slotted TabGroup markup
+     carries the TabGroup scope hash, not this one). */
+  .ledger-toolbar :global(.tab-group) {
+    display: contents;
+  }
+  .ledger-toolbar :global(.tab-group__tabs) {
+    border-bottom: 0;
+  }
+  .ledger-filter .ledger-toolbar :global(.tab-group__tabs [role='tab']) {
+    padding: 0.25rem 0.75rem;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .ledger-filter .ledger-toolbar :global(.tab-group__tabs [role='tab'][aria-selected='true']) {
+    color: var(--primary-foreground);
+    background: var(--primary);
+    border-color: var(--ring);
+  }
+  .ledger-toolbar :global(.tab-group__panel) {
+    order: 10; /* the status sentence rides below the control row, not between it and the input */
+    flex-basis: 100%;
+    padding-block: 0;
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
   }
   .ledger-filter__category {
     min-height: 44px; /* touch target */
@@ -136,7 +196,9 @@ const ENGINE_PANELS = [
     font-size: 0.75rem;
   }
   .ledger-filter__input {
-    width: 100%;
+    flex: 1 1 18rem;
+    min-width: 14rem;
+    width: auto;
     min-height: 44px; /* touch target */
     padding: 0.5rem 0.75rem;
     font: inherit;
@@ -151,8 +213,14 @@ const ENGINE_PANELS = [
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
+  /* The genuine empty state — readable, muted, token-bordered; never a
+     permanent fixture beside matching rows (the island owns its hidden
+     attribute, this only presents it). */
   .ledger-filter__no-results {
-    margin: 0;
+    margin: 0.75rem 0 0;
+    padding: 0.75rem 1rem;
     color: var(--muted-foreground);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
   }
 </style>
