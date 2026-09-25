@@ -1,0 +1,22 @@
+{
+  "status": "blocked",
+  "commit_sha": "b2560ce36e2e5ba2eb2012d77f53db5987b63432",
+  "summary": "Built the fifth vanilla island end-to-end: SearchDialog.astro + search-dialog.ts (native <dialog> via the Header data-search-slot seam, synchronous open with an in-page <=300ms witness, lazy same-origin Pagefind import on first activation only, module-level initialization retained across unchanged reopens and ClientRouter soft navigation, text-only grouped results via the shared search-page-model, aria-live counts, Arrow/Enter/Escape with invoker focus restoration, one visible error state on real offline failure, and the callable activateSearch(invoker?) seam for ORI-AST-009); scripts/docs-data/search-index.ts runs pinned Pagefind 1.5.2 through pnpm dlx over completed dist (no package.json/lockfile change), fail-closed naming any missing expected destination (56 items + 7 docs = 63 pages indexed, including props, verdict text, and hidden engine panels); DocsLayout mounts the island; island-budget superseded to exactly five custom elements. Functional RED captured canonically (run_flow --expect red: 10/15 cases failing at the missing search surface; proof.red + .red store committed, supplemental captures under .tmp/ORI-AST-004/cycle-1/red). GREEN: 7 passed / 8 failed, and all 8 failures are the single pinned /components/streamdown destination leg — searching streamdown really returns the two docs pages that mention it, and /components/streamdown is a verified 404. Every other contracted behavior is proven (lazy-load request accounting, 300ms, reopen/soft-nav retention, keyboard + focus, empty/literal-query/offline recovery, four item + three doc destination tours at HTTP 200, categories components/ui/lib/pages, no-JS surface on chromium-nojs). Gates: search-index 5/5 (incl. fail-closed scratch-removal naming /components/conversation), island-budget 3/3, typecheck 0, biome ci 0, fallow 0.",
+  "assumptions": [
+    "Pagefind is resolved at run time via pinned `pnpm dlx pagefind@1.5.2` inside the task-owned indexer, since package.json/pnpm-lock.yaml are writeProhibited; this keeps the dependency question untouched while running the real indexer.",
+    "The no-JavaScript project executes its actual supported surface (hidden trigger, zero Pagefind requests, working link navigation) inside every flow test instead of skipping — that surface already held pre-implementation, which is why RED shows 5 passing nojs cases.",
+    "The locked flow's verdict leg asserts the emitted badge verdict ('runs in Expo Go') is searchable plus a distinctive verbatim phrase from the same emitted document finds its originating item, because the badge words alone match 61 pages and cannot single out one item in a capped result window.",
+    "dist/pagefind is wiped by any astro build (including island-budget's chain), so the local gate order is island-budget -> search-index -> playwright; CI owns the ordered build+index invocation."
+  ],
+  "blockers": [
+    "/components/streamdown does not exist in the built candidate (no streamdown registry item among the 56; 404 verified via dist inspection, curl, and the real index). Every AC's streamdown leg therefore fails while all other contracted behavior passes; committing this checkpoint so the reviewer can verify everything else and so only the destination legs remain red.",
+    "The resolution is human-owned per the wave-4 ruling: 'create a docs-owned destination vs amend three tasks' ACs plus gate steps human-flows.json:730,742 — do not choose.' Once the destination exists (or the ACs are amended), only the streamdown assertions need to flip green — the dialog, index, keyboard, lazy-load, and offline mechanics are already proven."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-AST-004",
+      "found": "AC-1/2/3/4 pin /components/streamdown as a real item destination (HTTP 200, search result, Enter navigation target), but the candidate's registry emits 56 items with no streamdown entry; the route 404s and the real index returns only /docs/owns-vs-does-not-own/ and /docs/installation/ for the query.",
+      "change": "Unsatisfiable until the human decides between creating a docs-owned/registry streamdown destination or amending this task's ACs (plus ORI-VIS-003 AC-2 and gate steps human-flows.json:730,742 owned by ORI-AST-010). Implementation is complete and committed; only the pinned streamdown assertions remain failing, each naming the missing destination."
+    }
+  ]
+}

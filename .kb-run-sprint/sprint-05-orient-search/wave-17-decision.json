@@ -1,0 +1,17 @@
+{
+  "item_id": "ORI-AST-004:blocked:1:scope_impact:0:02b699e60e185f399f40755974ead67f9ee591d33c5b4c9a4d4637ca2074087a",
+  "wave_id": "wave-17",
+  "source_task": "ORI-AST-004",
+  "source_kind": "blocked",
+  "report_sha256": "02b699e60e185f399f40755974ead67f9ee591d33c5b4c9a4d4637ca2074087a",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "add",
+  "answers": [
+    {"question": 1, "answer": true, "reason": "Names the exact phantom destination: /components/streamdown pinned by AC-1..4 and locked gate flows (human-flows.json:730,742 'five existing item destinations') while the registry's 56 items never included streamdown — it is a third-party markdown-rendering dependency, not a shippable item.", "evidence": [{"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/human-flows.json", "sha256": "d84a1aeaff86633891550e3b824dc5e2a3e99792d84bc08c5c34dc9f82696671"}]},
+    {"question": 2, "answer": false, "reason": "Not a reviewer finding; an implementer blocked report naming a planning-time contract defect.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-AST-004/cycle-1.blocked.json", "sha256": "02b699e60e185f399f40755974ead67f9ee591d33c5b4c9a4d4637ca2074087a"}]},
+    {"question": 3, "answer": true, "reason": "All 14 remaining tasks chain behind ORI-AST-004; the locked gate step 6 exercises the streamdown destination.", "evidence": [{"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md", "sha256": "6fa0f48d8430dbeb501603aebb874f8b63d6ba8aa0964b842ab586b18477f07a"}]},
+    {"question": 4, "answer": false, "reason": "The human explicitly chose the fix in session (2026-09-25): create the docs-owned destination page. The wave-4 ruling that made this human-owned is satisfied; acting now executes the recorded decision without changing any gate step's words.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-AST-004/cycle-1.blocked.json", "sha256": "02b699e60e185f399f40755974ead67f9ee591d33c5b4c9a4d4637ca2074087a"}]},
+    {"question": 5, "answer": true, "reason": "Verified: no streamdown registry item exists (registry conversation.json carries 0 streamdown mentions as an item; /components/streamdown 404 in dist); searching streamdown returns the two docs pages that mention it; the registry-check claim reproduced.", "evidence": [{"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/human-flows.json", "sha256": "d84a1aeaff86633891550e3b824dc5e2a3e99792d84bc08c5c34dc9f82696671"}]}
+  ]
+}
