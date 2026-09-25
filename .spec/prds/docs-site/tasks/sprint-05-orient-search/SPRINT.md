@@ -142,6 +142,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | FIX-ORI-AI-002-1 | Take the NativeWind driver's turn records baselines before each send flow | react-native-reusables-implementer | 2 | 12 | ORI-RN-005, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3 |
 | ORI-CONT-003 | Author the single seed-data quickstart and its live-example run handoff | techwriting-implementer | 5 | 9 | ORI-CONT-001, ORI-AST-001, ORI-AST-002, ORI-RN-002, ORI-AI-002 |
 | ORI-AST-004 | Navigate the built docs through a lazily loaded Pagefind dialog | astro-implementer | 5 | 10 | ORI-AST-001, ORI-AST-002, ORI-AST-003, ORI-AST-008, ORI-CONT-001, ORI-CONT-003, ORI-CONT-005 |
+| FIX-ORI-AST-004-1 | Publish the docs-owned streamdown dependency-explainer destination | astro-implementer | 2 | 17 | ORI-AST-008 |
 | ORI-AST-006 | Reject broken links in the built documentation | astro-implementer | 3 | 4 | ORI-AST-001 |
 | ORI-AST-007 | Filter the registry ledger and copy commands for the selected engine | astro-implementer | 3 | 5 | ORI-AST-002, ORI-AST-008 |
 | ORI-AST-009 | Recover from unknown documentation URLs through the real site search | astro-implementer | 2 | 11 | ORI-AST-001, ORI-AST-004, ORI-CONT-005 |
@@ -161,7 +162,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-DEP-002 | Verify the accepted candidate's real Cloudflare version and 404 recovery | cloudflare-workers-implementer | 2 | 19 | ORI-DEP-001, ORI-CI-004, ORI-AST-009, ORI-VIS-005 |
 | ORI-DEP-003 | Publish and verify the completed Sprint 05 docs at the apex | cloudflare-workers-implementer | 3 | 20 | ORI-DEP-001, ORI-DEP-002, ORI-CI-004 |
 
-**Total: 42 tasks / 144 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1 and FIX-ORI-CI-001-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix and ask-wave16-add-quickstart-tutorial-designation). Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 43 tasks / 146 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1 and FIX-ORI-AST-004-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation and ask-wave17-add-streamdown-dependency-destination). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -293,6 +294,8 @@ The following filenames are derived from each exact task ID and title. Each char
 - [ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md](./ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md)
 
 - [ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md](./ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md)
+
+- [TASK-FIX-ORI-AST-004-1.md](./TASK-FIX-ORI-AST-004-1.md)
 
 - [ORI-AST-006-reject-broken-links-in-the-built-documentation.md](./ORI-AST-006-reject-broken-links-in-the-built-documentation.md)
 
