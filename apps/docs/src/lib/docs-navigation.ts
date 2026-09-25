@@ -6,8 +6,10 @@
  * Responsibilities, in order:
  *   1. Validate collection data is present before deriving anything.
  *   2. Exclude drafts from routes, section navigation, and search input alike.
- *   3. Exclude the reserved `theming` slug from catch-all generation (the static
- *      /docs/theming route owns that destination until ORI-AST-003 adapts it).
+ *   3. Split the reserved `theming` slug between the publication contract's two
+ *      consumers: excluded from catch-all generation (the static /docs/theming
+ *      route owns that destination), included in section navigation under its
+ *      authored section so every rendered page still reaches it.
  *   4. Detect duplicate published destinations and fail with the destination and
  *      both source paths.
  *   5. Sort deterministically: section order, then numeric order, then id.
@@ -63,6 +65,27 @@ function sourcePathFor(filePath?: string): string {
   return `apps/docs/${normalized}`;
 }
 
+/** Map + sort shared by both publication-contract consumers. Callers decide
+ * which entries go in; this never filters. */
+function toPublishedDocs(entries: DocsCollectionEntry[]): PublishedDoc[] {
+  return entries
+    .map((entry) => ({
+      id: entry.id,
+      title: entry.data.title,
+      description: entry.data.description,
+      section: entry.data.section,
+      order: entry.data.order,
+      href: `/docs/${entry.id}`,
+      sourcePath: sourcePathFor(entry.filePath),
+    }))
+    .sort(
+      (a, b) =>
+        SECTION_ORDER[a.section] - SECTION_ORDER[b.section] ||
+        a.order - b.order ||
+        a.id.localeCompare(b.id),
+    );
+}
+
 /**
  * The published (non-draft, non-reserved) docs in deterministic order.
  * Throws when two entries resolve to the same published destination — the
@@ -92,23 +115,7 @@ export function publishedDocs(entries: DocsCollectionEntry[]): PublishedDoc[] {
     throw new Error(detail);
   }
 
-  return published
-    .filter((entry) => !RESERVED_DOC_SLUGS.includes(entry.id))
-    .map((entry) => ({
-      id: entry.id,
-      title: entry.data.title,
-      description: entry.data.description,
-      section: entry.data.section,
-      order: entry.data.order,
-      href: `/docs/${entry.id}`,
-      sourcePath: sourcePathFor(entry.filePath),
-    }))
-    .sort(
-      (a, b) =>
-        SECTION_ORDER[a.section] - SECTION_ORDER[b.section] ||
-        a.order - b.order ||
-        a.id.localeCompare(b.id),
-    );
+  return toPublishedDocs(published).filter((doc) => !RESERVED_DOC_SLUGS.includes(doc.id));
 }
 
 export interface SectionNavGroup {
@@ -117,12 +124,13 @@ export interface SectionNavGroup {
 }
 
 /**
- * Section navigation grouped in declared section order. Excludes drafts and
- * reserved slugs exactly like `publishedDocs`, so route generation, the
- * rendered navigation, and the search input can never disagree.
+ * Section navigation grouped in declared section order. Excludes drafts but
+ * includes the reserved slugs the static routes own — the catch-all never
+ * generates them, yet navigation still reaches those destinations (the
+ * generation/navigation split).
  */
 export function sectionNavigation(entries: DocsCollectionEntry[]): SectionNavGroup[] {
-  const docs = publishedDocs(entries);
+  const docs = toPublishedDocs(entries.filter((entry) => entry.data.draft !== true));
   const groups: SectionNavGroup[] = [];
   for (const section of DOCS_SECTIONS) {
     const members = docs.filter((doc) => doc.section === section);

@@ -1,0 +1,17 @@
+{
+  "item_id": "ORI-VIS-001:blocked:1:scope_impact:0:6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+  "wave_id": "wave-18",
+  "source_task": "ORI-VIS-001",
+  "source_kind": "blocked",
+  "report_sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "add",
+  "answers": [
+    {"question": 1, "answer": true, "reason": "Names the exact defect: apps/docs/src/lib/docs-navigation.ts RESERVED_DOC_SLUGS=['theming'] is consumed by both publishedDocs (route-generation exclusion, correct) and sectionNavigation (nav derivation), so /docs/theming is silently absent from every page's section nav and the Guides group never renders; the one-line fix is precisely scoped.", "evidence": [{"path": "apps/docs/src/lib/docs-navigation.ts", "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"}]},
+    {"question": 2, "answer": false, "reason": "Not a reviewer finding; an implementer blocked report naming an out-of-allowlist routing gap.", "evidence": [{"path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-001/cycle-1.blocked.json", "sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444"}]},
+    {"question": 3, "answer": true, "reason": "In-flight ORI-VIS-001 cannot satisfy AC-2 without it; downstream ORI-CONT-004 and gate step 1/2 read the same nav.", "evidence": [{"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-001-complete-the-shared-reading-layout-for-orientation-and-boundary-pages.md", "sha256": "197d3553f8283885e30edacc7d055383d23a0a35dd6247b0c4e0389668130acf"}]},
+    {"question": 4, "answer": false, "reason": "One semantic line completing what AST-003's own comment anticipated ('until ORI-AST-003 adapts it' — it landed but never did); no gate words change, no PRD-open behavior decided.", "evidence": [{"path": "apps/docs/src/lib/docs-navigation.ts", "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"}]},
+    {"question": 5, "answer": true, "reason": "Verified in source: the reserved-slug list exists at the named location with the catch-all comment; nav observed lacking theming; no landed test asserts theming's absence from nav (orientation-content.spec.ts asserts only relative order of four other entries).", "evidence": [{"path": "apps/docs/src/lib/docs-navigation.ts", "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"}]}
+  ]
+}

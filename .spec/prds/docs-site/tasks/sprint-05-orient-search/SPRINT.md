@@ -151,6 +151,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-CI-002 | Make the public docs build execute every content gate in order | ghactions-implementer | 5 | 12 | ORI-AST-001, ORI-AST-004, ORI-AST-005, ORI-AST-006, ORI-AST-009, ORI-CONT-001, ORI-CONT-002, ORI-CONT-003, ORI-CONT-005, ORI-CI-001 |
 | ORI-CONT-006 | State the complete TR-12 docs contribution contract | techwriting-implementer | 1 | 13 | ORI-CI-002 |
 | ORI-VIS-001 | Complete the shared reading layout for orientation and boundary pages | frontend-designer | 5 | 12 | ORI-AST-001, ORI-AST-002, ORI-AST-003, ORI-AST-004, ORI-AST-007, ORI-AST-009, ORI-CONT-001, ORI-CONT-002, ORI-CONT-003, ORI-CONT-005 |
+| FIX-ORI-VIS-001-1 | Include the reserved theming entry in section navigation | astro-implementer | 1 | 18 | ORI-AST-003 |
 | ORI-VIS-002 | Present paired token values and the live theme demonstration | frontend-designer | 2 | 13 | ORI-VIS-001, ORI-AST-003, ORI-AST-007 |
 | ORI-VIS-003 | Present shared search results and keyboard-visible states | frontend-designer | 2 | 13 | ORI-VIS-001, ORI-AST-004 |
 | ORI-VIS-004 | Complete the ledger toolbar and shared table presentation | frontend-designer | 3 | 14 | ORI-VIS-001, ORI-VIS-002, ORI-AST-007 |
@@ -162,7 +163,7 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-DEP-002 | Verify the accepted candidate's real Cloudflare version and 404 recovery | cloudflare-workers-implementer | 2 | 19 | ORI-DEP-001, ORI-CI-004, ORI-AST-009, ORI-VIS-005 |
 | ORI-DEP-003 | Publish and verify the completed Sprint 05 docs at the apex | cloudflare-workers-implementer | 3 | 20 | ORI-DEP-001, ORI-DEP-002, ORI-CI-004 |
 
-**Total: 43 tasks / 146 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1 and FIX-ORI-AST-004-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation and ask-wave17-add-streamdown-dependency-destination). Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 44 tasks / 147 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1 and FIX-ORI-VIS-001-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination and ask-wave18-add-theming-nav-inclusion). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -312,6 +313,8 @@ The following filenames are derived from each exact task ID and title. Each char
 - [ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md](./ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md)
 
 - [ORI-VIS-001-complete-the-shared-reading-layout-for-orientation-and-boundary-pages.md](./ORI-VIS-001-complete-the-shared-reading-layout-for-orientation-and-boundary-pages.md)
+
+- [TASK-FIX-ORI-VIS-001-1.md](./TASK-FIX-ORI-VIS-001-1.md)
 
 - [ORI-VIS-002-present-paired-token-values-and-the-live-theme-demonstration.md](./ORI-VIS-002-present-paired-token-values-and-the-live-theme-demonstration.md)
 
