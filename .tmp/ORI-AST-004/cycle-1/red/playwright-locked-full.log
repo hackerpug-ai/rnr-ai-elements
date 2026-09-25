@@ -1,0 +1,899 @@
+{
+  "config": {
+    "argv": [
+      "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node",
+      "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/node_modules/@playwright/test/cli.js",
+      "test",
+      "--reporter=json",
+      "tests/sprint-05-orient-search/search-contract.spec.ts",
+      "--grep",
+      "FLOW-SHELL-15-search-contract-before-recovery"
+    ],
+    "configFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/playwright.config.ts",
+    "rootDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-mobile",
+        "name": "chromium-mobile",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-nojs",
+        "name": "chromium-nojs",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node -e 'const net=require(\"node:net\");const s=net.connect(4321,\"127.0.0.1\",()=>{console.error(\"strict port: 4321 is already in use; astro preview must own it\");s.destroy();process.exit(1)});s.on(\"error\",()=>process.exit(0))' && ASTRO_PREVIEW_BACKGROUND=1 exec pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+      "url": "http://localhost:4321",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "sprint-05-orient-search/search-contract.spec.ts",
+      "file": "sprint-05-orient-search/search-contract.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 180035,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:305:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:33:44.323Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-a5b298be4a249617a98b",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 279,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 150012,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 150000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:507:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:36:44.779Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-ded259f5e8fb5e8fb7e3",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 495,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-2 open immediately, load Pagefind only on demand",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 120030,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 120000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:606:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:39:15.078Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-3fcc6-oad-Pagefind-only-on-demand-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-3fcc6-oad-Pagefind-only-on-demand-chromium-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-8645290e10942a88b1fb",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 582,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 150012,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 150000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:665:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:41:15.409Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-c04f0df900811676e89a",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 652,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 180013,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:750:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:43:45.760Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-6d14cc0e553b1ca806ee",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 733,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 180036,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:305:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:46:46.090Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-mobile/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-896aaf1bfd88dd6af12a",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 279,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 150012,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 150000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:507:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:49:46.450Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-mobile/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-c330427d181766f89734",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 495,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-2 open immediately, load Pagefind only on demand",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 120033,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 120000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:606:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:52:16.780Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-3fcc6-oad-Pagefind-only-on-demand-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-3fcc6-oad-Pagefind-only-on-demand-chromium-mobile/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-2bb1bb16acba0eacfe12",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 582,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 150011,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 150000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:665:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:54:17.208Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-mobile/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-d2eb5c392b3cc1a3e5fb",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 652,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 180013,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts",
+                        "column": 38,
+                        "line": 178
+                      },
+                      "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-search-slot] button')\u001b[22m\n\n\n  176 | async function activateSearch(page: Page): Promise<number> {\n  177 |   const startedAt = Date.now();\n> 178 |   await page.locator(SEARCH_TRIGGER).click();\n      |                                      ^\n  179 |   await page.locator(`${SEARCH_DIALOG}[open]`).waitFor({ state: 'visible', timeout: 5_000 });\n  180 |   return Date.now() - startedAt;\n  181 | }\n    at activateSearch (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:178:38)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:750:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:56:47.572Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-mobile/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-32fb46fcd30003dcb502",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 733,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 110,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:59:47.893Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-839bb28f3baa95b5c0ac",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 279,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 89,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:59:48.116Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-cc931b703f230a45c9fb",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 495,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-2 open immediately, load Pagefind only on demand",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 86,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:59:48.209Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-605e2e4ecef5815a9056",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 582,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 87,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:59:48.298Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-068d38316f35d78bc37c",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 652,
+          "column": 1
+        },
+        {
+          "title": "FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 88,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T18:59:48.390Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7324009d67e7b6eb06ed-30ff2ab5ba1b2bbfa862",
+          "file": "sprint-05-orient-search/search-contract.spec.ts",
+          "line": 733,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-24T18:33:43.240Z",
+    "duration": 1565209.952,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 10,
+    "flaky": 0
+  }
+}
+

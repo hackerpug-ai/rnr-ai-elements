@@ -1,0 +1,169 @@
+
+Running 15 tests using 1 worker
+FF·FFFF·FF·····
+
+  1) [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:349:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence 
+
+    Error: could not activate /components/streamdown/; results were ["/docs/owns-vs-does-not-own/","/docs/installation/"]
+
+      321 |   }
+      322 |   const finalHrefs = await resultHrefs(page);
+    > 323 |   throw new Error(`could not activate ${href}; results were ${JSON.stringify(finalHrefs)}`);
+          |         ^
+      324 | }
+      325 |
+      326 | /** Open the active result with Enter and settle on the real destination.
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:323:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:448:3
+
+    Error Context: test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:570:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content 
+
+    Error: could not activate /components/streamdown/; results were ["/docs/owns-vs-does-not-own/","/docs/installation/"]
+
+      321 |   }
+      322 |   const finalHrefs = await resultHrefs(page);
+    > 323 |   throw new Error(`could not activate ${href}; results were ${JSON.stringify(finalHrefs)}`);
+          |         ^
+      324 | }
+      325 |
+      326 | /** Open the active result with Enter and settle on the real destination.
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:323:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:636:5
+
+    Error Context: test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:733:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus 
+
+    Error: a result for /components/streamdown/ must exist among the search results
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      305 | async function activateResult(page: Page, href: string): Promise<void> {
+      306 |   const count = await resultLinks(page).count();
+    > 307 |   expect(count, `a result for ${href} must exist among the search results`).toBeGreaterThan(0);
+          |                                                                             ^
+      308 |   for (let attempt = 0; attempt < count + 1; attempt += 1) {
+      309 |     const activeHref = await page.evaluate(() => {
+      310 |       const g = globalThis as unknown as {
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:307:77)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:801:3
+
+    Error Context: test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:814:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text 
+
+    Error: could not activate /components/streamdown/; results were ["/docs/owns-vs-does-not-own/","/docs/installation/"]
+
+      321 |   }
+      322 |   const finalHrefs = await resultHrefs(page);
+    > 323 |   throw new Error(`could not activate ${href}; results were ${JSON.stringify(finalHrefs)}`);
+          |         ^
+      324 | }
+      325 |
+      326 | /** Open the active result with Enter and settle on the real destination.
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:323:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:899:3
+
+    Error Context: test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-desktop/error-context.md
+
+  5) [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:349:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence 
+
+    Error: could not activate /components/streamdown/; results were ["/docs/owns-vs-does-not-own/","/docs/installation/"]
+
+      321 |   }
+      322 |   const finalHrefs = await resultHrefs(page);
+    > 323 |   throw new Error(`could not activate ${href}; results were ${JSON.stringify(finalHrefs)}`);
+          |         ^
+      324 | }
+      325 |
+      326 | /** Open the active result with Enter and settle on the real destination.
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:323:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:448:3
+
+    Error Context: test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-b473c-ery-locked-13-step-sequence-chromium-mobile/error-context.md
+
+  6) [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:570:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content 
+
+    Error: could not activate /components/streamdown/; results were ["/docs/owns-vs-does-not-own/","/docs/installation/"]
+
+      321 |   }
+      322 |   const finalHrefs = await resultHrefs(page);
+    > 323 |   throw new Error(`could not activate ${href}; results were ${JSON.stringify(finalHrefs)}`);
+          |         ^
+      324 | }
+      325 |
+      326 | /** Open the active result with Enter and settle on the real destination.
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:323:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:636:5
+
+    Error Context: test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-37f19-find-real-published-content-chromium-mobile/error-context.md
+
+  7) [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:733:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus 
+
+    Error: a result for /components/streamdown/ must exist among the search results
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      305 | async function activateResult(page: Page, href: string): Promise<void> {
+      306 |   const count = await resultLinks(page).count();
+    > 307 |   expect(count, `a result for ${href} must exist among the search results`).toBeGreaterThan(0);
+          |                                                                             ^
+      308 |   for (let attempt = 0; attempt < count + 1; attempt += 1) {
+      309 |     const activeHref = await page.evaluate(() => {
+      310 |       const g = globalThis as unknown as {
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:307:77)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:801:3
+
+    Error Context: test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-44d77-avigation-and-invoker-focus-chromium-mobile/error-context.md
+
+  8) [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:814:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text 
+
+    Error: could not activate /components/streamdown/; results were ["/docs/owns-vs-does-not-own/","/docs/installation/"]
+
+      321 |   }
+      322 |   const finalHrefs = await resultHrefs(page);
+    > 323 |   throw new Error(`could not activate ${href}; results were ${JSON.stringify(finalHrefs)}`);
+          |         ^
+      324 | }
+      325 |
+      326 | /** Open the active result with Enter and settle on the real destination.
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:323:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004/tests/sprint-05-orient-search/search-contract.spec.ts:899:3
+
+    Error Context: test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-se-e427c-rror-states-safe-query-text-chromium-mobile/error-context.md
+
+  8 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:349:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence 
+    [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:570:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content 
+    [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:733:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus 
+    [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:814:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text 
+    [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:349:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence 
+    [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:570:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content 
+    [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:733:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus 
+    [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:814:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text 
+  7 passed (51.1s)
+playwright green exit: 1

@@ -1,0 +1,94 @@
+{
+  "task_id": "ORI-AST-004",
+  "title": "Navigate the built docs through a lazily loaded Pagefind dialog",
+  "status": "cycle_2_green_pending_review",
+  "captured_at": "2026-09-25T17:09:45Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004",
+  "run": {
+    "run_id": "ori-ast-004-cycle-1",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "preview_command": "ASTRO_PREVIEW_BACKGROUND=1 pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+    "index_command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+    "browser": {
+      "engine": "chromium",
+      "projects": [
+        "chromium-desktop",
+        "chromium-mobile",
+        "chromium-nojs"
+      ],
+      "javascript_disabled_projects": [
+        "chromium-nojs"
+      ]
+    },
+    "hashes": {
+      "base_commit": "396c2ada",
+      "lockfile_sha256": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+      "surface_policy_sha256": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+      "coldboot_policy_sha256": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+      "pagefind_entry_sha256": "db394cbd263f3aee0d1a7e15696a92440439580e8188779ef7e18ba63fa22ac8",
+      "test_spec_sha256": "51a30253275e258c2d8d276b87994fc498eb60d1f94dd89a218c97809248a6d3",
+      "pagefind_version": "1.5.2 (pinned; resolved through pnpm dlx \u2014 no package.json or lockfile change)"
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm registry:build && pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 67
+      },
+      "index": {
+        "command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+        "exit_code": 0,
+        "observed": "fail-closed destination check passes (56 items + 7 docs); real Pagefind CLI indexes 64 pages (63 expected destinations + the new docs-owned /components/streamdown dependency-explainer page), 1 language; pagefind-entry.json reports 64 pages."
+      },
+      "red": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/search-contract.spec.ts --grep FLOW-SHELL-15-search-contract-before-recovery",
+        "exit_code": 1,
+        "observed": "10/15 cases fail at the missing search surface (locator('[data-search-slot] button') never resolves; no dialog, no Pagefind activation); 5/5 chromium-nojs cases pass because the no-JavaScript surface contract already holds pre-implementation.",
+        "captured_at": ".tmp/ORI-AST-004/cycle-1/red/",
+        "canonical_store": ".tmp/sprint-05-orient-search/e2e-evidence/FLOW-SHELL-15-search-contract-before-recovery.red (run_flow.py --expect red, CI=1, cmd_sha=0f945627ebd92ee95b6a960c2ca4ae8e56f834d50c7b0765dd84658e7d38da42)"
+      },
+      "green": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/search-contract.spec.ts --grep FLOW-SHELL-15-search-contract-before-recovery",
+        "exit_code": 0,
+        "passed": 15,
+        "failed": 0,
+        "observed": "All 15 cases pass across chromium-desktop, chromium-mobile and chromium-nojs with retries 0: zero pre-activation /pagefind/ requests across browse/hover/soft-nav; dialog open <=300ms (in-page and transport clocks); same-origin pagefind.js loads exactly once; real index chunks load with the first query; unchanged reopen adds 0 requests; initialization survives ClientRouter soft navigation; one activation opens exactly one dialog; grouped components/ui/lib/pages results with matching aria-live counts; ArrowDown/Up single-step selection; Enter reaches /components/streamdown with HTTP 200 and its own h1 (now the docs-owned dependency-explainer destination); Escape restores invoker focus; the no-JS surface passes on chromium-nojs; empty-state recovery, literal-HTML query safety, and the real offline error case all pass.",
+        "canonical_gate": "run_flow.py --flow FLOW-SHELL-15-search-contract-before-recovery --expect green: exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True -> PASS",
+        "captured_at": ".tmp/ORI-AST-004/cycle-2/green/"
+      }
+    },
+    "supplementary_gates": {
+      "search_index_vitest": "pnpm exec vitest run tests/sprint-05-orient-search/search-index.test.ts \u2014 5/5 pass (model coverage 56+7; real indexer exit 0; props/verdict/hidden-engine-panel text inside data-pagefind-body regions; fail-closed scratch removal names /components/conversation)",
+      "island_budget_vitest": "pnpm exec vitest run tests/sprint-01-docs-spike-skeleton/island-budget.test.ts \u2014 3/3 pass (exactly five customElements.define incl. rnr-search-dialog; zero framework imports; theme/tab contracts preserved)",
+      "typecheck": "pnpm typecheck \u2014 exit 0 (root tsc covers scripts/ and tests/, not Astro templates)",
+      "lint": "./node_modules/@biomejs/biome/bin/biome ci . \u2014 exit 0 (4 pre-existing warnings in untouched files); pnpm lint script dies locally (biome OOM), binary used directly"
+    }
+  },
+  "acceptance": {
+    "AC-1": "proven: all five item destinations (incl. /components/streamdown) and all three doc destinations reached through real searches at HTTP 200 with matching h1 content; categories components/ui/lib/pages observed; renderMarkdown and dev client return the boundary page plus item results; nearBottomThreshold finds Conversation; the emitted badge verdict is searchable and a distinctive emitted phrase finds its originating item.",
+    "AC-2": "proven (desktop + mobile): zero pre-activation Pagefind requests, <=300ms open on two independent clocks, exactly one same-origin module request, real index chunks with the first query, unchanged reopen adds zero requests, initialization survives soft navigation.",
+    "AC-3": "proven: single native dialog[aria-modal=true], input focus, matching aria-live count, single-step arrow selection, Enter reaching the pinned destination at HTTP 200, Escape restoring invoker focus, shortcut reopen after ClientRouter navigation; the JavaScript-disabled surface (hidden trigger, zero Pagefind requests, working links through /docs/introduction, /docs/installation, /registry) passes on chromium-nojs.",
+    "AC-4": "proven: run-specific no-match query yields the visible empty state and streamdown recovery restores results; the literal HTML-shaped query stays input text creating zero data-s05-query nodes/attributes; real offline failure yields exactly one visible error plus captured requestfailed events within the 300ms open budget with invoker focus restored; a fresh online context completes the search-and-follow."
+  },
+  "known_blockers": [
+    {
+      "blocker": "Run-order hazard (inherited): any astro build wipes dist/pagefind; the task-owned indexer must run after the last build before any preview-backed lane. CI owns this ordering.",
+      "unblocks": "deterministic local runs"
+    }
+  ],
+  "references": [
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-15-search-contract-before-recovery/run.json",
+    "tests/sprint-05-orient-search/evidence/FLOW-SHELL-15-search-contract-before-recovery/proof.red",
+    ".tmp/ORI-AST-004/cycle-1/red/",
+    ".tmp/ORI-AST-004/cycle-1/green/",
+    ".tmp/ORI-AST-004/cycle-2/green/",
+    ".tmp/ORI-AST-004/captures/"
+  ],
+  "resolution": "FIX-ORI-AST-004-1 (approved b8198956, merged b72e18e2, merged into this branch at 396c2ada) published the docs-owned /components/streamdown dependency destination; the 8 pinned streamdown legs were re-run green on the merged candidate.",
+  "cycle_2_fixes": [
+    "search-dialog.ts: guard per-instance wiring against the relocation re-entry of connectedCallback (a doubled keydown listener moved the active result two steps per keypress, making arrow activation miss targets); reset the per-instance settled-query witness on swap-in so a fresh element cannot inherit the previous page settlements.",
+    "search-contract.spec.ts: replace the generic main-root success oracles with real content oracles (the registry ledger region, the indexed prose region, role=heading level 1) to satisfy the surface-entry lint."
+  ]
+}

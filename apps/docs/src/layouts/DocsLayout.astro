@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import SearchDialog from '../components/islands/SearchDialog.astro';
 import ThemeToggle from '../components/islands/ThemeToggle.astro';
 
 /**
@@ -25,10 +26,11 @@ import ThemeToggle from '../components/islands/ThemeToggle.astro';
  *   visibility, this script owns pre-paint + post-swap restoration.
  *
  * ClientRouter enables SPA-mode soft navigation with view transitions; the
- * bundled islands (CopyButton, ThemeToggle, LedgerFilter, TabGroup) reconnect
- * per-instance in connectedCallback, so swapped-in elements upgrade without
- * re-running side effects or duplicating listeners. Pages keep their own
- * content trees — adoption wraps, it never rewrites page structure.
+ * bundled islands (CopyButton, ThemeToggle, LedgerFilter, TabGroup,
+ * SearchDialog) reconnect per-instance in connectedCallback, so swapped-in
+ * elements upgrade without re-running side effects or duplicating listeners.
+ * Pages keep their own content trees — adoption wraps, it never rewrites page
+ * structure.
  */
 interface Props {
   title: string;
@@ -94,6 +96,7 @@ const { title, variant = 'docs' } = Astro.props;
   <body data-layout={variant}>
     <Header />
     <ThemeToggle />
+    <SearchDialog />
     <slot />
     <Footer />
   </body>
