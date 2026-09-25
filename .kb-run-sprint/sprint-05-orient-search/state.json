@@ -10481,6 +10481,240 @@
         ],
         "wave_id": "wave-17"
       },
+      "ask-wave18-add-theming-nav-inclusion": {
+        "allowed_paths": [
+          {
+            "expected_sha256": null,
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-VIS-001-1.md"
+          },
+          {
+            "expected_sha256": "7bab5eddc111941f4657c97252ecaa619352122456bb1b9579042b216e130e6e",
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/SPRINT.md"
+          },
+          {
+            "expected_sha256": "37763f195a383e962f44a74b4dfb114c60aa70656fd307a686e42d2921ddb1e3",
+            "path": ".spec/prds/docs-site/ROADMAP.md"
+          }
+        ],
+        "ask_id": "ask-wave18-add-theming-nav-inclusion",
+        "assignment": {
+          "implementer": "astro-implementer",
+          "planner": "astro-planner",
+          "proposed_by": null,
+          "reviewer": "astro-reviewer",
+          "source": {
+            "domain": null,
+            "kind": "suffix",
+            "path": null
+          },
+          "status": "resolved",
+          "task": "astro-planner"
+        },
+        "human_flows_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/human-flows.json",
+        "input_hashes": [
+          {
+            "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-001/cycle-1.blocked.json",
+            "sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444"
+          },
+          {
+            "path": "apps/docs/src/lib/docs-navigation.ts",
+            "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"
+          }
+        ],
+        "kind": "add",
+        "planner": "astro-planner",
+        "planner_dispatch_handle": "wave18-planner@session-a251722f",
+        "planner_session_id": "wave18-planner@session-a251722f",
+        "publication": null,
+        "result": null,
+        "roster": "/Users/justinrich/Projects/brain/agents",
+        "roster_sha256": null,
+        "sequence": {
+          "when": "next"
+        },
+        "source_item_ids": [
+          "ORI-VIS-001:blocked:1:scope_impact:0:6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444"
+        ],
+        "state": "dispatched",
+        "target": "FIX-ORI-VIS-001-1",
+        "task_id": "FIX-ORI-VIS-001-1",
+        "task_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "validation_context": [
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-001-implement-the-worked-examples-usechat-hook-and-real-openai-streaming-route.md",
+            "sha256": "7753e5d2e27019409cc23528c13ce66a7a7cde8112ba2aab64e0297d2e913132"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md",
+            "sha256": "ceb3e1e2b964928d8283775d5f1043630ab328f3e97bb722e836ae4b55031482"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-001-render-authored-documentation-through-the-astro-collection-and-prose-shell.md",
+            "sha256": "c760a2b69f2de184fe6bb3a26ecd7137419db8201b7c6f39fe0f1d2c4e881089"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-002-keep-engine-choices-synchronized-through-prose-and-astro-navigation.md",
+            "sha256": "b9939dd12511f2223104ecdb46b25106d78b4e0ba7b57a4c75c0386217846a71"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-003-make-the-theming-token-table-demonstrate-the-live-site-theme.md",
+            "sha256": "7c6cc18e8e9fbed243533956e5ea7fe37f3459a2b4647754ad33181dc58c65d9"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md",
+            "sha256": "6619a3ab346ee14acfaf875102e7b9e5df814125337f6448cc084158071ecbdc"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-005-reject-authored-code-that-loses-its-real-source-or-typecheck.md",
+            "sha256": "aaa592d9d99ccf33477335df5aac4f0afc710b4b9aa498db91a48797a8b32d2b"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-006-reject-broken-links-in-the-built-documentation.md",
+            "sha256": "d8583842a4f544819cc0ecdacc51aea26abf19aeb08b4e1b9464d1442ac6971c"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-007-filter-the-registry-ledger-and-copy-commands-for-the-selected-engine.md",
+            "sha256": "ea3866efb97006c775685cf06dd776624d276910ba9a799d11beb2be66593b28"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-008-publish-reference-destinations-for-the-remaining-17-ui-and-library-items.md",
+            "sha256": "0b9a2ac37d2d52ac1061720f757241e7bc4fe9150ba7eab4ba8358fffdd3935e"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-009-recover-from-unknown-documentation-urls-through-the-real-site-search.md",
+            "sha256": "218da00d68811c4855a717ff4ba58e69e58936ae155f9594bfd1631d5e29292b"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-010-prove-integrated-engine-and-search-flows-after-real-content-and-recovery-exist.md",
+            "sha256": "0e29e53cbe4ae5d8a682ba01809961f3bf353b094c0a098c1bf182815206dc61"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md",
+            "sha256": "1e4245a0c61b06d151ee152ac08326858cf0db4fbd2b7394db6ed1a3bea95b8b"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-002-make-the-public-docs-build-execute-every-content-gate-in-order.md",
+            "sha256": "9e7a2d8e1efdbe9ec39b3f42870c6886338c8c85068021e2470f7c603e3f5206"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-003-enforce-credential-free-candidate-checks-in-github-actions.md",
+            "sha256": "dbcb33b250f3a157ff02e6a4444b6bd5cd9b94ee3a42cff18221cfbd98814e50"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-004-require-fresh-native-provider-and-public-registry-proof-before-publication.md",
+            "sha256": "869d0fa06432904fdeea041c7e603481f5b1586d8bf63d9b6ba5e3f64c6a5f29"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-001-author-introduction-installation-and-registry-specific-cli-content.md",
+            "sha256": "f404f809f2040f36b0faef2073f6ed2ef4e76f6d8b543d406604e33fdc6566be"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-002-author-theming-and-dark-mode-manuscripts-for-the-real-route-adapter.md",
+            "sha256": "5b66ea47134681540b02877a82034c546f81c3aae2a2b7e3dd709dc6f85d1817"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md",
+            "sha256": "d9dcdcb8713786af93fa1646185d5a316a8e944993fb62bfd77c4935aa64f7ab"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+            "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-005-author-the-real-boundary-explanation-and-missing-page-recovery-copy.md",
+            "sha256": "db56825193c492254c3f007cb10cc2041d32571867debc3448b3a84aaedeb601"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md",
+            "sha256": "3d75c4fe1b114d92f381c7db655759b2624e59ffe15ad5b023af0d644892ab51"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-DEP-001-establish-the-initial-workers-deployment-and-canonical-registry-prerequisite.md",
+            "sha256": "4239dabcf944dae85476db48ca27417e2f05e4baaa6f35c8851f5c1cfb6d3843"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-DEP-002-verify-the-accepted-candidates-real-cloudflare-version-and-404-recovery.md",
+            "sha256": "05f65767e38d2c7a05eeb23c1fe58ecbb8729c234f3a33698db231a1e0d5ef1a"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-DEP-003-publish-and-verify-the-completed-sprint-05-docs-at-the-apex.md",
+            "sha256": "2d36a92323afac138ac89fae452f6b144a61f8d21978c19582b50676b19ee33d"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-000-make-the-published-promptinput-import-graph-compatible-with-expo-57-types.md",
+            "sha256": "8ba2316e07c681535115e9d2d84edf51ee69e74f27840a243f6aca96af1c137d"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-001-provide-complete-source-backed-setup-for-both-clean-expo-consumers.md",
+            "sha256": "ce0e745346d65b29e82f59c974cb153220d1eb15c4fe544e6e3ba592d5d7e9d0"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-002-provide-the-single-source-backed-seed-data-chat-screen.md",
+            "sha256": "faafd6f8bc434ba69a09007df4f7ea748ad5277a43d706e7364c5ca3fe201e1f"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md",
+            "sha256": "3af1fefea3349daa03014836e020f3e302c7f9354b63fbc2cca41aa26a2a2685"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md",
+            "sha256": "d805f854a7f7c2bf7424e003ee143f9d8419254c346c9d539ab7833d08ffa68d"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-005-run-the-real-worked-example-source-in-an-independent-nativewind-consumer.md",
+            "sha256": "586d95c9f59ffa00091f6a58f4fed1e8f30c42de686378e7e678187d75099097"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-001-complete-the-shared-reading-layout-for-orientation-and-boundary-pages.md",
+            "sha256": "197d3553f8283885e30edacc7d055383d23a0a35dd6247b0c4e0389668130acf"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-002-present-paired-token-values-and-the-live-theme-demonstration.md",
+            "sha256": "f550109cc418e73e134926377ca5d926c8eb06ea680eb687d32283edef66c398"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-003-present-shared-search-results-and-keyboard-visible-states.md",
+            "sha256": "d987b03551ca2ac29197035b4dd4b2430fdae5d87ab83f6059d4d8ded894f0f9"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-004-complete-the-ledger-toolbar-and-shared-table-presentation.md",
+            "sha256": "2cf1c8d948867c768074cc77583f4c060bfff18ff1c511e54b4dad7d66a60ad3"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-005-compose-the-branded-missing-page-search-recovery-surface.md",
+            "sha256": "89a8323aa068867ba58a2abd32ee76fa91fd772a306d83b0c8efd274e5d5be6e"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-AI-001-1.md",
+            "sha256": "11b9b26c413ca77c51698e60f5d485642b971fb7a1af8403f527a9e68e7fa902"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-AI-002-1.md",
+            "sha256": "7f381a07d573d92b1b566cb73c04a0d7d42e5612f6883b419a3cbc863086d0be"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-AST-004-1.md",
+            "sha256": "46234fc37c301ed467292ca2d293a515a15ff639f2fed4bc61315e9c85afc631"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-CI-001-1.md",
+            "sha256": "318564ae9817c06a0fe4e131a408ecceeb351e5ec8ef8b012e83cd26b265b953"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-2.md",
+            "sha256": "18cb79ce35c3cdd7debedf233106c75d8595beee7363b8b47945862252a4d153"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-3.md",
+            "sha256": "efe30af24d2d1374780afd839d85b4b58c19ad614d701e68e483e3055c107846"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-005-1.md",
+            "sha256": "84c4692ac3704fc998de2335d6355431dcb04302065fa090180533351ec8682a"
+          }
+        ],
+        "wave_id": "wave-18"
+      },
       "ask-wave8-add-payload-retry-fix": {
         "allowed_paths": [
           {
@@ -15493,6 +15727,73 @@
         "source_kind": "blocked",
         "source_task": "ORI-RN-005",
         "wave_id": "wave-9"
+      },
+      "ORI-VIS-001:blocked:1:scope_impact:0:6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444": {
+        "answers": [
+          {
+            "answer": true,
+            "evidence": [
+              {
+                "path": "apps/docs/src/lib/docs-navigation.ts",
+                "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"
+              }
+            ],
+            "question": 1,
+            "reason": "Names the exact defect: apps/docs/src/lib/docs-navigation.ts RESERVED_DOC_SLUGS=['theming'] is consumed by both publishedDocs (route-generation exclusion, correct) and sectionNavigation (nav derivation), so /docs/theming is silently absent from every page's section nav and the Guides group never renders; the one-line fix is precisely scoped."
+          },
+          {
+            "answer": false,
+            "evidence": [
+              {
+                "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-001/cycle-1.blocked.json",
+                "sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444"
+              }
+            ],
+            "question": 2,
+            "reason": "Not a reviewer finding; an implementer blocked report naming an out-of-allowlist routing gap."
+          },
+          {
+            "answer": true,
+            "evidence": [
+              {
+                "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-001-complete-the-shared-reading-layout-for-orientation-and-boundary-pages.md",
+                "sha256": "197d3553f8283885e30edacc7d055383d23a0a35dd6247b0c4e0389668130acf"
+              }
+            ],
+            "question": 3,
+            "reason": "In-flight ORI-VIS-001 cannot satisfy AC-2 without it; downstream ORI-CONT-004 and gate step 1/2 read the same nav."
+          },
+          {
+            "answer": false,
+            "evidence": [
+              {
+                "path": "apps/docs/src/lib/docs-navigation.ts",
+                "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"
+              }
+            ],
+            "question": 4,
+            "reason": "One semantic line completing what AST-003's own comment anticipated ('until ORI-AST-003 adapts it' — it landed but never did); no gate words change, no PRD-open behavior decided."
+          },
+          {
+            "answer": true,
+            "evidence": [
+              {
+                "path": "apps/docs/src/lib/docs-navigation.ts",
+                "sha256": "746aeb636bea88bb6c1e9f29c22e2b895bd9e401071434e84131d7602160b6c8"
+              }
+            ],
+            "question": 5,
+            "reason": "Verified in source: the reserved-slug list exists at the named location with the catch-all comment; nav observed lacking theming; no landed test asserts theming's absence from nav (orientation-content.spec.ts asserts only relative order of four other entries)."
+          }
+        ],
+        "field": "scope_impact",
+        "index": 0,
+        "item_id": "ORI-VIS-001:blocked:1:scope_impact:0:6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+        "outcome": "add",
+        "report_sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+        "source_kind": "blocked",
+        "source_task": "ORI-VIS-001",
+        "wave_id": "wave-18"
       }
     },
     "operations": {
@@ -15747,9 +16048,9 @@
         "task": "FIX-ORI-AI-002-1"
       }
     },
-    "phase": "idle",
+    "phase": "planning",
     "reservations": {},
-    "wave_id": "wave-17"
+    "wave_id": "wave-18"
   },
   "roadmap_path": ".spec/prds/docs-site/ROADMAP.md",
   "sprint_dir": ".spec/prds/docs-site/tasks/sprint-05-orient-search",
@@ -21299,6 +21600,51 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005"
     },
     "ORI-VIS-001": {
+      "blocked_reports": {
+        "1": {
+          "cycle": 1,
+          "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-001/cycle-1.blocked.json",
+          "payload": {
+            "assumptions": [
+              "Toc renders as <details open>: open-by-default at every width (static HTML cannot vary the open attribute per viewport without JS), user-togglable everywhere, chevron affordance below xl, restyled as the sticky rail at >=xl; the summary stays a live toggle at rail width so a collapsed rail can always reopen.",
+              "boundary-table.png is the boundary page evidence exactly as authored: ORI-CONT-005's manuscript contains no table (ownership split is prose + lists), and the task notes the filename is an evidence path, not authorization to expand into the Sprint 06 boundary-table use case — no table was fabricated.",
+              "Command confinement is scoped to .prose: .copy-button__command becomes white-space:pre + overflow-x:auto + flex shrink so long single-line commands scroll inside their own container instead of wrapping mid-URL; the ledger/home strip treatment is untouched.",
+              "The CopyButton trigger token treatment lives in global.css (allowlisted) because sprint-04's contract test pins CopyButton.astro and CodeBlock.astro byte-identical to their landed state; the rule adds no hover gating, only token colors.",
+              "No-JS contexts render the dark column by construction (the pre-paint theme flip is an is:inline script), so installation-nojs.png and the no-JS engine-panel proofs are dark-theme observations.",
+              "Direct page.request.get checks on woff2 accept 200 or 304 (304 = cache revalidation after the browser's initial 200 load within the same context); the first observed browser response per font URL must be exactly 200.",
+              "Font binaries are the foundry variable woff2 subsets (Spline Sans 300-700, Spline Sans Mono 300-700, latin + latin-ext) fetched from Google Fonts' CDN with their SIL OFL 1.1 license text committed alongside."
+            ],
+            "blockers": [
+              "AC-2 member 'section navigation reaches /docs/theming' fails in chromium-desktop, chromium-mobile and chromium-nojs: apps/docs/src/lib/docs-navigation.ts RESERVED_DOC_SLUGS excludes theming from sectionNavigation, so no docs page's section nav links /docs/theming. The fix file is outside this task's write allowlist (routing/publication contract, write_prohibited 'Routing'). Either grant a one-line scope addition to docs-navigation.ts (include the reserved slug in the nav derivation while the catch-all keeps excluding it from generation) or reroute the AC-2 member's mechanism; the committed spec already encodes the assertion and fails honestly until then."
+            ],
+            "commit_sha": "1c732dc1a571e9747def76b06efb1a9e3788a253",
+            "scope_impact": [
+              {
+                "change": "Needed: include the reserved theming entry in the sectionNavigation derivation only (one semantic line in docs-navigation.ts, outside this task's allowlist). Everything else in AC-2 — nav reaches installation/cli/dark-mode, TextClassContext heading below the 3.5rem header, 70ch measure, details-based ToC — is green across all three projects.",
+                "found": "apps/docs/src/lib/docs-navigation.ts:48 RESERVED_DOC_SLUGS=['theming'] is consumed by both publishedDocs (route generation exclusion, correct — the static /docs/theming route owns the destination) and sectionNavigation (nav derivation), so the reserved slug is silently absent from every page's section nav and the Guides group never renders.",
+                "target": "ORI-VIS-001"
+              }
+            ],
+            "status": "blocked",
+            "summary": "All in-scope presentation work is implemented, verified against the real built preview, and committed as 1c732dc1 in the ORI-VIS-001 worktree: PageHeader is now the editorial masthead (balanced title, muted one-liner, token hairline); Prose carries the full reading rhythm (70ch measure kept, token-driven links replacing UA blue, quiet lists/blockquotes, anchored headings) and confines command surfaces as single-line pre with their own horizontal scroller in --font-mono; Toc is the Astro-owned <details> control (bordered collapsible block below xl, sticky 14rem rail with its own vertical scroller at >=xl); DocsLayout preloads the latin Spline subsets; global.css gains the four self-hosted @font-face rules (Spline Sans / Spline Sans Mono Variable, latin + latin-ext, font-display swap, same-origin, OFL 1.1 committed under apps/docs/public/fonts, force-added because public/ is gitignored for generated r/ — prebuild only wipes public/r so fonts survive rebuilds) plus one token treatment for the CopyButton trigger so no UA system button face renders in install strips (CodeBlock/CopyButton sources byte-identical to their landed sprint-04 contracts). RED run recorded before implementation (.tmp/ORI-VIS-001/cycle-1/red), final run 9/12 green; the 3 failures are one assertion failing identically in all three projects. Gates: docs build green, pnpm typecheck green, biome ci green on apps/docs/src + the spec. Visual verification done against the real screenshots: pixel-sampled evidence PNGs (light bg 255, dark bg 10, hairline 229 = --border, tab pill 229 = --primary with 63 text, trigger 38 = --secondary with 250 text after the fix, both stacked no-JS panels confirmed by DOM probe) plus computed-style probes. The blocker: AC-2 requires 'Section navigation reaches /docs/installation, /docs/cli, /docs/theming and /docs/dark-mode', but the nav on every docs page derives from sectionNavigation() in apps/docs/src/lib/docs-navigation.ts, whose RESERVED_DOC_SLUGS mechanism excludes the theming slug from the nav entirely (its own comment says the static route owns the destination 'until ORI-AST-003 adapts it' — AST-003 landed but never adapted the nav). Observed nav hrefs: introduction, installation, quickstart, cli, dark-mode, owns-vs-does-not-own — no theming, so the Guides section group is absent everywhere. Fixing it means editing apps/docs/src/lib/docs-navigation.ts, which is outside this task's exact write allowlist and in the write-prohibited 'Routing' class. The fix itself is one semantic line: let sectionNavigation include the reserved theming entry (under its 'guides' section) while the catch-all keeps excluding it from route generation; no landed test asserts theming's absence from nav. I did not weaken the assertion — it fails loudly in all three projects as the recorded evidence of the mismatch."
+          },
+          "provenance": {
+            "dispatch_handle": "ori-vis-001-impl@session-a251722f",
+            "response_id": "digest:6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+            "response_receipt": {
+              "agent": "frontend-designer",
+              "dispatch_handle": "ori-vis-001-impl@session-a251722f",
+              "payload_sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+              "response_id": "digest:6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444",
+              "session_id": "ori-vis-001-impl@session-a251722f"
+            },
+            "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-001/cycle-1.blocked.response.json",
+            "response_receipt_sha256": "4656b2b96252638d426ab8992d7daf9ba6e9da31d8042133f808e3fbd291e547",
+            "session_id": "ori-vis-001-impl@session-a251722f"
+          },
+          "sha256": "6e153cd8e6df6e8acb03b93ff6da64c56ed2e3e1805e3b14690b40b200ee9444"
+        }
+      },
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-VIS-001",
       "commit_sha": null,
       "cycle": 0,
