@@ -1,0 +1,51 @@
+{
+  "task": "ORI-VIS-001",
+  "commit_sha": "315c4330f69810e05af1a36aa0b95761cadc58b4",
+  "done": "The shared reading presentation landed at 315c4330 (merged to main as c28e40c2): PageHeader is the editorial masthead (balanced title, muted one-liner, token hairline), Prose carries the full reading rhythm with the 70ch measure, token-driven links and single-line command surfaces that scroll in their own containers in --font-mono, Toc is the Astro-owned <details> control (bordered block below xl, sticky 14rem rail with its own vertical scroller at >=xl), DocsLayout preloads the latin Spline subsets, global.css gains the four self-hosted @font-face rules plus the OFL-licensed woff2 files under apps/docs/public/fonts/ (force-added past the public/ ignore), a token treatment for the CopyButton trigger so no UA system button face renders in install strips, and the mobile grid containment guard; tests/sprint-05-orient-search/reading-presentation.spec.ts proves all four ACs 12/12 across chromium-desktop/mobile/nojs with evidence PNGs, assertions.json and run-identity.json under tests/sprint-05-orient-search/evidence/reading/ and cycle records under .tmp/ORI-VIS-001/cycle-{1,2}/.",
+  "deviations": [
+    "Toc ships as <details open> (Toc.astro:29) — open by default at every width rather than a collapsed-by-default mobile toggle, because static HTML cannot vary the open attribute per viewport without JS; it stays user-togglable everywhere and restyles as the rail at >=xl.",
+    "The spec sentence 'Render the genuine boundary content through the shared DataTable presentation' was not literally implementable: the authored ORI-CONT-005 manuscript contains no table, so no table was fabricated and boundary-table.png shows the page exactly as authored (the task's own note marks the filename as evidence path, not scope).",
+    "AC-4's 'long commands scroll in their own container' is implemented prose-scoped (Prose.astro:126, white-space:pre + overflow-x:auto on .prose .copy-button__command) so the registry ledger and home strips keep their established wrapping treatment.",
+    "Only the two latin font subsets are preloaded (DocsLayout.astro head); latin-ext rides on demand through unicode-range, which the TR-07 'preloaded' wording did not distinguish.",
+    "The CopyButton trigger token treatment lives in global.css (global.css:229) rather than the island source, because sprint-04's contract test pins CopyButton.astro and CodeBlock.astro byte-identical to their landed state.",
+    "The header assertion bounds the sticky bar at 56px box plus at most its 1px divider (57px outer) since the site ships no border-box reset, and the 70ch measure is proven against a live-measured 70ch probe because Chrome resolves ch to used px."
+  ],
+  "concerns": [
+    "The mobile containment guard (min-width:0 on the markdown-doc grid areas, global.css:255) belongs in MarkdownLayout.astro's stacked template next to its >=lg minmax(0,1fr), but that file was outside this task's allowlist — it should be adopted/moved the next time MarkdownLayout is opened under a proper scope.",
+    "apps/docs/.gitignore ignores all of public/ for the generated r/ tree, so every future asset under public/ (fonts included) needs git add -f or an ignore refinement, and a fresh clone only regenerates public/r — the fonts are tracked, but reviewers should know the directory is half-ignored by design.",
+    "Spec authors must write page.evaluate callbacks as string expressions with result casts (or globalThis-typed DOM shims) because the workspace tsconfig has no DOM lib — arrow-function callbacks referencing document/window fail pnpm typecheck.",
+    "The pre-commit righthook runs biome over every staged file including .tmp scratch, so long single lines in diagnostic scripts fail commits; keep scratch scripts formatter-clean or expect an amend cycle.",
+    "Leaked astro preview servers from ad-hoc probes squat port 4321 and break the next playwright webServer start under CI=true — always kill by port after standalone probes."
+  ],
+  "findings": [
+    "RESERVED_DOC_SLUGS (apps/docs/src/lib/docs-navigation.ts:48) was consumed by both route generation and section navigation, so a reserved slug silently vanished from every page's nav — fixed for theming by FIX-ORI-VIS-001-1, but any future reserved slug needs the same generation-vs-nav split decided explicitly.",
+    "The site has no global border-box reset, so a height token plus a border measures one pixel larger than the token — do not assert token px equals rendered box px on bordered bars.",
+    "The CopyButton island's trigger is bare markup frozen byte-identical by the sprint-04 contract; before global.css:229 it rendered as a UA-default system button (gray, outset border) inside every install strip on every surface, including the ledger and item pages.",
+    "Under Pixel 5 emulation window.innerWidth reported 731 while documentElement.clientWidth and visualViewport stayed 393 — use scrollWidth vs clientWidth, not innerWidth, as the no-overflow oracle.",
+    "Any wide non-shrinkable content (code fences, tables) inside the docs grid's stacked 1fr track blows the page ~2x past a phone viewport unless the grid items keep min-width:0 — the >=lg template always had the minmax(0,1fr) guard but the stacked template did not, and any new layout shell needs the same guard.",
+    "getComputedStyle resolves ch units to used pixels, so the 70ch measure must be verified against a probe element measured in the same font context, not against the computed string.",
+    "No-JS contexts render the dark column by construction because the pre-paint theme flip is an is:inline script — all no-JS screenshots and panel proofs are dark-theme observations."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-VIS-002",
+      "found": "The VIS successors build directly on this reading shell and its geometry oracles.",
+      "change": "Verify mobile containment with documentElement.scrollWidth vs clientWidth (not window.innerWidth) and reuse the details-open Toc and prose-scoped command-scroll contracts rather than restyling them."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "The mobile min-width:0 containment guard lives in global.css only because MarkdownLayout.astro was outside this task's allowlist.",
+      "change": "Next time MarkdownLayout.astro is in scope, move the guard into its stacked-template media query beside the existing >=lg minmax(0,1fr) and delete the global rule."
+    },
+    {
+      "target": "ORI-AST-010",
+      "found": "Its no-JS stacked-panel and engine-persistence proofs walk the same TabGroup surfaces this task verified.",
+      "change": "Reuse the per-group panel-iteration pattern from reading-presentation.spec.ts AC-3 (loop rnr-tab-group instances instead of unscoped panel locators, which strict mode rejects on multi-group pages)."
+    }
+  ],
+  "feedback": [
+    "The blocked-report -> one-line FIX -> cycle-2 loop worked exactly as designed: the AC mismatch was reported with the precise one-line predecessor change, the fix landed clean, and only the intended member flipped.",
+    "Cross-checking each AC's must_observe against the owning module's actual derivation before dispatch would have caught the theming-nav impossibility at plan time instead of mid-implementation.",
+    "The recurring environment quirks (broken pnpm lint, rtk swallowing playwright output until rtk proxy, no-DOM-lib tsconfig, leaked preview servers on 4321) each cost a debug cycle — they belong in a standing environment note attached to sprint dispatches."
+  ]
+}
