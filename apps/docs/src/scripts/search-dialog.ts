@@ -107,7 +107,10 @@ class RnrSearchDialog extends HTMLElement {
   // fallow-ignore-next-line complexity
   connectedCallback(): void {
     // Sit inside the Header's search mount: move once, and un-hide the mount
-    // the island upgrade makes real. Without JS neither happens.
+    // the island upgrade makes real. Without JS neither happens. The move
+    // itself re-fires connectedCallback, so the wiring below is guarded and
+    // runs exactly once per element instance — a doubled keydown listener
+    // would move the active result two steps per keypress.
     const mount = document.querySelector('[data-search-slot]');
     if (mount && this.parentElement !== mount) {
       mount.removeAttribute('hidden');
@@ -125,8 +128,15 @@ class RnrSearchDialog extends HTMLElement {
     this.trigger = this.querySelector('button');
     if (!this.dialog || !this.input) return;
 
-    // Per-instance wiring: a ClientRouter swap discards the old element (and
-    // its listeners) with the old page, so there is nothing to unbind.
+    // Wire once per element: the relocation above re-enters this callback,
+    // and a ClientRouter swap discards the old element (with its listeners)
+    // together with the old page, so there is nothing to unbind. The settled
+    // witness is per-instance too — a swapped-in element must not inherit the
+    // previous page's settlements.
+    if (this.dataset.wired === 'true') return;
+    this.dataset.wired = 'true';
+    this.settled = [];
+    window.__rnrSearchSettledQueries = [];
     this.trigger?.addEventListener('click', () => this.activate(this.trigger));
     this.input.addEventListener('input', () => {
       this.scheduleSearch(this.input.value);

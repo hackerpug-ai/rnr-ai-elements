@@ -156,7 +156,7 @@ async function expectNoJsSurface(page: Page, log: RequestLog, testInfo: TestInfo
   expect(installResponse?.status(), '/docs/installation must return HTTP 200').toBe(200);
   const registryResponse = await navigateLocalhost(page, '/registry');
   expect(registryResponse?.status(), '/registry must return HTTP 200').toBe(200);
-  const mainText = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
+  const mainText = (await page.locator('[data-ledger]').innerText()).replace(/\s+/g, ' ');
   expect(mainText.length, '/registry must render actual registry content').toBeGreaterThan(200);
   expect(mainText).toContain('nativewind');
 
@@ -451,7 +451,9 @@ test(`${FLOW_TOKEN}: locked 13-step sequence`, async ({ page }, testInfo) => {
     /\/components\/streamdown\/?$/,
   );
   expect(await fetchCurrentStatus(page), '/components/streamdown must return HTTP 200').toBe(200);
-  expect((await page.locator('main h1').innerText()).toLowerCase()).toContain('streamdown');
+  expect((await page.getByRole('heading', { level: 1 }).innerText()).toLowerCase()).toContain(
+    'streamdown',
+  );
 
   // -- Step 6: after ClientRouter navigation, the platform shortcut reopens -
   await page.keyboard.press(shortcut);
@@ -469,7 +471,10 @@ test(`${FLOW_TOKEN}: locked 13-step sequence`, async ({ page }, testInfo) => {
   await activateResult(page, '/docs/owns-vs-does-not-own/');
   await followActiveResult(page, testInfo);
   expect(await fetchCurrentStatus(page)).toBe(200);
-  expect((await page.locator('main').innerText()).length).toBeGreaterThan(200);
+  expect(
+    (await page.locator('[data-pagefind-body]').innerText()).length,
+    'the boundary destination renders substantive indexed prose',
+  ).toBeGreaterThan(200);
   await page.keyboard.press(shortcut);
   await search(page, 'dev client');
   const devClientHrefs = await resultHrefs(page);
@@ -489,7 +494,7 @@ test(`${FLOW_TOKEN}: locked 13-step sequence`, async ({ page }, testInfo) => {
     await followActiveResult(page, testInfo);
     itemResults[destination] = {
       status: await fetchCurrentStatus(page),
-      title: await page.locator('main h1').innerText(),
+      title: await page.getByRole('heading', { level: 1 }).innerText(),
     };
   }
 
@@ -503,7 +508,7 @@ test(`${FLOW_TOKEN}: locked 13-step sequence`, async ({ page }, testInfo) => {
     await followActiveResult(page, testInfo);
     docResults[destination] = {
       status: await fetchCurrentStatus(page),
-      textLength: (await page.locator('main').innerText()).length,
+      textLength: (await page.locator('[data-pagefind-body]').innerText()).length,
     };
   }
   capture(testInfo, 'locked-destinations', { itemResults, docResults });
@@ -637,7 +642,7 @@ test(`${FLOW_TOKEN}: AC-1 find real published content`, async ({ page }, testInf
     await followActiveResult(page, testInfo);
     destinationProof[destination] = {
       status: await fetchCurrentStatus(page),
-      title: await page.locator('main h1').innerText(),
+      title: await page.getByRole('heading', { level: 1 }).innerText(),
     };
     await page.keyboard.press(shortcut);
   }
@@ -802,7 +807,9 @@ test(`${FLOW_TOKEN}: AC-3 keyboard navigation and invoker focus`, async ({ page 
   await followActiveResult(page, testInfo);
   expect(page.url()).toMatch(/\/components\/streamdown\/?$/);
   expect(await fetchCurrentStatus(page), '/components/streamdown must return HTTP 200').toBe(200);
-  expect((await page.locator('main h1').innerText()).toLowerCase()).toContain('streamdown');
+  expect((await page.getByRole('heading', { level: 1 }).innerText()).toLowerCase()).toContain(
+    'streamdown',
+  );
 
   capture(testInfo, 'ac-3', {
     announcedCount: actualCount,
