@@ -1,0 +1,73 @@
+{
+  "task": "FIX-ORI-VIS-001-1",
+  "candidate": {
+    "candidate_sha": "19a4955f9782558feca4d82293d92dfac2ee30ea",
+    "module_sha256": "2e601c44d38d8f7dded208807e2a58d19d4b990f44d578b8f175dccb542c1286",
+    "harness_sha256": "b217ba7f4ac0eb1804625f891348a5a6b921b0f949f2a2ce2ae9ed6c7c904360"
+  },
+  "commands": {
+    "selector": "pnpm exec tsx tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts",
+    "build": "pnpm --filter @rnr-ai-elements/docs build",
+    "orientation_spec": "pnpm exec playwright test tests/sprint-05-orient-search/orientation-content.spec.ts --project=chromium-desktop",
+    "typecheck": "pnpm typecheck",
+    "biome": "pnpm exec biome ci apps/docs/src/lib/docs-navigation.ts tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts"
+  },
+  "red": {
+    "candidate_sha": "19a4955f9782558feca4d82293d92dfac2ee30ea",
+    "theming_nav_count": 0,
+    "guides_group_count": 0,
+    "published_hrefs": [
+      "/docs/introduction",
+      "/docs/installation",
+      "/docs/quickstart",
+      "/docs/cli",
+      "/docs/dark-mode",
+      "/docs/owns-vs-does-not-own"
+    ],
+    "build_exit": 0,
+    "page_count": 69,
+    "nav_theming_anchors": 0,
+    "nav_guides_titles": 0
+  },
+  "green": {
+    "theming_nav_count": 1,
+    "guides_group_hrefs": [
+      "/docs/theming"
+    ],
+    "theming_after_getting_started": true,
+    "published_hrefs": [
+      "/docs/introduction",
+      "/docs/installation",
+      "/docs/quickstart",
+      "/docs/cli",
+      "/docs/dark-mode",
+      "/docs/owns-vs-does-not-own"
+    ],
+    "build_exit": 0,
+    "page_count": 69,
+    "page_count_equal_to_red": true,
+    "theming_page_built": true,
+    "nav_theming_anchors": 1,
+    "nav_guides_titles": 1,
+    "theming_anchor_section": "Guides",
+    "orientation_spec_exit": 0,
+    "static_gates": {
+      "typecheck_exit": 0,
+      "biome": {
+        "command": "pnpm exec biome ci apps/docs/src/lib/docs-navigation.ts tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts",
+        "attempts": [
+          {
+            "shape": "pnpm exec",
+            "exit": 0,
+            "stderr": ""
+          }
+        ],
+        "passed": true
+      }
+    },
+    "changed_paths_outside_tmp": [
+      "apps/docs/src/lib/docs-navigation.ts",
+      "tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts"
+    ]
+  }
+}
