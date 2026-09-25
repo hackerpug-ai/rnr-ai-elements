@@ -1,0 +1,43 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "315c4330f69810e05af1a36aa0b95761cadc58b4",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independently reran the full chain in the review worktree (pnpm install --frozen-lockfile, registry:build [56 items x 2 engines], gallery:manifest, docs prebuild, docs build [69 pages], search-index [64 pages cover all 63 destinations]) then the per-AC selection and the aggregate: AC-1 green on chromium-desktop/mobile/nojs, aggregate 12/12, exit 0, CI=true, port 4321 verified free before and released after. Test asserts real product content: the opening prose paragraph carries all three identity phrases, the canonical boundary link is clicked through to /docs/owns-vs-does-not-own, the boundary main text contains renderMarkdown and dev client, no 'Coming soon', shared docs-nav present, body renders through exactly one .prose. Contract PNGs inspected: introduction-desktop-light.png (light shell, section nav, masthead + prose), boundary-table.png (substantive provides/expects ownership content, real apps/example link, xl ToC rail), introduction-mobile-dark.png (dark canvas verified by pixel analysis, single-column stacked bands within 393px padding). My re-render of both introduction captures during the aggregate run was byte-identical to the committed files (git status showed no diff for them) — decisive proof the committed captures are genuine renders of this commit. Boundary content file is ORI-CONT-005's and untouched by this task's commits.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "AC-2 selection rerun green on all three projects. Cycle-2 test changes verified as strengthening, not weakening (diffed 1c732dc1..315c4330): theming is now among the four clicked nav destinations (cycle 1 excluded the click), and the .toc #textclasscontext count assertion now runs after navigating to theming (cycle 1 counted it on the previously loaded dark-mode page, which has its own TextClassContext anchor — vacuous). The two recalibrated oracles are justified against the tree and against my own run's captures: (1) headerHeight 56-57 window — --layout-header-h is 3.5rem (global.css:123), .site-header adds border-bottom 1px (Header.astro:55-61), and NO box-sizing reset exists anywhere in apps/docs/src (grep 0 matches), so Chromium's outer measurement is 57px; my capture shows headerHeight 57, headerBottom 57, headingTop 72.09-72.33, headingBelowHeader true. Cycle 1's |h-56|<=0.5 would fail at 57 — this was a genuine oracle repair with a tight 1px window, not a loosening. (2) 70ch measure — my capture shows getComputedStyle maxWidth '706.86px' vs a live width:70ch probe 706.859375px in the same font context, within 1px; cycle 1's string match to '70ch' was unsatisfiable because Chrome resolves ch to used px, and the probe form is strictly stronger (proves the rendered measure IS 70ch in Spline Sans). proseOverflowing/pageOverflowing false and navRight <= viewport on both desktop (288<=1280) and mobile (369<=393). ToC details toggles closed/open without scripts.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "AC-3 selection rerun green on all three projects. chromium-nojs is a genuinely JS-disabled context (playwright.config.ts: javaScriptEnabled: false, fresh context). Enabled contexts click the real tab controls (nativewind then uniwind, aria-selected asserted) and byte-compare both conversation.json commands against the locked constants; >=7 numbered steps each matching /should see/i; intro names scrolling message list / prompt input / Expo Go; the real useChat worked-example GitHub link located after the ol. No-JS lane asserts BOTH tabpanels visible with complete commands on Quickstart, on every Installation engine group, and on /components/message, plus served-HTML label checks; the nojs lane uses locator-only assertions (documented page.evaluate-hangs finding). installation-nojs.png inspected: both labeled engine panels stacked with full commands and copy buttons — genuine no-JS render. Note (non-blocking): the capture() sidecar for the nojs lane hardcodes installationBothPanels/messageBothPanels: true in the evidence JSON; the actual oracles are the real toBeVisible()/command equality expects above it, which would fail the test, so this is evidence-logging cosmetics, not a stub.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "AC-4 selection rerun green on all three projects. Fonts: four real variable woff2 files (20-57KB, not empty stubs) + genuine SIL OFL 1.1 license committed under apps/docs/public/fonts/; latin faces preloaded in DocsLayout head with crossorigin; wire-level listener requires first status 200 per same-origin /fonts/*.woff2 URL, document.fonts.check passes both families, computed body/code families resolve through --font-sans/--font-mono tokens, stylesheet responses non-empty. Theme flip via the product's own emulated-scheme mechanism with differing body backgrounds. Mobile containment reproduced live and causally at 393px on theming against the committed build: with the guard, grid track 345px, pageScrollW 393 == clientWidth 393; stripping only the .markdown-doc__* min-width rule via style override regresses the track to 706.859px and the page to 731px — the rule is the exact cause, and it mirrors the existing >=lg minmax(0,1fr) guard (MarkdownLayout.astro:146) for the stacked 1fr template (MarkdownLayout.astro:92). Guard selectors are markdown-doc-scoped, so ledger/reference surfaces are untouched. Longest command (~3895 chars) asserted white-space:pre and confined; token table wrapper inside viewport.",
+      "fix": "",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Independently verified as the binding (different-specialist) reviewer: scope, gates, evidence, oracles and the containment fix all hold. ORI-VIS-001's own commits (1c732dc1, 315c4330) touch only allowlisted files plus owned .tmp scratch; docs-navigation.ts and theming-nav-inclusion-proof.test.ts belong solely to the separately approved FIX-ORI-VIS-001-1 commit (01837e2e) merged by the orchestrator; the remaining full-range diff files are orchestrator state/planning artifacts, not implementer writes. I rebuilt everything from scratch (install, registry/gallery/prebuild chain, build 69 pages, pagefind index 64/63) and reran the aggregate (12/12) plus all four per-AC selections (3/3 each) with CI=true on a strictly-owned port 4321 that I verified free before and killed by PID after; typecheck exit 0; biome via the direct binary exit 0 on both the task's scopes (the single useLiteralKeys warning lives in another task's file in the sprint dir, non-blocking). Zero hex literals and zero stub markers in the task's product+test diff. The two documented oracle recalibrations are verified repairs, not weakenings: the 56-57px header window matches the real tree (3.5rem + 1px border, no border-box reset anywhere — my capture reads exactly 57) and cycle 1's tighter form would have failed; the live 70ch probe (706.86 vs 706.859375px) replaces an unsatisfiable string match with a strictly stronger proof. The mobile fix is causal: I stripped only the min-width guard on the committed build and watched the track regress 345px -> 706.859px and the page 393 -> 731px. All four contract PNGs are genuine product renders (two inspected visually, mobile-dark confirmed by pixel analysis, and both introduction captures re-rendered byte-identical by my own run). Evidence binding holds: committed run-identity specSha256 equals the committed spec file's sha256, sourceSha d6080c2f is the code-identical pre-evidence commit (inherent to self-committed evidence), 20 assertion records match the capture points per project. Minor non-blocking note recorded under AC-3: two hardcoded booleans in the nojs capture sidecar are cosmetics behind real failing-capable expects."
+}
