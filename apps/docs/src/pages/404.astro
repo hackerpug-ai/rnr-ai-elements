@@ -1,0 +1,108 @@
+---
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import Button from '../components/Button.astro';
+import Callout from '../components/Callout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Prose from '../components/Prose.astro';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+/**
+ * 404 (ORI-AST-009) — the custom recovery document for genuinely unknown
+ * URLs, composed entirely from landed contracts:
+ *
+ * - DocsLayout supplies the shared shell (R1 Header with the live ThemeToggle
+ *   and SearchDialog mounts, R6 Footer) and the pre-paint theme/engine
+ *   script, so recovery navigation retains theme and shell;
+ * - ORI-CONT-005's system manuscript (`src/content/system/not-found.md`)
+ *   supplies the title, explanation and search hint — read at build time,
+ *   parsed fail-closed, and kept OUTSIDE the docs collection so no ordinary
+ *   docs entry or navigation row is ever created for it;
+ * - PageHeader / Prose / Callout / Button carry the recovery content (R2-R5);
+ * - the "Search the site" action reuses the production SearchDialog through
+ *   ORI-AST-004's `activateSearch(invoker)` seam — no second dialog, no
+ *   second index. It ships `hidden` and is revealed only when the
+ *   `rnr-search-dialog` element is actually defined, so zero-JavaScript
+ *   visitors never see a dead control; the plain Components and Registry
+ *   anchors are their recovery path (AC-4).
+ *
+ * The static build emits this route as `dist/404.html`; the page carries no
+ * `data-pagefind-body`, so with any marked page in the site the indexer
+ * excludes the whole document from the shared index by contract. The
+ * Cloudflare specialist owns the host's not_found_handling setting.
+ */
+const manuscriptPath = join(process.cwd(), 'src', 'content', 'system', 'not-found.md');
+const raw = readFileSync(manuscriptPath, 'utf8');
+const blocks = raw
+  .split(/\n\s*\n/)
+  .map((block) => block.trim())
+  .filter((block) => block.length > 0);
+if (blocks.length < 3 || !blocks[0].startsWith('# ')) {
+  throw new Error(
+    '[404] src/content/system/not-found.md must carry a # title plus explanation and hint blocks',
+  );
+}
+const title = blocks[0].replace(/^#\s+/, '');
+const explanation = blocks[1];
+const hint = blocks[2];
+---
+
+<DocsLayout title={title}>
+  <main class="not-found">
+    <PageHeader title={title} description={explanation} />
+    <Prose>
+      <p>{explanation}</p>
+    </Prose>
+    <Callout variant="info" title={hint}>
+      <Fragment slot="link">
+        <Button variant="primary" type="button" data-recovery-search hidden>
+          Search the site
+        </Button>
+      </Fragment>
+    </Callout>
+    <div class="not-found__links">
+      <Button variant="outline" href="/components">Components</Button>
+      <Button variant="outline" href="/registry">Registry</Button>
+    </div>
+  </main>
+</DocsLayout>
+
+<script>
+  import { activateSearch } from '../scripts/search-dialog';
+
+  // The recovery action exists only while the shared dialog island can honor
+  // it — reveal through the element definition, wire once, and let the
+  // dialog's own Escape/backdrop handling restore focus here.
+  const trigger = document.querySelector('[data-recovery-search]');
+  if (trigger) {
+    customElements.whenDefined('rnr-search-dialog').then(() => {
+      trigger.removeAttribute('hidden');
+      if (trigger instanceof HTMLElement) {
+        trigger.addEventListener('click', () => activateSearch(trigger));
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Single-column recovery surface; identical structure at every width. */
+  .not-found {
+    display: grid;
+    gap: 1.5rem;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+  .not-found__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  /* The button primitives set `display:` on their own scoped classes, which
+     beats the UA's [hidden] rule. Inside this page `hidden` must stay honest
+     — the JS-only recovery control ships hidden and only the island script
+     may reveal it (:global because the button carries its own cid). */
+  .not-found :global([hidden]) {
+    display: none;
+  }
+</style>
