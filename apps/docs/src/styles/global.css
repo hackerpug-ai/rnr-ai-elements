@@ -14,6 +14,56 @@
  * Every color is oklch; no hex literal appears in this file.
  */
 
+/*
+ * Self-hosted Spline (TR-07): both variable families served from the site's
+ * own /fonts — same-origin only, CSP font-src 'self' satisfied, no third-party
+ * request ever leaves the origin. font-display: swap per the constitution.
+ * Files + SIL OFL 1.1 license: apps/docs/public/fonts/. The family names are
+ * the FIRST names of --font-sans / --font-mono above, so the tokens resolve to
+ * these faces and nothing else. latin + latin-ext subsets mirror the foundry
+ * CSS; the latin files are preloaded in DocsLayout's head.
+ */
+@font-face {
+  font-family: 'Spline Sans Variable';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/spline-sans-var-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+    U+FFFD;
+}
+@font-face {
+  font-family: 'Spline Sans Variable';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/spline-sans-var-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Spline Sans Mono Variable';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/spline-sans-mono-var-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+    U+FFFD;
+}
+@font-face {
+  font-family: 'Spline Sans Mono Variable';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/spline-sans-mono-var-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   color-scheme: dark;
 
@@ -54,7 +104,7 @@
   --code-background: oklch(0.235 0 0);
   --code-foreground: oklch(0.922 0 0);
 
-  /* Typography — family names now; self-hosted Spline Sans woff2 files are sprint-05 */
+  /* Typography — resolves to the self-hosted @font-face families above. */
   --font-sans:
     'Spline Sans Variable', 'Spline Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono:
@@ -169,9 +219,41 @@ kbd {
   padding: 0.125em 0.375em;
 }
 
+/* The command-strip copy control (ORI-VIS-001): the CopyButton island ships
+ * its trigger as bare markup, and a bare <button> answers with the platform's
+ * system face — an untokenized gray blob with an outset 3D border in every
+ * install strip. One quiet token treatment here styles every copy control on
+ * the site (reading pages, item pages, ledger) through the shared sheet; the
+ * island and CodeBlock sources stay byte-identical to their landed contracts.
+ * Hover recolors only — the trigger is never gated (REF-003). */
+.copy-button__trigger {
+  min-height: 44px; /* touch target */
+  padding-inline: 0.75rem;
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.copy-button__trigger:hover {
+  color: var(--accent-foreground);
+  background: var(--accent);
+}
+
 /* Focus-ring contract: a 2px ring in the theme's --ring, 2px offset
  * (hard UI constraint, applies site-wide to every interactive element). */
 :focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
+}
+
+/* Reading-layout containment (ORI-VIS-001): below lg the docs grid's single
+ * `1fr` track sizes to its content's min-content — a wide code fence capped
+ * by the 70ch measure — which pushes the page ~2x past a phone viewport and
+ * drags every reading surface wide with it. The >=lg template already guards
+ * with minmax(0, 1fr); this mirrors that guard for the stacked template so
+ * wide code and tables scroll inside their own containers instead. */
+.markdown-doc__body,
+.markdown-doc__toc,
+.markdown-doc__nav {
+  min-width: 0;
 }
