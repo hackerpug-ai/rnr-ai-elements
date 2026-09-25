@@ -1,0 +1,117 @@
+
+Running 15 tests using 1 worker
+F···FF···FF···F
+
+  1) [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:408:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations 
+
+    Error: the approved explanation must accompany the title exactly once
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      434 |       await page.getByText(parts.explanation, { exact: true }).count(),
+      435 |       'the approved explanation must accompany the title exactly once',
+    > 436 |     ).toBe(1);
+          |       ^
+      437 |
+      438 |     // Presentation: R5 is THE action row — the three recovery CTAs (primary
+      439 |     // Search the site + the two ordinary outline links) compose one row, and
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005/tests/sprint-05-orient-search/recovery-presentation.spec.ts:436:7
+
+    Error Context: test-results/sprint-05-orient-search-re-fd251-n-and-ordinary-destinations-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:746:1 › ORI-VIS-005-ac-5: public-origin presentation handoff 
+
+    Error: PUBLIC PREREQUISITE unmet for https://rnraielements.com/ori-vis-005-missing-ori-vis-005-1790375833684-254584684: observed status=404, bodyBytes=0, title=absent. The deployment owner must publish the reviewed candidate at the public origin (ORI-DEP-002/003) before this AC can pass; the capture above records the currently published reality.
+
+      798 |     html.includes('href="/components"');
+      799 |   if (!branded) {
+    > 800 |     throw new Error(
+          |           ^
+      801 |       `PUBLIC PREREQUISITE unmet for ${url}: observed status=${status ?? 'none'}, ` +
+      802 |         `bodyBytes=${html.length}, title=${html.includes(parts.title) ? 'present' : 'absent'}. ` +
+      803 |         'The deployment owner must publish the reviewed candidate at the public origin ' +
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005/tests/sprint-05-orient-search/recovery-presentation.spec.ts:800:11
+
+    Error Context: test-results/sprint-05-orient-search-re-5603b-origin-presentation-handoff-chromium-desktop/error-context.md
+
+  3) [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:408:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations 
+
+    Error: the approved explanation must accompany the title exactly once
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      434 |       await page.getByText(parts.explanation, { exact: true }).count(),
+      435 |       'the approved explanation must accompany the title exactly once',
+    > 436 |     ).toBe(1);
+          |       ^
+      437 |
+      438 |     // Presentation: R5 is THE action row — the three recovery CTAs (primary
+      439 |     // Search the site + the two ordinary outline links) compose one row, and
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005/tests/sprint-05-orient-search/recovery-presentation.spec.ts:436:7
+
+    Error Context: test-results/sprint-05-orient-search-re-fd251-n-and-ordinary-destinations-chromium-mobile/error-context.md
+
+  4) [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:746:1 › ORI-VIS-005-ac-5: public-origin presentation handoff 
+
+    Error: PUBLIC PREREQUISITE unmet for https://rnraielements.com/ori-vis-005-missing-ori-vis-005-1790375842603-928968050: observed status=404, bodyBytes=0, title=absent. The deployment owner must publish the reviewed candidate at the public origin (ORI-DEP-002/003) before this AC can pass; the capture above records the currently published reality.
+
+      798 |     html.includes('href="/components"');
+      799 |   if (!branded) {
+    > 800 |     throw new Error(
+          |           ^
+      801 |       `PUBLIC PREREQUISITE unmet for ${url}: observed status=${status ?? 'none'}, ` +
+      802 |         `bodyBytes=${html.length}, title=${html.includes(parts.title) ? 'present' : 'absent'}. ` +
+      803 |         'The deployment owner must publish the reviewed candidate at the public origin ' +
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005/tests/sprint-05-orient-search/recovery-presentation.spec.ts:800:11
+
+    Error Context: test-results/sprint-05-orient-search-re-5603b-origin-presentation-handoff-chromium-mobile/error-context.md
+
+  5) [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:408:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations 
+
+    Error: the approved explanation must accompany the title exactly once
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      434 |       await page.getByText(parts.explanation, { exact: true }).count(),
+      435 |       'the approved explanation must accompany the title exactly once',
+    > 436 |     ).toBe(1);
+          |       ^
+      437 |
+      438 |     // Presentation: R5 is THE action row — the three recovery CTAs (primary
+      439 |     // Search the site + the two ordinary outline links) compose one row, and
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005/tests/sprint-05-orient-search/recovery-presentation.spec.ts:436:7
+
+    Error Context: test-results/sprint-05-orient-search-re-fd251-n-and-ordinary-destinations-chromium-nojs/error-context.md
+
+  6) [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:746:1 › ORI-VIS-005-ac-5: public-origin presentation handoff 
+
+    Error: PUBLIC PREREQUISITE unmet for https://rnraielements.com/ori-vis-005-missing-ori-vis-005-1790375849165-949822942: observed status=404, bodyBytes=0, title=absent. The deployment owner must publish the reviewed candidate at the public origin (ORI-DEP-002/003) before this AC can pass; the capture above records the currently published reality.
+
+      798 |     html.includes('href="/components"');
+      799 |   if (!branded) {
+    > 800 |     throw new Error(
+          |           ^
+      801 |       `PUBLIC PREREQUISITE unmet for ${url}: observed status=${status ?? 'none'}, ` +
+      802 |         `bodyBytes=${html.length}, title=${html.includes(parts.title) ? 'present' : 'absent'}. ` +
+      803 |         'The deployment owner must publish the reviewed candidate at the public origin ' +
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005/tests/sprint-05-orient-search/recovery-presentation.spec.ts:800:11
+
+    Error Context: test-results/sprint-05-orient-search-re-5603b-origin-presentation-handoff-chromium-nojs/error-context.md
+
+  6 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:408:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations 
+    [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:746:1 › ORI-VIS-005-ac-5: public-origin presentation handoff 
+    [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:408:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations 
+    [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:746:1 › ORI-VIS-005-ac-5: public-origin presentation handoff 
+    [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:408:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations 
+    [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:746:1 › ORI-VIS-005-ac-5: public-origin presentation handoff 
+  9 passed (23.2s)

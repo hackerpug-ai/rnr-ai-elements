@@ -4,27 +4,31 @@ import { join } from 'node:path';
 import Button from '../components/Button.astro';
 import Callout from '../components/Callout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import Prose from '../components/Prose.astro';
 import DocsLayout from '../layouts/DocsLayout.astro';
 
 /**
- * 404 (ORI-AST-009) — the custom recovery document for genuinely unknown
- * URLs, composed entirely from landed contracts:
+ * 404 (ORI-AST-009 mechanics + ORI-VIS-005 presentation) — the branded
+ * recovery document for genuinely unknown URLs, composed from landed
+ * contracts in the TR-07 six-region order:
  *
- * - DocsLayout supplies the shared shell (R1 Header with the live ThemeToggle
- *   and SearchDialog mounts, R6 Footer) and the pre-paint theme/engine
- *   script, so recovery navigation retains theme and shell;
- * - ORI-CONT-005's system manuscript (`src/content/system/not-found.md`)
- *   supplies the title, explanation and search hint — read at build time,
- *   parsed fail-closed, and kept OUTSIDE the docs collection so no ordinary
- *   docs entry or navigation row is ever created for it;
- * - PageHeader / Prose / Callout / Button carry the recovery content (R2-R5);
- * - the "Search the site" action reuses the production SearchDialog through
- *   ORI-AST-004's `activateSearch(invoker)` seam — no second dialog, no
- *   second index. It ships `hidden` and is revealed only when the
- *   `rnr-search-dialog` element is actually defined, so zero-JavaScript
- *   visitors never see a dead control; the plain Components and Registry
- *   anchors are their recovery path (AC-4).
+ * - R1 DocsLayout Header (live ThemeToggle + SearchDialog mounts) and R6
+ *   Footer supply the shared shell, so recovery navigation keeps theme
+ *   and shell; the pre-paint theme/engine script rides the layout.
+ * - R2 PageHeader carries the manuscript's title AND explanation as the
+ *   masthead (ORI-AST-009 pins `.page-header__description` byte-equal to
+ *   the explanation, so the recovery prose lives in the title block —
+ *   with only three approved manuscript blocks there is no second prose
+ *   passage to duplicate, and none is authored here).
+ * - R4 Callout carries the approved search hint alone.
+ * - R5 is THE action row: the primary "Search the site" CTA plus the two
+ *   ordinary outline links compose one flex-wrap row, per the not-found
+ *   region table (primary focuses the SearchDialog trigger; the plain
+ *   links carry recovery without JavaScript).
+ * - The "Search the site" action reuses the production SearchDialog
+ *   through ORI-AST-004's `activateSearch(invoker)` seam — no second
+ *   dialog, no second index. It ships `hidden` and is revealed only when
+ *   the `rnr-search-dialog` element is actually defined, so zero-JavaScript
+ *   visitors never see a dead control (AC-4).
  *
  * The static build emits this route as `dist/404.html`; the page carries no
  * `data-pagefind-body`, so with any marked page in the site the indexer
@@ -50,17 +54,11 @@ const hint = blocks[2];
 <DocsLayout title={title}>
   <main class="not-found">
     <PageHeader title={title} description={explanation} />
-    <Prose>
-      <p>{explanation}</p>
-    </Prose>
-    <Callout variant="info" title={hint}>
-      <Fragment slot="link">
-        <Button variant="primary" type="button" data-recovery-search hidden>
-          Search the site
-        </Button>
-      </Fragment>
-    </Callout>
+    <Callout variant="info" title={hint} />
     <div class="not-found__links">
+      <Button variant="primary" type="button" data-recovery-search hidden>
+        Search the site
+      </Button>
       <Button variant="outline" href="/components">Components</Button>
       <Button variant="outline" href="/registry">Registry</Button>
     </div>

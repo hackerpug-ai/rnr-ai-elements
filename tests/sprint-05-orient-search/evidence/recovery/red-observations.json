@@ -1,0 +1,26 @@
+{
+  "phase": "red",
+  "gate": "ORI-VIS-005 cycle-1 RED",
+  "command": "pnpm exec playwright test tests/sprint-05-orient-search/recovery-presentation.spec.ts --project=chromium-desktop --project=chromium-mobile --project=chromium-nojs",
+  "env": {
+    "CI": "true",
+    "ORI_VIS_PHASE": "red"
+  },
+  "playwright_exit": 1,
+  "candidate": {
+    "gitHead": "6a1ca11eeaf5ba93ba941b2fd97e5429539105bd",
+    "dist": "pre-fix 404 (explanation duplicated: .page-header__description + Prose paragraph; search CTA inside R4 Callout, R5 row missing primary)"
+  },
+  "functional_failures": [
+    "ORI-VIS-005-ac-1 on chromium-desktop/chromium-mobile/chromium-nojs: the approved explanation must accompany the title exactly once (observed 2)"
+  ],
+  "prerequisite_failures": [
+    "ORI-VIS-005-ac-5 on all projects: PUBLIC PREREQUISITE unmet - https://rnraielements.com serves status=404 with bodyBytes=0 (stale DEP-001-era candidate, no branded 404); deployment owner ORI-DEP-002/003 must publish"
+  ],
+  "passed_prefix": [
+    "ORI-VIS-005-ac-2 x3",
+    "ORI-VIS-005-ac-3 x3",
+    "ORI-VIS-005-ac-4 x3"
+  ],
+  "log": ".tmp/ORI-VIS-005/cycle-1/red/matrix.log"
+}
