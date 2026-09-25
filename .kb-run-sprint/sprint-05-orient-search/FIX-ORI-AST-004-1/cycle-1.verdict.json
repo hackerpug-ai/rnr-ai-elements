@@ -1,0 +1,31 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "b81989560b9c709996ed2e992126734723d18c9a",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independently reproduced both phases with the committed harness. GREEN: exact selector at HEAD exited 0 — real `pnpm --filter @rnr-ai-elements/docs build` at 68 pages (RED baseline 67, +1), pinned `pnpm dlx pagefind@1.5.2 --site apps/docs/dist` (run after the build) index page_count 64 read from pagefind-entry.json (RED 63, +1), real astro preview over the built dist on the shared strict-port shape at 127.0.0.1:4321 serving /components/streamdown at HTTP 200 with h1 'Streamdown', the pinned sentence, and data-pagefind-body + data-pagefind-meta category:components (verified by direct grep of the built HTML). RED: removed the page, reran the selector — exit 1 recording build 67 / index 63 / route 404, matching the committed red.json (bound to base SHA 48c8ad3b with real astro and pagefind output tails); page and red.json restored byte-identical afterwards, worktree clean at b8198956. Committed page/harness/matrix sha256s (eb9733e5…, 682fdb17…, 1eb805d9…) match the green.json/run.json bindings exactly."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Built HTML grep: pinned sentence 1 occurrence (visible in main); exactly 0 occurrences of 'streamdown.json' and of '@react-native-reusables/cli'. No registry chrome — the page's h2s are What Streamdown is / Installing the dependency / Its relationship to the registry, vs a real item page's Install/Dependencies/Source/Props/Usage; zero npx/npm commands, no manifest URL, no version chip or family pager. Peers render from the committed dev-client-matrix.json entry (page imports the JSON, throws if the streamdown entry is absent, maps entry.peers): all four peers and both platform permissions match the JSON byte-for-byte in the built HTML. Dev-client verdict follows the site-wide convention (DevClientMatrix.astro:31 renders the identical Badge tone='dev-client' from matrix membership; the entry schema carries peers+permissions only — membership is the only derivable verdict signal). All 11 internal hrefs returned 200 in the harness link audit (broken_internal_links {}); the /docs/theming#rendermarkdown anchor exists in the built theming page. Static gates: pnpm typecheck exit 0 and scoped biome exit 0 both run directly by the reviewer (direct binary; the pnpm-exec shape also passed inside the harness GREEN run — run.json attempt exit 0, so the documented exit-254 environmental quirk never triggered). Diff is exactly the five allowlisted files: page + harness + three owned .tmp evidence files; [item].astro and every other write-prohibited path absent from the diff (byte-unchanged)."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "The selector proves route 200 + h1 + pinned sentence + index page_count exactly RED+1 with the pre-change 404 and both counts in red.json — reviewer reran the selector in both directions (GREEN exit 0 at HEAD; RED exit 1 with the page removed) and read all three evidence files."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Served-HTML inspection (harness + reviewer's direct greps over the rebuilt dist) proves the honest framing, zero registry-command occurrences, and matrix parity; static gates exit 0; tracked diff is exactly the new page plus the harness (plus owned .tmp evidence)."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": { "typecheck": "pass", "lint": "pass", "tests": "pass" },
+  "summary": "Genuine RED/GREEN over the real pipeline, independently reproduced. The harness drives the real composite build, the pinned real Pagefind run after the build, and a real strict-port preview; it parses the build's own page-count line and reads pagefind-entry.json rather than hand-counting, exits 1 on RED, surfaces broken prerequisites and route-observation failures instead of laundering them, and stops the owned preview on every exit path. The page is honest documentation: pinned sentence visible in main, zero registry-command literals, zero registry chrome, all facts rendered from the committed matrix entry and the landed boundary prose it links, links resolve to real built destinations. All three documented assumptions upheld: the exactly-0 streamdown.json count in AC-2 governs over the boundary contract's example phrasing (the page states the fact without the literal); the dev-client verdict rides the site-wide Badge convention derived from matrix membership (DevClientMatrix.astro precedent, no verdict field exists in the schema); the RED/GREEN branch on page-file presence was verified by direct reproduction both ways. Two non-blocking recording nuances: the GREEN run's candidate_sha is the base SHA because the harness ran with the page as an uncommitted working-tree file (the bound page/harness/matrix sha256s match the committed bytes, so identity is provable), and the RED run used an earlier harness revision (closed by the reviewer reproducing RED with the committed harness). Static gates green, five-file allowlisted diff, no stubs."
+}
