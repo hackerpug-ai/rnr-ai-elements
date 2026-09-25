@@ -1,0 +1,38 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-006
+
+ ❯ tests/sprint-05-orient-search/contributing-content.test.ts (4 tests | 1 failed | 3 skipped) 4ms
+     × ORI-CONT-006-four-criteria 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/contributing-content.test.ts > ORI-CONT-006 contributing content > ORI-CONT-006-four-criteria
+AssertionError: commands over the real file: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "[ORI-CONT-006] documented command missing: \"pnpm --filter @rnr-ai-elements/docs check:snippets\"; found mutated \"check:snippet\" instead",
++ ]
+
+ ❯ tests/sprint-05-orient-search/contributing-content.test.ts:263:71
+    261|     }
+    262|     expect(criteriaDiagnostics(source), 'criteria over the real file')…
+    263|     expect(commandDiagnostics(source), 'commands over the real file').…
+       |                                                                       ^
+    264|
+    265|     // Case 2: five mutated copies in owned scratch — one per removed …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:40:22
+   Duration  92ms (transform 14ms, setup 0ms, import 22ms, tests 4ms, environment 0ms)
+
