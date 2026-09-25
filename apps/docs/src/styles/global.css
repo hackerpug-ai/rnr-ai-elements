@@ -245,3 +245,15 @@ kbd {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
+
+/* Reading-layout containment (ORI-VIS-001): below lg the docs grid's single
+ * `1fr` track sizes to its content's min-content — a wide code fence capped
+ * by the 70ch measure — which pushes the page ~2x past a phone viewport and
+ * drags every reading surface wide with it. The >=lg template already guards
+ * with minmax(0, 1fr); this mirrors that guard for the stacked template so
+ * wide code and tables scroll inside their own containers instead. */
+.markdown-doc__body,
+.markdown-doc__toc,
+.markdown-doc__nav {
+  min-width: 0;
+}

@@ -66,7 +66,10 @@ const FONT_FILES = [
 
 const REPO_ROOT = process.cwd();
 const EVIDENCE_READING = join(REPO_ROOT, 'tests/sprint-05-orient-search/evidence/reading');
-const GREEN_ROOT = join(REPO_ROOT, '.tmp/ORI-VIS-001/cycle-1/green');
+const GREEN_ROOT = join(
+  REPO_ROOT,
+  `.tmp/ORI-VIS-001/${process.env.ORI_VIS_CYCLE ?? 'cycle-1'}/green`,
+);
 
 function capture(project: string, name: string, observed: Record<string, unknown>): void {
   const path = join(GREEN_ROOT, 'captures', `${project}-${name}.json`);
@@ -263,27 +266,25 @@ test('ORI-VIS-001-AC-2', async ({ page }, testInfo) => {
     expect.soft(navHrefs, `section navigation reaches ${destination}`).toContain(destination);
   }
 
-  // Follow the named destinations through the real section-nav links. The
-  // theming member is asserted against the nav below; the publication
-  // contract currently reserves that slug out of sectionNavigation, so it is
-  // read by its real destination instead of a nav click that would hang.
-  for (const destination of [ROUTES.installation, ROUTES.cli, ROUTES.darkMode]) {
+  // Follow the four named destinations through the real section-nav links —
+  // theming included since FIX-ORI-VIS-001-1 put the reserved slug into the
+  // nav while the static route keeps owning catch-all generation.
+  for (const destination of [ROUTES.installation, ROUTES.cli, ROUTES.theming, ROUTES.darkMode]) {
     await page.locator(`nav[data-docs-nav] a[href="${destination}"]`).click();
     await page.waitForURL(`**${destination}`);
     await expect(page.locator('main h1')).toHaveText(H1_BY_ROUTE[destination]);
   }
-  expect.soft(navHrefs, 'section navigation reaches /docs/theming').toContain(ROUTES.theming);
 
-  // Use the on-this-page rail: the #textclasscontext link scrolls the heading
-  // to a readable position below the 3.5rem sticky header.
+  // Use the on-this-page rail on Theming: the #textclasscontext link scrolls
+  // the heading to a readable position below the 3.5rem sticky header.
+  await requireOk(page, ROUTES.theming);
   const tocLink = page.locator('.toc a[href="#textclasscontext"]');
   expect.soft(await tocLink.count(), 'Toc links the TextClassContext heading').toBe(1);
   // The narrower-width ToC is an Astro-owned details control (zero-JS toggle).
   const tocDetails = page.locator('details.toc');
   expect.soft(await tocDetails.count(), 'Toc is a details control').toBe(1);
 
-  await requireOk(page, ROUTES.theming);
-  await page.locator('.toc a[href="#textclasscontext"]').click();
+  await tocLink.click();
   await page.waitForURL('**/docs/theming#textclasscontext');
 
   if (!nojs) {
@@ -295,12 +296,20 @@ test('ORI-VIS-001-AC-2', async ({ page }, testInfo) => {
       const headingTop = heading.getBoundingClientRect().top;
       const headerBottom = header.getBoundingClientRect().bottom;
       const proseStyle = getComputedStyle(prose);
+      // getComputedStyle resolves '70ch' to its used px; measure a live 70ch
+      // probe in the same font context to prove the measure is exactly 70ch.
+      const probe = document.createElement('span');
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;width:70ch';
+      prose.appendChild(probe);
+      const seventyCh = probe.getBoundingClientRect().width;
+      probe.remove();
       return {
         headingTop,
         headerBottom,
         headerHeight: header.getBoundingClientRect().height,
         headingBelowHeader: headingTop >= headerBottom - 0.5,
         proseMaxWidth: proseStyle.maxWidth,
+        seventyChWidth: seventyCh,
         proseOverflowing: prose.scrollWidth > prose.clientWidth + 1,
         pageOverflowing:
           document.documentElement.scrollWidth > window.innerWidth + 1,
@@ -315,6 +324,7 @@ test('ORI-VIS-001-AC-2', async ({ page }, testInfo) => {
       headerHeight: number;
       headingBelowHeader: boolean;
       proseMaxWidth: string;
+      seventyChWidth: number;
       proseOverflowing: boolean;
       pageOverflowing: boolean;
       navRight: number;
@@ -326,9 +336,17 @@ test('ORI-VIS-001-AC-2', async ({ page }, testInfo) => {
         .soft(geometry.headingBelowHeader, 'TextClassContext heading sits below the header')
         .toBe(true);
       expect
-        .soft(Math.abs(geometry.headerHeight - 56), 'sticky header is 3.5rem (56px)')
-        .toBeLessThanOrEqual(0.5);
-      expect.soft(geometry.proseMaxWidth, 'prose measure is the 70ch token').toBe('70ch');
+        .soft(
+          geometry.headerHeight >= 56 && geometry.headerHeight <= 57,
+          'sticky header is the 3.5rem box (56px + its 1px divider at most)',
+        )
+        .toBe(true);
+      expect
+        .soft(
+          Math.abs(parseFloat(geometry.proseMaxWidth) - geometry.seventyChWidth) <= 1,
+          'prose measure is exactly 70ch in the rendered font',
+        )
+        .toBe(true);
       expect.soft(geometry.proseOverflowing, 'prose content stays inside its measure').toBe(false);
       expect.soft(geometry.pageOverflowing, 'no page-wide overflow').toBe(false);
       expect
