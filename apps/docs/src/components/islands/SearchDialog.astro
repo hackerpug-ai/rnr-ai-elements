@@ -13,8 +13,11 @@
  * hidden — the Header mount keeps its `hidden` attribute and the site stays
  * fully navigable through ordinary links. Results markup is empty here and
  * is built exclusively by the script through createElement/textContent.
- * ORI-VIS-003/ORI-VIS-005 own later presentation work; this chrome stays in
- * the existing token vocabulary.
+ * ORI-VIS-003 owns the presentation layer (toolbar + close action, focus
+ * ring, grouped results, active selection, loading/empty/error states);
+ * the runtime-built nodes carry no scoping attribute, so their styles use
+ * :global() anchored on template-owned ancestors. ORI-VIS-005 owns later
+ * work; this chrome stays in the existing token vocabulary.
  *
  * `data-pagefind-ignore` keeps the dialog chrome out of the index even if a
  * future layout moves it — the data-pagefind-body regions already exclude it.
@@ -31,16 +34,31 @@
     Search
   </button>
   <dialog class="search-dialog__panel" aria-modal="true" aria-label="Search documentation">
-    <form class="search-dialog__form" role="search">
-      <input
-        class="search-dialog__input"
-        type="search"
-        placeholder="Search docs and components…"
-        aria-label="Search documentation"
-        autocomplete="off"
-        spellcheck="false"
-      />
-    </form>
+    <div class="search-dialog__toolbar">
+      <form class="search-dialog__form" role="search">
+        <input
+          class="search-dialog__input"
+          type="search"
+          placeholder="Search docs and components…"
+          aria-label="Search documentation"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </form>
+      <!-- Close action (ORI-VIS-003): a native method="dialog" form closes the
+           dialog WITHOUT script — the platform fires the same `close` event the
+           island already listens to for invoker focus restoration. -->
+      <form class="search-dialog__close-form" method="dialog">
+        <button
+          type="submit"
+          class="search-dialog__close"
+          data-search-close
+          aria-label="Close search"
+        >
+          <span class="search-dialog__close-glyph" aria-hidden="true">×</span>
+        </button>
+      </form>
+    </div>
     <p class="search-dialog__status" role="status" aria-live="polite" data-search-status></p>
     <div class="search-dialog__scroll">
       <p class="search-dialog__loading" data-search-loading hidden>Loading search…</p>
@@ -87,8 +105,13 @@
 
   /* The panel floats over the page canvas on the native top layer; the
      backdrop is token-derived (no raw colors) and calms under reduced
-     motion with every other transition. */
+     motion with every other transition. The column flex keeps the toolbar
+     (input + close) and the live status pinned while ONLY the results
+     region absorbs the dialog's max-height — the AC-4 control-reachability
+     contract. */
   .search-dialog__panel {
+    display: flex;
+    flex-direction: column;
     width: min(40rem, calc(100vw - 2rem));
     max-height: min(32rem, calc(100vh - 6rem));
     padding: 0;
@@ -97,12 +120,24 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
   }
+  /* The flex display above outspecifies the UA's closed-dialog display:none,
+     which would render (and pointer-intercept with) the closed panel — the
+     modal must stay truly gone until showModal(). */
+  .search-dialog__panel:not([open]) {
+    display: none;
+  }
   .search-dialog__panel::backdrop {
     background: color-mix(in oklab, var(--foreground) 40%, transparent);
   }
 
-  .search-dialog__form {
+  .search-dialog__toolbar {
+    display: flex;
+    align-items: stretch;
     border-bottom: 1px solid var(--border);
+  }
+  .search-dialog__form {
+    flex: 1 1 auto;
+    min-width: 0;
   }
   .search-dialog__input {
     width: 100%;
@@ -111,67 +146,159 @@
     color: var(--popover-foreground);
     background: transparent;
     border: none;
-    outline: none;
+  }
+  /* Focus-ring contract (site-wide 2px ring, 2px offset) — restated here
+     because the input must not carry the UA/`outline: none` fallback. */
+  .search-dialog__input:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .search-dialog__close-form {
+    flex: 0 0 auto;
+    display: flex;
+  }
+  .search-dialog__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    min-height: 44px; /* touch target */
+    padding: 0 0.75rem;
+    font: inherit;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .search-dialog__close:hover {
+    color: var(--accent-foreground);
+    background: var(--accent);
+  }
+  .search-dialog__close-glyph {
+    font-size: 1.375rem;
+    line-height: 1;
   }
   .search-dialog__status {
+    flex: 0 0 auto;
     min-height: 1.55rem;
     padding: 0.25rem 1rem;
     font-size: 0.75rem;
     color: var(--muted-foreground);
   }
   .search-dialog__scroll {
+    flex: 1 1 auto;
+    min-height: 0;
     max-height: 24rem;
     padding: 0 0.5rem 0.75rem;
     overflow-y: auto;
+    overscroll-behavior: contain;
   }
+
+  /* -- Runtime-built result presentation (ORI-VIS-003) ---------------------
+   * The island script builds groups, links, titles, excerpts and kind badges
+   * through createElement at runtime, so those nodes carry no Astro scoping
+   * attribute — plain scoped selectors never matched them. Every rule below
+   * anchors on a template-owned ancestor (.search-dialog__scroll) and uses
+   * :global() for the script-built descendants. */
+  .search-dialog__scroll :global(div[data-search-group]) {
+    padding-top: 0.25rem;
+  }
+  .search-dialog__scroll :global(div[data-search-group] + div[data-search-group]) {
+    margin-top: 0.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .search-dialog__scroll :global(h3.search-dialog__group-label) {
+    margin: 0;
+    padding: 0.5rem 0.5rem 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+  }
+  .search-dialog__scroll :global(a[data-search-result]) {
+    display: grid;
+    gap: 0.125rem;
+    padding: 0.5rem 0.625rem;
+    color: var(--popover-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .search-dialog__scroll :global(a[data-search-result]:hover) {
+    background: var(--accent);
+  }
+  /* Keyboard selection (AC-3): the active result carries BOTH a tinted
+     background and a 2px inset ring, so selection reads beyond text color
+     in light and dark themes. The outline is inset because the scroll
+     region clips outside outlines at its edges. The script addresses
+     results by data attribute (never a class), so these selectors do too. */
+  .search-dialog__scroll :global(a[data-search-result][data-active='true']) {
+    background: var(--accent);
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+  .search-dialog__scroll :global(span.search-dialog__result-title) {
+    font-weight: 600;
+  }
+  .search-dialog__scroll :global(span.search-dialog__result-excerpt) {
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+  }
+  .search-dialog__scroll :global(span.search-dialog__result-kind) {
+    font-size: 0.6875rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+  }
+
   .search-dialog__loading,
   .search-dialog__empty,
   .search-dialog__error {
-    padding: 0.5rem;
+    padding: 0.75rem 0.5rem;
     color: var(--muted-foreground);
   }
   .search-dialog__error {
     color: var(--destructive);
   }
-  .search-dialog__group-label {
-    padding: 0.5rem 0.5rem 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted-foreground);
+  /* Genuine first-open loading (AC-1): a token-derived spinner marks the
+     real Pagefind initialization; it animates only when motion is welcome
+     and never covers the toolbar or status. */
+  .search-dialog__loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
-  .search-dialog__result {
-    display: grid;
-    gap: 0.125rem;
-    padding: 0.5rem;
-    color: var(--popover-foreground);
-    text-decoration: none;
-    border-radius: var(--radius-md);
+  /* The flex display must not defeat the script's `hidden` toggling — the
+     loading state appears only while the real initialization runs. */
+  .search-dialog__loading[hidden] {
+    display: none;
   }
-  .search-dialog__result:hover {
-    background: var(--accent);
+  .search-dialog__loading::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 2px solid var(--border);
+    border-top-color: var(--ring);
+    border-radius: 50%;
   }
-  .search-dialog__result[data-active='true'] {
-    background: var(--accent);
-    outline: 1px solid var(--ring);
+  @media (prefers-reduced-motion: no-preference) {
+    .search-dialog__loading::before {
+      animation: search-dialog-spin 0.7s linear infinite;
+    }
   }
-  .search-dialog__result-title {
-    font-weight: 600;
-  }
-  .search-dialog__result-excerpt {
-    font-size: 0.8125rem;
-    color: var(--muted-foreground);
-  }
-  .search-dialog__result-kind {
-    font-size: 0.6875rem;
-    font-family: var(--font-mono);
-    color: var(--muted-foreground);
+  @keyframes search-dialog-spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .search-dialog__panel,
-    .search-dialog__panel::backdrop {
+    .search-dialog__panel::backdrop,
+    .search-dialog__close {
       transition: none;
       animation: none;
     }
