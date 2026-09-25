@@ -1,0 +1,39 @@
+{
+  "task": "FIX-ORI-AST-004-1",
+  "commit_sha": "b81989560b9c709996ed2e992126734723d18c9a",
+  "done": "The docs-owned dependency explainer landed at apps/docs/src/pages/components/streamdown.astro (h1 Streamdown, the pinned visible sentence 'Streamdown is not a registry item.', peers/permissions/dev-client verdict rendered from the committed dev-client-matrix.json streamdown entry, links only to /components, /components/message, /components/reasoning, /components/markdown, /docs/installation, /docs/owns-vs-does-not-own, /docs/theming#rendermarkdown, data-pagefind-body + category:components, no registry chrome) with the task-owned harness tests/sprint-05-orient-search/streamdown-destination-proof.test.ts exporting runStreamdownDestinationProof, committed with bound evidence .tmp/FIX-ORI-AST-004-1/{red,green,run}.json — RED recorded pre-change (route 404, real build 67 pages, pinned real Pagefind run index 63, trunk 48c8ad3b), GREEN with the identical selector post-change (build exit 0 at 68 = RED+1, HTTP 200 over the real built preview with h1 + pinned sentence, index page_count 64 = RED+1, exactly 0 'streamdown.json' and 0 '@react-native-reusables/cli' in served HTML, matrix parity, every internal link served at 200, owned preview stopped on every exit path); static gates green (typecheck 0, scoped biome 0, fallow 0 new findings, both files health 100 A).",
+  "deviations": [
+    "The boundary contract's example phrasing 'no rnraielements.com/r/{engine}/streamdown.json exists' was rendered without the literal as prose at apps/docs/src/pages/components/streamdown.astro:57 ('The registry's per-item manifest endpoints list no streamdown entry') because AC-2 requires exactly 0 occurrences of the literal in served HTML — the two charter sentences are mutually unsatisfiable verbatim.",
+    "The 'dev-client verdict' is rendered as the site-wide Badge tone dev-client ('requires a dev client') at streamdown.astro:55, derived from the entry's membership in dev-client-matrix.json — the committed entry itself carries no verdict field.",
+    "The page carries no scoped <style> block, unlike the [item].astro pattern it follows — content styling rides global.css element selectors (h1/h2/h3/code/ul) to keep the new file under fallow's 60-line unit gate.",
+    "RED evidence omits internal link audits (meaningless on the 404 page); the link audit is GREEN-only and bound in green.json/run.json."
+  ],
+  "concerns": [
+    "The charter's preserved command `pnpm exec biome ci apps/docs/src/pages/components/streamdown.astro tests/...` dies with exit 254 ('abnormal termination') in shimmed agent shells — the working shapes are clean-env (`env -i PATH=... HOME=... pnpm exec biome ci ...`) or the direct binary ./node_modules/.bin/biome; the harness encodes the clean-env retry so its own gate is reproducible.",
+    "The pinned-sentence assertion is a substring check over entity-decoded served HTML — any future copy edit that drops or rewords the sentence fails GREEN by design, so the sentence must stay visible page content (currently the lead paragraph, streamdown.astro:39).",
+    "fallow's audit gate fails on any finding inside NEW files while grandfathering inherited ones ([item].astro's 253-line template passes only because it predates the gate) — streamdown.astro sits at 60 total LOC, so adding a scoped style block or wrapper chrome will re-trip the unit-size gate.",
+    "run.json's candidate_sha binds 48c8ad3b (this cycle's trunk), not the merge commit b72e18e261df — the evidence is candidate-scoped by design; a reviewer wanting post-merge observations should rerun the exact selector on main."
+  ],
+  "findings": [
+    "The strict-port preview shape in tests/harness/docs-preview.ts (strictPreviewCommand) works standalone from a plain tsx harness: spawn ['sh', '-c', command] detached, poll with fetch, then SIGTERM the process group — no Playwright webServer needed (tests/sprint-05-orient-search/streamdown-destination-proof.test.ts:229).",
+    "Astro's printed 'N page(s) built' line plus the summed page_count in apps/docs/dist/pagefind/pagefind-entry.json are the only count sources used; the build wipes dist/pagefind, so the pinned `pnpm dlx pagefind@1.5.2 --site apps/docs/dist` must always run after the build (re-confirmed ORI-AST-004's gate-order finding).",
+    "fallow health takes exactly one PATH argument (two paths exit with a usage error) and its unit-size/complexity thresholds only bite files that are new or changed — that asymmetry is why the 253-line [item].astro template coexists with a failing 64-line new template.",
+    "Global element styles in apps/docs/src/styles/global.css already cover h1/h2/h3/code/ul, so hand-authored docs pages need zero scoped CSS — the cheapest way to stay under fallow's unit budget."
+  ],
+  "scope_impact": [
+    {
+      "target": "ROADMAP",
+      "found": "Charter RUNTIME COMMANDS name `pnpm exec biome ci <files>` as the preserved gate, but that shape dies environmentally (exit 254) in shimmed agent shells while clean-env and direct-binary shapes pass.",
+      "change": "Future charters should name the clean-env invocation (env -i with explicit PATH/HOME) as the canonical biome shape, with pnpm-exec treated as best-effort, so reviewers don't read an environmental death as a gate failure."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "fallow's pre-commit audit gate fails every finding in NEW files (unit >60 lines, CRAP thresholds), which surfaced only at commit time in this task.",
+      "change": "Task contracts for new .astro pages and test harnesses should carry an explicit unit-size budget (decomposed functions, lean templates, global-styles pages) so authors don't discover the gate at commit time."
+    }
+  ],
+  "feedback": [
+    "The RED-then-GREEN evidence contract with exactly +1 invariants on both the build page count and the index page_count made the destination leg mechanically checkable and left the reviewer nothing to take on faith — worth keeping as the template for destination-landing tasks.",
+    "The charter's own forbidden literal ('streamdown.json') appeared in its own content prescription (boundary contract #1), forcing a same-session interpretation; charters should grep their content prescriptions against their forbidden-literal counts before publishing."
+  ]
+}
