@@ -48,6 +48,22 @@ const { title, variant = 'docs' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- TR-07: the primary Spline subsets preloaded same-origin (font-src
+         'self'); the latin-ext faces ride on demand through unicode-range. -->
+    <link
+      rel="preload"
+      href="/fonts/spline-sans-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/spline-sans-mono-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <ClientRouter />
     <script is:inline data-astro-rerun>
       (() => {

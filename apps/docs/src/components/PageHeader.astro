@@ -1,8 +1,12 @@
 ---
 /**
  * PageHeader (TR-07 R3) — the title block of an authored docs page: the single
- * page-title h1 and the one-line description. Semantic only: Astro owns the
- * markup, frontend-designer owns later visual treatment. No islands, no scripts.
+ * page-title h1 and the one-line description. Presentation (ORI-VIS-001): the
+ * editorial masthead of the reading surface — the title balances across at most
+ * the 70ch measure, the description rides muted below it, and a token hairline
+ * separates the masthead from the Prose body. Type scale stays locked to the
+ * TR-07 sheet (h1 2.25rem/1.2/600); only rhythm, measure and color apply here.
+ * No islands, no scripts.
  */
 interface Props {
   title: string;
@@ -13,19 +17,25 @@ const { title, description } = Astro.props;
 ---
 
 <header class="page-header">
-  <h1>{title}</h1>
+  <h1 class="page-header__title">{title}</h1>
   <p class="page-header__description">{description}</p>
 </header>
 
 <style>
   .page-header {
-    margin-block-end: 1.5rem;
+    max-width: var(--measure);
+    margin-block-end: 2rem;
+    padding-block-end: 1.5rem;
+    border-bottom: 1px solid var(--border);
   }
-  .page-header h1 {
+  .page-header__title {
     margin: 0;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
   .page-header__description {
-    margin: 0.25rem 0 0;
+    margin: 0.5rem 0 0;
     color: var(--muted-foreground);
+    text-wrap: pretty;
   }
 </style>

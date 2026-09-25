@@ -1,0 +1,516 @@
+
+Running 12 tests using 1 worker
+
+[1/12] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:175:1 › ORI-VIS-001-AC-1
+[2/12] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2
+  1) [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2 
+
+    Error: section navigation reaches /docs/theming
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "/docs/theming"
+    Received array: ["/docs/introduction", "/docs/installation", "/docs/quickstart", "/docs/cli", "/docs/dark-mode", "/docs/owns-vs-does-not-own"]
+
+      258 |     ROUTES.darkMode,
+      259 |   ]) {
+    > 260 |     expect.soft(navHrefs, `section navigation reaches ${destination}`).toContain(destination);
+          |                                                                        ^
+      261 |   }
+      262 |
+      263 |   // Follow the four named destinations through the real links.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:260:72
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for locator('nav[data-docs-nav] a[href="/docs/theming"]')
+
+
+      268 |     ROUTES.darkMode,
+      269 |   ]) {
+    > 270 |     await page.locator(`nav[data-docs-nav] a[href="${destination}"]`).click();
+          |                                                                       ^
+      271 |     await page.waitForURL(`**${destination}`);
+      272 |     await expect(page.locator('main h1')).toHaveText(H1_BY_ROUTE[destination]);
+      273 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:270:71
+
+    Error Context: test-results/sprint-05-orient-search-re-11bdf-esentation-ORI-VIS-001-AC-2-chromium-desktop/error-context.md
+
+
+[3/12] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:347:1 › ORI-VIS-001-AC-3
+[4/12] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4
+[chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4
+
+
+  2) [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4 
+
+    Error: body uses --font-sans
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      530 |     expect
+      531 |       .soft(typography.bodyFamily.startsWith("'Spline Sans Variable'"), 'body uses --font-sans')
+    > 532 |       .toBe(true);
+          |        ^
+      533 |     expect
+      534 |       .soft(
+      535 |         (typography.codeFamily ?? '').startsWith("'Spline Sans Mono Variable'"),
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:532:8
+
+    Error: code surfaces use --font-mono
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      536 |         'code surfaces use --font-mono',
+      537 |       )
+    > 538 |       .toBe(true);
+          |        ^
+      539 |     expect
+      540 |       .soft(typography.stylesheetLinks.length, 'the built stylesheet is linked')
+      541 |       .toBeGreaterThanOrEqual(1);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:538:8
+
+    Error: real font requests hit the wire during navigation
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    0
+
+      564 |   expect
+      565 |     .soft(observedFonts.length, 'real font requests hit the wire during navigation')
+    > 566 |     .toBeGreaterThanOrEqual(1);
+          |      ^
+      567 |   for (const [url, status] of observedFonts) {
+      568 |     expect.soft(status, `font response 200: ${url}`).toBe(200);
+      569 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:566:6
+
+    Error: stylesheet response 200: http://localhost:4321/_astro/Prose.C-aJ1a1h.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 304
+
+      572 |     .toBeGreaterThanOrEqual(1);
+      573 |   for (const [url, status] of observedStyles) {
+    > 574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+          |                                                            ^
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+      576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+      577 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:574:60
+
+    Error: stylesheet response is non-empty: http://localhost:4321/_astro/Prose.C-aJ1a1h.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+    > 576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+          |                                                                        ^
+      577 |   }
+      578 |
+      579 |   // Long content stays inside its own containers on the reading surfaces.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:576:72
+
+    Error: stylesheet response 200: http://localhost:4321/_astro/DocsLayout.Ceb9VkJr.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 304
+
+      572 |     .toBeGreaterThanOrEqual(1);
+      573 |   for (const [url, status] of observedStyles) {
+    > 574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+          |                                                            ^
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+      576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+      577 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:574:60
+
+    Error: stylesheet response is non-empty: http://localhost:4321/_astro/DocsLayout.Ceb9VkJr.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+    > 576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+          |                                                                        ^
+      577 |   }
+      578 |
+      579 |   // Long content stays inside its own containers on the reading surfaces.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:576:72
+
+    Error: stylesheet response 200: http://localhost:4321/_astro/docs-navigation.CMy9G28B.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 304
+
+      572 |     .toBeGreaterThanOrEqual(1);
+      573 |   for (const [url, status] of observedStyles) {
+    > 574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+          |                                                            ^
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+      576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+      577 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:574:60
+
+    Error: stylesheet response is non-empty: http://localhost:4321/_astro/docs-navigation.CMy9G28B.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+    > 576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+          |                                                                        ^
+      577 |   }
+      578 |
+      579 |   // Long content stays inside its own containers on the reading surfaces.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:576:72
+
+    Error: command surfaces preserve single lines (pre)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "pre"
+    Received: "pre-wrap"
+
+      610 |     expect
+      611 |       .soft(containment.commandWhiteSpace, 'command surfaces preserve single lines (pre)')
+    > 612 |       .toBe('pre');
+          |        ^
+      613 |     expect
+      614 |       .soft(containment.commandConfined, 'the long command stays inside its container')
+      615 |       .toBe(true);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:612:8
+
+    Error Context: test-results/sprint-05-orient-search-re-4bc94-esentation-ORI-VIS-001-AC-4-chromium-desktop/error-context.md
+
+
+[5/12] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:175:1 › ORI-VIS-001-AC-1
+[6/12] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2
+  3) [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2 
+
+    Error: section navigation reaches /docs/theming
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "/docs/theming"
+    Received array: ["/docs/introduction", "/docs/installation", "/docs/quickstart", "/docs/cli", "/docs/dark-mode", "/docs/owns-vs-does-not-own"]
+
+      258 |     ROUTES.darkMode,
+      259 |   ]) {
+    > 260 |     expect.soft(navHrefs, `section navigation reaches ${destination}`).toContain(destination);
+          |                                                                        ^
+      261 |   }
+      262 |
+      263 |   // Follow the four named destinations through the real links.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:260:72
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for locator('nav[data-docs-nav] a[href="/docs/theming"]')
+
+
+      268 |     ROUTES.darkMode,
+      269 |   ]) {
+    > 270 |     await page.locator(`nav[data-docs-nav] a[href="${destination}"]`).click();
+          |                                                                       ^
+      271 |     await page.waitForURL(`**${destination}`);
+      272 |     await expect(page.locator('main h1')).toHaveText(H1_BY_ROUTE[destination]);
+      273 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:270:71
+
+    Error Context: test-results/sprint-05-orient-search-re-11bdf-esentation-ORI-VIS-001-AC-2-chromium-mobile/error-context.md
+
+
+[7/12] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:347:1 › ORI-VIS-001-AC-3
+[8/12] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4
+  4) [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4 
+
+    Error: body uses --font-sans
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      530 |     expect
+      531 |       .soft(typography.bodyFamily.startsWith("'Spline Sans Variable'"), 'body uses --font-sans')
+    > 532 |       .toBe(true);
+          |        ^
+      533 |     expect
+      534 |       .soft(
+      535 |         (typography.codeFamily ?? '').startsWith("'Spline Sans Mono Variable'"),
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:532:8
+
+    Error: code surfaces use --font-mono
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      536 |         'code surfaces use --font-mono',
+      537 |       )
+    > 538 |       .toBe(true);
+          |        ^
+      539 |     expect
+      540 |       .soft(typography.stylesheetLinks.length, 'the built stylesheet is linked')
+      541 |       .toBeGreaterThanOrEqual(1);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:538:8
+
+    Error: real font requests hit the wire during navigation
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    0
+
+      564 |   expect
+      565 |     .soft(observedFonts.length, 'real font requests hit the wire during navigation')
+    > 566 |     .toBeGreaterThanOrEqual(1);
+          |      ^
+      567 |   for (const [url, status] of observedFonts) {
+      568 |     expect.soft(status, `font response 200: ${url}`).toBe(200);
+      569 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:566:6
+
+    Error: stylesheet response 200: http://localhost:4321/_astro/DocsLayout.Ceb9VkJr.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 304
+
+      572 |     .toBeGreaterThanOrEqual(1);
+      573 |   for (const [url, status] of observedStyles) {
+    > 574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+          |                                                            ^
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+      576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+      577 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:574:60
+
+    Error: stylesheet response is non-empty: http://localhost:4321/_astro/DocsLayout.Ceb9VkJr.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+    > 576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+          |                                                                        ^
+      577 |   }
+      578 |
+      579 |   // Long content stays inside its own containers on the reading surfaces.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:576:72
+
+    Error: stylesheet response 200: http://localhost:4321/_astro/Prose.C-aJ1a1h.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 304
+
+      572 |     .toBeGreaterThanOrEqual(1);
+      573 |   for (const [url, status] of observedStyles) {
+    > 574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+          |                                                            ^
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+      576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+      577 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:574:60
+
+    Error: stylesheet response is non-empty: http://localhost:4321/_astro/Prose.C-aJ1a1h.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+    > 576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+          |                                                                        ^
+      577 |   }
+      578 |
+      579 |   // Long content stays inside its own containers on the reading surfaces.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:576:72
+
+    Error: stylesheet response 200: http://localhost:4321/_astro/docs-navigation.CMy9G28B.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 304
+
+      572 |     .toBeGreaterThanOrEqual(1);
+      573 |   for (const [url, status] of observedStyles) {
+    > 574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+          |                                                            ^
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+      576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+      577 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:574:60
+
+    Error: stylesheet response is non-empty: http://localhost:4321/_astro/docs-navigation.CMy9G28B.css
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      574 |     expect.soft(status, `stylesheet response 200: ${url}`).toBe(200);
+      575 |     const bytes = assets.stylesheetBytes.get(url) ?? 0;
+    > 576 |     expect.soft(bytes > 0, `stylesheet response is non-empty: ${url}`).toBe(true);
+          |                                                                        ^
+      577 |   }
+      578 |
+      579 |   // Long content stays inside its own containers on the reading surfaces.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:576:72
+
+    Error: command surfaces preserve single lines (pre)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "pre"
+    Received: "pre-wrap"
+
+      610 |     expect
+      611 |       .soft(containment.commandWhiteSpace, 'command surfaces preserve single lines (pre)')
+    > 612 |       .toBe('pre');
+          |        ^
+      613 |     expect
+      614 |       .soft(containment.commandConfined, 'the long command stays inside its container')
+      615 |       .toBe(true);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:612:8
+
+    Error Context: test-results/sprint-05-orient-search-re-4bc94-esentation-ORI-VIS-001-AC-4-chromium-mobile/error-context.md
+
+
+[9/12] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:175:1 › ORI-VIS-001-AC-1
+[10/12] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2
+  5) [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2 
+
+    Error: section navigation reaches /docs/theming
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "/docs/theming"
+    Received array: ["/docs/introduction", "/docs/installation", "/docs/quickstart", "/docs/cli", "/docs/dark-mode", "/docs/owns-vs-does-not-own"]
+
+      258 |     ROUTES.darkMode,
+      259 |   ]) {
+    > 260 |     expect.soft(navHrefs, `section navigation reaches ${destination}`).toContain(destination);
+          |                                                                        ^
+      261 |   }
+      262 |
+      263 |   // Follow the four named destinations through the real links.
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:260:72
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for locator('nav[data-docs-nav] a[href="/docs/theming"]')
+
+
+      268 |     ROUTES.darkMode,
+      269 |   ]) {
+    > 270 |     await page.locator(`nav[data-docs-nav] a[href="${destination}"]`).click();
+          |                                                                       ^
+      271 |     await page.waitForURL(`**${destination}`);
+      272 |     await expect(page.locator('main h1')).toHaveText(H1_BY_ROUTE[destination]);
+      273 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:270:71
+
+    Error Context: test-results/sprint-05-orient-search-re-11bdf-esentation-ORI-VIS-001-AC-2-chromium-nojs/error-context.md
+
+
+[11/12] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:347:1 › ORI-VIS-001-AC-3
+  6) [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:347:1 › ORI-VIS-001-AC-3 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[role="tabpanel"][data-engine="nativewind"]')
+    Expected: visible
+    Error: strict mode violation: locator('[role="tabpanel"][data-engine="nativewind"]') resolved to 2 elements:
+        1) <div tabindex="0" role="tabpanel" class="tab-group__panel" data-engine="nativewind" data-astro-cid-teel6a2y="" id="g-50ba2d803be9-panel-nativewind" aria-labelledby="g-50ba2d803be9-tab-nativewind">…</div> aka getByRole('region', { name: 'Install' }).getByLabel('nativewind', { exact: true })
+        2) <div tabindex="0" role="tabpanel" class="tab-group__panel" data-engine="nativewind" data-astro-cid-teel6a2y="" id="g-bbad47517d07-panel-nativewind" aria-labelledby="g-bbad47517d07-tab-nativewind">…</div> aka getByRole('region', { name: 'Dependencies' }).getByLabel('nativewind', { exact: true })
+
+    Call log:
+      - Expect "toBeVisible" locator('[role="tabpanel"][data-engine="nativewind"]') with timeout 5000ms
+      - waiting for locator('[role="tabpanel"][data-engine="nativewind"]')
+
+
+      467 |       await expect(
+      468 |         page.locator('[role="tabpanel"][data-engine="nativewind"]'),
+    > 469 |       ).toBeVisible();
+          |         ^
+      470 |       await expect(page.locator('[role="tabpanel"][data-engine="uniwind"]')).toBeVisible();
+      471 |       expect
+      472 |         .soft(messageHtml.includes('nativewind engine'), 'message page labels both panels')
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:469:9
+
+    Error Context: test-results/sprint-05-orient-search-re-5ba4e-esentation-ORI-VIS-001-AC-3-chromium-nojs/error-context.md
+
+
+[12/12] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4
+  7) [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4 
+
+    Error: real font requests hit the wire during navigation
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    0
+
+      564 |   expect
+      565 |     .soft(observedFonts.length, 'real font requests hit the wire during navigation')
+    > 566 |     .toBeGreaterThanOrEqual(1);
+          |      ^
+      567 |   for (const [url, status] of observedFonts) {
+      568 |     expect.soft(status, `font response 200: ${url}`).toBe(200);
+      569 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-001/tests/sprint-05-orient-search/reading-presentation.spec.ts:566:6
+
+    Error Context: test-results/sprint-05-orient-search-re-4bc94-esentation-ORI-VIS-001-AC-4-chromium-nojs/error-context.md
+
+
+  7 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2 
+    [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4 
+    [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2 
+    [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4 
+    [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:241:1 › ORI-VIS-001-AC-2 
+    [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:347:1 › ORI-VIS-001-AC-3 
+    [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:490:1 › ORI-VIS-001-AC-4 
+  5 passed (1.6m)

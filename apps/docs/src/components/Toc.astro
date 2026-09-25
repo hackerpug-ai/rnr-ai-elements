@@ -1,9 +1,12 @@
 ---
 /**
- * Toc (TR-07 R8) — the on-this-page rail: source-derived heading anchors with
- * zero-JS `:target` highlight. Receives real depth/slug/text records from the
- * markdown renderer's heading extraction (h2/h3 only) and emits ordinary
- * fragment links; a heading link resolves to exactly one heading on the page.
+ * Toc (TR-07 R8, ORI-VIS-001) — the on-this-page rail. One Astro-owned
+ * <details> control: open and togglable with zero scripts, a bordered block
+ * below xl, and the always-open rail on the sticky 14rem column at >=xl where
+ * the marker hides and the title becomes the rail caption. The list carries
+ * its own vertical scroller so a long outline never stretches the page.
+ * Heading anchors resolve to exactly one heading on the page and highlight
+ * through the browser's native :target — no script observes scroll.
  */
 interface Heading {
   depth: number;
@@ -23,32 +26,70 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
 
 {
   tocHeadings.length > 0 && (
-    <nav class="toc" aria-label="On this page">
-      <h2 class="toc__title">On this page</h2>
-      <ul class="toc__list">
-        {tocHeadings.map((heading) => (
-          <li class={`toc__item toc__item--depth-${heading.depth}`}>
-            <a href={`#${heading.slug}`}>{heading.text}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <details class="toc" open>
+      <summary class="toc__summary">
+        <span class="toc__title">On this page</span>
+        <span class="toc__marker" aria-hidden="true" />
+      </summary>
+      <nav class="toc__nav" aria-label="On this page">
+        <ul class="toc__list">
+          {tocHeadings.map((heading) => (
+            <li class={`toc__item toc__item--depth-${heading.depth}`}>
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
   )
 }
 
 <style>
+  .toc__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.5rem;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .toc__summary::-webkit-details-marker {
+    display: none;
+  }
   .toc__title {
     font-size: 0.875rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--muted-foreground);
-    margin: 0 0 0.5rem;
+  }
+  /* The zero-JS affordance: a token-ink chevron drawn with borders, rotated
+     by the details element's own open state. */
+  .toc__marker {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid var(--muted-foreground);
+    border-bottom: 2px solid var(--muted-foreground);
+    transform: rotate(45deg);
+    transition: transform 120ms ease;
+  }
+  .toc[open] .toc__marker {
+    transform: rotate(225deg);
+  }
+
+  /* Below xl the rail is a quiet bordered block above the article flow. */
+  .toc {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--card);
   }
   .toc__list {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0.5rem 0.5rem;
   }
   .toc__item a {
     display: inline-flex;
@@ -70,5 +111,32 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
   /* Zero-JS destination highlight: the browser applies :target natively. */
   .toc__item a:target {
     color: var(--foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toc__marker {
+      transition: none;
+    }
+  }
+
+  /* >=xl: the rail. The block chrome dissolves into the sticky column and the
+     outline scrolls inside its own container so a long page never stretches
+     the grid row. The summary stays a live, zero-JS toggle at every width —
+     the chevron keeps its affordance, so a collapsed rail can always reopen. */
+  @media (min-width: 80rem) {
+    .toc {
+      border: none;
+      background: none;
+    }
+    .toc__summary {
+      min-height: 0;
+      padding-inline: 0.25rem;
+    }
+    .toc__list {
+      padding: 0 0.25rem;
+      max-height: calc(100dvh - var(--layout-header-h) - 4rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
   }
 </style>
