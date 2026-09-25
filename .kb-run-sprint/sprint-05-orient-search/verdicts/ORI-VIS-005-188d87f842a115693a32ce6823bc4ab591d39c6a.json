@@ -1,0 +1,45 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "188d87f842a115693a32ce6823bc4ab591d39c6a",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Reviewer fresh chain (build + exact matrix): ac-1 passed 3/3 projects. Two run-bound absent URLs served HTTP 404 with the manuscript title/explanation/hint byte-pinned (recovery-presentation.spec.ts:424-426), explanation rendered exactly ONCE (getByText count===1, line 432-435 — this oracle failed 3/3 in RED with 'observed 2', confirmed in .tmp/ORI-VIS-005/cycle-1/red/matrix.log), R5 action row carries exactly 3 CTAs with the primary outside the callout (lines 440-449), single-column geometry via expectSingleColumn, and both ordinary links navigate to real HTTP 200 /components and /registry with content oracles (family-grid>=5, ledger>200 chars containing 'nativewind').",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Fresh run 3/3. JS projects: the revealed recovery trigger opens exactly 1 dialog[aria-modal=true][open] with focused input, real Pagefind query settled through the production island, keyboard-activated renderMarkdown result navigates to /docs/owns-vs-does-not-own (HTTP 200, h1 'What the library owns', contains renderMarkdown). chromium-nojs: recovery + header search triggers toBeHidden (0 dead controls), dialog count 0, ordinary Components link reaches 200. The __rnrSearchReady/__rnrSearchSettledQueries globals pre-exist from ORI-AST-004 (search-dialog.ts:139, commit feab34bd) — no test hooks were added to product code by this task (diff touches only 404.astro + spec + evidence).",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Fresh run 3/3. The actual 404 response HTML is asserted to contain title, explanation, hint, href=/components and href=/registry (spec lines 597-602); chromium-nojs project plus explicitly javaScriptEnabled:false contexts on desktop/mobile both exercise the fixture's seeding options; nojs-links.png captured at the exact allowed path from the chromium-nojs project; both ordinary links navigate without JavaScript to their named 200 destinations with heading oracles.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Fresh run 3/3. Themes flipped through the REAL ThemeToggle control only, with the toggle-away-and-back dance so the rnr-theme storage witness is always earned by clicks (setTheme, lines 331-349); columnTracks===1, scrollWidth<=clientWidth+1, actionsFullyInside geometry recorded; focus rings read WHILE each action holds keyboard focus via real Tab presses and asserted 2px/solid/2px in the live-resolved --ring color (green captures record the observed values); unknown-path-light.png and unknown-path-dark.png at exact allowed paths from chromium-desktop; nojs fallback readable in one column.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-5",
+      "satisfied": true,
+      "evidence": "Designed failing prerequisite, honestly recorded — the task file's own words sanction exactly this shape: the public_recovery fixture states 'An unavailable origin, mismatched candidate or missing identity is a failed prerequisite; no captured local image or skipped test replaces public observation'; agent-instruction step 4 and the execution prerequisites both frame the public observation as a read-only deployment-owner handoff; and SPRINT.md assigns ORI-PUBLIC-RECOVERY to ORI-DEP-002 (task file line 440: 'Final public fresh-install verification and ORI-PUBLIC-RECOVERY after promotion'), which runs after this task. The check is fully authored and REAL: direct Playwright navigation to https://rnraielements.com/ori-vis-005-missing-<run-id>, captures public-unknown-path.png from that public session BEFORE the verdict, records TLS 1.3, servedStatus 404, servedHtmlSha256 e3b0c442...b855 (the SHA-256 of the empty string — cryptographically consistent with the zero-byte stale DEP-001-era body), then throws loudly. Reviewer independently reproduced: curl shows status=404 bytes=0 (with /components and /registry at 200), and my own full matrix run reproduced 3/3 ac-5 failures with the identical PUBLIC PREREQUISITE message — a truthful public observation, not an infra error. The check passes without modification once ORI-DEP-002/003 publish this candidate.",
+      "fix_location": "amend_requirement: AC-5's public pass is owned by ORI-DEP-002/003 because the task charter (fixture, agent instructions, execution prerequisites) and SPRINT.md line 440 assign public recovery verification to the deployment tasks, and writeProhibited bars this task from touching deployment."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Presentation-only composition exactly as chartered: 404.astro's diff removes the duplicated explanation paragraph (forced by ORI-AST-009's byte-pin of .page-header__description — not-found-search-recovery.spec.ts:152-156 — which makes the base page's separate Prose block a strict duplicate) and moves the Search CTA from the R4 Callout link slot into the R5 action row as the primary beside the two outline links, matching the locked TR-07 region table ('Primary focuses SearchDialog trigger; secondary = plain links'). AST-009's mechanics are untouched — the trigger script, [hidden] enforcement and manuscript parsing are byte-identical base-to-tip. Reviewer ran the full fresh chain: docs build (0 errors), the exact 3-project matrix (12 passed / 3 failed, the 3 being ac-5's designed PUBLIC PREREQUISITE failure which I independently reproduced via curl — the live origin serves 404 with a zero-byte stale body), pnpm typecheck exit 0, scoped biome exit 0. All four canonical captures exist at exact allowed paths with run-bound manifests; the public capture truthfully documents the stale deployment (empty-string body hash). No stubs, skips, fulfills or test-only hooks found. Two notes for the orchestrator: (1) the AST-009 spec's 2 failures on this candidate are verified PRE-EXISTING — not-found-search-recovery.spec.ts:79 uses '[data-search-slot] button' which multi-matches after ORI-VIS-003's merge added data-search-close inside that slot (SearchDialog.astro:55, present in base 6a1ca11e); the fix belongs to that spec's owner and is outside this task's allowlist; (2) my replay regenerated the canonical evidence files in the worktree (now dirty, bound to my run IDs) — re-commit or reset them when landing. AC-5 turns green without code change once ORI-DEP-002/003 publish this candidate."
+}

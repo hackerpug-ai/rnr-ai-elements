@@ -17273,6 +17273,11 @@
         "state": "landed",
         "task": "FIX-ORI-VIS-001-1"
       },
+      "37a75f9b286b1fad4b71bbb63ebec766564916767d9f77845bbdc63c784ed2a2": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-VIS-005"
+      },
       "3be2b86ddf3d2c464a3bae1f80e801705682d402ca58b85e765aa09ae6f9f3de": {
         "kind": "complete-task",
         "state": "landed",
@@ -23913,8 +23918,21 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004"
     },
     "ORI-VIS-005": {
+      "approved_sha": "188d87f842a115693a32ce6823bc4ab591d39c6a",
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-VIS-005",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "188d87f842a115693a32ce6823bc4ab591d39c6a",
+        "before_head": "d8943b01d6a133876b3ad0bc8fe8f6e35182dc04",
+        "desired_sha256": "96b38c66f60e5177d5b08e52b2fd55efe9a2f95f0b8e8b293137b203ad77cea9",
+        "expected_task_sha256": "54fd1ecc65bba4cd08c56963d308ea9a960588a094eb1ce91afda907a1011ed4",
+        "handoff_sha256": "569b22504429c90010221a0253e9752fcfc482229b4af36f4fe37b5361addbe7",
+        "landed_on": "main",
+        "landed_trunk_sha": "cc0aab642b87e3735e813309a825c664b6cc6f9d",
+        "metadata_commit_sha": "cc0aab642b87e3735e813309a825c664b6cc6f9d",
+        "operation_id": "37a75f9b286b1fad4b71bbb63ebec766564916767d9f77845bbdc63c784ed2a2",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-005-compose-the-branded-missing-page-search-recovery-surface.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-VIS-001",
@@ -23922,6 +23940,83 @@
         "ORI-AST-009"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-005-compose-the-branded-missing-page-search-recovery-surface.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-VIS-005-188d87f842a115693a32ce6823bc4ab591d39c6a.json",
+        "payload": {
+          "commit_sha": "188d87f842a115693a32ce6823bc4ab591d39c6a",
+          "concerns": [
+            "ORI-AST-009's not-found-search-recovery.spec.ts is broken on current main independent of this task: 2/13 fail (chromium-desktop and chromium-mobile, locked 8-step sequence and AC-3) with a strict-mode violation because '[data-search-slot] button' resolves to both the header trigger and the dialog's close button; any FLOW-SHELL-16 gate replay stays red until a FIX task lands the one-line selector pin.",
+            "The committed matrix exits 1 by design until the deployment owner publishes the reviewed candidate: ac-5 fails as an unmet public prerequisite on all three projects, so pipelines that run the whole spec file will see those three failures (public-unknown-path.png on main truthfully documents the empty-body public 404, not the branded surface).",
+            "evidence/recovery/runs/ accumulates one directory per playback (eight committed at landing); nothing prunes old runs, so the evidence tree grows with every matrix replay.",
+            "Port 4321 arbitration between active sibling worktrees remains a live race: leaked astro previews are PPID-1 orphans indistinguishable from an in-flight run's webServer without checking for active playwright processes first, and my cycle both killed a genuine leak and mistakenly killed one server under an active sibling run (no work was lost; the sibling's gates had already passed)."
+          ],
+          "deviations": [
+            "The R3 Prose region carries no element in the final composition: ORI-AST-009's landed spec pins the explanation byte-equal to .page-header__description (R2) and the hint to .callout__title (R4), no fourth approved manuscript block exists, and authoring copy is write-prohibited — so the duplicated Prose paragraph was the presentation defect and was removed rather than filled (apps/docs/src/pages/404.astro:59).",
+            "The primary Search-the-site CTA moved out of the Callout link slot into the .not-found__links action row as the first child, matching the locked region table's 'R5 Recovery CTAs' row; the task prose never pinned its location and ORI-AST-009's assertions on [data-recovery-search] are location-independent (verified by regression run).",
+            "Canonical screenshot authorship is deterministic because the matrix serializes with workers:1 but would overwrite across projects: unknown-path-light.png, unknown-path-dark.png and public-unknown-path.png are written by chromium-desktop and nojs-links.png by chromium-nojs, while chromium-mobile records run-bound captures under evidence/recovery/runs/<runId>/ bound in manifest.json (tests/sprint-05-orient-search/recovery-presentation.spec.ts:676).",
+            "On JavaScript-disabled projects the '0 exposed or focusable dead recovery search controls' oracle is realized as toBeHidden on the recovery and header search triggers, since a display:none element cannot receive keyboard focus (tests/sprint-05-orient-search/recovery-presentation.spec.ts:447).",
+            "setTheme toggles away-and-back before flipping when a fresh context already sits in the target theme without a stored rnr-theme value, so the localStorage retention witness is always earned by real control clicks rather than the pre-paint default (tests/sprint-05-orient-search/recovery-presentation.spec.ts:328)."
+          ],
+          "done": "The branded missing-page recovery surface landed at 188d87f8 (merged to main as d8943b01): apps/docs/src/pages/404.astro now renders the approved explanation exactly once (PageHeader masthead, honoring ORI-AST-009's byte-equal .page-header__description pin — the pre-fix page rendered it twice), R4 Callout carries the hint alone, and R5 is one action row composing the primary Search-the-site CTA beside the Components/Registry outline links per the not-found region table, with the hidden-until-defined trigger, reveal script and [hidden] enforcement unchanged; tests/sprint-05-orient-search/recovery-presentation.spec.ts implements the five exact AC tokens (ac-1..ac-5) across chromium-desktop/mobile/nojs against the built dist and real Pagefind index; RED observed ac-1 failing on all three projects on the duplicate-explanation oracle, GREEN passed ac-1..ac-4 12/12 (focus rings measured 2px/solid/2px-offset in the live-resolved --ring, single-column geometry at both viewports, real theme-control light/dark, no-JS server-HTML recovery, search recovery to /docs/owns-vs-does-not-own), and ac-5 fails as a designed PUBLIC PREREQUISITE (rnraielements.com serves unknown paths as HTTP 404 with a 0-byte body — stale DEP-001-era candidate); the four canonical screenshots, manifest with bound run/candidate identity, red/green observations and per-run captures landed under tests/sprint-05-orient-search/evidence/recovery/ with cycle records under .tmp/ORI-VIS-005/cycle-1/; static gates passed (pnpm typecheck exit 0, biome ci scoped exit 0 via direct binary).",
+          "feedback": [
+            "The ac-5 pattern — run the probe for real, capture the actual public state, then fail loudly as an unmet prerequisite with the owner named — kept the deployment dependency honest without a skip or a fake pass; it should be the standing template for deployment-dependent ACs.",
+            "Tasks whose predecessors pin exact DOM oracles (byte-equal text, region classes) should surface those pins in the dependency handoff's consumable form; I had to read ORI-AST-009's full spec to learn the explanation was already pinned to .page-header__description, which decided the whole composition.",
+            "Sibling-worktree preview arbitration needs a real protocol (per-worktree preview port or a lease file beside the strict-port guard); distinguishing a leaked PPID-1 preview from an in-flight run's webServer required manual ps inspection twice this cycle and one mistaken kill."
+          ],
+          "findings": [
+            "The pre-fix 404 rendered the approved explanation twice in the emitted dist (verified: 2 occurrences in dist/404.html) because ORI-AST-009's spec pinned .page-header__description byte-equal but never asserted the manuscript text renders exactly once — presentation specs should assert copy uniqueness, not just presence.",
+            "ORI-VIS-003's merge 90cbe643 added data-search-close inside the [data-search-slot] mount (SearchDialog.astro:55), silently breaking ORI-AST-009's '[data-search-slot] button' selector while search-presentation.spec.ts's own 'button.search-dialog__trigger' pin stayed safe — cross-task selectors must target the element's own class, not a descendant-of-container shape.",
+            "A fresh browser context starts in the pre-paint default theme with localStorage rnr-theme unset, so a theme-persistence witness that only checks the class when already flipped polls null forever; the control must be made to write storage by real clicks.",
+            "Single-column geometry oracles must compare sibling regions to each other, not children against the container's border box: main.not-found's 1.5rem padding offsets every child by 24px and fails a 2px tolerance against the container's own x.",
+            "This repo's Playwright typings expose neither Locator.allBoundingBoxes nor expect.fail — use an nth(i).boundingBox() loop (protocol-level, works with JavaScript disabled) and a thrown Error for prerequisite failures."
+          ],
+          "scope_impact": [
+            {
+              "change": "Dispatch a one-line FIX to not-found-search-recovery.spec.ts pinning HEADER_SEARCH_TRIGGER to '[data-search-slot] button.search-dialog__trigger' (the form search-presentation.spec.ts already uses) before the next flow-gate replay.",
+              "found": "The locked flow's spec fails 2/13 on desktop and mobile from the pre-existing '[data-search-slot] button' strict-mode violation introduced by the ORI-VIS-003 merge (90cbe643), not from this task's diff.",
+              "target": "GATE:FLOW-SHELL-16-not-found-search-recovery"
+            },
+            {
+              "change": "After publishing the sprint-05 candidate, rerun ORI-VIS-005's exact matrix — ac-5 flips from prerequisite-failed to green and regenerates public-unknown-path.png from the matching candidate; the manifest already binds run and candidate identity for that replay.",
+              "found": "The public origin serves unknown paths as HTTP 404 with a 0-byte body (sha256 of the empty string bound in evidence/recovery/manifest.json) while /components and /registry already return 200, so ORI-VIS-005-ac-5's public evidence is structurally unavailable until publishing.",
+              "target": "ORI-DEP-002"
+            },
+            {
+              "change": "When authoring the journey, target the header trigger by its own class ('[data-search-slot] button.search-dialog__trigger') rather than the container descendant form that already broke ORI-AST-009's spec.",
+              "found": "The shared journey spec tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts does not exist yet, and the header search trigger now has two descendant buttons under [data-search-slot].",
+              "target": "ORI-AST-010"
+            },
+            {
+              "change": "Cross-check region-table sketch copy against the approved-copy set at plan time (same class of plan-vs-reality mismatch as the sprint-04 five-section DOM ruling); either the content owner authors a fourth block or the region is dropped from the composition contract as this task did.",
+              "found": "The task plan prescribed composing an R3 Prose region with recovery prose, but the approved manuscript carries only three blocks and ORI-AST-009's landed assertions pin all of them to R2/R4, leaving R3 with no honest content.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-VIS-005"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-vis-005-impl@session-a251722f",
+          "response_id": "digest:569b22504429c90010221a0253e9752fcfc482229b4af36f4fe37b5361addbe7",
+          "response_receipt": {
+            "agent": "frontend-designer",
+            "dispatch_handle": "ori-vis-005-impl@session-a251722f",
+            "payload_sha256": "569b22504429c90010221a0253e9752fcfc482229b4af36f4fe37b5361addbe7",
+            "response_id": "digest:569b22504429c90010221a0253e9752fcfc482229b4af36f4fe37b5361addbe7",
+            "session_id": "ori-vis-005-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-VIS-005-188d87f842a115693a32ce6823bc4ab591d39c6a-4e505591998d20c91c52be151b7e83b7067b46cb90e406eae052eb3a6e7c12f9.response.json",
+          "response_receipt_sha256": "4e505591998d20c91c52be151b7e83b7067b46cb90e406eae052eb3a6e7c12f9",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-vis-005-impl@session-a251722f"
+        },
+        "sha256": "569b22504429c90010221a0253e9752fcfc482229b4af36f4fe37b5361addbe7"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:569b22504429c90010221a0253e9752fcfc482229b4af36f4fe37b5361addbe7",
+        "status": "received"
+      },
       "implementer": "frontend-designer",
       "implementer_session": {
         "dispatch_handle": "ori-vis-005-impl@session-a251722f",
@@ -23937,11 +24032,30 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-005-compose-the-branded-missing-page-search-recovery-surface.md",
         "task_sha256": "54fd1ecc65bba4cd08c56963d308ea9a960588a094eb1ce91afda907a1011ed4"
       },
+      "landing": {
+        "approved_sha": "188d87f842a115693a32ce6823bc4ab591d39c6a",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "d8943b01d6a133876b3ad0bc8fe8f6e35182dc04",
+        "review_receipt": {
+          "agent": "astro-reviewer",
+          "dispatch_handle": "ori-vis-005-rev@session-a251722f",
+          "payload_sha256": "fa5bf645083bdf126b63777f14591871fe6b59bfd287f6a94602d1ab73ce7275",
+          "response_id": "digest:fa5bf645083bdf126b63777f14591871fe6b59bfd287f6a94602d1ab73ce7275",
+          "session_id": "ori-vis-005-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "b7347e5b8e16a1b6e5a0a049f7b25a0f37781ca1a9e434877d79d6a3d3292042",
+        "reviewer": "astro-reviewer",
+        "reviewer_dispatch_handle": "ori-vis-005-rev@session-a251722f",
+        "reviewer_response_id": "digest:fa5bf645083bdf126b63777f14591871fe6b59bfd287f6a94602d1ab73ce7275",
+        "reviewer_session": "ori-vis-005-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "fa5bf645083bdf126b63777f14591871fe6b59bfd287f6a94602d1ab73ce7275"
+      },
       "last_findings": null,
-      "merge_sha": null,
+      "merge_sha": "d8943b01d6a133876b3ad0bc8fe8f6e35182dc04",
       "points": 2,
       "reviewer": "frontend-designer",
-      "status": "in_progress",
+      "status": "completed",
       "wave": 14,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005"
     }
