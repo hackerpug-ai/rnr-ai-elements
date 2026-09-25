@@ -17258,6 +17258,11 @@
         "state": "landed",
         "task": "FIX-ORI-RN-004-1"
       },
+      "29977b6dc3d65a5170402f61f774080bdc3fb3f181749a4a6a738f86db1f79c8": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-VIS-002"
+      },
       "2d29059fe8f62e970e4bd7c4758ec5eb337737fc6e73fa4ed53ad72c700601b2": {
         "kind": "complete-task",
         "state": "landed",
@@ -23594,6 +23599,18 @@
       "approved_sha": "3dbf6818c177e4b1cad0b687f150baec50d729ab",
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-VIS-002",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "3dbf6818c177e4b1cad0b687f150baec50d729ab",
+        "before_head": "ee4a1844f98924e150ff371e8bdf70ac21ac4bf8",
+        "desired_sha256": "95d31beb76e2cb600a536be9dc3d6535985af55bddb494ace209e334132498ae",
+        "expected_task_sha256": "37e2af6e13e8190998759dad95b108f091ea2f56d76d19dc792c8a7df35f6d04",
+        "handoff_sha256": "979c0a80def3ddc66e7c14b571535682debb4eeee7a60138ef0dc9300692ab1e",
+        "landed_on": "main",
+        "landed_trunk_sha": "773c3628be220a8f88e7707ade3d66e41c0dd9cb",
+        "metadata_commit_sha": "773c3628be220a8f88e7707ade3d66e41c0dd9cb",
+        "operation_id": "29977b6dc3d65a5170402f61f774080bdc3fb3f181749a4a6a738f86db1f79c8",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-002-present-paired-token-values-and-the-live-theme-demonstration.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-VIS-001",
@@ -23601,9 +23618,75 @@
         "ORI-AST-007"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-002-present-paired-token-values-and-the-live-theme-demonstration.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-VIS-002-3dbf6818c177e4b1cad0b687f150baec50d729ab.json",
+        "payload": {
+          "commit_sha": "3dbf6818c177e4b1cad0b687f150baec50d729ab",
+          "concerns": [
+            "The EC frame surfaces are shiki palette values (github-light #fff, github-dark #24292e), close to but not exactly the documented --code-background/--code-foreground oklch pair; AC-3 is satisfied as theme-following plus the documented live values, but exact visual equality needs an edit to global.css or astro.config.mjs, neither owned by any sprint-05 task.",
+            "biome ci reports pre-existing findings in the landed, untouched tests/sprint-05-orient-search/authored-snippet-gate.test.ts under the current biome version; my touched files are clean, and fixing that file would exceed this task's allowlist.",
+            "Port 4321 is contended by sibling worktree preview servers; two run attempts aborted on the strict-port guard and one manual probe session accidentally observed a sibling's stale dist — all committed evidence comes from runs where the guard passed on this task's own dist."
+          ],
+          "deviations": [
+            "CodeBlock.astro was inside the write allowlist but was not modified: it already rides var(--code-background)/var(--code-foreground) and is not rendered on /docs/theming, whose code surface is the Expressive Code block.",
+            "TDD_MODE was skipped per the task file, but red/green phase captures were still produced under .tmp/ORI-VIS-002/cycle-1/ — the red run shows mobile AC-4 failing against the trunk card layout, proving the new assertions are not vacuous."
+          ],
+          "done": "TokenTable now composes ORI-AST-007's DataTable rich-cell slot (apps/docs/src/components/TokenTable.astro:39) instead of duplicating table chrome, so one implementation owns the scroll wrapper, zebra bands, sticky header, and the mobile pinned identifying column (replacing AST-003's interim stacked-card media query); DataTable gained two additive passthroughs, wrapperClass and tableAttrs (apps/docs/src/components/DataTable.astro:41-48), so the established observation hooks (.token-table__scroll, [data-token-table], the per-cell data-* attributes) resolve to the same elements and every landed spec stayed green. The no-JS live-value cells carry an honest em-dash placeholder that the theme-toggle island overwrites. tests/sprint-05-orient-search/token-presentation.spec.ts registers AC-1..AC-4 across chromium-desktop, chromium-mobile, and chromium-nojs — real header-toggle interaction cases in the enabled projects, static-fallback assertions in no-JS — with committed evidence (theming-light/dark/mobile/nojs PNGs and an identity-bound computed-values.json) under tests/sprint-05-orient-search/evidence/tokens/. Gates: docs build PASS, typecheck PASS, biome clean on touched files, aggregate 12/12; regressions reading-presentation 12/12, theme-toggle flow 6/6, registry-ledger 12/12. Merged to main as 7ff73b83412e.",
+          "feedback": [
+            "Producing a red run despite RED_GREEN_REQUIRED:no was cheap (~10s) and caught a real oracle bug before it could launder a false failure — worth keeping the practice for presentation tasks whose predecessors already landed most of the machinery."
+          ],
+          "findings": [
+            "Rerunning landed presentation specs rewrites their committed evidence: reading-presentation.spec.ts appends to evidence/reading/assertions.json and overwrites .tmp/ORI-VIS-001 captures plus evidence/FLOW-GEND-07-registry-ledger-controls/run.json — regression runs must git-restore those paths afterward or they ship as noise.",
+            "Playwright's locator.boundingBox() returns {x,y,width,height} with no right property; Math.round(undefined) is NaN and NaN <= n silently fails soft assertions — compute x + width instead (fixed at tests/sprint-05-orient-search/token-presentation.spec.ts:587).",
+            "The no-JS page-wide overflow check cannot use evaluate (hangs with JavaScript disabled, the ORI-CONT-005 finding), so the no-JS branch asserts box-based containment via boundingBox while the JS-enabled projects assert the exact 0px scrollWidth (tests/sprint-05-orient-search/token-presentation.spec.ts:575-597).",
+            "Before probing localhost:4321 by hand, check the listener's cwd via lsof -p <pid> — sibling worktree servers are visually identical but serve their own dist."
+          ],
+          "scope_impact": [
+            {
+              "change": "No change required — build on the rich-cell slot rather than new table markup, and reuse the passthroughs instead of adding per-caller wrapper elements.",
+              "found": "DataTable now accepts wrapperClass and tableAttrs passthroughs, additive and behavior-identical when unset; composed tables inherit the mobile scroll-plus-pinned-column presentation.",
+              "target": "ORI-VIS-004"
+            },
+            {
+              "change": "If FLOW-DOCS-01 gains mobile theming assertions, target the .token-table__scroll container geometry, not a card structure.",
+              "found": "The theming page's mobile token table changed from stacked cards to in-container horizontal scrolling with the Token column pinned; no landed assertion referenced the card layout.",
+              "target": "ORI-CONT-004"
+            },
+            {
+              "change": "Account for the strict-port serialization when batching the e2e lane with sibling lanes.",
+              "found": "token-presentation.spec.ts runs 4 tests x 3 projects in ~10s on the built dist and needs port 4321 exclusively while running.",
+              "target": "ORI-CI-004"
+            },
+            {
+              "change": "If exact alignment is ever wanted, assign a global.css/astro.config.mjs owner to map EC surfaces onto var(--code-background)/var(--code-foreground); no sprint-05 task holds those files.",
+              "found": "EC frame colors and the documented code tokens are two sources of truth that nearly agree.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-VIS-002"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-vis-002-impl@session-a251722f",
+          "response_id": "digest:979c0a80def3ddc66e7c14b571535682debb4eeee7a60138ef0dc9300692ab1e",
+          "response_receipt": {
+            "agent": "frontend-designer",
+            "dispatch_handle": "ori-vis-002-impl@session-a251722f",
+            "payload_sha256": "979c0a80def3ddc66e7c14b571535682debb4eeee7a60138ef0dc9300692ab1e",
+            "response_id": "digest:979c0a80def3ddc66e7c14b571535682debb4eeee7a60138ef0dc9300692ab1e",
+            "session_id": "ori-vis-002-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-VIS-002-3dbf6818c177e4b1cad0b687f150baec50d729ab-10bd76e72ca07a2c94a0619ce52614b9d2e068e86021a5c190d883bafb6cb6e6.response.json",
+          "response_receipt_sha256": "10bd76e72ca07a2c94a0619ce52614b9d2e068e86021a5c190d883bafb6cb6e6",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-vis-002-impl@session-a251722f"
+        },
+        "sha256": "979c0a80def3ddc66e7c14b571535682debb4eeee7a60138ef0dc9300692ab1e"
+      },
       "handoff_delivery": {
-        "session_id": "ori-vis-002-impl@session-a251722f",
-        "status": "pending"
+        "response_id": "digest:979c0a80def3ddc66e7c14b571535682debb4eeee7a60138ef0dc9300692ab1e",
+        "status": "received"
       },
       "implementer": "frontend-designer",
       "implementer_session": {
@@ -23643,7 +23726,7 @@
       "merge_sha": "7ff73b83412e4e90c8e12abf504a52b69922f3d7",
       "points": 2,
       "reviewer": "frontend-designer",
-      "status": "landed",
+      "status": "completed",
       "wave": 13,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-002"
     },
