@@ -1,0 +1,64 @@
+{
+  "task_id": "ORI-AST-009",
+  "title": "Recover from unknown documentation URLs through the real site search",
+  "status": "cycle_1_green_pending_review",
+  "captured_at": "2026-09-25T19:05:06Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-009",
+  "run": {
+    "run_id": "ori-ast-009-cycle-1-1790363106797",
+    "preview_origin": "http://localhost:4321",
+    "preview_host": "127.0.0.1",
+    "preview_port": 4321,
+    "base_commit": "21862449",
+    "browser": {
+      "engine": "chromium",
+      "projects": [
+        "chromium-desktop",
+        "chromium-mobile",
+        "chromium-nojs"
+      ],
+      "javascript_disabled_projects": [
+        "chromium-nojs"
+      ]
+    },
+    "commands": {
+      "build": {
+        "command": "pnpm --filter @rnr-ai-elements/docs build",
+        "exit_code": 0,
+        "pages_built": 69,
+        "emitted": "apps/docs/dist/404.html"
+      },
+      "index": {
+        "command": "pnpm exec tsx scripts/docs-data/search-index.ts",
+        "exit_code": 0,
+        "observed": "64 pages indexed covering all 63 expected destinations; 404.html carries no data-pagefind-body so the indexer excludes it by contract (count unchanged from the pre-recovery candidate)."
+      },
+      "red": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/not-found-search-recovery.spec.ts --grep FLOW-SHELL-16-not-found-search-recovery",
+        "exit_code": 1,
+        "observed": "15/15 cases fail on the pre-implementation candidate: the served title never equals the manuscript title, apps/docs/dist/404.html is absent, and the recovery search control never resolves. No infrastructure failures.",
+        "canonical_store": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-16-not-found-search-recovery/proof.red (run_flow.py --expect red, cmd_sha=bb838d1aca0f9418cc364d3f71c7ea051daf28265fb37bea366a7f96e622d8b6)"
+      },
+      "green": {
+        "command": "pnpm exec playwright test tests/sprint-05-orient-search/not-found-search-recovery.spec.ts --grep FLOW-SHELL-16-not-found-search-recovery",
+        "exit_code": 0,
+        "passed": 15,
+        "failed": 0,
+        "log": ".tmp/ORI-AST-009/cycle-1/green-run.log",
+        "observed": "All 15 cases pass across chromium-desktop, chromium-mobile and chromium-nojs with retries 0: fresh run-specific unknown /docs/ URLs serve the custom 404 with the real manuscript title, explanation and hint; the emitted dist/404.html byte-matches the manuscript and the system file stays outside the docs collection and ordinary docs navigation; Search the site opens the shared aria-modal dialog <=300ms on the island's own activation clock (independent of index readiness) with the search input focused; the real Pagefind index settles 'message' and keyboard selection reaches /components/message/ at HTTP 200 with its own h1 and substantive content; Escape restores focus to the Search the site control; ordinary-page and recovery-page searches load the same production /pagefind/ module and both return Message; completed manuscript-derived queries exclude /404, /404.html and every run-specific unknown URL; dark and light themes selected through the real ThemeToggle persist onto fresh unknown URLs with the shared header, footer and recovery links; and the no-JavaScript project reads the manuscript and reaches /components and /registry at HTTP 200 through the plain links with zero Pagefind requests and the JS-only control hidden."
+      }
+    }
+  },
+  "acceptance": {
+    "AC-1": "proven: fresh run-specific unknown /docs/ URLs serve the manuscript through the custom 404; Search the site opens the shared aria-modal dialog with the 300ms island-clock budget measured independently of Pagefind readiness (the island clocks showModal alone and starts the index in parallel), with the search input focused; the real index settles 'message', keyboard selection reaches /components/message/ at HTTP 200 with its own h1 and substantive content; chromium-nojs proves the readable recovery surface with zero Pagefind requests.",
+    "AC-2": "proven: dist/404.html emitted and byte-compared against the real system manuscript (title, explanation, hint); the manuscript stays outside the docs collection and ordinary docs navigation; dark and light selections made through the real ThemeToggle control persist onto fresh unknown URLs with the shared header, footer and recovery links.",
+    "AC-3": "proven: Escape closes recovery search and restores focus to the Search the site control (in-page activeElement observation); ordinary-page and recovery-page searches both load the production /pagefind/ module and both return Message at /components/message/; completed manuscript-derived queries (missing-page title + distinctive hint phrase) return URL lists that exclude /404, /404.html and every current-run unknown /docs/ URL, recorded with real result counts after settled index completion.",
+    "AC-4": "proven: the manuscript explanation and shared shell remain readable with JavaScript disabled and zero Pagefind resources; the plain Components link reaches /components at HTTP 200 with rendered family content and the plain Registry link reaches /registry at HTTP 200 with the real ledger; the JS-only search control stays hidden without JavaScript."
+  },
+  "known_blockers": [
+    {
+      "blocker": "Run-order hazard (inherited from ORI-AST-004): any astro build wipes dist/pagefind; the task-owned indexer ran after the last build before every preview-backed lane. CI owns this ordering.",
+      "unblocks": "deterministic local runs"
+    }
+  ]
+}
