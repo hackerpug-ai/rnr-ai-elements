@@ -1,0 +1,60 @@
+---
+/**
+ * FIX-ORI-AST-004-1 — the docs-owned dependency explainer for Streamdown,
+ * served at /components/streamdown. Streamdown is the conversation family's
+ * third-party markdown renderer — an npm dependency, not a registry item — so
+ * the generated [item].astro fan-out can never emit this route. This page is
+ * the authored static route (a static path wins over the [item] dynamic route
+ * without touching that template), on the DocsLayout shell with the same
+ * Pagefind contract as the generated destinations: data-pagefind-body +
+ * category:components, so the real index admits it and the search dialog
+ * groups it with component destinations.
+ *
+ * Every fact renders from committed sources: the peers, permissions, and
+ * dev-client verdict from the dev-client-matrix.json streamdown entry (a
+ * matrix change moves this page, never a hand-typed literal), and the
+ * renderMarkdown seam facts from the landed boundary prose the page links.
+ * Zero islands; static template over build-time data. No InstallCommand, no
+ * version chip, no family pager, no fabricated registry data — the pinned
+ * sentence is the page's own framing. Styling is the layout's global element
+ * sheet (global.css h1/h2/h3/code/ul); the page adds no scoped CSS.
+ */
+import Badge from '../../components/Badge.astro';
+import matrix from '../../data/dev-client-matrix.json';
+import Layout from '../../layouts/DocsLayout.astro';
+
+const entry = matrix.find((candidate) => candidate.id === 'streamdown');
+if (!entry) {
+  throw new Error('[components/streamdown] has no dev-client-matrix.json entry');
+}
+---
+
+<Layout title="Streamdown — RNR AI Elements">
+  <Fragment slot="head">
+    <meta name="description" content="Streamdown is the third-party streaming-markdown renderer the conversation family consumes through the renderMarkdown seam — an npm dependency, not a registry item." />
+  </Fragment>
+  <main data-pagefind-body data-pagefind-meta="category:components">
+    <p><a href="/components">Components</a> <span aria-hidden="true">/</span> Streamdown</p>
+    <h1>Streamdown</h1>
+    <p>Streamdown is not a registry item. It is the third-party markdown renderer the conversation family consumes when your app supplies it through the <code>renderMarkdown</code> prop, published as the npm package <code>react-native-streamdown</code>.</p>
+    <h2 id="what-streamdown-is">What Streamdown is</h2>
+    <p>Streamdown renders markdown text that arrives in streaming chunks in React Native. Each chunk can cut a paragraph, emphasis run, or code fence in half; Streamdown renders the partial text as formatted markdown instead of flashing literal syntax, and settles each block once its closing chunk arrives.</p>
+    <p>The registry items do not bundle a renderer. <a href="/components/message">Message</a>'s MessageResponse and <a href="/components/reasoning">Reasoning</a>'s ReasoningContent both accept a <code>renderMarkdown</code> prop. Omit the prop and each renders the string as plain Text, which runs anywhere Expo Go runs. Supply a function backed by Streamdown and the same components render streaming markdown.</p>
+    <p>Half-streamed markdown is repaired before either component renders it. The registry's <a href="/components/markdown">Markdown repair</a> item closes unterminated emphasis and code runs in each chunk; Streamdown receives already-repaired text through the same <code>renderMarkdown</code> seam. The ownership split behind this choice is covered in <a href="/docs/owns-vs-does-not-own">What the library owns</a>.</p>
+    <h2 id="installing-the-dependency">Installing the dependency</h2>
+    <p>Add <code>react-native-streamdown</code> with your package manager, then add every peer below and declare the permissions before the first development build. The <a href="/docs/installation">installation guide</a> covers the registry items this dependency supports.</p>
+    <h3>Peer dependencies</h3>
+    <ul>{entry.peers.map((peer) => <li><code>{`${peer.name} ${peer.range}`}</code></li>)}</ul>
+    <h3>Platform permissions</h3>
+    <ul>
+      <li>iOS: <code>{entry.permissions.ios.join(', ')}</code></li>
+      <li>Android: <code>{entry.permissions.android.join(', ')}</code></li>
+    </ul>
+
+    <h3>Expo Go verdict</h3>
+    <p><Badge tone="dev-client" /> — Streamdown loads native modules Expo Go cannot load, so apps that render markdown through it require a dev client: a development build of your app that includes those native modules.</p>
+    <h2 id="its-relationship-to-the-registry">Its relationship to the registry</h2>
+    <p>The registry's per-item manifest endpoints list no streamdown entry, and the CLI cannot add it — there is nothing to add. The registry's <a href="/components/markdown">Markdown repair</a> lib is the related registry item: the repair pass consumed through the same <code>renderMarkdown</code> seam, installable on its own for apps that keep plain-Text rendering but want repaired chunks.</p>
+    <p>For the styling side of the seam — theming the rendered markdown your function returns — read <a href="/docs/theming#rendermarkdown">Theming: the renderMarkdown seam</a>.</p>
+  </main>
+</Layout>
