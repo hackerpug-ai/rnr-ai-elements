@@ -1,0 +1,44 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "1d40435e764a590e535bf0dbdd1c96b0794de7e2",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independently reproduced: `pnpm exec tsx scripts/docs-data/authored-snippets.ts` exit 0 on my own run — 7 documents, 8 code-bearing blocks, 6 identities (cli.md::fence-0 shell, theming.mdx::fence-0 css, quickstart.mdx readFileSync exports messagesSource/screenSource/entrypointNativewind/entrypointUniwind with messages/screen rendered once per engine tab), exactly matching my own out-of-band corpus scan (find + fence-marker count + readFileSync/code-prop count). Region bindings independently recomputed: cli.md fence-0 pins exactly 1 window (105 bytes @ offset 835 of packages/docs-snippets/commands/nativewind.sh) and theming.mdx fence-0 exactly 1 window (838 bytes @ offset 2126 of apps/example/global.css); authored fences byte-equal those windows. 3 real compiler receipts exit 0 (nativewind tsc --noEmit, uniwind tsc --noEmit, live-chat tsc -p tsconfig.live-chat.json; TypeScript 6.0.3). Configuration kind: the real corpus contains zero configuration-language blocks (verified by my own scan — only sh/css fences and ts/tsx readFileSync sources); coverage is delivered through the 16 fail-closed committed engine-package config inputs (9 nativewind + 7 uniwind, requireConfigurationInputs fails closed when any is absent) plus complete configuration-fence machinery (FENCE_KINDS maps json/js/mjs/cjs; kindFromSourcePath maps config extensions) ready the moment the corpus gains one. apps/docs/src/content/** is write-prohibited to this task, so authoring a configuration block is out of scope; the deviation is documented in the gate header and manifest interpretation_notes[0], not silent. This is faithful intent coverage: no configuration example escapes committed provenance.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Test ORI-AST-005-binding-rejections passes in my own full-suite run (4/4 PASS, exit 0) on real filesystem copies: removed quickstart-messages.ts fails naming quickstart.mdx/messagesSource/quickstart-messages.ts; removed css region fails naming theming.mdx/fence-0/global.css/'region'; duplicated region fails 'ambiguous selection' (not first-match); all bindings removed while code retained fails naming all six identities with 'no committed binding', and restoring yields exit 0 with the original inventory; missing discovery root and empty discovery root each fail with explicit 'discovery' diagnostics. Diagnostics carry document/snippet/source identities throughout (gate lines: discoverBlocks missing-source message, selectSourceBytes not-found/ambiguous messages, unbound-block message)."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Test ORI-AST-005-byte-fidelity passes in my own run: real `astro build` of an owned repo-shaped scratch copy of the actual docs app rendering SourceSnippet (whole-file + named multiline region of quickstart-screen.tsx retaining interior indentation and final newline — asserted endsWith('\\n') and contains('\\n  ')); served on an OS-assigned ephemeral port (net.createServer listen(0); 4321/4322 never used) via astro preview --ignore-lock; real Playwright Chromium with granted clipboard permissions clicks each snippet's real Copy button and navigator.clipboard.readText() equals the selected source (length + sha256 + full equality). One-byte drift ('export'->'exPort') in a fresh physical dist copy fails --check-emitted with document/snippet/source identity and mismatch offset, and the corrupted artifact is verified unchanged afterward (no silent re-emission); pristine dist passes with 2 elements / 0 failures. Copy path verified byte-exact: SourceSnippet composes the UNMODIFIED CopyButton island whose handler writes command.textContent verbatim (ORI-AST-001 updated the shared handler before this task; this diff touches none of the protected copy paths — verified via empty git diff on copy-button.ts/CodeBlock/UsageSnippet/content/packages/apps/example).",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Test ORI-AST-005-owner-compilers passes in my own run: baseline 3 receipts exit 0 with executable/cwd/config/args/duration/TypeScript-version identities. Per engine on fresh copies: import mutated to @/shared/__ori_ast_005_missing__ fails nonzero through the real consumer tsc with the marker plus engine/quickstart.mdx/entry-snippet identities (works because source-bound authored bytes and source bytes are the same file, so byte-compare passes and the REAL compiler rejects); <QuickstartScreen __ori_ast_005_invalid_prop__ /> fails likewise. Missing prerequisites fail closed naming themselves: tsconfig.json removed, whole packages/docs-snippets/uniwind removed, react-native removed from the assembled consumer (real tsc diagnostics name it; pnpm install restores; restored corpus passes exit 0 again). The compilers are real spawnSync invocations of each consumer's own node_modules/.bin/tsc after the committed recipe (packages/docs-snippets/commands/<engine>.sh) is executed verbatim via bash — no mock compiler, no static receipt, no ambient declarations.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "DONE-WHEN-gates",
+      "satisfied": true,
+      "evidence": "All planned verification gates independently reproduced: full vitest suite exit 0 (4/4); real corpus gate exit 0; pnpm typecheck exit 0; scoped biome exit 0 via the direct node_modules binary (1 warning, 8 infos, 0 errors — the pnpm-exec wrapper OOMs locally, a documented environment quirk matching the manifest note and repo memory). fallow audit could not be re-verified locally (binary rejects .fallowrc.json 'minimumVersion' field — version mismatch in this environment, not a code defect); the code carries the fallow directives and the manifest records exit 0. Scope: diff 313bddda...1d40435e touches exactly the four write-allowed paths plus .tmp/ORI-AST-005 cycle-1 evidence, which is the repo's established committed-evidence convention (FAM-001/FAM-002 precedent). Worktree clean at HEAD; manifest sha256s match the committed bytes of all three hashed files (recomputed). RED evidence genuine: assertion failures against the scaffold plus a real astro UNRESOLVED_IMPORT for the missing SourceSnippet (not runner/setup errors).",
+      "fix": "",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": { "typecheck": "pass", "lint": "pass", "tests": "pass" },
+  "summary": "Adversarially verified and approved. The gate script is a real, deterministic pipeline: parse of the actual corpus (fences + MDX readFileSync exports), fail-closed committed configuration inputs, sha256+length region bindings proven to resolve to exactly one window (recomputed independently), byte comparison of every block, real owner compilers via the committed consumer recipe executed verbatim (real tsc --noEmit per engine + the live-chat import-graph config), and a read-only emitted-byte comparison that rejects one-byte drift without rewriting the artifact. SourceSnippet renders byte-exact selections through the unmodified CopyButton island, proven in a real Chromium with a real clipboard on an ephemeral owned port. All four AC tests pass on my own runs of the full suite, the real corpus command, typecheck, and scoped lint; RED evidence is genuine assertion-level failure. The two documented deviations — configuration-kind coverage via the 16 committed engine config inputs (the corpus has no configuration block and content is write-prohibited) and the bindings table living in the gate script (in-document annotation impossible under scope) — are faithful to the ACs' intent, fail-closed, and loudly documented in the manifest; the discovery root matches ORI-AST-001's substrate with the live example covered by its owning import-graph compiler per VP-EXAMPLE-DIAGNOSTICS. No stubs, mocks, skips, or fabricated compiler surfaces found."
+}

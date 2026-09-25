@@ -1,0 +1,148 @@
+{
+  "scenario_1": {
+    "id": "SC-FIX-ORI-AST-004-1-1",
+    "use_case_ref": "UC-SHELL-02",
+    "ac_ref": "AC-1",
+    "primary": true,
+    "tier": "visible",
+    "test_tier": "integration",
+    "verification_service": "the real Astro build, the pinned real Pagefind CLI (1.5.2 via pnpm dlx) over the completed dist, and the real astro preview serving the built dist on the owned localhost:4321",
+    "negative_control": {
+      "would_fail_if": [
+        "GREEN is claimed from a cached build receipt, a dev-server render, or a static source grep over a non-built tree instead of the real public build, the real pinned Pagefind run, and the real built preview.",
+        "The page ships without data-pagefind-body so Pagefind never indexes it - the route serves 200 while the index page_count stays at the RED value, and the search dialog can never surface it.",
+        "A mocked index, a hand-counted page list, or an authored success flag replaces the observed pagefind-entry.json page_count, or the index delta is asserted from source inspection rather than the real run."
+      ]
+    },
+    "evidence": {"artifact_type": "file_artifact", "required_capture": true},
+    "cases": [
+      {
+        "start_ref": "trunk_without_streamdown_destination",
+        "action": {
+          "actor": "cli_user",
+          "steps": [
+            "Pre-change RED: on the isolated candidate (the page absent), run the real pnpm --filter @rnr-ai-elements/docs build, then the pinned real Pagefind run (pnpm dlx pagefind@1.5.2 --site apps/docs/dist - always after the build, since any astro build wipes dist/pagefind), then serve the built dist through the real astro preview on the owned port; record the route's HTTP 404, the build page count, the index page_count, and the candidate SHA in red.json.",
+            "Author apps/docs/src/pages/components/streamdown.astro - the docs-owned dependency explainer on the DocsLayout shell following ORI-AST-008's destination conventions, with data-pagefind-body and data-pagefind-meta category:components.",
+            "Rerun the identical commands; confirm build exit 0 at exactly the RED page count + 1, HTTP 200 at /components/streamdown with the main h1 carrying Streamdown and the pinned honest sentence, and index page_count exactly RED + 1."
+          ]
+        },
+        "end_state": {
+          "must_observe": [
+            "red.json records the pre-change run: route HTTP 404 at /components/streamdown, build page count (67 at planning time), index page_count (63 at planning time), and the candidate SHA.",
+            "green.json records the post-change run: build exit 0 at exactly the RED page count + 1 (68 at planning time), HTTP 200 at /components/streamdown, the served route HTML's main h1 carrying Streamdown, the pinned sentence 'Streamdown is not a registry item.' present in the served route HTML, and index page_count exactly RED + 1 (64 at planning time).",
+            "The served page carries data-pagefind-body and data-pagefind-meta category:components, so the real index admits it and the search dialog groups it with component destinations."
+          ],
+          "must_not_observe": [
+            "An index page_count delta other than exactly +1 between the recorded RED and GREEN runs, a GREEN build page count other than RED + 1, or a route status other than 200 after the change.",
+            "GREEN claimed from a source grep, a dev-server render, or a cached dist instead of the real build + real Pagefind run + real built preview.",
+            "The served route HTML missing the pinned honest sentence, or index-inclusion evidence reported with (0) real Pagefind observations - the empty signature of a static shell."
+          ]
+        }
+      }
+    ]
+  },
+  "scenario_2": {
+    "id": "SC-FIX-ORI-AST-004-1-2",
+    "use_case_ref": "UC-SHELL-02",
+    "ac_ref": "AC-2",
+    "primary": false,
+    "tier": "visible",
+    "test_tier": "integration",
+    "verification_service": "the real built-preview route HTML over the committed data file, the real TypeScript compiler, and the real Biome linter",
+    "negative_control": {
+      "would_fail_if": [
+        "The page omits the pinned honest sentence, carries a copyable registry CLI command targeting streamdown, or fabricates registry-item data (props, source files, usage snippet).",
+        "Peers are hand-typed literals rather than rendered from the committed dev-client-matrix.json entry, so a matrix change can silently drift the page.",
+        "The static gates fail without the stash-proven pre-existing record, or any path outside the allowlist changes."
+      ]
+    },
+    "evidence": {"artifact_type": "file_artifact", "required_capture": true},
+    "cases": [
+      {
+        "start_ref": "trunk_without_streamdown_destination",
+        "action": {
+          "actor": "cli_user",
+          "steps": [
+            "Fetch /components/streamdown over the built preview; assert the pinned honest sentence 'Streamdown is not a registry item.', count 'streamdown.json' occurrences (exactly 0) and '@react-native-reusables/cli' occurrences (exactly 0) in the served route HTML.",
+            "Compare the rendered peers, permissions, and verdict with the committed apps/docs/src/data/dev-client-matrix.json streamdown entry; follow every internal link on the page and require real destinations the build emits.",
+            "Run pnpm typecheck and the scoped Biome command on the candidate; prove any failure pre-existing with git stash && rerun before recording it. Confirm the tracked-file diff is exactly apps/docs/src/pages/components/streamdown.astro and tests/sprint-05-orient-search/streamdown-destination-proof.test.ts (plus the owned .tmp/FIX-ORI-AST-004-1 evidence)."
+          ]
+        },
+        "end_state": {
+          "must_observe": [
+            "The served route HTML carries the pinned sentence 'Streamdown is not a registry item.' and reports exactly 0 occurrences of 'streamdown.json' and exactly 0 occurrences of '@react-native-reusables/cli' - the page documents an npm dependency and never offers a registry CLI command.",
+            "The rendered list of peers equals the committed dev-client-matrix.json streamdown entry - react-native-streamdown@0.3.0, react-native-enriched-markdown@>=1.0.0, react-native-worklets@>=0.10.0, remend@1.3.0 - with the dev-client verdict and the iOS/Android permissions, rendered from the data file, never hand-typed literals.",
+            "pnpm typecheck and the scoped Biome command exit 0 (or carry the stash-proven pre-existing record); apps/docs/src/pages/components/[item].astro is byte-unchanged; the tracked-file diff is exactly the two new files."
+          ],
+          "must_not_observe": [
+            "An InstallCommand, version chip, family pager, fabricated Props or Source section, or any other registry-item chrome implying the page is installable via the registry CLI - the empty framing of (0) honest sentences fails the gate.",
+            "Hand-typed peers drifting from dev-client-matrix.json, or a link to a route the build does not emit.",
+            "Any changed path beyond the new page, the harness, and the owned .tmp evidence."
+          ]
+        }
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "AC-1",
+      "type": "acceptance_criterion",
+      "name": "The destination lands, serves HTTP 200, and enters the real index",
+      "primary": true,
+      "description": "GIVEN trunk where /components/streamdown is a verified 404 and the real Pagefind index covers 63 pages (56 items + 7 docs) WHEN the docs-owned dependency-explainer page is authored at apps/docs/src/pages/components/streamdown.astro THEN the real public build exits 0 at exactly the recorded RED page count + 1 (67 -> 68 at planning time), the built preview serves /components/streamdown at HTTP 200 with a main h1 carrying Streamdown and the pinned honest sentence 'Streamdown is not a registry item.', and the pinned real Pagefind run over the completed dist reports an index page_count of exactly RED + 1 (63 -> 64 as it lands) - the new page is in the index, not just on disk.",
+      "flow_ref": null,
+      "test_file": "tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "test_function": "runStreamdownDestinationProof",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "test_tier": "integration",
+      "verification_service": "the real Astro build, the pinned real Pagefind CLI (1.5.2 via pnpm dlx) over the completed dist, and the real astro preview serving the built dist on the owned localhost:4321",
+      "surface_policy": null,
+      "tdd_state": "none",
+      "maps_to_ac": null,
+      "scenario": "__SCENARIO_1__"
+    },
+    {
+      "id": "AC-2",
+      "type": "acceptance_criterion",
+      "name": "Honest non-registry framing, real matrix facts, static gates, and the two-file diff",
+      "primary": false,
+      "description": "GIVEN the landed page WHEN the served route HTML and the candidate tree are inspected THEN the page carries the pinned honest sentence 'Streamdown is not a registry item.' with (0) occurrences of 'streamdown.json' and (0) occurrences of '@react-native-reusables/cli' in the served route HTML (no copyable registry command), the peers, permissions, and dev-client verdict render from the committed dev-client-matrix.json streamdown entry (react-native-streamdown@0.3.0 among four peers), every internal link resolves to a real destination the build emits, pnpm typecheck and the scoped Biome command exit 0, and the tracked-file diff is exactly the new page plus the harness.",
+      "flow_ref": null,
+      "test_file": "tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "test_function": "runStreamdownDestinationProof",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "test_tier": "integration",
+      "verification_service": "the real built-preview route HTML over the committed data file, the real TypeScript compiler, and the real Biome linter",
+      "surface_policy": null,
+      "tdd_state": "none",
+      "maps_to_ac": null,
+      "scenario": "__SCENARIO_2__"
+    },
+    {
+      "id": "TC-1",
+      "type": "test_criterion",
+      "description": "The harness's real build, real Pagefind run, and real built preview prove the route 200 + h1 + pinned honest sentence + index page_count exactly RED + 1, with the pre-change 404 and both counts recorded in red.json.",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "maps_to_ac": "AC-1"
+    },
+    {
+      "id": "TC-2",
+      "type": "test_criterion",
+      "description": "The harness's served-HTML inspection proves the honest framing and the zero registry-command occurrences over the real matrix facts; the static gates pass; the tracked-file diff is exactly the new page plus the harness.",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "maps_to_ac": "AC-2"
+    }
+  ],
+  "fixture": {
+    "trunk_without_streamdown_destination": {
+      "description": "An isolated candidate worktree of trunk (Source SHA b56b5214c2b48b57493116a6402935dc5b712cf4) with ORI-AST-008's 56 generated reference destinations and ORI-CONT-005's landed boundary prose, where /components/streamdown is a verified 404 and the real index covers 63 pages (56 items + 7 docs), plus the owned .tmp/FIX-ORI-AST-004-1 evidence root.",
+      "seed_method": "cli",
+      "records": [
+        "The gitignored generated apps/docs/src/data/registry-items.json is absent in a fresh worktree and gates pnpm typecheck - copy or regenerate it via pnpm registry:build inside the worktree; never commit it (stash-proven pre-existing behavior recorded in FIX-ORI-AI-002-1's handoff).",
+        "dist/pagefind is wiped by any astro build, so the harness runs the pinned Pagefind invocation AFTER the build, never before (the ORI-AST-004 blocked report's gate-order finding); the invocation is pnpm dlx pagefind@1.5.2 --site apps/docs/dist - the identical command ORI-AST-004's indexer runs.",
+        "The preview serves the built dist through the shared tests/harness/docs-preview.ts strict-port shape on the canonical owned port 4321; the guard exits 1 while the port is owned by anything else - refuse an unowned conflict, never kill unrelated processes, and stop the owned server on every exit path.",
+        "The build page count and index page_count literals are the ones observed at the RED run - 67 and 63 at planning time; the invariant is exactly +1 on both, since the change adds exactly one page."
+      ]
+    }
+  }
+}
