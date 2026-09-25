@@ -15701,6 +15701,11 @@
         "state": "landed",
         "task": "FIX-ORI-CI-001-1"
       },
+      "c21d20cf290426969a5b21688f8d3507849e85cc9fa12188755197739f0e4c8e": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-AST-004"
+      },
       "c7e7460d033e6f8789f00d7630b803bea858d26a86317692402a2e5b2348a24b": {
         "kind": "complete-task",
         "state": "landed",
@@ -18370,6 +18375,18 @@
       },
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-AST-004",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "feab34bd4f5b7ad648024afcdf96f708146fb8fd",
+        "before_head": "9e8f36963c91a25326399880827cd6f2d9b7f046",
+        "desired_sha256": "6619a3ab346ee14acfaf875102e7b9e5df814125337f6448cc084158071ecbdc",
+        "expected_task_sha256": "6fa0f48d8430dbeb501603aebb874f8b63d6ba8aa0964b842ab586b18477f07a",
+        "handoff_sha256": "e4263be52f91748110c260d18ebf4a5e2ce59f9ab360089a194e8a664214fd87",
+        "landed_on": "main",
+        "landed_trunk_sha": "df618518d1c7aa66f934d61bf142200b5324948d",
+        "metadata_commit_sha": "df618518d1c7aa66f934d61bf142200b5324948d",
+        "operation_id": "c21d20cf290426969a5b21688f8d3507849e85cc9fa12188755197739f0e4c8e",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-AST-001",
@@ -18381,9 +18398,83 @@
         "ORI-CONT-005"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-AST-004-feab34bd4f5b7ad648024afcdf96f708146fb8fd.json",
+        "payload": {
+          "commit_sha": "feab34bd4f5b7ad648024afcdf96f708146fb8fd",
+          "concerns": [
+            "Run-order hazard inherited by every preview-backed lane: any astro build — including island-budget.test.ts's SHELL-003 chain — deletes dist/pagefind, so the task-owned indexer must run after the LAST build before Playwright (local order: island-budget -> search-index -> playwright; observed as silent 404s on /pagefind/* otherwise).",
+            "CI does not yet invoke the indexer: the task says 'CI owns ordered invocation after Astro builds' but .github was writeProhibited, so the ordered build-then-index call (`pnpm exec tsx scripts/docs-data/search-index.ts` after `pnpm --filter @rnr-ai-elements/docs build`) still needs wiring into the docs e2e chain before any hosted lane can see the index.",
+            "The activateSearch seam is exported and fallow-suppressed as an unused export until ORI-AST-009 consumes it — a reviewer running the dead-code gate should expect exactly that suppression (apps/docs/src/scripts/search-dialog.ts:404-405).",
+            "The `pnpm lint` script dies locally (biome child process OOM); the biome binary at ./node_modules/@biomejs/biome/bin/biome works and `biome ci .` exits 0 with 4 pre-existing warnings in untouched files.",
+            "Result rendering caps at 20 links per query; the current corpus ranks every pinned destination inside the window, but a larger corpus could push a rare destination below the cap and re-open ranking-dependent assertions."
+          ],
+          "deviations": [
+            "Pagefind is not a package.json dependency: the task-owned indexer (scripts/docs-data/search-index.ts:110) spawns the version-pinned CLI through `pnpm dlx pagefind@1.5.2`, because package.json and pnpm-lock.yaml were writeProhibited and the dependency question was explicitly 'ask first' — a reviewer wanting a committed devDependency instead needs one add plus lockfile refresh and no other change.",
+            "AC-1's verdict leg is proven in two halves — the emitted badge verdict phrase ('runs in Expo Go') is asserted searchable, and a distinctive verbatim phrase extracted from the same emitted document must surface its originating item — because the badge words alone match 61 of 64 pages and cannot single out one item inside the dialog's 20-result window (tests/sprint-05-orient-search/search-contract.spec.ts:305-325).",
+            "The chromium-nojs project executes its real supported surface (hidden trigger, zero Pagefind requests, working link navigation) inside every flow test rather than in separate nojs-only tests, so the canonical pre-implementation RED shows 5 passing nojs cases and 10 failing dialog cases, not a 15/15 wipe.",
+            "Cycle 2 replaced the generic `main`-root success oracles with real content oracles (the `[data-ledger]` registry region, the indexed `[data-pagefind-body]` prose region, and role=heading level 1) because the surface-entry lint rejects a generic-root oracle; the owns-page depth check moved to the indexed prose region.",
+            "Cycle 2 fixed two implementation defects the plan could not have anticipated: relocation of the island into the Header slot re-fires connectedCallback and double-wired every listener (one ArrowDown moved the active result two steps), and the per-instance settled-query witness leaked across ClientRouter swaps so stale settlements satisfied readiness polls (apps/docs/src/scripts/search-dialog.ts:135-142)."
+          ],
+          "done": "Landed at feab34bd (merged to main as 21862449) across two cycles: the fifth vanilla island `rnr-search-dialog` (apps/docs/src/components/islands/SearchDialog.astro + apps/docs/src/scripts/search-dialog.ts) mounts through the Header's existing [data-search-slot] seam, opens a native <dialog> synchronously on activation, lazy-imports the same-origin Pagefind module on first open only, retains initialization across unchanged reopens and ClientRouter soft navigation, renders text-only grouped results (components/ui/lib/pages via the shared apps/docs/src/lib/search-page-model.ts) with aria-live counts and single-step Arrow/Enter/Escape handling plus invoker focus restoration, and exposes the callable activateSearch(invoker?) seam for ORI-AST-009; scripts/docs-data/search-index.ts indexes completed dist with pinned Pagefind 1.5.2 (fail-closed on any missing expected destination — 56 items + 7 docs, now 64 pages with the FIX-ORI-AST-004-1 streamdown page); DocsLayout.astro mounts the island and island-budget.test.ts pins exactly five custom elements. Evidence: canonical functional RED via run_flow --expect red (10/15 failing at the missing surface, proof.red committed) and cycle-2 GREEN 15/15 across chromium-desktop/mobile/nojs with the canonical run_flow --expect green gate PASS (exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok), all in tests/sprint-05-orient-search/evidence/ and .tmp/ORI-AST-004/.",
+          "feedback": [
+            "run_flow.py's --sprint-dir must point at the planner's flow list beside SPRINT.md (.spec/prds/docs-site/tasks/sprint-05-orient-search), not the .kb-run-sprint state folder — the wrong one exits 2 with REFUSED after also writing a BLOCKED gate verdict.",
+            "The fallow pre-commit gate fails commits on complexity/unused-export findings in changed files even when the consumers are tests or future tasks; the established suppression form is a bare `// fallow-ignore-next-line <kind>` line with the justification on a separate comment line — extra words after the kind register as stale suppressions.",
+            "Playwright runs wrapped by the rtk hook buffer output and hang forever if the spawned astro preview outlives the run; killing the preview by its full command pattern (`astro.mjs preview` / `astro preview --host ... --port 4321`) is what unwedges them, and `rtk proxy` gives unbuffered real output for interactive runs."
+          ],
+          "findings": [
+            "The relocate-into-slot island pattern re-fires connectedCallback when appendChild moves the element into the Header mount, so every listener must be wired behind a per-instance guard or keyboard handlers fire twice per keypress (the fix lives at apps/docs/src/scripts/search-dialog.ts:135-142; theme-toggle.ts guards only its trigger, not its whole wiring).",
+            "Chromium gives <input type=search> a clear-on-Escape default that swallows the native <dialog> cancel path entirely — no cancel or close event fires — so Escape must be handled explicitly in the input's keydown handler (apps/docs/src/scripts/search-dialog.ts:386-392).",
+            "A closed native <dialog> element stays in the DOM, so closed-state assertions must target the [open]-qualified selector or visibility, never element count; Pagefind 1.5.2 also indexes content inside hidden elements (the uniwind TabGroup panels are searchable) and loads its index chunks on the first query rather than at module import, so request-log assertions must separate the module phase from the chunk phase.",
+            "`astro preview` (sirv) snapshots the dist file list at startup, so files generated after startup (freshly hashed bundles, a re-run pagefind index) 404 until the preview restarts; the CI=true webServer ownership pattern avoids this entirely, and orphaned previews from interrupted runs hold the runner's stdout pipe open and hang tooling until killed by their full command pattern.",
+            "The vitest-side docs destination list is derived from real sources at assertion time (expectedDestinations() over registry-items.json plus the content/docs scan with draft frontmatter excluded), so adding a published doc or registry item updates the model, the indexer's fail-closed check, and the test together with no hand-maintained destination list."
+          ],
+          "scope_impact": [
+            {
+              "change": "Consume that export from the custom 404 control instead of re-implementing activation; keep the 404 document outside data-pagefind-body regions (or marked data-pagefind-ignore) so the composed 404 never enters the index, and note that no 404 route exists in dist until that task lands.",
+              "found": "The Search the site seam exists and is verified: `activateSearch(invoker?: HTMLElement)` at apps/docs/src/scripts/search-dialog.ts:404 opens the SAME dialog implementation and restores focus to the passed invoker on close.",
+              "target": "ORI-AST-009"
+            },
+            {
+              "change": "No AC amendments are needed anymore for streamdown; ORI-AST-010's journey specs should reuse the run-order discipline (index after build) and can lift the working keyboard/tap interaction patterns from tests/sprint-05-orient-search/search-contract.spec.ts.",
+              "found": "The previously blocked streamdown legs are unblocked — /components/streamdown is a real HTTP 200 destination that the real index ranks first for its query — so gate steps human-flows.json:730,742 (FLOW-SHELL-07/08 journeys) can now run their full Enter-through-search legs.",
+              "target": "ORI-AST-010"
+            },
+            {
+              "change": "Insert `pnpm exec tsx scripts/docs-data/search-index.ts` into the ordered chain immediately after the docs astro build (and before any Playwright lane); the indexer is idempotent, exits 0 in ~0.1s once pagefind is cached, and fails closed naming any missing destination.",
+              "found": "The docs e2e chain does not invoke the search indexer at all, so `pnpm e2e:docs` on a clean checkout builds a dist with no /pagefind/ directory and every search-backed Playwright lane would fail.",
+              "target": "ORI-CI-001"
+            },
+            {
+              "change": "Close the open streamdown question in the sprint state so later waves stop treating it as pending; ORI-VIS-003's presentation work can now target the real destination and the real dialog (the current chrome is token-scoped and functional, not the presentation pass).",
+              "found": "Sprint-05's wave-4 human question about /components/streamdown is resolved by landing FIX-ORI-AST-004-1, and the destination-adjacent notes recorded against ORI-VIS-003 AC-2 and ORI-AST-010 are satisfied by the same page.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-AST-004"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-ast-004-impl@session-a251722f",
+          "response_id": "digest:e4263be52f91748110c260d18ebf4a5e2ce59f9ab360089a194e8a664214fd87",
+          "response_receipt": {
+            "agent": "astro-implementer",
+            "dispatch_handle": "ori-ast-004-impl@session-a251722f",
+            "payload_sha256": "e4263be52f91748110c260d18ebf4a5e2ce59f9ab360089a194e8a664214fd87",
+            "response_id": "digest:e4263be52f91748110c260d18ebf4a5e2ce59f9ab360089a194e8a664214fd87",
+            "session_id": "ori-ast-004-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-AST-004-feab34bd4f5b7ad648024afcdf96f708146fb8fd-589dd2ef7fa03d03642c2ab45c36e6bc3009bb7296092926b9d2806b939e7870.response.json",
+          "response_receipt_sha256": "589dd2ef7fa03d03642c2ab45c36e6bc3009bb7296092926b9d2806b939e7870",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-ast-004-impl@session-a251722f"
+        },
+        "sha256": "e4263be52f91748110c260d18ebf4a5e2ce59f9ab360089a194e8a664214fd87"
+      },
       "handoff_delivery": {
-        "session_id": "ori-ast-004-impl@session-a251722f",
-        "status": "pending"
+        "response_id": "digest:e4263be52f91748110c260d18ebf4a5e2ce59f9ab360089a194e8a664214fd87",
+        "status": "received"
       },
       "implementer": "astro-implementer",
       "implementer_session": {
@@ -18423,7 +18514,7 @@
       "merge_sha": "21862449c5da5659c9a25fceed1ced1cee4d7c49",
       "points": 5,
       "reviewer": "astro-reviewer",
-      "status": "landed",
+      "status": "completed",
       "wave": 10,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-004"
     },
