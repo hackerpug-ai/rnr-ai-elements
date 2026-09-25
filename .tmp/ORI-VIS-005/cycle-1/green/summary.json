@@ -1,0 +1,42 @@
+{
+  "phase": "green",
+  "gate": "ORI-VIS-005 cycle-1 GREEN",
+  "command": "pnpm exec playwright test tests/sprint-05-orient-search/recovery-presentation.spec.ts --project=chromium-desktop --project=chromium-mobile --project=chromium-nojs",
+  "env": {
+    "CI": "true",
+    "ORI_VIS_PHASE": "green"
+  },
+  "playwright_exit": 1,
+  "passed": 12,
+  "failed": 3,
+  "failures": [
+    "ORI-VIS-005-ac-5 x3: PUBLIC PREREQUISITE unmet - public origin serves status=404 bodyBytes=0 (stale candidate); deployment owner ORI-DEP-002/003 must publish before AC-5 can pass"
+  ],
+  "green_for": [
+    "ORI-VIS-005-ac-1 x3",
+    "ORI-VIS-005-ac-2 x3",
+    "ORI-VIS-005-ac-3 x3",
+    "ORI-VIS-005-ac-4 x3"
+  ],
+  "candidate": {
+    "gitHead": "6a1ca11eeaf5ba93ba941b2fd97e5429539105bd",
+    "change": "404.astro: explanation rendered once (PageHeader masthead per AST-009 pin, duplicate Prose paragraph removed); search CTA moved from R4 Callout link slot into the R5 action row as the primary beside the two outline links"
+  },
+  "static_gates": {
+    "pnpm typecheck": "exit 0",
+    "biome ci (scoped, direct binary: pnpm lint dies locally)": "exit 0, 0 warnings"
+  },
+  "regression_note": "ORI-AST-009 not-found-search-recovery.spec.ts run on this candidate: 11/13 pass; 2 failures (desktop+mobile locked-sequence and AC-3) are a PRE-EXISTING strict-mode break caused by ORI-VIS-003 merge 90cbe643 adding data-search-close inside the [data-search-slot] mount; not touched by this diff (zero component changes). Suggested one-line fix for the owner: pin the selector to [data-search-slot] button.search-dialog__trigger as search-presentation.spec.ts already does.",
+  "evidence": {
+    "canonical": [
+      "unknown-path-light.png",
+      "unknown-path-dark.png",
+      "nojs-links.png",
+      "public-unknown-path.png"
+    ],
+    "manifest": "tests/sprint-05-orient-search/evidence/recovery/manifest.json",
+    "runs_dir": "tests/sprint-05-orient-search/evidence/recovery/runs/",
+    "red": ".tmp/ORI-VIS-005/cycle-1/red/",
+    "green_captures": ".tmp/ORI-VIS-005/cycle-1/green/captures/"
+  }
+}
