@@ -1,0 +1,55 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "90cbe643cf27b4cce58213c4dc5ab879651cdbcb",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Fresh reviewer run (CI=true, owned 4321 preview over built dist + production index): dialog[aria-modal=true] opens via Meta+K with input focused and computed ring 2px/solid/offset 2px; close action fully inside viewport and clicking it closes the dialog (open-dialog count 0, method=dialog path). Genuine loading sampled with an observation-only poll (no delay, no interception) — loadingSeen=false honestly recorded, covered by the task's explicit 'Loading may be brief' carve-out; loading ends hidden and status reads 'Type to search documentation and components.'. Reviewer-run capture: .tmp/ORI-VIS-003/cycle-1/review/captures/chromium-desktop-ac1.json; committed evidence focus-and-status.json ac1 matches (sourceHashes verified byte-for-byte against the commit)."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Real Pagefind results through the real input, zero route interception in the spec (no page.route/context.route anywhere): 'streamdown' -> hrefs [/components/streamdown/, /docs/owns-vs-does-not-own/, /docs/installation/], group labels [Components, Documentation], titles [Streamdown, What the library owns, Installation], 3/3 non-empty excerpts, announced aria-live count 3 == 3 hrefs; typography distinct (title 600/17px vs excerpt 400/13px vs uppercase 11px labels, labelMargin 0px). 'renderMarkdown' and 'dev client' both return the boundary result plus >=1 /components/ item result; following the real anchor lands on /docs/owns-vs-does-not-own/ whose main text explains renderMarkdown (true) and the dev client (true) — reproduced in the reviewer run (chromium-desktop-ac2-boundary.json, chromium-desktop-ac2-streamdown.json)."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Selection moves with ArrowDown (active href streamdown -> boundary doc) and back with ArrowUp in both themes. Active indicator beyond text color: 2px solid outline + accent background (light oklch(0.97 0 0), dark oklch(0.269 0 0)) vs inactive transparent background and outline none. Dark theme reached through the REAL header theme toggle with resolvedTheme asserted 'dark'. Escape closes and restores focus to the invoking header trigger with computed 2px/solid/2px-offset ring in both themes. RED capture proves the negative control bites: pre-change active result had background rgba(0,0,0,0) and outlineStyle none (AST-004's scoped rules never matched createElement-built nodes)."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Mobile 393x727 reviewer run: streamdown result visible inside the scrolling region; 'install' list genuinely overflows (scrollHeight 4501 vs clientHeight 396); after scrolling, input, close and panel each 100% inside the viewport (inputFullyInside/closeFullyInside/panelFullyInside all true, geometry recorded). Reduced-motion fresh context: animationAudit over the dialog and every descendant returned animatedCount 0. Captures: chromium-mobile-ac4-scroll.json, chromium-desktop-ac4-reduced-motion.json; evidence results-mobile.png is a real 976x1411 dialog render."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Reviewer ran the exact verify command fresh: pnpm exec playwright test tests/sprint-05-orient-search/search-presentation.spec.ts --project=chromium-desktop --project=chromium-mobile --grep ORI-VIS-003-AC-1 -> passed on both projects (within the full 8/8 run, exit 0)."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Same fresh run, --grep ORI-VIS-003-AC-2 passed on both projects; no empty result shell, no canned results (spec contains no interception and queries go through the real input)."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Same fresh run, --grep ORI-VIS-003-AC-3 passed on both projects; selection styling follows the real data-active attribute and restored focus ring is visible after Escape."
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "chromium-mobile project AC-4 passed in the fresh run; controls inside viewport after real scroll and 0 entrance animations under prefers-reduced-motion: reduce."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approved. Diff base 1cdbc303...90cbe643 touches only SearchDialog.astro's markup shell + scoped style, the new e2e spec, the four allowlisted evidence artifacts, and force-added .tmp RED/GREEN scratch (established sprint convention — merged ORI-VIS-001 did the same); zero changes to search-dialog.ts, Header.astro, scripts/**, indexing or focus logic. The flagged native method=dialog close form is adjudicated IN: the task's own ACs require an observable close action AST-004 never shipped, it adds zero JS, and it rides the island's existing close-event listener (search-dialog.ts:147-149) so keyboard/focus/navigation semantics are unchanged — the 'Ask first' clause was discharged by flagging it to this review. The dead-CSS key finding is verified two ways: by code (createElement-built result nodes carry no Astro scoping attribute, so the scoped .search-dialog__result*/__group-label rules could never match) and empirically (RED captures show the pre-change active result completely unstyled; the :global() replacements anchored on .search-dialog__scroll demonstrably style the built results). loadingSeen=false is accepted under the task's explicit 'Loading may be brief' observation carve-out — the poll imposes no delay and the observation is honestly recorded in both the implementer's and my run; fallow-ignore-next-line is the repo's documented lint idiom, not an assertion skip. All four gates re-verified fresh by the reviewer: build exit 0 ([search-index] index complete: 64 pages cover all 63 expected destinations), pnpm typecheck exit 0, biome ci (direct binary) exit 0, and playwright 8/8 across chromium-desktop + chromium-mobile with CI=true on the owned port. Non-blocking notes for the merger: untracked apps/docs/playwright-report/ and test-results/ dirs remain in the worktree (not gitignored, not committed — do not sweep them into the merge), and the committed evidence JSON records gitHead c28e40c2 (captured pre-commit) but binds correctness through content hashes that match this commit exactly."
+}
