@@ -1,0 +1,55 @@
+{
+  "task": "ORI-VIS-003",
+  "commit_sha": "90cbe643cf27b4cce58213c4dc5ab879651cdbcb",
+  "done": "Landed the search dialog presentation layer at apps/docs/src/components/islands/SearchDialog.astro: a toolbar carrying the input (site-standard 2px/2px :focus-visible ring) and a native method=\"dialog\" close action (data-search-close, zero JS — the platform fires the close event the island already listens to for invoker focus restoration), :global() attribute-selector styling for the script-built results (groups, titles, excerpts, kind badges, active selection as accent background + 2px inset ring), a motion-gated loading spinner with [hidden] semantics restored, an explicit .search-dialog__panel:not([open]) { display: none } guard, and a flex-column panel so only the results region absorbs height while toolbar/status stay pinned. Proof lives in tests/sprint-05-orient-search/search-presentation.spec.ts (four ACs x chromium-desktop/chromium-mobile, 8/8 green over the built dist and production Pagefind index, RED 8/8 captured pre-change under .tmp/ORI-VIS-003/cycle-1/red) plus committed evidence tests/sprint-05-orient-search/evidence/search/{results-light.png,results-dark.png,results-mobile.png,focus-and-status.json}. Approved at 90cbe643 and merged to main as 6a1ca11eeaf5.",
+  "deviations": [
+    "Added new markup (the close form/button at apps/docs/src/components/islands/SearchDialog.astro:44-58) although the dispatch brief described the file as STYLING ONLY, because AC-1 and AC-4 require a close action with checkable bounds and click-closes-dialog behavior that no existing element provided; it adds zero JS and changes no keyboard/focus/navigation logic, and review approved it.",
+    "Header.astro was in write_allowed but needed no change, so the landed diff is narrower than the allowlist.",
+    "focus-and-status.json records loadingSeen:false — the genuine first Pagefind initialization completes faster than one evaluate round-trip on localhost even under fast sampling with no imposed delay, so the loading state was never frame-captured (the task's 'Loading may be brief' carve-out covers the honest observation; the transition to hidden and control reachability are still asserted).",
+    "The biome gate was verified with the direct binary ./node_modules/.bin/biome ci (exit 0) because pnpm exec biome OOMs locally ('Linter process terminated abnormally') — the pre-commit hook's own pnpm lint run passed, so CI parity holds.",
+    "The three fallow size/complexity findings on the AC callbacks are silenced with the repo idiom '// fallow-ignore-next-line complexity' (tests/sprint-05-orient-search/search-presentation.spec.ts:398,493,598,684), matching the search-contract.spec.ts precedent."
+  ],
+  "concerns": [
+    "Any display value set on .search-dialog__panel overrides the UA's closed-dialog display:none and renders (and pointer-intercepts mobile taps with) the closed modal — the :not([open]) guard at apps/docs/src/components/islands/SearchDialog.astro:126-129 is load-bearing and must survive future restyling.",
+    "Runtime-built island DOM carries no data-astro-cid and the result anchors carry no class at all, so scoped or class-based selectors silently never match them; every result/group style must stay a :global() selector anchored on the template-owned .search-dialog__scroll (pattern documented in the component comment at apps/docs/src/components/islands/SearchDialog.astro:176-180).",
+    "Chromium reports outline-width '3px' (resolved 'medium') even when outline-style is 'none', so width-only focus-ring assertions pass vacuously against unstyled elements — assert outline-style 'solid' first, as this spec does.",
+    "Sibling-worktree contention on port 4321 is the top e2e flake source: astro preview silently hops ports when the strict guard loses a sub-second race, and the run then tests a foreign stale server; this cycle needed staleness-detecting retry loops (three runs were discarded before a clean one)."
+  ],
+  "findings": [
+    "ORI-AST-004's scoped .search-dialog__result*/__group-label rules were dead CSS from the day they landed — createElement-built nodes carry no scoping attribute and result anchors have no class — so the trunk dialog rendered results with UA default styling until this task's :global() replacement.",
+    "Consequently ORI-AST-004's 15/15 green never exercised visual result styling; behavior proofs were unaffected, but any visual assumption inherited from that run was untested until ORI-VIS-003's spec.",
+    "The fallow audit reports 68 unused dependencies (apps/example, apps/harness) that are pre-existing and non-blocking — prior commits land with them — so a red Dependencies section in righthook output is not by itself a blocker.",
+    "The docs build emits 7 external-link 404 warnings (GitHub source links on main that do not exist yet) on every build including trunk; they are warnings, not errors, and need no action from this sprint's tasks."
+  ],
+  "scope_impact": [
+    {
+      "target": "ORI-VIS-005",
+      "found": "Inherits the now-working result/group presentation selectors, the close action, and the two load-bearing CSS guards (closed-panel display, loading [hidden]) in apps/docs/src/components/islands/SearchDialog.astro.",
+      "change": "Treat the component comment block (lines 13-21 and 176-180) as the contract: keep runtime-node styles as :global() anchored on .search-dialog__scroll, keep the :not([open]) display guard, and do not reintroduce outline:none on the input."
+    },
+    {
+      "target": "ORI-AST-010",
+      "found": "The search flow's visible surface now includes a real close control (data-search-close, native method=dialog path) alongside Escape and backdrop dismissal, and styled active selection the flow's screenshots will show.",
+      "change": "When proving the integrated flow, exercise the close-action path too (it shares the island's close event, so focus restoration already covers it) and assert against the styled dialog rather than bare UA rendering."
+    },
+    {
+      "target": "ORI-CONT-004",
+      "found": "Content review will see search results with the new presentation (group labels, kind badges, snippets, counts) whose readability evidence is already committed under tests/sprint-05-orient-search/evidence/search/.",
+      "change": "Reuse the evidence conventions (results-light/dark/mobile.png + focus-and-status.json with run-identity hashes) rather than recapturing ad hoc."
+    },
+    {
+      "target": "ORI-CI-004",
+      "found": "CI will run the new search-presentation.spec.ts lane (4 ACs x 2 projects, ~15s warm) whose green depends on a fresh dist build; stale-dist runs fail with the stale-server signature described in concerns.",
+      "change": "Keep the ordered build-then-test chain and CI=true (reuse off) exactly as the lane prescribes; if port collisions appear in CI, the retry-with-staleness-detection pattern from this cycle is the workaround."
+    },
+    {
+      "target": "GATE:FLOW-SHELL-07-cmdk-open-search-navigate",
+      "found": "The flow's visible surface gained the close control and styled states, but no locked flow command, step, or primary ownership changed (this task holds primary:false only).",
+      "change": "Nothing to change in the lock; the primary owner's proof may optionally add the close-action observation."
+    }
+  ],
+  "feedback": [
+    "A dispatch brief describing a file as STYLING ONLY while its ACs require an observable, clickable close action with geometry bounds sets the implementer up for a mid-cycle judgment call — state markup-composition allowances explicitly in the brief next time.",
+    "Consider giving each parallel worktree its own preview port (a docs-preview.ts harness change, outside this task's scope) — the shared 4321 with silent astro port-hopping wasted three run attempts this cycle and will keep biting sibling lanes."
+  ]
+}
