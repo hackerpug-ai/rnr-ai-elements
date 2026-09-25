@@ -1,0 +1,62 @@
+{
+  "runId": "7408c708-0d19-446a-811c-7c1df68f743e",
+  "variant": "duplicate-tutorial",
+  "command": "pnpm --filter @rnr-ai-elements/docs build",
+  "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/duplicate-tutorial-7408c708",
+  "targets": [
+    {
+      "path": "apps/docs/src/content/docs/ori-ci-002-second-tutorial.mdx",
+      "action": "add",
+      "baselineSha256": "",
+      "mutatedSha256": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
+      "restoredSha256": "removed"
+    },
+    {
+      "path": "scripts/docs-data/authored-snippets.ts",
+      "action": "edit",
+      "baselineSha256": "3309881d9803e1e926d13a1e071857a65681ee927bba17dd10d41b1a4f7e231a",
+      "mutatedSha256": "cafd2680955a25f3f761c84c686fb5e7b0f8f42698544078c8b5fe67c1a16f77",
+      "restoredSha256": "3309881d9803e1e926d13a1e071857a65681ee927bba17dd10d41b1a4f7e231a"
+    }
+  ],
+  "executable": null,
+  "failingBuild": {
+    "exitCode": 1,
+    "signal": null,
+    "durationMs": 5299,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build"
+    ],
+    "diagnostic": "[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92\n[docs-data] single-tutorial: item \"tutorial-cardinality\" the published tutorial sources are [\"ori-ci-002-second-tutorial\", \"quickstart\"]; observed 2 versus 1"
+  },
+  "downstreamSuppression": {
+    "astroStarted": true,
+    "searchIndexStarted": false,
+    "checkLinksStarted": false
+  },
+  "restoration": {
+    "byteExact": true
+  },
+  "restoredBuild": {
+    "exitCode": 0,
+    "durationMs": 36191,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index",
+      "check:links"
+    ],
+    "dist": {
+      "docs/introduction/index.html": true,
+      "pagefind/pagefind-entry.json": true,
+      "pagefindNonEmpty": true
+    }
+  }
+}

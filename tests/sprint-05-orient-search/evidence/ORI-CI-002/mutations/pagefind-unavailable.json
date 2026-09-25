@@ -1,0 +1,62 @@
+{
+  "runId": "7408c708-0d19-446a-811c-7c1df68f743e",
+  "variant": "pagefind-unavailable",
+  "command": "pnpm --filter @rnr-ai-elements/docs build",
+  "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708",
+  "targets": [
+    {
+      "path": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/ori-ci-002-pnpm-cache/dlx/59e8c6514ca8f73d48af8d03b597541094501606e79c5c4cd362c0ffc92597e5/1a0da520e18-69c4/node_modules/.pnpm/@pagefind+darwin-arm64@1.5.2/node_modules/@pagefind/darwin-arm64/bin/pagefind_extended",
+      "action": "rename",
+      "baselineSha256": "111c39d20165385df77736c80ddace6593d01d46d0758d541f5d3bafff0cddd2",
+      "mutatedSha256": "unavailable (renamed away)",
+      "restoredSha256": "111c39d20165385df77736c80ddace6593d01d46d0758d541f5d3bafff0cddd2"
+    }
+  ],
+  "executable": {
+    "path": "/Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/ori-ci-002-pnpm-cache/dlx/59e8c6514ca8f73d48af8d03b597541094501606e79c5c4cd362c0ffc92597e5/1a0da520e18-69c4/node_modules/.pnpm/@pagefind+darwin-arm64@1.5.2/node_modules/@pagefind/darwin-arm64/bin/pagefind_extended",
+    "baselineSha256": "111c39d20165385df77736c80ddace6593d01d46d0758d541f5d3bafff0cddd2",
+    "restoredSha256": "111c39d20165385df77736c80ddace6593d01d46d0758d541f5d3bafff0cddd2",
+    "privateInode": 1334158789,
+    "storeInodeDifferent": true
+  },
+  "failingBuild": {
+    "exitCode": 1,
+    "signal": null,
+    "durationMs": 32770,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index"
+    ],
+    "diagnostic": "[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92\n[search-index] 63 expected destinations (56 items, 7 docs) derived from the real sources\n[search-index] all expected destinations emitted under /Users/justinrich/.cache/agent-scratch/ori-ci-002-scratch/pagefind-unavailable-7408c708/apps/docs/dist\n    throw new Error(`[search-index] pagefind exited ${index.status}\\n${index.output}`);\nError: [search-index] pagefind exited 1\nFailed to run pagefind via the npx wrapper: Error: Failed to install either of [pagefind_extended, pagefind]. Most likely the platform darwin-arm64 is not yet a supported architecture."
+  },
+  "downstreamSuppression": {
+    "astroStarted": true,
+    "searchIndexStarted": true,
+    "checkLinksStarted": false
+  },
+  "restoration": {
+    "byteExact": true
+  },
+  "restoredBuild": {
+    "exitCode": 0,
+    "durationMs": 52369,
+    "stagesStarted": [
+      "registry:build",
+      "gallery:manifest",
+      "prebuild",
+      "check:snippets",
+      "astro build",
+      "search:index",
+      "check:links"
+    ],
+    "dist": {
+      "docs/introduction/index.html": true,
+      "pagefind/pagefind-entry.json": true,
+      "pagefindNonEmpty": true
+    }
+  }
+}
