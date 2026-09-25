@@ -1,0 +1,35 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "3dbf6818c177e4b1cad0b687f150baec50d729ab",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Fresh aggregate at tip 3dbf6818: 12/12 (CI=true, owned strict preview, port 4321 verified free first). AC-1 selection 3/3 across chromium-desktop/mobile/nojs. Spec asserts exactly one [data-token-table], all six column headers, >=10 paired Light/Dark oklch rows; committed computed-values.json records total 20 / paired 20 on desktop AND no-JS, --primary name with distinct contract pair oklch(0.205 0 0)/oklch(0.922 0 0), docsOnlyCount exactly 2. No-JS branch asserts the served static bytes contain primaryLight/primaryDark/DOCS-ONLY (not a shell waiting on script). theming-light.png / theming-dark.png / theming-nojs.png inspected: real full-page product renders with readable paired columns in both themes."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "AC-2 selection 2/2 (desktop+mobile per the AC matrix). Real header control driven (button[aria-label=\"Toggle dark and light theme\"]) through light->dark->light; swatch computed background asserted exact at both ends (oklch(1 0 0) <-> oklch(0.145 0 0)); transitions counted = 2; both reference columns re-asserted after each toggle. Committed observations [\"oklch(1 0 0)\",\"oklch(0.145 0 0)\",\"oklch(1 0 0)\"], transitions 2. The chromium-nojs project registers the real fallback (static references readable, swatch chip visible) — a genuine assertion branch, not a runtime skip."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "AC-3 selection 2/2. Live --code-background cell asserted exactly oklch(0.97 0 0) light / oklch(0.235 0 0) dark via the real theme-toggle island, and the EC frame's computed background is exactly rgb(255,255,255) in light, changes off light in dark (observed rgb(36,41,46)), and returns exactly to light on toggle-back — repaint symmetry proven both directions. DOCS-ONLY labels persist in dark (2 labels, text verified 'DOCS-ONLY'). Assumption adjudicated: pinning the dark EC surface to an exact literal would require editing EC theme files outside the write allowlist; exact token-row values plus the exact-light/exact-return EC assertions are a sound alignment proof without those edits. CodeBlock.astro untouched is correct — no change was needed, verified live."
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "AC-4 selection 3/3. JS-enabled projects assert pageOverflowPx === 0 exactly; mobile additionally asserts table wider than wrapper (committed geometry: scrollWidth 938 vs clientWidth 345), afterScrollLeft 593 > 0, and the --primary name cell pinned inside wrapper bounds (namePinnedInside true). Visual crop of theming-mobile-dark.png at native resolution confirms token names pinned left with value columns scrolled into view. No-JS project uses locator-only containment assertions (page.evaluate hangs with JS disabled — documented ORI-CONT-005 finding) with committed diagnostic wrapperBox/proseBox inside the 1280 viewport; static --primary values and both DOCS-ONLY labels asserted visible."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Approving ORI-VIS-002 at real tip 3dbf6818c177e4b1cad0b687f150baec50d729ab (note: the brief's full SHA 3dbf6818c42ba... was a mis-expansion — correct short prefix, wrong tail; rev-parse verified). TokenTable now composes ORI-AST-007's DataTable rich-cell slot with the interim stacked-card CSS deleted, and DataTable's wrapperClass/tableAttrs passthroughs are genuinely additive (zero client: directives added; no new island; the em-dash Current-cell placeholder is honest — theme-toggle.ts:53 overwrites it with the resolved color when the island runs, and it truthfully remains in no-JS output; swatches resolve var() only, no inline palette). Locked selectors resolve to the same elements: no landed spec selects table.token-table — lanes select .token-table__scroll and [data-token-table], both preserved by the passthroughs; regression lanes reading-presentation 12/12, theme-toggle flow 3/3, registry-ledger 12/12 all green fresh, and scripts/packages/authored content show an empty diff. Fresh chain: pnpm install, registry/gallery/prebuild generation, docs build exit 0 ([build] Complete!), typecheck exit 0, scoped biome exit 0 via direct binary (5 warnings + 7 infos all pre-existing in authored-snippet-gate.test.ts and live-example-proof.test.ts — untouched by this diff; correctly flagged-not-fixed since those files are outside the allowlist). Scope is exact: product+test writes match the allowlist, plus sanctioned .tmp RED/GREEN phase captures (sprint convention) and extra PNGs inside the allowed evidence directory. Two non-blocking notes: (1) committed evidence identity.sourceSha records parent c28e40c2 because the green run preceded the single code+evidence commit — my independent rerun at the tip reproduces 12/12, superseding that; (2) pre-existing, out-of-scope: tests/sprint-04-generated-reference/data-table-contract.test.ts REF-006 fails at BOTH base 1cdbc303 and tip because its regex requires non-optional 'rows:' while ORI-AST-007's earlier rich-cell landing made rows optional ('rows?: readonly' at base) — outside this task's write_allowed and not among its gates; worth a follow-up fix task."
+}
