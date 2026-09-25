@@ -17464,6 +17464,11 @@
         "state": "landed",
         "task": "FIX-ORI-CI-001-1"
       },
+      "b909e5a743a6b4d11f636276601869957b23b5bd938a7a298505d765821890c2": {
+        "kind": "complete-task",
+        "state": "landed",
+        "task": "ORI-CONT-006"
+      },
       "c21d20cf290426969a5b21688f8d3507849e85cc9fa12188755197739f0e4c8e": {
         "kind": "complete-task",
         "state": "landed",
@@ -21982,13 +21987,89 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-005"
     },
     "ORI-CONT-006": {
+      "approved_sha": "1ae56d27736cdd2ab0424b24cc02379b16ef83a0",
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-CONT-006",
       "commit_sha": null,
+      "completion": {
+        "approved_sha": "1ae56d27736cdd2ab0424b24cc02379b16ef83a0",
+        "before_head": "310683fa97fd28715acfa6354e368f253bdb457b",
+        "desired_sha256": "e0141a0bd6caf3c672c6db618c80d6950116cc9d47c80c312f07f2d2a9898809",
+        "expected_task_sha256": "3d75c4fe1b114d92f381c7db655759b2624e59ffe15ad5b023af0d644892ab51",
+        "handoff_sha256": "2f5b9a5e5076baa20806138d7f73890ffc5c85a817d5c89f48e383c0783077cf",
+        "landed_on": "main",
+        "landed_trunk_sha": "cc770fd9bd29f948ce8d86c9196f7169c84c48be",
+        "metadata_commit_sha": "cc770fd9bd29f948ce8d86c9196f7169c84c48be",
+        "operation_id": "b909e5a743a6b4d11f636276601869957b23b5bd938a7a298505d765821890c2",
+        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md"
+      },
       "cycle": 0,
       "depends_on": [
         "ORI-CI-002"
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md",
+      "handoff": {
+        "path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CONT-006-1ae56d27736cdd2ab0424b24cc02379b16ef83a0.json",
+        "payload": {
+          "commit_sha": "1ae56d27736cdd2ab0424b24cc02379b16ef83a0",
+          "concerns": [
+            "criteriaDiagnostics pins the four English phrases ('build green', 'link check green', 'snippet gate green', 'content-standards conformance') and requires them verbatim in both TR-12 and CONTRIBUTING.md: rewording either file without keeping the phrases in sync fails the lane loudly (deliberate fail-closed coupling to a CONSTITUTION-stability file, but maintainers will hit it on any prose reword).",
+            "currencyDiagnostics checks loose markers ('behavior', 'reviewer', 'accura', 'description', the registry path): a differently-worded weaker rule could satisfy the markers, so the semantic strength of the currency rule rests on the recorded rendered review plus the independent techwriting-reviewer pass, not on the test alone.",
+            "The link-check 'Edit this page → GitHub blob/main' 404-until-merge warning class (7 warnings, fail soft) remains open on trunk — pre-existing, documented by ORI-CI-002 and ORI-CONT-003 before this task, and still owned by no fix task."
+          ],
+          "deviations": [
+            "RED evidence is the missing-doc state rather than failing assertions: with CONTRIBUTING.md parked, the three content ACs fail with '[ORI-CONT-006] content failure: CONTRIBUTING.md is missing — the TR-12 docs contribution contract requires it' while ORI-CONT-006-real-docs-checks passes, because it proves the doc-independent commands (TDD_MODE is skipped for this task, so no assertion-level RED exists to capture).",
+            "The task's RUNTIME COMMANDS gate 'pnpm lint' cannot run in this environment (linter OOM, exit 254); the recorded lint gate is ./node_modules/.bin/biome ci ., exit 0 on touched files after one cosmetic import-wrap auto-format of the test file.",
+            "AC-2's freshness proof deletes apps/docs/dist (untracked generated output, under the shared FUSE-01-docs-build lock) before spawning the build, so artifact existence proves the current run produced it — a write the task file did not spell out.",
+            "Seeded stdout captures require running the lane with --reporter=verbose: vitest 4's default reporter in this environment hides console.log, so the recorded green runs deviate from the bare VERIFY command by that flag."
+          ],
+          "done": "Landed the complete TR-12 docs contribution contract: CONTRIBUTING.md at the repository root (new file) states the four independent docs-PR criteria — build green, link check green, snippet gate green, content-standards conformance — with the three exact pnpm commands in execution order and a concrete expected result for each, plus the registry-description currency rule (a behavior-changing PR updates that registry item's description in packages/registry/registry.json and the reviewer judges sentence accuracy; no gate proves prose accuracy), linking the canonical standards, terminology-lock and page-template anchors instead of duplicating them. The proof lane tests/sprint-05-orient-search/contributing-content.test.ts runs four named integration cases: criteria pinned from TR-12 itself rather than the doc under test, the three documented commands executed as real pnpm subprocesses with the dist freshness proven by deleting apps/docs/dist before the build and binding the link gate's read to that exact dist via tree digest (b96e4f84…), the currency rule asserted over the real registry (item shimmer captured), and every local link plus both fragment anchors resolved from disk; mutation controls over real copies in owned scratch (four criterion removals, the check:snippet command mutation, the currency-section removal) all fail with named diagnostics while originals stay byte-identical. Evidence with hashes, receipts, observed diagnostics and the rendered review lives at tests/sprint-05-orient-search/evidence/ORI-CONT-006-content-review.md; captures under .tmp/ORI-CONT-006/cycle-1/. Gates: lane 4/4 green, build/check:snippets/check:links exit 0 (69 html files, 1697 links, 0 errors, 7 pre-existing soft warnings), typecheck exit 0, biome ci exit 0 on touched files. Merged to main as 310683fa97fd28715acfa6354e368f253bdb457b.",
+          "feedback": [
+            "Docs tasks whose evidence requires seeded stdout captures should pin --reporter=verbose in the VERIFY command, since vitest 4's default reporter hides console.log and a bare run silently loses the capture.",
+            "Task RUNTIME COMMANDS should stop listing pnpm lint as a gate while it dies locally with a linter OOM — either fix the memory issue or name the biome-binary invocation lanes actually run.",
+            "Process correction from this handoff: my completion report expanded the 7-char prefix 1ae56d27 into a fabricated SHA tail; handoff SHAs must always come from git rev-parse at commit time, never from memory."
+          ],
+          "findings": [
+            "pnpm --filter @rnr-ai-elements/docs build already chains all seven ordered stages including check:snippets and check:links (apps/docs/package.json:11), so CONTRIBUTING's three commands re-run two gates standalone after the build — about a minute of duplicated work that buys independent receipts; the docs now say 'in execution order', which is accurate.",
+            "Vitest 4 in this repo swallows console.log under the default reporter, which affects any sprint lane whose evidence contract requires seeded stdout captures.",
+            "Local pnpm lint is broken by linter OOM in this environment (exit 254, 'Linter process terminated abnormally'), affecting every lane that lists it as a gate; the biome binary at ./node_modules/.bin/biome works."
+          ],
+          "scope_impact": [
+            {
+              "change": "When UC-EXT-03's broader contribution documentation is planned, link CONTRIBUTING.md as the docs-PR criteria section rather than restating the four criteria, and extend CONTRIBUTING.md only through the task that owns those topics.",
+              "found": "CONTRIBUTING.md now exists but covers only the fixed TR-12 docs-PR criteria; UC-EXT-03's broader contribution topics (source-of-truth map, fan-out, release process) remain undocumented by design.",
+              "target": "ROADMAP"
+            },
+            {
+              "change": "Route the warning class to a small future fix (point Edit-on-GitHub at the PR branch or suppress until merge) instead of leaving it re-documented per task.",
+              "found": "The 7 external-link warnings from the 'Edit this page → GitHub blob/main' 404-until-merge class fail soft on every build and are re-documented in this task's evidence.",
+              "target": "ROADMAP"
+            }
+          ],
+          "task": "ORI-CONT-006"
+        },
+        "provenance": {
+          "dispatch_handle": "ori-cont-006-impl@session-a251722f",
+          "response_id": "digest:2f5b9a5e5076baa20806138d7f73890ffc5c85a817d5c89f48e383c0783077cf",
+          "response_receipt": {
+            "agent": "techwriting-implementer",
+            "dispatch_handle": "ori-cont-006-impl@session-a251722f",
+            "payload_sha256": "2f5b9a5e5076baa20806138d7f73890ffc5c85a817d5c89f48e383c0783077cf",
+            "response_id": "digest:2f5b9a5e5076baa20806138d7f73890ffc5c85a817d5c89f48e383c0783077cf",
+            "session_id": "ori-cont-006-impl@session-a251722f"
+          },
+          "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/handoffs/ORI-CONT-006-1ae56d27736cdd2ab0424b24cc02379b16ef83a0-884473ce72deea80602741d20892e0ad2d7554bde95e3c88294974605f5d9c59.response.json",
+          "response_receipt_sha256": "884473ce72deea80602741d20892e0ad2d7554bde95e3c88294974605f5d9c59",
+          "resume_receipt": null,
+          "resume_receipt_path": null,
+          "resume_receipt_sha256": null,
+          "session_id": "ori-cont-006-impl@session-a251722f"
+        },
+        "sha256": "2f5b9a5e5076baa20806138d7f73890ffc5c85a817d5c89f48e383c0783077cf"
+      },
+      "handoff_delivery": {
+        "response_id": "digest:2f5b9a5e5076baa20806138d7f73890ffc5c85a817d5c89f48e383c0783077cf",
+        "status": "received"
+      },
       "implementer": "techwriting-implementer",
       "implementer_session": {
         "dispatch_handle": "ori-cont-006-impl@session-a251722f",
@@ -22004,11 +22085,30 @@
         "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md",
         "task_sha256": "3d75c4fe1b114d92f381c7db655759b2624e59ffe15ad5b023af0d644892ab51"
       },
+      "landing": {
+        "approved_sha": "1ae56d27736cdd2ab0424b24cc02379b16ef83a0",
+        "implementation_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "merge_sha": "310683fa97fd28715acfa6354e368f253bdb457b",
+        "review_receipt": {
+          "agent": "techwriting-reviewer",
+          "dispatch_handle": "ori-cont-006-rev@session-a251722f",
+          "payload_sha256": "dd25ab4514c8a743e22041203706355e7f594922b82ccd46f318634d28a2a302",
+          "response_id": "digest:dd25ab4514c8a743e22041203706355e7f594922b82ccd46f318634d28a2a302",
+          "session_id": "ori-cont-006-rev@session-a251722f"
+        },
+        "review_receipt_sha256": "f65c81ba9f9e3d5b0f8c2ab93fc6342aea98989394d1247296d7628f79f0d8b2",
+        "reviewer": "techwriting-reviewer",
+        "reviewer_dispatch_handle": "ori-cont-006-rev@session-a251722f",
+        "reviewer_response_id": "digest:dd25ab4514c8a743e22041203706355e7f594922b82ccd46f318634d28a2a302",
+        "reviewer_session": "ori-cont-006-rev@session-a251722f",
+        "trunk": "main",
+        "verdict_sha256": "dd25ab4514c8a743e22041203706355e7f594922b82ccd46f318634d28a2a302"
+      },
       "last_findings": null,
-      "merge_sha": null,
+      "merge_sha": "310683fa97fd28715acfa6354e368f253bdb457b",
       "points": 1,
       "reviewer": "techwriting-reviewer",
-      "status": "in_progress",
+      "status": "completed",
       "wave": 13,
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-006"
     },

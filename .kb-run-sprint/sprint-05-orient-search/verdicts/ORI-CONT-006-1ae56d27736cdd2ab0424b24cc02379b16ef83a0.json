@@ -1,0 +1,36 @@
+{
+ "verdict": "APPROVED",
+ "commit_sha": "1ae56d27736cdd2ab0424b24cc02379b16ef83a0",
+ "reviewer": "techwriting-reviewer",
+ "requirements": [
+  {
+   "id": "AC-1",
+   "satisfied": true,
+   "evidence": "CONTRIBUTING.md:5-12 states the four independent criteria (build green / link check green / snippet gate green / content-standards conformance) and CONTRIBUTING.md:18-22 the three exact commands in execution order. The test's CRITERIA_PHRASES are pinned to TR-12 (12-content-standards.md:37 states the identical line, regex-verified at test line 44-45/66) and cross-checked against apps/docs/package.json script bindings, never derived from the doc under test. The five negative controls (four criterion-line removals + check:snippets->check:snippet) mutate real copies in mkdtemp scratch and each fails with a named diagnostic (contributing-content.test.ts:267-298; observed diagnostics in .tmp/ORI-CONT-006/cycle-1/mutation-check-snippet.txt); the unchanged copy passes and the source re-reads byte-identical. I ran the full lane myself: 4/4 pass, exit 0."
+  },
+  {
+   "id": "AC-2",
+   "satisfied": true,
+   "evidence": "Independently reran `pnpm exec vitest run tests/sprint-05-orient-search/contributing-content.test.ts --reporter=verbose` (exit 0, 75s). AC-2 deletes apps/docs/dist under the FUSE-01 lock, spawns the three documented commands as real pnpm subprocesses (spawnSync, argument-array, contributing-content.test.ts:232-245), and my run printed the receipts [{build, exit 0}, {check:snippets, exit 0}, {check:links, exit 0}] with distDigest b96e4f840aa9bcccd11d194c394e75cc5cfbb7dde0e1d05fbcd813f83019928e \u2014 identical to the digest recorded in the implementer's evidence, proving the link gate read exactly the dist this build produced (digest re-taken after check:links, test line 352). apps/docs/dist/docs/introduction/index.html produced; snippet receipt ends with \"errors\": [] (verified in .tmp/ORI-CONT-006/cycle-1/check-snippets.txt); link summary matches the real format in scripts/docs-data/check-dist-links.ts:483-487."
+  },
+  {
+   "id": "AC-3",
+   "satisfied": true,
+   "evidence": "CONTRIBUTING.md:28-32 states the rule: behavior change of a registry item -> update that item's description in packages/registry/registry.json in the same PR, reviewer judges accuracy, and 'No gate proves a sentence accurate' (explicitly not claiming CI proves prose accuracy). Test requires the five contract markers (registry path, description, behavior, reviewer, accura) and captures a real registry item (shimmer, verified against packages/registry/registry.json items[0]). Negative control removes the whole currency section in a scratch copy and fails with description-currency diagnostics (.tmp/ORI-CONT-006/cycle-1/mutation-currency.txt); original restored byte-identical (sha256 336c5b17...ceca77 re-verified by me against the working tree)."
+  },
+  {
+   "id": "AC-4",
+   "satisfied": true,
+   "evidence": "Every local CONTRIBUTING.md link resolves from disk (linkDiagnostics ran green in my lane run); the three canonical targets apps/docs/package.json, packages/registry/registry.json and .spec/prds/docs-site/11-technical-requirements/12-content-standards.md are linked, and both fragments resolve against real headings I grep-verified (12-content-standards.md:14 'Terminology lock (one canonical term per concept)' and :25 'Page templates (authored)'). Standards are linked, not duplicated; no onboarding lesson. Evidence file records quoted checklist text, the shimmer registry item, concrete expected results for all three commands, and an honest rendered-review section; sha256 bindings for CONTRIBUTING.md and the test file match my working-tree hashes exactly."
+  }
+ ],
+ "flows": [],
+ "stubs": [],
+ "verification": {
+  "typecheck": "pass",
+  "lint": "pass",
+  "tests": "pass"
+ },
+ "summary": "APPROVED. I independently reran the full integration lane (4/4 pass, exit 0, 75s \u2014 AC-2 spawns the three documented commands as real pnpm subprocesses, deletes dist first, and the post-links dist tree digest matches the implementer's recorded digest exactly), pnpm typecheck (exit 0), and biome ci over the repo plus biome check on the three touched files (exit 0, clean). No mocks, skips, canned output, or test-only seams anywhere in the test file \u2014 mutations run over real copies in owned mkdtemp scratch and the original CONTRIBUTING.md re-reads byte-identical after each. Every factual claim in CONTRIBUTING.md matches the product: the seven-stage build chain equals the actual build script in apps/docs/package.json, the snippet receipt really ends with \"errors\": [], the link summary/soft-external-fail behavior matches scripts/docs-data/check-dist-links.ts, and the currency rule names the registry path, the description field, and reviewer judgment while explicitly denying that CI proves prose accuracy. Quadrant-pure how-to: scope and non-scope up front, PR defined on first use, imperative steps with concrete expected results, canonical links instead of duplicated standards, terminology-lock terms (registry item, description) used consistently. RED evidence is the correct missing-doc content-failure form (3 fail with named diagnostics, not module-load errors) and AC-2 passing in RED is by-design and sound: its commands are pinned to apps/docs/package.json, not to the doc. Two non-blocking notes for a future polish pass, neither rising to a fix: (1) CONTRIBUTING.md:24 'a summary line ending in 0 error(s)' \u2014 the real line ends with the warning count ('...0 error(s), 7 warning(s)'); 'reporting 0 error(s)' would be exact, though the adjacent fail-soft clause already prevents misreading. (2) The four independent criteria are formatted as a numbered list where bullets would technically fit non-sequential items; as a submission checklist the numbering is a defensible convention. Committed .tmp/ORI-CONT-006 evidence follows the established repo convention (FAM-001/002 precedent) and the writeProhibited set is untouched \u2014 only the three deliverables plus owned evidence changed.",
+ "note": "commit_sha corrected from a wrong full expansion of the same 7-char prefix (1ae56d27) reported by implementer and echoed by reviewer; the reviewer verified the branch tip, which is this commit."
+}
