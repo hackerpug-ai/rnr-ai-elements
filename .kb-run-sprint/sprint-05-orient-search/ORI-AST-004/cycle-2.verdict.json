@@ -1,0 +1,80 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "feab34bd4f5b7ad648024afcdf96f708146fb8fd",
+  "reviewer": "astro-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independently replayed the locked command via run_flow --expect green at head=feab34bd (15/15, exit=0). My own captures (.tmp/ORI-AST-004/captures/chromium-desktop-{ac-1,locked-destinations,locked-flow}.json): all 8 pinned destinations return HTTP 200 with real h1 titles (5 items incl. /components/streamdown + 3 docs incl. /docs/owns-vs-does-not-own); observedCategories = [pages, components, ui, lib]; renderMarkdown and dev client each return /docs/owns-vs-does-not-own/ plus /components/ item results; nearBottomThreshold finds /components/conversation; the verdict phrase is read from the emitted dist HTML (spec reads apps/docs/dist/components/conversation/index.html) and its distinctive theming phrase finds the originating item. Index is the real Pagefind CLI output (I re-ran scripts/docs-data/search-index.ts: byte-identical pagefind-entry.json, db394cbd..., 64 pages covering all 63 fail-closed expected destinations).",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Locked-flow capture from my run: 0 /pagefind/ requests before activation (after browse + 5s wait + hover + two soft navigations); islandOpenMs=0 (in-page clock, <=300) and harnessDelta=381ms; exactly 1 same-origin /pagefind/pagefind.js module request ever; first query loads real index chunks (73 total pagefind requests across the run); unchanged reopen adds 0 requests and preserves the query; after ClientRouter soft navigation the platform shortcut opens exactly 1 dialog with still-exactly-1 module request (module-level pagefindPromise in search-dialog.ts:65 retains initialization).",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "1 native dialog[aria-modal=true] with focused search input; aria-live status count equals actual result count (3==3 for streamdown); ArrowDown then ArrowUp each change the active result exactly one step (cycle-2 per-instance wiring guard at search-dialog.ts:136-137 fixes the relocation double-connectedCallback that moved selection two steps); Enter closes the dialog and reaches /components/streamdown with HTTP 200 and matching h1; Escape leaves 0 open dialogs and restores the invoker's focus; one shortcut opens one dialog (realm-level keydown guard, search-dialog.ts:425-432). chromium-nojs project runs the real JavaScript-disabled surface: trigger and [data-search-slot] hidden, /docs/* and /registry return 200 with substantive [data-ledger] content containing 'nativewind', zero Pagefind requests.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-4",
+      "satisfied": true,
+      "evidence": "Fresh run-specific query (zzqx-no-match-*) yields 0 results with a visible empty-state message, then streamdown restores 3 results with a nonzero announced count; the literal query '<b data-s05-query=\"literal\">streamdown</b>' remains the input's literal value with 0 b[data-s05-query] nodes and 0 data-s05-query attributes created (rendering is createElement/textContent only, search-dialog.ts:258-332); offline case uses real context.setOffline with no route interception: opening 11ms (<=300), 1 captured failed /pagefind/ request, exactly 1 visible error message, Escape restores the invoker, and a fresh online context searches streamdown and reaches /components/streamdown at HTTP 200 (failed loader promise is un-poisoned for retry, search-dialog.ts:73-76).",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Same locked-command run as AC-1: 8/8 destinations HTTP 200; boundary, prop (nearBottomThreshold), and emitted-HTML verdict searches all match their real sources.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Same locked-command run as AC-2: <=300ms in-page open, lazy first-activation load, initialization retained across reopen and soft navigation.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Same locked-command run as AC-3: keyboard selection/navigation/invoker focus proven; no-JS lane proves usable navigation with zero Pagefind and a hidden inert trigger.",
+      "fix": "",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-4",
+      "satisfied": true,
+      "evidence": "Same locked-command run as AC-4: truthful empty and real offline error states; literal query creates no DOM; normal search recovers.",
+      "fix": "",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [
+    {
+      "id": "FLOW-SHELL-15-search-contract-before-recovery",
+      "gate_steps": [10],
+      "played": true,
+      "enacts_step": true,
+      "judged": "pass",
+      "evidence": "Step 10 words: 'Exercise the focused search contract on the real built index before custom-404 composition. Require zero initial Pagefind requests, dialog opening within 300ms, input focus, keyboard navigation, five item and three docs destinations, and indexed nearBottomThreshold and Conversation verdict text. Verify no-match recovery, literal HTML-shaped query rendering without created elements, soft-navigation reuse, unchanged-query reopen without extra loading, and Escape focus restoration.' I played the flow twice via run_flow.py --expect green at head=feab34bd: exit=0 artifact_fresh=True surface_ok=True coldboot_ok=True red_proof_ok=True, 15/15 across chromium-desktop/mobile/nojs. The spec enacts exactly this step, not a neighbor: zero-initial-requests = locked step 1; 300ms open + input focus = step 2; keyboard navigation = step 5; 5 item + 3 docs destinations = steps 8-9; nearBottomThreshold + Conversation verdict text = step 10 (verdict phrase read from the actual emitted dist HTML); no-match recovery = step 11; literal HTML query = step 12; soft-navigation reuse = step 6; unchanged-query reopen = step 4; Escape focus restoration = step 13. No 404 leg (correctly owned by ORI-AST-009/010)."
+    }
+  ],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "summary": "Cycle 2 approves. The dialog is a real vanilla fifth island over the real Pagefind index: same-origin lazy import retained at module scope, createElement/textContent-only rendering with per-result origin validation, monotonic stale-completion discards, and a callable activateSearch seam for ORI-AST-009. The two cycle-2 root-cause fixes are sound and minimal (per-instance dataset.wired guard against the relocation re-fired connectedCallback that double-wired keydown listeners; per-instance settled-witness reset across ClientRouter swaps) and the cycle-2 spec changes are selector adaptations to the merged docs-owned streamdown destination that are equivalent-or-stronger (role-based h1, [data-pagefind-body] and [data-ledger] regions instead of bare main). I independently reproduced: canonical run_flow green twice at the review commit (15/15, all four gate flags true), vitest search-index 5/5 (including the fail-closed removed-destination case), island-budget 3/3 (five registrations, zero framework imports), typecheck exit 0, biome ci exit 0 via the direct binary (the pnpm-wrapper 'Linter process terminated abnormally' warning is a documented local spawn artifact), and a manual indexer re-run producing a byte-identical pagefind-entry.json (64 pages = 63 fail-closed expected destinations + the merged docs-owned /components/streamdown page). Documented assumptions adjudicated as sound: the 64th page sits outside the 56-item derivation because it is another task's approved merged static page (correctly outside this task's write_allowed), accommodated by the indexer's pageCount>=expected check; cycle-1's committed proof.red (functional RED at head=313bddda+dirty, @@GATE-EXIT=1@@, 10/15 failing on the missing search surface with the no-JS lane legitimately green pre-implementation) remains the canonical RED and is revalidated by red_proof_ok on every green replay — no cycle-2 RED re-capture is needed since the cycle introduced no new behavior class. Both task commits touch only write_allowed paths plus owned .tmp scratch; committed run.json hashes match the working tree byte-for-byte; port 4321 left clear."
+}
