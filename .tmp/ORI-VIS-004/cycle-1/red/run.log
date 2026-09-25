@@ -1,0 +1,1196 @@
+{
+  "config": {
+    "argv": [
+      "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node",
+      "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/node_modules/@playwright/test/cli.js",
+      "test",
+      "--reporter=json",
+      "tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+      "--project=chromium-desktop",
+      "--project=chromium-mobile",
+      "--project=chromium-nojs"
+    ],
+    "configFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/playwright.config.ts",
+    "rootDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-mobile",
+        "name": "chromium-mobile",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-nojs",
+        "name": "chromium-nojs",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node -e 'const net=require(\"node:net\");const s=net.connect(4321,\"127.0.0.1\",()=>{console.error(\"strict port: 4321 is already in use; astro preview must own it\");s.destroy();process.exit(1)});s.on(\"error\",()=>process.exit(0))' && ASTRO_PREVIEW_BACKGROUND=1 exec pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+      "url": "http://localhost:4321",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "sprint-05-orient-search/ledger-presentation.spec.ts",
+      "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ORI-VIS-004-AC-1: filtered conversation row keeps verdict, complete uniwind command and Docs link",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1006,
+                  "error": {
+                    "message": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:325:58",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 58,
+                      "line": 325
+                    },
+                    "snippet": "  323 |   // viewports they share a top edge inside the toolbar's box.\n  324 |   const toolbar = await readToolbarGeometry(page);\n> 325 |   soft(toolbar.toolbar, 'the ledger toolbar exists').not.toBeNull();\n      |                                                          ^\n  326 |   if (toolbar.toolbar && (page.viewportSize()?.width ?? 0) >= 1024) {\n  327 |     for (const [label, control] of [\n  328 |       ['category facets', toolbar.categories],"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 58,
+                        "line": 325
+                      },
+                      "message": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  323 |   // viewports they share a top edge inside the toolbar's box.\n  324 |   const toolbar = await readToolbarGeometry(page);\n> 325 |   soft(toolbar.toolbar, 'the ledger toolbar exists').not.toBeNull();\n      |                                                          ^\n  326 |   if (toolbar.toolbar && (page.viewportSize()?.width ?? 0) >= 1024) {\n  327 |     for (const [label, control] of [\n  328 |       ['category facets', toolbar.categories],\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:325:58"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 48,
+                        "line": 358
+                      },
+                      "message": "Error: exactly 1 matching row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  356 |     expectedMatches,\n  357 |   );\n> 358 |   soft(names.length, 'exactly 1 matching row').toBe(1);\n      |                                                ^\n  359 |   soft(names[0], 'the matching row is conversation').toBe('conversation');\n  360 |\n  361 |   // The row retains its generated Expo Go verdict.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:358:48"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 54,
+                        "line": 359
+                      },
+                      "message": "Error: the matching row is conversation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"c\u001b[7monversation\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"c\u001b[7mheckpoint\u001b[27m\"\u001b[39m\n\n  357 |   );\n  358 |   soft(names.length, 'exactly 1 matching row').toBe(1);\n> 359 |   soft(names[0], 'the matching row is conversation').toBe('conversation');\n      |                                                      ^\n  360 |\n  361 |   // The row retains its generated Expo Go verdict.\n  362 |   const verdict = (\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:359:54"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 14,
+                        "line": 383
+                      },
+                      "message": "Error: path: unsupported mime type \"null\"\n\n  381 |   ).toBe('true');\n  382 |\n> 383 |   await page.screenshot({\n      |              ^\n  384 |     path: screenshotPaths(project, 'filtered-uniwind.png', 'chromium-desktop'),\n  385 |     fullPage: true,\n  386 |   });\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:383:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:22.063Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-a8a1a-iwind-command-and-Docs-link-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-a8a1a-iwind-command-and-Docs-link-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 58,
+                    "line": 325
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-f9a892660f32a609d806",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 308,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-2: All + clear restores all rows; the real no-results state appears and recovers",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 952,
+                  "error": {
+                    "message": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                    "stack": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:443:89",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 89,
+                      "line": 443
+                    },
+                    "snippet": "  441 |   // Filter down to the single conversation row first.\n  442 |   await filterToConversationUniwind(page);\n> 443 |   soft(await page.locator('tr[data-filter-text]:visible').count(), 'filtered to 1 row').toBe(1);\n      |                                                                                         ^\n  444 |\n  445 |   // All + clear restores the generated set with its category totals.\n  446 |   await page.locator(CATEGORY('all')).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 89,
+                        "line": 443
+                      },
+                      "message": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  441 |   // Filter down to the single conversation row first.\n  442 |   await filterToConversationUniwind(page);\n> 443 |   soft(await page.locator('tr[data-filter-text]:visible').count(), 'filtered to 1 row').toBe(1);\n      |                                                                                         ^\n  444 |\n  445 |   // All + clear restores the generated set with its category totals.\n  446 |   await page.locator(CATEGORY('all')).click();\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:443:89"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 78,
+                        "line": 470
+                      },
+                      "message": "Error: locator.isVisible: Error: strict mode violation: locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' }) resolved to 2 elements:\n    1) <code data-astro-cid-wrfzb2vf=\"\">https://rnraielements.com/r/nativewind</code> aka getByText('https://rnraielements.com/r/').first()\n    2) <code data-astro-cid-d4l6eyi2=\"\" class=\"copy-button__command\">https://rnraielements.com/r/nativewind</code> aka locator('rnr-copy-button').filter({ hasText: 'https://rnraielements.com/r/nativewindCopy' }).getByRole('code')\n\nCall log:\n\u001b[2m    - checking visibility of locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' })\u001b[22m\n\n\n  468 |   for (const base of [NATIVEWIND_BASE, UNIWIND_BASE]) {\n  469 |     soft(\n> 470 |       await page.locator('section.ledger__bulk-add code', { hasText: base }).isVisible(),\n      |                                                                              ^\n  471 |       `${base} stays readable`,\n  472 |     ).toBe(true);\n  473 |   }\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:470:78"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:23.976Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-02aca--state-appears-and-recovers-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-02aca--state-appears-and-recovers-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 89,
+                    "line": 443
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-1a195366de205f2e151a",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-3: mobile scroll stays in the wrapper; sticky column, header, zebra and mono tokens hold",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 716,
+                  "error": {
+                    "message": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:550:88",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 88,
+                      "line": 550
+                    },
+                    "snippet": "  548 |     };\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n> 550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n      |                                                                                        ^\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 88,
+                        "line": 550
+                      },
+                      "message": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  548 |     };\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n> 550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n      |                                                                                        ^\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:550:88"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 60,
+                        "line": 551
+                      },
+                      "message": "Error: header cells are sticky\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sticky\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n  550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n> 551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n      |                                                            ^\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n  554 |\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:551:60"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 75,
+                        "line": 552
+                      },
+                      "message": "Error: alternating row surfaces resolve from --muted\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"oklch(0.97 0 0)\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n> 552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n      |                                                                           ^\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n  554 |\n  555 |   if ((page.viewportSize()?.width ?? 0) <= 768) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:552:75"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 73,
+                        "line": 553
+                      },
+                      "message": "Error: engine labels resolve from --font-mono\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\\\"Spline Sans Mono Variable\\\", \\\"Spline Sans Mono\\\", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n> 553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n      |                                                                         ^\n  554 |\n  555 |   if ((page.viewportSize()?.width ?? 0) <= 768) {\n  556 |     // Containment: the WRAPPER scrolls while the page does not.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:553:73"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 16,
+                        "line": 643
+                      },
+                      "message": "Error: path: unsupported mime type \"null\"\n\n  641 |     soft(pageOverflow, 'the wide page does not overflow').toBe(0);\n  642 |\n> 643 |     await page.screenshot({\n      |                ^\n  644 |       path: screenshotPaths(project, 'wide-toolbar.png', 'chromium-desktop'),\n  645 |       fullPage: false,\n  646 |     });\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:643:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:25.643Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-988e5--zebra-and-mono-tokens-hold-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-988e5--zebra-and-mono-tokens-hold-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 88,
+                    "line": 550
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-47c6a8168607dc0f6135",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 516,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5885,
+                  "error": {
+                    "message": "Error: Tab reached the tab:uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"tab:uniwind\"\u001b[39m\nReceived array: \u001b[31m[\"copy\", \"category:all\", \"category:component\", \"category:ui\", \"category:lib\", \"tab:nativewind\", \"input\"]\u001b[39m",
+                    "stack": "Error: Tab reached the tab:uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"tab:uniwind\"\u001b[39m\nReceived array: \u001b[31m[\"copy\", \"category:all\", \"category:component\", \"category:ui\", \"category:lib\", \"tab:nativewind\", \"input\"]\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:738:63",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 63,
+                      "line": 738
+                    },
+                    "snippet": "  736 |     'input',\n  737 |   ]) {\n> 738 |     soft(toolbarKinds, `Tab reached the ${expected} control`).toContain(expected);\n      |                                                               ^\n  739 |   }\n  740 |   soft(toolbarKinds, 'Tab reached the bulk-add copy controls').toContain('copy');\n  741 |   for (const reached of toolbarWalk) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 63,
+                        "line": 738
+                      },
+                      "message": "Error: Tab reached the tab:uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"tab:uniwind\"\u001b[39m\nReceived array: \u001b[31m[\"copy\", \"category:all\", \"category:component\", \"category:ui\", \"category:lib\", \"tab:nativewind\", \"input\"]\u001b[39m\n\n  736 |     'input',\n  737 |   ]) {\n> 738 |     soft(toolbarKinds, `Tab reached the ${expected} control`).toContain(expected);\n      |                                                               ^\n  739 |   }\n  740 |   soft(toolbarKinds, 'Tab reached the bulk-add copy controls').toContain('copy');\n  741 |   for (const reached of toolbarWalk) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:738:63"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 83,
+                        "line": 755
+                      },
+                      "message": "Error: Shift+Tab returns keyboard focus to the uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  753 |     `document.activeElement !== null && document.activeElement.getAttribute('data-engine') === 'uniwind'`,\n  754 |   )) as boolean;\n> 755 |   soft(focusIsUniwind, 'Shift+Tab returns keyboard focus to the uniwind control').toBe(true);\n      |                                                                                   ^\n  756 |   await page.keyboard.press('Enter');\n  757 |   await expect(page.locator(ENGINE_TAB('uniwind'))).toHaveAttribute('aria-selected', 'true');\n  758 |   const engineStyles = (await page.evaluate(`(() => {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:755:83"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 53,
+                        "line": 757
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('rnr-ledger-filter rnr-tab-group [role=\"tab\"][data-engine=\"uniwind\"]')\nExpected: \u001b[32m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" locator('rnr-ledger-filter rnr-tab-group [role=\"tab\"][data-engine=\"uniwind\"]') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('rnr-ledger-filter rnr-tab-group [role=\"tab\"][data-engine=\"uniwind\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <button role=\"tab\" type=\"button\" tabindex=\"-1\" data-engine=\"uniwind\" aria-selected=\"false\" data-astro-cid-teel6a2y=\"\" aria-label=\"uniwind engine\" id=\"registry-ledger-engine-tab-uniwind\" aria-controls=\"registry-ledger-engine-panel-uniwind\">uniwind</button>\u001b[22m\n\u001b[2m       - unexpected value \"false\"\u001b[22m\n\n\n  755 |   soft(focusIsUniwind, 'Shift+Tab returns keyboard focus to the uniwind control').toBe(true);\n  756 |   await page.keyboard.press('Enter');\n> 757 |   await expect(page.locator(ENGINE_TAB('uniwind'))).toHaveAttribute('aria-selected', 'true');\n      |                                                     ^\n  758 |   const engineStyles = (await page.evaluate(`(() => {\n  759 |     const read = (engine) => {\n  760 |       const el = document.querySelector('rnr-ledger-filter [role=\"tab\"][data-engine=\"' + engine + '\"]');\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:757:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:27.025Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-9fcba-eyboard-focus-stays-visible-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-9fcba-eyboard-focus-stays-visible-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 63,
+                    "line": 738
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-1558dc535ff9d5e19d3c",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 658,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-1: filtered conversation row keeps verdict, complete uniwind command and Docs link",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 893,
+                  "error": {
+                    "message": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:325:58",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 58,
+                      "line": 325
+                    },
+                    "snippet": "  323 |   // viewports they share a top edge inside the toolbar's box.\n  324 |   const toolbar = await readToolbarGeometry(page);\n> 325 |   soft(toolbar.toolbar, 'the ledger toolbar exists').not.toBeNull();\n      |                                                          ^\n  326 |   if (toolbar.toolbar && (page.viewportSize()?.width ?? 0) >= 1024) {\n  327 |     for (const [label, control] of [\n  328 |       ['category facets', toolbar.categories],"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 58,
+                        "line": 325
+                      },
+                      "message": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  323 |   // viewports they share a top edge inside the toolbar's box.\n  324 |   const toolbar = await readToolbarGeometry(page);\n> 325 |   soft(toolbar.toolbar, 'the ledger toolbar exists').not.toBeNull();\n      |                                                          ^\n  326 |   if (toolbar.toolbar && (page.viewportSize()?.width ?? 0) >= 1024) {\n  327 |     for (const [label, control] of [\n  328 |       ['category facets', toolbar.categories],\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:325:58"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 48,
+                        "line": 358
+                      },
+                      "message": "Error: exactly 1 matching row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  356 |     expectedMatches,\n  357 |   );\n> 358 |   soft(names.length, 'exactly 1 matching row').toBe(1);\n      |                                                ^\n  359 |   soft(names[0], 'the matching row is conversation').toBe('conversation');\n  360 |\n  361 |   // The row retains its generated Expo Go verdict.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:358:48"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 54,
+                        "line": 359
+                      },
+                      "message": "Error: the matching row is conversation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"c\u001b[7monversation\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"c\u001b[7mheckpoint\u001b[27m\"\u001b[39m\n\n  357 |   );\n  358 |   soft(names.length, 'exactly 1 matching row').toBe(1);\n> 359 |   soft(names[0], 'the matching row is conversation').toBe('conversation');\n      |                                                      ^\n  360 |\n  361 |   // The row retains its generated Expo Go verdict.\n  362 |   const verdict = (\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:359:54"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 14,
+                        "line": 383
+                      },
+                      "message": "Error: path: unsupported mime type \"null\"\n\n  381 |   ).toBe('true');\n  382 |\n> 383 |   await page.screenshot({\n      |              ^\n  384 |     path: screenshotPaths(project, 'filtered-uniwind.png', 'chromium-desktop'),\n  385 |     fullPage: true,\n  386 |   });\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:383:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:33.447Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-a8a1a-iwind-command-and-Docs-link-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-a8a1a-iwind-command-and-Docs-link-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 58,
+                    "line": 325
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-3073a54a14d4778e8007",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 308,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-2: All + clear restores all rows; the real no-results state appears and recovers",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1132,
+                  "error": {
+                    "message": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                    "stack": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:443:89",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 89,
+                      "line": 443
+                    },
+                    "snippet": "  441 |   // Filter down to the single conversation row first.\n  442 |   await filterToConversationUniwind(page);\n> 443 |   soft(await page.locator('tr[data-filter-text]:visible').count(), 'filtered to 1 row').toBe(1);\n      |                                                                                         ^\n  444 |\n  445 |   // All + clear restores the generated set with its category totals.\n  446 |   await page.locator(CATEGORY('all')).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 89,
+                        "line": 443
+                      },
+                      "message": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  441 |   // Filter down to the single conversation row first.\n  442 |   await filterToConversationUniwind(page);\n> 443 |   soft(await page.locator('tr[data-filter-text]:visible').count(), 'filtered to 1 row').toBe(1);\n      |                                                                                         ^\n  444 |\n  445 |   // All + clear restores the generated set with its category totals.\n  446 |   await page.locator(CATEGORY('all')).click();\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:443:89"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 78,
+                        "line": 470
+                      },
+                      "message": "Error: locator.isVisible: Error: strict mode violation: locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' }) resolved to 2 elements:\n    1) <code data-astro-cid-wrfzb2vf=\"\">https://rnraielements.com/r/nativewind</code> aka getByText('https://rnraielements.com/r/').first()\n    2) <code data-astro-cid-d4l6eyi2=\"\" class=\"copy-button__command\">https://rnraielements.com/r/nativewind</code> aka locator('rnr-copy-button').filter({ hasText: 'https://rnraielements.com/r/nativewindCopy' }).getByRole('code')\n\nCall log:\n\u001b[2m    - checking visibility of locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' })\u001b[22m\n\n\n  468 |   for (const base of [NATIVEWIND_BASE, UNIWIND_BASE]) {\n  469 |     soft(\n> 470 |       await page.locator('section.ledger__bulk-add code', { hasText: base }).isVisible(),\n      |                                                                              ^\n  471 |       `${base} stays readable`,\n  472 |     ).toBe(true);\n  473 |   }\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:470:78"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:35.000Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-02aca--state-appears-and-recovers-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-02aca--state-appears-and-recovers-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 89,
+                    "line": 443
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-1bf241d853401721c460",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-3: mobile scroll stays in the wrapper; sticky column, header, zebra and mono tokens hold",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 836,
+                  "error": {
+                    "message": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:550:88",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 88,
+                      "line": 550
+                    },
+                    "snippet": "  548 |     };\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n> 550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n      |                                                                                        ^\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 88,
+                        "line": 550
+                      },
+                      "message": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  548 |     };\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n> 550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n      |                                                                                        ^\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:550:88"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 60,
+                        "line": 551
+                      },
+                      "message": "Error: header cells are sticky\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sticky\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n  550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n> 551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n      |                                                            ^\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n  554 |\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:551:60"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 75,
+                        "line": 552
+                      },
+                      "message": "Error: alternating row surfaces resolve from --muted\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"oklch(0.97 0 0)\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n> 552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n      |                                                                           ^\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n  554 |\n  555 |   if ((page.viewportSize()?.width ?? 0) <= 768) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:552:75"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 73,
+                        "line": 553
+                      },
+                      "message": "Error: engine labels resolve from --font-mono\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\\\"Spline Sans Mono Variable\\\", \\\"Spline Sans Mono\\\", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n> 553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n      |                                                                         ^\n  554 |\n  555 |   if ((page.viewportSize()?.width ?? 0) <= 768) {\n  556 |     // Containment: the WRAPPER scrolls while the page does not.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:553:73"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 82,
+                        "line": 566
+                      },
+                      "message": "Error: the ledger wrapper scrolls horizontally\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n\n  564 |       };\n  565 |     })()`)) as { wrapperOverflow: number; pageOverflow: number };\n> 566 |     soft(containment.wrapperOverflow, 'the ledger wrapper scrolls horizontally').toBeGreaterThan(0);\n      |                                                                                  ^\n  567 |     soft(containment.pageOverflow, 'the page itself does not overflow').toBe(0);\n  568 |\n  569 |     // The toolbar keeps its reading order when it wraps.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:566:82"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 73,
+                        "line": 567
+                      },
+                      "message": "Error: the page itself does not overflow\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n\n  565 |     })()`)) as { wrapperOverflow: number; pageOverflow: number };\n  566 |     soft(containment.wrapperOverflow, 'the ledger wrapper scrolls horizontally').toBeGreaterThan(0);\n> 567 |     soft(containment.pageOverflow, 'the page itself does not overflow').toBe(0);\n      |                                                                         ^\n  568 |\n  569 |     // The toolbar keeps its reading order when it wraps.\n  570 |     const toolbar = await readToolbarGeometry(page);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:567:73"
+                    },
+                    {
+                      "location": {
+                        "file": "eval at evaluate (:311:30), <anonymous>",
+                        "column": 29,
+                        "line": 4
+                      },
+                      "message": "Error: page.evaluate: SyntaxError: Failed to execute 'querySelector' on 'Document': 'tr[id=\"row-conversation\"] a[data-docs-link\"]' is not a valid selector.\n    at eval (eval at evaluate (:311:30), <anonymous>:4:29)\n    at eval (eval at evaluate (:311:30), <anonymous>:21:7)\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:29)\n    at eval (eval at evaluate (:311:30), <anonymous>:21:7)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:581:34"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:36.992Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-988e5--zebra-and-mono-tokens-hold-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-988e5--zebra-and-mono-tokens-hold-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 88,
+                    "line": 550
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-b0ceac75abddc54315be",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 516,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5731,
+                  "error": {
+                    "message": "Error: Tab reached the tab:uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"tab:uniwind\"\u001b[39m\nReceived array: \u001b[31m[\"copy\", \"category:all\", \"category:component\", \"category:ui\", \"category:lib\", \"tab:nativewind\", \"input\"]\u001b[39m",
+                    "stack": "Error: Tab reached the tab:uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"tab:uniwind\"\u001b[39m\nReceived array: \u001b[31m[\"copy\", \"category:all\", \"category:component\", \"category:ui\", \"category:lib\", \"tab:nativewind\", \"input\"]\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:738:63",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 63,
+                      "line": 738
+                    },
+                    "snippet": "  736 |     'input',\n  737 |   ]) {\n> 738 |     soft(toolbarKinds, `Tab reached the ${expected} control`).toContain(expected);\n      |                                                               ^\n  739 |   }\n  740 |   soft(toolbarKinds, 'Tab reached the bulk-add copy controls').toContain('copy');\n  741 |   for (const reached of toolbarWalk) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 63,
+                        "line": 738
+                      },
+                      "message": "Error: Tab reached the tab:uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"tab:uniwind\"\u001b[39m\nReceived array: \u001b[31m[\"copy\", \"category:all\", \"category:component\", \"category:ui\", \"category:lib\", \"tab:nativewind\", \"input\"]\u001b[39m\n\n  736 |     'input',\n  737 |   ]) {\n> 738 |     soft(toolbarKinds, `Tab reached the ${expected} control`).toContain(expected);\n      |                                                               ^\n  739 |   }\n  740 |   soft(toolbarKinds, 'Tab reached the bulk-add copy controls').toContain('copy');\n  741 |   for (const reached of toolbarWalk) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:738:63"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 83,
+                        "line": 755
+                      },
+                      "message": "Error: Shift+Tab returns keyboard focus to the uniwind control\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  753 |     `document.activeElement !== null && document.activeElement.getAttribute('data-engine') === 'uniwind'`,\n  754 |   )) as boolean;\n> 755 |   soft(focusIsUniwind, 'Shift+Tab returns keyboard focus to the uniwind control').toBe(true);\n      |                                                                                   ^\n  756 |   await page.keyboard.press('Enter');\n  757 |   await expect(page.locator(ENGINE_TAB('uniwind'))).toHaveAttribute('aria-selected', 'true');\n  758 |   const engineStyles = (await page.evaluate(`(() => {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:755:83"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 53,
+                        "line": 757
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('rnr-ledger-filter rnr-tab-group [role=\"tab\"][data-engine=\"uniwind\"]')\nExpected: \u001b[32m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" locator('rnr-ledger-filter rnr-tab-group [role=\"tab\"][data-engine=\"uniwind\"]') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('rnr-ledger-filter rnr-tab-group [role=\"tab\"][data-engine=\"uniwind\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <button role=\"tab\" type=\"button\" tabindex=\"-1\" data-engine=\"uniwind\" aria-selected=\"false\" data-astro-cid-teel6a2y=\"\" aria-label=\"uniwind engine\" id=\"registry-ledger-engine-tab-uniwind\" aria-controls=\"registry-ledger-engine-panel-uniwind\">uniwind</button>\u001b[22m\n\u001b[2m       - unexpected value \"false\"\u001b[22m\n\n\n  755 |   soft(focusIsUniwind, 'Shift+Tab returns keyboard focus to the uniwind control').toBe(true);\n  756 |   await page.keyboard.press('Enter');\n> 757 |   await expect(page.locator(ENGINE_TAB('uniwind'))).toHaveAttribute('aria-selected', 'true');\n      |                                                     ^\n  758 |   const engineStyles = (await page.evaluate(`(() => {\n  759 |     const read = (engine) => {\n  760 |       const el = document.querySelector('rnr-ledger-filter [role=\"tab\"][data-engine=\"' + engine + '\"]');\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:757:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:38.517Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-9fcba-eyboard-focus-stays-visible-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-9fcba-eyboard-focus-stays-visible-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 63,
+                    "line": 738
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-055e70f24cdd6d15ad14",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 658,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-1: filtered conversation row keeps verdict, complete uniwind command and Docs link",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 784,
+                  "error": {
+                    "message": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:325:58",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 58,
+                      "line": 325
+                    },
+                    "snippet": "  323 |   // viewports they share a top edge inside the toolbar's box.\n  324 |   const toolbar = await readToolbarGeometry(page);\n> 325 |   soft(toolbar.toolbar, 'the ledger toolbar exists').not.toBeNull();\n      |                                                          ^\n  326 |   if (toolbar.toolbar && (page.viewportSize()?.width ?? 0) >= 1024) {\n  327 |     for (const [label, control] of [\n  328 |       ['category facets', toolbar.categories],"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 58,
+                        "line": 325
+                      },
+                      "message": "Error: the ledger toolbar exists\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  323 |   // viewports they share a top edge inside the toolbar's box.\n  324 |   const toolbar = await readToolbarGeometry(page);\n> 325 |   soft(toolbar.toolbar, 'the ledger toolbar exists').not.toBeNull();\n      |                                                          ^\n  326 |   if (toolbar.toolbar && (page.viewportSize()?.width ?? 0) >= 1024) {\n  327 |     for (const [label, control] of [\n  328 |       ['category facets', toolbar.categories],\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:325:58"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 48,
+                        "line": 358
+                      },
+                      "message": "Error: exactly 1 matching row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  356 |     expectedMatches,\n  357 |   );\n> 358 |   soft(names.length, 'exactly 1 matching row').toBe(1);\n      |                                                ^\n  359 |   soft(names[0], 'the matching row is conversation').toBe('conversation');\n  360 |\n  361 |   // The row retains its generated Expo Go verdict.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:358:48"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 54,
+                        "line": 359
+                      },
+                      "message": "Error: the matching row is conversation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"c\u001b[7monversation\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"c\u001b[7mheckpoint\u001b[27m\"\u001b[39m\n\n  357 |   );\n  358 |   soft(names.length, 'exactly 1 matching row').toBe(1);\n> 359 |   soft(names[0], 'the matching row is conversation').toBe('conversation');\n      |                                                      ^\n  360 |\n  361 |   // The row retains its generated Expo Go verdict.\n  362 |   const verdict = (\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:359:54"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 14,
+                        "line": 383
+                      },
+                      "message": "Error: path: unsupported mime type \"null\"\n\n  381 |   ).toBe('true');\n  382 |\n> 383 |   await page.screenshot({\n      |              ^\n  384 |     path: screenshotPaths(project, 'filtered-uniwind.png', 'chromium-desktop'),\n  385 |     fullPage: true,\n  386 |   });\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:383:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:44.700Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-a8a1a-iwind-command-and-Docs-link-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-a8a1a-iwind-command-and-Docs-link-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 58,
+                    "line": 325
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-e87f4975c0d3812b2b30",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 308,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-2: All + clear restores all rows; the real no-results state appears and recovers",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 924,
+                  "error": {
+                    "message": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                    "stack": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:443:89",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 89,
+                      "line": 443
+                    },
+                    "snippet": "  441 |   // Filter down to the single conversation row first.\n  442 |   await filterToConversationUniwind(page);\n> 443 |   soft(await page.locator('tr[data-filter-text]:visible').count(), 'filtered to 1 row').toBe(1);\n      |                                                                                         ^\n  444 |\n  445 |   // All + clear restores the generated set with its category totals.\n  446 |   await page.locator(CATEGORY('all')).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 89,
+                        "line": 443
+                      },
+                      "message": "Error: filtered to 1 row\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  441 |   // Filter down to the single conversation row first.\n  442 |   await filterToConversationUniwind(page);\n> 443 |   soft(await page.locator('tr[data-filter-text]:visible').count(), 'filtered to 1 row').toBe(1);\n      |                                                                                         ^\n  444 |\n  445 |   // All + clear restores the generated set with its category totals.\n  446 |   await page.locator(CATEGORY('all')).click();\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:443:89"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 78,
+                        "line": 470
+                      },
+                      "message": "Error: locator.isVisible: Error: strict mode violation: locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' }) resolved to 2 elements:\n    1) <code data-astro-cid-wrfzb2vf=\"\">https://rnraielements.com/r/nativewind</code> aka getByText('https://rnraielements.com/r/').first()\n    2) <code data-astro-cid-d4l6eyi2=\"\" class=\"copy-button__command\">https://rnraielements.com/r/nativewind</code> aka locator('rnr-copy-button').filter({ hasText: 'https://rnraielements.com/r/nativewindCopy' }).getByRole('code')\n\nCall log:\n\u001b[2m    - checking visibility of locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' })\u001b[22m\n\n\n  468 |   for (const base of [NATIVEWIND_BASE, UNIWIND_BASE]) {\n  469 |     soft(\n> 470 |       await page.locator('section.ledger__bulk-add code', { hasText: base }).isVisible(),\n      |                                                                              ^\n  471 |       `${base} stays readable`,\n  472 |     ).toBe(true);\n  473 |   }\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:470:78"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:46.032Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-02aca--state-appears-and-recovers-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-02aca--state-appears-and-recovers-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 89,
+                    "line": 443
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-6d0b37543d5b8c51d2cd",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-3: mobile scroll stays in the wrapper; sticky column, header, zebra and mono tokens hold",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 726,
+                  "error": {
+                    "message": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:550:88",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 88,
+                      "line": 550
+                    },
+                    "snippet": "  548 |     };\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n> 550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n      |                                                                                        ^\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 88,
+                        "line": 550
+                      },
+                      "message": "Error: the shared scroll wrapper carries the ledger table\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  548 |     };\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n> 550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n      |                                                                                        ^\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:550:88"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 60,
+                        "line": 551
+                      },
+                      "message": "Error: header cells are sticky\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sticky\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  549 |   })()`)) as { wrapperExists: boolean; headPosition: string; zebra: string; engineFont: string };\n  550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n> 551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n      |                                                            ^\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n  554 |\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:551:60"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 75,
+                        "line": 552
+                      },
+                      "message": "Error: alternating row surfaces resolve from --muted\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"oklch(0.97 0 0)\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  550 |   soft(cellStyles.wrapperExists, 'the shared scroll wrapper carries the ledger table').toBe(true);\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n> 552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n      |                                                                           ^\n  553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n  554 |\n  555 |   if ((page.viewportSize()?.width ?? 0) <= 768) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:552:75"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 73,
+                        "line": 553
+                      },
+                      "message": "Error: engine labels resolve from --font-mono\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\\\"Spline Sans Mono Variable\\\", \\\"Spline Sans Mono\\\", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\n  551 |   soft(cellStyles.headPosition, 'header cells are sticky').toBe('sticky');\n  552 |   soft(cellStyles.zebra, 'alternating row surfaces resolve from --muted').toBe(probes.muted);\n> 553 |   soft(cellStyles.engineFont, 'engine labels resolve from --font-mono').toBe(probes.fontMono);\n      |                                                                         ^\n  554 |\n  555 |   if ((page.viewportSize()?.width ?? 0) <= 768) {\n  556 |     // Containment: the WRAPPER scrolls while the page does not.\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:553:73"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 16,
+                        "line": 643
+                      },
+                      "message": "Error: path: unsupported mime type \"null\"\n\n  641 |     soft(pageOverflow, 'the wide page does not overflow').toBe(0);\n  642 |\n> 643 |     await page.screenshot({\n      |                ^\n  644 |       path: screenshotPaths(project, 'wide-toolbar.png', 'chromium-desktop'),\n  645 |       fullPage: false,\n  646 |     });\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:643:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:47.584Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-988e5--zebra-and-mono-tokens-hold-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-988e5--zebra-and-mono-tokens-hold-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 88,
+                    "line": 550
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-9d3868fef22c44682a7a",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 516,
+          "column": 1
+        },
+        {
+          "title": "ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 197,
+                  "error": {
+                    "message": "Error: https://rnraielements.com/r/nativewind is served as selectable text\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m",
+                    "stack": "Error: https://rnraielements.com/r/nativewind is served as selectable text\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:686:72",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                      "column": 72,
+                      "line": 686
+                    },
+                    "snippet": "  684 |     for (const base of [NATIVEWIND_BASE, UNIWIND_BASE]) {\n  685 |       const code = page.locator('section.ledger__bulk-add code', { hasText: base });\n> 686 |       soft(await code.count(), `${base} is served as selectable text`).toBe(1);\n      |                                                                        ^\n  687 |       soft(await code.isVisible(), `${base} is visible`).toBe(true);\n  688 |       soft(((await code.textContent()) ?? '').trim(), `${base} text is complete`).toBe(base);\n  689 |       const truncation = (await page.evaluate(`(() => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 72,
+                        "line": 686
+                      },
+                      "message": "Error: https://rnraielements.com/r/nativewind is served as selectable text\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m2\u001b[39m\n\n  684 |     for (const base of [NATIVEWIND_BASE, UNIWIND_BASE]) {\n  685 |       const code = page.locator('section.ledger__bulk-add code', { hasText: base });\n> 686 |       soft(await code.count(), `${base} is served as selectable text`).toBe(1);\n      |                                                                        ^\n  687 |       soft(await code.isVisible(), `${base} is visible`).toBe(true);\n  688 |       soft(((await code.textContent()) ?? '').trim(), `${base} text is complete`).toBe(base);\n  689 |       const truncation = (await page.evaluate(`(() => {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:686:72"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                        "column": 23,
+                        "line": 687
+                      },
+                      "message": "Error: locator.isVisible: Error: strict mode violation: locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' }) resolved to 2 elements:\n    1) <code data-astro-cid-wrfzb2vf=\"\">https://rnraielements.com/r/nativewind</code> aka getByText('https://rnraielements.com/r/').first()\n    2) <code data-astro-cid-d4l6eyi2=\"\" class=\"copy-button__command\">https://rnraielements.com/r/nativewind</code> aka locator('rnr-copy-button').filter({ hasText: 'https://rnraielements.com/r/nativewindCopy' }).getByRole('code')\n\nCall log:\n\u001b[2m    - checking visibility of locator('section.ledger__bulk-add code').filter({ hasText: 'https://rnraielements.com/r/nativewind' })\u001b[22m\n\n\n  685 |       const code = page.locator('section.ledger__bulk-add code', { hasText: base });\n  686 |       soft(await code.count(), `${base} is served as selectable text`).toBe(1);\n> 687 |       soft(await code.isVisible(), `${base} is visible`).toBe(true);\n      |                       ^\n  688 |       soft(((await code.textContent()) ?? '').trim(), `${base} text is complete`).toBe(base);\n  689 |       const truncation = (await page.evaluate(`(() => {\n  690 |         const codes = [...document.querySelectorAll('section.ledger__bulk-add code')];\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts:687:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-25T22:24:49.042Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-9fcba-eyboard-focus-stays-visible-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/test-results/sprint-05-orient-search-le-9fcba-eyboard-focus-stays-visible-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-004/tests/sprint-05-orient-search/ledger-presentation.spec.ts",
+                    "column": 72,
+                    "line": 686
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bcb7b9c6e5767a47fe5d-fc8ca7e5955ecb92d776",
+          "file": "sprint-05-orient-search/ledger-presentation.spec.ts",
+          "line": 658,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-25T22:24:21.565Z",
+    "duration": 28072.511,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 12,
+    "flaky": 0
+  }
+}
+

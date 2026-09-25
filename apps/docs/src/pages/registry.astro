@@ -84,13 +84,26 @@ const categories = [
 </Layout>
 
 <style>
+  /* Masthead + rhythm (ORI-VIS-004): the title takes the editorial tracking
+     of the reading shell's masthead and the generated note rides muted below
+     it — the same title/one-liner idiom PageHeader sets for authored pages,
+     kept here as the existing h1 + p.ledger__note markup the legacy specs
+     select. */
   .ledger {
     max-width: 96rem;
     margin-inline: auto;
     padding: 1.5rem;
   }
+  .ledger h1 {
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
   .ledger__note {
-    font-weight: 700;
+    margin: 0.5rem 0 0;
+    color: var(--muted-foreground);
+  }
+  .ledger__bulk-add {
+    margin-block: 2rem;
   }
   .ledger__bases {
     list-style: none;

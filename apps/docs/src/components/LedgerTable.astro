@@ -25,6 +25,12 @@
  * `data-filter-text` (name + title + one-liner + category) and `data-category`
  * (the stripped type) for the island to match against, plus the stable
  * `id="row-{name}"` anchor the link-checker fragments resolve against.
+ *
+ * Presentation (ORI-VIS-004): the `ledger-table__scroll` wrapper class rides
+ * DataTable's passthrough so this component's table-wide scale, quiet header,
+ * hover surface and single-line commands stay contained to the ledger — the
+ * shared mechanics (zebra, sticky header, mobile pinned column) remain
+ * DataTable's alone.
  */
 import Badge from './Badge.astro';
 import CopyButton from './islands/CopyButton.astro';
@@ -60,6 +66,7 @@ const filterTextFor = (item: LedgerItem): string =>
 <DataTable
   columns={COLUMNS}
   caption={`Generated registry ledger — ${items.length} items, every one with both engine install commands.`}
+  wrapperClass="ledger-table__scroll"
   bodyAttrs={{ 'data-ledger': 'true' }}
 >
   <Fragment>
@@ -108,6 +115,30 @@ const filterTextFor = (item: LedgerItem): string =>
 </DataTable>
 
 <style>
+  /* Table-wide presentation under the ledger's unique wrapper (the same
+     containment TokenTable uses; the slotted rows carry this component's
+     scope hash, so table-wide rules must be :global under the wrapper class):
+     the six-column ledger reads at the smaller scale with a quiet header,
+     rows answer hover with the accent surface, and mono commands hold their
+     single line — the Install column keeps its width so the shared wrapper
+     scrolls instead of wrapping a 90-character command into four-line rows. */
+  :global(.ledger-table__scroll .data-table) {
+    font-size: 0.875rem;
+  }
+  :global(.ledger-table__scroll .data-table thead th) {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  :global(.ledger-table__scroll .data-table tbody tr:hover td),
+  :global(.ledger-table__scroll .data-table tbody tr:hover th) {
+    background: var(--accent);
+  }
+  :global(.ledger-table__scroll .data-table td code) {
+    white-space: nowrap;
+  }
+  td {
+    vertical-align: top;
+  }
   .ledger-engines {
     list-style: none;
     margin: 0;
