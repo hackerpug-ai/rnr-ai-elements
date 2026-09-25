@@ -17,6 +17,11 @@
  * the `.data-table` class namespace so slotted rows (authored in the CALLER's
  * component, carrying the caller's scope hash) still inherit the shared table
  * chrome — the `.data-table` class is unique to this component.
+ *
+ * Composed callers (ORI-VIS-002) also carry their own test hooks: an extra
+ * `wrapperClass` rides the scroll wrapper (so a caller's established selector
+ * keeps resolving to the SAME scroll element) and `tableAttrs` spreads onto
+ * the <table> itself, mirroring `bodyAttrs`.
  */
 interface Props {
   /** Header labels; absent or empty renders no thead (the bare-tbody form). */
@@ -27,15 +32,19 @@ interface Props {
   bodyAttrs?: Record<string, string>;
   /** Table caption rendered when present. */
   caption?: string;
+  /** Extra class on the scroll wrapper (a caller's established selector). */
+  wrapperClass?: string;
+  /** Attributes spread onto the table (test hooks and the like). */
+  tableAttrs?: Record<string, string>;
 }
 
-const { columns, rows, bodyAttrs, caption } = Astro.props;
+const { columns, rows, bodyAttrs, caption, wrapperClass, tableAttrs } = Astro.props;
 
 const hasRichBody = Astro.slots.has('default');
 ---
 
-<div class="data-table__scroll">
-  <table class="data-table">
+<div class:list={['data-table__scroll', wrapperClass]}>
+  <table class="data-table" {...tableAttrs}>
     {caption && <caption>{caption}</caption>}
     {columns && columns.length > 0 && (
       <thead>
