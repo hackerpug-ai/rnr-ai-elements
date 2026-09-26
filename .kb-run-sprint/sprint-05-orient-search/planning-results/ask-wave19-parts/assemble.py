@@ -1,0 +1,321 @@
+import json, hashlib, re, sys
+
+BASE = '/Users/justinrich/Projects/rnr-ai-elements'
+SPRINT = BASE + '/spec-placeholder'  # fixed below
+SPRINT = BASE + '/.spec/prds/docs-site/tasks/sprint-05-orient-search/SPRINT.md'
+ROADMAP = BASE + '/.spec/prds/docs-site/ROADMAP.md'
+PARTS = BASE + '/.kb-run-sprint/sprint-05-orient-search/planning-results/ask-wave19-parts'
+OUT = BASE + '/.kb-run-sprint/sprint-05-orient-search/planning-results/ask-wave19-add-preexisting-suite-repair.result.json'
+
+def sha(b): return hashlib.sha256(b).hexdigest()
+
+sprint_old = open(SPRINT, 'rb').read()
+roadmap_old = open(ROADMAP, 'rb').read()
+assert sha(sprint_old) == '8ee99d52429c9530bc6f8b867fce0fed2f7cfa6f076967cc92262507c0fcfa64', 'SPRINT.md hash drift'
+assert sha(roadmap_old) == 'e76834b5d74374a402019018710eddd11936c792975147eafc65b57486e5cd21', 'ROADMAP.md hash drift'
+sp = sprint_old.decode('utf8')
+rm = roadmap_old.decode('utf8')
+
+# ---- SPRINT.md edits ----
+row = '| ORI-CI-004 | Require fresh native, provider, and public-registry proof before publication | ghactions-implementer | 5 | 18 |'
+i = sp.index(row)
+j = sp.index('\n', i)
+new_row = '\n| FIX-ORI-SUITE-1 | Repair the seven pre-existing suite breaks on trunk | ghactions-implementer | 3 | 19 | ORI-CI-002 |'
+sp2 = sp[:j] + new_row + sp[j:]
+
+old_total = "**Total: 44 tasks / 147 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1 and FIX-ORI-VIS-001-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination and ask-wave18-add-theming-nav-inclusion). Review assignments and exact read/write boundaries remain in the task charters."
+assert sp2.count(old_total) == 1
+new_total = "**Total: 45 tasks / 150 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1, FIX-ORI-VIS-001-1 and FIX-ORI-SUITE-1, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination, ask-wave18-add-theming-nav-inclusion and ask-wave19-add-preexisting-suite-repair). Review assignments and exact read/write boundaries remain in the task charters."
+sp2 = sp2.replace(old_total, new_total)
+
+ci004_link = '- [ORI-CI-004-require-fresh-native-provider-and-public-registry-proof-before-publication.md](./ORI-CI-004-require-fresh-native-provider-and-public-registry-proof-before-publication.md)'
+dep002_link = '- [ORI-DEP-002-verify-the-accepted-candidates-real-cloudflare-version-and-404-recovery.md](./ORI-DEP-002-verify-the-accepted-candidates-real-cloudflare-version-and-404-recovery.md)'
+assert sp2.count(ci004_link) == 1 and sp2.count(dep002_link) == 1
+sp2 = sp2.replace(dep002_link, '- [TASK-FIX-ORI-SUITE-1.md](./TASK-FIX-ORI-SUITE-1.md)\n\n' + dep002_link)
+
+# ---- ROADMAP.md edits ----
+vis_row = '| FIX-ORI-VIS-001-1 | Include the reserved theming entry in section navigation | astro-implementer | 1 | 18 | ⬜ Pending |'
+assert rm.count(vis_row) == 1
+rm2 = rm.replace(vis_row, vis_row + '\n| FIX-ORI-SUITE-1 | Repair the seven pre-existing suite breaks on trunk | ghactions-implementer | 3 | 19 | ⬜ Pending |')
+
+wave18_note_tail = "Depends on ORI-AST-003; unblocks ORI-VIS-001's AC-2 theming leg and every task chained behind it."
+assert rm2.count(wave18_note_tail) == 1
+note = "Added 2026-09-25 via ask `ask-wave19-add-preexisting-suite-repair`: seven pre-existing suite breaks on trunk — each planner-verified failing on trunk ca759bd7 independent of the reporting tasks — block ORI-CI-003/ORI-CI-004's aggregate `pnpm test` acceptance: single-tutorial-gate.test.ts's duplicate/noncanonical drills stop at check:snippets 'no committed binding' before Astro's tutorial gate (the drills predate ORI-CI-002's ordered chain), scaffold.build.test.ts pins the retired three-segment build script and the pre-ORI-AST-001/ORI-DEP-001 TR-06 dependency set, data-table-contract.test.ts wants the pre-AST-007 non-optional rows prop, ledger.spec.ts and verdict-badge-wiring.spec.ts select the pre-AST-007 ledger markup, and not-found-search-recovery.spec.ts's header-search selector strict-violates since VIS-003's close button landed inside the slot (ORI-VIS-004 handoff scope_impact, wave-19 decision). Test-file repairs only — zero product-source changes; depends on ORI-CI-002 (completed); unblocks ORI-CI-003 and ORI-CI-004's aggregate acceptance.\n\n"
+rm2 = rm2.replace(wave18_note_tail, wave18_note_tail + '\n\n' + note.rstrip('\n'))
+
+# ---- Requirements ----
+V1 = 'the real vitest runners, the real seven-stage public docs build inside the drills\' owned scratch copies, and the real check:snippets and tutorial-gate diagnostics'
+V2 = 'the real Playwright runners over astro preview serving the real built dist, the real generated dataset, and the real clipboard'
+V3 = 'the real vitest aggregate over the whole repository test tree, the real TypeScript compiler, the real Biome linter, and the harness\'s own spawned selectors'
+VERIFY = 'pnpm exec vitest run tests/sprint-05-orient-search/suite-repair-proof.test.ts'
+TF = 'tests/sprint-05-orient-search/suite-repair-proof.test.ts'
+
+fixtures = {
+  "trunk_six_suites_red": {
+    "description": "An isolated candidate worktree of trunk ca759bd7 carrying the six planner-verified suite breaks: single-tutorial-gate.test.ts 3 pass / 2 fail (duplicate :461, noncanonical :496 — check:snippets 'no committed binding' preempts the tutorial gate), scaffold.build.test.ts 1 pass / 1 fail (github-slugger :142 outside the TR-06 set with wrangler behind it, plus the retired three-segment pin :162), data-table-contract.test.ts 3 pass / 1 fail (rows regex :58 wants the non-optional form), ledger.spec.ts failing across tokens (112 copy triggers, replaced td.ledger-type/td.ledger-verdict/table.ledger__table selectors, 56 /components/ docs links), verdict-badge-wiring.spec.ts 6 pass / 3 fail (same replaced selectors), not-found-search-recovery.spec.ts 6 pass / 3 fail (the '[data-search-slot] button' strict-mode violation on the two JS-enabled projects), and search-contract.spec.ts 5 pass / 10 fail (every JS-enabled token in chromium-desktop and chromium-mobile failing at the :208 click on the same strict-mode violation; the no-JS project passes).",
+    "seed_method": "cli",
+    "records": [
+      "The gitignored generated apps/docs/src/data/registry-items.json is absent in a fresh worktree and gates pnpm typecheck — copy or regenerate it via pnpm registry:build inside the worktree; never commit it.",
+      "The single-tutorial drill is a six-build, 45-minute-class run (DRILL_TIMEOUT_MS 2_700_000); the harness's per-child timeouts must respect it, and the Playwright selectors need the freshly built dist with CI=1 and a verified-free 4321 (Playwright owns the astro preview webServer).",
+      "RED is the recorded pre-change state of the seven exact selectors — failures with exit codes and failing assertions bound to the candidate SHA — never authored or hand-copied output.",
+      "The drill appends run blocks to tests/sprint-05-orient-search/evidence/ORI-CI-001/ (five logs + manifest.json); those appends are the suite's own recording contract, append-only, never hand-edited."
+    ]
+  }
+}
+
+sc1 = {
+  "id": "SC-FIX-ORI-SUITE-1-1",
+  "use_case_ref": "UC-DOCS-02",
+  "ac_ref": "AC-1",
+  "primary": True,
+  "tier": "visible",
+  "test_tier": "integration",
+  "verification_service": V1,
+  "negative_control": {
+    "would_fail_if": [
+      "GREEN is claimed from a source read or a hand-recorded pass instead of the harness spawning the three real vitest selectors and observing exit 0 for each.",
+      "The drill's scratch COMMITTED_BINDINGS extension is faked by editing the candidate's scripts/docs-data/authored-snippets.ts (a product-source change) instead of mutating only the owned os.tmpdir() scratch copy, or by stubbing check:snippets out of the build.",
+      "The duplicate variants stop passing because the bindings are added but the noncanonical rename leaves the four quickstart entries orphaned — the stale-binding check at authored-snippets.ts:945 preempts Astro's tutorial gate, so the '[docs-data] single-tutorial: item \"tutorial-cardinality\"' and canonical-destination diagnostics never appear.",
+      "The manifest contract is repaired by deleting the TR-06 boundary assertion or the banned-package negatives instead of extending the allowed set with exactly github-slugger and wrangler and superseding the build-script pin to the landed seven-stage string.",
+      "The data-table contract is repaired by deleting the rows-prop, loop-count, or slot-form assertions instead of updating them to the optional rich-cell shape."
+    ]
+  },
+  "evidence": {"artifact_type": "file_artifact", "required_capture": True},
+  "cases": [
+    {
+      "start_ref": "trunk_six_suites_red",
+      "action": {
+        "actor": "cli_user",
+        "steps": [
+          "Pre-change RED: on the isolated candidate, run the three preserved vitest selectors and record the failures in red.json with the candidate SHA bound — single-tutorial-gate.test.ts exits nonzero failing ORI-CI-001-duplicate at :461 and ORI-CI-001-noncanonical at :496, scaffold.build.test.ts exits nonzero failing FUSE-01-manifest-contract at :142, data-table-contract.test.ts exits nonzero failing the rows regex at :58.",
+          "Land the three vitest-class repairs: the drill extends (duplicate, published and unpublished) or re-points (noncanonical) the scratch copy's COMMITTED_BINDINGS for the copy's four source-bound blocks; the TR-06 allowed set gains github-slugger and wrangler with the landing commits named and the build-script pin supersedes to the seven-stage string; the rows regex accepts the optional rich-cell form, asserts the slot branch, and re-anchors the loop count to rows?.map(.",
+          "Rerun the identical three selectors through the harness; confirm each exits 0 — the duplicate variant naming both source IDs with 'observed 2 versus 1', the unpublished variant exiting 0 with no gate diagnostic, the noncanonical variant carrying '[docs-data] canonical-destination', the restored build exiting 0, and the manifest/data-table tokens green."
+        ]
+      },
+      "end_state": {
+        "must_observe": [
+          "red.json records exactly (3) pre-change selector failures — the literal tallies 3-pass/2-fail (single-tutorial-gate.test.ts), 1-pass/1-fail (scaffold.build.test.ts), 3-pass/1-fail (data-table-contract.test.ts) — each with exit code (1) and the failing assertion text bound to the candidate SHA literal.",
+          "green.json records each of the three vitest selectors exiting 0 post-change, with the tutorial drill's five tokens all passing and the scratch gate-file mutations restored byte-exactly (restoredMatchesBaseline true, candidateUnchanged true).",
+          "The drill's duplicatePublished build output matches /[docs-data] single-tutorial: item \"tutorial-cardinality\"/ and contains 'observed 2 versus 1', and the noncanonical output carries /[docs-data] canonical-destination/ — ASTRO's gate speaking, not check:snippets 'no committed binding' with a (0)-diagnostic count for the tutorial gate."
+        ],
+        "must_not_observe": [
+          "Any candidate-side edit to scripts/docs-data/authored-snippets.ts, apps/**, or packages/** while making the drills pass.",
+          "A check:snippets 'no committed binding' or 'stale binding' diagnostic in the repaired duplicate/noncanonical build outputs.",
+          "A deleted or skipped token, a weakened assertion, or a green claim without the real selector exits recorded."
+        ]
+      }
+    }
+  ]
+}
+
+sc2 = {
+  "id": "SC-FIX-ORI-SUITE-1-2",
+  "use_case_ref": "UC-SHELL-02",
+  "ac_ref": "AC-2",
+  "primary": False,
+  "tier": "visible",
+  "test_tier": "integration",
+  "verification_service": V2,
+  "negative_control": {
+    "would_fail_if": [
+      "GREEN is claimed from a markup read or a recorded screenshot instead of the harness spawning the four real Playwright selectors against astro preview serving the freshly built dist and observing exit 0 across all three projects.",
+      "A selector rewrite hardcodes expected row data as literals instead of deriving it from the generated apps/docs/src/data/registry-items.json dataset, so a dataset change can silently drift the oracle.",
+      "An oracle is weakened to get green — the 56-rows name-for-name equality, the verdict vocabulary ('runs in Expo Go' / 'requires a dev client'), the absolute-URL command regex, clipboard equality with the displayed command, DOM-order, or the no-JS render assertions are dropped rather than re-scoped.",
+      "The not-found recovery fix scopes the trigger selector so broadly it still multi-matches (for example '[data-search-slot] button' kept, or a form that matches the close button too) instead of the single .search-dialog__trigger element.",
+      "A suite is made green by skipping the chromium-nojs project or lowering timeouts below the lane's real settle times."
+    ]
+  },
+  "evidence": {"artifact_type": "file_artifact", "required_capture": True},
+  "cases": [
+    {
+      "start_ref": "trunk_six_suites_red",
+      "action": {
+        "actor": "cli_user",
+        "steps": [
+          "Pre-change RED: run the three preserved Playwright selectors against the built dist and record the failures — ledger.spec.ts failing across tokens (112 rnr-copy-button button triggers versus 56 expected; the strict-mode bulk-add code pair; the replaced td.ledger-type, td.ledger-verdict, and table.ledger__table selectors; td.ledger-docs a never resolving), verdict-badge-wiring.spec.ts timing out in all three projects, not-found-search-recovery.spec.ts failing its two JS-enabled projects with the strict-mode violation on '[data-search-slot] button' resolved to 2 elements, and search-contract.spec.ts failing every JS-enabled token in chromium-desktop and chromium-mobile at the :208 click on the same strict-mode violation (5 pass / 10 fail).",
+          "Land the three spec repairs using the living lane precedents: row-scoped .badge, engine-scoped [data-engine-command=\"nativewind\"] rnr-copy-button selection, a[data-docs-link] with all 56 hrefs /components/{item.name}, the stripped-category td text, table.data-table under .ledger-table__scroll, the bulk-add display-code scoping, HEADER_SEARCH_TRIGGER = '[data-search-slot] button.search-dialog__trigger', and SEARCH_TRIGGER in search-contract.spec.ts taking the same scoped form.",
+          "Rebuild once (pnpm --filter @rnr-ai-elements/docs build) and rerun the identical four selectors through the harness; confirm each exits 0 across chromium-desktop, chromium-mobile, and chromium-nojs."
+        ]
+      },
+      "end_state": {
+        "must_observe": [
+          "ledger.spec.ts exits 0 with 56 rows name-for-name against the generated dataset, the verdict vocabulary per item.expoGo, both engine base URLs copyable with clipboard equality, and the no-JS token green.",
+          "verdict-badge-wiring.spec.ts exits 0 with every row's .badge text and tone class matching the manifest and every docs href /components/{item.name}; the per-row copy affordance assertion holds for both labeled engine commands (2 per row, 112 total).",
+          "not-found-search-recovery.spec.ts exits 0 in all three projects with the header search opening through the single trigger element.",
+          "search-contract.spec.ts exits 0 in all three projects with the locked 13-step sequence and AC-1..AC-4 clicking the single trigger element."
+        ],
+        "must_not_observe": [
+          "A strict-mode violation on any rewritten selector, a multi-match locator, or a timeout used to dodge a missing element.",
+          "Expected data hardcoded as literals replacing the dataset derivation, or a retired assertion that is not named and justified in the handoff.",
+          "A dev-server render (astro dev) or a stale dist standing in for the freshly built one.",
+          "red.json reporting (0) recorded failures or an empty failures array — the empty signature of a skipped capture."
+        ]
+      }
+    }
+  ]
+}
+
+sc3 = {
+  "id": "SC-FIX-ORI-SUITE-1-3",
+  "use_case_ref": "UC-DOCS-02",
+  "ac_ref": "AC-3",
+  "primary": False,
+  "tier": "visible",
+  "test_tier": "integration",
+  "verification_service": V3,
+  "negative_control": {
+    "would_fail_if": [
+      "The aggregate pnpm test exit 0 is claimed without running it, or is replaced by a partial vitest selection over only the repaired suites.",
+      "The harness spawns the aggregate pnpm test itself (unbounded recursion through the harness) instead of running it as a preserved command recorded in run.json.",
+      "A static-gate failure is recorded as environmental without the clean-env or righthook rerun proof, or a diff-boundary breach is hidden by stashing unrelated changes.",
+      "The proof harness is a stub — it returns authored pass records instead of spawning the seven real selectors and capturing their exit codes, or red.json/green.json are hand-written rather than emitted by the harness.",
+      "The harness omits the search-contract.spec.ts selector from its spawned set, so the seventh repair is claimed without a real selector run."
+    ]
+  },
+  "evidence": {"artifact_type": "file_artifact", "required_capture": True},
+  "cases": [
+    {
+      "start_ref": "trunk_six_suites_red",
+      "action": {
+        "actor": "cli_user",
+        "steps": [
+          "Run the aggregate pnpm test on the repaired tree and record its exit code in run.json (the harness never spawns it — the implementer runs it as the preserved GREEN command).",
+          "Run pnpm typecheck and the scoped Biome command over the seven touched test files; prove any failure environmental (clean-env or righthook rerun) or pre-existing (git stash and rerun) before recording it.",
+          "Verify the tracked-file diff: exactly the six repaired suites plus the new harness, with only drill-appended run blocks under tests/sprint-05-orient-search/evidence/ORI-CI-001/ as the single-tutorial drill's own recording side effect, and zero product-source changes (apps/**, packages/**, scripts/** byte-unchanged on the candidate)."
+        ]
+      },
+      "end_state": {
+        "must_observe": [
+          "The aggregate pnpm test exits 0 on the repaired tree — the vitest-class members of the six breaks repaired with no other suite regressed.",
+          "pnpm typecheck and the scoped Biome command exit 0 (or carry the stash-proven or clean-env-proven environmental record).",
+          "red.json, green.json, and run.json bind the candidate and harness sha256 values, the per-suite exit codes, the aggregate and static-gate exits, and the diff inventory; scratch roots are cleaned."
+        ],
+        "must_not_observe": [
+          "A seventh failing vitest suite silently absorbed into the repair set without a scope report.",
+          "Any candidate-side product-source byte changed, or a path outside writeAllowed touched.",
+          "An empty or authored evidence record standing in for harness-observed exits — the (0)-count signature of a stub."
+        ]
+      }
+    }
+  ]
+}
+
+def ac(idx, name, primary, desc, service, scenario):
+    return {
+      "id": f"AC-{idx}",
+      "type": "acceptance_criterion",
+      "name": name,
+      "primary": primary,
+      "description": desc,
+      "flow_ref": None,
+      "test_file": TF,
+      "test_function": "runSuiteRepairProof",
+      "verify": VERIFY,
+      "test_tier": "integration",
+      "verification_service": service,
+      "surface_policy": None,
+      "tdd_state": "none",
+      "maps_to_ac": None,
+      "scenario": scenario,
+    }
+
+ac1 = ac(1, "The three vitest suites pass their exact selectors in isolation", True,
+  "GIVEN trunk ca759bd7 where the three vitest selectors fail — single-tutorial-gate.test.ts 3 pass / 2 fail (ORI-CI-001-duplicate at :461 and ORI-CI-001-noncanonical at :496, the builds stopping at check:snippets 'no committed binding' before the tutorial gate, the draft variant tripping it too), scaffold.build.test.ts 1 pass / 1 fail (FUSE-01-manifest-contract at :142 on github-slugger outside the TR-06 set with wrangler behind it, and the retired three-segment pin at :162), and data-table-contract.test.ts 3 pass / 1 fail (the :58 rows regex wanting the pre-AST-007 non-optional form) WHEN the seven named test files carry the repairs THEN each of the three exact vitest selectors exits 0 in isolation — the drill's duplicate/noncanonical variants reaching ASTRO's tutorial-gate diagnostics through scratch-only COMMITTED_BINDINGS extensions (the noncanonical rename re-pointing the four quickstart entries, because the stale-binding check at authored-snippets.ts:945 rejects orphaned bindings), the manifest contract allowing exactly the landed dependency set (github-slugger from bf202aac, wrangler from 57903f51) and pinning the seven-stage build script, and the data-table contract asserting the optional rich-cell rows?: prop, the single rows?.map( loop, and the slot branch.", V1, sc1)
+ac2 = ac(2, "The four Playwright suites pass their exact selectors against the built dist", False,
+  "GIVEN trunk where ledger.spec.ts fails across its tokens (112 copy triggers — two labeled engine commands per row since AST-007; the strict-mode bulk-add code pair; the replaced td.ledger-type, td.ledger-verdict, and table.ledger__table selectors; the docs column's 56 /components/{name} links via a[data-docs-link]), verdict-badge-wiring.spec.ts fails its ledger token in all three projects on the same replaced selectors, not-found-search-recovery.spec.ts fails its two JS-enabled projects on the '[data-search-slot] button' strict-mode violation (2 elements since VIS-003's close button landed inside the slot), and search-contract.spec.ts fails every JS-enabled token in chromium-desktop and chromium-mobile at the :208 click on the same violation (5 pass / 10 fail) WHEN the four spec files carry the selector repairs adopted from the living sprint-05 lane precedents (ledger-presentation.spec.ts's row-scoped .badge, engine-scoped rnr-copy-button, and a[data-docs-link]; search-presentation.spec.ts:40's scoped trigger) THEN each of the four exact Playwright selectors exits 0 across all three projects against astro preview serving the freshly built dist, with the data-equality oracles preserved — 56 rows name-for-name against the generated dataset, the verdict vocabulary, the absolute-URL command regex, clipboard equality with the displayed command, DOM-order, and the no-JS render.", V2, sc2)
+ac3 = ac(3, "Aggregate, static gates, diff boundary, and the proof harness evidence", False,
+  "GIVEN the repaired tree WHEN the aggregate pnpm test (vitest run) executes THEN it exits 0 — the vitest-class breaks repaired with no other suite regressed; pnpm typecheck exits 0; the scoped Biome command over the eight touched test files exits 0; the tracked-file diff is exactly the seven repaired suites plus the new harness, with only drill-appended run blocks under tests/sprint-05-orient-search/evidence/ORI-CI-001/ as the single-tutorial drill's own recording side effect; the harness records RED (the planner-verified trunk failures bound to the pre-change candidate SHA) and GREEN (per-suite exit 0) under .tmp/FIX-ORI-SUITE-1/; and no product source changes — scripts/docs-data/authored-snippets.ts mutations live and die inside the drill's owned scratch copies.", V3, sc3)
+
+tc1 = {"id": "TC-1", "type": "test_criterion", "description": "The three vitest selectors exit 0 in isolation (spawned by the harness; per-suite commands preserved in the charter).", "verify": VERIFY, "maps_to_ac": "AC-1"}
+tc2 = {"id": "TC-2", "type": "test_criterion", "description": "The four Playwright selectors exit 0 across all three projects after one real build.", "verify": VERIFY, "maps_to_ac": "AC-2"}
+tc3 = {"id": "TC-3", "type": "test_criterion", "description": "The aggregate pnpm test, pnpm typecheck, and the scoped Biome command exit 0; the tracked-file diff is the seven suites + harness + drill appends; RED/GREEN recorded in .tmp/FIX-ORI-SUITE-1/.", "verify": VERIFY, "maps_to_ac": "AC-3"}
+
+requirements = [ac1, ac2, ac3, tc1, tc2, tc3]
+
+SUPERSEDES = [
+  "tests/sprint-05-orient-search/single-tutorial-gate.test.ts",
+  "tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts",
+  "tests/sprint-04-generated-reference/data-table-contract.test.ts",
+  "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts",
+  "tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts",
+  "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts",
+  "tests/sprint-05-orient-search/search-contract.spec.ts",
+]
+req_contract = {
+  "version": "1",
+  "task_id": "FIX-ORI-SUITE-1",
+  "tdd_mode": "red_first",
+  "verification_policy": {"requires_tests": True, "requires_red_evidence": True, "requires_seeded_evidence": True},
+  "fixtures": fixtures,
+  "supersedes": SUPERSEDES,
+  "requirements": requirements,
+}
+
+# ---- Charter assembly ----
+charter = open(PARTS + '/charter.md').read()
+for ph, val in [
+  ('__SC1__', json.dumps(sc1)),
+  ('__SC2__', json.dumps(sc2)),
+  ('__SC3__', json.dumps(sc3)),
+  ('__FIXTURES__', json.dumps(fixtures)),
+  ('__REQ_JSON__', json.dumps(req_contract)),
+]:
+  assert charter.count(ph) == 1, ph
+  charter = charter.replace(ph, val)
+open(PARTS + '/TASK-FIX-ORI-SUITE-1.md', 'w').write(charter)
+
+# ---- Result JSON ----
+guardrails_write_allowed = [
+  "tests/sprint-05-orient-search/single-tutorial-gate.test.ts (MODIFY)",
+  "tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts (MODIFY)",
+  "tests/sprint-04-generated-reference/data-table-contract.test.ts (MODIFY)",
+  "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts (MODIFY)",
+  "tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts (MODIFY)",
+  "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts (MODIFY)",
+  "tests/sprint-05-orient-search/search-contract.spec.ts (MODIFY)",
+  "tests/sprint-05-orient-search/suite-repair-proof.test.ts (NEW)",
+  "tests/sprint-05-orient-search/evidence/ORI-CI-001/positive.log (APPEND-ONLY drill side effect)",
+  "tests/sprint-05-orient-search/evidence/ORI-CI-001/duplicate.log (APPEND-ONLY drill side effect)",
+  "tests/sprint-05-orient-search/evidence/ORI-CI-001/missing.log (APPEND-ONLY drill side effect)",
+  "tests/sprint-05-orient-search/evidence/ORI-CI-001/noncanonical.log (APPEND-ONLY drill side effect)",
+  "tests/sprint-05-orient-search/evidence/ORI-CI-001/restored.log (APPEND-ONLY drill side effect)",
+  "tests/sprint-05-orient-search/evidence/ORI-CI-001/manifest.json (APPEND-ONLY drill side effect)",
+  ".tmp/FIX-ORI-SUITE-1/red.json",
+  ".tmp/FIX-ORI-SUITE-1/green.json",
+  ".tmp/FIX-ORI-SUITE-1/run.json",
+]
+
+
+result = {
+  "ask_id": "ask-wave19-add-preexisting-suite-repair",
+  "planner": "ghactions-planner",
+  "files": [
+    {"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-1.md", "expected_sha256": None, "content": charter},
+    {"path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/SPRINT.md", "expected_sha256": sha(sprint_old), "content": sp2},
+    {"path": ".spec/prds/docs-site/ROADMAP.md", "expected_sha256": sha(roadmap_old), "content": rm2},
+  ],
+  "task_plan": {
+    "expanded_tasks": [
+      {
+        "task_id": "FIX-ORI-SUITE-1",
+        "planner": "ghactions-planner",
+        "agent": "ghactions-implementer",
+        "reviewer": "ghactions-reviewer",
+        "guardrails": {"write_allowed": guardrails_write_allowed, "write_prohibited": []},
+        "supersedes": SUPERSEDES,
+        "requirements": requirements,
+      }
+    ],
+    "journey_proofs": [],
+    "blocked_flows": [],
+  },
+}
+
+data = json.dumps(result, indent=1, ensure_ascii=False) + '\n'
+json.loads(data)  # parse check
+open(OUT, 'w').write(data)
+print('WROTE', OUT, len(data))
+print('sha256', sha(data.encode('utf8')))
+# diff sanity
+open(PARTS + '/SPRINT.new.md', 'w').write(sp2)
+open(PARTS + '/ROADMAP.new.md', 'w').write(rm2)
