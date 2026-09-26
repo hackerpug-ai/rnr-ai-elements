@@ -1,0 +1,67 @@
+{
+ "item_id": "ORI-CONT-004:blocked:1:scope_impact:0:dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
+ "wave_id": "wave-20",
+ "source_task": "ORI-CONT-004",
+ "source_kind": "blocked",
+ "report_sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
+ "field": "scope_impact",
+ "index": 0,
+ "outcome": "add",
+ "answers": [
+  {
+   "question": 1,
+   "answer": true,
+   "reason": "Names the exact external break: react-native-web@0.21.3 (published 2026-09-25T15:00Z, after ORI-RN-003's committed green) dies inside uniwind 1.11.0's incomplete package.json exports map during expo export --platform web ('Unable to resolve module ./exports/InputAccessoryView'); reproduced standalone twice; pinning 0.21.2 in the same consumer exports cleanly; the fix is a one-line pin in packages/docs-snippets/{nativewind,uniwind}/package.json.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
+     "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
+    }
+   ]
+  },
+  {
+   "question": 2,
+   "answer": false,
+   "reason": "Not a reviewer finding; an implementer blocked report naming an upstream dependency release breaking fresh installs.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
+     "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
+    }
+   ]
+  },
+  {
+   "question": 3,
+   "answer": true,
+   "reason": "In-flight ORI-CONT-004's locked flow 3 fails closed on the uniwind/web leg; ORI-CI-004's fresh-install proofs run the same consumer resolution.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
+     "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
+    }
+   ]
+  },
+  {
+   "question": 4,
+   "answer": false,
+   "reason": "A dependency pin restoring the recorded working resolution (0.21.2) against a day-old upstream release; no gate words change, no product behavior decided.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
+     "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
+    }
+   ]
+  },
+  {
+   "question": 5,
+   "answer": true,
+   "reason": "Verified: the child reproduced the failure standalone twice and proved the 0.21.2 pin exports cleanly (exit 0) in the same consumer; the owning template files are outside its allowlist.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
+     "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
+    }
+   ]
+  }
+ ]
+}
