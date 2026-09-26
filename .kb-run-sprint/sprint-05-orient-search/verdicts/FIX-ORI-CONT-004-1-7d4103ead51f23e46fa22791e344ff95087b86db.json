@@ -1,0 +1,37 @@
+{
+ "verdict": "APPROVED",
+ "commit_sha": "7d4103ead51f23e46fa22791e344ff95087b86db",
+ "reviewer": "react-native-reusables-reviewer",
+ "requirements": [
+  {
+   "id": "AC-1",
+   "satisfied": true,
+   "evidence": "RED: red.json binds pre-pin spec '~0.21.0' (modeRed precondition exits 2 if the pin is already present, so the run genuinely saw the pre-pin manifests), real registry lane `npm view 'react-native-web@~0.21.0' version --json` returning candidates [0.21.0, 0.21.1, 0.21.2, 0.21.3], resolved react-native-web exactly '0.21.3' read from the consumer's own node_modules/react-native-web/package.json, export exit 1, and the verbatim Metro log carrying the literal 'Unable to resolve module ./exports/InputAccessoryView' with the full import stack from react-native-web@0.21.3/dist/index.js \u2014 an authored receipt cannot reproduce that log. GREEN: green.json records committed_specs 0.21.2/0.21.2 with range_operator_count 0 (confirmed live in both manifests at packages/docs-snippets/{nativewind,uniwind}/package.json), registry lane for the exact pin returning exactly ['0.21.2'], a fresh uniwind consumer resolving exactly 0.21.2, export exit 0, 158,124 ms within the 90-min budget. Both JSONs bind candidate SHA, literal command+mode, consumer roots, resolved-version read paths, export exits, and harness_sha256 5caebb93\u2026 which equals `shasum -a 256` of the committed harness file byte-for-byte \u2014 proving both phases ran the final harness bytes after the fallow refactor.",
+   "fix": "",
+   "fix_location": "in_scope"
+  },
+  {
+   "id": "AC-2",
+   "satisfied": true,
+   "evidence": "green.json nativewind leg: recipe_script_exit 0, resolved_rnw_version '0.21.2' read from /tmp/fix-ori-cont-004-1-scratch/ori-rn-001-nativewind-6uAWCz/node_modules/react-native-web/package.json, real export exit 0 with a verbatim 1317-module Metro bundle log, leg_ok true; fresh_installs_per_engine 1, skipped_legs []. The refreshed evidence/ORI-RN-001/nativewind-install.txt carries run id nativewind-2026-09-26T03:31:51.729Z and the same consumer root, correlating exactly with green.json's GREEN started_at 03:31:51.156Z \u2014 the install evidence was refreshed by the same run, not hand-edited.",
+   "fix": "",
+   "fix_location": "in_scope"
+  },
+  {
+   "id": "AC-3",
+   "satisfied": true,
+   "evidence": "Independently re-run by reviewer in the worktree: guard selector `pnpm exec vitest run tests/sprint-05-orient-search/rnw-pin-proof.test.ts` PASS 2/2 exit 0 in under a second (no network, no spawns \u2014 the heavyweight lanes are structurally gated behind directInvocationCheck(process.argv[1]) and the guard test itself asserts the gate is closed under the runner); `pnpm typecheck` exit 0; scoped biome ci exit 0 (2 suppressions/unused warnings only). git diff --name-only fd39f560...7d4103ea reports exactly the 9 allowlist paths \u2014 zero changes to pnpm-lock.yaml, workspace manifests, support/, commands/, apps/, .spec/, .github/. Both pinned entries are the bare string 0.21.2, 0 range operators. Worktree clean at the candidate.",
+   "fix": "",
+   "fix_location": "in_scope"
+  }
+ ],
+ "flows": [],
+ "stubs": [],
+ "verification": {
+  "typecheck": "pass",
+  "lint": "pass",
+  "tests": "pass"
+ },
+ "summary": "No stubs found: the only new code is the harness, and every lane drives a real surface \u2014 spawnSync shell execution, the committed recipe script verbatim (bash packages/docs-snippets/commands/{uniwind,nativewind}.sh with the literal rnraielements.com CLI adds), a real npm registry query, the resolved version read from each consumer's own node_modules, and real expo export exit codes; verdicts are computed from receipt fields, never authored, and the PRE_PIN_CANDIDATES constant is an assertion expectation, not a data source. The RED failure log is unmistakably genuine (full Metro import stack through react-native-web@0.21.3 and uniwind@1.11.0's missing dist/module/components/web/InputAccessoryView.js). The three flagged assumptions all adjudicate sound: (1) the post-fallow RED roundtrip is proven by the harness sha256 in both red.json and green.json matching the committed file byte-for-byte; (2) the warm pnpm store cannot fabricate the result \u2014 version resolution is registry-metadata-driven in a fresh root, and the same warm store resolved 0.21.3 at RED minutes before resolving 0.21.2 at GREEN; (3) the scratch root /tmp/fix-ori-cont-004-1-scratch is retained with cache dirs for replays while consumer roots were torn down per contract. Two non-blocking notes: the evidence JSONs bind candidate_head_sha fd39f560 (the diff base) rather than 7d4103ea \u2014 inherent to honest RED-first, since the runs precede the commit and the harness-bytes sha covers identity; and biome reports 2 suppressions/unused warnings on the harness's biome-ignore comments \u2014 cosmetic, gate exits 0. The exact bare 0.21.2 pin is the correct minimal fix and matches the manifests' existing exact-pin convention for sensitive native entries.",
+ "note": "commit_sha corrected from a wrong full expansion of the same 7-char prefix; the reviewer verified the branch tip, which is this commit."
+}
