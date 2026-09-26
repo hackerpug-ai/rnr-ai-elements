@@ -63,6 +63,11 @@ listed with peers in the [install docs matrix](/components). The
 
 To see how a real consumer installs and composes the items, read the
 [example app source (apps/example)](https://github.com/hackerpug-ai/rnr-ai-elements/tree/main/apps/example).
-The source shows installation and composition today; it does not yet include
-a live streaming chat. For the styling side of the same split, read
+Its `/live-chat` route composes the same registry items around AI SDK v7's
+`useChat` hook, streaming from a small server that keeps your provider
+credentials off the device — the model-side wiring your app owns under the
+split above. To run that screen against the real provider, follow the
+verified run guide:
+[Run the live chat example (apps/example/docs/live-chat.md)](https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/example/docs/live-chat.md).
+For the styling side of the same split, read
 [Theming: the renderMarkdown seam](/docs/theming#rendermarkdown).
