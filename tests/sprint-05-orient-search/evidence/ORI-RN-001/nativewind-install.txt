@@ -1,46 +1,56 @@
 ORI-RN-001 clean nativewind consumer install proof
-candidate HEAD: 5447639180825418595de89dee05332c0345a31a
-run id: nativewind-2026-09-15T07:18:29.593Z
-consumer root: /Users/justinrich/.cache/agent-scratch/ori-rn-001-nativewind-j7jMNu
+candidate HEAD: fd39f5605559a679582738fe6232f12724595b65
+run id: nativewind-2026-09-26T03:31:51.729Z
+consumer root: /tmp/fix-ori-cont-004-1-scratch/ori-rn-001-nativewind-6uAWCz
 RNR CLI: @latest resolved to 1.0.0
-script: bash /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-001/packages/docs-snippets/commands/nativewind.sh
+script: bash /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1/packages/docs-snippets/commands/nativewind.sh
 --- install log (verbatim) ---
 Progress: resolved 1, reused 0, downloaded 0, added 0
-Progress: resolved 370, reused 361, downloaded 0, added 0
+Progress: resolved 35, reused 33, downloaded 0, added 0
+Progress: resolved 145, reused 142, downloaded 0, added 0
+Progress: resolved 321, reused 312, downloaded 0, added 0
+Progress: resolved 377, reused 365, downloaded 0, added 0
+Progress: resolved 665, reused 645, downloaded 0, added 0
  WARN  1 deprecated subdependencies found: uuid@7.0.3
-Packages: +641
+Packages: +658
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Progress: resolved 660, reused 641, downloaded 0, added 66
-Progress: resolved 660, reused 641, downloaded 0, added 494
-Progress: resolved 660, reused 641, downloaded 0, added 597
-Progress: resolved 660, reused 641, downloaded 0, added 641, done
+Progress: resolved 677, reused 658, downloaded 0, added 89
+Progress: resolved 677, reused 658, downloaded 0, added 314
+Progress: resolved 677, reused 658, downloaded 0, added 519
+Progress: resolved 677, reused 658, downloaded 0, added 578
+Progress: resolved 677, reused 658, downloaded 0, added 614
+Progress: resolved 677, reused 658, downloaded 0, added 620
+Progress: resolved 677, reused 658, downloaded 0, added 658, done
 
 dependencies:
++ @ai-sdk/react 4.0.92 (4.0.104 is available)
 + @rn-primitives/avatar 1.5.2
 + @rn-primitives/dialog 1.5.2
 + @rn-primitives/portal 1.5.3
 + @rn-primitives/separator 1.5.2
 + @rn-primitives/slot 1.5.2
++ ai 7.0.89 (7.0.93 is available)
 + class-variance-authority 0.7.1
 + clsx 2.1.1
-+ expo 57.0.22
-+ expo-constants 57.0.18
++ expo 57.0.25
++ expo-constants 57.0.19
 + expo-document-picker 57.0.2
-+ expo-image-picker 57.0.17
-+ expo-linking 57.0.10
-+ expo-router 57.0.21
++ expo-image-picker 57.0.20
++ expo-linking 57.0.11
++ expo-router 57.0.23
 + expo-status-bar 57.0.1
-+ lucide-react-native 0.577.0 (1.46.0 is available)
++ lucide-react-native 0.577.0 (1.48.0 is available)
 + nativewind 4.2.6 (4.2.7 is available)
 + react 19.2.3 (19.3.0 is available)
 + react-dom 19.2.3 (19.3.0 is available)
 + react-native 0.86.3 (0.87.1 is available)
++ react-native-css-interop 0.2.6 (0.2.7 is available)
 + react-native-gesture-handler 2.32.0 (3.3.0 is available)
 + react-native-reanimated 4.5.1 (4.6.0 is available)
-+ react-native-safe-area-context 5.7.0 (5.9.1 is available)
++ react-native-safe-area-context 5.7.0 (5.10.0 is available)
 + react-native-screens 4.26.2 (4.28.0 is available)
 + react-native-svg 15.15.4 (15.15.5 is available)
-+ react-native-web 0.21.2
++ react-native-web 0.21.2 (0.21.3 is available)
 + react-native-worklets 0.10.1 (0.11.4 is available)
 + tailwind-merge 3.7.0
 + tailwindcss-animate 1.0.7
@@ -51,13 +61,13 @@ devDependencies:
 + tailwindcss 3.4.19 (4.3.3 is available)
 + typescript 6.0.3 (7.0.2 is available)
 
-Done in 5.1s using pnpm v10.32.1
+Done in 12.4s using pnpm v10.32.1
 › Installing using pnpm
 > pnpm install
 Lockfile is up to date, resolution step is skipped
 Already up to date
 
-Done in 275ms using pnpm v10.32.1
+Done in 678ms using pnpm v10.32.1
 [2m[34mℹ[39m Styling Library: Nativewind[0m
   - components/ui/text.tsx
   - components/ui/icon.tsx
