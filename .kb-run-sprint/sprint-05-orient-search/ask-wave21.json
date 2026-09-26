@@ -1,0 +1,37 @@
+{
+ "ask_id": "ask-wave21-add-foreign-suite-repair",
+ "wave_id": "wave-21",
+ "kind": "add",
+ "source_item_ids": [
+  "FIX-ORI-SUITE-1:blocked:1:scope_impact:0:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+ ],
+ "target": "FIX-ORI-SUITE-2",
+ "planner": "ghactions-planner",
+ "planner_session_id": "wave21-planner@session-a251722f",
+ "planner_dispatch_handle": "wave21-planner@session-a251722f",
+ "input_hashes": [
+  {
+   "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+   "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+  }
+ ],
+ "allowed_paths": [
+  {
+   "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md",
+   "expected_sha256": null
+  },
+  {
+   "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/SPRINT.md",
+   "expected_sha256": "0d93d8db89a260a9416a59262f56d4826ffb5140d945217e00407c535d9b7823"
+  },
+  {
+   "path": ".spec/prds/docs-site/ROADMAP.md",
+   "expected_sha256": "eca465c78a5d13367729ae05d5ba46885bdbb193c1a0fc857cd198f46e672b9d"
+  }
+ ],
+ "task_id": "FIX-ORI-SUITE-2",
+ "sequence": {
+  "when": "next"
+ },
+ "human_flows_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/human-flows.json"
+}

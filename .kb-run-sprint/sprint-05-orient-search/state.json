@@ -16345,6 +16345,248 @@
         ],
         "wave_id": "wave-20"
       },
+      "ask-wave21-add-foreign-suite-repair": {
+        "allowed_paths": [
+          {
+            "expected_sha256": null,
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md"
+          },
+          {
+            "expected_sha256": "0d93d8db89a260a9416a59262f56d4826ffb5140d945217e00407c535d9b7823",
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/SPRINT.md"
+          },
+          {
+            "expected_sha256": "eca465c78a5d13367729ae05d5ba46885bdbb193c1a0fc857cd198f46e672b9d",
+            "path": ".spec/prds/docs-site/ROADMAP.md"
+          }
+        ],
+        "ask_id": "ask-wave21-add-foreign-suite-repair",
+        "assignment": {
+          "implementer": "ghactions-implementer",
+          "planner": "ghactions-planner",
+          "proposed_by": null,
+          "reviewer": "ghactions-reviewer",
+          "source": {
+            "domain": null,
+            "kind": "suffix",
+            "path": null
+          },
+          "status": "resolved",
+          "task": "ghactions-planner"
+        },
+        "human_flows_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/human-flows.json",
+        "input_hashes": [
+          {
+            "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+            "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+          }
+        ],
+        "kind": "add",
+        "planner": "ghactions-planner",
+        "planner_dispatch_handle": "wave21-planner@session-a251722f",
+        "planner_session_id": "wave21-planner@session-a251722f",
+        "publication": null,
+        "result": null,
+        "roster": "/Users/justinrich/Projects/brain/agents",
+        "roster_sha256": null,
+        "sequence": {
+          "when": "next"
+        },
+        "source_item_ids": [
+          "FIX-ORI-SUITE-1:blocked:1:scope_impact:0:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+        ],
+        "state": "dispatched",
+        "target": "FIX-ORI-SUITE-2",
+        "task_id": "FIX-ORI-SUITE-2",
+        "task_repo": "/Users/justinrich/Projects/rnr-ai-elements",
+        "validation_context": [
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-001-implement-the-worked-examples-usechat-hook-and-real-openai-streaming-route.md",
+            "sha256": "7753e5d2e27019409cc23528c13ce66a7a7cde8112ba2aab64e0297d2e913132"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AI-002-prove-the-composed-worked-example-against-the-real-provider.md",
+            "sha256": "ceb3e1e2b964928d8283775d5f1043630ab328f3e97bb722e836ae4b55031482"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-001-render-authored-documentation-through-the-astro-collection-and-prose-shell.md",
+            "sha256": "c760a2b69f2de184fe6bb3a26ecd7137419db8201b7c6f39fe0f1d2c4e881089"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-002-keep-engine-choices-synchronized-through-prose-and-astro-navigation.md",
+            "sha256": "b9939dd12511f2223104ecdb46b25106d78b4e0ba7b57a4c75c0386217846a71"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-003-make-the-theming-token-table-demonstrate-the-live-site-theme.md",
+            "sha256": "7c6cc18e8e9fbed243533956e5ea7fe37f3459a2b4647754ad33181dc58c65d9"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-004-navigate-the-built-docs-through-a-lazily-loaded-pagefind-dialog.md",
+            "sha256": "6619a3ab346ee14acfaf875102e7b9e5df814125337f6448cc084158071ecbdc"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-005-reject-authored-code-that-loses-its-real-source-or-typecheck.md",
+            "sha256": "aaa592d9d99ccf33477335df5aac4f0afc710b4b9aa498db91a48797a8b32d2b"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-006-reject-broken-links-in-the-built-documentation.md",
+            "sha256": "d8583842a4f544819cc0ecdacc51aea26abf19aeb08b4e1b9464d1442ac6971c"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-007-filter-the-registry-ledger-and-copy-commands-for-the-selected-engine.md",
+            "sha256": "ea3866efb97006c775685cf06dd776624d276910ba9a799d11beb2be66593b28"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-008-publish-reference-destinations-for-the-remaining-17-ui-and-library-items.md",
+            "sha256": "0b9a2ac37d2d52ac1061720f757241e7bc4fe9150ba7eab4ba8358fffdd3935e"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-009-recover-from-unknown-documentation-urls-through-the-real-site-search.md",
+            "sha256": "218da00d68811c4855a717ff4ba58e69e58936ae155f9594bfd1631d5e29292b"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-AST-010-prove-integrated-engine-and-search-flows-after-real-content-and-recovery-exist.md",
+            "sha256": "0e29e53cbe4ae5d8a682ba01809961f3bf353b094c0a098c1bf182815206dc61"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-001-reject-missing-duplicate-or-noncanonical-published-tutorials.md",
+            "sha256": "1e4245a0c61b06d151ee152ac08326858cf0db4fbd2b7394db6ed1a3bea95b8b"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-002-make-the-public-docs-build-execute-every-content-gate-in-order.md",
+            "sha256": "f207c70678feba0ab2642b1c6a093d7444cb1cec2c94c0baf58f01b72cc6e6cc"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-003-enforce-credential-free-candidate-checks-in-github-actions.md",
+            "sha256": "dbcb33b250f3a157ff02e6a4444b6bd5cd9b94ee3a42cff18221cfbd98814e50"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CI-004-require-fresh-native-provider-and-public-registry-proof-before-publication.md",
+            "sha256": "869d0fa06432904fdeea041c7e603481f5b1586d8bf63d9b6ba5e3f64c6a5f29"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-001-author-introduction-installation-and-registry-specific-cli-content.md",
+            "sha256": "f404f809f2040f36b0faef2073f6ed2ef4e76f6d8b543d406604e33fdc6566be"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-002-author-theming-and-dark-mode-manuscripts-for-the-real-route-adapter.md",
+            "sha256": "5b66ea47134681540b02877a82034c546f81c3aae2a2b7e3dd709dc6f85d1817"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-003-author-the-single-seed-data-quickstart-and-its-live-example-run-handoff.md",
+            "sha256": "d9dcdcb8713786af93fa1646185d5a316a8e944993fb62bfd77c4935aa64f7ab"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+            "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-005-author-the-real-boundary-explanation-and-missing-page-recovery-copy.md",
+            "sha256": "db56825193c492254c3f007cb10cc2041d32571867debc3448b3a84aaedeb601"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-006-state-the-complete-tr-12-docs-contribution-contract.md",
+            "sha256": "e0141a0bd6caf3c672c6db618c80d6950116cc9d47c80c312f07f2d2a9898809"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-DEP-001-establish-the-initial-workers-deployment-and-canonical-registry-prerequisite.md",
+            "sha256": "4239dabcf944dae85476db48ca27417e2f05e4baaa6f35c8851f5c1cfb6d3843"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-DEP-002-verify-the-accepted-candidates-real-cloudflare-version-and-404-recovery.md",
+            "sha256": "05f65767e38d2c7a05eeb23c1fe58ecbb8729c234f3a33698db231a1e0d5ef1a"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-DEP-003-publish-and-verify-the-completed-sprint-05-docs-at-the-apex.md",
+            "sha256": "2d36a92323afac138ac89fae452f6b144a61f8d21978c19582b50676b19ee33d"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-000-make-the-published-promptinput-import-graph-compatible-with-expo-57-types.md",
+            "sha256": "8ba2316e07c681535115e9d2d84edf51ee69e74f27840a243f6aca96af1c137d"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-001-provide-complete-source-backed-setup-for-both-clean-expo-consumers.md",
+            "sha256": "ce0e745346d65b29e82f59c974cb153220d1eb15c4fe544e6e3ba592d5d7e9d0"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-002-provide-the-single-source-backed-seed-data-chat-screen.md",
+            "sha256": "faafd6f8bc434ba69a09007df4f7ea748ad5277a43d706e7364c5ca3fe201e1f"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md",
+            "sha256": "3af1fefea3349daa03014836e020f3e302c7f9354b63fbc2cca41aa26a2a2685"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md",
+            "sha256": "d805f854a7f7c2bf7424e003ee143f9d8419254c346c9d539ab7833d08ffa68d"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-RN-005-run-the-real-worked-example-source-in-an-independent-nativewind-consumer.md",
+            "sha256": "586d95c9f59ffa00091f6a58f4fed1e8f30c42de686378e7e678187d75099097"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-001-complete-the-shared-reading-layout-for-orientation-and-boundary-pages.md",
+            "sha256": "afc3d358189fdd672208f401d7cd3ec611b5a287fcf8803bed3711293d7f5073"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-002-present-paired-token-values-and-the-live-theme-demonstration.md",
+            "sha256": "95d31beb76e2cb600a536be9dc3d6535985af55bddb494ace209e334132498ae"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-003-present-shared-search-results-and-keyboard-visible-states.md",
+            "sha256": "c16b9ae40cad4d6ff845b3b483f48e1e7de127eb2986b64b199292f6282d6fb5"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-004-complete-the-ledger-toolbar-and-shared-table-presentation.md",
+            "sha256": "71d05f3c45cc400054041208d158ce4eeb354b4dee9553ee60ba8ae4580506dc"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-VIS-005-compose-the-branded-missing-page-search-recovery-surface.md",
+            "sha256": "96b38c66f60e5177d5b08e52b2fd55efe9a2f95f0b8e8b293137b203ad77cea9"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-AI-001-1.md",
+            "sha256": "11b9b26c413ca77c51698e60f5d485642b971fb7a1af8403f527a9e68e7fa902"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-AI-002-1.md",
+            "sha256": "7f381a07d573d92b1b566cb73c04a0d7d42e5612f6883b419a3cbc863086d0be"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-AST-004-1.md",
+            "sha256": "46234fc37c301ed467292ca2d293a515a15ff639f2fed4bc61315e9c85afc631"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-CI-001-1.md",
+            "sha256": "318564ae9817c06a0fe4e131a408ecceeb351e5ec8ef8b012e83cd26b265b953"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-CONT-004-1.md",
+            "sha256": "756b7babcdef5a5467b1a232020efec538c74212ff87fd5cefa9e89cf2c075e0"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-2.md",
+            "sha256": "18cb79ce35c3cdd7debedf233106c75d8595beee7363b8b47945862252a4d153"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-3.md",
+            "sha256": "efe30af24d2d1374780afd839d85b4b58c19ad614d701e68e483e3055c107846"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-005-1.md",
+            "sha256": "84c4692ac3704fc998de2335d6355431dcb04302065fa090180533351ec8682a"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-1.md",
+            "sha256": "f9c8a581d87d2439fe91b36f8bff7420316567b9ab6d18bd14d9b7f766442651"
+          },
+          {
+            "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-VIS-001-1.md",
+            "sha256": "9b9157347d765d5359c2832087b736d93e7769cff3263873411e4f3c87192a5e"
+          }
+        ],
+        "wave_id": "wave-21"
+      },
       "ask-wave8-add-payload-retry-fix": {
         "allowed_paths": [
           {
@@ -18277,6 +18519,73 @@
         "outcome": "nothing",
         "source_task": "FIX-ORI-RN-005-1",
         "wave_id": "wave-9"
+      },
+      "FIX-ORI-SUITE-1:blocked:1:scope_impact:0:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051": {
+        "answers": [
+          {
+            "answer": true,
+            "evidence": [
+              {
+                "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+                "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+              }
+            ],
+            "question": 1,
+            "reason": "Names the six concrete failing suites with standalone-verified status (docs-collection, docs-data-prebuild, ci-chain-order incl. the 112-vs-114 dist-count drift, contributing-content, live-example-api, nativewind-live-example) — all outside the charter's writeAllowed, blocking AC-3's aggregate clause."
+          },
+          {
+            "answer": false,
+            "evidence": [
+              {
+                "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+                "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+              }
+            ],
+            "question": 2,
+            "reason": "Not a reviewer finding; an implementer blocked report naming foreign suites discovered during aggregate verification."
+          },
+          {
+            "answer": true,
+            "evidence": [
+              {
+                "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+                "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+              }
+            ],
+            "question": 3,
+            "reason": "Pending ORI-CI-003/004's aggregate pnpm test acceptance requires these suites passing; FIX-ORI-SUITE-1's own completion is gated on the same clause."
+          },
+          {
+            "answer": false,
+            "evidence": [
+              {
+                "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+                "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+              }
+            ],
+            "question": 4,
+            "reason": "Same repair class as the seven chartered suites: test/assertion alignment to landed product reality, each requiring planner verification and classification (count-drift repair vs owner-routed vs budget-class)."
+          },
+          {
+            "answer": true,
+            "evidence": [
+              {
+                "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+                "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+              }
+            ],
+            "question": 5,
+            "reason": "Verified: four of six standalone-verified failing on the candidate; the remaining two failed in the 16h aggregate; the child's seven repairs are proven green so these failures are independent of its work."
+          }
+        ],
+        "field": "scope_impact",
+        "index": 0,
+        "item_id": "FIX-ORI-SUITE-1:blocked:1:scope_impact:0:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+        "outcome": "add",
+        "report_sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+        "source_kind": "blocked",
+        "source_task": "FIX-ORI-SUITE-1",
+        "wave_id": "wave-21"
       },
       "ORI-AI-001:4d174065ecb988b9e73164140b81b958d8e78598:scope_impact:0:c3b32e58f419dd68ca4b862b9fb8007029f69f7271e927536f88ceb6afec2b99": {
         "answers": [
@@ -21905,9 +22214,9 @@
         "task": "FIX-ORI-AI-002-1"
       }
     },
-    "phase": "idle",
+    "phase": "planning",
     "reservations": {},
-    "wave_id": "wave-20"
+    "wave_id": "wave-21"
   },
   "roadmap_path": ".spec/prds/docs-site/ROADMAP.md",
   "sprint_dir": ".spec/prds/docs-site/tasks/sprint-05-orient-search",
@@ -23628,6 +23937,57 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-005-1"
     },
     "FIX-ORI-SUITE-1": {
+      "blocked_reports": {
+        "1": {
+          "cycle": 1,
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+          "payload": {
+            "assumptions": [
+              "Two extra same-class re-scopes were required because fixing each suite's first failure unmasked the next drifted assertion behind it: data-table-contract's sticky-thead regex (now :global(.data-table thead th)) and scaffold.build's /prerender/ negative (now route-directive-scoped, since the landed prerenderConflictBehavior: 'error' static-output hardening matches the bare form). Both stay inside the same test files with guards kept byte-effective.",
+              "The diff-boundary check hard-fails on product sources (apps/**, packages/**, scripts/**, configs, planning artifacts) and foreign test files, and tolerates-and-records the selectors' own append-only recording contracts (tests/**/evidence/**) plus Playwright's untracked report dirs; product sources are proven byte-unchanged.",
+              "The aggregate was run once (16h wall) and its exit recorded; it was not rerun after the tmpdir-reap cascade because the six real foreign failures are independent of it (four standalone-verified).",
+              "Playwright children run with CI=true plus a harness-side port pre-check that hard-fails on an occupied 4321 rather than recording a misattributed port failure; window-seizing wrappers (uncommitted scratch under .tmp/) wrapped every 4321-dependent run due to continuous sibling contention.",
+              "An early duplicate RED run of my own making raced the rtk-buffered original (two concurrent drills sharing the AST-005 consumer cache); both were invalidated, every orphan process I started was killed, and a single-instance lock plus the honest recapture merge replaced the bad evidence. green.json/run.json bind 62973955's file hashes via a post-commit green re-run.",
+              "Five fallow complexity suppressions with reasons were added (the repo's own idiom): two pre-existing verdict-badge loop shapes enforced only via the changed-file gate, and the harness's three selector/assert spines.",
+              "tests/sprint-05-orient-search/recovery-presentation.spec.ts:52 still carries the stale '[data-search-slot] button' constant — untouched per the charter; its 3 failures remain the ORI-DEP-003 public-origin prerequisite. Report only."
+            ],
+            "blockers": [
+              "ORI-AST-001 (tests/sprint-05-orient-search/docs-collection.test.ts): fails STANDALONE on 62973955 — 3 tokens (ORI-AST-001-collection-schema, ORI-AST-001-mdx-code-copy, ORI-AST-001-publication-contract). Pre-existing drift of the same class as this task's seven; outside writeAllowed.",
+              "FUSE-05 (tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts): fails STANDALONE on 62973955 — 4 tokens, 'copies public r generated-only and byte-identical'.",
+              "FLOW-DELIV-01 (tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts): fails STANDALONE on 62973955 — 2 tokens, including 'ships 112 dist JSONs' while the current build produces 114 public/r files (a superseded count pin of exactly this task's repair class).",
+              "ORI-CONT-006 (tests/sprint-05-orient-search/contributing-content.test.ts): fails STANDALONE on 62973955 — ORI-CONT-006-real-docs-checks; sibling task cont-006-impl is active in this session and likely owns it.",
+              "FLOW-DOCS-02 (tests/sprint-05-orient-search/live-example-api.test.ts): AC-4 token fails in the aggregate (hook contract, both graph compiles, owned-child teardown). Not standalone-rerun (long-running lane); attributed from the aggregate output.",
+              "ORI-RN-005 (tests/sprint-05-orient-search/nativewind-live-example.test.ts): two tokens fail in the aggregate on 75-minute test timeouts (ORI-RN-005-abort-error-retry, ORI-RN-005-fail-closed-cleanup). Not standalone-rerun; timeout/budget-class per the aggregate output.",
+              "Environmental cascade in the aggregate's final minutes: the session tmpdir holding vite's transform scratch (~/.cache/agent-scratch/<session>/ssr/.tmp-*) was reaped mid-run ~16h in, failing 87 files at collection in a burst — including scaffold.build's collection INSIDE the aggregate. My scaffold.build passes standalone (twice: the isolated selector and the green harness) and is not a real aggregate break; the six suites above are the real failures. The interrupted aggregate's destructive lane also wiped generated+tracked data files mid-run — restored (git restore of the tracked pair + prebuild regen; worktree typechecks clean)."
+            ],
+            "commit_sha": "2f15ba41b5d50b7ff5007ab941bf56bbb4ce69b8",
+            "scope_impact": [
+              {
+                "change": "unblocked this task's seven; aggregate remains red through the six foreign suites — rerun of the aggregate is the pending cycle-2 step once they land",
+                "found": "Their aggregate pnpm test acceptance cannot exit 0 until the six foreign suites above are repaired; the seven suites this task owned are green in isolation and in the proof harness (all seven selectors exit 0, twice on 62973955's bytes)",
+                "target": "GATE:ORI-CI-003/ORI-CI-004"
+              }
+            ],
+            "status": "blocked",
+            "summary": "All seven suite repairs are landed (62973955: seven test files + the suite-repair-proof harness; 2f15ba41: RED/GREEN/run evidence + drill appends) and fully proven against real services. RED captured pre-change on f1574f3f with the planner's exact tallies (single-tutorial-gate 3p/2f on ORI-CI-001-duplicate/noncanonical, scaffold.build 1p/1f on FUSE-01-manifest-contract, data-table-contract 3p/1f on the rows regex; the four Playwright suites failing with the strict-mode '[data-search-slot] button' violations and the replaced ledger selectors — the playwright RED needed one harness-emitted recapture merge after the CONT-004 sibling's continuous 4321 occupation initially recorded port errors instead of the real failures). GREEN proves each of the seven preserved selectors exit 0 (all three chromium projects over astro preview serving the freshly built dist): the drill's scratch COMMITTED_BINDINGS extend/re-point lets ASTRO's tutorial gate speak (no check:snippets 'no committed binding'/'stale binding' preemption, 'observed 2 versus 1' and canonical-destination diagnostics present, restoration byte-exact, candidate unchanged), pnpm typecheck 0, scoped Biome 0, tracked-file diff boundary clean, zero product-source changes. Blocked ONLY on AC-3's aggregate clause: pnpm test exits 1 because six suites beyond this task's seven fail on the candidate through no fault of the repairs, all outside the charter's writeAllowed, recorded honestly in run.json (aggregate.exitCode 1) and reported for scope check — not absorbed."
+          },
+          "provenance": {
+            "dispatch_handle": "fix-suite-1-impl@session-a251722f",
+            "response_id": "digest:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+            "response_receipt": {
+              "agent": "ghactions-implementer",
+              "dispatch_handle": "fix-suite-1-impl@session-a251722f",
+              "payload_sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+              "response_id": "digest:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+              "session_id": "fix-suite-1-impl@session-a251722f"
+            },
+            "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.response.json",
+            "response_receipt_sha256": "4e36349780d593997d33e24eb10257d3ec6f6626e264874824d1bde268991087",
+            "session_id": "fix-suite-1-impl@session-a251722f"
+          },
+          "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+        }
+      },
       "created_by_ask": "ask-wave19c-add-preexisting-suite-repair",
       "implementer_session": {
         "dispatch_handle": "fix-suite-1-impl@session-a251722f",

@@ -1,0 +1,67 @@
+{
+ "item_id": "FIX-ORI-SUITE-1:blocked:1:scope_impact:0:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+ "wave_id": "wave-21",
+ "source_task": "FIX-ORI-SUITE-1",
+ "source_kind": "blocked",
+ "report_sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+ "field": "scope_impact",
+ "index": 0,
+ "outcome": "add",
+ "answers": [
+  {
+   "question": 1,
+   "answer": true,
+   "reason": "Names the six concrete failing suites with standalone-verified status (docs-collection, docs-data-prebuild, ci-chain-order incl. the 112-vs-114 dist-count drift, contributing-content, live-example-api, nativewind-live-example) \u2014 all outside the charter's writeAllowed, blocking AC-3's aggregate clause.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+     "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+    }
+   ]
+  },
+  {
+   "question": 2,
+   "answer": false,
+   "reason": "Not a reviewer finding; an implementer blocked report naming foreign suites discovered during aggregate verification.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+     "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+    }
+   ]
+  },
+  {
+   "question": 3,
+   "answer": true,
+   "reason": "Pending ORI-CI-003/004's aggregate pnpm test acceptance requires these suites passing; FIX-ORI-SUITE-1's own completion is gated on the same clause.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+     "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+    }
+   ]
+  },
+  {
+   "question": 4,
+   "answer": false,
+   "reason": "Same repair class as the seven chartered suites: test/assertion alignment to landed product reality, each requiring planner verification and classification (count-drift repair vs owner-routed vs budget-class).",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+     "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+    }
+   ]
+  },
+  {
+   "question": 5,
+   "answer": true,
+   "reason": "Verified: four of six standalone-verified failing on the candidate; the remaining two failed in the 16h aggregate; the child's seven repairs are proven green so these failures are independent of its work.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+     "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+    }
+   ]
+  }
+ ]
+}
