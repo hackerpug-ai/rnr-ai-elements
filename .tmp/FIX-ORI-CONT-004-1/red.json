@@ -1,0 +1,97 @@
+{
+  "task": "FIX-ORI-CONT-004-1",
+  "mode": "red",
+  "candidate_head_sha": "fd39f5605559a679582738fe6232f12724595b65",
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/rnw-pin-proof.test.ts --mode red",
+  "committed_spec_at_red": "~0.21.0",
+  "scratch_root": "/tmp/fix-ori-cont-004-1-scratch",
+  "started_at": "2026-09-26T03:30:04.907Z",
+  "duration_ms": 59610,
+  "registry_lane": {
+    "command": "npm view 'react-native-web@~0.21.0' version --json",
+    "spec": "~0.21.0",
+    "exit": 0,
+    "candidates": [
+      "0.21.0",
+      "0.21.1",
+      "0.21.2",
+      "0.21.3"
+    ],
+    "raw": "[\n  \"0.21.0\",\n  \"0.21.1\",\n  \"0.21.2\",\n  \"0.21.3\"\n]"
+  },
+  "consumer": {
+    "engine": "uniwind",
+    "root": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG",
+    "cli_version": "1.0.0",
+    "recipe_script_exit": 0,
+    "install_log_bytes": 4007,
+    "install_log_sha256": "2ba7ceac766b70d813e5ddf1ba48d14c4ac2c438d11eaeefd776c940ca6a6f9c",
+    "install_log_evidence": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1/tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt",
+    "install_log_evidence_exists": true,
+    "install_log_head": "Progress: resolved 1, reused 0, downloaded 0, added 0\nProgress: resolved 57, reused 51, downloaded 0, added 0\nProgress: resolved 324, reused 292, downloaded 0, added 0",
+    "install_log_tail": "- Installing dependencies.\n✔ Installing dependencies.\n- Updating files.\n✔ Created 11 files:\nℹ Skipped 3 files: (files might be identical, use --overwrite to overwrite)\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n"
+  },
+  "resolved_version_read": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/react-native-web/package.json",
+  "observations": {
+    "registry_candidates": [
+      "0.21.0",
+      "0.21.1",
+      "0.21.2",
+      "0.21.3"
+    ],
+    "registry_exit": 0,
+    "registry_command": "npm view 'react-native-web@~0.21.0' version --json",
+    "resolved_rnw_version": "0.21.3",
+    "export_exit": 1,
+    "module_error_present": true
+  },
+  "export": {
+    "command": "npx expo export --platform web --output-dir <scratch>",
+    "dist_dir": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-003-uniwind-dist-1790393452333",
+    "export_exit": 1,
+    "export_log_bytes": 8337,
+    "export_log_sha256": "d47522484055cd2a7102623b4c451c6be9a4475cdd5b08d0318c59411ce2573a",
+    "export_log": "Starting Metro Bundler\n\nStatic rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/\n WARN  The package /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind contains an invalid package.json configuration. Consider raising this issue with the package maintainer(s).\nReason: The resolution for \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/uniwind/components/InputAccessoryView\" defined in \"exports\" is /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind/dist/module/components/web/InputAccessoryView.js, however this file does not exist. Falling back to file-based resolution.\n WARN  The package /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind contains an invalid package.json configuration. Consider raising this issue with the package maintainer(s).\nReason: The resolution for \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/uniwind/components/InputAccessoryView\" defined in \"exports\" is /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind/dist/module/components/web/InputAccessoryView.js, however this file does not exist. Falling back to file-based resolution.\n WARN  The package /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind contains an invalid package.json configuration. Consider raising this issue with the package maintainer(s).\nReason: The resolution for \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/uniwind/components/InputAccessoryView\" defined in \"exports\" is /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind/dist/module/components/web/InputAccessoryView.js, however this file does not exist. Falling back to file-based resolution.\n WARN  The package /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind contains an invalid package.json configuration. Consider raising this issue with the package maintainer(s).\nReason: The resolution for \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/uniwind/components/InputAccessoryView\" defined in \"exports\" is /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind/dist/module/components/web/InputAccessoryView.js, however this file does not exist. Falling back to file-based resolution.\n WARN  The package /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind contains an invalid package.json configuration. Consider raising this issue with the package maintainer(s).\nReason: The resolution for \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/uniwind/components/InputAccessoryView\" defined in \"exports\" is /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind/dist/module/components/web/InputAccessoryView.js, however this file does not exist. Falling back to file-based resolution.\n WARN  The package /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind contains an invalid package.json configuration. Consider raising this issue with the package maintainer(s).\nReason: The resolution for \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/uniwind/components/InputAccessoryView\" defined in \"exports\" is /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/uniwind@1.11.0_@expo+metro-config@57.0.12_expo@57.0.25_typescript@6.0.3__metro-cache@0._a5d5a9b49360eace3058de3fb0704720/node_modules/uniwind/dist/module/components/web/InputAccessoryView.js, however this file does not exist. Falling back to file-based resolution.\nλ Bundling failed 1974ms node_modules/.pnpm/@expo+router-server@57.0.11_@expo+metro-runtime@57.0.16_expo-constants@57.0.19_expo-fon_1f8b2256b9aa22a4df117739d12f7fc2/node_modules/@expo/router-server/node/render.js (1351 modules)\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\nError: Unable to resolve module ./exports/InputAccessoryView from /private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/react-native-web@0.21.3_react-dom@19.2.3_react@19.2.3__react@19.2.3/node_modules/react-native-web/dist/index.js: ./exports/InputAccessoryView could not be found within the project or in these directories:\n  node_modules\n\u001b[0m \u001b[90m 38 |\u001b[39m \u001b[36mexport\u001b[39m { \u001b[36mdefault\u001b[39m \u001b[36mas\u001b[39m \u001b[33mImage\u001b[39m } \u001b[36mfrom\u001b[39m \u001b[32m'./exports/Image'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 39 |\u001b[39m \u001b[36mexport\u001b[39m { \u001b[36mdefault\u001b[39m \u001b[36mas\u001b[39m \u001b[33mImageBackground\u001b[39m } \u001b[36mfrom\u001b[39m \u001b[32m'./exports/ImageBackground'\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 40 |\u001b[39m \u001b[36mexport\u001b[39m { \u001b[36mdefault\u001b[39m \u001b[36mas\u001b[39m \u001b[33mInputAccessoryView\u001b[39m } \u001b[36mfrom\u001b[39m \u001b[32m'./exports/InputAccessoryView'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 41 |\u001b[39m \u001b[36mexport\u001b[39m { \u001b[36mdefault\u001b[39m \u001b[36mas\u001b[39m \u001b[33mKeyboardAvoidingView\u001b[39m } \u001b[36mfrom\u001b[39m \u001b[32m'./exports/KeyboardAvoidingView'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 42 |\u001b[39m \u001b[36mexport\u001b[39m { \u001b[36mdefault\u001b[39m \u001b[36mas\u001b[39m \u001b[33mModal\u001b[39m } \u001b[36mfrom\u001b[39m \u001b[32m'./exports/Modal'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m \u001b[36mexport\u001b[39m { \u001b[36mdefault\u001b[39m \u001b[36mas\u001b[39m \u001b[33mPicker\u001b[39m } \u001b[36mfrom\u001b[39m \u001b[32m'./exports/Picker'\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\nImport stack:\n\n node_modules/.pnpm/react-native-web@0.21.3_react-dom@19.2.3_react@19.2.3__react@19.2.3/node_modules/react-native-web/dist/index.js\n | import \"./exports/InputAccessoryView\"\n\n node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/build/color/index.js\n | import \"react-native-web/dist/index\"\n\n node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/build/index.js\n | import \"./color\"\n\n node_modules/.pnpm/@expo+router-server@57.0.11_@expo+metro-runtime@57.0.16_expo-constants@57.0.19_expo-fon_1f8b2256b9aa22a4df117739d12f7fc2/node_modules/@expo/router-server/build/static/renderStaticContent.js\n | import \"expo-router\"\n\n node_modules/.pnpm/@expo+router-server@57.0.11_@expo+metro-runtime@57.0.16_expo-constants@57.0.19_expo-fon_1f8b2256b9aa22a4df117739d12f7fc2/node_modules/@expo/router-server/node/render.js\n | import \"@expo/router-server/build/static/renderStaticContent\"\n\n \n | import \"/private/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-kjtdiG/node_modules/.pnpm/@expo+router-server@57.0.11_@expo+metro-runtime@57.0.16_expo-constants@57.0.19_expo-fon_1f8b2256b9aa22a4df117739d12f7fc2/node_modules/@expo/router-server/node/render.js\"\n\n"
+  },
+  "harness_sha256": "5caebb9314183d5f362f2bc5883d3daf0ceb1a2590847c795d957b6fb1c7e56f",
+  "checks": [
+    {
+      "name": "no_lane_failure",
+      "pass": true
+    },
+    {
+      "name": "consumer_prepared",
+      "pass": true
+    },
+    {
+      "name": "export_ran",
+      "pass": true
+    },
+    {
+      "name": "registry_exit_0",
+      "pass": true
+    },
+    {
+      "name": "candidates_span_drift",
+      "pass": true
+    },
+    {
+      "name": "recipe_exit_0",
+      "pass": true
+    },
+    {
+      "name": "resolved_drifted_version",
+      "pass": true
+    },
+    {
+      "name": "export_failed",
+      "pass": true
+    },
+    {
+      "name": "module_error_literal",
+      "pass": true
+    }
+  ],
+  "red_capture_ok": true,
+  "failure": null
+}
