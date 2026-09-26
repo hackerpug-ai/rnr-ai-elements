@@ -1,0 +1,67 @@
+{
+ "item_id": "ORI-VIS-004:7230130b726b4371c29f6756ac92dd3c4191878e:scope_impact:1:4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0",
+ "wave_id": "wave-19",
+ "source_task": "ORI-VIS-004",
+ "approved_sha": "7230130b726b4371c29f6756ac92dd3c4191878e",
+ "handoff_sha256": "4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0",
+ "field": "scope_impact",
+ "index": 1,
+ "outcome": "add",
+ "answers": [
+  {
+   "question": 1,
+   "answer": true,
+   "reason": "Names concrete failing files: sprint-04 data-table-contract REF-006 (rows regex vs AST-007's optional rich-cell form), plus the sibling breaks named across this and CI-002's handoff (sprint-01 ledger.spec, sprint-03 verdict-badge-wiring, AST-009 not-found strict-mode from VIS-003's close button, CI-001's two drill tokens, sprint-01 scaffold.build pinning the old script).",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-004/handoff.json",
+     "sha256": "4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0"
+    }
+   ]
+  },
+  {
+   "question": 2,
+   "answer": false,
+   "reason": "Not reviewer findings; landed-handoff findings naming out-of-scope breaks each task could not fix.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-004/handoff.json",
+     "sha256": "4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0"
+    }
+   ]
+  },
+  {
+   "question": 3,
+   "answer": true,
+   "reason": "Pending ORI-CI-004's aggregate pnpm test acceptance requires these suites passing; CI-003's candidate checks run the same tree.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-004/handoff.json",
+     "sha256": "4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0"
+    }
+   ]
+  },
+  {
+   "question": 4,
+   "answer": false,
+   "reason": "Test-selector/contract repairs aligned to landed product reality; no gate words change, no product behavior decided.",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-004/handoff.json",
+     "sha256": "4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0"
+    }
+   ]
+  },
+  {
+   "question": 5,
+   "answer": true,
+   "reason": "Verified: each named suite fails on current trunk independent of the reporting tasks' diffs (VIS-004's reviewer confirmed at base; CI-002's empirically; VIS-005's reviewer confirmed the AST-009 strict-mode break pre-exists).",
+   "evidence": [
+    {
+     "path": ".kb-run-sprint/sprint-05-orient-search/ORI-VIS-004/handoff.json",
+     "sha256": "4630af86107466e7efb7fb8da0f9454d981e18c8768ac298a683572a2eb7e8f0"
+    }
+   ]
+  }
+ ]
+}
