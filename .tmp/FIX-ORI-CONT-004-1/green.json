@@ -1,0 +1,121 @@
+{
+  "task": "FIX-ORI-CONT-004-1",
+  "mode": "green",
+  "candidate_head_sha": "fd39f5605559a679582738fe6232f12724595b65",
+  "command": "pnpm exec tsx tests/sprint-05-orient-search/rnw-pin-proof.test.ts",
+  "committed_specs": {
+    "nativewind": "0.21.2",
+    "uniwind": "0.21.2"
+  },
+  "range_operator_count": 0,
+  "scratch_root": "/tmp/fix-ori-cont-004-1-scratch",
+  "started_at": "2026-09-26T03:31:51.156Z",
+  "duration_ms": 158124,
+  "green_budget_ms": 5400000,
+  "budget_ok": true,
+  "registry_lane": {
+    "command": "npm view 'react-native-web@0.21.2' version --json",
+    "spec": "0.21.2",
+    "exit": 0,
+    "candidates": [
+      "0.21.2"
+    ],
+    "raw": "\"0.21.2\""
+  },
+  "legs": {
+    "nativewind": {
+      "engine": "nativewind",
+      "root": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-nativewind-6uAWCz",
+      "cli_version": "1.0.0",
+      "recipe_script_exit": 0,
+      "install_log_bytes": 4310,
+      "install_log_sha256": "0601a0c396350a1ddd0d6a8cbd4c396e58669d22e63e18d1caaa19748632ec48",
+      "install_log_evidence": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1/tests/sprint-05-orient-search/evidence/ORI-RN-001/nativewind-install.txt",
+      "install_log_evidence_exists": true,
+      "install_log_head": "Progress: resolved 1, reused 0, downloaded 0, added 0\nProgress: resolved 35, reused 33, downloaded 0, added 0\nProgress: resolved 145, reused 142, downloaded 0, added 0",
+      "install_log_tail": "- Installing dependencies.\n✔ Installing dependencies.\n- Updating files.\n✔ Created 11 files:\nℹ Skipped 3 files: (files might be identical, use --overwrite to overwrite)\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n",
+      "resolved_rnw_version": "0.21.2",
+      "resolved_version_read": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-nativewind-6uAWCz/node_modules/react-native-web/package.json",
+      "export": {
+        "command": "npx expo export --platform web --output-dir <scratch>",
+        "dist_dir": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-003-nativewind-dist-1790393565574",
+        "export_exit": 0,
+        "export_log_bytes": 869,
+        "export_log_sha256": "ff376af6dc9d77ab3676dea2c689941e540bcc90d8e5ebcd26a08992c83f6242",
+        "export_log": "Starting Metro Bundler\n\nStatic rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/\nλ Bundled 18521ms node_modules/.pnpm/@expo+router-server@57.0.11_@expo+metro-runtime@57.0.16_expo-constants@57.0.19_expo-fon_1f8b2256b9aa22a4df117739d12f7fc2/node_modules/@expo/router-server/node/render.js (1317 modules)\nWeb Bundled 18880ms node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1264 modules)\n\n› web bundles (2):\n_expo/static/css/web-b6cd29e1dd8fc72580f42d9a101b63ac.css (19KB)\n_expo/static/js/web/entry-b852590a5e1c9f21467c97a2767d0da9.js (2.2MB)\n\n› Static routes (1):\n/+not-found (18KB)\n\nExported: /tmp/fix-ori-cont-004-1-scratch/ori-rn-003-nativewind-dist-1790393565574\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n"
+      },
+      "leg_ok": true
+    },
+    "uniwind": {
+      "engine": "uniwind",
+      "root": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-YPKHLH",
+      "cli_version": "1.0.0",
+      "recipe_script_exit": 0,
+      "install_log_bytes": 3967,
+      "install_log_sha256": "a95e84d3a0d12a4560e57b9e912ec9144a459cbbd35089375ce2272884444101",
+      "install_log_evidence": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1/tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt",
+      "install_log_evidence_exists": true,
+      "install_log_head": "Progress: resolved 1, reused 0, downloaded 0, added 0\nProgress: resolved 70, reused 67, downloaded 0, added 0\nProgress: resolved 301, reused 268, downloaded 0, added 0",
+      "install_log_tail": "- Installing dependencies.\n✔ Installing dependencies.\n- Updating files.\n✔ Created 11 files:\nℹ Skipped 3 files: (files might be identical, use --overwrite to overwrite)\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n",
+      "resolved_rnw_version": "0.21.2",
+      "resolved_version_read": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-001-uniwind-YPKHLH/node_modules/react-native-web/package.json",
+      "export": {
+        "command": "npx expo export --platform web --output-dir <scratch>",
+        "dist_dir": "/tmp/fix-ori-cont-004-1-scratch/ori-rn-003-uniwind-dist-1790393647650",
+        "export_exit": 0,
+        "export_log_bytes": 867,
+        "export_log_sha256": "218c2614be1489d6343349c060fb4bf5359d22e45c8b38b33dda0691134ab892",
+        "export_log": "Starting Metro Bundler\n\nStatic rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/\nλ Bundled 2285ms node_modules/.pnpm/@expo+router-server@57.0.11_@expo+metro-runtime@57.0.16_expo-constants@57.0.19_expo-fon_1f8b2256b9aa22a4df117739d12f7fc2/node_modules/@expo/router-server/node/render.js (1537 modules)\nWeb Bundled 2684ms node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1454 modules)\n\n› web bundles (2):\n_expo/static/css/global-84e8b62c99529a0266f0fecc88e7d65b.css (31KB)\n_expo/static/js/web/entry-33e41b074f3cf0ab9d479ed4d44d87a6.js (2.3MB)\n\n› Static routes (1):\n/+not-found (18KB)\n\nExported: /tmp/fix-ori-cont-004-1-scratch/ori-rn-003-uniwind-dist-1790393647650\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in the next major version of npm.\n"
+      },
+      "leg_ok": true
+    }
+  },
+  "skipped_legs": [],
+  "fresh_installs_per_engine": 1,
+  "static_gates": {
+    "guard_selector": {
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/rnw-pin-proof.test.ts",
+      "exit": 0,
+      "output_tail": "\n RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1\n\n\n Test Files  1 passed (1)\n      Tests  2 passed (2)\n   Start at  21:34:23\n   Duration  734ms (transform 114ms, setup 0ms, import 523ms, tests 5ms, environment 0ms)\n\n(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:\n  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead\nSet `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.\n"
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "exit": 0,
+      "output_tail": "\n> rnr-ai-elements@0.2.1 typecheck /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1\n> tsc --noEmit && pnpm --filter @rnr-ai-elements/registry typecheck\n\n\n> @rnr-ai-elements/registry@0.0.0 typecheck /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-CONT-004-1/packages/registry\n> tsc --noEmit\n\n"
+    },
+    "biome_ci_scoped": {
+      "command": "pnpm exec biome ci tests/sprint-05-orient-search/rnw-pin-proof.test.ts",
+      "exit": 0,
+      "output_tail": "[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\u001b[1m\u001b[31m^\u001b[0m\u001b[0m\n\u001b[0m\u001b[0m  \u001b[0m\u001b[0m  \u001b[0m\u001b[0m\u001b[1m608 │ \u001b[0m\u001b[0me\u001b[0m\u001b[0mx\u001b[0m\u001b[0mp\u001b[0m\u001b[0mo\u001b[0m\u001b[0mr\u001b[0m\u001b[0mt\u001b[0m\u001b[0m \u001b[0m\u001b[0m{\u001b[0m\u001b[0m \u001b[0m\u001b[0mr\u001b[0m\u001b[0mu\u001b[0m\u001b[0mn\u001b[0m\u001b[0mR\u001b[0m\u001b[0mn\u001b[0m\u001b[0mw\u001b[0m\u001b[0mP\u001b[0m\u001b[0mi\u001b[0m\u001b[0mn\u001b[0m\u001b[0mP\u001b[0m\u001b[0mr\u001b[0m\u001b[0mo\u001b[0m\u001b[0mo\u001b[0m\u001b[0mf\u001b[0m\u001b[0m \u001b[0m\u001b[0m}\u001b[0m\u001b[0m;\u001b[0m\u001b[0m\n\u001b[0m\u001b[0m  \u001b[0m\u001b[0m  \u001b[0m\u001b[0m\u001b[1m609 │ \u001b[0m\u001b[0m\n\u001b[0m\u001b[0m  \u001b[0m\u001b[0m\n\u001b[0m\n"
+    }
+  },
+  "harness_sha256": "5caebb9314183d5f362f2bc5883d3daf0ceb1a2590847c795d957b6fb1c7e56f",
+  "checks": [
+    {
+      "name": "pinned_form",
+      "pass": true
+    },
+    {
+      "name": "registry_exact_pin",
+      "pass": true
+    },
+    {
+      "name": "leg_nativewind",
+      "pass": true
+    },
+    {
+      "name": "leg_uniwind",
+      "pass": true
+    },
+    {
+      "name": "static_gates",
+      "pass": true
+    },
+    {
+      "name": "budget",
+      "pass": true
+    }
+  ],
+  "green_proof_ok": true,
+  "failures": []
+}
