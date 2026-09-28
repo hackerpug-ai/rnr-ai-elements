@@ -165,8 +165,9 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | ORI-DEP-003 | Publish and verify the completed Sprint 05 docs at the apex | cloudflare-workers-implementer | 3 | 20 | ORI-DEP-001, ORI-DEP-002, ORI-CI-004 |
 | FIX-ORI-CONT-004-1 | Pin react-native-web 0.21.2 in both consumer templates | react-native-reusables-implementer | 2 | 20 | ORI-RN-001, ORI-RN-003 |
 | FIX-ORI-SUITE-2 | Repair the foreign suite drifts behind the aggregate's residual failures | ghactions-implementer | 3 | 21 | ORI-CI-002 |
+| FIX-ORI-RN-003-3 | Make driveWeb return from the seed web legs and the negative-control serve | react-native-reusables-implementer | 3 | 24 | ORI-RN-003 |
 
-**Total: 47 tasks / 155 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1, FIX-ORI-VIS-001-1, FIX-ORI-SUITE-1, FIX-ORI-CONT-004-1 and FIX-ORI-SUITE-2, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination, ask-wave18-add-theming-nav-inclusion, ask-wave19-add-preexisting-suite-repair, ask-wave20-add-rnw-pin and ask-wave21-add-foreign-suite-repair). Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 48 tasks / 158 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1, FIX-ORI-VIS-001-1, FIX-ORI-SUITE-1, FIX-ORI-CONT-004-1, FIX-ORI-SUITE-2 and FIX-ORI-RN-003-3, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination, ask-wave18-add-theming-nav-inclusion, ask-wave19-add-preexisting-suite-repair, ask-wave20-add-rnw-pin, ask-wave21-add-foreign-suite-repair and ask-wave24-add-driveweb-return). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -280,6 +281,8 @@ The following filenames are derived from each exact task ID and title. Each char
 - [TASK-FIX-ORI-AI-001-1.md](./TASK-FIX-ORI-AI-001-1.md)
 
 - [ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md](./ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md)
+
+- [TASK-FIX-ORI-RN-003-3.md](./TASK-FIX-ORI-RN-003-3.md)
 
 - [ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md](./ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md)
 
