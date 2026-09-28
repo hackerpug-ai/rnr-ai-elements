@@ -31,10 +31,10 @@ import { navigateLocalhost, waitForAstroPageLoad } from '../harness/docs-preview
  *                       0 clipped actions, and the 2px/2px --ring focus
  *                       outline on the keyboard-focused recovery actions;
  *                       unknown-path-light.png / unknown-path-dark.png.
- *   - ORI-VIS-005-ac-5  the deployment owner's public-origin probe against
- *                       https://rnraielements.com; an origin not serving the
- *                       reviewed candidate is a FAILED PREREQUISITE, never a
- *                       skip and never replaced by a localhost capture.
+ *   - ORI-VIS-005-ac-5  moved to the publication lane
+ *                       (public-recovery.remote.spec.ts). It still probes
+ *                       https://rnraielements.com on desktop, mobile, and
+ *                       no-JavaScript. This local file no longer collects it.
  *
  * Nothing is intercepted or manufactured: the recovery copy is read from the
  * real system manuscript, the dialog is the existing SearchDialog island
@@ -59,7 +59,6 @@ const FOOTER = '.site-footer';
 const THEME_TRIGGER = '.theme-toggle__trigger';
 const MANUSCRIPT_PATH = 'apps/docs/src/content/system/not-found.md';
 const BOUNDARY_PATH = '/docs/owns-vs-does-not-own';
-const PUBLIC_ORIGIN = 'https://rnraielements.com';
 
 const REPO_ROOT = process.cwd();
 const EVIDENCE_RECOVERY = join(REPO_ROOT, 'tests/sprint-05-orient-search/evidence/recovery');
@@ -736,89 +735,4 @@ test('ORI-VIS-005-ac-4: theme and mobile presentation', async ({ page }, testInf
     rings[selector] = ring;
   }
   capture(testInfo, 'ac4-focus-rings', { rings, ...runIdentity() });
-});
-
-// ---------------------------------------------------------------------------
-// AC-5 — public-origin presentation handoff (deployment-owner prerequisite)
-// ---------------------------------------------------------------------------
-// fallow-ignore-next-line complexity
-test('ORI-VIS-005-ac-5: public-origin presentation handoff', async ({ page }, testInfo) => {
-  test.setTimeout(180_000);
-  const parts = manuscriptParts();
-  const url = `${PUBLIC_ORIGIN}/ori-vis-005-missing-${RUN_ID}`;
-  const project = testInfo.project.name;
-
-  // Direct navigation to the literal public HTTPS origin — ordinary public
-  // DNS and trusted TLS or the goto itself fails (observed, never bypassed).
-  const response = await page.goto(url, { timeout: 30_000 });
-  const status = response?.status();
-  const security = await response?.securityDetails();
-  const html = (await response?.text()) ?? '';
-  const componentsStatus = await page.request.get(`${PUBLIC_ORIGIN}/components`);
-  const registryStatus = await page.request.get(`${PUBLIC_ORIGIN}/registry`);
-
-  // The public capture is taken from THIS public browser session before any
-  // verdict, bound to the actual URL and the observed response identity.
-  if (project === 'chromium-desktop') {
-    await page.screenshot({ path: evidencePath('public-unknown-path.png'), fullPage: true });
-    mergeManifest({
-      publicUnknownPath: {
-        file: 'public-unknown-path.png',
-        project,
-        runId: RUN_ID,
-        url,
-        servedStatus: status ?? null,
-        servedHtmlSha256: sha256Text(html),
-        tlsProtocol: security?.protocol ?? null,
-        localCandidateDist404: sha256File('apps/docs/dist/404.html'),
-      },
-    });
-  }
-  capture(testInfo, 'ac5-public-probe', {
-    url,
-    servedStatus: status ?? null,
-    servedHtmlSha256: sha256Text(html),
-    servedHtmlBytes: html.length,
-    tls: security ? { protocol: security.protocol, issuer: security.issuer } : null,
-    publicComponentsStatus: componentsStatus.status(),
-    publicRegistryStatus: registryStatus.status(),
-    localDist404: sha256File('apps/docs/dist/404.html'),
-    ...runIdentity(),
-  });
-
-  // The prerequisite gate: the public origin must serve the reviewed
-  // candidate's branded 404. A stale/default/empty public error body is a
-  // FAILED PREREQUISITE — the deployment owner must publish the matching
-  // candidate; no localhost capture or skip may stand in for it.
-  const branded =
-    status === 404 &&
-    html.includes(parts.title) &&
-    html.includes(parts.explanation) &&
-    html.includes('href="/components"');
-  if (!branded) {
-    throw new Error(
-      `PUBLIC PREREQUISITE unmet for ${url}: observed status=${status ?? 'none'}, ` +
-        `bodyBytes=${html.length}, title=${html.includes(parts.title) ? 'present' : 'absent'}. ` +
-        'The deployment owner must publish the reviewed candidate at the public origin ' +
-        '(ORI-DEP-002/003) before this AC can pass; the capture above records the ' +
-        'currently published reality.',
-    );
-  }
-
-  // Matching-candidate assertions: the same branded surface and links, plus
-  // the available shared search on JavaScript-enabled projects.
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(parts.title);
-  await expect(page.locator('main a[href="/components"]')).toBeVisible();
-  await expect(page.locator('main a[href="/registry"]')).toBeVisible();
-  expect(componentsStatus.status(), 'public /components must be HTTP 200').toBe(200);
-  expect(registryStatus.status(), 'public /registry must be HTTP 200').toBe(200);
-  if (!isNoJs(testInfo)) {
-    await expect(page.locator(RECOVERY_TRIGGER)).toBeVisible();
-    await page.locator(RECOVERY_TRIGGER).click();
-    await page.locator(OPEN_SEARCH_DIALOG).waitFor({ state: 'visible', timeout: 5_000 });
-    await expect(page.locator(SEARCH_INPUT)).toBeFocused();
-    await page.keyboard.press('Escape');
-  } else {
-    await expect(page.locator(RECOVERY_TRIGGER), 'no dead public search control').toBeHidden();
-  }
 });
