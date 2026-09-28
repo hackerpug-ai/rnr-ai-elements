@@ -41,7 +41,9 @@ Own exactly the four named test files, the task-owned proof harness, drill-emitt
 
 <!-- Template Version: 5.2.0 -->
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+
+Commit: 92d0f004aea8b2e311a58544cb6182fbf571b99a
 
 > Assignee: ghactions-implementer
 > Priority: P1 · Points: 3 · Type: FIX
@@ -316,8 +318,8 @@ Must pass: each of the five preserved selectors exits 0 standalone (the three dr
 ```json
 {
   "task": "FIX-ORI-SUITE-2",
-  "commit_sha": "",
-  "done": "",
+  "commit_sha": "92d0f004aea8b2e311a58544cb6182fbf571b99a",
+  "done": "Published on main at 92d0f004aea8b2e311a58544cb6182fbf571b99a. AC-3 now closes on the owner map tests/sprint-05-orient-search/evidence/FIX-ORI-SUITE-2-1/owner-routing.json and pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts. The residual token remains FLOW-DELIV-01-ci-chain-order. The four suite files were not changed. Commit 3dc22d71154d0bd43764cc33f4b8f78d2530aa75 was not merged.",
   "deviations": [],
   "concerns": [],
   "findings": [],
