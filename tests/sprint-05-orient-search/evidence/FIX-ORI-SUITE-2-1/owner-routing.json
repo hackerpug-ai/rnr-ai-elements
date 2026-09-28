@@ -1,0 +1,234 @@
+{
+  "task": "FIX-ORI-SUITE-2-1",
+  "aggregate_head": "8ee4282f24474eb8824e5a92685063f1070a12d6",
+  "suite2_commit_not_landed": "3dc22d71154d0bd43764cc33f4b8f78d2530aa75",
+  "residual_tokens": [
+    "FLOW-DELIV-01-ci-chain-order"
+  ],
+  "residual_widened": false,
+  "edits_four_chartered_suites": false,
+  "four_chartered_suites": [
+    "tests/sprint-05-orient-search/docs-collection.test.ts",
+    "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts",
+    "tests/sprint-05-orient-search/live-example-api.test.ts",
+    "tests/sprint-05-orient-search/nativewind-live-example.test.ts"
+  ],
+  "routes": [
+    {
+      "file": "tests/sprint-05-orient-search/docs-build-pipeline.test.ts",
+      "owner": "ORI-CI-002",
+      "action": "report-only",
+      "cause": "Cold build stopped after astro start because this worktree was missing the HEAD-tracked files apps/docs/src/data/dev-client-matrix.json and token-usage.json. Not a FIX-ORI-SUITE-2 suite edit."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/authored-snippet-gate.test.ts",
+      "owner": "ORI-AST-005",
+      "action": "report-only",
+      "cause": "astro build exited 1 on the same incomplete cold build. The byte-fidelity oracle was not reached and is not this task's repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts",
+      "owner": "FIX-ORI-SUITE-2",
+      "action": "do-not-widen-allow-list",
+      "cause": "The in-aggregate run failed the diff boundary because earlier files had dirtied paths outside the allow list. The standalone proof already exited 0. Do not widen DIFF_ALLOWED and do not edit the four suites."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/single-tutorial-gate.test.ts",
+      "owner": "FIX-ORI-SUITE-1",
+      "action": "owner-task",
+      "cause": "FIX-ORI-SUITE-1 already charters this file. FIX-ORI-SUITE-2 writeProhibited lists it."
+    },
+    {
+      "file": "tests/sprint-02-shell-hero/shell-layout.test.ts",
+      "owner": "SHELL-002",
+      "action": "owner-task",
+      "cause": "SHELL-002 failed because a dialog rendered. That assertion is outside FIX-ORI-SUITE-2 writeAllowed."
+    },
+    {
+      "file": "tests/sprint-04-generated-reference/data-table-contract.test.ts",
+      "owner": "FIX-ORI-SUITE-1",
+      "action": "owner-task",
+      "cause": "FIX-ORI-SUITE-1 already charters the rows-regex repair. FIX-ORI-SUITE-2 must not edit this file."
+    },
+    {
+      "file": "tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts",
+      "owner": "ORI-DEP-002",
+      "action": "residual-only",
+      "cause": "FLOW-DELIV-01-ci-chain-order is the only named residual and stays owner-routed to ORI-DEP-002 and ORI-DEP-003. The same file's AC-1 docs-build failure is the missing-data stop, not a second residual token."
+    },
+    {
+      "file": "tests/sprint-02-shell-hero/tokens.test.ts",
+      "owner": "SHELL-001",
+      "action": "report-only",
+      "cause": "SHELL-001 failed because the docs build exited 1 on the incomplete cold build."
+    },
+    {
+      "file": "tests/sprint-04-generated-reference/dev-client-matrix-contract.test.ts",
+      "owner": "REF-007",
+      "action": "report-only",
+      "cause": "ENOENT for apps/docs/src/data/dev-client-matrix.json, a HEAD-tracked file absent from the worktree during the aggregate."
+    },
+    {
+      "file": "tests/sprint-03-family-browse/component-contract.test.ts",
+      "owner": "FAM-002",
+      "action": "report-only",
+      "cause": "registry-items.json was absent because the docs prebuild did not finish after the cold build stopped."
+    },
+    {
+      "file": "tests/sprint-01-docs-spike-skeleton/island-budget.test.ts",
+      "owner": "SHELL-003",
+      "action": "report-only",
+      "cause": "SHELL-003 failed because the docs build chain exited 1 on the incomplete cold build."
+    },
+    {
+      "file": "tests/sprint-04-generated-reference/props-table-contract.test.ts",
+      "owner": "REF-002",
+      "action": "report-only",
+      "cause": "The real props dataset was absent because registry-items.json was not generated."
+    },
+    {
+      "file": "tests/sprint-04-generated-reference/seam-contract.test.ts",
+      "owner": "REF-004",
+      "action": "owner-task",
+      "cause": "REF-004 required a textclasscontext section that was not in the theming page. That page is outside FIX-ORI-SUITE-2 writeAllowed."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/search-index.test.ts",
+      "owner": "ORI-AST-004",
+      "action": "report-only",
+      "cause": "ORI-AST-004 failed on a missing registry-items.json and an indexer that exited 1 after the build stopped."
+    },
+    {
+      "file": "tests/sprint-03-family-browse/ledger-filter-contract.test.ts",
+      "owner": "FAM-004",
+      "action": "owner-task",
+      "cause": "FAM-004 required the clear branch to assign hidden = false. ledger-filter.ts is outside FIX-ORI-SUITE-2 writeAllowed."
+    },
+    {
+      "file": "tests/sprint-02-shell-hero/resolve-deps.test.ts",
+      "owner": "SHELL-006",
+      "action": "report-only",
+      "cause": "SHELL-006 failed on a missing registry-items.json and a docs build that exited 1."
+    },
+    {
+      "file": "tests/sprint-02-shell-hero/theming-route.test.ts",
+      "owner": "SHELL-009",
+      "action": "owner-task",
+      "cause": "SHELL-009 owns the theming route. The recorded failure was a docs build exit 1, and the page is outside FIX-ORI-SUITE-2 writeAllowed."
+    },
+    {
+      "file": "tests/sprint-02-shell-hero/copy-pass.test.ts",
+      "owner": "SHELL-010",
+      "action": "owner-task",
+      "cause": "SHELL-010 required the copy anchor ship no tokens. The theming page is outside FIX-ORI-SUITE-2 writeAllowed."
+    },
+    {
+      "file": "tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts",
+      "owner": "FIX-ORI-SUITE-1",
+      "action": "owner-task",
+      "cause": "FIX-ORI-SUITE-1 already charters the github-slugger and wrangler allow-list and the seven-stage build pin."
+    },
+    {
+      "file": "tests/sprint-01-docs-spike-skeleton/generated-data-untracked.test.ts",
+      "owner": "FIX-FUSE-05-1",
+      "action": "owner-task",
+      "cause": "The tracked data set is the three authored JSON files, not only families.json. FIX-ORI-SUITE-2 writeAllowed does not include this test."
+    },
+    {
+      "file": "tests/sprint-02-shell-hero/item-pages-build.test.ts",
+      "owner": "SHELL-008",
+      "action": "report-only",
+      "cause": "ENOENT for registry-items.json after the cold build stopped."
+    },
+    {
+      "file": "tests/sprint-03-family-browse/home-teaser-contract.test.ts",
+      "owner": "FAM-006",
+      "action": "report-only",
+      "cause": "registry-items.json was absent because the docs prebuild did not finish."
+    },
+    {
+      "file": "tests/sprint-03-family-browse/page-contract.test.ts",
+      "owner": "FAM-003",
+      "action": "report-only",
+      "cause": "registry-items.json was absent because the docs prebuild did not finish."
+    },
+    {
+      "file": "tests/sprint-03-family-browse/verdict-contract.test.ts",
+      "owner": "FAM-005",
+      "action": "report-only",
+      "cause": "registry-items.json was absent because the docs prebuild did not finish. Badge markup is outside FIX-ORI-SUITE-2 writeAllowed."
+    },
+    {
+      "file": "tests/sprint-04-generated-reference/code-primitives-contract.test.ts",
+      "owner": "REF-003",
+      "action": "report-only",
+      "cause": "The import of registry-items.json failed because that generated file was absent."
+    },
+    {
+      "file": "tests/sprint-04-generated-reference/enrichment-drill.test.ts",
+      "owner": "REF-011",
+      "action": "report-only",
+      "cause": "ENOENT for the HEAD-tracked dev-client-matrix.json absent from the worktree."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts",
+      "owner": "FIX-ORI-RN-004-3",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite because include is tests/**/*.test.ts. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/nativewind-baseline-ordering-proof.test.ts",
+      "owner": "FIX-ORI-AI-002-1",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/public-http.test.ts",
+      "owner": "ORI-DEP-001",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/streamdown-destination-proof.test.ts",
+      "owner": "FIX-ORI-AST-004-1",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts",
+      "owner": "FIX-ORI-VIS-001-1",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/token-map.test.ts",
+      "owner": "ORI-AST-003",
+      "action": "report-only",
+      "cause": "ENOENT for the HEAD-tracked token-usage.json absent from the worktree."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/tutorial-designation-proof.test.ts",
+      "owner": "FIX-ORI-CI-001-1",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/web-leg-orchestration-proof.test.ts",
+      "owner": "FIX-ORI-RN-004-2",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/support/live-example-proof.test.ts",
+      "owner": "FIX-ORI-AI-001-1",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    },
+    {
+      "file": "tests/sprint-05-orient-search/support/quickstart-proof.test.ts",
+      "owner": "ORI-RN-003",
+      "action": "no-suite",
+      "cause": "Vitest collected a script that has no suite. Not a FIX-ORI-SUITE-2 repair."
+    }
+  ]
+}
