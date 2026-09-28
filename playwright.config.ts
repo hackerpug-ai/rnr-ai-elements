@@ -11,6 +11,11 @@ export default defineConfig({
   // *.spec.ts only: the sibling vitest files (*.test.ts) belong to vitest's
   // `tests/**/*.test.ts` include and must never be double-run by this lane.
   testMatch: '**/*.spec.ts',
+  // Release-only public-origin checks (*.remote.spec.ts) are owned by the
+  // publication lane. The local candidate lane must not collect them: they
+  // require the promoted apex and would make prepublication acceptance wait
+  // on a deployment that has not happened yet.
+  testIgnore: '**/*.remote.spec.ts',
   // Flake policy: run once; failures are real. Never --retries on the CLI either.
   retries: 0,
   // Serialize the lane (FIX-FUSE-06-1): deliv-03's contracted destructive cases rmSync
