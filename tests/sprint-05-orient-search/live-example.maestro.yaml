@@ -56,6 +56,16 @@ appId: host.exp.Exponent
     text: "Minimize"
     optional: true
 - tapOn: "Send message"
+- hideKeyboard
+# The reply that carries the marker can sit above the keyboard-shrunk viewport.
+# Scroll toward the top until its center is on screen, then assert it.
+- scrollUntilVisible:
+    element:
+      text: ${MARKER}
+    direction: UP
+    timeout: 30000
+    visibilityPercentage: 40
+    centerElement: true
 # The accepted turn lands as exactly one user message; PromptInput clears its own field.
 - extendedWaitUntil:
     visible: ${MARKER}
