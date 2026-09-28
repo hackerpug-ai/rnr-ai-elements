@@ -26116,95 +26116,118 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-005-1"
     },
     "FIX-ORI-SUITE-1": {
-      "blocked_reports": {
-        "1": {
-          "cycle": 1,
-          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
-          "payload": {
-            "assumptions": [
-              "Two extra same-class re-scopes were required because fixing each suite's first failure unmasked the next drifted assertion behind it: data-table-contract's sticky-thead regex (now :global(.data-table thead th)) and scaffold.build's /prerender/ negative (now route-directive-scoped, since the landed prerenderConflictBehavior: 'error' static-output hardening matches the bare form). Both stay inside the same test files with guards kept byte-effective.",
-              "The diff-boundary check hard-fails on product sources (apps/**, packages/**, scripts/**, configs, planning artifacts) and foreign test files, and tolerates-and-records the selectors' own append-only recording contracts (tests/**/evidence/**) plus Playwright's untracked report dirs; product sources are proven byte-unchanged.",
-              "The aggregate was run once (16h wall) and its exit recorded; it was not rerun after the tmpdir-reap cascade because the six real foreign failures are independent of it (four standalone-verified).",
-              "Playwright children run with CI=true plus a harness-side port pre-check that hard-fails on an occupied 4321 rather than recording a misattributed port failure; window-seizing wrappers (uncommitted scratch under .tmp/) wrapped every 4321-dependent run due to continuous sibling contention.",
-              "An early duplicate RED run of my own making raced the rtk-buffered original (two concurrent drills sharing the AST-005 consumer cache); both were invalidated, every orphan process I started was killed, and a single-instance lock plus the honest recapture merge replaced the bad evidence. green.json/run.json bind 62973955's file hashes via a post-commit green re-run.",
-              "Five fallow complexity suppressions with reasons were added (the repo's own idiom): two pre-existing verdict-badge loop shapes enforced only via the changed-file gate, and the harness's three selector/assert spines.",
-              "tests/sprint-05-orient-search/recovery-presentation.spec.ts:52 still carries the stale '[data-search-slot] button' constant — untouched per the charter; its 3 failures remain the ORI-DEP-003 public-origin prerequisite. Report only."
-            ],
-            "blockers": [
-              "ORI-AST-001 (tests/sprint-05-orient-search/docs-collection.test.ts): fails STANDALONE on 62973955 — 3 tokens (ORI-AST-001-collection-schema, ORI-AST-001-mdx-code-copy, ORI-AST-001-publication-contract). Pre-existing drift of the same class as this task's seven; outside writeAllowed.",
-              "FUSE-05 (tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts): fails STANDALONE on 62973955 — 4 tokens, 'copies public r generated-only and byte-identical'.",
-              "FLOW-DELIV-01 (tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts): fails STANDALONE on 62973955 — 2 tokens, including 'ships 112 dist JSONs' while the current build produces 114 public/r files (a superseded count pin of exactly this task's repair class).",
-              "ORI-CONT-006 (tests/sprint-05-orient-search/contributing-content.test.ts): fails STANDALONE on 62973955 — ORI-CONT-006-real-docs-checks; sibling task cont-006-impl is active in this session and likely owns it.",
-              "FLOW-DOCS-02 (tests/sprint-05-orient-search/live-example-api.test.ts): AC-4 token fails in the aggregate (hook contract, both graph compiles, owned-child teardown). Not standalone-rerun (long-running lane); attributed from the aggregate output.",
-              "ORI-RN-005 (tests/sprint-05-orient-search/nativewind-live-example.test.ts): two tokens fail in the aggregate on 75-minute test timeouts (ORI-RN-005-abort-error-retry, ORI-RN-005-fail-closed-cleanup). Not standalone-rerun; timeout/budget-class per the aggregate output.",
-              "Environmental cascade in the aggregate's final minutes: the session tmpdir holding vite's transform scratch (~/.cache/agent-scratch/<session>/ssr/.tmp-*) was reaped mid-run ~16h in, failing 87 files at collection in a burst — including scaffold.build's collection INSIDE the aggregate. My scaffold.build passes standalone (twice: the isolated selector and the green harness) and is not a real aggregate break; the six suites above are the real failures. The interrupted aggregate's destructive lane also wiped generated+tracked data files mid-run — restored (git restore of the tracked pair + prebuild regen; worktree typechecks clean)."
-            ],
-            "commit_sha": "2f15ba41b5d50b7ff5007ab941bf56bbb4ce69b8",
-            "scope_impact": [
-              {
-                "change": "unblocked this task's seven; aggregate remains red through the six foreign suites — rerun of the aggregate is the pending cycle-2 step once they land",
-                "found": "Their aggregate pnpm test acceptance cannot exit 0 until the six foreign suites above are repaired; the seven suites this task owned are green in isolation and in the proof harness (all seven selectors exit 0, twice on 62973955's bytes)",
-                "target": "GATE:ORI-CI-003/ORI-CI-004"
-              }
-            ],
-            "status": "blocked",
-            "summary": "All seven suite repairs are landed (62973955: seven test files + the suite-repair-proof harness; 2f15ba41: RED/GREEN/run evidence + drill appends) and fully proven against real services. RED captured pre-change on f1574f3f with the planner's exact tallies (single-tutorial-gate 3p/2f on ORI-CI-001-duplicate/noncanonical, scaffold.build 1p/1f on FUSE-01-manifest-contract, data-table-contract 3p/1f on the rows regex; the four Playwright suites failing with the strict-mode '[data-search-slot] button' violations and the replaced ledger selectors — the playwright RED needed one harness-emitted recapture merge after the CONT-004 sibling's continuous 4321 occupation initially recorded port errors instead of the real failures). GREEN proves each of the seven preserved selectors exit 0 (all three chromium projects over astro preview serving the freshly built dist): the drill's scratch COMMITTED_BINDINGS extend/re-point lets ASTRO's tutorial gate speak (no check:snippets 'no committed binding'/'stale binding' preemption, 'observed 2 versus 1' and canonical-destination diagnostics present, restoration byte-exact, candidate unchanged), pnpm typecheck 0, scoped Biome 0, tracked-file diff boundary clean, zero product-source changes. Blocked ONLY on AC-3's aggregate clause: pnpm test exits 1 because six suites beyond this task's seven fail on the candidate through no fault of the repairs, all outside the charter's writeAllowed, recorded honestly in run.json (aggregate.exitCode 1) and reported for scope check — not absorbed."
+      "created_by_ask": "ask-wave19c-add-preexisting-suite-repair",
+      "planner": "ghactions-planner",
+      "status": "pending",
+      "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-1.md",
+      "withdrawals": [
+        {
+          "blocked_reports": {
+            "1": {
+              "cycle": 1,
+              "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.json",
+              "payload": {
+                "assumptions": [
+                  "Two extra same-class re-scopes were required because fixing each suite's first failure unmasked the next drifted assertion behind it: data-table-contract's sticky-thead regex (now :global(.data-table thead th)) and scaffold.build's /prerender/ negative (now route-directive-scoped, since the landed prerenderConflictBehavior: 'error' static-output hardening matches the bare form). Both stay inside the same test files with guards kept byte-effective.",
+                  "The diff-boundary check hard-fails on product sources (apps/**, packages/**, scripts/**, configs, planning artifacts) and foreign test files, and tolerates-and-records the selectors' own append-only recording contracts (tests/**/evidence/**) plus Playwright's untracked report dirs; product sources are proven byte-unchanged.",
+                  "The aggregate was run once (16h wall) and its exit recorded; it was not rerun after the tmpdir-reap cascade because the six real foreign failures are independent of it (four standalone-verified).",
+                  "Playwright children run with CI=true plus a harness-side port pre-check that hard-fails on an occupied 4321 rather than recording a misattributed port failure; window-seizing wrappers (uncommitted scratch under .tmp/) wrapped every 4321-dependent run due to continuous sibling contention.",
+                  "An early duplicate RED run of my own making raced the rtk-buffered original (two concurrent drills sharing the AST-005 consumer cache); both were invalidated, every orphan process I started was killed, and a single-instance lock plus the honest recapture merge replaced the bad evidence. green.json/run.json bind 62973955's file hashes via a post-commit green re-run.",
+                  "Five fallow complexity suppressions with reasons were added (the repo's own idiom): two pre-existing verdict-badge loop shapes enforced only via the changed-file gate, and the harness's three selector/assert spines.",
+                  "tests/sprint-05-orient-search/recovery-presentation.spec.ts:52 still carries the stale '[data-search-slot] button' constant — untouched per the charter; its 3 failures remain the ORI-DEP-003 public-origin prerequisite. Report only."
+                ],
+                "blockers": [
+                  "ORI-AST-001 (tests/sprint-05-orient-search/docs-collection.test.ts): fails STANDALONE on 62973955 — 3 tokens (ORI-AST-001-collection-schema, ORI-AST-001-mdx-code-copy, ORI-AST-001-publication-contract). Pre-existing drift of the same class as this task's seven; outside writeAllowed.",
+                  "FUSE-05 (tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts): fails STANDALONE on 62973955 — 4 tokens, 'copies public r generated-only and byte-identical'.",
+                  "FLOW-DELIV-01 (tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts): fails STANDALONE on 62973955 — 2 tokens, including 'ships 112 dist JSONs' while the current build produces 114 public/r files (a superseded count pin of exactly this task's repair class).",
+                  "ORI-CONT-006 (tests/sprint-05-orient-search/contributing-content.test.ts): fails STANDALONE on 62973955 — ORI-CONT-006-real-docs-checks; sibling task cont-006-impl is active in this session and likely owns it.",
+                  "FLOW-DOCS-02 (tests/sprint-05-orient-search/live-example-api.test.ts): AC-4 token fails in the aggregate (hook contract, both graph compiles, owned-child teardown). Not standalone-rerun (long-running lane); attributed from the aggregate output.",
+                  "ORI-RN-005 (tests/sprint-05-orient-search/nativewind-live-example.test.ts): two tokens fail in the aggregate on 75-minute test timeouts (ORI-RN-005-abort-error-retry, ORI-RN-005-fail-closed-cleanup). Not standalone-rerun; timeout/budget-class per the aggregate output.",
+                  "Environmental cascade in the aggregate's final minutes: the session tmpdir holding vite's transform scratch (~/.cache/agent-scratch/<session>/ssr/.tmp-*) was reaped mid-run ~16h in, failing 87 files at collection in a burst — including scaffold.build's collection INSIDE the aggregate. My scaffold.build passes standalone (twice: the isolated selector and the green harness) and is not a real aggregate break; the six suites above are the real failures. The interrupted aggregate's destructive lane also wiped generated+tracked data files mid-run — restored (git restore of the tracked pair + prebuild regen; worktree typechecks clean)."
+                ],
+                "commit_sha": "2f15ba41b5d50b7ff5007ab941bf56bbb4ce69b8",
+                "scope_impact": [
+                  {
+                    "change": "unblocked this task's seven; aggregate remains red through the six foreign suites — rerun of the aggregate is the pending cycle-2 step once they land",
+                    "found": "Their aggregate pnpm test acceptance cannot exit 0 until the six foreign suites above are repaired; the seven suites this task owned are green in isolation and in the proof harness (all seven selectors exit 0, twice on 62973955's bytes)",
+                    "target": "GATE:ORI-CI-003/ORI-CI-004"
+                  }
+                ],
+                "status": "blocked",
+                "summary": "All seven suite repairs are landed (62973955: seven test files + the suite-repair-proof harness; 2f15ba41: RED/GREEN/run evidence + drill appends) and fully proven against real services. RED captured pre-change on f1574f3f with the planner's exact tallies (single-tutorial-gate 3p/2f on ORI-CI-001-duplicate/noncanonical, scaffold.build 1p/1f on FUSE-01-manifest-contract, data-table-contract 3p/1f on the rows regex; the four Playwright suites failing with the strict-mode '[data-search-slot] button' violations and the replaced ledger selectors — the playwright RED needed one harness-emitted recapture merge after the CONT-004 sibling's continuous 4321 occupation initially recorded port errors instead of the real failures). GREEN proves each of the seven preserved selectors exit 0 (all three chromium projects over astro preview serving the freshly built dist): the drill's scratch COMMITTED_BINDINGS extend/re-point lets ASTRO's tutorial gate speak (no check:snippets 'no committed binding'/'stale binding' preemption, 'observed 2 versus 1' and canonical-destination diagnostics present, restoration byte-exact, candidate unchanged), pnpm typecheck 0, scoped Biome 0, tracked-file diff boundary clean, zero product-source changes. Blocked ONLY on AC-3's aggregate clause: pnpm test exits 1 because six suites beyond this task's seven fail on the candidate through no fault of the repairs, all outside the charter's writeAllowed, recorded honestly in run.json (aggregate.exitCode 1) and reported for scope check — not absorbed."
+              },
+              "provenance": {
+                "dispatch_handle": "fix-suite-1-impl@session-a251722f",
+                "response_id": "digest:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+                "response_receipt": {
+                  "agent": "ghactions-implementer",
+                  "dispatch_handle": "fix-suite-1-impl@session-a251722f",
+                  "payload_sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+                  "response_id": "digest:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
+                  "session_id": "fix-suite-1-impl@session-a251722f"
+                },
+                "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.response.json",
+                "response_receipt_sha256": "4e36349780d593997d33e24eb10257d3ec6f6626e264874824d1bde268991087",
+                "session_id": "fix-suite-1-impl@session-a251722f"
+              },
+              "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+            }
           },
-          "provenance": {
+          "child_state": "killed",
+          "cycle": 1,
+          "implementer_session": {
             "dispatch_handle": "fix-suite-1-impl@session-a251722f",
-            "response_id": "digest:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
-            "response_receipt": {
+            "dispatch_receipt": {
               "agent": "ghactions-implementer",
               "dispatch_handle": "fix-suite-1-impl@session-a251722f",
-              "payload_sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
-              "response_id": "digest:e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051",
-              "session_id": "fix-suite-1-impl@session-a251722f"
+              "session_id": "fix-suite-1-impl@session-a251722f",
+              "task": "FIX-ORI-SUITE-1"
             },
-            "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-1.blocked.response.json",
-            "response_receipt_sha256": "4e36349780d593997d33e24eb10257d3ec6f6626e264874824d1bde268991087",
-            "session_id": "fix-suite-1-impl@session-a251722f"
+            "dispatch_receipt_sha256": "3b297a7d1976bfa2c0ff3687ee4b742aeecfd402cf0907c89d3ac9c03b5cf51c",
+            "implementer": "ghactions-implementer",
+            "session_id": "fix-suite-1-impl@session-a251722f",
+            "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-1.md",
+            "task_sha256": "f9c8a581d87d2439fe91b36f8bff7420316567b9ab6d18bd14d9b7f766442651"
           },
-          "sha256": "e15d4ad7d3b8a3d88a009a94b82efb2f6a4929485ee739b261236e0a9e1ad051"
+          "index": 0,
+          "last_findings": null,
+          "reason": "Originating Claude Code in-process teammate is not runnable from this Grok orchestrator. Parent session 4e9f071b-1fbd-4414-b372-1ea67ee37c2c last wrote 2026-09-26T22:33:28-06:00 and no live process matches session-a251722f or that parent. The implementer transcript stopped mid-turn and did not return a completion. Worktree HEAD and dirty WIP stay in place. This withdrawal archives that session id and does not reuse it.",
+          "remediation_dispatch_handle": null,
+          "wip": null
         }
-      },
-      "created_by_ask": "ask-wave19c-add-preexisting-suite-repair",
-      "implementer_session": {
-        "dispatch_handle": "fix-suite-1-impl@session-a251722f",
-        "dispatch_receipt": {
-          "agent": "ghactions-implementer",
-          "dispatch_handle": "fix-suite-1-impl@session-a251722f",
-          "session_id": "fix-suite-1-impl@session-a251722f",
-          "task": "FIX-ORI-SUITE-1"
-        },
-        "dispatch_receipt_sha256": "3b297a7d1976bfa2c0ff3687ee4b742aeecfd402cf0907c89d3ac9c03b5cf51c",
-        "implementer": "ghactions-implementer",
-        "session_id": "fix-suite-1-impl@session-a251722f",
-        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-1.md",
-        "task_sha256": "f9c8a581d87d2439fe91b36f8bff7420316567b9ab6d18bd14d9b7f766442651"
-      },
-      "planner": "ghactions-planner",
-      "status": "in_progress",
-      "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-1.md"
+      ]
     },
     "FIX-ORI-SUITE-2": {
       "created_by_ask": "ask-wave21c-add-foreign-suite-repair",
-      "implementer_session": {
-        "dispatch_handle": "fix-suite-2-impl@session-a251722f",
-        "dispatch_receipt": {
-          "agent": "ghactions-implementer",
-          "dispatch_handle": "fix-suite-2-impl@session-a251722f",
-          "session_id": "fix-suite-2-impl@session-a251722f",
-          "task": "FIX-ORI-SUITE-2"
-        },
-        "dispatch_receipt_sha256": "70c3981464260c3f8d816ea692f1065b66c6e1a3fbbde28694a04b3f44a96814",
-        "implementer": "ghactions-implementer",
-        "session_id": "fix-suite-2-impl@session-a251722f",
-        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md",
-        "task_sha256": "cb995e44c86771f2d2d6d25fab529268fb637d71f784676771e0e8dc9187db7c"
-      },
       "planner": "ghactions-planner",
-      "status": "in_progress",
-      "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md"
+      "status": "pending",
+      "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md",
+      "withdrawals": [
+        {
+          "blocked_reports": null,
+          "child_state": "killed",
+          "cycle": null,
+          "implementer_session": {
+            "dispatch_handle": "fix-suite-2-impl@session-a251722f",
+            "dispatch_receipt": {
+              "agent": "ghactions-implementer",
+              "dispatch_handle": "fix-suite-2-impl@session-a251722f",
+              "session_id": "fix-suite-2-impl@session-a251722f",
+              "task": "FIX-ORI-SUITE-2"
+            },
+            "dispatch_receipt_sha256": "70c3981464260c3f8d816ea692f1065b66c6e1a3fbbde28694a04b3f44a96814",
+            "implementer": "ghactions-implementer",
+            "session_id": "fix-suite-2-impl@session-a251722f",
+            "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md",
+            "task_sha256": "cb995e44c86771f2d2d6d25fab529268fb637d71f784676771e0e8dc9187db7c"
+          },
+          "index": 0,
+          "last_findings": null,
+          "reason": "Originating Claude Code in-process teammate is not runnable from this Grok orchestrator. Parent session 4e9f071b-1fbd-4414-b372-1ea67ee37c2c last wrote 2026-09-26T22:33:28-06:00 and no live process matches session-a251722f or that parent. The implementer transcript stopped mid-turn and did not return a completion. Worktree HEAD and dirty WIP stay in place. This withdrawal archives that session id and does not reuse it.",
+          "remediation_dispatch_handle": null,
+          "wip": null
+        }
+      ]
     },
     "FIX-ORI-VIS-001-1": {
       "approved_sha": "01837e2ea0c1c42f4ca5a76fb37ad2d0e181adce",
@@ -28891,69 +28914,8 @@
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-003"
     },
     "ORI-CONT-004": {
-      "blocked_reports": {
-        "1": {
-          "cycle": 1,
-          "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
-          "payload": {
-            "assumptions": [
-              "RED base = the task's declared planning Source SHA 38034e97 (the recorded preimplementation source); the three flow specs were copied into a clone of that SHA and run_flow --root captured the proofs; the canonical proof.red files carry head=38034e97+dirty lineage headers.",
-              "The heavyweight Quickstart test applies the env hygiene the owning tasks established (delete NODE_ENV, short reaper-free TMPDIR) before importing the RN driver in-process — without it the Playwright worker's NODE_ENV=test breaks expo install and Metro serving to Expo Go.",
-              "The Expo Go 57.0.9 APK was restored to the driver's hardcoded cache path by pulling the genuine artifact from the reserved emulator (same versionCode 444); the agent-scratch reaper had deleted the original.",
-              "Driver output directories (tests/sprint-05-orient-search/evidence/ORI-RN-003/** and the would-be ORI-AI-002 refresh) plus FLOW-SHELL-15/16 run.json were rewritten by real runs in this worktree but are NOT committed — outside writeAllowed; they remain dirty for their owners/the orchestrator.",
-              "FLOW-DOCS-02's run.json records exit 1 with the 5/6 seed state; its testFile hash predates a post-run biome format-only autofix of the spec (flows 1 and 2 were canonically replayed after the autofix and their hash bindings are exact).",
-              "Prior-sprint verification: the vitest logic lanes fail extensively on main itself (verified on the primary checkout: SHELL-010 copy contract, SHELL-006 trio, SHELL-002, plus the contracted destructive src/data cases), so those failures are pre-existing and routed to their owners; the prior browser lanes also fail on this candidate (same SHELL-010-class content assertions, destructive-case data deletion, and mid-run server loss) but a main-side browser baseline could not be completed due to heavy sibling contention on port 4321 throughout the evening.",
-              "Port 4321 discipline: only previews serving this worktree were killed; foreign listeners (primary checkout and FIX-ORI-SUITE-1 worktree) were waited out, and final canonical replays ran with CI=true so Playwright owned its server."
-            ],
-            "blockers": [
-              "FLOW-DOCS-02-quickstart-chat-screen sixth seed leg (uniwind/web): react-native-web@0.21.3 (published 2026-09-25T15:00Z) adds an InputAccessoryView export that uniwind 1.11.0's package.json exports map cannot resolve (it points at dist/module/components/web/InputAccessoryView.js, which the uniwind tarball does not ship), so `expo export --platform web` fails inside every fresh uniwind consumer under `~0.21.0`. Deterministic across two flow attempts plus a standalone reproduction; pinning react-native-web@0.21.2 in the same consumer exports with exit 0. Fix owner: the RN/template tasks (packages/docs-snippets/{nativewind,uniwind}/package.json is outside this task's writeAllowed). After the pin lands, rerunning this task's locked command completes the seed matrix and executes the per-engine live matrices in the same invocation (the spec already awaits runQuickstartProof and run-live-example-proof.mjs unchanged)."
-            ],
-            "commit_sha": "78f88b07a2fdd698d09b75fda7bf3c3dd15c61ab",
-            "scope_impact": [
-              {
-                "change": "No scope change made — the spec fails closed on the missing sixth leg per contract. Requested change: pin react-native-web@0.21.2 (or adopt a uniwind release shipping the mapped file) in packages/docs-snippets/*/package.json, owned by the RN template tasks.",
-                "found": "Fresh public installs of the displayed uniwind tutorial deterministically fail `expo export --platform web` under react-native-web@0.21.3 + uniwind 1.11.0's incomplete exports map (published after ORI-RN-003's committed green run); nativewind and all native legs pass.",
-                "target": "GATE:FLOW-DOCS-02-quickstart-chat-screen"
-              },
-              {
-                "change": "Nothing committed on their behalf; the refresh is left dirty for the owner. Recommend the owner add recipe-exit assertion and consider pinning react-native-web.",
-                "found": "Its driver's evidence root (tests/sprint-05-orient-search/evidence/ORI-RN-003/) was refreshed by this task's real seed runs (currently recording run_id ORI-CONT-004-2026-09-26T01-44-39-507Z, passed_legs 5/6) and its run-manifest/leg files are dirty in this worktree; also, prepareConsumer never asserts the recipe's exit code, so a failed CLI add surfaces only as downstream seed-visibility failures.",
-                "target": "ORI-RN-003"
-              },
-              {
-                "change": "Left dirty uncommitted; flagged so the orchestrator knows those refreshes exist on this branch's worktree.",
-                "found": "The recovery/search specs replayed green inside this worktree during the evening (run.json files refreshed with current hashes, exit 0) — not dispatched by this task and outside its writeAllowed.",
-                "target": "ORI-AST-009 / FLOW-SHELL-15,16"
-              },
-              {
-                "change": "Routed to owners; this task's candidate shows the same failure set, not a regression from its changes.",
-                "found": "The prior vitest logic lanes fail on main itself (verified directly on the primary checkout this evening) — stale copy-contract expectations and destructive src/data cases, predating this task.",
-                "target": "SHELL-010 / SHELL-006 / SHELL-002 (prior-sprint lanes)"
-              }
-            ],
-            "status": "blocked",
-            "summary": "Authored and landed the three locked DOCS flow specs, their canonical run_flow RED proofs (captured against the recorded preimplementation source at planning SHA 38034e97 via a historical-checkout --root run; twelve functional assertion failures, no infrastructure failures), and the AC-4 claim ledger. FLOW-DOCS-01-getting-started-engine-decision passes 12/12 across chromium-desktop/mobile/nojs (orientation bodies, single engine question and TabGroup, both complete conversation commands inside their panels, transport search to the boundary page, authored 404 recovery, ledger plus real snippet/single-tutorial/dist-link gate subprocesses). FLOW-DOCS-01-theming-and-section-nav passes 9/9 (>=20 paired oklch token rows, distinct --primary pair, scoped engine guidance verified against apps/example/global.css and lib/theme.ts, seam anchors verified against current registry sources, section navigation, no-JS reading floor). FLOW-DOCS-02's content cases and reading floor pass, and its heavyweight invocation executes real fresh public installs: five of six seed legs pass on real devices (both engines, iOS + Android, both appearances, plus the nativewind web export and the callback-disconnection negative control), but the uniwind/web leg is deterministically blocked by react-native-web@0.21.3 (published 2026-09-25T15:00Z, after ORI-RN-003's committed green) dying inside uniwind 1.11.0's incomplete package.json exports map during expo export; reproduced standalone twice and pinned 0.21.2 exports cleanly, so the one-line fix lives in packages/docs-snippets/*/package.json (outside this task's writeAllowed) and the flow fails closed per contract, leaving the per-engine live matrices owed to the rerun. One content correction landed: owns-vs-does-not-own.md no longer claims the example lacks a live streaming chat and now links the verified run guide apps/example/docs/live-chat.md."
-          },
-          "provenance": {
-            "dispatch_handle": "ori-cont-004-impl@session-a251722f",
-            "response_id": "digest:dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
-            "response_receipt": {
-              "agent": "techwriting-implementer",
-              "dispatch_handle": "ori-cont-004-impl@session-a251722f",
-              "payload_sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
-              "response_id": "digest:dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
-              "session_id": "ori-cont-004-impl@session-a251722f"
-            },
-            "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.response.json",
-            "response_receipt_sha256": "e77c32f348172e54684c77e46ae931fc0dc80733bf4f7bba1a05b470d6d0eeda",
-            "session_id": "ori-cont-004-impl@session-a251722f"
-          },
-          "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
-        }
-      },
       "branch": "kb-run-sprint/sprint-05-orient-search/ORI-CONT-004",
       "commit_sha": null,
-      "cycle": 0,
       "depends_on": [
         "ORI-CONT-001",
         "ORI-CONT-002",
@@ -28977,26 +28939,100 @@
       ],
       "file": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
       "implementer": "techwriting-implementer",
-      "implementer_session": {
-        "dispatch_handle": "ori-cont-004-impl@session-a251722f",
-        "dispatch_receipt": {
-          "agent": "techwriting-implementer",
-          "dispatch_handle": "ori-cont-004-impl@session-a251722f",
-          "session_id": "ori-cont-004-impl@session-a251722f",
-          "task": "ORI-CONT-004"
-        },
-        "dispatch_receipt_sha256": "6cfc4ca75240e276092d259336c89338656886ef007cef59287190b0d23b5c18",
-        "implementer": "techwriting-implementer",
-        "session_id": "ori-cont-004-impl@session-a251722f",
-        "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
-        "task_sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
-      },
-      "last_findings": null,
       "merge_sha": null,
       "points": 3,
       "reviewer": "techwriting-reviewer",
-      "status": "in_progress",
+      "status": "pending",
       "wave": 15,
+      "withdrawals": [
+        {
+          "blocked_reports": {
+            "1": {
+              "cycle": 1,
+              "path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.json",
+              "payload": {
+                "assumptions": [
+                  "RED base = the task's declared planning Source SHA 38034e97 (the recorded preimplementation source); the three flow specs were copied into a clone of that SHA and run_flow --root captured the proofs; the canonical proof.red files carry head=38034e97+dirty lineage headers.",
+                  "The heavyweight Quickstart test applies the env hygiene the owning tasks established (delete NODE_ENV, short reaper-free TMPDIR) before importing the RN driver in-process — without it the Playwright worker's NODE_ENV=test breaks expo install and Metro serving to Expo Go.",
+                  "The Expo Go 57.0.9 APK was restored to the driver's hardcoded cache path by pulling the genuine artifact from the reserved emulator (same versionCode 444); the agent-scratch reaper had deleted the original.",
+                  "Driver output directories (tests/sprint-05-orient-search/evidence/ORI-RN-003/** and the would-be ORI-AI-002 refresh) plus FLOW-SHELL-15/16 run.json were rewritten by real runs in this worktree but are NOT committed — outside writeAllowed; they remain dirty for their owners/the orchestrator.",
+                  "FLOW-DOCS-02's run.json records exit 1 with the 5/6 seed state; its testFile hash predates a post-run biome format-only autofix of the spec (flows 1 and 2 were canonically replayed after the autofix and their hash bindings are exact).",
+                  "Prior-sprint verification: the vitest logic lanes fail extensively on main itself (verified on the primary checkout: SHELL-010 copy contract, SHELL-006 trio, SHELL-002, plus the contracted destructive src/data cases), so those failures are pre-existing and routed to their owners; the prior browser lanes also fail on this candidate (same SHELL-010-class content assertions, destructive-case data deletion, and mid-run server loss) but a main-side browser baseline could not be completed due to heavy sibling contention on port 4321 throughout the evening.",
+                  "Port 4321 discipline: only previews serving this worktree were killed; foreign listeners (primary checkout and FIX-ORI-SUITE-1 worktree) were waited out, and final canonical replays ran with CI=true so Playwright owned its server."
+                ],
+                "blockers": [
+                  "FLOW-DOCS-02-quickstart-chat-screen sixth seed leg (uniwind/web): react-native-web@0.21.3 (published 2026-09-25T15:00Z) adds an InputAccessoryView export that uniwind 1.11.0's package.json exports map cannot resolve (it points at dist/module/components/web/InputAccessoryView.js, which the uniwind tarball does not ship), so `expo export --platform web` fails inside every fresh uniwind consumer under `~0.21.0`. Deterministic across two flow attempts plus a standalone reproduction; pinning react-native-web@0.21.2 in the same consumer exports with exit 0. Fix owner: the RN/template tasks (packages/docs-snippets/{nativewind,uniwind}/package.json is outside this task's writeAllowed). After the pin lands, rerunning this task's locked command completes the seed matrix and executes the per-engine live matrices in the same invocation (the spec already awaits runQuickstartProof and run-live-example-proof.mjs unchanged)."
+                ],
+                "commit_sha": "78f88b07a2fdd698d09b75fda7bf3c3dd15c61ab",
+                "scope_impact": [
+                  {
+                    "change": "No scope change made — the spec fails closed on the missing sixth leg per contract. Requested change: pin react-native-web@0.21.2 (or adopt a uniwind release shipping the mapped file) in packages/docs-snippets/*/package.json, owned by the RN template tasks.",
+                    "found": "Fresh public installs of the displayed uniwind tutorial deterministically fail `expo export --platform web` under react-native-web@0.21.3 + uniwind 1.11.0's incomplete exports map (published after ORI-RN-003's committed green run); nativewind and all native legs pass.",
+                    "target": "GATE:FLOW-DOCS-02-quickstart-chat-screen"
+                  },
+                  {
+                    "change": "Nothing committed on their behalf; the refresh is left dirty for the owner. Recommend the owner add recipe-exit assertion and consider pinning react-native-web.",
+                    "found": "Its driver's evidence root (tests/sprint-05-orient-search/evidence/ORI-RN-003/) was refreshed by this task's real seed runs (currently recording run_id ORI-CONT-004-2026-09-26T01-44-39-507Z, passed_legs 5/6) and its run-manifest/leg files are dirty in this worktree; also, prepareConsumer never asserts the recipe's exit code, so a failed CLI add surfaces only as downstream seed-visibility failures.",
+                    "target": "ORI-RN-003"
+                  },
+                  {
+                    "change": "Left dirty uncommitted; flagged so the orchestrator knows those refreshes exist on this branch's worktree.",
+                    "found": "The recovery/search specs replayed green inside this worktree during the evening (run.json files refreshed with current hashes, exit 0) — not dispatched by this task and outside its writeAllowed.",
+                    "target": "ORI-AST-009 / FLOW-SHELL-15,16"
+                  },
+                  {
+                    "change": "Routed to owners; this task's candidate shows the same failure set, not a regression from its changes.",
+                    "found": "The prior vitest logic lanes fail on main itself (verified directly on the primary checkout this evening) — stale copy-contract expectations and destructive src/data cases, predating this task.",
+                    "target": "SHELL-010 / SHELL-006 / SHELL-002 (prior-sprint lanes)"
+                  }
+                ],
+                "status": "blocked",
+                "summary": "Authored and landed the three locked DOCS flow specs, their canonical run_flow RED proofs (captured against the recorded preimplementation source at planning SHA 38034e97 via a historical-checkout --root run; twelve functional assertion failures, no infrastructure failures), and the AC-4 claim ledger. FLOW-DOCS-01-getting-started-engine-decision passes 12/12 across chromium-desktop/mobile/nojs (orientation bodies, single engine question and TabGroup, both complete conversation commands inside their panels, transport search to the boundary page, authored 404 recovery, ledger plus real snippet/single-tutorial/dist-link gate subprocesses). FLOW-DOCS-01-theming-and-section-nav passes 9/9 (>=20 paired oklch token rows, distinct --primary pair, scoped engine guidance verified against apps/example/global.css and lib/theme.ts, seam anchors verified against current registry sources, section navigation, no-JS reading floor). FLOW-DOCS-02's content cases and reading floor pass, and its heavyweight invocation executes real fresh public installs: five of six seed legs pass on real devices (both engines, iOS + Android, both appearances, plus the nativewind web export and the callback-disconnection negative control), but the uniwind/web leg is deterministically blocked by react-native-web@0.21.3 (published 2026-09-25T15:00Z, after ORI-RN-003's committed green) dying inside uniwind 1.11.0's incomplete package.json exports map during expo export; reproduced standalone twice and pinned 0.21.2 exports cleanly, so the one-line fix lives in packages/docs-snippets/*/package.json (outside this task's writeAllowed) and the flow fails closed per contract, leaving the per-engine live matrices owed to the rerun. One content correction landed: owns-vs-does-not-own.md no longer claims the example lacks a live streaming chat and now links the verified run guide apps/example/docs/live-chat.md."
+              },
+              "provenance": {
+                "dispatch_handle": "ori-cont-004-impl@session-a251722f",
+                "response_id": "digest:dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
+                "response_receipt": {
+                  "agent": "techwriting-implementer",
+                  "dispatch_handle": "ori-cont-004-impl@session-a251722f",
+                  "payload_sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
+                  "response_id": "digest:dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82",
+                  "session_id": "ori-cont-004-impl@session-a251722f"
+                },
+                "response_receipt_path": ".kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-1.blocked.response.json",
+                "response_receipt_sha256": "e77c32f348172e54684c77e46ae931fc0dc80733bf4f7bba1a05b470d6d0eeda",
+                "session_id": "ori-cont-004-impl@session-a251722f"
+              },
+              "sha256": "dae3cf7ffdc9461ede2179f491c590391620c8382284bf8b8d1c4b684ee56e82"
+            }
+          },
+          "child_state": "killed",
+          "cycle": 1,
+          "implementer_session": {
+            "dispatch_handle": "ori-cont-004-impl@session-a251722f",
+            "dispatch_receipt": {
+              "agent": "techwriting-implementer",
+              "dispatch_handle": "ori-cont-004-impl@session-a251722f",
+              "session_id": "ori-cont-004-impl@session-a251722f",
+              "task": "ORI-CONT-004"
+            },
+            "dispatch_receipt_sha256": "6cfc4ca75240e276092d259336c89338656886ef007cef59287190b0d23b5c18",
+            "implementer": "techwriting-implementer",
+            "session_id": "ori-cont-004-impl@session-a251722f",
+            "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+            "task_sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+          },
+          "index": 0,
+          "last_findings": null,
+          "reason": "Originating Claude Code in-process teammate is not runnable from this Grok orchestrator. Parent session 4e9f071b-1fbd-4414-b372-1ea67ee37c2c last wrote 2026-09-26T22:33:28-06:00 and no live process matches session-a251722f or that parent. The implementer transcript stopped mid-turn and did not return a completion. Worktree HEAD and dirty WIP stay in place. This withdrawal archives that session id and does not reuse it.",
+          "remediation_dispatch_handle": null,
+          "wip": {
+            "branch_tip_sha": "a68c9a0eb19a94865ebe4b43bf739832bff8820e",
+            "commits_ahead_of_trunk": 3,
+            "uncommitted_paths": 84
+          }
+        }
+      ],
       "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004"
     },
     "ORI-CONT-005": {
