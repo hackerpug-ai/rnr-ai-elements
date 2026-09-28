@@ -30,7 +30,9 @@ writeProhibited:
 - .spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md
 - apps/**, packages/**, scripts/**
 
-> Status: ⬜ Pending
+> Status: ✅ Completed
+
+Commit: f9d30b09eadf06350a691cc9bd39a667ee2a8e52
 
 AGENT: planner=ghactions-planner | implementer=ghactions-implementer | reviewer=ghactions-reviewer
 
@@ -42,3 +44,24 @@ GIVEN the committed inventory of the one `pnpm test` WHEN the routing record and
 
 - TEST_FILE: tests/sprint-05-orient-search/aggregate-owner-routing.test.ts
 - VERIFY: `pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts`
+
+## Handoff
+
+```json
+{
+  "task": "FIX-ORI-SUITE-2-1",
+  "commit_sha": "f9d30b09eadf06350a691cc9bd39a667ee2a8e52",
+  "done": "FIX-ORI-SUITE-2-1 was approved at f9d30b09eadf06350a691cc9bd39a667ee2a8e52 and merged to main as c1785cf8b73af05d5d2127cacb3f5e8ee70f22e2. That commit adds the owner map, the committed aggregate inventory, the routing test, and TASK-FIX-ORI-SUITE-2-1.md. It does not change the four chartered suites or TASK-FIX-ORI-SUITE-2.md. The residual token remains FLOW-DELIV-01-ci-chain-order.",
+  "deviations": [],
+  "concerns": [],
+  "findings": [],
+  "scope_impact": [
+    {
+      "target": "FIX-ORI-SUITE-2",
+      "found": "Commit 3dc22d71154d0bd43764cc33f4b8f78d2530aa75 is still unmerged because its review is NEEDS_FIXES. The owner map for aggregate failures outside the four suites is already on main via FIX-ORI-SUITE-2-1.",
+      "change": "Address the NEEDS_FIXES review on 3dc22d71154d0bd43764cc33f4b8f78d2530aa75 and merge that commit without changing the four chartered suites, TASK-FIX-ORI-SUITE-2.md, or the owner map FIX-ORI-SUITE-2-1 already merged."
+    }
+  ],
+  "feedback": []
+}
+```
