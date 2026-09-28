@@ -56,7 +56,9 @@ appId: host.exp.Exponent
     text: "Minimize"
     optional: true
 - tapOn: "Send message"
-- hideKeyboard
+# Expo Go's composer does not expose a standard keyboard dismiss, so hideKeyboard
+# fails the flow. Tap the static title, then scroll the marker back into view.
+- tapOn: "Live chat"
 # The reply that carries the marker can sit above the keyboard-shrunk viewport.
 # Scroll toward the top until its center is on screen, then assert it.
 - scrollUntilVisible:
