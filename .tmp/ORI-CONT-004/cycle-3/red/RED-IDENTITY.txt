@@ -1,0 +1,18 @@
+ORI-CONT-004 cycle-3 RED identity
+
+These captures are functional assertion failures, not a down server and not a missing test file.
+
+1. FLOW-DOCS-01-getting-started-engine-decision.proof.red
+   run_flow --expect red against recorded source head 38034e972490945b684f5bd5a706bca0479dc659.
+   First failure: /docs/introduction returned 404, expected 200.
+2. FLOW-DOCS-01-theming-and-section-nav.proof.red
+   Same source. First failure: rendered Theming body lacked "Uniwind pairs with Tailwind v4".
+3. FLOW-DOCS-02-quickstart-chat-screen.proof.red
+   Same source. First failure: /docs/quickstart returned 404, expected 200.
+4. flow3-uniwind-web-seed-leg.out
+   Later green attempt on head ce1cd537 (before the react-native-web pin).
+   The locked command reached the product. The seed assertion failed:
+   uniwind/web expo export could not resolve InputAccessoryView (9 of 12 records passed).
+   Cycle 2's run_flow exit 124 was a runner timeout. That is infrastructure, so it is not copied here as RED.
+
+Cycle 3 does not re-run --expect red against the current candidate. The authored behavior is present, and a passing --expect red run is NOT_RED. It must not replace proof.red.

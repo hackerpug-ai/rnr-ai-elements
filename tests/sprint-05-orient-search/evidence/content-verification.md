@@ -95,7 +95,7 @@ live example.
 | 24 authored seed turns (`Seed turn 01` … `Seed turn 24`) | [RUN] flow 3 asserts both endpoints in the displayed source; [OWNER] RN-003 leg evidence records the same seed list on device. |
 | Marker appears once; composer clears; no assistant reply | [OWNER] ORI-RN-003 six-leg manifest and the callback-disconnection negative control (baseline passes, disconnected fails, restored passes). |
 | Both public conversation commands run with `rnraielements.com` unchanged | [RUN] flow 3 asserts the literal strings; [OWNER] ORI-RN-003 executed the recipes verbatim in clean consumers. |
-| The worked example composes the items around AI SDK v7 `useChat` with server-held credentials | [SRC] `apps/example/app/live-chat.tsx` + `apps/example/server/*` (key never crosses to the client); [OWNER] ORI-AI-002 six-target provider proof (the per-engine rerun in this invocation is owed — see the blocker below). |
+| The worked example composes the items around AI SDK v7 `useChat` with server-held credentials | [SRC] `apps/example/app/live-chat.tsx` + `apps/example/server/*` (the key stays on the server); [RUN] the locked Quickstart playback awaits `run-live-example-proof.mjs` for both engines and binds the result in `FLOW-DOCS-02-quickstart-chat-screen/run.json`. |
 
 ### owns-vs-does-not-own.md
 
@@ -149,34 +149,27 @@ live example.
 
 ## Consumed integration evidence
 
-- Seed matrix: `runQuickstartProof` (ORI-RN-003 driver) awaited in flow 3's invocation —
-  fresh run ID, all native legs passing (nativewind + uniwind on iOS and Android, both
-  appearances) plus the nativewind web leg; manifest at
-  `tests/sprint-05-orient-search/evidence/ORI-RN-003/run-manifest.json`.
-- Live matrices: `run-live-example-proof.mjs` (ORI-AI-002 runner) is awaited per engine
-  after the seed matrix completes; this invocation never reached them (see the blocker
-  below), so the committed ORI-AI-002 evidence sets remain the standing live proof and
-  the rerun stays owed to this flow's locked command.
-- Both drivers were consumed unchanged through their declared interfaces; their output
-  directories are owned by ORI-RN-003/ORI-AI-002 and are refreshed, not rewritten, by
-  this task (this task's committed binding lives in
-  `FLOW-DOCS-02-quickstart-chat-screen/run.json`).
+- Seed matrix: the locked Quickstart playback awaits `runQuickstartProof` (the ORI-RN-003
+  driver) unchanged. The driver creates two clean consumers from the committed templates,
+  runs the literal public commands, and writes
+  `tests/sprint-05-orient-search/evidence/ORI-RN-003/run-manifest.json`. The binding
+  record for this candidate is `FLOW-DOCS-02-quickstart-chat-screen/run.json` (`seed.run_id`,
+  `seed.completed`, and `seed.manifest_sha256`). An earlier partial manifest is not this
+  playback.
+- Live matrices: the same playback then awaits `run-live-example-proof.mjs` (the ORI-AI-002
+  runner) once per engine, on iOS, Android, and Web. `run.json` `live` holds each engine's
+  `run_id` and manifest hash. The runner's output directories stay owned by ORI-AI-002.
+- Both drivers are consumed through their declared interfaces. This task does not patch them.
 
-## Known blocker: react-native-web 0.21.3 breaks the uniwind web export
+## Consumer web pin consumed from FIX-ORI-CONT-004-1
 
-`react-native-web@0.21.3` was published 2026-09-25T15:00Z — after ORI-RN-003's
-committed green run (2026-09-24, which resolved 0.21.2). The consumer templates pin
-`~0.21.0`, so every fresh public install now resolves 0.21.3, which adds an
-`InputAccessoryView` export to `react-native-web/dist/index.js`. Uniwind 1.11.0's
-package.json `exports` map points `./components/InputAccessoryView` at
-`dist/module/components/web/InputAccessoryView.js`, a file its tarball does not ship,
-and uniwind's Metro wrapper routes resolution through that map — so `expo export
---platform web` fails inside the uniwind consumer with "Unable to resolve module
-./exports/InputAccessoryView". Reproduced standalone twice (2026-09-26); pinning
-`react-native-web` to 0.21.2 in the same consumer exports cleanly (exit 0). The
-nativewind consumer is unaffected (its Metro wrapper does not install that resolver),
-which is why five of six seed legs pass. The fix — pin `react-native-web@0.21.2` (or a
-uniwind release shipping the mapped file) in `packages/docs-snippets/*/package.json` —
-is owned by the RN/template tasks (outside this task's writeAllowed). Per the task
-contract the Quickstart flow fails closed on the missing sixth leg rather than shipping
-a reduced matrix.
+On 2026-09-26 a fresh uniwind consumer resolved `react-native-web@0.21.3`. That release
+exports `InputAccessoryView`, and Uniwind 1.11.0 maps that path to a file the package does
+not ship, so `expo export --platform web` failed. NativeWind was unaffected. Five seed legs
+passed and the uniwind web leg did not. That failure is the functional RED recorded in
+cycle 1; it is not a missing server.
+
+FIX-ORI-CONT-004-1, commit `7d4103ea`, pins `react-native-web` to exact `0.21.2` in
+`packages/docs-snippets/nativewind/package.json` and
+`packages/docs-snippets/uniwind/package.json`. This candidate includes that commit. The
+locked playback still fails closed if any of the six seed legs or six live legs is missing.
