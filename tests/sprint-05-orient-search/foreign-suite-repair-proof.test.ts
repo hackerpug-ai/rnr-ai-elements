@@ -1,26 +1,26 @@
 /**
  * FIX-ORI-SUITE-2-2 — the foreign-suite repair proof harness.
  *
- * Spawns the REAL preserved per-suite selectors as child processes and asserts
- * on their real exit codes — nothing here reads a cached receipt, replays a
- * recorded manifest, or trusts a hand-written pass. The three drifted vitest
- * suites, the live-example-api AC-4 token, the immutable owner-routing token,
- * and the two NativeWind marathon
+ * Fresh proof spawns the REAL preserved per-suite selectors as child processes
+ * and asserts on their exit codes and exact executed-test tallies. Later
+ * aggregate runs re-read the committed, embedded raw receipt bytes and verify
+ * their hashes and semantics without replaying device work. The three drifted
+ * vitest suites, immutable owner-routing token, and two NativeWind marathon
  * tokens each run as the exact `pnpm exec vitest run ...` command the charter
- * preserves, with per-child timeouts sized to their real envelopes (a marathon
- * token is 75-minute-class and may legally double through the suite's
- * one external-kill retry, so its child envelope is 165 minutes).
+ * preserves, with per-child timeouts sized to their real envelopes.
  *
  * Modes:
  *  - FOREIGN_SUITE_REPAIR_CAPTURE=red  — pre-change capture: spawn the three
  *    drifted selectors, REQUIRE each to fail with its chartered signature, and
  *    write .tmp/FIX-ORI-SUITE-2-2/red.json bound to the candidate SHA. Refuses to
  *    run once the repairs have landed (a red authored after the fix is a lie).
- *  - default (green) — post-change proof: verify port 4321 is free (the
+ *  - default (green) — when no GREEN exists, or force is explicit, verify port 4321 is free (the
  *    docs-collection Playwright-class token must own it), spawn all six
  *    selectors requiring exit 0, verify the marathon manifests/teardowns are
  *    fresh and complete, run `pnpm typecheck` and the scoped Biome command,
  *    assert the tracked-file diff boundary, and write green.json + run.json.
+ *    When committed GREEN exists, verify its embedded receipts and all current
+ *    executable/input bytes without resolving historical Git objects.
  *
  * This harness NEVER spawns the aggregate `pnpm test` — a vitest child spawning
  * the vitest aggregate would re-run every drill and this harness (unbounded
@@ -30,13 +30,13 @@
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { connect } from 'node:net';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { test } from 'vitest';
+import { expect, test } from 'vitest';
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const EVIDENCE_ROOT = join(REPO_ROOT, '.tmp', 'FIX-ORI-SUITE-2-2');
@@ -86,6 +86,8 @@ interface SelectorSpec {
   name: string;
   args: string[];
   timeoutMs: number;
+  expectedPasses: number;
+  expectedSkips: number;
   /** Extra env for this child only. */
   env?: Record<string, string>;
   /** The chartered failure signature RED mode must observe (drifted trio only). */
@@ -97,6 +99,8 @@ const DRIFTED_SELECTORS: SelectorSpec[] = [
     name: 'docs-collection',
     args: ['exec', 'vitest', 'run', 'tests/sprint-05-orient-search/docs-collection.test.ts'],
     timeoutMs: 45 * MINUTE,
+    expectedPasses: 4,
+    expectedSkips: 0,
     env: { CI: '1' },
     redSignature: {
       failedAtLeast: 2,
@@ -112,6 +116,8 @@ const DRIFTED_SELECTORS: SelectorSpec[] = [
       'tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts',
     ],
     timeoutMs: 25 * MINUTE,
+    expectedPasses: 4,
+    expectedSkips: 0,
     redSignature: {
       failedAtLeast: 1,
       outputContains: ['copies public r generated-only and byte-identical'],
@@ -128,6 +134,8 @@ const DRIFTED_SELECTORS: SelectorSpec[] = [
       'AC-4',
     ],
     timeoutMs: 10 * MINUTE,
+    expectedPasses: 1,
+    expectedSkips: 3,
     redSignature: {
       failedAtLeast: 1,
       outputContains: ["from 'expo/fetch'"],
@@ -147,6 +155,8 @@ const MARATHON_SELECTORS: SelectorSpec[] = [
       'ORI-RN-005-abort-error-retry',
     ],
     timeoutMs: 165 * MINUTE,
+    expectedPasses: 1,
+    expectedSkips: 3,
   },
   {
     name: 'nativewind-fail-closed-cleanup',
@@ -159,6 +169,8 @@ const MARATHON_SELECTORS: SelectorSpec[] = [
       'ORI-RN-005-fail-closed-cleanup',
     ],
     timeoutMs: 165 * MINUTE,
+    expectedPasses: 1,
+    expectedSkips: 3,
   },
 ];
 
@@ -166,7 +178,12 @@ const ROUTING_SELECTOR: SelectorSpec = {
   name: 'immutable-owner-routing',
   args: ['exec', 'vitest', 'run', 'tests/sprint-05-orient-search/aggregate-owner-routing.test.ts'],
   timeoutMs: 5 * MINUTE,
+  expectedPasses: 1,
+  expectedSkips: 0,
+  env: { OWNER_ROUTING_EXECUTION_AUDIT: '1' },
 };
+
+const ALL_SELECTORS = [...DRIFTED_SELECTORS, ROUTING_SELECTOR, ...MARATHON_SELECTORS];
 
 const SCOPED_BIOME_TARGETS = [
   'tests/sprint-05-orient-search/docs-collection.test.ts',
@@ -245,7 +262,7 @@ function runPlain(
   logPath: string,
   timeoutMs: number,
 ): ChildResult {
-  return runChild({ name: command, args, timeoutMs }, logPath);
+  return runChild({ name: command, args, timeoutMs, expectedPasses: 0, expectedSkips: 0 }, logPath);
 }
 
 function sha256File(path: string): string {
@@ -373,7 +390,15 @@ type CandidateScope = {
   base_commit: string;
   execution_candidate: string;
   changed_paths: string[];
+  git_range_audit: {
+    verified: true;
+    changed_paths_sha256: string;
+  };
 };
+
+function pathInventorySha256(paths: string[]): string {
+  return createHash('sha256').update(paths.join('\0')).digest('hex');
+}
 
 /** Scope is immutable base -> recorded execution candidate. It never widens to a
  * later aggregate HEAD, whose unrelated reviewed commits are outside this task. */
@@ -400,22 +425,33 @@ function candidateScope(executionCandidate: string): CandidateScope {
     base_commit: TASK_BASE_COMMIT,
     execution_candidate: executionCandidate,
     changed_paths: changedPaths,
+    git_range_audit: {
+      verified: true,
+      changed_paths_sha256: pathInventorySha256(changedPaths),
+    },
   };
 }
 
+type TestTally = { failed: number; passed: number; skipped: number };
+
 /** The vitest summary line: "Tests  3 failed | 1 passed (4)". */
-function tallyOf(output: string): { failed: number; passed: number } {
+function tallyOf(output: string): TestTally {
   // The summary's segment order varies: "3 failed | 1 passed (4)" after the
   // repairs, "1 failed | 3 skipped (4)" for a -t filtered selector, so parse
   // every "N failed/passed/skipped" segment rather than assuming one shape.
   const summary = output.match(/^\s*Tests\s+(.+)\(\d+\)\s*$/m)?.[1] ?? '';
-  const counts = { failed: 0, passed: 0 };
+  const counts: TestTally = { failed: 0, passed: 0, skipped: 0 };
   for (const segment of summary.split('|')) {
-    const part = segment.match(/(\d+)\s+(failed|passed)/);
-    if (part) counts[part[2] as 'failed' | 'passed'] = Number(part[1]);
+    const part = segment.match(/(\d+)\s+(failed|passed|skipped)/);
+    if (part) counts[part[2] as keyof TestTally] = Number(part[1]);
   }
-  if (counts.failed === 0 && counts.passed === 0 && !summary.includes('passed')) {
-    return { failed: -1, passed: -1 };
+  if (
+    counts.failed === 0 &&
+    counts.passed === 0 &&
+    counts.skipped === 0 &&
+    !summary.includes('passed')
+  ) {
+    return { failed: -1, passed: -1, skipped: -1 };
   }
   return counts;
 }
@@ -576,9 +612,17 @@ function requireMarathonArtifacts(name: string, paths: string[]): void {
   }
 }
 
-function teardownIsFresh(finishedAt: string | undefined, childStartedAt: number): boolean {
-  const finished = new Date(finishedAt ?? 0).getTime();
-  return Number.isFinite(finished) && finished >= childStartedAt - 2000;
+function timestampInsideChild(
+  timestamp: string | undefined,
+  childStartedAt: number,
+  childFinishedAt: number,
+): boolean {
+  const observed = new Date(timestamp ?? 0).getTime();
+  return (
+    Number.isFinite(observed) &&
+    observed >= childStartedAt - 2000 &&
+    observed <= childFinishedAt + 2000
+  );
 }
 
 function assertManifestCompleted(name: string, completed: boolean | undefined): void {
@@ -590,7 +634,7 @@ function assertManifestCompleted(name: string, completed: boolean | undefined): 
 function assertTeardownFresh(name: string, fresh: boolean, finishedAt: string | undefined): void {
   if (!fresh) {
     throw new Error(
-      `${name}: teardown.json is stale (finished_at ${finishedAt} predates the child start) — ` +
+      `${name}: receipt timestamp ${finishedAt} falls outside the child execution window — ` +
         "a prior run's artifact cannot stand in for this run.",
     );
   }
@@ -613,7 +657,7 @@ type MarathonManifest = {
   completed?: boolean;
   consumer?: { resolved_versions?: Record<string, string> };
   generated_at?: string;
-  legs?: { platform?: string; status?: string }[];
+  legs?: { platform?: string; status?: string; evidence?: { appearance?: string } }[];
   run_id?: string;
 };
 
@@ -628,12 +672,53 @@ function assertConsistentRunIds(name: string, runIds: (string | undefined)[]): v
   }
 }
 
-function passedLegCount(name: string, manifest: MarathonManifest): number {
-  const count = (manifest.legs ?? []).filter((leg) => leg.status === 'passed').length;
-  if (count !== 5) {
-    throw new Error(`${name}: expected 5 passed iOS/Android/Web legs, observed ${count}`);
+const EXPECTED_NATIVE_LEGS = [
+  'android:dark',
+  'android:light',
+  'ios:dark',
+  'ios:light',
+  'web:default',
+] as const;
+
+function nativeLegIdentity(leg: NonNullable<MarathonManifest['legs']>[number]): string {
+  return `${leg.platform ?? '(missing)'}:${leg.evidence?.appearance ?? 'default'}`;
+}
+
+function passedLegIdentities(name: string, manifest: MarathonManifest): string[] {
+  const legs = manifest.legs ?? [];
+  const identities = legs.map(nativeLegIdentity).sort();
+  if (
+    legs.some((leg) => leg.status !== 'passed') ||
+    new Set(identities).size !== EXPECTED_NATIVE_LEGS.length ||
+    JSON.stringify(identities) !== JSON.stringify(EXPECTED_NATIVE_LEGS)
+  ) {
+    throw new Error(
+      `${name}: expected unique passed legs ${EXPECTED_NATIVE_LEGS.join(', ')}, observed ` +
+        identities.join(', '),
+    );
   }
-  return count;
+  return identities;
+}
+
+type EmbeddedReceipt = {
+  path: string;
+  sha256: string;
+  encoding: 'base64';
+  content_base64: string;
+};
+
+type RawReceipts = Record<string, EmbeddedReceipt>;
+
+const RECEIPT_NAMES = ['manifest', 'provider_correlation', 'selector_log', 'teardown'] as const;
+
+function embeddedReceipt(path: string): EmbeddedReceipt {
+  const bytes = readFileSync(path);
+  return {
+    path: path.startsWith(REPO_ROOT) ? path.slice(REPO_ROOT.length + 1) : path,
+    sha256: createHash('sha256').update(bytes).digest('hex'),
+    encoding: 'base64',
+    content_base64: bytes.toString('base64'),
+  };
 }
 
 function rawReceiptEvidence(
@@ -641,16 +726,94 @@ function rawReceiptEvidence(
   teardownPath: string,
   correlationPath: string,
   selectorLogPath: string,
-): Record<string, { path: string; sha256: string }> {
-  const receipt = (path: string) => ({
-    path: path.slice(REPO_ROOT.length + 1),
-    sha256: sha256File(path),
-  });
+): RawReceipts {
   return {
-    manifest: receipt(manifestPath),
-    teardown: receipt(teardownPath),
-    provider_correlation: receipt(correlationPath),
-    selector_log: receipt(selectorLogPath),
+    manifest: embeddedReceipt(manifestPath),
+    teardown: embeddedReceipt(teardownPath),
+    provider_correlation: embeddedReceipt(correlationPath),
+    selector_log: embeddedReceipt(selectorLogPath),
+  };
+}
+
+function receiptBytes(name: string, receipt: EmbeddedReceipt): Buffer {
+  assertSha256(`${name} receipt`, receipt.sha256);
+  if (!receipt.path || receipt.path.trim().length === 0) {
+    throw new Error(`${name} receipt path is absent`);
+  }
+  if (receipt.encoding !== 'base64' || receipt.content_base64.length === 0) {
+    throw new Error(`${name} receipt lacks embedded base64 bytes`);
+  }
+  const bytes = Buffer.from(receipt.content_base64, 'base64');
+  if (bytes.toString('base64') !== receipt.content_base64) {
+    throw new Error(`${name} receipt base64 is not canonical`);
+  }
+  const observed = createHash('sha256').update(bytes).digest('hex');
+  if (observed !== receipt.sha256) {
+    throw new Error(`${name} receipt bytes do not match ${receipt.sha256}`);
+  }
+  return bytes;
+}
+
+function exactRawReceipts(name: string, receipts: RawReceipts): Record<string, Buffer> {
+  const names = Object.keys(receipts).sort();
+  if (JSON.stringify(names) !== JSON.stringify(RECEIPT_NAMES)) {
+    throw new Error(`${name}: expected exact raw receipts ${RECEIPT_NAMES.join(', ')}`);
+  }
+  return Object.fromEntries(
+    names.map((receiptName) => [receiptName, receiptBytes(receiptName, receipts[receiptName])]),
+  );
+}
+
+type MarathonSummary = {
+  runId: string;
+  manifest: MarathonManifest;
+  teardown: MarathonTeardown;
+  aborted: number;
+  completed: number;
+  legIdentities: string[];
+};
+
+function validateMarathonReceipts(
+  name: MarathonName,
+  receipts: RawReceipts,
+  childStartedAt: number,
+  childFinishedAt: number,
+): MarathonSummary {
+  const bytes = exactRawReceipts(name, receipts);
+  const manifest = JSON.parse(bytes.manifest.toString('utf8')) as MarathonManifest;
+  const teardown = JSON.parse(bytes.teardown.toString('utf8')) as MarathonTeardown;
+  const correlation = JSON.parse(
+    bytes.provider_correlation.toString('utf8'),
+  ) as MarathonCorrelation;
+  const selectorTally = tallyOf(bytes.selector_log.toString('utf8'));
+  assertConsistentRunIds(name, [manifest.run_id, teardown.run_id, correlation.run_id]);
+  assertManifestCompleted(name, manifest.completed);
+  assertTeardownFresh(
+    name,
+    timestampInsideChild(teardown.finished_at, childStartedAt, childFinishedAt),
+    teardown.finished_at,
+  );
+  assertTeardownFresh(
+    name,
+    timestampInsideChild(manifest.generated_at, childStartedAt, childFinishedAt),
+    manifest.generated_at,
+  );
+  if (selectorTally.passed !== 1 || selectorTally.failed !== 0 || selectorTally.skipped !== 3) {
+    throw new Error(
+      `${name}: embedded selector log does not prove exactly one passing selected test`,
+    );
+  }
+  const records = correlation.backend_records ?? [];
+  const aborted = countOutcome(records, 'aborted');
+  const completed = countOutcome(records, 'completed');
+  assertCorrelationCounts(name, aborted, completed);
+  return {
+    runId: manifest.run_id as string,
+    manifest,
+    teardown,
+    aborted,
+    completed,
+    legIdentities: passedLegIdentities(name, manifest),
   };
 }
 
@@ -660,6 +823,7 @@ function rawReceiptEvidence(
 function marathonEvidence(
   name: MarathonName,
   childStartedAt: number,
+  childFinishedAt: number,
   selectorLogPath: string,
 ): Record<string, unknown> {
   const dir = marathonScratchDir(name);
@@ -667,35 +831,29 @@ function marathonEvidence(
   const teardownPath = join(dir, 'teardown.json');
   const correlationPath = join(dir, 'provider-correlation.json');
   requireMarathonArtifacts(name, [manifestPath, teardownPath, correlationPath, selectorLogPath]);
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as MarathonManifest;
-  const teardown = JSON.parse(readFileSync(teardownPath, 'utf8')) as MarathonTeardown;
-  const correlation = JSON.parse(readFileSync(correlationPath, 'utf8')) as MarathonCorrelation;
-  const fresh = teardownIsFresh(teardown.finished_at, childStartedAt);
-  const generatedFresh = teardownIsFresh(manifest.generated_at, childStartedAt);
-  const runIds = [manifest.run_id, teardown.run_id, correlation.run_id];
-  assertConsistentRunIds(name, runIds);
-  const passedLegs = passedLegCount(name, manifest);
-  const records = correlation.backend_records ?? [];
-  const aborted = countOutcome(records, 'aborted');
-  const completed = countOutcome(records, 'completed');
+  const rawReceipts = rawReceiptEvidence(
+    manifestPath,
+    teardownPath,
+    correlationPath,
+    selectorLogPath,
+  );
+  const summary = validateMarathonReceipts(name, rawReceipts, childStartedAt, childFinishedAt);
   const record: Record<string, unknown> = {
     proof_mode: 'rerun',
-    run_id: manifest.run_id,
-    manifest_completed: manifest.completed === true,
-    manifest_generated_at: manifest.generated_at ?? null,
-    manifest_fresh: generatedFresh,
-    passed_legs: passedLegs,
-    teardown_finished_at: teardown.finished_at ?? null,
-    teardown_fresh: fresh,
-    provider_aborted_records: aborted,
-    provider_completed_records: completed,
-    resolved_versions: manifest.consumer?.resolved_versions ?? null,
-    raw_receipts: rawReceiptEvidence(manifestPath, teardownPath, correlationPath, selectorLogPath),
+    child_started_at_ms: childStartedAt,
+    child_finished_at_ms: childFinishedAt,
+    run_id: summary.runId,
+    manifest_completed: summary.manifest.completed === true,
+    manifest_generated_at: summary.manifest.generated_at ?? null,
+    manifest_fresh: true,
+    passed_legs: summary.legIdentities,
+    teardown_finished_at: summary.teardown.finished_at ?? null,
+    teardown_fresh: true,
+    provider_aborted_records: summary.aborted,
+    provider_completed_records: summary.completed,
+    resolved_versions: summary.manifest.consumer?.resolved_versions ?? null,
+    raw_receipts: rawReceipts,
   };
-  assertManifestCompleted(name, manifest.completed);
-  assertTeardownFresh(name, fresh, teardown.finished_at);
-  assertTeardownFresh(name, generatedFresh, manifest.generated_at);
-  assertCorrelationCounts(name, aborted, completed);
   return record;
 }
 
@@ -715,11 +873,22 @@ async function assertPortFree(): Promise<void> {
   }
 }
 
-function assertSelectorGreen(spec: SelectorSpec, result: ChildResult): void {
+function assertSelectorGreen(spec: SelectorSpec, result: ChildResult, tally: TestTally): void {
   if (result.exit !== 0 || result.timedOut) {
     throw new Error(
       `selector ${spec.name} exited ${result.exit}${result.timedOut ? ' (timed out)' : ''} — ` +
         `green requires exit 0 for every preserved selector.\n${result.output.slice(-3000)}`,
+    );
+  }
+  if (
+    tally.failed !== 0 ||
+    tally.skipped !== spec.expectedSkips ||
+    tally.passed !== spec.expectedPasses
+  ) {
+    throw new Error(
+      `selector ${spec.name} executed ${tally.passed} passed / ${tally.failed} failed / ` +
+        `${tally.skipped} skipped tests; expected exactly ${spec.expectedPasses} passed, ` +
+        `${spec.expectedSkips} filtered skips, and no failures.`,
     );
   }
 }
@@ -737,27 +906,30 @@ function runSelector(spec: SelectorSpec): Record<string, unknown> {
       ? join(CHILD_TMPDIR, `${spec.name}.log`)
       : join(GREEN_DIR, `${spec.name}.log`);
   const result = runChild(spec, selectorLogPath);
+  const childFinishedAt = Date.now();
   const tally = tallyOf(result.output);
-  assertSelectorGreen(spec, result);
+  assertSelectorGreen(spec, result, tally);
   const record: Record<string, unknown> = {
     name: spec.name,
     command: `pnpm ${spec.args.join(' ')}`,
     exit: result.exit,
     passed_tokens: tally.passed,
+    failed_tokens: tally.failed,
+    skipped_tokens: tally.skipped,
     duration_ms: result.durationMs,
     log: selectorLogPath.startsWith(REPO_ROOT)
       ? selectorLogPath.slice(REPO_ROOT.length + 1)
       : selectorLogPath,
   };
   if (isMarathonSelector(spec.name)) {
-    record.marathon = marathonEvidence(spec.name, childStartedAt, selectorLogPath);
+    record.marathon = marathonEvidence(spec.name, childStartedAt, childFinishedAt, selectorLogPath);
   }
   return record;
 }
 
 function runSelectors(): Record<string, unknown>[] {
   const selectorRecords: Record<string, unknown>[] = [];
-  for (const spec of [...DRIFTED_SELECTORS, ROUTING_SELECTOR, ...MARATHON_SELECTORS]) {
+  for (const spec of ALL_SELECTORS) {
     selectorRecords.push(runSelector(spec));
   }
   return selectorRecords;
@@ -860,21 +1032,26 @@ function writeGreenEvidence(
 ): void {
   const executionCandidate = gitHead();
   const harnessPath = fileURLToPath(import.meta.url);
+  const candidateScopeRecord = candidateScope(executionCandidate);
+  const suiteHashes = hashes();
+  const nativeInputs = nativeExecutionInputs();
+  assertGitAndCurrentHashes('suite', executionCandidate, suiteHashes);
+  assertGitAndCurrentHashes('native execution input', executionCandidate, nativeInputs.sha256);
   const greenRecord = {
     task: 'FIX-ORI-SUITE-2-2',
     mode: 'green',
     captured_at: new Date().toISOString(),
     candidate_commit: executionCandidate,
-    candidate_scope: candidateScope(executionCandidate),
+    candidate_scope: candidateScopeRecord,
     harness_sha256: sha256File(harnessPath),
-    suites_sha256: hashes(),
+    suites_sha256: suiteHashes,
     selectors: selectorRecords,
     native_proof: {
       mode: 'rerun',
       selector_count: selectorRecords.filter((record) =>
         String(record.name).startsWith('nativewind-'),
       ).length,
-      execution_inputs: nativeExecutionInputs(),
+      execution_inputs: nativeInputs,
     },
     static_gates: staticGates,
     diff_boundary: {
@@ -889,7 +1066,7 @@ function writeGreenEvidence(
     candidate_commit: executionCandidate,
     candidate_scope: greenRecord.candidate_scope,
     harness_sha256: sha256File(harnessPath),
-    suites_sha256: hashes(),
+    suites_sha256: suiteHashes,
     selectors: selectorRecords,
     native_proof: greenRecord.native_proof,
     static_gates: greenRecord.static_gates,
@@ -921,11 +1098,23 @@ type RecordedGreen = {
     execution_inputs?: { sha256?: Record<string, string> };
   };
   selectors?: {
+    command?: string;
     exit?: number;
+    failed_tokens?: number;
     marathon?: {
-      raw_receipts?: Record<string, { path?: string; sha256?: string }>;
+      child_started_at_ms?: number;
+      child_finished_at_ms?: number;
+      manifest_completed?: boolean;
+      passed_legs?: string[];
+      provider_aborted_records?: number;
+      provider_completed_records?: number;
+      raw_receipts?: RawReceipts;
+      run_id?: string;
+      teardown_fresh?: boolean;
     };
     name?: string;
+    passed_tokens?: number;
+    skipped_tokens?: number;
   }[];
   static_gates?: StaticGates;
   suites_sha256?: Record<string, string>;
@@ -961,6 +1150,21 @@ function assertGitAndCurrentHashes(
   }
 }
 
+function assertCurrentHashes(
+  root: string,
+  label: string,
+  hashesToVerify: Record<string, string>,
+): void {
+  for (const [path, expected] of Object.entries(hashesToVerify)) {
+    assertSha256(`${label} ${path}`, expected);
+    const absolutePath = join(root, path);
+    if (!existsSync(absolutePath)) throw new Error(`${label} ${path} is absent`);
+    if (sha256File(absolutePath) !== expected) {
+      throw new Error(`${label} ${path} changed after the recorded proof`);
+    }
+  }
+}
+
 function recordedCandidateOf(evidence: RecordedGreen): string {
   if (evidence.task !== 'FIX-ORI-SUITE-2-2' || evidence.mode !== 'green') {
     throw new Error('recorded green evidence has the wrong task or mode');
@@ -972,10 +1176,31 @@ function recordedCandidateOf(evidence: RecordedGreen): string {
   return candidate;
 }
 
+function assertScopeHeader(scope: CandidateScope | undefined, candidate: string): CandidateScope {
+  if (!scope) throw new Error('recorded candidate scope is absent');
+  if (scope.base_commit !== TASK_BASE_COMMIT) {
+    throw new Error('recorded candidate scope has the wrong immutable base');
+  }
+  if (scope.execution_candidate !== candidate) {
+    throw new Error('recorded candidate scope has the wrong execution candidate');
+  }
+  if (scope.git_range_audit?.verified !== true) {
+    throw new Error('recorded candidate scope lacks its execution-time Git audit');
+  }
+  return scope;
+}
+
 function assertRecordedScope(evidence: RecordedGreen, candidate: string): void {
-  const observedScope = candidateScope(candidate);
-  if (JSON.stringify(observedScope) !== JSON.stringify(evidence.candidate_scope)) {
-    throw new Error('recorded candidate scope differs from the immutable Git range');
+  const scope = assertScopeHeader(evidence.candidate_scope, candidate);
+  const paths = scope.changed_paths;
+  if (paths.length === 0) throw new Error('recorded candidate scope path inventory is empty');
+  if (new Set(paths).size !== paths.length)
+    throw new Error('recorded candidate scope has duplicates');
+  if (paths.some((path) => !DIFF_ALLOWED.has(path))) {
+    throw new Error('recorded candidate scope contains an outside path');
+  }
+  if (scope.git_range_audit.changed_paths_sha256 !== pathInventorySha256(paths)) {
+    throw new Error('recorded candidate scope path inventory is invalid');
   }
 }
 
@@ -986,44 +1211,110 @@ function assertRecordedHarness(evidence: RecordedGreen): void {
   }
 }
 
-function assertRecordedSuites(evidence: RecordedGreen, candidate: string): void {
+function assertRecordedSuites(evidence: RecordedGreen): void {
   const recordedSuites = evidence.suites_sha256 ?? {};
   const inventory = Object.keys(recordedSuites).sort();
   if (JSON.stringify(inventory) !== JSON.stringify([...SUITE_FILES].sort())) {
     throw new Error('recorded suite hash inventory is incomplete');
   }
-  assertGitAndCurrentHashes('suite', candidate, recordedSuites);
+  assertCurrentHashes(REPO_ROOT, 'suite', recordedSuites);
 }
 
-function assertRecordedNativeInputs(evidence: RecordedGreen, candidate: string): void {
+function assertRecordedNativeInputs(evidence: RecordedGreen): void {
   const recordedInputs = evidence.native_proof?.execution_inputs?.sha256 ?? {};
   const currentInputs = nativeExecutionInputs().sha256;
   if (JSON.stringify(currentInputs) !== JSON.stringify(recordedInputs)) {
     throw new Error('recorded native execution-input inventory differs from the current graph');
   }
-  assertGitAndCurrentHashes('native execution input', candidate, recordedInputs);
+  assertCurrentHashes(REPO_ROOT, 'native execution input', recordedInputs);
 }
 
 function assertNativeReceipts(selector: NonNullable<RecordedGreen['selectors']>[number]): void {
-  const receipts = selector.marathon?.raw_receipts ?? {};
-  if (Object.keys(receipts).length !== 4) {
-    throw new Error(`${selector.name}: expected 4 hashed raw receipts`);
+  const marathon = selector.marathon;
+  const name = selector.name ?? '';
+  if (!isMarathonSelector(name) || !marathon?.raw_receipts) {
+    throw new Error(`${selector.name}: native selector lacks embedded raw receipts`);
   }
-  for (const [name, receipt] of Object.entries(receipts)) {
-    if (!receipt.path) throw new Error(`${selector.name}: ${name} receipt path absent`);
-    assertSha256(`${selector.name}: ${name}`, receipt.sha256);
+  const startedAt = marathon.child_started_at_ms;
+  const finishedAt = marathon.child_finished_at_ms;
+  if (!Number.isFinite(startedAt) || !Number.isFinite(finishedAt)) {
+    throw new Error(`${selector.name}: native selector lacks its child execution window`);
+  }
+  const summary = validateMarathonReceipts(
+    name,
+    marathon.raw_receipts,
+    startedAt as number,
+    finishedAt as number,
+  );
+  const recordedSummary = {
+    run_id: marathon.run_id,
+    manifest_completed: marathon.manifest_completed,
+    teardown_fresh: marathon.teardown_fresh,
+    passed_legs: marathon.passed_legs,
+    provider_aborted_records: marathon.provider_aborted_records,
+    provider_completed_records: marathon.provider_completed_records,
+  };
+  const receiptSummary = {
+    run_id: summary.runId,
+    manifest_completed: true,
+    teardown_fresh: true,
+    passed_legs: summary.legIdentities,
+    provider_aborted_records: summary.aborted,
+    provider_completed_records: summary.completed,
+  };
+  if (JSON.stringify(recordedSummary) !== JSON.stringify(receiptSummary)) {
+    throw new Error(`${selector.name}: native summary differs from its embedded raw receipts`);
+  }
+}
+
+type RecordedSelector = NonNullable<RecordedGreen['selectors']>[number];
+
+function assertSelectorInventory(selectors: RecordedSelector[]): Map<string, SelectorSpec> {
+  const expectedByName = new Map(ALL_SELECTORS.map((spec) => [spec.name, spec]));
+  const names = selectors.map((selector) => selector.name ?? '').sort();
+  const expectedNames = [...expectedByName.keys()].sort();
+  if (JSON.stringify(names) !== JSON.stringify(expectedNames)) {
+    throw new Error('recorded proof must contain the exact six unique selector names');
+  }
+  return expectedByName;
+}
+
+function assertRecordedSelector(selector: RecordedSelector, spec: SelectorSpec): void {
+  const expected = {
+    command: `pnpm ${spec.args.join(' ')}`,
+    exit: 0,
+    passed_tokens: spec.expectedPasses,
+    failed_tokens: 0,
+    skipped_tokens: spec.expectedSkips,
+  };
+  const actual = {
+    command: selector.command,
+    exit: selector.exit,
+    passed_tokens: selector.passed_tokens,
+    failed_tokens: selector.failed_tokens,
+    skipped_tokens: selector.skipped_tokens,
+  };
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    throw new Error(`${selector.name}: recorded command or exact test tally is invalid`);
   }
 }
 
 function assertRecordedSelectors(evidence: RecordedGreen): void {
-  if (evidence.native_proof?.mode !== 'rerun' || evidence.native_proof.selector_count !== 2) {
-    throw new Error('native proof must record rerun mode with exactly 2 selectors');
-  }
   const selectors = evidence.selectors ?? [];
-  if (selectors.length !== 6 || selectors.some((selector) => selector.exit !== 0)) {
-    throw new Error('recorded proof must contain exactly 6 passing selectors');
+  const expectedByName = assertSelectorInventory(selectors);
+  for (const selector of selectors) {
+    const spec = expectedByName.get(selector.name ?? '') as SelectorSpec;
+    assertRecordedSelector(selector, spec);
   }
-  for (const selector of selectors.filter((record) => record.name?.startsWith('nativewind-'))) {
+  const nativeSelectors = selectors.filter((record) => isMarathonSelector(record.name ?? ''));
+  if (
+    evidence.native_proof?.mode !== 'rerun' ||
+    evidence.native_proof.selector_count !== nativeSelectors.length ||
+    nativeSelectors.length !== MARATHON_SELECTORS.length
+  ) {
+    throw new Error('native proof must derive rerun mode from exactly both native selectors');
+  }
+  for (const selector of nativeSelectors) {
     assertNativeReceipts(selector);
   }
 }
@@ -1043,14 +1334,15 @@ function verifyRecordedGreen(): void {
   const candidate = recordedCandidateOf(evidence);
   assertRecordedScope(evidence, candidate);
   assertRecordedHarness(evidence);
-  assertRecordedSuites(evidence, candidate);
-  assertRecordedNativeInputs(evidence, candidate);
+  assertRecordedSuites(evidence);
+  assertRecordedNativeInputs(evidence);
   assertRecordedSelectors(evidence);
   assertRecordedStaticGates(evidence);
 }
 
 /** The task's single exported proof function (TEST_FUNCTION in the charter).
  * Never wipes the evidence root: red.json must survive the green run beside it. */
+// biome-ignore lint/suspicious/noExportsInTest: task contract requires this named exported proof function
 export async function runForeignSuiteRepairProof(): Promise<void> {
   mkdirSync(EVIDENCE_ROOT, { recursive: true });
   if (process.env.FOREIGN_SUITE_REPAIR_CAPTURE === 'red') {
@@ -1066,6 +1358,221 @@ export async function runForeignSuiteRepairProof(): Promise<void> {
   }
   await proveGreen();
 }
+
+function writeVerifierReceiptFixture(root: string): {
+  receipts: RawReceipts;
+  startedAt: number;
+  finishedAt: number;
+} {
+  const startedAt = Date.now() - 1000;
+  const finishedAt = startedAt + 500;
+  const runId = 'verifier-contract-fixture';
+  const paths = {
+    manifest: join(root, 'manifest.json'),
+    teardown: join(root, 'teardown.json'),
+    correlation: join(root, 'provider-correlation.json'),
+    log: join(root, 'selector.log'),
+  };
+  writeFileSync(
+    paths.manifest,
+    JSON.stringify({
+      run_id: runId,
+      completed: true,
+      generated_at: new Date(startedAt + 100).toISOString(),
+      legs: EXPECTED_NATIVE_LEGS.map((identity) => {
+        const [platform, appearance] = identity.split(':');
+        return {
+          platform,
+          status: 'passed',
+          evidence: appearance === 'default' ? {} : { appearance },
+        };
+      }),
+    }),
+  );
+  writeFileSync(
+    paths.teardown,
+    JSON.stringify({ run_id: runId, finished_at: new Date(startedAt + 200).toISOString() }),
+  );
+  writeFileSync(
+    paths.correlation,
+    JSON.stringify({
+      run_id: runId,
+      backend_records: [
+        { outcome: 'aborted' },
+        { outcome: 'aborted' },
+        { outcome: 'aborted' },
+        { outcome: 'completed' },
+        { outcome: 'completed' },
+        { outcome: 'completed' },
+      ],
+    }),
+  );
+  writeFileSync(
+    paths.log,
+    ' Test Files  1 passed (1)\n Tests  1 passed | 3 skipped (4)\n[exit 0]\n',
+  );
+  return {
+    receipts: rawReceiptEvidence(paths.manifest, paths.teardown, paths.correlation, paths.log),
+    startedAt,
+    finishedAt,
+  };
+}
+
+test('FIX-ORI-SUITE-2-2 verifier-contract rejects skipped success and duplicate legs', () => {
+  const skippedOutput = ' Test Files  1 skipped (1)\n Tests  4 skipped (4)\n';
+  const tally = tallyOf(skippedOutput);
+  expect(() =>
+    assertSelectorGreen(
+      DRIFTED_SELECTORS[0],
+      { exit: 0, timedOut: false, output: skippedOutput, durationMs: 1 },
+      tally,
+    ),
+  ).toThrow(/expected exactly 4 passed/);
+  const duplicateLegs: MarathonManifest = {
+    legs: Array.from({ length: 5 }, () => ({
+      platform: 'ios',
+      status: 'passed',
+      evidence: { appearance: 'light' },
+    })),
+  };
+  expect(() => passedLegIdentities('duplicate-leg-probe', duplicateLegs)).toThrow(
+    /expected unique passed legs/,
+  );
+});
+
+test('FIX-ORI-SUITE-2-2 verifier-contract reads embedded receipt bytes and rejects tampering', () => {
+  const root = mkdtempSync(join(tmpdir(), 'fix-ori-suite-2-2-receipts-'));
+  try {
+    const fixture = writeVerifierReceiptFixture(root);
+    const summary = validateMarathonReceipts(
+      'nativewind-abort-error-retry',
+      fixture.receipts,
+      fixture.startedAt,
+      fixture.finishedAt,
+    );
+    expect(summary.legIdentities).toEqual([...EXPECTED_NATIVE_LEGS]);
+    const selector: RecordedSelector = {
+      name: 'nativewind-abort-error-retry',
+      marathon: {
+        child_started_at_ms: fixture.startedAt,
+        child_finished_at_ms: fixture.finishedAt,
+        run_id: summary.runId,
+        manifest_completed: true,
+        teardown_fresh: true,
+        passed_legs: summary.legIdentities,
+        provider_aborted_records: summary.aborted,
+        provider_completed_records: summary.completed,
+        raw_receipts: fixture.receipts,
+      },
+    };
+    expect(() => assertNativeReceipts(selector)).not.toThrow();
+
+    const changedBytes = structuredClone(selector);
+    const changedManifest = changedBytes.marathon?.raw_receipts?.manifest;
+    if (!changedManifest) throw new Error('verifier fixture lost its embedded manifest');
+    changedManifest.content_base64 = Buffer.from('{"tampered":true}').toString('base64');
+    expect(() => assertNativeReceipts(changedBytes)).toThrow(/bytes do not match/);
+
+    const missingReceipt = structuredClone(selector);
+    const missingReceipts = missingReceipt.marathon?.raw_receipts;
+    if (!missingReceipts) throw new Error('verifier fixture lost its raw receipt map');
+    delete missingReceipts.selector_log;
+    expect(() => assertNativeReceipts(missingReceipt)).toThrow(/expected exact raw receipts/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('FIX-ORI-SUITE-2-2 verifier-contract rejects duplicate selector identities', () => {
+  const duplicate = Array.from({ length: ALL_SELECTORS.length }, () => ({
+    name: 'docs-collection',
+    command: 'pnpm exec vitest run tests/sprint-05-orient-search/docs-collection.test.ts',
+    exit: 0,
+    passed_tokens: 4,
+    failed_tokens: 0,
+    skipped_tokens: 0,
+  }));
+  expect(() =>
+    assertRecordedSelectors({
+      native_proof: { mode: 'rerun', selector_count: 2 },
+      selectors: duplicate,
+    }),
+  ).toThrow(/exact six unique selector names/);
+});
+
+test('FIX-ORI-SUITE-2-2 verifier-contract passes in a real depth-one checkout and rejects drift', () => {
+  const root = mkdtempSync(join(tmpdir(), 'fix-ori-suite-2-2-shallow-'));
+  const source = join(root, 'source');
+  const checkout = join(root, 'checkout');
+  try {
+    mkdirSync(source);
+    const git = (cwd: string, args: string[]) =>
+      spawnSync('git', args, { cwd, encoding: 'utf8', stdio: 'pipe' });
+    expect(git(source, ['init', '-q']).status).toBe(0);
+    writeFileSync(join(source, 'bound.txt'), 'first\n');
+    expect(git(source, ['add', 'bound.txt']).status).toBe(0);
+    expect(
+      git(source, [
+        '-c',
+        'user.name=Verifier',
+        '-c',
+        'user.email=verifier@example.invalid',
+        'commit',
+        '-qm',
+        'first',
+      ]).status,
+    ).toBe(0);
+    writeFileSync(join(source, 'bound.txt'), 'second\n');
+    expect(git(source, ['add', 'bound.txt']).status).toBe(0);
+    expect(
+      git(source, [
+        '-c',
+        'user.name=Verifier',
+        '-c',
+        'user.email=verifier@example.invalid',
+        'commit',
+        '-qm',
+        'second',
+      ]).status,
+    ).toBe(0);
+    expect(
+      spawnSync('git', ['clone', '-q', '--depth', '1', `file://${source}`, checkout], {
+        encoding: 'utf8',
+      }).status,
+    ).toBe(0);
+    expect(git(checkout, ['rev-parse', '--is-shallow-repository']).stdout.trim()).toBe('true');
+    expect(git(checkout, ['cat-file', '-e', 'HEAD^']).status).not.toBe(0);
+
+    const candidate = git(checkout, ['rev-parse', 'HEAD']).stdout.trim();
+    const changedPaths = ['tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts'];
+    const scope: CandidateScope = {
+      base_commit: TASK_BASE_COMMIT,
+      execution_candidate: candidate,
+      changed_paths: changedPaths,
+      git_range_audit: {
+        verified: true,
+        changed_paths_sha256: pathInventorySha256(changedPaths),
+      },
+    };
+    expect(() => assertRecordedScope({ candidate_scope: scope }, candidate)).not.toThrow();
+    const boundHash = sha256File(join(checkout, 'bound.txt'));
+    expect(() =>
+      assertCurrentHashes(checkout, 'shallow fixture', { 'bound.txt': boundHash }),
+    ).not.toThrow();
+
+    writeFileSync(join(checkout, 'bound.txt'), 'changed after proof\n');
+    expect(() =>
+      assertCurrentHashes(checkout, 'shallow fixture', { 'bound.txt': boundHash }),
+    ).toThrow(/changed after the recorded proof/);
+    const alteredScope = structuredClone(scope);
+    alteredScope.git_range_audit.changed_paths_sha256 = '0'.repeat(64);
+    expect(() => assertRecordedScope({ candidate_scope: alteredScope }, candidate)).toThrow(
+      /path inventory is invalid/,
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
 
 test('FIX-ORI-SUITE-2-2 foreign suite repair proof', { timeout: 8 * 60 * MINUTE }, () =>
   runForeignSuiteRepairProof(),
