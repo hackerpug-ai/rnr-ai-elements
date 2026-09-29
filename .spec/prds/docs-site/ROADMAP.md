@@ -486,6 +486,7 @@ Added 2026-09-29 via ask `ask-wave26-add-native-live-repair`: FIX-ORI-RN-004-4 o
 | GBC-015 | IndexList component (NEW) | frontend-designer | 3 | A | ⬜ Pending |
 | GBC-016 | Section-index page layout | frontend-designer | 2 | B | ⬜ Pending |
 | GBC-017 | Boundary + porting table presentation | frontend-designer | 3 | C | ⬜ Pending |
+| GBC-018 | Home boundary teaser (R11): one line, one anchor | astro-implementer | 1 | next | ⬜ Pending |
 
 **Waves:** A(4) → B(3) → C(3) → D(2) → E(3) → F(1) → G(1) — 7 waves over 17 tasks, derived from each task's declared dependencies (a task runs one wave after its latest dependency). Tasks in one wave share no NEW/MODIFY write path; shared entries are bare never-edit references to a spec another task writes.
 
@@ -507,6 +508,7 @@ Added 2026-09-29 via ask `ask-wave26-add-native-live-repair`: FIX-ORI-RN-004-4 o
 - GBC-015-indexlist-component-new-the-section-index-linked-entry-row-primitive.md
 - GBC-016-section-index-page-layout-the-shared-guides-changelog-visual-shell.md
 - GBC-017-boundary-porting-scannable-table-and-callout-presentation.md
+- TASK-GBC-018.md
 
 #### Dependencies
 
