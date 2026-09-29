@@ -1,0 +1,175 @@
+{
+  "flows": [
+    {
+      "id": "FLOW-DOCS-03-five-guides-index",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-03",
+      "manual_physical": false,
+      "gate_steps": [
+        1,
+        3
+      ],
+      "desc": "A visitor finds exactly five guides on /guides, each opening as a complete how-to, with troubleshooting giving one fix per symptom and customize-rendering serving as the target of the component-page seam links, while the build refuses a sixth guide.",
+      "run_cmd": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+      "test": "tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-03-five-guides-index/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-03-five-guides-index/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "FLOW-DOCS-04-boundary-ownership-tables",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-04",
+      "manual_physical": false,
+      "gate_steps": [
+        2
+      ],
+      "desc": "A visitor reads what the library ships and does not ship as scannable tables on the one canonical boundary page, and every listed gap matches the 56-item registry and the not-ported list with no contradiction or omission.",
+      "run_cmd": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts --grep FLOW-DOCS-04-boundary-ownership-tables",
+      "test": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-04-boundary-ownership-tables/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-04-boundary-ownership-tables/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "FLOW-DOCS-05-porting-map-and-prior-art",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-05",
+      "manual_physical": false,
+      "gate_steps": [
+        1,
+        2
+      ],
+      "desc": "A visitor on /porting sees a mapping table with a deviations column whose rows each resolve to a shipped item, a not-ported list that exactly completes the upstream set, and live links to both prior-art projects, and the build fails whenever the two lists disagree.",
+      "run_cmd": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+      "test": "tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-05-porting-map-and-prior-art/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-05-porting-map-and-prior-art/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "FLOW-DOCS-06-changelog-release-pages",
+      "type": "core",
+      "scope": "task",
+      "uc_ref": "UC-DOCS-06",
+      "manual_physical": false,
+      "gate_steps": [
+        1,
+        4
+      ],
+      "desc": "A visitor browses the changelog newest-first (0.2.1, 0.2.0, 0.1.0) and opens per-release pages that carry a date, Added/Changed/Fixed sections, and working links to the components they touched, with the build keeping one entry per git tag.",
+      "run_cmd": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts --grep FLOW-DOCS-06-changelog-release-pages",
+      "test": "tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-06-changelog-release-pages/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-06-changelog-release-pages/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "journeys/docs-integrator-arc",
+      "type": "core",
+      "scope": "journey",
+      "uc_refs": [
+        "UC-DOCS-01",
+        "UC-DOCS-02",
+        "UC-DOCS-04",
+        "UC-GEND-04",
+        "UC-GEND-07",
+        "UC-SHELL-03"
+      ],
+      "manual_physical": false,
+      "gate_steps": [
+        2,
+        5
+      ],
+      "desc": "An integrator goes from picking an engine once on Installation, through the quickstart and /registry, to the boundary page's example-app section, copying only absolute-URL install commands, and the engine choice never appears in a URL or resets along the way.",
+      "run_cmd": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc --project=chromium-desktop --project=chromium-mobile",
+      "test": "tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-integrator-arc/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-integrator-arc/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    },
+    {
+      "id": "journeys/docs-themer-arc",
+      "type": "core",
+      "scope": "journey",
+      "uc_refs": [
+        "UC-DOCS-01",
+        "UC-DOCS-03",
+        "UC-GEND-03",
+        "UC-SHELL-01"
+      ],
+      "manual_physical": false,
+      "gate_steps": [
+        3
+      ],
+      "desc": "A themer reads the theming token map, watches the swatches flip live with the site's theme toggle without a flash, then reaches the re-theme guide and the renderMarkdown and TextClassContext seam docs from the component pages that use them, and every link loads.",
+      "run_cmd": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc --project=chromium-desktop",
+      "test": "tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts",
+      "artifact": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-themer-arc/run.json",
+      "red_proof": "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-themer-arc/proof.red",
+      "surface_policy": ".spec/e2e-policy/surface.json",
+      "coldboot_policy": ".spec/e2e-policy/coldboot.json"
+    }
+  ],
+  "deferred_journeys": [
+    {
+      "id": "journeys/docs-contributor-arc",
+      "covers_ucs": [
+        "UC-DELIV-01",
+        "UC-DOCS-05",
+        "UC-EXT-02",
+        "UC-EXT-03",
+        "UC-GEND-07"
+      ],
+      "outstanding_ucs": [
+        "UC-EXT-02",
+        "UC-EXT-03"
+      ]
+    },
+    {
+      "id": "journeys/docs-evaluator-arc",
+      "covers_ucs": [
+        "UC-DOCS-06",
+        "UC-GEND-01",
+        "UC-GEND-02",
+        "UC-GEND-03",
+        "UC-GEND-05",
+        "UC-GEND-06"
+      ],
+      "outstanding_ucs": [
+        "UC-GEND-05"
+      ]
+    }
+  ],
+  "derived_from": {
+    "scenarios": ".spec/scenarios",
+    "scope": [
+      "UC-DOCS-03",
+      "UC-DOCS-04",
+      "UC-DOCS-05",
+      "UC-DOCS-06"
+    ],
+    "prior_scope": [
+      "UC-DELIV-01",
+      "UC-DOCS-01",
+      "UC-DOCS-02",
+      "UC-GEND-01",
+      "UC-GEND-02",
+      "UC-GEND-03",
+      "UC-GEND-04",
+      "UC-GEND-06",
+      "UC-GEND-07",
+      "UC-SHELL-01",
+      "UC-SHELL-02",
+      "UC-SHELL-03"
+    ]
+  }
+}
