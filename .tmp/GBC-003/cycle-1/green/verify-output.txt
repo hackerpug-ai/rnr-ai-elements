@@ -1,0 +1,75 @@
+
+Running 15 tests using 1 worker
+···F····F····F·
+
+  1) [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page 
+
+    Error: home carries exactly 1 teaser link to the boundary page
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      270 |     .locator('a[href="/docs/owns-vs-does-not-own"]')
+      271 |     .count();
+    > 272 |   expect(homeTeaserCount, 'home carries exactly 1 teaser link to the boundary page').toBe(1);
+          |                                                                                      ^
+      273 |
+      274 |   // Introduction: no boundary table, exactly 1 teaser link in the article
+      275 |   // (the section navigation aside is page chrome, not a teaser).
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-003/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:272:86
+
+    Error Context: test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-desktop/error-context.md
+
+  2) [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page 
+
+    Error: home carries exactly 1 teaser link to the boundary page
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      270 |     .locator('a[href="/docs/owns-vs-does-not-own"]')
+      271 |     .count();
+    > 272 |   expect(homeTeaserCount, 'home carries exactly 1 teaser link to the boundary page').toBe(1);
+          |                                                                                      ^
+      273 |
+      274 |   // Introduction: no boundary table, exactly 1 teaser link in the article
+      275 |   // (the section navigation aside is page chrome, not a teaser).
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-003/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:272:86
+
+    Error Context: test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-mobile/error-context.md
+
+  3) [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page 
+
+    Error: home carries exactly 1 teaser link to the boundary page
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      270 |     .locator('a[href="/docs/owns-vs-does-not-own"]')
+      271 |     .count();
+    > 272 |   expect(homeTeaserCount, 'home carries exactly 1 teaser link to the boundary page').toBe(1);
+          |                                                                                      ^
+      273 |
+      274 |   // Introduction: no boundary table, exactly 1 teaser link in the article
+      275 |   // (the section navigation aside is page chrome, not a teaser).
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-003/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:272:86
+
+    Error Context: test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-nojs/error-context.md
+
+    Error Context: test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-nojs/error-context.md
+
+  3 failed
+    [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page 
+    [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page 
+    [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page 
+  12 passed (11.5s)
