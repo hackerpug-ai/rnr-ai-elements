@@ -11,7 +11,7 @@ planned_at: 2026-09-29
 
 # Sprint 06: guides-boundary-changelog
 
-**Status:** planned
+**Status:** in_progress
 **Sequence:** 6
 **Timeline:** Phase 2
 
@@ -129,7 +129,7 @@ Repaired by /kb-sprint-tasks-plan on 2026-09-29 (proof bindings re-authored by t
 - GBC-009-section-aware-routing-guides-slug-porting-exclude-from-docs-catch-all.md
 - GBC-010-guides-section-index-page-capped-at-five.md
 - GBC-011-five-guides-cap-gate-t-docs-014-mirror.md
-- GBC-012-porting-consistency-gates-mapping-slugs-resolve-not-ported-exact-compl.md
+- TASK-GBC-012-porting-consistency-gates-mapping-slugs-resolve-not-ported-exact-compl.md
 - GBC-013-header-footer-nav-wiring-r1-registry-guides-porting-changelog.md
 - GBC-014-post-integration-journey-proofs-docs-integrator-arc-docs-themer-arc.md
 - GBC-015-indexlist-component-new-the-section-index-linked-entry-row-primitive.md
