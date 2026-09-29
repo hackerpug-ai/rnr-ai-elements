@@ -63,3 +63,37 @@ are written against verified silent-failure modes: a planted hex literal in the 
 style object, a short-name `registryDependencies` entry resolving to the shadcn web
 registry, `hover:` with no `active:` twin, a missing `PortalHost`, and an unhandled
 `approval-requested` that stalls a gated agent forever.
+
+## docs-site PRD — added 2026-09-08
+
+From `.spec/prds/docs-site/`. 24 use cases, 43 visible + 98 holdout scenarios, 9 journeys
+(7 arcs + 2 edge variants). Verified by
+`brain/tools/flow-coverage/flow_coverage_check.py --prd .spec/scenarios` (exit 0, flows=279).
+Gap report: none — every docs-site UC appears in >=1 journey and carries >=1 visible + >=1 holdout scenario.
+
+| UC | Title | Visible | Holdout | Journeys |
+|---|---|---|---|---|
+| `UC-DOCS-01` | Read the getting-started documentation set | 2 | 4 | `docs-integrator-arc`, `docs-themer-arc` |
+| `UC-DOCS-02` | Build a chat screen with the single quickstart tutorial | 1 | 4 | `docs-integrator-arc` |
+| `UC-DOCS-03` | Use the lean how-to guides | 1 | 3 | `docs-themer-arc` |
+| `UC-DOCS-04` | Read the owns-vs-does-not-own boundary | 1 | 3 | `docs-integrator-arc` |
+| `UC-DOCS-05` | Read porting notes and prior art | 1 | 3 | `docs-contributor-arc` |
+| `UC-DOCS-06` | Track releases through the changelog | 1 | 4 | `docs-evaluator-arc` |
+| `UC-GEND-01` | Evaluate the library from the home page in one visit | 2 | 4 | `docs-evaluator-arc` |
+| `UC-GEND-02` | Browse components by AI family | 2 | 5 | `docs-evaluator-arc` |
+| `UC-GEND-03` | Read a generated component reference page | 2 | 4 | `docs-evaluator-arc`, `docs-themer-arc` |
+| `UC-GEND-04` | Copy exact install commands and review dependencies per item | 2 | 5 | `docs-integrator-arc`, `docs-agent-arc` |
+| `UC-GEND-05` | See generated run evidence and Expo Go verdicts | 2 | 5 | `docs-evaluator-arc` |
+| `UC-GEND-06` | Inspect the generated API reference and full source | 2 | 4 | `docs-evaluator-arc`, `docs-integrator-arc` |
+| `UC-GEND-07` | Use the generated registry ledger | 2 | 5 | `docs-integrator-arc`, `docs-contributor-arc` |
+| `UC-SHELL-01` | Experience the dark-first themed shell | 2 | 4 | `docs-themer-arc` |
+| `UC-SHELL-02` | Navigate by Cmd+K search | 2 | 4 | `docs-resilience-arc` |
+| `UC-SHELL-03` | Persist the engine choice across pages | 2 | 4 | `docs-integrator-arc` |
+| `UC-SHELL-04` | Use the site without JavaScript, on mobile, and in print | 2 | 5 | `docs-resilience-arc` |
+| `UC-DELIV-01` | Build the docs over fail-closed registry data | 2 | 5 | `docs-delivery-arc`, `docs-contributor-arc` |
+| `UC-DELIV-02` | Deploy gated to Cloudflare Workers at the canonical domain | 2 | 5 | `docs-delivery-arc` |
+| `UC-DELIV-03` | Serve the registry JSON from the same deploy | 2 | 4 | `docs-delivery-arc`, `docs-agent-arc` |
+| `UC-DELIV-04` | Recover from bad deploys and dead URLs | 2 | 4 | `docs-resilience-arc` |
+| `UC-EXT-01` | Fetch machine-readable agent docs | 2 | 4 | `docs-agent-arc` |
+| `UC-EXT-02` | Trust the GitHub-facing surface | 2 | 3 | `docs-contributor-arc` |
+| `UC-EXT-03` | Contribute without tribal knowledge | 2 | 3 | `docs-contributor-arc` |

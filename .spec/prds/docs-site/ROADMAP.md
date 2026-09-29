@@ -456,11 +456,12 @@ Added 2026-09-29 via ask `ask-wave26-add-native-live-repair`: FIX-ORI-RN-004-4 o
 **Demonstrates:** UC-DOCS-03, UC-DOCS-04, UC-DOCS-05, UC-DOCS-06
 
 **Test Steps:** *(each stranger-runnable verbatim)*
-1. Run `pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` — exits 0 naming nothing; stdout carries `[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological` and `[docs-data] guides: 5 guides — cap satisfied`; then `pnpm --filter @rnr-ai-elements/docs preview --port 4321` serves http://localhost:4321.   `exercises: GBC-005, GBC-007, GBC-011, GBC-012`
+1. Check the port is free first (`lsof -nP -iTCP:4321 -sTCP:LISTEN` must be empty — Astro silently hops ports when squatted, and you would be judging the wrong site); then run `pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build` — exits 0 naming no violation offenders; stdout carries `[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological` and `[docs-data] guides: 5 guides — cap satisfied`; then `pnpm --filter @rnr-ai-elements/docs preview --port 4321` serves http://localhost:4321.   `exercises: GBC-005, GBC-007, GBC-011, GBC-012`
 2. Open http://localhost:4321/docs/owns-vs-does-not-own, http://localhost:4321/porting, and http://localhost:4321/registry. On the boundary page read the ships/does-not-ship table (`transport`, `streaming client`, `tool executor` in does-not-ship cells; `useChat` in the consumer-wires cell) and the ownership-split + gaps table. On /porting read the mapping table (a deviations column, ≥5 rows) and the not-ported list. On /registry confirm exactly 56 rows split 39/11/6. Cross-check: every boundary gap is a consumer-owned responsibility or a named not-ported upstream element — zero contradictions, zero known omissions.   `exercises: GBC-003, GBC-004, GBC-006, GBC-017`
-3. Open http://localhost:4321/guides — the index lists exactly 5 guides; open each (re-theme, update-installed-items, preview-on-device, customize-rendering, troubleshooting) — each 200 with a complete how-to; /guides/troubleshooting carries 4 symptom→cause→fix entries; customize-rendering documents renderMarkdown and TextClassContext and component-page seam Callouts link it.   `exercises: GBC-001, GBC-002, GBC-009, GBC-010, GBC-015, GBC-016`
+3. Open http://localhost:4321/guides — the index lists exactly 5 guides; open each (re-theme, update-installed-items, preview-on-device, customize-rendering, troubleshooting) — each 200 with a complete how-to (every guide opens with a sentence matching /This guide shows you how to/ and numbered steps); /guides/troubleshooting carries 4 symptom→cause→fix entries; customize-rendering documents renderMarkdown and TextClassContext and component-page seam Callouts link it.   `exercises: GBC-001, GBC-002, GBC-009, GBC-010, GBC-015, GBC-016`
 4. Open http://localhost:4321/changelog — entries reverse-chronological (0.2.1 → 0.2.0 → 0.1.0); open http://localhost:4321/changelog/0.2.1 — literal date 2026-09-08 + Added/Changed/Fixed headings + a touched-component link resolving 200.   `exercises: GBC-005, GBC-007, GBC-008, GBC-015, GBC-016`
 5. On any page the header shows Components, Registry, Guides, Porting, Changelog (each resolving 200). Run `pnpm e2e:docs` — exits 0 with retries: 0, all lanes green including the sprint-06 lane (FLOW-DOCS-03/04/05/06) and the docs-integrator-arc + docs-themer-arc journey specs writing evidence.   `exercises: GBC-013, GBC-014`
+6. First contact — on your own machine, in your own clone as it is (no fixture, no seeded data, no HOME override, no locked flow), start the docs site the way CONTRIBUTING.md documents: from the repository root run `pnpm --filter @rnr-ai-elements/docs build`, then `pnpm --filter @rnr-ai-elements/docs preview`, and open the URL that preview prints (Astro's default is http://localhost:4321; use whatever port it reports). The build's own output under apps/docs/dist/ is the only thing written; stop before any other write (no install, no publish, no edits to files). Promise (UC-DOCS-03): "A Guides section capped at five launch pages serves the re-theme, update, preview, engine-choice, and port-next jobs without becoming a curriculum." Promise (UC-DOCS-04): "The boundary page states as scannable tables that the library ships no transport, no streaming client, and no tool executor, and points to the example app as the worked reference." Promise (UC-DOCS-05): "Porting notes explain intentional divergences from Vercel AI Elements and earlier RN ports before an extender backports anything." Promise (UC-DOCS-06): "One entry per release in reverse chronological order makes maintenance health visible on the site." Then see, on THIS machine: the build exits 0, the preview serves the printed URL, and the header links Guides, Porting, and Changelog each open a real page (not a 404) that matches its promise above; if the printed port differs from 4321, judge the site at that port.   `exercises: GBC-013, GBC-009, GBC-010, GBC-004, GBC-008`
 
 **Dark tasks:** None — every task is exercised by at least one gate step.
 
@@ -468,25 +469,25 @@ Added 2026-09-29 via ask `ask-wave26-add-native-live-repair`: FIX-ORI-RN-004-4 o
 
 | ID | Title | Agent | Points | Wave | Status |
 |----|-------|-------|--------|------|--------|
-| GBC-001 | Author the four job how-to guides + seam-map repoint | techwriting-implementer | 5 | A | ⬜ Pending |
-| GBC-002 | Author the troubleshooting guide + wire its links | techwriting-implementer | 5 | B | ⬜ Pending |
+| GBC-001 | Author the four job how-to guides + seam-map repoint | techwriting-implementer | 5 | C | ⬜ Pending |
+| GBC-002 | Author the troubleshooting guide + wire its links | techwriting-implementer | 5 | D | ⬜ Pending |
 | GBC-003 | Rewrite owns-vs-does-not-own as scannable tables | techwriting-implementer | 5 | A | ⬜ Pending |
 | GBC-004 | Author /porting mapping + not-ported list | techwriting-implementer | 5 | A | ⬜ Pending |
 | GBC-005 | Author changelog release entries (v0.1.0–v0.2.1) | techwriting-implementer | 3 | A | ⬜ Pending |
-| GBC-006 | Content review + cross-check gate | techwriting-implementer | 3 | C | ⬜ Pending |
+| GBC-006 | Content review + cross-check gate | techwriting-implementer | 3 | E | ⬜ Pending |
 | GBC-007 | Changelog collection schema + build gates | astro-implementer | 5 | B | ⬜ Pending |
 | GBC-008 | /changelog index + [version] pages | astro-implementer | 3 | D | ⬜ Pending |
 | GBC-009 | Section-aware routing (/guides/[slug] + /porting) | astro-implementer | 5 | B | ⬜ Pending |
-| GBC-010 | /guides section-index page | astro-implementer | 3 | C | ⬜ Pending |
-| GBC-011 | Five-guides cap gate | astro-implementer | 3 | C | ⬜ Pending |
+| GBC-010 | /guides section-index page | astro-implementer | 3 | E | ⬜ Pending |
+| GBC-011 | Five-guides cap gate | astro-implementer | 3 | E | ⬜ Pending |
 | GBC-012 | Porting consistency gates | astro-implementer | 3 | C | ⬜ Pending |
-| GBC-013 | Header/footer nav wiring (R1) | astro-implementer | 2 | E | ⬜ Pending |
-| GBC-014 | Sprint-06 e2e lane + journeys | astro-implementer | 5 | F | ⬜ Pending |
+| GBC-013 | Header/footer nav wiring (R1) | astro-implementer | 2 | F | ⬜ Pending |
+| GBC-014 | Sprint-06 e2e lane + journeys | astro-implementer | 5 | G | ⬜ Pending |
 | GBC-015 | IndexList component (NEW) | frontend-designer | 3 | A | ⬜ Pending |
 | GBC-016 | Section-index page layout | frontend-designer | 2 | B | ⬜ Pending |
-| GBC-017 | Boundary + porting table presentation | frontend-designer | 3 | A | ⬜ Pending |
+| GBC-017 | Boundary + porting table presentation | frontend-designer | 3 | C | ⬜ Pending |
 
-**Waves:** A(6) → B(4) → C(4) → D(1) → E(1) → F(1) — 6 waves over 17 tasks (no two tasks in a wave share a write_allowed path; promotion fused from three specialist proposals staged at `.tmp/kb-sprint-tasks-plan/sprint-06-guides-boundary-changelog/proposals/`)
+**Waves:** A(4) → B(3) → C(3) → D(2) → E(3) → F(1) → G(1) — 7 waves over 17 tasks, derived from each task's declared dependencies (a task runs one wave after its latest dependency). Tasks in one wave share no NEW/MODIFY write path; shared entries are bare never-edit references to a spec another task writes.
 
 **Next Sprint Tasks:** *(generated by /kb-sprint-tasks-plan on 2026-09-15)*
 - GBC-001-author-the-four-job-how-to-guides-re-theme-update-preview-customize-re.md
