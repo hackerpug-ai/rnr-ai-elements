@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { changelogSchema } from './lib/changelog-schema';
 
 /**
  * The authored docs collection (CAP-DOCS-01 / data schema docs_page).
@@ -27,7 +28,25 @@ const docs = defineCollection({
     order: z.number(),
     draft: z.boolean().optional(),
     tutorial: z.boolean().optional(),
+    // GBC-004 authors these in porting.md frontmatter; GBC-012's gate consumes
+    // them. mapping is one {upstream, item} pair per ported element.
+    mapping: z.array(z.object({ upstream: z.string(), item: z.string() })).optional(),
+    notPorted: z.array(z.string()).optional(),
+    upstream: z.array(z.string()).optional(),
   }),
 });
 
-export const collections = { docs };
+/**
+ * The changelog collection (CAP-LLMS-01 / data schema changelog_entry,
+ * GBC-007). Frontmatter is exactly `version` (semver) and `date`, validated by
+ * the shared changelogSchema; the Added/Changed/Fixed release body is authored
+ * as markdown headings and gated at prebuild by
+ * scripts/docs-data/changelog-gates.ts (tag one-to-one with `git tag --list 'v*'`,
+ * reverse-chronological order, section presence) before any output byte.
+ */
+const changelog = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
+  schema: changelogSchema,
+});
+
+export const collections = { docs, changelog };
