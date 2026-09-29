@@ -1,0 +1,88 @@
+---
+/**
+ * DocsNav — the docs-section navigation sidebar (TR-07 R2): the
+ * getting-started / guides / porting groups in the publication contract's
+ * deterministic order. Extracted from MarkdownLayout's inline nav (Rule of 2:
+ * MarkdownLayout and SectionIndexLayout render the same sidebar), so the
+ * group labels, the 44px touch targets and the docs-nav styles live in
+ * exactly one place — never a second sidebar implementation. Zero JS; tokens
+ * only.
+ */
+import type { DocsSection, SectionNavGroup } from '../lib/docs-navigation';
+
+interface Props {
+  /** Section navigation groups (docs-navigation.sectionNavigation). */
+  nav: SectionNavGroup[];
+  /**
+   * The current entry id, driving the nav's aria-current. A section index is
+   * not a docs entry, so SectionIndexLayout omits this and no link is marked.
+   */
+  currentId?: string;
+}
+
+const { nav, currentId } = Astro.props;
+
+const SECTION_LABELS: Record<DocsSection, string> = {
+  'getting-started': 'Getting started',
+  guides: 'Guides',
+  porting: 'Porting',
+};
+---
+
+<nav class="docs-nav" data-docs-nav aria-label="Documentation">
+  {
+    nav.map((group) => (
+      <section class="docs-nav__section">
+        <h2 class="docs-nav__section-title">{SECTION_LABELS[group.section]}</h2>
+        <ul class="docs-nav__list">
+          {group.entries.map((entry) => (
+            <li>
+              <a
+                href={entry.href}
+                aria-current={entry.id === currentId ? 'page' : undefined}
+              >
+                {entry.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</nav>
+
+<style>
+  .docs-nav__section {
+    margin-block-end: 1rem;
+  }
+  .docs-nav__section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.25rem;
+  }
+  .docs-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .docs-nav__list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding-inline: 0.5rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .docs-nav__list a:hover {
+    color: var(--foreground);
+    background: var(--accent);
+  }
+  .docs-nav__list a[aria-current='page'] {
+    color: var(--foreground);
+    background: var(--secondary);
+  }
+</style>

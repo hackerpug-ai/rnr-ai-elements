@@ -1,0 +1,75 @@
+---
+/**
+ * SectionIndexLayout (TR-07 section-index wireframe) — the shared visual
+ * shell of the section-index pages (/guides, /changelog): the docs-section
+ * nav (the SAME DocsNav extraction MarkdownLayout consumes — DocsLayout
+ * renders no sidebar of its own), a PageHeader, one SectionHeader with the
+ * entry count, and the entry list arriving as the default slot. The consuming
+ * page composes <IndexList rows={...} /> into that slot — IndexList
+ * deliberately has no slot form, so the row markup stays in one place.
+ *
+ * Short page, no on-this-page rail: the rail exists for long manuscripts; an
+ * index of five guides (or three releases) has nothing to anchor. This is the
+ * MarkdownLayout grid minus the rail and minus the edit link — MarkdownLayout
+ * hard-renders Edit-this-page against a recorded source path a generated
+ * index cannot claim, which is why this shell composes DocsLayout directly.
+ * Only the derived data (title, description, section heading, count, rows)
+ * differs between /guides and /changelog. Zero JS; tokens only.
+ */
+import DocsLayout from './DocsLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import DocsNav from '../components/DocsNav.astro';
+import type { SectionNavGroup } from '../lib/docs-navigation';
+
+interface Props {
+  /** The page title: the PageHeader h1 and the document masthead. */
+  title: string;
+  /** The one-line description under the title. */
+  description: string;
+  /** The single section heading (e.g. 'All guides', 'Releases'). */
+  sectionTitle: string;
+  /** The h2's anchor id; anchor jumps stop clear of the sticky Header. */
+  anchor: string;
+  /** The entry count Chip, derived from the rows by the consuming page. */
+  count?: number;
+  /** The publication navigation (docs-navigation.sectionNavigation). */
+  nav: SectionNavGroup[];
+}
+
+const { title, description, sectionTitle, anchor, count, nav } = Astro.props;
+---
+
+<DocsLayout title={`${title} — RNR AI Elements`}>
+  <div class="section-index" data-section-index>
+    <aside class="section-index__nav">
+      <DocsNav nav={nav} />
+    </aside>
+
+    <main class="section-index__body">
+      <PageHeader title={title} description={description} />
+      <SectionHeader title={sectionTitle} anchor={anchor} count={count} />
+      <slot />
+    </main>
+  </div>
+</DocsLayout>
+
+<style>
+  /* The MarkdownLayout grid minus the rail track: docs nav + body, one
+     column below lg. Measure and padding match /components and /registry. */
+  .section-index {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+
+  /* >=lg: the docs-section nav takes the sidebar track. */
+  @media (min-width: 64rem) {
+    .section-index {
+      grid-template-columns: var(--layout-sidebar-w) minmax(0, 1fr);
+    }
+  }
+</style>

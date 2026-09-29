@@ -1,0 +1,32 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-016
+
+ ❯ tests/sprint-05-orient-search/support/live-example-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/caller-backend-restart-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/nativewind-baseline-ordering-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/docs-collection.test.ts (4 tests | 3 failed) 5343ms
+   × ORI-AST-001-collection-schema 1173ms
+   × ORI-AST-001-publication-contract 647ms
+   × ORI-AST-001-mdx-code-copy 3449ms
+ ❯ tests/sprint-05-orient-search/streamdown-destination-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/web-leg-orchestration-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/live-example-api.test.ts (4 tests | 1 failed) 11701ms
+     × AC-4 pins the hook contract, compiles both graphs and tears down owned children 1069ms
+ ❯ tests/sprint-05-orient-search/tutorial-designation-proof.test.ts (0 test)
+ ❯ tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts (4 tests | 1 failed) 130109ms
+     × copies public r generated-only and byte-identical 3959ms
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts (5 tests | 2 failed) 154015ms
+   × ORI-CI-001-duplicate 2ms
+   × ORI-CI-001-noncanonical 2ms
+ ❯ tests/sprint-05-orient-search/support/quickstart-proof.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/public-http.test.ts (0 test)
+ ❯ tests/sprint-05-orient-search/nativewind-live-example.test.ts (4 tests | 1 failed) 41749ms
+   × ORI-RN-005-fail-closed-cleanup: invalid inputs fail explicitly and owned resources are released 5395ms
+ ❯ tests/sprint-02-shell-hero/shell-layout.test.ts (3 tests | 1 failed) 40689ms
+   × SHELL-002-themed-shell-on-adopted-routes: header + footer + zero-JS drawer + token stylesheet on all three built pages 4ms
+ ❯ tests/sprint-04-generated-reference/data-table-contract.test.ts (4 tests | 1 failed) 28ms
+   × REF-006-data-table-generic-contract: prop-driven table, zebra var(--muted), sticky thead, mobile first-column scroll 3ms
