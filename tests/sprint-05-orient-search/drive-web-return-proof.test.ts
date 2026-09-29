@@ -48,6 +48,7 @@ import {
   stopServe,
   type WebExportReceipt,
   type WebLegResult,
+  type WebServeHandle,
 } from './support/quickstart-web';
 
 const WATCHDOG_MS = 180_000;
@@ -57,6 +58,8 @@ const SUBMIT_CALLBACK = 'onSubmit={handleSubmit}';
 const DISCONNECTED_CALLBACK = 'onSubmit={() => {}}';
 const TASK = 'FIX-ORI-RN-003-3';
 const DISPOSITION = 'not_reproduced_no_driver_change';
+const TASK_DIFF_BASE_SHA = '09123090d57f7747ac3760055a5932392b598351';
+const TASK_DIFF_BASE_TREE_SHA = '770221ce4b3808fb1850206448b37ada5fdd748e';
 const EXPECTED_DRIVER_SHA = '69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33';
 const HISTORICAL_RED_SHA = 'fb844da4c2ecb882656f3fd2c987bf02a243ef7f31000b9fb08de35c603b6745';
 const CYCLE_2_RED_SHA = 'f09d5bb8dc4138b1cb0900f32eb086c2989c0bdb423cc63ed4a77e8fb994a4e8';
@@ -75,6 +78,10 @@ const ALLOWED = new Set([
   'tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt',
   '.tmp/FIX-ORI-RN-003-3/green.json',
   '.tmp/FIX-ORI-RN-003-3/run.json',
+]);
+const PRESERVED_HISTORICAL = new Set([
+  '.tmp/FIX-ORI-RN-003-3/red.json',
+  '.tmp/FIX-ORI-RN-003-3/cycle-2/red.json',
 ]);
 
 type WebBooleans = {
@@ -168,6 +175,39 @@ function gitHead(): string {
   return res.output.trim();
 }
 
+function gitValue(args: string[], label: string): string {
+  const res = spawnSync('git', args, { cwd: REPO_ROOT, encoding: 'utf8' });
+  if (res.status !== 0) throw new Error(`${label} failed: ${res.stderr.trim()}`);
+  return res.stdout.trim();
+}
+
+function assertTaskDiffBase(): void {
+  const tree = gitValue(['rev-parse', `${TASK_DIFF_BASE_SHA}^{tree}`], 'task diff base');
+  if (tree !== TASK_DIFF_BASE_TREE_SHA) throw new Error(`task diff base tree changed: ${tree}`);
+  const ancestor = spawnSync('git', ['merge-base', '--is-ancestor', TASK_DIFF_BASE_SHA, 'HEAD'], {
+    cwd: REPO_ROOT,
+  });
+  if (ancestor.status !== 0) throw new Error('task diff base is not an ancestor of HEAD');
+}
+
+function lines(value: string): string[] {
+  return value.split('\n').filter((line) => line.length > 0);
+}
+
+function committedTaskPaths(): string[] {
+  return lines(
+    gitValue(['diff', '--name-only', `${TASK_DIFF_BASE_SHA}...HEAD`], 'committed task diff'),
+  );
+}
+
+function uniqueSorted(paths: string[]): string[] {
+  return [...new Set(paths)].sort();
+}
+
+function preservedHistoricalPaths(paths: string[]): string[] {
+  return paths.filter((path) => PRESERVED_HISTORICAL.has(path));
+}
+
 function logPhase(phase: string): void {
   console.log(`[drive-web] ${phase} ${new Date().toISOString()}`);
 }
@@ -218,9 +258,42 @@ function historicalHashes(): Record<string, string> {
   };
 }
 
+function historicalReceiptAudit(paths: string[]): Record<string, unknown> {
+  return {
+    paths: preservedHistoricalPaths(paths),
+    treatment: 'immutable provenance inherited from earlier cycles; excluded from current writes',
+    actual_hashes: historicalHashes(),
+    expected_hashes: {
+      red_json_sha256: HISTORICAL_RED_SHA,
+      cycle_2_red_json_sha256: CYCLE_2_RED_SHA,
+    },
+  };
+}
+
+function taskDiffAudit(): Record<string, unknown> {
+  assertTaskDiffBase();
+  const committed = committedTaskPaths();
+  const worktree = porcelainPaths();
+  const relevant = uniqueSorted([...committed, ...worktree]);
+  const currentScope = relevant.filter((path) => !PRESERVED_HISTORICAL.has(path));
+  const outside = outsideAllowlist(currentScope);
+  const head = gitHead();
+  return {
+    immutable_base_sha: TASK_DIFF_BASE_SHA,
+    immutable_base_tree_sha: TASK_DIFF_BASE_TREE_SHA,
+    executed_head_sha: head,
+    executed_head_tree_sha: gitValue(['rev-parse', `${head}^{tree}`], 'executed head tree'),
+    committed_paths_since_base: committed,
+    dirty_and_untracked_paths: worktree,
+    relevant_paths: relevant,
+    preserved_historical_receipts: historicalReceiptAudit(relevant),
+    scope_paths_outside_allowlist: outside.length,
+    outside_allowlist_paths: outside,
+  };
+}
+
 function baseRunFields(): Record<string, unknown> {
-  const paths = porcelainPaths();
-  const outside = outsideAllowlist(paths);
+  const diffAudit = taskDiffAudit();
   return {
     task: TASK,
     execution_head_sha: gitHead(),
@@ -237,9 +310,12 @@ function baseRunFields(): Record<string, unknown> {
       red_json_sha256: HISTORICAL_RED_SHA,
       cycle_2_red_json_sha256: CYCLE_2_RED_SHA,
     },
-    changed_and_untracked_paths: paths,
-    scope_paths_outside_allowlist: outside.length,
-    outside_allowlist_paths: outside,
+    task_diff_audit: diffAudit,
+    committed_paths_since_task_base: diffAudit.committed_paths_since_base,
+    changed_and_untracked_paths: diffAudit.dirty_and_untracked_paths,
+    candidate_relevant_paths: diffAudit.relevant_paths,
+    scope_paths_outside_allowlist: diffAudit.scope_paths_outside_allowlist,
+    outside_allowlist_paths: diffAudit.outside_allowlist_paths,
   };
 }
 
@@ -275,10 +351,16 @@ function overlayQuickstart(engine: Engine, root: string): void {
 
 function prepareReady(engine: Engine): ConsumerReceipt {
   logPhase(`install ${engine}`);
-  const receipt = prepareConsumer(engine);
-  assertInstalled(receipt);
-  overlayQuickstart(engine, receipt.root);
-  return receipt;
+  let receipt: ConsumerReceipt | undefined;
+  try {
+    receipt = prepareConsumer(engine);
+    assertInstalled(receipt);
+    overlayQuickstart(engine, receipt.root);
+    return receipt;
+  } catch (error) {
+    if (receipt) cleanupConsumer(receipt.root);
+    throw error;
+  }
 }
 
 function textLike(name: string): boolean {
@@ -459,17 +541,19 @@ async function watchServed(
   engine: Engine,
 ): Promise<LegRecord> {
   const port = await freePort();
-  const serve = await serveExport(receipt.distDir, port);
-  logPhase(`drive ${phase} ${serve.url}`);
-  const launched = await launchChromium();
+  let serve: WebServeHandle | null = null;
+  let browser: Browser | null = null;
   let leg: LegRecord | undefined;
   try {
-    const core = await observeDrive(launched.browser, serve.url, marker);
+    serve = await serveExport(receipt.distDir, port);
+    logPhase(`drive ${phase} ${serve.url}`);
+    browser = (await launchChromium()).browser;
+    const core = await observeDrive(browser, serve.url, marker);
     leg = tagLeg(core, phase, engine, serve.url, port, marker, receipt.exportExit);
   } finally {
     const cleanupStarted = new Date().toISOString();
     if (leg) leg.harness_cleanup_started_at = cleanupStarted;
-    await launched.browser.close().catch(() => {});
+    await browser?.close().catch(() => {});
     await stopServe(serve);
     if (leg) leg.harness_cleanup_finished_at = new Date().toISOString();
   }
@@ -763,8 +847,7 @@ function withRestore(leg: LegRecord, note: HashNote): Record<string, unknown> {
   };
 }
 
-function writeGreen(calls: LegRecord[], note: HashNote, started: number, runId: string): void {
-  const elapsed = Date.now() - started;
+function writeGreen(calls: LegRecord[], note: HashNote, elapsed: number, runId: string): void {
   writeJson(join(cycleDir(), 'green.json'), {
     task: TASK,
     mode: 'verification',
@@ -794,6 +877,11 @@ function writeGreen(calls: LegRecord[], note: HashNote, started: number, runId: 
   });
 }
 
+function assertFullMatrixBudget(elapsed: number): void {
+  if (elapsed < GREEN_BUDGET_MS) return;
+  throw new Error(`full matrix exceeded ${GREEN_BUDGET_MS} ms budget: ${elapsed} ms`);
+}
+
 function mergedCommands(name: string, receipt: Record<string, unknown>): Record<string, unknown> {
   const prior = asRecord(readJson(join(cycleDir(), 'run.json')).commands);
   return { ...prior, [name]: receipt };
@@ -806,15 +894,18 @@ async function runGreen(): Promise<void> {
   const started = Date.now();
   const runId = `${TASK}-full-${started}`;
   const calls: LegRecord[] = [];
+  rmSync(join(cycleDir(), 'green.json'), { force: true });
   try {
     const note = await collectGreen(calls);
-    writeGreen(calls, note, started, runId);
+    const elapsed = Date.now() - started;
+    assertFullMatrixBudget(elapsed);
+    writeGreen(calls, note, elapsed, runId);
     mergeRun({
       full_matrix: {
         run_id: runId,
         exit: 0,
-        elapsed_ms: Date.now() - started,
-        within_budget: Date.now() - started < GREEN_BUDGET_MS,
+        elapsed_ms: elapsed,
+        within_budget: true,
         calls,
         restoration: note,
       },
@@ -824,12 +915,14 @@ async function runGreen(): Promise<void> {
       JSON.stringify({ verification: true, run_id: runId, elapsed_ms: Date.now() - started }),
     );
   } catch (error) {
+    const elapsed = Date.now() - started;
     mergeRun({
       hang_reproduced: calls.some((call) => call.promise_outcome === 'pending'),
       full_matrix: {
         run_id: runId,
         exit: 1,
-        elapsed_ms: Date.now() - started,
+        elapsed_ms: elapsed,
+        within_budget: elapsed < GREEN_BUDGET_MS,
         error: errorText(error),
         partial_calls: calls,
       },
@@ -891,7 +984,10 @@ function pathFromPorcelain(line: string): string {
 }
 
 function porcelainPaths(): string[] {
-  const res = spawnSync('git', ['status', '--porcelain'], { cwd: REPO_ROOT, encoding: 'utf8' });
+  const res = spawnSync('git', ['status', '--porcelain', '--untracked-files=all'], {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+  });
   if (res.status !== 0) return ['git-status-failed'];
   return res.stdout
     .split('\n')
@@ -904,16 +1000,22 @@ function outsideAllowlist(paths: string[]): string[] {
 }
 
 function allowlistClean(): boolean {
-  return outsideAllowlist(porcelainPaths()).length === 0;
+  const audit = taskDiffAudit();
+  return audit.scope_paths_outside_allowlist === 0;
 }
 
 if (!directInvocation(process.argv[1])) {
   describe('driveWeb bounded diagnostic', () => {
     it('driveWebActionTimeoutStaysFinite', () => {
       const source = readFileSync(driveWebPath(), 'utf8');
+      const audit = taskDiffAudit();
       expect(sha256(source)).toBe(EXPECTED_DRIVER_SHA);
       expect(hasCheckAssignments(source)).toBe(true);
       expect(WATCHDOG_MS).toBe(180_000);
+      expect(() => assertFullMatrixBudget(GREEN_BUDGET_MS - 1)).not.toThrow();
+      expect(() => assertFullMatrixBudget(GREEN_BUDGET_MS)).toThrow(/exceeded/);
+      expect(audit.immutable_base_sha).toBe(TASK_DIFF_BASE_SHA);
+      expect(audit.immutable_base_tree_sha).toBe(TASK_DIFF_BASE_TREE_SHA);
       expect(fileSha(join(cycleDir(), 'red.json'))).toBe(HISTORICAL_RED_SHA);
       expect(fileSha(join(cycleDir(), 'cycle-2/red.json'))).toBe(CYCLE_2_RED_SHA);
       expect(directInvocation(process.argv[1])).toBe(false);
