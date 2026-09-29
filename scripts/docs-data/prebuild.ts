@@ -40,6 +40,7 @@ import {
   resolveRegistryDependencies,
 } from '../../apps/docs/src/lib/resolve-deps';
 import { ENGINES } from '../../packages/registry/scripts/build-registry';
+import { CHANGELOG_DIR, runChangelogGates } from './changelog-gates';
 import { type EnrichedItem, type Expectation, runAllGates } from './gates';
 import { createDocsProject, extractProps, type PropInfo, type RegistryItem } from './props';
 import { buildThemingNotes } from './theming-note';
@@ -251,6 +252,11 @@ function main(): void {
   // ALL gates over the fully-built dataset — any violation throws a
   // GateError naming every offending item BEFORE a single output byte.
   runAllGates(dataset, familiesExpectation(families), project);
+
+  // GBC-007 changelog gates: tag one-to-one with the real `git tag --list 'v*'`,
+  // reverse-chronological order, and Added/Changed/Fixed section presence —
+  // read-only over apps/docs/src/content/changelog, failing before any write.
+  runChangelogGates(join(REPO_ROOT, CHANGELOG_DIR), REPO_ROOT);
 
   // SHELL-006 gate: every {engine} template in the dataset must resolve to a
   // concrete URL for BOTH engines through the one resolver (resolve-deps.ts) —
