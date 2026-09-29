@@ -3,7 +3,9 @@ TASK: GBC-018 - Home boundary teaser (R11): the one-line hero teaser + anchor to
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: ae4fe5173998426a243785d9bf0c72bb5f854845
 PRIORITY:   P1
 POINTS:     1
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -198,3 +200,36 @@ Blocks:     none
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-018",
+  "commit_sha": "ae4fe5173998426a243785d9bf0c72bb5f854845",
+  "done": "The R11 home boundary teaser landed in apps/docs/src/pages/index.astro (hero <main>, Callout variant info at index.astro:82 with the single anchor href=\"/docs/owns-vs-does-not-own\" on slot=\"link\", zero new styles, zero JS, placed after the CTA nav so the hero's one-screen 1440x900 contract holds) together with the SHELL-007 comment update recording R11 as landed while R10/R12 stay deferred, committed with RED/GREEN evidence force-added under .tmp/GBC-018/cycle-1/, approved and merged to main as 502955b5d4d14841b2cadded06594bf0860109f1.",
+  "deviations": [],
+  "concerns": [
+    "A stale astro preview from a sibling run held strict port 4321 and silently blocked Playwright's webServer (config forbids reuseExistingServer), so any sprint task running the locked verify must first clear port 4321 or its run reports a port error instead of test results."
+  ],
+  "findings": [
+    "GBC-003's boundary-tables.spec.ts was absent from the trunk at execution time, so RED/GREEN was proven by running GBC-003's byte-identical checkpointed spec (3a5118e7) unmodified at its canonical path, then removing it uncommitted.",
+    "Because AC-4 in a GBC-003-less tree fails at its boundary-page assertions before reaching the home segment, the home observations were additionally collected with a throwaway Playwright driver over the real built preview (chromium-desktop + chromium-nojs, .tmp/GBC-018/cycle-1/green/ac4-home-observations.json): / returned 200 with exactly 1 main-scoped teaser anchor, whole-page count 1, and 0 tool-executor tables in main, while /docs/introduction already carried its own main-scoped teaser (its whole-page 2 includes page chrome the spec explicitly tolerates), meaning AC-4's only missing piece was home and it is now closed."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-003",
+      "found": "GBC-003's blocked report scope_impact[0] flagged index.astro as unowned by any sprint-06 task; that gap is now closed by ae4fe517 merged as 502955b5, and with home plus the already-landed Introduction teasers in place the only remaining FLOW-DOCS-04 reds are the boundary-page segments satisfied by GBC-003's own content landing.",
+      "change": "When GBC-003 lands, its full locked verify should pass including AC-4 with zero spec edits; GBC-003's cycle-1.blocked.json record can note the scope gap as closed rather than open."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "Sprint sequencing note: any task asked to show FLOW-DOCS-04 fully green in a fresh worktree before GBC-003 lands will stay red on boundary-page assertions through no fault of its own, as GBC-018's run demonstrated.",
+      "change": "Sequence GBC-003's landing (or its spec+content checkpoint) before any qa or human-testing gate step that expects the full FLOW-DOCS-04 verify green."
+    }
+  ],
+  "feedback": [
+    "The rtk hook tees Playwright's JSON reporter output to ~/Library/Application Support/rtk/tee/*_playwright.log rather than the redirected shell log, so implementers and reviewers judging verify.log tails will miss actual assertion messages unless they know to copy the tee file \u2014 sibling tasks verifying with this spec should capture the tee path into their evidence."
+  ]
+}
+```
