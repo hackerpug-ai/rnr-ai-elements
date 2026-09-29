@@ -178,7 +178,7 @@ const ROUTING_SELECTOR: SelectorSpec = {
   name: 'immutable-owner-routing',
   args: ['exec', 'vitest', 'run', 'tests/sprint-05-orient-search/aggregate-owner-routing.test.ts'],
   timeoutMs: 5 * MINUTE,
-  expectedPasses: 1,
+  expectedPasses: 2,
   expectedSkips: 0,
   env: { OWNER_ROUTING_EXECUTION_AUDIT: '1' },
 };
