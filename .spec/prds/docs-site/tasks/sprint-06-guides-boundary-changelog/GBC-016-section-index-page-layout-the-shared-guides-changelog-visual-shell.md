@@ -3,7 +3,9 @@ TASK: GBC-016 - section-index page layout — the shared /guides + /changelog vi
 ================================================================================
 
 TASK_TYPE:  DESIGN
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 4022ddf1e8c4204b1fba73994e497f3912ce5e13
 PRIORITY:   P1
 POINTS:     2
 AGENT:      planner=frontend-designer | implementer=frontend-designer | reviewer=react-native-reusables-reviewer
@@ -667,3 +669,60 @@ Blocks:     ['GBC-008', 'GBC-010']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-016",
+  "commit_sha": "4022ddf1e8c4204b1fba73994e497f3912ce5e13",
+  "done": "Landed the shared section-index visual shell: apps/docs/src/layouts/SectionIndexLayout.astro (DocsLayout > data-section-index grid with a DocsNav aside and a main holding PageHeader, SectionHeader with count Chip, and exactly one default slot for the consuming page's <IndexList rows={...} />; 1fr single-column below lg, 2-track sidebar only inside @media (min-width: 64rem), max-width 96rem / padding 1.5rem, no Toc, zero JS, tokens only), apps/docs/src/components/DocsNav.astro (the docs-section nav extracted from MarkdownLayout verbatim \u2014 markup, SECTION_LABELS, and all .docs-nav__* CSS including the 44px targets), MarkdownLayout.astro rewritten to compose <DocsNav nav={nav} currentId={id} /> (net -58 lines, 0 docs-nav__ literals left), and tests/sprint-06-guides-boundary-changelog/section-index-layout-source.test.ts (AC-6, RED captured first); proven at close by the source contract, a real-render harness through the real Astro compiler + SSR with the real IndexList slotted in, and the real docs build with the extraction verified in dist HTML and bundled CSS.",
+  "deviations": [
+    "No fallow exemption commit was made: the pre-authorized remediation was conditional, and pnpm check:fallow passes clean because fallow treats apps/docs/src/layouts/ as an entry surface (only components/ files orphan \u2014 which is why IndexList.astro alone needed seeding), so .fallowrc.json is untouched.",
+    "SectionIndexLayout renders no <meta name=\"description\"> head slot: the contract's \"exactly 1 '<slot'\" MUST_OBSERVE forbids the Fragment slot=\"head\" pattern MarkdownLayout uses, so the description reaches the visitor only through PageHeader's visible <p>.",
+    "The prop surface was invented, not pinned by the task file: title / description / sectionTitle / anchor (required, SectionHeader demands one) / count (optional \u2014 AC-2's changelog SectionHeader asserts no Chip) / nav, with DocsNav's currentId omitted because a section index is not a docs entry."
+  ],
+  "concerns": [
+    "Five vitest failures exist on main at 15f1236e independent of this work (stash proof committed at .tmp/GBC-016/cycle-1/green/fail-repro-3-stashed.txt): ORI-AST-001 x3 in tests/sprint-05-orient-search/docs-collection.test.ts, SHELL-002 in tests/sprint-02-shell-hero/shell-layout.test.ts, and REF-006 in tests/sprint-04-generated-reference/data-table-contract.test.ts \u2014 GBC-008/GBC-010 reviewers must not attribute these to the section-index shell.",
+    "Running the full vitest suite in one bounded window is hazardous: it exceeds 30 minutes (docs-build drills) and a kill mid-drill leaves tracked data files deleted (apps/docs/src/data/dev-client-matrix.json, token-usage.json) and generated ones gone until git checkout -- apps/docs/src/data/ plus a prebuild regen \u2014 I hit and repaired exactly this.",
+    "The Astro dev client transform modernizes '@media (min-width: 64rem)' to '(width >= 64rem)' in compiled CSS, so any future source-level check that greps rendered CSS for the authored literal will false-fail (the GBC-008/GBC-010 Playwright specs are safe \u2014 they assert computed gridTemplateColumns).",
+    "Vitest 4 swallows console.log from passing tests in non-TTY runs, so contract tests whose evidence type is stdout need --disableConsoleIntercept on the command, not just the task file's bare VERIFY line.",
+    "DocsNav's CSS now ships as a shared chunk (_astro/docs-navigation.*.css) linked from built pages rather than inline, which is fine for every current spec but changes what 'the nav's styles are on the page' means for future dist-grepping assertions."
+  ],
+  "findings": [
+    "Fallow's orphan window only exists for apps/docs/src/components/, not layouts/ or pages/ \u2014 GBC-008 and GBC-010 will compose SectionIndexLayout from real pages, so they have no orphan problem at all and should not touch .fallowrc.json.",
+    "AstroContainer.renderToString(Component, { props, slots: { default: html } }) accepts pre-rendered HTML as slot content, so future orphan render-proofs can compose two real components with no scratch wrapper file (technique captured in .tmp/GBC-016/cycle-1/green/render-harness.mjs).",
+    "theming-nav-inclusion-proof.test.ts asserts on the built dist's nav[data-docs-nav] region, not on MarkdownLayout's source, so the DocsNav extraction is invisible to it by construction.",
+    "The docs build's 8 external link-check warnings (edit-source links 404ing against the stale GitHub main) are pre-existing and non-fatal \u2014 0 errors \u2014 and untouched by this change.",
+    "MarkdownLayout still imports the DocsSection type only for its Props.section pagefind metadata, a residual coupling worth knowing if anyone later 'simplifies' that import block."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-010",
+      "found": "SectionIndexLayout's concrete interface was invented by GBC-016, not pinned by any plan artifact",
+      "change": "guides.astro should compose <SectionIndexLayout title=\"Guides\" description=\"...\" sectionTitle=\"All guides\" anchor=\"all-guides\" count={rows.length} nav={sectionNavigation(...)}> with <IndexList rows={...} /> as the child \u2014 count must be derived from the rows array because the spec asserts the Chip text equals the row count, and the h2 text must stay separate from it (no literal 'All guides (5)')"
+    },
+    {
+      "target": "GBC-008",
+      "found": "Same invented interface plus the layout renders the slot verbatim \u2014 ordering and the absent count Chip are the page's choices",
+      "change": "changelog.astro should sort its collection newest-first before building rows (the layout never re-sorts) and omit count to match AC-2's Chip-free SectionHeader; /changelog/[version] pages stay on MarkdownLayout, which still renders exactly one nav[data-docs-nav] via the shared extraction"
+    },
+    {
+      "target": "GATE:FLOW-DOCS-03-five-guides-index",
+      "found": "AC-4's mobile claims depend on DocsNav's 44px min-height links and the 1fr-below-lg grid, both of which moved into the new files and are pinned by the AC-6 source contract",
+      "change": "nothing in the gate itself \u2014 it will pass as written; only note that '[data-section-index]' is the div.section-index grid root and the slot content sits inside it, which is what the row-count selector keys on"
+    },
+    {
+      "target": "ROADMAP",
+      "found": "Five pre-existing vitest failures on main (proven by stash at .tmp/GBC-016/cycle-1/green/fail-repro-3-stashed.txt): ORI-AST-001 x3, SHELL-002, REF-006",
+      "change": "they need an owner and a fix task before any sprint gate that runs the full suite, and until then gates should scope vitest to their own spec files rather than inheriting these reds"
+    }
+  ],
+  "feedback": [
+    "The MUST_OBSERVE \"exactly 1 '<slot'\" silently forbids the meta-description head slot that the MarkdownLayout pattern (and the task's own Pattern note pointing at it) would suggest \u2014 the task file should have stated 'no head slot' explicitly so the implementer is not choosing between an implied SEO convention and a literal contract reading.",
+    "The task file never specifies SectionIndexLayout's prop surface even though two downstream tasks (GBC-008, GBC-010) must program against it \u2014 pinning the interface in the task (or in a shared design note) would remove a silent cross-task dependency on one implementer's naming choices.",
+    "For unit-contract tasks whose evidence type is stdout, the VERIFY line should include vitest's --disableConsoleIntercept, because the bare command exits 0 while printing no evidence in non-TTY environments (vitest 4 behavior).",
+    "The pre-authorized fallow remediation was unnecessary and the handoff's framing ('will be orphans until composed') was wrong for layouts \u2014 future handoffs should distinguish components/ (orphans, may need seeding) from layouts/ and pages/ (entry surfaces, never orphan) so implementers do not seed preemptively."
+  ]
+}
+```
