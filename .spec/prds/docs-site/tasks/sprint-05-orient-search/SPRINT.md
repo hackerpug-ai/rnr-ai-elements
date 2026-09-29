@@ -48,7 +48,7 @@ Execute the following locked checks against the candidate only after their decla
 
 - [ ] 2. Read /docs/theming, including the engine-scoped no-config statement, @theme mapping, Light and Dark columns, at least ten oklch occurrences, and distinct paired --primary values. Follow CLI and Dark mode links and the preserved #textclasscontext and #rendermarkdown anchors. Require source-correct seam descriptions, real bodies, 200 responses, and readable JavaScript-disabled content. RED must expose the missing contract, not claim that the existing Theming route is absent. Run `pnpm exec playwright test tests/sprint-05-orient-search/theming-and-section-nav.spec.ts --grep FLOW-DOCS-01-theming-and-section-nav`. Flow: `FLOW-DOCS-01-theming-and-section-nav`. `exercises: ORI-CONT-004, ORI-CONT-002, ORI-VIS-002`
 
-- [ ] 3. Follow the single seed-data Quickstart. Execute its literal rnraielements.com commands for both engines in clean Expo 57 consumers, then observe the displayed screen on iOS, Android, and Web. Read its conclusion and follow the handoff to the separate real-provider apps/example live-chat screen. Require fresh, current-invocation proof for all six seed and six live engine/platform combinations, bound to the candidate and source hashes; local registry substitutions or older manifests fail. Run `pnpm exec playwright test tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts --grep FLOW-DOCS-02-quickstart-chat-screen`. Flow: `FLOW-DOCS-02-quickstart-chat-screen`. `exercises: ORI-CONT-004, ORI-CONT-003, ORI-RN-000, ORI-RN-001, ORI-RN-002, ORI-RN-003, ORI-RN-004, ORI-RN-005, ORI-AI-001, ORI-AI-002, ORI-DEP-001`
+- [ ] 3. Follow the single seed-data Quickstart. Execute its literal rnraielements.com commands for both engines in clean Expo 57 consumers, then observe the displayed screen on iOS, Android, and Web. Read its conclusion and follow the handoff to the separate real-provider apps/example live-chat screen. Require fresh, current-invocation proof for all six seed and six live engine/platform combinations, bound to the candidate and source hashes; local registry substitutions or older manifests fail. Run `pnpm exec playwright test tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts --grep FLOW-DOCS-02-quickstart-chat-screen`. Flow: `FLOW-DOCS-02-quickstart-chat-screen`. `exercises: ORI-CONT-004, ORI-CONT-003, ORI-RN-000, ORI-RN-001, ORI-RN-002, ORI-RN-003, ORI-RN-004, ORI-RN-005, ORI-AI-001, ORI-AI-002, ORI-DEP-001, FIX-ORI-RN-004-4`
 
 - [ ] 4. Open /docs/theming in light mode and use the actual theme toggle. Require root .dark without .light, color-scheme: dark, persisted rnr-theme=dark, background oklch(0.145 0 0), and changed live token swatches. Reload and inspect every captured frame from the first nonblank paint for dark-mode continuity. Toggle back and verify the complementary light state and persistence. Run `pnpm exec playwright test tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts --grep FLOW-SHELL-01-theme-toggle-persisted-flash-free`. Flow: `FLOW-SHELL-01-theme-toggle-persisted-flash-free`. `exercises: ORI-AST-003, ORI-VIS-002`
 
@@ -167,8 +167,9 @@ All tasks remain planned. Titles, assignments, estimates, and dependency edges b
 | FIX-ORI-SUITE-2 | Repair the foreign suite drifts behind the aggregate's residual failures | ghactions-implementer | 3 | 21 | ORI-CI-002 |
 | FIX-ORI-RN-003-3 | Make driveWeb return from the seed web legs and the negative-control serve | react-native-reusables-implementer | 3 | 24 | ORI-RN-003 |
 | FIX-ORI-SUITE-2-2 | Land and re-prove the foreign-suite repair after premature completion | ghactions-implementer | 3 | 25 | FIX-ORI-SUITE-2, FIX-ORI-SUITE-2-1 |
+| FIX-ORI-RN-004-4 | Repair the native live proof after isolated iOS diagnosis | react-native-reusables-implementer | 5 | 26 | ORI-RN-004 |
 
-**Total: 49 tasks / 161 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1, FIX-ORI-VIS-001-1, FIX-ORI-SUITE-1, FIX-ORI-CONT-004-1, FIX-ORI-SUITE-2, FIX-ORI-RN-003-3 and FIX-ORI-SUITE-2-2, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination, ask-wave18-add-theming-nav-inclusion, ask-wave19-add-preexisting-suite-repair, ask-wave20-add-rnw-pin, ask-wave21-add-foreign-suite-repair, ask-wave24-add-driveweb-return and the 2026-09-29 failed-review remediation audit). Review assignments and exact read/write boundaries remain in the task charters.
+**Total: 50 tasks / 166 points** (the approved 36-task/131-point plan plus FIX-ORI-AI-001-1, FIX-ORI-RN-005-1, FIX-ORI-RN-004-2, FIX-ORI-RN-004-3, FIX-ORI-AI-002-1, FIX-ORI-CI-001-1, FIX-ORI-AST-004-1, FIX-ORI-VIS-001-1, FIX-ORI-SUITE-1, FIX-ORI-CONT-004-1, FIX-ORI-SUITE-2, FIX-ORI-RN-003-3, FIX-ORI-SUITE-2-2 and FIX-ORI-RN-004-4, added in flight by planner asks ask-wave8-add-payload-retry-fix, ask-wave9-add-nativewind-compile-fix, ask-wave10-add-uniwind-webleg-stall-fix, ask-wave11-add-caller-backend-restart-fix, ask-wave12-add-nativewind-baseline-ordering-fix, ask-wave16-add-quickstart-tutorial-designation, ask-wave17-add-streamdown-dependency-destination, ask-wave18-add-theming-nav-inclusion, ask-wave19-add-preexisting-suite-repair, ask-wave20-add-rnw-pin, ask-wave21-add-foreign-suite-repair, ask-wave24-add-driveweb-return the 2026-09-29 failed-review remediation audit and ask-wave26-add-native-live-repair). Review assignments and exact read/write boundaries remain in the task charters.
 
 ## Waves and Dependencies
 
@@ -197,6 +198,7 @@ The following waves are the longest dependency depth of each task. They summariz
 | 19 | ORI-DEP-002 |
 | 20 | ORI-DEP-003 |
 | 25 | FIX-ORI-SUITE-2-2 |
+| 26 | FIX-ORI-RN-004-4 (NEXT after completed ORI-RN-004) |
 
 The prerequisite chain deliberately reaches beyond prose: ORI-RN-000 precedes canonical registry deployment and clean-consumer work; real AI/native evidence precedes the Quickstart handoff; complete content precedes integrated search and recovery; post-integration journeys precede hosted acceptance; verified accepted-version deployment precedes apex publication. No task may bypass an edge because its source files already exist.
 
@@ -285,6 +287,7 @@ The following filenames are derived from each exact task ID and title. Each char
 - [ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md](./ORI-RN-003-execute-the-copied-quickstart-on-both-native-platforms-and-web.md)
 
 - [TASK-FIX-ORI-RN-003-3.md](./TASK-FIX-ORI-RN-003-3.md)
+- [TASK-FIX-ORI-RN-004-4.md](./TASK-FIX-ORI-RN-004-4.md)
 
 - [ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md](./ORI-RN-004-compose-and-verify-the-separate-live-chat-screen-in-apps-example.md)
 
