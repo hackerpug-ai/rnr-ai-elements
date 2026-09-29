@@ -1,9 +1,9 @@
 {
   "task": "FIX-ORI-RN-003-3",
-  "evidence_cycle": 5,
-  "remediates_candidate_sha": "b38975b163aa71d748e604a74f1849824e562bfb",
-  "remediates_verdict_sha256": "c2d6a629a005eae2e43b182f09ffba50298661045185ce3d3ecd9c05549ef022",
-  "execution_head_sha": "cd8d76abdd2b228fce7dd467583289fac80626ae",
+  "evidence_cycle": 6,
+  "remediates_candidate_sha": "ea9400aea0ba6e7f804b8951e0462590b35b879f",
+  "remediates_verdict_sha256": "a5b282fd68137e3e4719c0e0d9be1f4eeaa11083d33a799c871acaabc3b008a8",
+  "execution_head_sha": "03a534c0f5b4e78c92d2aea256ddd02611cdd88f",
   "disposition": "not_reproduced_no_driver_change",
   "driver_changed": false,
   "red_evidence_claimed": false,
@@ -13,7 +13,7 @@
   "full_matrix_budget_ms": 9000000,
   "source_hashes": {
     "drive_web_sha256": "69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33",
-    "proof_harness_sha256": "1e7238d40e51b69d51baca223f4c8b2d891dd218d7150960a1962e0c32149136"
+    "proof_harness_sha256": "c5f92eb63722ef9337988f2a87bbd97f37af1558fbdcaeab0076afd99cfc5e5b"
   },
   "historical_receipt_hashes": {
     "red_json_sha256": "fb844da4c2ecb882656f3fd2c987bf02a243ef7f31000b9fb08de35c603b6745",
@@ -36,24 +36,24 @@
   "scope_paths_outside_allowlist": 0,
   "outside_allowlist_paths": [],
   "diagnostic": {
-    "run_id": "FIX-ORI-RN-003-3-diagnostic-1790698786936",
+    "run_id": "FIX-ORI-RN-003-3-diagnostic-1790699791138",
     "exit": 0,
-    "elapsed_ms": 62335,
+    "elapsed_ms": 66792,
     "calls": [
       {
         "phase": "diagnostic-uniwind-baseline",
         "engine": "uniwind",
-        "marker": "FIX-ORI-RN-003-3 diagnostic-baseline 1 1790698809732",
-        "serve_url": "http://127.0.0.1:63987",
-        "port": 63987,
+        "marker": "FIX-ORI-RN-003-3 diagnostic-baseline 1 1790699818180",
+        "serve_url": "http://127.0.0.1:52731",
+        "port": 52731,
         "exportExit": 0,
         "settled_before_close": true,
         "settled_before_harness_cleanup": true,
-        "elapsed_ms": 1008,
-        "started_at": "2026-09-29T16:20:11.936Z",
-        "settled_at": "2026-09-29T16:20:12.790Z",
-        "harness_cleanup_started_at": "2026-09-29T16:20:12.944Z",
-        "harness_cleanup_finished_at": "2026-09-29T16:20:12.957Z",
+        "elapsed_ms": 1009,
+        "started_at": "2026-09-29T16:37:00.470Z",
+        "settled_at": "2026-09-29T16:37:01.322Z",
+        "harness_cleanup_started_at": "2026-09-29T16:37:01.479Z",
+        "harness_cleanup_finished_at": "2026-09-29T16:37:01.494Z",
         "promise_outcome": "fulfilled",
         "browser_connected_at_observe": true,
         "page_open_at_observe": false,
@@ -72,17 +72,17 @@
       {
         "phase": "diagnostic-uniwind-disconnected",
         "engine": "uniwind",
-        "marker": "FIX-ORI-RN-003-3 diagnostic-disconnected 2 1790698812960",
-        "serve_url": "http://127.0.0.1:64165",
-        "port": 64165,
+        "marker": "FIX-ORI-RN-003-3 diagnostic-disconnected 2 1790699821497",
+        "serve_url": "http://127.0.0.1:52953",
+        "port": 52953,
         "exportExit": 0,
         "settled_before_close": true,
         "settled_before_harness_cleanup": true,
-        "elapsed_ms": 30846,
-        "started_at": "2026-09-29T16:20:14.573Z",
-        "settled_at": "2026-09-29T16:20:45.299Z",
-        "harness_cleanup_started_at": "2026-09-29T16:20:45.419Z",
-        "harness_cleanup_finished_at": "2026-09-29T16:20:45.433Z",
+        "elapsed_ms": 30835,
+        "started_at": "2026-09-29T16:37:03.215Z",
+        "settled_at": "2026-09-29T16:37:33.951Z",
+        "harness_cleanup_started_at": "2026-09-29T16:37:34.050Z",
+        "harness_cleanup_finished_at": "2026-09-29T16:37:34.065Z",
         "promise_outcome": "fulfilled",
         "browser_connected_at_observe": true,
         "page_open_at_observe": false,
@@ -119,7 +119,7 @@
         "red"
       ],
       "exit": 0,
-      "recorded_at": "2026-09-29T16:20:49.271Z"
+      "recorded_at": "2026-09-29T16:37:37.930Z"
     },
     "full_matrix": {
       "argv": [
@@ -131,7 +131,7 @@
         "runDriveWebReturnProof"
       ],
       "exit": 0,
-      "recorded_at": "2026-09-29T16:22:44.766Z"
+      "recorded_at": "2026-09-29T16:39:31.604Z"
     },
     "vitest_selector": {
       "argv": [
@@ -144,7 +144,7 @@
         "driveWebActionTimeoutStaysFinite"
       ],
       "exit": 0,
-      "recorded_at": "2026-09-29T16:24:09Z"
+      "recorded_at": "2026-09-29T16:40:05Z"
     },
     "typecheck": {
       "argv": [
@@ -152,7 +152,7 @@
         "typecheck"
       ],
       "exit": 0,
-      "recorded_at": "2026-09-29T16:24:09Z"
+      "recorded_at": "2026-09-29T16:40:05Z"
     },
     "scoped_biome": {
       "argv": [
@@ -164,7 +164,7 @@
         "tests/sprint-05-orient-search/drive-web-return-proof.test.ts"
       ],
       "exit": 0,
-      "recorded_at": "2026-09-29T16:24:09Z"
+      "recorded_at": "2026-09-29T16:40:05Z"
     }
   },
   "static_gates": {
@@ -181,7 +181,7 @@
       "files_checked": 2,
       "fixes_applied": 0
     },
-    "recorded_at": "2026-09-29T16:24:09Z"
+    "recorded_at": "2026-09-29T16:40:05Z"
   },
   "downstream_historical_evidence": {
     "caller_run_manifest": {
@@ -205,36 +205,36 @@
     "consumer_roots_remaining": 0,
     "export_dirs_remaining": 0,
     "owned_listener_ports_checked": [
-      53123,
-      55595,
-      55800,
-      58041,
-      63987,
-      64165
+      52731,
+      52953,
+      58237,
+      60663,
+      60854,
+      63090
     ],
     "owned_listeners_remaining": 0,
-    "recorded_at": "2026-09-29T16:24:09Z"
+    "recorded_at": "2026-09-29T16:40:05Z"
   },
   "full_matrix": {
-    "run_id": "FIX-ORI-RN-003-3-full-1790698853593",
+    "run_id": "FIX-ORI-RN-003-3-full-1790699862049",
     "exit": 0,
-    "elapsed_ms": 111155,
+    "elapsed_ms": 109542,
     "within_budget": true,
     "calls": [
       {
         "phase": "nativewind-seed",
         "engine": "nativewind",
-        "marker": "FIX-ORI-RN-003-3 nativewind-seed 1 1790698881948",
-        "serve_url": "http://127.0.0.1:53123",
-        "port": 53123,
+        "marker": "FIX-ORI-RN-003-3 nativewind-seed 1 1790699890248",
+        "serve_url": "http://127.0.0.1:58237",
+        "port": 58237,
         "exportExit": 0,
         "settled_before_close": true,
         "settled_before_harness_cleanup": true,
         "elapsed_ms": 1007,
-        "started_at": "2026-09-29T16:21:30.480Z",
-        "settled_at": "2026-09-29T16:21:31.338Z",
-        "harness_cleanup_started_at": "2026-09-29T16:21:31.487Z",
-        "harness_cleanup_finished_at": "2026-09-29T16:21:31.500Z",
+        "started_at": "2026-09-29T16:38:18.875Z",
+        "settled_at": "2026-09-29T16:38:19.709Z",
+        "harness_cleanup_started_at": "2026-09-29T16:38:19.882Z",
+        "harness_cleanup_finished_at": "2026-09-29T16:38:19.896Z",
         "promise_outcome": "fulfilled",
         "browser_connected_at_observe": true,
         "page_open_at_observe": false,
@@ -253,17 +253,17 @@
       {
         "phase": "uniwind-baseline",
         "engine": "uniwind",
-        "marker": "FIX-ORI-RN-003-3 uniwind-baseline 2 1790698921960",
-        "serve_url": "http://127.0.0.1:55595",
-        "port": 55595,
+        "marker": "FIX-ORI-RN-003-3 uniwind-baseline 2 1790699929659",
+        "serve_url": "http://127.0.0.1:60663",
+        "port": 60663,
         "exportExit": 0,
         "settled_before_close": true,
         "settled_before_harness_cleanup": true,
-        "elapsed_ms": 1008,
-        "started_at": "2026-09-29T16:22:04.286Z",
-        "settled_at": "2026-09-29T16:22:05.120Z",
-        "harness_cleanup_started_at": "2026-09-29T16:22:05.294Z",
-        "harness_cleanup_finished_at": "2026-09-29T16:22:05.307Z",
+        "elapsed_ms": 806,
+        "started_at": "2026-09-29T16:38:51.837Z",
+        "settled_at": "2026-09-29T16:38:52.598Z",
+        "harness_cleanup_started_at": "2026-09-29T16:38:52.643Z",
+        "harness_cleanup_finished_at": "2026-09-29T16:38:52.657Z",
         "promise_outcome": "fulfilled",
         "browser_connected_at_observe": true,
         "page_open_at_observe": false,
@@ -282,17 +282,17 @@
       {
         "phase": "uniwind-disconnected",
         "engine": "uniwind",
-        "marker": "FIX-ORI-RN-003-3 uniwind-disconnected 3 1790698925310",
-        "serve_url": "http://127.0.0.1:55800",
-        "port": 55800,
+        "marker": "FIX-ORI-RN-003-3 uniwind-disconnected 3 1790699932659",
+        "serve_url": "http://127.0.0.1:60854",
+        "port": 60854,
         "exportExit": 0,
         "settled_before_close": true,
         "settled_before_harness_cleanup": true,
-        "elapsed_ms": 30836,
-        "started_at": "2026-09-29T16:22:06.976Z",
-        "settled_at": "2026-09-29T16:22:37.710Z",
-        "harness_cleanup_started_at": "2026-09-29T16:22:37.812Z",
-        "harness_cleanup_finished_at": "2026-09-29T16:22:37.825Z",
+        "elapsed_ms": 30840,
+        "started_at": "2026-09-29T16:38:54.413Z",
+        "settled_at": "2026-09-29T16:39:25.145Z",
+        "harness_cleanup_started_at": "2026-09-29T16:39:25.253Z",
+        "harness_cleanup_finished_at": "2026-09-29T16:39:25.265Z",
         "promise_outcome": "fulfilled",
         "browser_connected_at_observe": true,
         "page_open_at_observe": false,
@@ -311,17 +311,17 @@
       {
         "phase": "uniwind-restored",
         "engine": "uniwind",
-        "marker": "FIX-ORI-RN-003-3 uniwind-restored 4 1790698957827",
-        "serve_url": "http://127.0.0.1:58041",
-        "port": 58041,
+        "marker": "FIX-ORI-RN-003-3 uniwind-restored 4 1790699965268",
+        "serve_url": "http://127.0.0.1:63090",
+        "port": 63090,
         "exportExit": 0,
         "settled_before_close": true,
         "settled_before_harness_cleanup": true,
-        "elapsed_ms": 808,
-        "started_at": "2026-09-29T16:22:39.564Z",
-        "settled_at": "2026-09-29T16:22:40.323Z",
-        "harness_cleanup_started_at": "2026-09-29T16:22:40.372Z",
-        "harness_cleanup_finished_at": "2026-09-29T16:22:40.386Z",
+        "elapsed_ms": 806,
+        "started_at": "2026-09-29T16:39:27.053Z",
+        "settled_at": "2026-09-29T16:39:27.811Z",
+        "harness_cleanup_started_at": "2026-09-29T16:39:27.859Z",
+        "harness_cleanup_finished_at": "2026-09-29T16:39:27.873Z",
         "promise_outcome": "fulfilled",
         "browser_connected_at_observe": true,
         "page_open_at_observe": false,
@@ -348,8 +348,8 @@
   "task_diff_audit": {
     "immutable_base_sha": "09123090d57f7747ac3760055a5932392b598351",
     "immutable_base_tree_sha": "770221ce4b3808fb1850206448b37ada5fdd748e",
-    "executed_head_sha": "cd8d76abdd2b228fce7dd467583289fac80626ae",
-    "executed_head_tree_sha": "9ba7b867b497977e9f79f3734d4afb22f05a68db",
+    "executed_head_sha": "03a534c0f5b4e78c92d2aea256ddd02611cdd88f",
+    "executed_head_tree_sha": "fde2e960d92d1b673ad1f85775e99c2537fa75a6",
     "committed_paths_since_base": [
       ".tmp/FIX-ORI-RN-003-3/cycle-2/red.json",
       ".tmp/FIX-ORI-RN-003-3/green.json",
@@ -410,13 +410,11 @@
     "tests/sprint-05-orient-search/evidence/ORI-RN-001/nativewind-install.txt",
     "tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt"
   ],
-  "integration_guard": {
-    "immutable_task_base_sha": "09123090d57f7747ac3760055a5932392b598351",
-    "recorded_execution_head_sha": "cd8d76abdd2b228fce7dd467583289fac80626ae",
-    "current_main_sha_observed": "962f724943e4a841860b694b476099e69d537671",
-    "later_main_changed_paths_observed": 175,
-    "later_main_paths_outside_task_scope_observed": 175,
-    "proof": "vitest recomputed real Git history, validated the recorded immutable task boundary, and accepted current executable hashes while unrelated main paths existed",
-    "recorded_at": "2026-09-29T16:24:09Z"
+  "aggregate_guard": {
+    "mode": "recorded_boundary_paths_and_current_executable_hashes",
+    "historical_git_objects_required": false,
+    "local_main_branch_required": false,
+    "full_checkout_selector_exit": 0,
+    "recorded_at": "2026-09-29T16:40:05Z"
   }
 }
