@@ -1,0 +1,49 @@
+{
+  "task": "FIX-ORI-RN-004-4",
+  "status": "not_reproduced",
+  "assigned_base": "713eee79f70a15bba4c04dfa796151d69e1e6093",
+  "current_yaml_sha256": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+  "attempts": [
+    {
+      "cycle": "cycle-2",
+      "run_id": "FIX-ORI-RN-004-4-cycle-2-ios-red",
+      "started_at": "2026-09-29T16:22:38.143Z",
+      "ended_at": "2026-09-29T16:29:15.845Z",
+      "child_exit": 1,
+      "child_exit_interpretation": "Expected inherited one-platform completed=false exit; both real iOS appearance legs passed.",
+      "actual_native_failures": 0,
+      "light": "passed",
+      "dark": "passed",
+      "final_screenshot_visually_inspected": true,
+      "exact_marker_assertion_completed": true,
+      "evidence": "cycle-2/ios-red/red.json"
+    },
+    {
+      "cycle": "cycle-3",
+      "run_id": "FIX-ORI-RN-004-4-cycle-3-ios-red",
+      "started_at": "2026-09-29T16:29:42.367Z",
+      "ended_at": "2026-09-29T16:35:56.744Z",
+      "child_exit": 1,
+      "child_exit_interpretation": "Expected inherited one-platform completed=false exit; both real iOS appearance legs passed.",
+      "actual_native_failures": 0,
+      "light": "passed",
+      "dark": "passed",
+      "final_screenshot_visually_inspected": true,
+      "exact_marker_assertion_completed": true,
+      "evidence": "cycle-3/ios-red/red.json"
+    }
+  ],
+  "visual_observation": "The preserved final screenshots show the usable Retry end state with the composer visible, the keyboard absent, and the real Retry answer visible. They do not independently prove that the complete marker remained on screen at final capture; for example, the cycle-3 dark capture shows only the marker suffix at the top. Exact marker visibility is temporal evidence from the earlier real Maestro assertVisible step, which completed twice in each appearance leg, rather than an inference from hierarchy presence or the final screenshot.",
+  "behavior_observation": "Both attempts preserved active Stop and endpoint-loss/Retry. Each light and dark leg passed the unchanged Maestro flow, produced a real completed Retry request with exactly one retained failed user turn, and left zero listeners on owned ports.",
+  "snapshot_classification": "Each ios-red/driver-evidence snapshot copies the driver's fixed ORI-RN-004 evidence root immediately after the iOS-only run. The ios/** files, manifest, provider correlation, heartbeat and Metro log are current. Copied android/** screenshots are carried historical source artifacts because the fixed driver root already contained them; they are not current Android proof and are not used by this disposition.",
+  "source_comparison": {
+    "failed_cont_candidate": "21b2bf92673fa465aba3ba3dbc0ccd622ea24417",
+    "failed_cont_yaml_sha256": "4cd1efcce46dbbfb559330947ec8edf3ed64cc84c9e2f31a184d650a19dc7b5a",
+    "failed_cont_difference_from_assigned_base": "Adds a tap on the Live chat title and scrollUntilVisible for MARKER with direction UP, timeout 30000, visibilityPercentage 40, and centerElement true after the first Send message tap.",
+    "unreviewed_cont_tip": "e44dbabbaa28e31f70beeaaddd65aeb79ccb3962",
+    "unreviewed_cont_tip_yaml_sha256": "55c170aa2347423e6b78dcfc9087f655c7fe6910f01fe4bc6bba9627369fd4f5",
+    "unreviewed_tip_difference_from_failed_candidate": "Replaces the title tap with an unverified 50%,30% coordinate tap, waits 3000 ms, and changes centerElement from true to false while retaining visibilityPercentage 40.",
+    "causation_claimed": false
+  },
+  "stop_condition": "The task permits at most two bounded assigned-base reproduction attempts. Both passed every real iOS appearance, so the mandatory actual RED does not exist on the assigned base. No YAML or native driver behavior was changed, no historical failure was relabeled, and the unreviewed patch was not imported."
+}

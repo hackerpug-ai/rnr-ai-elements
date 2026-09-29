@@ -1,0 +1,104 @@
+{
+  "task": "FIX-ORI-RN-004-4",
+  "phase": "ios",
+  "mode": "red",
+  "run_id": "FIX-ORI-RN-004-4-cycle-2-ios-red",
+  "executed_head": "713eee79f70a15bba4c04dfa796151d69e1e6093",
+  "source_sha256": {
+    "tests/sprint-05-orient-search/live-example.maestro.yaml": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+    "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "e92d1afabb5dc1dd5e0d43dd2e1b3a3db429cdc964342d415743e03472f15b39",
+    "tests/sprint-05-orient-search/native-live-repair-proof_test.ts": "ea3d1e00babc1faf47d541c6080ba53eec3d46eddff2671f8d841c2c05991058",
+    "tests/sprint-05-orient-search/live-example-proof.ts": "967f841e20562e72a47dd98e208551435c0d396612f1e791047c7628d3c614cd",
+    "tests/sprint-05-orient-search/run-live-example-proof.mjs": "56182ddf0ae69990a02b8fd54fd1787f2c27c9846d8d87bea04a75c0532060f8",
+    "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+    "apps/example/components/live-chat-screen.tsx": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+    "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+    "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+    "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+  },
+  "preflight": {
+    "devices": {
+      "ios_reserved_booted": true,
+      "unrelated_ios_visible": true,
+      "android_reserved_online": true,
+      "android_expo_go_57_0_9": true,
+      "apk_path": "/Users/justinrich/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk",
+      "apk_exists": true,
+      "apk_sha256": "14c18828a3d04e43922245920bd941b978fd1c7a5aec88a0188032f0bb4972ce"
+    },
+    "ports": [
+      4000,
+      8095,
+      8406
+    ],
+    "listeners_before": []
+  },
+  "execution": {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "tests/sprint-05-orient-search/support/live-example-proof.test.ts",
+      "--platforms",
+      "ios",
+      "--run-id",
+      "FIX-ORI-RN-004-4-cycle-2-ios-red"
+    ],
+    "started_at": "2026-09-29T16:22:38.143Z",
+    "ended_at": "2026-09-29T16:29:15.845Z",
+    "child_pid": 72987,
+    "process_group_id": 72987,
+    "last_child_output_at": "2026-09-29T16:29:15.832Z",
+    "timeout_ms": 2700000,
+    "timed_out": false,
+    "exit_code": 1,
+    "signal": null,
+    "log": "tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/child.log",
+    "heartbeat_log": "tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/supervisor-heartbeat.jsonl"
+  },
+  "driver_manifest": "tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/driver-evidence/run-manifest.json",
+  "driver_evidence_sha256": {
+    "README.md": "15d2f85f83a1383990a9a471c789222eb6b4528ad6df00c464c92c8c26b77fd5",
+    "android/dark/retry-state.png": "11878c6d58ec3d5a84aeb45a7972f5ad6489d055190af4096bc50bc95f3f26fe",
+    "android/dark/screenshot.png": "11878c6d58ec3d5a84aeb45a7972f5ad6489d055190af4096bc50bc95f3f26fe",
+    "android/light/retry-state.png": "d315497e23bb25f10c71fd14e4aaaf510ffcbec7b1fb69d17cd00b0561143b05",
+    "android/light/screenshot.png": "d315497e23bb25f10c71fd14e4aaaf510ffcbec7b1fb69d17cd00b0561143b05",
+    "example-package-typecheck.txt": "4af4b41b6b4a52821c2f418c3727cb9034238527e5569b6ef5a608cfb203b7b6",
+    "heartbeat.log": "ba6e0d1cce42cbc65972b0ae3ca21209c7d7797db1b605bb0dab3d4b6ec7195f",
+    "ios/dark/retry-state.png": "4c245b5c4dc40be3fe5b06407c9170f2f5b18218d7d33fdfe26388300c39ec75",
+    "ios/dark/screenshot.png": "4c245b5c4dc40be3fe5b06407c9170f2f5b18218d7d33fdfe26388300c39ec75",
+    "ios/light/retry-state.png": "2025bc4a2b5d95b38ee36d79b3803e8e157035d63ac80d0e6c1bd79a1b1c377e",
+    "ios/light/screenshot.png": "2025bc4a2b5d95b38ee36d79b3803e8e157035d63ac80d0e6c1bd79a1b1c377e",
+    "live-import-graph-typecheck.txt": "aae48d007890737c15549a19b0c9a479b47c8a5f46d67b6581d647d9bd766ef2",
+    "metro.log": "d83f5bffa50170af3849618388bad19887c0872f306fa2d3c3949325fc9a7cfa",
+    "provider-correlation.json": "37736b71367d847908d6848917c08378242f449c675c851a05c04b66617311ee",
+    "run-manifest.json": "fe8bf5f261ee1cd94544b8d3df42aac273d8db1e0500ff32abfc0173e0cd0055"
+  },
+  "verdict": {
+    "appearances": [
+      "light",
+      "dark"
+    ],
+    "exactly_light_dark": true,
+    "passed": true,
+    "actual_failure_count": 0,
+    "actual_failures": [],
+    "markers_visible": true,
+    "active_stop": true,
+    "retries": true,
+    "inherited_completed_false": true
+  },
+  "teardown": {
+    "listeners_after": [],
+    "zero_owned_listeners": true,
+    "devices_after": {
+      "ios_reserved_booted": true,
+      "unrelated_ios_visible": true,
+      "android_reserved_online": true,
+      "android_expo_go_57_0_9": true,
+      "apk_path": "/Users/justinrich/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk",
+      "apk_exists": true,
+      "apk_sha256": "14c18828a3d04e43922245920bd941b978fd1c7a5aec88a0188032f0bb4972ce"
+    }
+  }
+}
