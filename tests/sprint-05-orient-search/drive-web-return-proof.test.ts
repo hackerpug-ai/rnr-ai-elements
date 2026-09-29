@@ -181,22 +181,27 @@ function gitValue(args: string[], label: string): string {
   return res.stdout.trim();
 }
 
-function assertTaskDiffBase(): void {
+function assertTaskDiffBase(candidate = 'HEAD'): void {
   const tree = gitValue(['rev-parse', `${TASK_DIFF_BASE_SHA}^{tree}`], 'task diff base');
   if (tree !== TASK_DIFF_BASE_TREE_SHA) throw new Error(`task diff base tree changed: ${tree}`);
-  const ancestor = spawnSync('git', ['merge-base', '--is-ancestor', TASK_DIFF_BASE_SHA, 'HEAD'], {
-    cwd: REPO_ROOT,
-  });
-  if (ancestor.status !== 0) throw new Error('task diff base is not an ancestor of HEAD');
+  const ancestor = spawnSync(
+    'git',
+    ['merge-base', '--is-ancestor', TASK_DIFF_BASE_SHA, candidate],
+    { cwd: REPO_ROOT },
+  );
+  if (ancestor.status !== 0) throw new Error(`task diff base is not an ancestor of ${candidate}`);
 }
 
 function lines(value: string): string[] {
   return value.split('\n').filter((line) => line.length > 0);
 }
 
-function committedTaskPaths(): string[] {
+function committedTaskPaths(candidate = 'HEAD'): string[] {
   return lines(
-    gitValue(['diff', '--name-only', `${TASK_DIFF_BASE_SHA}...HEAD`], 'committed task diff'),
+    gitValue(
+      ['diff', '--name-only', `${TASK_DIFF_BASE_SHA}...${candidate}`],
+      'committed task diff',
+    ),
   );
 }
 
@@ -268,6 +273,59 @@ function historicalReceiptAudit(paths: string[]): Record<string, unknown> {
       cycle_2_red_json_sha256: CYCLE_2_RED_SHA,
     },
   };
+}
+
+function stringArray(value: unknown, label: string): string[] {
+  if (!Array.isArray(value) || value.some((item) => typeof item !== 'string'))
+    throw new Error(`${label} is not a string array`);
+  return value as string[];
+}
+
+function assertSamePaths(actual: string[], expected: string[], label: string): void {
+  if (JSON.stringify(actual) === JSON.stringify(expected)) return;
+  throw new Error(`${label} changed: ${JSON.stringify(actual)} != ${JSON.stringify(expected)}`);
+}
+
+function recordedTaskDiffAudit(): Record<string, unknown> {
+  return asRecord(readJson(join(cycleDir(), 'run.json')).task_diff_audit);
+}
+
+function assertRecordedTaskDiffAudit(): void {
+  const audit = recordedTaskDiffAudit();
+  if (audit.immutable_base_sha !== TASK_DIFF_BASE_SHA) throw new Error('recorded base sha changed');
+  if (audit.immutable_base_tree_sha !== TASK_DIFF_BASE_TREE_SHA)
+    throw new Error('recorded base tree changed');
+  const executed = String(audit.executed_head_sha ?? '');
+  assertTaskDiffBase(executed);
+  const committed = committedTaskPaths(executed);
+  const recordedCommitted = stringArray(
+    audit.committed_paths_since_base,
+    'recorded committed paths',
+  );
+  assertSamePaths(committed, recordedCommitted, 'recorded committed paths');
+  const dirty = stringArray(audit.dirty_and_untracked_paths, 'recorded worktree paths');
+  const relevant = uniqueSorted([...committed, ...dirty]);
+  const recordedRelevant = stringArray(audit.relevant_paths, 'recorded relevant paths');
+  assertSamePaths(relevant, recordedRelevant, 'recorded relevant paths');
+  const currentScope = relevant.filter((path) => !PRESERVED_HISTORICAL.has(path));
+  const outside = outsideAllowlist(currentScope);
+  if (outside.length > 0)
+    throw new Error(`recorded paths outside allowlist: ${outside.join(', ')}`);
+}
+
+function assertCurrentExecutableHashes(): void {
+  const recorded = asRecord(readJson(join(cycleDir(), 'run.json')).source_hashes);
+  const current = sourceHashes();
+  if (recorded.drive_web_sha256 !== current.drive_web_sha256)
+    throw new Error('current driver differs from executed evidence');
+  if (recorded.proof_harness_sha256 !== current.proof_harness_sha256)
+    throw new Error('current harness differs from executed evidence');
+}
+
+function laterMainPathsOutsideTaskScope(): string[] {
+  assertTaskDiffBase('main');
+  const currentScope = committedTaskPaths('main').filter((path) => !PRESERVED_HISTORICAL.has(path));
+  return outsideAllowlist(currentScope);
 }
 
 function taskDiffAudit(): Record<string, unknown> {
@@ -999,27 +1057,21 @@ function outsideAllowlist(paths: string[]): string[] {
   return paths.filter((item) => !ALLOWED.has(item));
 }
 
-function allowlistClean(): boolean {
-  const audit = taskDiffAudit();
-  return audit.scope_paths_outside_allowlist === 0;
-}
-
 if (!directInvocation(process.argv[1])) {
   describe('driveWeb bounded diagnostic', () => {
     it('driveWebActionTimeoutStaysFinite', () => {
       const source = readFileSync(driveWebPath(), 'utf8');
-      const audit = taskDiffAudit();
       expect(sha256(source)).toBe(EXPECTED_DRIVER_SHA);
       expect(hasCheckAssignments(source)).toBe(true);
       expect(WATCHDOG_MS).toBe(180_000);
       expect(() => assertFullMatrixBudget(GREEN_BUDGET_MS - 1)).not.toThrow();
       expect(() => assertFullMatrixBudget(GREEN_BUDGET_MS)).toThrow(/exceeded/);
-      expect(audit.immutable_base_sha).toBe(TASK_DIFF_BASE_SHA);
-      expect(audit.immutable_base_tree_sha).toBe(TASK_DIFF_BASE_TREE_SHA);
+      expect(laterMainPathsOutsideTaskScope().length).toBeGreaterThan(0);
+      expect(() => assertRecordedTaskDiffAudit()).not.toThrow();
+      expect(() => assertCurrentExecutableHashes()).not.toThrow();
       expect(fileSha(join(cycleDir(), 'red.json'))).toBe(HISTORICAL_RED_SHA);
       expect(fileSha(join(cycleDir(), 'cycle-2/red.json'))).toBe(CYCLE_2_RED_SHA);
       expect(directInvocation(process.argv[1])).toBe(false);
-      expect(allowlistClean()).toBe(true);
     });
   });
 }
