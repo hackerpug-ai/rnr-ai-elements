@@ -1,20 +1,16 @@
-# FIX-ORI-RN-003-3: Make driveWeb return from the seed web legs and the negative-control serve
+# FIX-ORI-RN-003-3: Verify driveWeb returns and record the unreproduced hang
 
 ## What this does
 
-Makes `driveWeb` in `tests/sprint-05-orient-search/support/quickstart-web.ts` fulfill on the two seed web legs and on the negative-control serve. The function today calls `scrollIntoViewIfNeeded`, `click`, and `fill` with no action timeout. Playwright 1.63 defaults that timeout to `0`, which means wait forever. A `.catch` never runs if the promise never rejects.
-
-The seed-visible, older-seed, marker, and cleared-input checks stay real observations. `driveWeb` must still return `seedVisible`, `olderSeedReached`, `markerVisible`, `inputCleared`, and `markerSubmitted` from the live page. A finite timeout is the backstop that makes the call return. It is not a license to mark those booleans true.
+Verifies the unchanged `driveWeb` against both real seed web exports and the real disconnected-callback control. Records an evidence-backed `not_reproduced_no_driver_change` disposition. The task does not claim a timeout defect was fixed.
 
 ## Why
 
-ORI-CONT-004 cycle 3 is blocked. Commit `6e98cf4ad9e00160cee84716cf2efedb1aa75ecc` is on branch `kb-run-sprint/sprint-05-orient-search/ORI-CONT-004` and is not an ancestor of main `44aa249187fd11e9054210d27fed0f51367dc988`. The worktree and main have the same `quickstart-web.ts` blob (`3e2299b7774d26dafef813a888fbfcd6d25dcfad`).
+The original charter required a call to remain pending for 180000 ms, but also required the implementer to stop if every baseline call settled. Two actual standalone cycles settled. Cycle 1 recorded baseline 1007 ms and disconnected 30838 ms. Cycle 2 recorded baseline 1005 ms and disconnected 30745 ms. Baselines had all five booleans true; disconnected calls had seedVisible, olderSeedReached, and inputCleared true, with markerVisible and markerSubmitted false. Both used unchanged driver SHA-256 `69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33`.
 
-FLOW-DOCS-01-getting-started-engine-decision and FLOW-DOCS-01-theming-and-section-nav `run_flow` receipts exited 0 on 2026-09-28 at head `6e98cf4ad9e0`. FLOW-DOCS-02-quickstart-chat-screen did not. Its canonical receipt, in that worktree at `.tmp/sprint-05-orient-search/e2e-evidence/FLOW-DOCS-02-quickstart-chat-screen.json`, is still the 2026-09-26 file: `exit_code` 124, `artifact_fresh` false, `head` `a68c9a0eb19a94865ebe4b43bf739832bff8820e`.
+The caller's ORI-RN-003 manifest records `completed: true`, `passed_legs: 6`, both web engines with all five booleans true, and the callback negative control passing at candidate `21b2bf92673fa465aba3ba3dbc0ccd622ea24417`. This contradicts the mandatory seed-path hang premise. It does not prove the whole locked flow passed.
 
-Attempt 1 wrote the native seed screenshots and a uniwind web export, then listened on `127.0.0.1:8610`. That port is in `webSubmit`'s range (`8500` plus a random value under `400`), so `runAllLegs` had already returned. A second browser loaded that same page: HTTP 200, `Seed turn 24` visible, scroll to `Seed turn 01` in 206 ms. The in-process `driveWeb` call did not return. The note is `.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/.tmp/ORI-CONT-004/cycle-3/red/flow3-attempt1-wedge.txt`. Attempt 2 stalled at `web_listen` for 482 seconds and was killed (`flow3-attempt2-heartbeat.txt`).
-
-`quickstart-web.ts` is owned by completed ORI-RN-003. It is outside ORI-CONT-004 `writeAllowed`. This task depends only on ORI-RN-003. It does not revise ORI-CONT-004, the locked flow command, or `human-flows.json`.
+The later ORI-AI-002 Uniwind manifest has `exit_code: 1`, and the iOS result fails the `Stop generating` assertion. The precise cause remains unproven. That live/native failure and fresh locked-flow verification remain with ORI-CONT-004 and its separately scoped dependencies; they are not repaired or waived here.
 
 ## How to verify
 
@@ -26,11 +22,11 @@ pnpm typecheck
 pnpm exec biome ci tests/sprint-05-orient-search/support/quickstart-web.ts tests/sprint-05-orient-search/drive-web-return-proof.test.ts
 ```
 
-`--mode red` runs before the timeout edit. It must record one real `driveWeb` call that is still pending at 180000 ms. The default command is GREEN: both seed legs and the three negative-control serves fulfill before the page closes. The vitest command is the source guard only. It must not launch Chromium or export.
+Every command is preserved and must execute. The historical spelling `--mode red` now means a real diagnostic baseline/disconnected run: it records whether a hang reproduces, without requiring or fabricating one. The default command verifies both engines and baseline/disconnected/restored behavior. The legacy `driveWebActionTimeoutStaysFinite` selector checks the diagnostic harness bound, unchanged driver, and retained observations; it does not require an unsupported driver timeout edit. These changes are explicit in the authorized amendment below.
 
 ## Scope
 
-Own `driveWeb`'s action timeout, a bounded scroll helper only if the timed-out scroll leaves the older seed off screen, and the task-owned proof harness. No product source. No locked flow files. No ORI-CONT-004 charter.
+Use the existing task-owned proof harness and evidence paths. Preserve the current writeAllowed list. For this diagnostic disposition, `quickstart-web.ts` remains byte-for-byte unchanged. A newly reproduced defect is a blocker requiring a separate decision before any driver change. No product files, locked-flow files, or other task charters are owned here.
 
 <details>
 <summary>▸ Full agent specification (TASK-TEMPLATE v5.2 — required reading for implementer + reviewer)</summary>
@@ -42,65 +38,75 @@ Own `driveWeb`'s action timeout, a bounded scroll helper only if the timed-out s
 > Priority: P1 · Points: 3 · Type: FIX
 > Dependency phase: after ORI-RN-003
 > Proposed By: react-native-reusables-planner
-> TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
+> TDD_MODE: verification_only · RED_GREEN_REQUIRED: no — governed diagnostic revision; real runtime and negative-control verification remain mandatory
 > Sprint: [SPRINT.md](./SPRINT.md)
-> Planned date: 2026-09-28
-> Source SHA: 44aa249187fd11e9054210d27fed0f51367dc988
+> Planned date: 2026-09-28 · Revised date: 2026-09-29
+> Source SHA: 53034655a3062e9fa0e9f942e271d12418fb7a62
 
 AGENT: planner=react-native-reusables-planner | implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
 
-PROGRESS: 0/3 ACs; every TDD_STATE is none. All evidence paths are future outputs.
+PROGRESS: 0/3 revised ACs. Every TDD_STATE is none. Historical receipts support the diagnosis only; fresh verification and independent review are still required.
 
 ### OUTCOME
 
-`driveWeb` fulfills on both seed web legs and on the baseline, disconnected, and restored negative-control serves. Each call records a real `WebLegResult` before the page closes. The seed legs show the newest seed, the older seed, one submitted marker, and a cleared composer. The disconnected callback still fails the marker check.
+Both seed web legs and the real uniwind baseline/disconnected/restored calls fulfill under a bounded harness with the original observation contract. The task closes as a verified diagnostic with no driver change, not as a timeout repair or locked-flow completion.
 
 ### CRITICAL CONSTRAINTS — Never
 
-- Never change product source under `apps/`, `packages/`, or `scripts/`. An export failure is a blocker. Do not patch Uniwind, Metro, or `react-native-web` from this task.
-- Never edit ORI-CONT-004's task file, `human-flows.json`, `gate-plan.json`, or `tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts`. Do not run that locked flow as this task's gate.
-- Never weaken the checks. These assignments stay the real observations: `seedVisible` from exact `Seed turn 24: Ready for your message.`, `olderSeedReached` from exact `olderSeed` `isVisible()`, `inputCleared` from the textarea value `=== ''`, `markerVisible` from exact marker `isVisible()`, and `markerSubmitted = markerVisible`. The outer catch must not set any of them true.
-- Never prove this with a stubbed Playwright page, `page.setContent`, a mocked `Browser`, or an authored `WebLegResult`. A second client that can scroll the page does not count as `driveWeb` returning.
-- Never leave an action timeout of `0`. `page.setDefaultTimeout(0)` and `timeout: 0` on `scrollIntoViewIfNeeded`, `click`, or `fill` are the hang.
-- Never add a `fallow-ignore` comment. With no coverage file, Fallow CRAP is cyclomatic complexity squared plus complexity, and the gate fails at 30. Keep every new or edited function at cyclomatic complexity 4 or below. Put a scroll loop in its own helper.
+- Never edit product source under `apps/`, `packages/`, or `scripts/`; install/export failures are blockers.
+- Never edit ORI-CONT-004, `human-flows.json`, `gate-plan.json`, `quickstart-chat-screen.spec.ts`, or the locked command. Do not run the locked flow as this task's gate.
+- Never manufacture RED, prolong a successful call to 180000 ms, close the browser to induce a result, invent booleans, or call the absence of a timeout edit a failure.
+- Never weaken the five observed results: exact newest seed visibility, exact older seed visibility, textarea value `=== ''`, exact marker visibility, and `markerSubmitted = markerVisible`.
+- Never use a stub Playwright page, `page.setContent`, mocked Browser, authored WebLegResult, runtime-gated skip, or static historical receipt instead of the real current calls.
+- Never change `quickstart-web.ts` for this disposition. A newly reproduced pending call or wrong boolean is new evidence to report, not authority to patch the driver.
+- Never bypass hooks, rewrite historical evidence, or add `fallow-ignore`. Keep new/edited functions at cyclomatic complexity 4 or below.
 
 ### DONE WHEN
 
-- [ ] AC-1 proves both seed web legs fulfill before the page closes, in under 180000 ms, with all five booleans true.
-- [ ] AC-2 proves the three negative-control serves fulfill, and the disconnected callback returns `markerVisible` false.
-- [ ] AC-3 proves the finite timeout, the unchanged check assignments, the static gates, and the write boundary.
-- [ ] RED is a real pre-fix `driveWeb` call that is still pending at 180000 ms. If every pre-fix call settles, stop and report the booleans. Do not invent a hang.
+- [ ] AC-1: both current seed web engines return all five real booleans true in under 180000 ms.
+- [ ] AC-2: current baseline/disconnected/restored control passes, including exact source restoration.
+- [ ] AC-3: preserved commands run, driver hash and historical evidence remain unchanged, scope audit passes, and the diagnostic is truthful.
+- [ ] Independent react-native-reusables-reviewer approves the exact candidate and evidence; no claims of a timeout repair or complete FLOW-DOCS-02.
 
 ### SPECIFICATION
 
-One finite action timeout inside `driveWeb`, plus a task-owned harness that calls the real `exportWeb`, `serveExport`, `launchChromium`, and `driveWeb`. Immediately after `newPage()`, call `page.setDefaultTimeout(n)` with an integer `n` from 10000 to 30000 inclusive. `page.goto` keeps `timeout: 60_000`. `waitForFunction` keeps `timeout: 15_000`. Do not pass `timeout: 0`.
+Reuse the task-owned harness present in commit `ae894cf28b51fab518f6165ad3e37e113c527794`: `git ls-tree` resolves `tests/sprint-05-orient-search/drive-web-return-proof.test.ts` to blob `79cc76167b1d5cae83abee2e3d6d209f60384f36`. It was committed in ancestor `59f5e8bd5ac6ea8bf7106b99d7a1822c63f68c19`; cycle-2 commit ae894cf only adds receipt/install-log changes and inherits that harness. Do not discard its prior blocked cycles. Adapt its diagnostic and static checks within this task's existing scope. No production-driver change is expected or authorized by this revision.
 
-`fill` has no local catch today. A timeout rejection must hit the existing outer `try` so `driveWeb` fulfills with a `WebLegResult` instead of rejecting or staying pending. Do not delete that `try`.
+The harness calls real `prepareConsumer`, `exportWeb`, `serveExport`, `launchChromium`, and `driveWeb`. Two installs and four exports form the default matrix: nativewind seed; uniwind baseline, disconnected, restored. The uniwind baseline is also the uniwind seed leg, so four real calls satisfy the two seed-leg and three-control-role assertions. Require exportExit 0 and nonempty distinct markers. Source-presence inspection does not replace UI observations.
 
-If the finite timeout makes `olderSeedReached` false while the served document contains `Seed turn 01: Plan a weekend walk.`, replace the list and older `scrollIntoViewIfNeeded` calls with a helper that scrolls the overflow div in at most 30 steps, then keep `older.isVisible()` as the boolean. Do not set that boolean from text presence alone. The same pattern already works in `crawlTurns` inside `tests/sprint-05-orient-search/quickstart-content.spec.ts` (read-only). Do not import that spec. Attempt 1 showed a second browser could reach `Seed turn 01` in 206 ms, so a returned result with `olderSeedReached` false is not GREEN.
+Every call must fulfill with a real WebLegResult within 180000 ms before harness browser/server cleanup. Record rejection distinctly from fulfillment; do not let a rejection handler mark a result as passed. The harness watchdog bounds waiting and fails closed, but does not change Playwright's driver defaults. Record started/settled/cleanup timestamps, promise outcome, elapsed_ms, browser_connected_at_observe, and harness_closed_browser_before_settle. A pending call fails verification even if cleanup later causes it to settle.
 
-`runWebLeg` and `webSubmit` in `quickstart-proof.test.ts` stay unchanged. They already require the real booleans. `PromptInput` clears the field after a resolved `onSubmit` even when the callback does not append a turn. Do not require `inputCleared` false on the disconnected serve. The marker check is what must fail there. Do not edit `prompt-input.tsx`.
+`driveWeb` closes its own context in `finally` before it returns. Therefore `page_open_at_observe: false` after fulfillment is expected and is not a hang. The required ordering is fulfillment before external harness/browser cleanup; do not remove context cleanup or demand an open page after the function has returned. Preserve a legacy settled_before_close field only with this documented meaning; add settled_before_harness_cleanup for clarity.
+
+Baseline and restored calls require all five booleans true. The disconnected callback requires seedVisible and olderSeedReached true, markerVisible and markerSubmitted false. `inputCleared` is recorded as observed; PromptInput may clear after a resolved no-op callback, so false is not required. Only the disposable screen's single `onSubmit={handleSubmit}` is replaced with `onSubmit={() => {}}`. Restore in `finally` even if export/drive fails; compare exact original/mutated/restored SHA-256 values.
+
+The preserved `--mode red` command executes the real uniwind baseline and disconnected diagnosis. If both fulfill with the required observations, it exits 0 as diagnostic verification, records `hang_reproduced: false`, `red_evidence_claimed: false`, and `driver_changed: false` in `run.json`, and proceeds to the mandatory default matrix. A newly pending, rejected, or incorrect call records its actual failure and exits nonzero; no no-change completion is allowed. Do not overwrite the existing `.tmp/FIX-ORI-RN-003-3/red.json` or `cycle-2/red.json`; preserve their hashes and read them as historical input. The old filename `red.json` is not proof of a reproduced bug.
+
+The Vitest selector is retained for compatibility. Replace the obsolete requirement for one setDefaultTimeout call with direct checks of the real unchanged driver SHA-256, its actual result assignments, and the finite 180000 ms harness watchdog. Vitest must run at least one guard test and must not launch a browser/export. Current runtime proof is authoritative for behavior; the source guard alone is insufficient.
+
+Use an OS-derived short scratch directory outside the repo and confirm it will survive the run; do not hardcode `/tmp`. Delete NODE_ENV before pnpm/npx/expo children. Keep the full default matrix under the original 150-minute budget. Stop only the browser/server/processes this invocation owns and delete only its disposable consumers. Release resources in `finally` after failure as well as success.
 
 ### BOUNDARY CONTRACTS
 
-1. `tests/sprint-05-orient-search/support/quickstart-web.ts` (MODIFY): add `page.setDefaultTimeout(n)` and, only if required by the older-seed check, one bounded scroll helper. No other behavior change.
-2. `tests/sprint-05-orient-search/drive-web-return-proof.test.ts` (NEW): export `runDriveWebReturnProof`. CLI entry only when `process.argv[1]` is this file. `--mode red` and the default GREEN mode. Vitest exposes `driveWebActionTimeoutStaysFinite` and must not spawn a browser or `expo export`.
-3. RED calls the real uniwind `prepareConsumer`, `exportWeb`, and `serveExport`, then `driveWeb`. If that baseline settles within 180000 ms, re-export the disconnected callback and call `driveWeb` again. Stop at the first call that is still pending at 180000 ms. Record `settled_before_close: false` and `elapsed_ms >= 180000` in `.tmp/FIX-ORI-RN-003-3/red.json`. Closing the browser after the watchdog fires is cleanup, not a voluntary return.
-4. GREEN calls, in order: nativewind seed, uniwind baseline, uniwind disconnected, uniwind restored. Each must fulfill with `settled_before_close: true` and `elapsed_ms < 180000` while the page is still open. Seed legs and the baseline require all five booleans true. The disconnected call requires `markerVisible` false, `seedVisible` true, and `olderSeedReached` true. The restored call requires `markerVisible` true, `inputCleared` true, and the same sha256 as the original screen file. One changed callback only.
-5. `prepareConsumer` rewrites `tests/sprint-05-orient-search/evidence/ORI-RN-001/{nativewind,uniwind}-install.txt`. Those refreshes are allowed side effects. Do not hand-edit them. Delete `NODE_ENV` before any pnpm, npx, or expo child, and use a short reaper-free `TMPDIR`.
+1. `quickstart-web.ts`: existing allowlist entry remains, but this disposition requires its exact bytes unchanged. No arbitrary finite-timeout edit or new scroll helper.
+2. `drive-web-return-proof.test.ts`: retain CLI entry `runDriveWebReturnProof`, default full verification, `--mode red` real diagnosis, and Vitest selector `driveWebActionTimeoutStaysFinite` with the explicit revised assertions above.
+3. `.tmp/FIX-ORI-RN-003-3/red.json`: preserve historical committed receipt byte-for-byte; reference its hash in run.json. Read the cycle-2 receipt without modifying it.
+4. `.tmp/FIX-ORI-RN-003-3/green.json`: fresh full matrix, current source hashes and run ID, four unique current calls and their five result booleans. Its legacy name means verification passed, not a bug fix.
+5. `.tmp/FIX-ORI-RN-003-3/run.json`: real command argv/exits, run IDs, source hashes, budgets, historical receipt hashes, diagnosis results, no-change disposition, static gate results, and scoped diff audit. Keep red_evidence_claimed false and downstream_live_gate_status open.
+6. ORI-RN-001 install logs may refresh only through prepareConsumer, as already allowed. Do not hand-edit them.
 
-### ACCEPTANCE CRITERIA — RED → GREEN → REFACTOR
+### ACCEPTANCE CRITERIA — DIAGNOSE → VERIFY → INDEPENDENT REVIEW
 
-Only AC-1 is PRIMARY.
+Only AC-1 is PRIMARY. This authorized diagnostic task has no required implementation RED because no defect or driver change has been established. It retains a real causal negative control and every runtime verification command.
 
-#### AC-1: driveWeb returns from both seed web legs with the four checks still true [PRIMARY]
+#### AC-1: Verify unchanged driveWeb returns with both seed engines [PRIMARY]
 
-GIVEN a real served export of the quickstart screen for nativewind and uniwind WHEN driveWeb runs in Chromium from launchChromium THEN each call fulfills before the page closes, in under 180000 ms, with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted all true.
+GIVEN real nativewind and uniwind quickstart exports WHEN unchanged driveWeb runs in real Chromium THEN both seed calls fulfill before harness teardown, in under 180000 ms, with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted true; the diagnostic receipt says hang_reproduced false and driver_changed false.
 
 - PRIMARY: true
 - FLOW_REF: null
 - TEST_TIER: e2e
-- VERIFICATION_SERVICE: a real expo export of the committed quickstart consumer, serveExport on 127.0.0.1, and Chromium launched by launchChromium
+- VERIFICATION_SERVICE: Real Expo exports, localhost serveExport HTTP servers, and Chromium launched by launchChromium
 - SURFACE_POLICY: null
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/drive-web-return-proof.test.ts
@@ -118,12 +124,12 @@ SCENARIO:
   "primary": true,
   "tier": "visible",
   "test_tier": "e2e",
-  "verification_service": "a real expo export of the committed quickstart consumer, serveExport on 127.0.0.1, and Chromium launched by launchChromium",
+  "verification_service": "Real Expo exports, localhost serveExport HTTP servers, and Chromium launched by launchChromium",
   "negative_control": {
     "would_fail_if": [
-      "driveWeb is raced against a stub Playwright page, page.setContent, or a mocked Browser instead of the served export.",
-      "The four checks are hardcoded true, or seedVisible, olderSeedReached, markerVisible, or inputCleared is removed.",
-      "The call is still pending at 180000 ms and the harness records that pending call as settled."
+      "A stubbed Playwright page, mocked Browser, page.setContent, or authored WebLegResult replaces a live export.",
+      "Any of the five booleans is hardcoded true, omitted, or derived from source text rather than the returned result.",
+      "A pending or rejected call is recorded as a fulfilled result, or forced browser closure produces a false settlement."
     ]
   },
   "evidence": {
@@ -136,20 +142,20 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "Run pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof for nativewind and uniwind.",
-          "For each engine, exportWeb, serveExport, launchChromium, and await driveWeb with a fresh marker while the page is still open.",
-          "Record settled_before_close, elapsed_ms, and the five WebLegResult booleans."
+          "Run pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof.",
+          "Prepare nativewind and uniwind consumers, export each, serve each over HTTP, and await the real driveWeb call with distinct nonempty markers.",
+          "Record the result and settlement time before the harness closes its browser or server."
         ]
       },
       "end_state": {
         "must_observe": [
-          "green.json records 2 seed legs, nativewind and uniwind, each with settled_before_close true and elapsed_ms < 180000.",
-          "Each seed leg records seedVisible true for \"Seed turn 24: Ready for your message.\" and olderSeedReached true for \"Seed turn 01: Plan a weekend walk.\"",
-          "Each of the 2 seed legs records markerVisible true, markerSubmitted true, and inputCleared true for 1 submitted marker."
+          "green.json records 2 seed legs, nativewind and uniwind, each fulfilled with elapsed_ms < 180000, settled_before_harness_cleanup true, and harness_closed_browser_before_settle false.",
+          "Each seed leg has all 5 booleans true, including seedVisible for \"Seed turn 24: Ready for your message.\" and olderSeedReached for \"Seed turn 01: Plan a weekend walk.\"",
+          "The 2 markers are distinct and nonempty; browser_connected_at_observe is true; driver_changed is false and hang_reproduced is false."
         ],
         "must_not_observe": [
-          "0 settled seed legs, or an empty WebLegResult standing in for a returned call.",
-          "A stub page or timeout 0 left on scrollIntoViewIfNeeded, click, or fill."
+          "0 seed legs, an empty WebLegResult, a reused historical manifest, or a rejected promise counted as fulfillment.",
+          "A claim that a timeout bug was fixed or that FLOW-DOCS-02 passed."
         ]
       }
     }
@@ -157,14 +163,14 @@ SCENARIO:
 }
 ```
 
-#### AC-2: driveWeb returns from the negative-control serve and the marker check still bites
+#### AC-2: Verify the disconnected callback falsifies submission and restored bytes pass
 
-GIVEN one uniwind disposable consumer WHEN driveWeb runs on the baseline export, the disconnected onSubmit={() => {}} export, and the restored-bytes export THEN all three calls fulfill before the page closes in under 180000 ms, baseline and restored have markerVisible true and inputCleared true, the disconnected call has markerVisible false, and the restored hash equals the original.
+GIVEN one real uniwind disposable consumer WHEN baseline, disconnected callback, and restored exports are driven THEN all 3 calls fulfill before harness teardown in under 180000 ms; baseline/restored have all 5 booleans true; disconnected has seedVisible and olderSeedReached true with markerVisible and markerSubmitted false; the restored hash equals the original.
 
 - PRIMARY: false
 - FLOW_REF: null
 - TEST_TIER: e2e
-- VERIFICATION_SERVICE: the same real export, serve, and Chromium path, three times, on one uniwind disposable consumer
+- VERIFICATION_SERVICE: The same real uniwind consumer exported and served 3 times through real Chromium
 - SURFACE_POLICY: null
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/drive-web-return-proof.test.ts
@@ -182,12 +188,12 @@ SCENARIO:
   "primary": false,
   "tier": "visible",
   "test_tier": "e2e",
-  "verification_service": "the same real export, serve, and Chromium path, three times, on one uniwind disposable consumer",
+  "verification_service": "The same real uniwind consumer exported and served 3 times through real Chromium",
   "negative_control": {
     "would_fail_if": [
-      "The disconnected onSubmit={() => {}} case is skipped, or markerVisible is hardcoded true so the no-op callback still passes.",
-      "The restored bytes are not the original file, or the mutation edits the shared checkout instead of the disposable consumer.",
-      "A stubbed page or a static receipt replaces the three served driveWeb calls."
+      "The disconnected callback is skipped or a hardcoded markerVisible true makes the no-op callback pass.",
+      "The mutation changes the shared checkout, changes more than 1 callback, or restores different bytes.",
+      "A static saved receipt replaces any of the 3 current served calls."
     ]
   },
   "evidence": {
@@ -200,34 +206,19 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "On the uniwind consumer, driveWeb the baseline export and the restored-bytes export."
+          "Drive the uniwind baseline, replace exactly one onSubmit={handleSubmit} with onSubmit={() => {}}, export again, and drive a new marker.",
+          "Restore the exact original bytes in a finally block, record original/mutated/restored hashes, export the restored screen, and drive a third marker."
         ]
       },
       "end_state": {
         "must_observe": [
-          "Baseline and restored each settle with elapsed_ms < 180000, markerVisible true, and inputCleared true.",
-          "The restored sha256 equals the original sha256, and the only changed source text is \"onSubmit={handleSubmit}\" versus \"onSubmit={() => {}}\" (1 callback)."
+          "green.json records 3 current uniwind calls with elapsed_ms < 180000 and settled_before_harness_cleanup true.",
+          "Baseline and restored have all 5 booleans true; disconnected has seedVisible true and olderSeedReached true while markerVisible and markerSubmitted are false.",
+          "Exactly 1 callback changed, mutated_sha256 differs from original_sha256, and restored_sha256 equals original_sha256."
         ],
         "must_not_observe": [
-          "0 returned baseline calls, or an empty marker string accepted as the submitted turn."
-        ]
-      }
-    },
-    {
-      "start_ref": "served_quickstart_export",
-      "action": {
-        "actor": "cli_user",
-        "steps": [
-          "Replace only onSubmit={handleSubmit} with onSubmit={() => {}}, re-export, serve, and call driveWeb with a distinct marker."
-        ]
-      },
-      "end_state": {
-        "must_observe": [
-          "The disconnected call settles with elapsed_ms < 180000, markerVisible false, and seedVisible true for \"Seed turn 24: Ready for your message.\"",
-          "olderSeedReached stays true for \"Seed turn 01: Plan a weekend walk.\" on that same returned result."
-        ],
-        "must_not_observe": [
-          "The disconnected callback still shows 1 marker turn, or an empty result is recorded as a pass."
+          "0 returned calls, empty markers, a disconnected callback accepted as successful submission, or a missing restoration.",
+          "An assertion that disconnected inputCleared must be false; PromptInput may clear after a resolved callback."
         ]
       }
     }
@@ -235,14 +226,14 @@ SCENARIO:
 }
 ```
 
-#### AC-3: The action timeout is finite, the checks stay in source, and the diff stays in bounds
+#### AC-3: Record a truthful diagnostic disposition with unchanged driver and bounded proof
 
-GIVEN the landed driveWeb edit WHEN the vitest guard, pnpm typecheck, and scoped Biome run THEN the guard sees one action timeout from 10000 to 30000 inclusive, the five result assignments remain, vitest launches no browser, and git diff --name-only shows 0 paths outside the allowlist.
+GIVEN the current real proof and prior blocked reports WHEN the preserved diagnostic CLI, source guard, typecheck, scoped Biome, and diff audit run THEN the driver hash is unchanged, the harness watchdog is 180000 ms, the commands execute without skips, and run.json states not_reproduced_no_driver_change with no timeout-fix claim and the downstream live failure still open.
 
 - PRIMARY: false
 - FLOW_REF: null
 - TEST_TIER: integration
-- VERIFICATION_SERVICE: the real vitest runner, the real TypeScript compiler, and the real Biome linter reading the committed driver source
+- VERIFICATION_SERVICE: Real Vitest, TypeScript, Biome, Git, and filesystem evidence bound to actual served Chromium runs
 - SURFACE_POLICY: null
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/drive-web-return-proof.test.ts
@@ -260,13 +251,12 @@ SCENARIO:
   "primary": false,
   "tier": "visible",
   "test_tier": "integration",
-  "verification_service": "the real vitest runner, the real TypeScript compiler, and the real Biome linter reading the committed driver source",
+  "verification_service": "Real Vitest, TypeScript, Biome, Git, and filesystem evidence bound to actual served Chromium runs",
   "negative_control": {
     "would_fail_if": [
-      "The vitest file launches Chromium or runs expo export, or the guard is skipped so 0 tests run.",
-      "setDefaultTimeout(0) or timeout: 0 remains on scrollIntoViewIfNeeded, click, or fill.",
-      "The diff edits apps, packages, scripts, human-flows.json, or the ORI-CONT-004 task file.",
-      "The guard is a stub that does not read quickstart-web.ts, or the suite is empty."
+      "The guard is skipped, reads no real driver source, or no guard tests run.",
+      "Driver bytes are changed without a reproduced defect, the harness uses timeout 0, or a historical receipt is relabeled as current GREEN.",
+      "A fabricated RED, no-op runtime path, erased blocked cycle, or static success flag replaces the actual observations."
     ]
   },
   "evidence": {
@@ -279,19 +269,21 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "Run pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite.",
-          "Run pnpm typecheck and pnpm exec biome ci on the two owned test paths.",
-          "Read git diff --name-only against the allowlist."
+          "Run pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof --mode red to diagnose the unchanged uniwind baseline and disconnected callback.",
+          "Run pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite, pnpm typecheck, and scoped Biome.",
+          "Compare the driver hash and task candidate diff to the recorded base; record exact commands, exits, source hashes, evidence paths, and the downstream live failure."
         ]
       },
       "end_state": {
         "must_observe": [
-          "The guard exits 0 and reports 1 finite action timeout in the range 10000..30000, not 0.",
-          "The source still contains the 5 assignments seedVisible, olderSeedReached, inputCleared, markerVisible, and markerSubmitted, including the literal \"Seed turn 24: Ready for your message.\"",
-          "git diff --name-only lists 0 paths outside the allowlist."
+          "The diagnostic mode executes 2 real calls and records hang_reproduced false when both fulfill within 180000 ms; red_evidence_claimed is false.",
+          "The guard executes at least 1 test and verifies the real driver sha256 \"69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33\", retained 5 result assignments, finite 180000 ms harness bound, and no browser launch under Vitest.",
+          "run.json records disposition \"not_reproduced_no_driver_change\", driver_changed false, scope_paths_outside_allowlist 0, and downstream_live_gate_status \"open\".",
+          "Vitest, typecheck, and scoped Biome exit 0; historical red.json and cycle-2/red.json hashes remain unchanged."
         ],
         "must_not_observe": [
-          "0 guard tests, an empty diff check, or a browser launch under vitest."
+          "0 executed guard tests, a missing diff baseline, a timeout-fixed claim, skipped runtime verification, or FLOW-DOCS-02 completion from this task.",
+          "A finite watchdog converted into forced-close success or a newly reproduced hang accepted as a no-change pass."
         ]
       }
     }
@@ -301,23 +293,23 @@ SCENARIO:
 
 ### TEST CRITERIA
 
-- TC-1 → AC-1: Both seed web legs fulfill before the page closes in under 180000 ms with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted true. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof`
-- TC-2 → AC-2: The baseline, disconnected, and restored negative-control serves each fulfill before the page closes; the disconnected serve has markerVisible false; baseline and restored have markerVisible true and inputCleared true. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof`
-- TC-3 → AC-3: The vitest guard exits 0 with no browser launch, the action timeout is in 10000..30000, and the diff stays inside the allowlist. VERIFY: `pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite`
+- TC-1 → AC-1: GIVEN real nativewind and uniwind quickstart exports WHEN unchanged driveWeb runs in real Chromium THEN both seed calls fulfill before harness teardown, in under 180000 ms, with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted true; the diagnostic receipt says hang_reproduced false and driver_changed false. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof`
+- TC-2 → AC-2: GIVEN one real uniwind disposable consumer WHEN baseline, disconnected callback, and restored exports are driven THEN all 3 calls fulfill before harness teardown in under 180000 ms; baseline/restored have all 5 booleans true; disconnected has seedVisible and olderSeedReached true with markerVisible and markerSubmitted false; the restored hash equals the original. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof`
+- TC-3 → AC-3: GIVEN the current real proof and prior blocked reports WHEN the preserved diagnostic CLI, source guard, typecheck, scoped Biome, and diff audit run THEN the driver hash is unchanged, the harness watchdog is 180000 ms, the commands execute without skips, and run.json states not_reproduced_no_driver_change with no timeout-fix claim and the downstream live failure still open. VERIFY: `pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite`
 
 ### SHARED FIXTURES
 
 ```json
 {
   "served_quickstart_export": {
-    "description": "A real Expo 57 consumer prepared by prepareConsumer from the committed template and public recipe, exported with exportWeb (npx expo export --platform web), and served by serveExport on 127.0.0.1. Chromium is launchChromium, not a stub page.",
+    "description": "A real Expo 57 consumer prepared by prepareConsumer from the committed template and public recipe, exported with exportWeb, and served by serveExport on 127.0.0.1. Chromium comes from launchChromium; driveWeb is unchanged.",
     "seed_method": "cli",
     "records": [
-      "Two engines: nativewind and uniwind. Each consumer root is an OS temp directory outside the monorepo.",
-      "The served document contains the exact text 'Seed turn 24: Ready for your message.' and 'Seed turn 01: Plan a weekend walk.'",
-      "react-native-web is pinned to 0.21.2 in both templates. An export exit other than 0 is a blocker, not a driveWeb result.",
-      "Playwright 1.63 locator actions default to timeout 0 when chromium.launch is used outside a Playwright Test project.",
-      "The negative-control mutation replaces only onSubmit={handleSubmit} with onSubmit={() => {}} in the disposable consumer, then restores the original bytes."
+      "Two engines: nativewind and uniwind; each disposable consumer is outside the monorepo under an OS-derived scratch root.",
+      "The served screen contains 24 seed turns, including exact text \"Seed turn 24: Ready for your message.\" and \"Seed turn 01: Plan a weekend walk.\"",
+      "The shared driver sha256 is 69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33. A changed hash requires a new diagnosis, not an automatic approval.",
+      "The negative control replaces exactly one onSubmit={handleSubmit} callback with onSubmit={() => {}} in the disposable uniwind screen, then restores the original bytes.",
+      "Both consumer templates retain react-native-web 0.21.2. Install/export errors are failures, never returned driveWeb evidence."
     ]
   }
 }
@@ -351,111 +343,111 @@ writeProhibited:
 - playwright.config.ts
 - Any file not listed in writeAllowed.
 
-### BOUNDARIES — Ask First
+### BOUNDARIES — Stop and report
 
-- If every pre-fix `driveWeb` call settles within 180000 ms, stop. Report the phase, the elapsed time, and the booleans. Do not invent RED, and do not land a timeout that flips a true check to false.
-- If `expo export` exits non-zero, stop. The `0.21.2` pin is already on main. Do not widen this task into another pin.
-- If the public registry or npm is unreachable, stop. Do not substitute a local registry or a monorepo path.
-- If `pnpm typecheck` fails only because gitignored `apps/docs/src/data/registry-items.json` is missing, regenerate it in the worktree with `pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs prebuild` and do not commit it. If typecheck fails in an owned file, fix that file.
-- The whole GREEN run, two installs plus four exports, must finish within 150 minutes. Record the elapsed time in `run.json`. Do not raise that budget to hide a hang.
+- A call pending at 180000 ms, a rejection, a wrong seed/result boolean, or failure of restoration blocks this diagnostic disposition. Preserve phase, timestamps, booleans/error, and hashes; seek a new scoped decision before changing the driver.
+- A successful pre-change run is valid diagnostic evidence, not a requirement to invent RED. It still does not replace the default matrix or independent review.
+- An install/export error or unreachable public registry/npm blocks verification; do not substitute a local registry or monorepo dependency.
+- If typecheck fails because gitignored docs manifests are absent, the existing permission remains: run `pnpm gallery:manifest && pnpm --filter @rnr-ai-elements/docs prebuild` in the assigned worktree and do not commit generated files outside writeAllowed. Other failing gates block completion; preserve unrelated WIP rather than stashing it.
+- Do not raise the 180000 ms call bound or the 150-minute full-matrix budget to conceal a hang.
+- Do not edit/run another owner's native/live suite. Send evidence of the downstream failure through the normal handoff; this task has no authority to close it.
 
 ### DELIVERABLE
 
-- `tests/sprint-05-orient-search/support/quickstart-web.ts`: `driveWeb` uses a finite action timeout and still returns the five real booleans.
-- `tests/sprint-05-orient-search/drive-web-return-proof.test.ts`: `runDriveWebReturnProof` for the real web legs, and `driveWebActionTimeoutStaysFinite` for the source guard.
-- `.tmp/FIX-ORI-RN-003-3/red.json`, `green.json`, and `run.json`.
+- The reviewed task-owned proof harness with real diagnostic and full-matrix verification.
+- Historical `red.json` preserved, fresh `green.json`, and `run.json` recording `disposition: not_reproduced_no_driver_change`, `driver_changed: false`, and `red_evidence_claimed: false`.
+- Exact driver SHA-256 unchanged; no timeout repair claim. The blocked cycles remain part of provenance.
 
-### AGENT INSTRUCTIONS — TDD FLOW
+### AGENT INSTRUCTIONS — DIAGNOSTIC FLOW
 
-1. RED: add the harness. On the unmodified `driveWeb`, run the red command. Capture the pending call in `red.json` with the candidate SHA, the serve URL, `exportExit` 0, and `settled_before_close` false. Wait for orchestrator verification. An export failure is a blocker, not RED.
-2. GREEN: set the finite timeout. Add the bounded scroll helper only if the older-seed check is otherwise false. Rerun the default command. Then run the vitest guard, `pnpm typecheck`, and the scoped Biome command.
-3. Hand the candidate and the three JSON files to react-native-reusables-reviewer. Do not merge, and do not edit ORI-CONT-004.
+1. Inspect the reused task worktree and prior commits. Preserve unrelated WIP, blocked receipts, and the driver bytes. Record the base SHA and historical hashes before changing only the owned harness.
+2. Adapt the diagnostic command and legacy static selector as explicitly specified. Run the diagnostic CLI with real exports/Chromium. Do not author result flags independently of observations.
+3. Run the default full matrix. Both seed engines, disconnected callback, and restoration are required. A new failure blocks the no-change disposition.
+4. Run the preserved Vitest selector, typecheck, and scoped Biome. Record command exit codes, changed paths against the explicit task base, and untracked paths. Exclude no unexpected changes silently; preserve them and report ownership.
+5. Commit only the permitted harness/evidence changes with normal hooks. The evidence must identify the exact executed source bytes and execution HEAD; do not rewrite a receipt to pretend a later evidence-only commit was the executed HEAD. Bind it to the final candidate by source hashes and review, rerunning when executable source changes.
+6. Hand the exact candidate SHA and receipts to react-native-reusables-reviewer. Only the orchestrator may merge. The reviewer independently verifies real calls on the exact candidate and records its own evidence; it does not approve from the source guard alone.
 
 ### READING LIST — maximum five
 
-1. `tests/sprint-05-orient-search/support/quickstart-web.ts` — `driveWeb` lines 128-186. The six unbounded actions are at lines 154, 156, 162, 163, 165, and 177. `fill` at line 163 has no `.catch`.
-2. `tests/sprint-05-orient-search/support/quickstart-proof.test.ts` — `runWebLeg` (about line 253) and `webSubmit` (about line 369). Read-only. Port `8401`/`8402` are the seed legs. `8500` to `8899` is the negative-control serve.
-3. `tests/sprint-05-orient-search/quickstart-content.spec.ts` — `crawlTurns` (about line 482), the bounded scroll that reaches every seed turn. Read-only.
-4. `.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/.tmp/ORI-CONT-004/cycle-3/red/flow3-attempt1-wedge.txt` — the observed non-return after the page was already servable.
-5. `node_modules/.pnpm/playwright-core@1.63.0/node_modules/playwright-core/types/types.d.ts` — `scrollIntoViewIfNeeded` documents `timeout` default `0` (no timeout).
+1. `tests/sprint-05-orient-search/support/quickstart-web.ts` — actual five-result contract and context cleanup in finally; unchanged SHA-256 above.
+2. The task worktree's `tests/sprint-05-orient-search/drive-web-return-proof.test.ts`, `.tmp/FIX-ORI-RN-003-3/red.json`, and `.tmp/FIX-ORI-RN-003-3/cycle-2/red.json` — harness and two actual returned cycles.
+3. `.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/cycle-2.blocked.json` — source report, SHA-256 `24bfa6cb46246c6d53deb320cb5b927c99a0d73cb0eb52fa2c6baf79951ae427`, commit `ae894cf28b51fab518f6165ad3e37e113c527794`.
+4. ORI-CONT-004 worktree `tests/sprint-05-orient-search/evidence/ORI-RN-003/run-manifest.json` — six seed legs and negative control; SHA-256 `eed15223b27a7d4e0f01eb54ab39d477fa11177d7fa7165c2be4c16f2c9ee22b`.
+5. ORI-CONT-004 worktree `tests/sprint-05-orient-search/evidence/ORI-AI-002/uniwind/manifest.json` and `uniwind-ios/result.json` — later failed live matrix; hashes `5a362b6aebab236293e9b891a8de54e440c7b91be8c27dfbc2f471acab06f8f5` and `6507206df8924bd98d662f25e0bc8e589209852342f66213f87f85d9153ccaa0`.
+
+These retained external-worktree receipts describe the run at candidate 21b2bf9, not current-candidate acceptance. Verify hashes before drawing historical conclusions and never overwrite another owner's files.
 
 ### RUNTIME COMMANDS AND VERIFICATION GATES
 
-Exact selector:
-
-```sh
-pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof
-```
-
-Preserved commands:
-
 ```sh
 pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof --mode red
+pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof
 pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite
 pnpm typecheck
 pnpm exec biome ci tests/sprint-05-orient-search/support/quickstart-web.ts tests/sprint-05-orient-search/drive-web-return-proof.test.ts
 ```
 
-Do not run `pnpm exec playwright test tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts`. That locked command stays with ORI-CONT-004.
+All five commands are mandatory; no skip flag or environment waiver. The first command is the real diagnosis, the second current full web verification, and the third a source guard. The fourth/fifth remain static gates. Independent review also runs the required earlier sprint lanes under the sprint's normal gate policy.
+
+Do not run `pnpm exec playwright test tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts` from this task. FLOW-DOCS-02 remains with ORI-CONT-004.
 
 ### EVIDENCE GATES
 
-1. RED: one real pre-fix `driveWeb` call still pending at 180000 ms, with `exportExit` 0 and the serve URL recorded. A source reading is not RED.
-2. GREEN: 2 seed legs and 3 negative-control serves, each `settled_before_close` true and `elapsed_ms` under 180000, with the boolean contract above.
-3. Static: the vitest guard, `pnpm typecheck`, and scoped Biome exit 0, or a stash-proven pre-existing failure is recorded in `run.json`.
-4. Scope: `git diff --name-only` shows 0 paths outside writeAllowed.
-
-Planned evidence: `.tmp/FIX-ORI-RN-003-3/red.json`, `.tmp/FIX-ORI-RN-003-3/green.json`, `.tmp/FIX-ORI-RN-003-3/run.json`. Teardown stops only the browser and the serve this run opened, and deletes only the temp consumer roots this run created.
+1. Historical blocked evidence is preserved and labeled historical; no invented timeout RED.
+2. Current diagnostic baseline/disconnected calls execute and report actual outcomes, with no external browser closure before settlement.
+3. Current full proof contains both seed engines and all three negative-control roles, all result observations and exact restoration.
+4. The real source guard, typecheck, scoped Biome, source-hash binding, and task diff audit pass; static success alone does not pass runtime ACs.
+5. Independent review approves the exact candidate and scopes its claim to this diagnostic; the native/live and locked-flow obligations remain open.
 
 ### FLOW OWNERSHIP AND SPRINT BOUNDARY
 
-No locked flow belongs to this task. `FLOW-DOCS-02-quickstart-chat-screen` stays owned by ORI-CONT-004. This task does not write `human-flows.json`, `gate-plan.json`, or journey proofs. It unblocks the web calls ORI-CONT-004 already makes. It does not execute that flow.
+This task owns no locked flow and adds no journey proof. `FLOW-DOCS-02-quickstart-chat-screen` stays owned by ORI-CONT-004. Its required fresh six seed and six live engine/platform proofs, exact candidate/source binding, and locked command are unchanged. Successful seed proof cannot substitute for the later failing Uniwind live result or for the complete locked flow.
 
 ### DEPENDENCIES
 
 Depends on: ORI-RN-003
 
-Do not add ORI-CONT-004 as a dependency. ORI-CONT-004 is in flight and must not be revised.
+Do not add ORI-CONT-004 as a dependency or revise its in-flight charter.
 
-Blocks: the return of ORI-CONT-004's seed web legs and negative-control serve. It does not block by editing that task.
+Provides: an independently reviewed diagnosis and unchanged-driver web verification, allowing orchestration to stop pursuing an unsupported timeout repair.
 
-Provides: a `driveWeb` that fulfills under a finite action timeout without weakening the four checks.
+Consumes: ORI-RN-003 export/serve/browser/drive helpers and ORI-RN-001 prepareConsumer, without changing those dependencies.
 
-Consumes: ORI-RN-003's `exportWeb`, `serveExport`, `launchChromium`, and `driveWeb`, and ORI-RN-001's `prepareConsumer` (read-only).
-
-References: CAP-DOCS-01; UC-DOCS-02.
-
-Provenance: planner ask `ask-wave24-add-driveweb-return` (wave 24, sequence next). Source task ORI-RN-003, completed. Reporting task ORI-CONT-004 cycle 3, commit `6e98cf4ad9e00160cee84716cf2efedb1aa75ecc`, not on main.
+References: CAP-DOCS-01; UC-DOCS-02. Original add ask: ask-wave24-add-driveweb-return. Authorized revision: ask-wave26-revise-driveweb-disposition.
 
 ### OUT OF SCOPE
 
-ORI-CONT-004's spec, evidence, and task file. Native Maestro legs. Product components. The locked 13 flows. Journey proofs. Planning-policy edits other than the sprint list this ask updates. Trunk and worktree lifecycle.
+ORI-CONT-004 and its task/evidence ownership; native Maestro legs; provider/live failures; product components; the locked 13 flows; journey proofs; CI/deployment; task/state mutation; trunk/worktree lifecycle. No additional owned path is introduced.
 
 ### AGENT RATIONALE AND REVIEW
 
-Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls that settle before the page closes with the boolean contract; no stub page; no product diff; no edit to the locked flow or to ORI-CONT-004. Verdict: APPROVED or NEEDS_FIXES, naming the failed AC and the evidence file.
+The requirement for a specific bug RED was contradicted by actual observations and revised through the governed pending-task path. That does not authorize removing real service verification. APPROVED requires current observed results, causal disconnected-callback failure, source restoration, unchanged driver, truthful diagnosis, exact-source evidence, passing gates, and an in-scope diff. NEEDS_FIXES names the failed AC and evidence. A newly reproduced defect is reported for a new decision rather than silently folded into this no-change task.
+
+## Amendments
+
+- 2026-09-29 — `ask-wave26-revise-driveweb-disposition`, authorized by `.kb-run-sprint/sprint-05-orient-search/closure-20260929/driveweb-cycle2-revise-decision.json` and the exact cycle-2 blocked report identified above. The original task hash is `8de84652244a80987f4e5df586523fb876fb37e45ce8dc7f8b68a6815c6dc29f`. Two returned baseline/disconnected cycles plus the caller's six-leg seed proof refute the required 180-second pending-call premise. Replace mandatory invented RED/timeout edit with real diagnostic verification and a no-driver-change disposition. Preserve every command, functional oracle, callback negative control, task ID, allowlist, role assignment, and locked-flow owner. The legacy diagnostic/static selector semantics change explicitly as specified; they cannot be used to claim a fixed timeout. Correct settlement semantics for driveWeb's own context cleanup. The downstream `Stop generating` failure stays open and outside this scope.
 
 <!-- REQUIREMENT-CONTRACT v1 -->
 <!--
 {
   "version": "1",
   "task_id": "FIX-ORI-RN-003-3",
-  "tdd_mode": "red_first",
+  "tdd_mode": "verification_only",
   "verification_policy": {
     "requires_tests": true,
-    "requires_red_evidence": true,
+    "requires_red_evidence": false,
     "requires_seeded_evidence": true
   },
   "fixtures": {
     "served_quickstart_export": {
-      "description": "A real Expo 57 consumer prepared by prepareConsumer from the committed template and public recipe, exported with exportWeb (npx expo export --platform web), and served by serveExport on 127.0.0.1. Chromium is launchChromium, not a stub page.",
+      "description": "A real Expo 57 consumer prepared by prepareConsumer from the committed template and public recipe, exported with exportWeb, and served by serveExport on 127.0.0.1. Chromium comes from launchChromium; driveWeb is unchanged.",
       "seed_method": "cli",
       "records": [
-        "Two engines: nativewind and uniwind. Each consumer root is an OS temp directory outside the monorepo.",
-        "The served document contains the exact text 'Seed turn 24: Ready for your message.' and 'Seed turn 01: Plan a weekend walk.'",
-        "react-native-web is pinned to 0.21.2 in both templates. An export exit other than 0 is a blocker, not a driveWeb result.",
-        "Playwright 1.63 locator actions default to timeout 0 when chromium.launch is used outside a Playwright Test project.",
-        "The negative-control mutation replaces only onSubmit={handleSubmit} with onSubmit={() => {}} in the disposable consumer, then restores the original bytes."
+        "Two engines: nativewind and uniwind; each disposable consumer is outside the monorepo under an OS-derived scratch root.",
+        "The served screen contains 24 seed turns, including exact text \"Seed turn 24: Ready for your message.\" and \"Seed turn 01: Plan a weekend walk.\"",
+        "The shared driver sha256 is 69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33. A changed hash requires a new diagnosis, not an automatic approval.",
+        "The negative control replaces exactly one onSubmit={handleSubmit} callback with onSubmit={() => {}} in the disposable uniwind screen, then restores the original bytes.",
+        "Both consumer templates retain react-native-web 0.21.2. Install/export errors are failures, never returned driveWeb evidence."
       ]
     }
   },
@@ -463,15 +455,15 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
     {
       "id": "AC-1",
       "type": "acceptance_criterion",
-      "name": "driveWeb returns from both seed web legs with the four checks still true",
+      "name": "Verify unchanged driveWeb returns with both seed engines",
       "primary": true,
-      "description": "GIVEN a real served export of the quickstart screen for nativewind and uniwind WHEN driveWeb runs in Chromium from launchChromium THEN each call fulfills before the page closes, in under 180000 ms, with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted all true.",
+      "description": "GIVEN real nativewind and uniwind quickstart exports WHEN unchanged driveWeb runs in real Chromium THEN both seed calls fulfill before harness teardown, in under 180000 ms, with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted true; the diagnostic receipt says hang_reproduced false and driver_changed false.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
       "test_function": "runDriveWebReturnProof",
       "verify": "pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof",
       "test_tier": "e2e",
-      "verification_service": "a real expo export of the committed quickstart consumer, serveExport on 127.0.0.1, and Chromium launched by launchChromium",
+      "verification_service": "Real Expo exports, localhost serveExport HTTP servers, and Chromium launched by launchChromium",
       "surface_policy": null,
       "tdd_state": "none",
       "maps_to_ac": null,
@@ -482,12 +474,12 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
         "primary": true,
         "tier": "visible",
         "test_tier": "e2e",
-        "verification_service": "a real expo export of the committed quickstart consumer, serveExport on 127.0.0.1, and Chromium launched by launchChromium",
+        "verification_service": "Real Expo exports, localhost serveExport HTTP servers, and Chromium launched by launchChromium",
         "negative_control": {
           "would_fail_if": [
-            "driveWeb is raced against a stub Playwright page, page.setContent, or a mocked Browser instead of the served export.",
-            "The four checks are hardcoded true, or seedVisible, olderSeedReached, markerVisible, or inputCleared is removed.",
-            "The call is still pending at 180000 ms and the harness records that pending call as settled."
+            "A stubbed Playwright page, mocked Browser, page.setContent, or authored WebLegResult replaces a live export.",
+            "Any of the five booleans is hardcoded true, omitted, or derived from source text rather than the returned result.",
+            "A pending or rejected call is recorded as a fulfilled result, or forced browser closure produces a false settlement."
           ]
         },
         "evidence": {
@@ -500,20 +492,20 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
             "action": {
               "actor": "cli_user",
               "steps": [
-                "Run pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof for nativewind and uniwind.",
-                "For each engine, exportWeb, serveExport, launchChromium, and await driveWeb with a fresh marker while the page is still open.",
-                "Record settled_before_close, elapsed_ms, and the five WebLegResult booleans."
+                "Run pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof.",
+                "Prepare nativewind and uniwind consumers, export each, serve each over HTTP, and await the real driveWeb call with distinct nonempty markers.",
+                "Record the result and settlement time before the harness closes its browser or server."
               ]
             },
             "end_state": {
               "must_observe": [
-                "green.json records 2 seed legs, nativewind and uniwind, each with settled_before_close true and elapsed_ms < 180000.",
-                "Each seed leg records seedVisible true for \"Seed turn 24: Ready for your message.\" and olderSeedReached true for \"Seed turn 01: Plan a weekend walk.\"",
-                "Each of the 2 seed legs records markerVisible true, markerSubmitted true, and inputCleared true for 1 submitted marker."
+                "green.json records 2 seed legs, nativewind and uniwind, each fulfilled with elapsed_ms < 180000, settled_before_harness_cleanup true, and harness_closed_browser_before_settle false.",
+                "Each seed leg has all 5 booleans true, including seedVisible for \"Seed turn 24: Ready for your message.\" and olderSeedReached for \"Seed turn 01: Plan a weekend walk.\"",
+                "The 2 markers are distinct and nonempty; browser_connected_at_observe is true; driver_changed is false and hang_reproduced is false."
               ],
               "must_not_observe": [
-                "0 settled seed legs, or an empty WebLegResult standing in for a returned call.",
-                "A stub page or timeout 0 left on scrollIntoViewIfNeeded, click, or fill."
+                "0 seed legs, an empty WebLegResult, a reused historical manifest, or a rejected promise counted as fulfillment.",
+                "A claim that a timeout bug was fixed or that FLOW-DOCS-02 passed."
               ]
             }
           }
@@ -523,15 +515,15 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
     {
       "id": "AC-2",
       "type": "acceptance_criterion",
-      "name": "driveWeb returns from the negative-control serve and the marker check still bites",
+      "name": "Verify the disconnected callback falsifies submission and restored bytes pass",
       "primary": false,
-      "description": "GIVEN one uniwind disposable consumer WHEN driveWeb runs on the baseline export, the disconnected onSubmit={() => {}} export, and the restored-bytes export THEN all three calls fulfill before the page closes in under 180000 ms, baseline and restored have markerVisible true and inputCleared true, the disconnected call has markerVisible false, and the restored hash equals the original.",
+      "description": "GIVEN one real uniwind disposable consumer WHEN baseline, disconnected callback, and restored exports are driven THEN all 3 calls fulfill before harness teardown in under 180000 ms; baseline/restored have all 5 booleans true; disconnected has seedVisible and olderSeedReached true with markerVisible and markerSubmitted false; the restored hash equals the original.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
       "test_function": "runDriveWebReturnProof",
       "verify": "pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof",
       "test_tier": "e2e",
-      "verification_service": "the same real export, serve, and Chromium path, three times, on one uniwind disposable consumer",
+      "verification_service": "The same real uniwind consumer exported and served 3 times through real Chromium",
       "surface_policy": null,
       "tdd_state": "none",
       "maps_to_ac": null,
@@ -542,12 +534,12 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
         "primary": false,
         "tier": "visible",
         "test_tier": "e2e",
-        "verification_service": "the same real export, serve, and Chromium path, three times, on one uniwind disposable consumer",
+        "verification_service": "The same real uniwind consumer exported and served 3 times through real Chromium",
         "negative_control": {
           "would_fail_if": [
-            "The disconnected onSubmit={() => {}} case is skipped, or markerVisible is hardcoded true so the no-op callback still passes.",
-            "The restored bytes are not the original file, or the mutation edits the shared checkout instead of the disposable consumer.",
-            "A stubbed page or a static receipt replaces the three served driveWeb calls."
+            "The disconnected callback is skipped or a hardcoded markerVisible true makes the no-op callback pass.",
+            "The mutation changes the shared checkout, changes more than 1 callback, or restores different bytes.",
+            "A static saved receipt replaces any of the 3 current served calls."
           ]
         },
         "evidence": {
@@ -560,34 +552,19 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
             "action": {
               "actor": "cli_user",
               "steps": [
-                "On the uniwind consumer, driveWeb the baseline export and the restored-bytes export."
+                "Drive the uniwind baseline, replace exactly one onSubmit={handleSubmit} with onSubmit={() => {}}, export again, and drive a new marker.",
+                "Restore the exact original bytes in a finally block, record original/mutated/restored hashes, export the restored screen, and drive a third marker."
               ]
             },
             "end_state": {
               "must_observe": [
-                "Baseline and restored each settle with elapsed_ms < 180000, markerVisible true, and inputCleared true.",
-                "The restored sha256 equals the original sha256, and the only changed source text is \"onSubmit={handleSubmit}\" versus \"onSubmit={() => {}}\" (1 callback)."
+                "green.json records 3 current uniwind calls with elapsed_ms < 180000 and settled_before_harness_cleanup true.",
+                "Baseline and restored have all 5 booleans true; disconnected has seedVisible true and olderSeedReached true while markerVisible and markerSubmitted are false.",
+                "Exactly 1 callback changed, mutated_sha256 differs from original_sha256, and restored_sha256 equals original_sha256."
               ],
               "must_not_observe": [
-                "0 returned baseline calls, or an empty marker string accepted as the submitted turn."
-              ]
-            }
-          },
-          {
-            "start_ref": "served_quickstart_export",
-            "action": {
-              "actor": "cli_user",
-              "steps": [
-                "Replace only onSubmit={handleSubmit} with onSubmit={() => {}}, re-export, serve, and call driveWeb with a distinct marker."
-              ]
-            },
-            "end_state": {
-              "must_observe": [
-                "The disconnected call settles with elapsed_ms < 180000, markerVisible false, and seedVisible true for \"Seed turn 24: Ready for your message.\"",
-                "olderSeedReached stays true for \"Seed turn 01: Plan a weekend walk.\" on that same returned result."
-              ],
-              "must_not_observe": [
-                "The disconnected callback still shows 1 marker turn, or an empty result is recorded as a pass."
+                "0 returned calls, empty markers, a disconnected callback accepted as successful submission, or a missing restoration.",
+                "An assertion that disconnected inputCleared must be false; PromptInput may clear after a resolved callback."
               ]
             }
           }
@@ -597,15 +574,15 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
     {
       "id": "AC-3",
       "type": "acceptance_criterion",
-      "name": "The action timeout is finite, the checks stay in source, and the diff stays in bounds",
+      "name": "Record a truthful diagnostic disposition with unchanged driver and bounded proof",
       "primary": false,
-      "description": "GIVEN the landed driveWeb edit WHEN the vitest guard, pnpm typecheck, and scoped Biome run THEN the guard sees one action timeout from 10000 to 30000 inclusive, the five result assignments remain, vitest launches no browser, and git diff --name-only shows 0 paths outside the allowlist.",
+      "description": "GIVEN the current real proof and prior blocked reports WHEN the preserved diagnostic CLI, source guard, typecheck, scoped Biome, and diff audit run THEN the driver hash is unchanged, the harness watchdog is 180000 ms, the commands execute without skips, and run.json states not_reproduced_no_driver_change with no timeout-fix claim and the downstream live failure still open.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
       "test_function": "driveWebActionTimeoutStaysFinite",
       "verify": "pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite",
       "test_tier": "integration",
-      "verification_service": "the real vitest runner, the real TypeScript compiler, and the real Biome linter reading the committed driver source",
+      "verification_service": "Real Vitest, TypeScript, Biome, Git, and filesystem evidence bound to actual served Chromium runs",
       "surface_policy": null,
       "tdd_state": "none",
       "maps_to_ac": null,
@@ -616,13 +593,12 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
         "primary": false,
         "tier": "visible",
         "test_tier": "integration",
-        "verification_service": "the real vitest runner, the real TypeScript compiler, and the real Biome linter reading the committed driver source",
+        "verification_service": "Real Vitest, TypeScript, Biome, Git, and filesystem evidence bound to actual served Chromium runs",
         "negative_control": {
           "would_fail_if": [
-            "The vitest file launches Chromium or runs expo export, or the guard is skipped so 0 tests run.",
-            "setDefaultTimeout(0) or timeout: 0 remains on scrollIntoViewIfNeeded, click, or fill.",
-            "The diff edits apps, packages, scripts, human-flows.json, or the ORI-CONT-004 task file.",
-            "The guard is a stub that does not read quickstart-web.ts, or the suite is empty."
+            "The guard is skipped, reads no real driver source, or no guard tests run.",
+            "Driver bytes are changed without a reproduced defect, the harness uses timeout 0, or a historical receipt is relabeled as current GREEN.",
+            "A fabricated RED, no-op runtime path, erased blocked cycle, or static success flag replaces the actual observations."
           ]
         },
         "evidence": {
@@ -635,19 +611,21 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
             "action": {
               "actor": "cli_user",
               "steps": [
-                "Run pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite.",
-                "Run pnpm typecheck and pnpm exec biome ci on the two owned test paths.",
-                "Read git diff --name-only against the allowlist."
+                "Run pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof --mode red to diagnose the unchanged uniwind baseline and disconnected callback.",
+                "Run pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite, pnpm typecheck, and scoped Biome.",
+                "Compare the driver hash and task candidate diff to the recorded base; record exact commands, exits, source hashes, evidence paths, and the downstream live failure."
               ]
             },
             "end_state": {
               "must_observe": [
-                "The guard exits 0 and reports 1 finite action timeout in the range 10000..30000, not 0.",
-                "The source still contains the 5 assignments seedVisible, olderSeedReached, inputCleared, markerVisible, and markerSubmitted, including the literal \"Seed turn 24: Ready for your message.\"",
-                "git diff --name-only lists 0 paths outside the allowlist."
+                "The diagnostic mode executes 2 real calls and records hang_reproduced false when both fulfill within 180000 ms; red_evidence_claimed is false.",
+                "The guard executes at least 1 test and verifies the real driver sha256 \"69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33\", retained 5 result assignments, finite 180000 ms harness bound, and no browser launch under Vitest.",
+                "run.json records disposition \"not_reproduced_no_driver_change\", driver_changed false, scope_paths_outside_allowlist 0, and downstream_live_gate_status \"open\".",
+                "Vitest, typecheck, and scoped Biome exit 0; historical red.json and cycle-2/red.json hashes remain unchanged."
               ],
               "must_not_observe": [
-                "0 guard tests, an empty diff check, or a browser launch under vitest."
+                "0 executed guard tests, a missing diff baseline, a timeout-fixed claim, skipped runtime verification, or FLOW-DOCS-02 completion from this task.",
+                "A finite watchdog converted into forced-close success or a newly reproduced hang accepted as a no-change pass."
               ]
             }
           }
@@ -657,21 +635,21 @@ Must pass: a real pre-fix call that does not settle by 180000 ms; GREEN calls th
     {
       "id": "TC-1",
       "type": "test_criterion",
-      "description": "Both seed web legs fulfill before the page closes in under 180000 ms with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted true.",
+      "description": "GIVEN real nativewind and uniwind quickstart exports WHEN unchanged driveWeb runs in real Chromium THEN both seed calls fulfill before harness teardown, in under 180000 ms, with seedVisible, olderSeedReached, markerVisible, inputCleared, and markerSubmitted true; the diagnostic receipt says hang_reproduced false and driver_changed false.",
       "verify": "pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof",
       "maps_to_ac": "AC-1"
     },
     {
       "id": "TC-2",
       "type": "test_criterion",
-      "description": "The baseline, disconnected, and restored negative-control serves each fulfill before the page closes; the disconnected serve has markerVisible false; baseline and restored have markerVisible true and inputCleared true.",
+      "description": "GIVEN one real uniwind disposable consumer WHEN baseline, disconnected callback, and restored exports are driven THEN all 3 calls fulfill before harness teardown in under 180000 ms; baseline/restored have all 5 booleans true; disconnected has seedVisible and olderSeedReached true with markerVisible and markerSubmitted false; the restored hash equals the original.",
       "verify": "pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof",
       "maps_to_ac": "AC-2"
     },
     {
       "id": "TC-3",
       "type": "test_criterion",
-      "description": "The vitest guard exits 0 with no browser launch, the action timeout is in 10000..30000, and the diff stays inside the allowlist.",
+      "description": "GIVEN the current real proof and prior blocked reports WHEN the preserved diagnostic CLI, source guard, typecheck, scoped Biome, and diff audit run THEN the driver hash is unchanged, the harness watchdog is 180000 ms, the commands execute without skips, and run.json states not_reproduced_no_driver_change with no timeout-fix claim and the downstream live failure still open.",
       "verify": "pnpm exec vitest run tests/sprint-05-orient-search/drive-web-return-proof.test.ts -t driveWebActionTimeoutStaysFinite",
       "maps_to_ac": "AC-3"
     }
