@@ -1,6 +1,7 @@
 ---
 import pkg from '../../../../package.json';
 import Button from '../components/Button.astro';
+import Callout from '../components/Callout.astro';
 import Chip from '../components/Chip.astro';
 import ComponentCard from '../components/ComponentCard.astro';
 import InstallCommand from '../components/InstallCommand.astro';
@@ -20,8 +21,10 @@ import items from '../data/registry-items.json';
  * filters), so a fixture edit moves the rendered numbers.
  * R9 (the family teaser grid below the hero) ships from the same derivation
  * as /components.
- * R10-R12 (quickstart strip, boundary teaser, QR) stay deferred — zero dead
- * links here. The phrasing is structural; SHELL-010 owns the copy pass.
+ * R11 (the boundary teaser) ships here per its wireframe row: a Callout
+ * info-aside whose link slot carries the canonical boundary anchor — exactly
+ * one per home. R10 (quickstart strip) and R12 (QR) stay deferred — zero
+ * dead links here. The phrasing is structural; SHELL-010 owns the copy pass.
  */
 type HomeItem = { type: string };
 
@@ -77,6 +80,15 @@ const itemsByName = new Map(
       <Button variant="primary" href="/registry">Get started</Button>
       <Button variant="outline" href="/components">Browse components</Button>
     </nav>
+
+    <Callout
+      variant="info"
+      title="Where the registry ends and your app begins: transport, streaming, and tool execution stay yours."
+    >
+      <a slot="link" href="/docs/owns-vs-does-not-own">
+        Read the ownership boundary — what the library owns, and what it does not
+      </a>
+    </Callout>
   </main>
 
   <section id="families" aria-label="Component families">
