@@ -1,34 +1,33 @@
-# FIX-ORI-RN-004-4: Repair the native live proof after isolated iOS diagnosis
+# FIX-ORI-RN-004-4: Verify the native no-repair disposition and complete live proof
 
 ## What this does
 
-Diagnoses and repairs the native proof that blocks the live half of Quickstart. Run the real iOS light-to-dark slice before a broad matrix, preserve the observed RED, and change only the native proof that evidence demonstrates is wrong. Then verify the inherited marker, streaming, active Stop, endpoint-loss/Retry, and provider-correlation contract on the slice and full caller.
+Preserves two real iOS attempts that did not reproduce the reported marker failure. Verify their source binding, record a truthful no-repair disposition, and finish the unchanged six-target live caller with the inherited marker, streaming, active Stop, Retry, provider-correlation and cleanup requirements.
 
 ## Why
 
-ORI-CONT-004 cycle 4 is blocked by a file outside its ownership: `tests/sprint-05-orient-search/live-example.maestro.yaml`. Its recorded candidate `21b2bf92673fa465aba3ba3dbc0ccd622ea24417` completed the seed prerequisite with six passing engine/platform combinations, but the separate Uniwind live driver recorded only two of three platforms passed. The iOS light appearance passed; dark failed to make the exact marker visible even though `hierarchy_has_marker` was true. Presence in an accessibility tree does not prove a visible marker.
+Checkpoint `f836d3665638efa16e877534ef17b5ecbdbfa182` contains the task supervisor and immutable evidence. Cycle 1 stopped during preflight. Cycles 2 and 3 each exercised unchanged iOS light and dark against real services on base `713eee79f70a15bba4c04dfa796151d69e1e6093`; each recorded zero actual native failures. The child exit 1 means the inherited one-platform `completed: false`, not a failed native observation. No YAML or native driver behavior was changed. The mandatory RED/repair prerequisite was disproven for that base and is removed by authorized ask `ask-wave28-revise-native-live-disposition-refreshed`.
 
-The ORI-AI-002 wrapper also retained a `Stop generating` diagnostic from its intentional invalid-model rejection phase. The current caller records that child phase without requiring its completed flag to be true; a child diagnostic alone is not a second caller defect. Attribute it to phase/model and inspect the parent result and target validation before escalating. The confirmed failed live leg is the iOS dark marker check. Preserve the deliberate rejection phase and the valid-model active-Stop requirement; do not change either to evade a failure.
+The final screenshots show the usable Retry/composer state. They do not independently show the complete marker; cycle-3 dark shows only its suffix. Earlier real Maestro exact `assertVisible` steps completed twice per appearance and provide temporal marker proof. Hierarchy presence and a final screenshot are not interchangeable with that evidence.
 
-CONT's tip `e44dbabbaa28e31f70beeaaddd65aeb79ccb3962` contains an attempted YAML patch. It is unreviewed input, not approved code or passing proof. Leave that branch and its WIP intact. Start the repair from the orchestrator's assigned current trunk base, record differences from the failed candidate, and reproduce against that base before accepting a fix.
+The original CONT candidate's dark-marker failure remains a historical observation, not a bug this task fixed. Its three YAML-only commits remain unreviewed. The intentional reject-phase `Stop generating` diagnostic alone is not a second caller defect: inspect the actual parent validation, rejected-model phase and valid-model outcomes. This disposition does not waive full caller proof or ORI-CONT-004's locked Quickstart flow.
 
 ## How to verify
 
 ```sh
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode red --cycle cycle-1
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-1
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-1
+pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4
+pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4
+pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-4
 pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --case ORI-RN-004-AC-5-live-import-graph-compiler
 pnpm typecheck
 pnpm exec biome ci tests/sprint-05-orient-search/support/live-example-proof.test.ts tests/sprint-05-orient-search/native-live-repair-proof_test.ts
 ```
 
-The task-owned entry point is a new thin supervisor and evidence checker over the existing real commands, not a replacement driver. Its `_test.ts` suffix is recognized by the shared flow validator and is excluded by the verified Vitest include `tests/**/*.test.ts`; no Vitest configuration change or heavyweight auto-discovered test is permitted. `--mode red` preserves the actual nonzero native failure; it does not manufacture a bug or report runtime success. Each retry uses a new cycle directory. The full command is forbidden until the isolated slice has a documented diagnosis and passes after the scoped repair.
+The existing checkpoint wrapper must receive the narrowly scoped disposition/full-gate/audit update described below before this sequence can run. `--phase disposition` is a new local evidence operation, not an existing supported flag or a new native driver. Cycle 4 is a new parent linked to the immutable older attempts. There is no mandatory extra isolated iOS run when the relevant native/product executable bytes are unchanged.
 
 ## Scope
 
-Own the existing YAML, narrowly necessary iOS-native sections of `support/live-example-proof.test.ts`, the small task-owned supervisor, and bounded evidence. The app, AI hook/backend, NativeWind driver, shared device adapter, caller orchestrator, and locked-flow files remain outside the edit boundary. A product/caller defect is a concrete block for its owner.
+Retain the existing task ID, owners, dependencies and file allowlists. Implement only the small task-wrapper changes needed to verify the disposition and continue existing real proof. Keep YAML and driver behavior unchanged in the no-repair path. If new evidence demonstrates an actual defect, stop with exact owner/path evidence for a scoped decision.
 
 <details>
 <summary>▸ Full agent specification (TASK-TEMPLATE v5.2 — required reading for implementer + reviewer)</summary>
@@ -40,56 +39,72 @@ Own the existing YAML, narrowly necessary iOS-native sections of `support/live-e
 > Priority: P1 · Points: 5 · Type: FIX
 > Dependency phase: NEXT after completed ORI-RN-004
 > Proposed By: react-native-reusables-planner
-> TDD_MODE: red_first · RED_GREEN_REQUIRED: yes
+> TDD_MODE: verification_only · RED_GREEN_REQUIRED: no
 > Sprint: [SPRINT.md](./SPRINT.md)
-> Planned date: 2026-09-29
-> Source SHA: 5a6aa62f0423ac1bec57c7fffad3727ca68124e5
+> Revised date: 2026-09-29
+> Source SHA: 08c14642fc73a0c025e239317196c16b024366bd
 
 AGENT: planner=react-native-reusables-planner | implementer=react-native-reusables-implementer | reviewer=react-native-reusables-reviewer
 
-PROGRESS: 0/4 ACs; every TDD_STATE is none. No RED/GREEN or completion is claimed by this plan.
+PROGRESS: 0/4 ACs. The plan claims neither full caller success nor task completion. Historical attempts are retained as recorded; no native RED or product repair is asserted.
 
 ### OUTCOME
 
-An independently reviewed native proof repair supported by a reproducible current iOS failure, same-slice GREEN, and a fresh passing six-target live caller. ORI-CONT-004 then resumes its unchanged locked flow, producing its own current-invocation seed and live evidence.
+An independently reviewed, source-bound no-repair disposition and fresh passing six-target live caller. The native/product source remains unchanged. ORI-CONT-004 then resumes its own unchanged complete locked flow after safe integration of the reviewed native bytes.
 
 ### CRITICAL CONSTRAINTS — Never
 
-- Never replace visible native observations with hierarchy substring presence, lower a threshold merely to pass, remove exact marker/Stop/Retry assertions, add test-only labels, or fabricate provider correlation.
-- Never stub the app/provider/browser, synthesize success receipts, skip a required leg/phase, force stream latency, or change model/prompts/provider limits to keep Stop visible artificially.
-- Never edit cross-owner product/caller/device code, locked-flow steps/commands, or CONT's task/worktree. A demonstrated outside-scope defect must be reported with evidence.
-- Never claim the unreviewed branch patch, older seed success, or a partial iOS result proves the full live matrix. A slice retains inherited `completed: false`; all six live targets still must pass.
-- Never run unbounded or blind aggregate retries, kill another owner's processes, use the first booted device, bypass hooks, or overwrite prior cycle evidence.
+- Never manufacture native RED, relabel passing attempts as failures, infer success from a partial-matrix exit, or claim the historical CONT failure is fixed.
+- Never rewrite cycle-1/2/3 or `not-reproduced.json`, including their filenames, run IDs, execution SHA, screenshots and original claims. Add a new linked disposition to explain their meaning.
+- Never substitute hierarchy presence for visible native observations, remove exact marker/Stop/Retry assertions, force stream delay, change the model/prompts, fabricate provider records or omit targets.
+- Never edit cross-owner product/caller/device code, locked-flow steps/commands, or CONT's task/worktree. Preserve every CONT commit and its WIP.
+- Never make ordinary shallow aggregate guards depend on historical Git objects or task evidence history. Keep the wrapper outside Vitest discovery and the audit explicit.
+- Never kill another owner's processes, use first-booted fallback, bypass hooks or overwrite prior evidence.
 
 ### DEFAULTS — Always
 
-- Use the reserved iOS `81487B1E-A4D1-45AE-9BCE-D675802BACD1` and Android `emulator-5554`, after verifying identity and exclusive ownership.
-- Prefer the smallest YAML repair grounded in the failed screenshot and real accessibility behavior. Edit native-driver support only when the same captured failure requires it.
-- Keep the existing true light-to-dark order, keyboard behavior, request correlation, lifecycle bounds, and exported `runLiveExampleProof`/caller schema intact.
-- Inspect native screenshots and recordings visually; retain the raw logs and backend records that support each verdict.
-- Commit validated scoped work on the assigned branch; independent reviewer approves the exact candidate; only the orchestrator merges.
+- Use reserved iOS `81487B1E-A4D1-45AE-9BCE-D675802BACD1` and Android `emulator-5554` with verified ownership.
+- Preserve existing light-to-dark order, exact assertions, backend lifecycle, provider contracts, public driver/caller schemas and resource bounds.
+- Preserve raw statuses; inspect real screenshots/logs/records and state what each observation actually proves.
+- Commit validated scoped work on the assigned branch; independent review approves the exact candidate; only the orchestrator merges.
 
 ### DONE WHEN
 
-- [ ] AC-1 has real current RED and same-slice light/dark GREEN with visible exact markers.
-- [ ] AC-2 preserves active Stop, streamed output, context and retained-turn Retry with actual request correlation.
-- [ ] AC-3 passes the existing full caller for all six live targets, without waiving its rejection phase or native appearances.
-- [ ] AC-4 proves bounded execution, resource restoration, source-bound immutable evidence, static gates and scope.
-- [ ] Independent native reviewer approves; completion handoff explicitly leaves FLOW-DOCS-02 to ORI-CONT-004.
+- [ ] AC-1 verifies both attempts and current source binding, records no-repair without fabricated RED, and preserves old bytes.
+- [ ] AC-2 proves active Stop, context, streaming and retained-turn Retry with current request correlation.
+- [ ] AC-3 passes all six targets through the unchanged full caller and validate-only command.
+- [ ] AC-4 proves source-bound immutable evidence, real teardown, static gates and commit scope.
+- [ ] Independent native review approves; the handoff leaves FLOW-DOCS-02 to ORI-CONT-004.
 
 ### SPECIFICATION
 
-#### First diagnose the actual iOS slice
+#### Preserve and verify the actual diagnostic disposition
 
-Create `tests/sprint-05-orient-search/native-live-repair-proof_test.ts` as a small task-local CLI wrapper. It must invoke the existing exported `runLiveExampleProof` or its existing CLI in a separate child using `platforms: ['ios']`/`--platforms ios`. Do not create a parallel implementation, new product seam, or new appearance-selection API. The current driver deliberately executes light then dark and runs the real iOS YAML plus its native endpoint-loss/Retry phase. Keep that order to preserve the failure conditions.
+Read these exact source objects at checkpoint `f836d3665638efa16e877534ef17b5ecbdbfa182`; the existing task branch already contains them. Preserve them bytewise, including the misleading historical `ios-red` directory names, and explain those names without editing the past:
 
-The existing CLI exits 1 on an otherwise passing iOS-only run because `completed` literally means three platforms. The wrapper must record that raw exit and original manifest unchanged, verify the current run ID, require exactly the light and dark iOS outcomes, and derive slice success from both statuses and real observations. It must not mutate `completed` or accept a missing/failed leg. Direct export use is also allowed if the same manifest, execution and child isolation are preserved. Do not interpret exit 1 alone as RED; an actual failed native step is required.
+| Artifact below `tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/` | SHA-256 |
+|---|---|
+| `not-reproduced.json` | `c9c787364311f07a4a3f98a4592efdc2eb5950e793b79fa4fe5d4c003b114e92` |
+| `cycle-2/ios-red/run.json` | `319f3c5d5f93b381721d07155ed7081884144c4ed4c3c7d0938ede9c1da8a843` |
+| `cycle-3/ios-red/run.json` | `96736ebf536a043725d1a8ce2c734bd5cb3e4050754f6da797ddaa85965bbfe4` |
+| `cycle-2/ios-red/driver-evidence/run-manifest.json` | `fe8bf5f261ee1cd94544b8d3df42aac273d8db1e0500ff32abfc0173e0cd0055` |
+| `cycle-3/ios-red/driver-evidence/run-manifest.json` | `6ce3dd09bdc6b2c9fd67d498473d3725716818c59494e7fd0121b125be228d05` |
 
-Run the current assigned base before editing YAML/driver behavior. Capture appearance, exact step/selector, screenshot, keyboard geometry, accessibility hierarchy, actual submitted marker, provider phase/model, request IDs, and raw logs. Compare the current YAML hash with the recorded failed candidate and later attempted branch patch. Historical evidence is context only. If the base cannot reproduce after at most two bounded attempts with recorded conditions, stop and report `not reproduced`; do not reintroduce an old failure or force a timeout to obtain RED.
+The two attempts ran at base `713eee79f70a15bba4c04dfa796151d69e1e6093`. Preserve each exact argv/run ID, two `ios` legs with distinct light/dark appearances, passed status, `maestro_exit: 0`, `actual_failure_count: 0`, raw child exit 1, no signal/timeout and inherited `passed_platforms: 1`/`completed: false`. Each original report hashes its driver-evidence tree: verify those hashes and manifest links, not only a summary boolean. Cycle 1 is a prerequisite interruption and supplies no runtime failure. Copied `android/**` screenshots in the iOS snapshot are historical carried artifacts and provide no current Android evidence.
 
-The repair may navigate the real transcript or dismiss a real keyboard obstruction only when evidence shows that is the cause. Keep a final exact visible-marker assertion and prove the accepted user turn, not just an assistant echo. A coordinate tap is permitted only if the current device screenshot proves its actual target and it preserves accessibility assertions; do not copy `50%, 30%` or `visibilityPercentage: 40` from the unreviewed patch on faith. Never decrease visibility requirements to hide an offscreen result. No source/UI mutation is permitted merely to make a test pass.
+Verify the actual submitted marker and completed exact `assertVisible` operations in the original real Maestro logs (two per appearance). The final screenshot has a different capture time: it proves the described Retry/composer end state only. Do not overclaim `markers_visible: true` from the old supervisor as independent screenshot proof. Preserve original data and put this clarification in the new disposition.
 
-#### Keep active streaming and Retry causal
+Compare every recorded `source_sha256` entry against current bytes. Require equality for the YAML, native driver, app screen/component/hook, backend, caller entrypoints and lockfile. The sole permitted exception is this task wrapper, whose original execution hash and current revised hash must both be recorded with its narrowly reviewed delta. Do not blanket-ignore test/support code. Current main `962f7249` has no changes in the recorded native/product/caller paths relative to the attempt base; recheck in the assigned worktree. A future behavioral source mismatch blocks reuse; report it rather than pretending old evidence is current or automatically launching another broad run. A wrapper-only disposition/gating change does not require a redundant native slice.
+
+#### Make the existing full command reachable safely
+
+Extend only `native-live-repair-proof_test.ts` with `--phase disposition --cycle cycle-4` (no `--mode`). It validates the exact existing attempts, source hashes and permitted wrapper delta, then creates `cycle-4/disposition/disposition.json` once. Record task ID, `status: not_reproduced`, `no_repair: true`, original checkpoint/base/run IDs and artifact hashes, current candidate/source hashes, the temporal marker observation, screenshot limitations and any cleanup limitations. Missing/mismatched evidence or changed native/product bytes exits nonzero and must not create an accepted disposition. This receipt is a diagnosis, not full task success.
+
+Update `runFull` to verify that accepted disposition and its current source binding instead of unconditionally demanding a nonexistent same-cycle `ios-green/green.json`. Require the exact two passing attempts and all immutable links, not a hand-authored accepted boolean. Do not fabricate an ios-green receipt. Keep the existing full command and underlying caller semantics intact. Update explicit audit to accept this disposition plus the new full report; it must reject missing/failed/stale evidence and never require fictional RED. The old iOS modes may remain for explicit future diagnosis, but are not part of this no-repair completion sequence.
+
+Keep the update small: no replacement driver, appearance-selection API, new product hook, general process abstraction, dependency or test-runner configuration. Vitest currently includes `tests/**/*.test.ts`; the shared validator recognizes the `_test.ts` suffix, which stays excluded from automatic Vitest discovery. Historical receipt/Git checks belong to explicit task disposition/review/audit only, not normal `pnpm test`, shallow-clone guard suites or package scripts. The new full execution still exercises the real provider and all devices. Any targeted negative check of disposition rejection must use copies of the actual receipt bytes inside `.tmp/FIX-ORI-RN-004-4/`, never alter canonical attempts, never stub the live driver and never be labeled native RED.
+
+#### Preserve functional behavior and fresh full proof
 
 The native flow continues through the existing seed exchange, contextual follow-up, long response, active Stop, and endpoint-loss/Retry. Capture the request active at Stop and its incremental output before the tap. Its backend record must show abort before natural completion. A later completed record is not interchangeable with this request. Preserve the existing prompt/model/token configuration and prohibit injected delays or throttling changes.
 
@@ -97,18 +112,18 @@ For Retry, stop only the owned backend through its lifecycle handle, observe the
 
 The historical wrapper `Stop generating` diagnostic occurs in the intentional provider-reject phase. Current runEnginePhases records reject completed/status values and error records, then proceeds to the valid-model live phase; it does not treat the reject child's nonzero/partial outcome alone as caller failure. Inspect the parent manifest validation, concrete target rejection reasons, and live-leg status. An expected rejected-provider receipt is valid negative-control evidence, not automatically an AI-owner blocker. Only a demonstrated parent/caller contract failure outside native ownership is routed to the AI SDK owner, with exact phase/model/request evidence. Do not change the caller, skip rejection, restore the model early, or alter provider responses. Valid-model live phases must still prove active Stop.
 
-#### Prove the existing full caller only after slice GREEN
+#### Prove the existing full caller after verified disposition
 
 The wrapper's full phase executes the unchanged command shape:
 
 ```sh
-node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines uniwind,nativewind --platforms ios,android,web --output tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-1/full-green/caller --run-id FIX-ORI-RN-004-4-cycle-1-full --ios-udid 81487B1E-A4D1-45AE-9BCE-D675802BACD1 --android-serial emulator-5554
-node tests/sprint-05-orient-search/run-live-example-proof.mjs --validate tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-1/full-green/caller --expect-run-id FIX-ORI-RN-004-4-cycle-1-full
+node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines uniwind,nativewind --platforms ios,android,web --output tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-4/full-green/caller --run-id FIX-ORI-RN-004-4-cycle-4-full --ios-udid 81487B1E-A4D1-45AE-9BCE-D675802BACD1 --android-serial emulator-5554
+node tests/sprint-05-orient-search/run-live-example-proof.mjs --validate tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-4/full-green/caller --expect-run-id FIX-ORI-RN-004-4-cycle-4-full
 ```
 
 Substitute only the new cycle label for subsequent attempts; preserve the recorded exact argv. `runLiveExampleProof` currently writes driver screenshots/manifests to fixed ORI-RN-004 evidence paths despite its outputDir option. Permit those real generated side effects only in this task's assigned worktree, then snapshot and hash them immediately under the task-owned immutable cycle directory. Other generated ORI-RN-005/ORI-AI-002 paths have the same side-effect-only rule. Do not copy into or overwrite CONT's worktree.
 
-Require caller exit 0 and validate-only exit 0, all six target names, validation.ok true, and current source/run identities. Preserve the rejection/live/web-self phases and the inherited per-target criteria. Do not add a new aggregate or rerun pnpm test to diagnose a single native selector. An unowned full-matrix failure is a blocker with precise evidence, not permission to broaden the repair.
+Require caller exit 0 and validate-only exit 0, all six target names, validation.ok true, and current source/run identities. Preserve the rejection/live/web-self phases and the inherited per-target criteria. Do not add a new aggregate or rerun pnpm test to diagnose a single native selector. An unowned full-matrix failure is a blocker with precise evidence, not permission to broaden this no-repair task. Run one attempt after disposition acceptance; repeat only with a new evidence-backed hypothesis and new cycle.
 
 #### Runtime ownership, bounds and evidence
 
@@ -118,24 +133,26 @@ Check ports used by the selected path before launch: 4000, 8095 and 8406 for the
 
 The task-local supervisor must stay outside the driver's synchronous event loop. Record its child/process-group IDs, actual start time, phase transitions, last child output time and exit/signal. Emit a supervisor heartbeat at least every 30 seconds. Bound an isolated iOS invocation to 2700 seconds (existing native leg bound 2400 seconds plus setup/cleanup); bound the full caller to 14400 seconds, with per-phase limits: the existing NativeWind clean-consumer recipe/install/compiler/doctor preparation 3600 seconds (its recipe alone already permits 1800 seconds), device/Metro native-prep 300 seconds, each native leg 2400 seconds, web leg 900 seconds, backend operation 120 seconds, cleanup 180 seconds. Do not apply the device-prep limit to clean-consumer installation. Honor existing tighter bounds. Name the timed-out phase and last progress; a supervisor heartbeat by itself is not child progress. Use actual phase markers/owned child activity, not an arbitrary short output-silence timer during a valid native action.
 
-On timeout/failure, preserve evidence before terminating only the recorded owned process group and children. Teardown must inspect actual listeners/descendants, restore recorded appearances, remove only this run's Android reverse mappings, close proof browsers and release reservations. No global pkill, port-only kill of an unknown PID, first-booted fallback, or silent timeout success. Retain the real failure cleanup result as well as success cleanup proof.
+Preserved attempts do not establish every present teardown property. The fresh full run must supply the inherited process, appearance, reverse-mapping and reservation observations; do not infer them from an empty listener list alone. On actual timeout/failure, preserve evidence before terminating only the recorded owned process group and children. Teardown must inspect actual listeners/descendants, restore recorded appearances, remove only this run's Android reverse mappings, close proof browsers and release reservations. No global pkill, port-only kill of an unknown PID, first-booted fallback, or silent timeout success. Retain observed prerequisite/attempt cleanup and any actual full-run failure cleanup alongside success cleanup; do not create a native failure just to produce a cleanup receipt.
 
-A cycle is a shared parent with create-once phase/mode children: `cycle-1/ios-red/`, `cycle-1/ios-green/`, and `cycle-1/full-green/`. Each execution atomically creates only its own child and refuses that child if it already exists; an existing parent from an earlier phase is required and is not an error. The full caller writes under `cycle-1/full-green/caller/`. Record an immutable cycle identity (task/base/parent linkage) on first creation; later phases must match that identity and reference the preceding evidence hashes. Repeating a failed execution uses a new cycle, never overwrites a child. `--phase audit --cycle cycle-1` is read-only and idempotent: it reads all completed phase children, prints its verdict, and creates or rewrites no evidence. `red.json`, `green.json`, `run.json`, logs, screenshots/recordings and source manifest live in their applicable phase/mode child. Preserve exact executed HEAD and hashes for YAML, driver, wrapper, app/hook/backend, lockfile and caller. An evidence-only commit may follow execution, but never rewrite the execution SHA; the reviewer binds unchanged executable hashes to the final candidate or reruns changed code. No historical cycle is overwritten or relabeled as fresh.
+Use a new `cycle-4` parent with create-once `disposition/` and `full-green/` children; the full caller writes under `full-green/caller/`. Each operation refuses an existing execution child, allows its existing matched parent, and links the preceding immutable receipt. Cycle identity fixes the starting candidate, original diagnostic references and device IDs. A later evidence-only commit may change HEAD without changing executable bytes: retain the original execution SHA and verify exact executable hashes rather than rewriting the identity or requiring HEAD equality to an evidence-only commit. A changed executable requires a new disposition/cycle; unchanged native behavior does not require another isolated slice.
+
+Audit is read-only and idempotent: require an existing cycle and identity before reading; do not call a create-capable cycle initializer, write receipts or launch a native process. A retry uses a new unused cycle linked to the verified diagnostic input; never reuse or rewrite cycle-1/2/3. Full run evidence retains its own invocation SHA/hash set. Independent review binds unchanged executable hashes to the final evidence-only candidate or requires proof for changed executables.
 
 ### BOUNDARY CONTRACTS
 
-- `live-example.maestro.yaml`: real iOS interaction repair only; retain marker, seed/context, active Stop and exact accessibility assertions.
-- `support/live-example-proof.test.ts`: narrowly necessary native iOS proof/diagnostic sections (`runLiveMaestro`, `runNativeAppearance`, native observation helpers) only when the actual RED requires them. Preserve public options, CLI flags, manifest/correlation schemas, Web/Android semantics, backend lifecycle/model/prompts and existing bounds. No general refactor.
-- `tests/sprint-05-orient-search/native-live-repair-proof_test.ts`: thin task-local supervisor and evidence checker over existing entrypoints; no duplicated driver, new app seam, stub renderer, or generic process framework.
-- Task evidence paths: immutable cycle data only. Existing ORI-RN-004/005 and ORI-AI-002 evidence directories are generated side effects in this worktree only, never hand-authored successes.
+- YAML and `support/live-example-proof.test.ts`: unchanged behavior for this no-repair disposition. Their inherited allowlist remains, but does not authorize speculative edits.
+- `native-live-repair-proof_test.ts`: only the small disposition/full-gate/audit change and completion of inherited source/phase/cleanup observations needed for trustworthy proof. Preserve public driver/caller behavior.
+- Original cycle-1/2/3 and `not-reproduced.json`: immutable diagnostic input. New task-owned cycle data records interpretation and full-run evidence.
+- Existing ORI-RN-004/005 and ORI-AI-002 evidence roots: generated side effects only under the unchanged ownership rules below.
 
-### ACCEPTANCE CRITERIA — RED → GREEN → REFACTOR
+### ACCEPTANCE CRITERIA — DIAGNOSIS AND REAL VERIFICATION
 
-Only AC-1 is PRIMARY. All functional checks use real services; the slice is a diagnostic prerequisite and does not replace the full matrix.
+Only AC-1 is PRIMARY. This task has verification_only disposition because no native bug was reproduced. The full six-target runtime obligation is unchanged.
 
-#### AC-1: Diagnose the current iOS failure before repairing its native proof [PRIMARY]
+#### AC-1: Verify the unchanged iOS attempts and record a no-repair disposition [PRIMARY]
 
-GIVEN the unmodified current native proof and a real iOS session WHEN the isolated light-then-dark slice runs before any fix THEN preserve a concrete failing observation and its source-bound RED; after a bounded native-owner repair, the identical slice must pass both appearances with the exact marker visibly rendered and the composer usable.
+GIVEN the immutable checkpoint f836d366 and its two real unchanged iOS light/dark attempts WHEN their bytes, native source hashes, run IDs, actual outcomes and temporal marker observations are verified against the current candidate THEN record not reproduced with 0 actual native failures and no YAML/driver repair; preserve every original receipt and permit the fresh full caller without fictional RED or a redundant same-slice run.
 
 - PRIMARY: true
 - FLOW_REF: null
@@ -144,8 +161,8 @@ GIVEN the unmodified current native proof and a real iOS session WHEN the isolat
 - SURFACE_POLICY: .spec/e2e-policy/surface.json
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/native-live-repair-proof_test.ts
-- TEST_FUNCTION: runIosRepairProof
-- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1`
+- TEST_FUNCTION: recordNoRepairDisposition
+- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4`
 - MAPS_TO_AC: null
 
 SCENARIO:
@@ -161,9 +178,10 @@ SCENARIO:
   "verification_service": "Real Expo Go, Maestro accessibility interaction, reserved iOS/Android devices, owned example backend, official OpenAI Responses, and real Chromium for the full matrix",
   "negative_control": {
     "would_fail_if": [
-      "The repair is accepted from hierarchy_has_marker alone while the marker is off screen, an assistant echo is substituted for the accepted user turn, or assertVisible is removed.",
-      "A historical receipt or the unreviewed e44dbabb patch is called current RED/GREEN without executing the candidate.",
-      "A stub app, scripted success receipt, disabled assertion, or added test-only label replaces the real native interaction."
+      "A passed attempt with actual_failure_count=0 is labeled RED, inherited exit 1 is called a native defect, or original diagnostic evidence is overwritten.",
+      "A final Retry screenshot or hierarchy substring is claimed to show the complete marker despite lacking those pixels; the earlier exact real assertVisible result is missing or mismatched.",
+      "The disposition accepts altered native/product executable bytes, a missing source receipt, another run ID, copied historical Android evidence, or an unreviewed CONT patch.",
+      "An empty manifest, stubbed native outcome or static success receipt is accepted instead of the original real iOS run evidence."
     ]
   },
   "evidence": {
@@ -176,20 +194,22 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "Run pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode red --cycle cycle-1 against the assigned task base before changing the YAML or native driver behavior.",
-          "Inspect the failing screenshot, accessibility hierarchy, keyboard state, Maestro step, provider phase/model, and source hashes; distinguish marker visibility from active Stop failure.",
-          "Apply only the demonstrated native proof repair. Rerun the same iOS slice with mode green and the same device/phase order."
+          "Read checkpoint f836d3665638efa16e877534ef17b5ecbdbfa182 and verify the original cycle-2 and cycle-3 ios-red reports, raw manifests, logs and evidence hashes without rewriting them.",
+          "Compare recorded native/product/caller source hashes with the current candidate; separately record and review only the allowed task-wrapper changes. Classify cycle 1 as a prerequisite interruption, not runtime RED.",
+          "Run pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4; the disposition records both actual passing attempts, unchanged behavioral source, exact temporal Maestro marker assertions and the limited final screenshot observation before permitting full proof."
         ]
       },
       "end_state": {
         "must_observe": [
-          "red.json records at least 1 actual native failure on the unmodified current task base, with exact command, candidate/source hashes, run ID, appearance, failing step, nonzero child exit, screenshot and raw log paths.",
-          "green.json records 2 iOS appearance outcomes, light and dark, both passed; each has a visibly rendered fresh user marker, actual assertVisible success, and the composer above the keyboard.",
-          "For the 1-platform slice the inherited completed flag remains false; acceptance requires exactly 2 passed iOS appearance legs and current source/run binding, not rewriting completed."
+          "2 real bounded attempts each contain exactly 2 passing iOS appearances, light and dark, actual_failure_count 0, raw child exit 1, no signal or timeout, passed_platforms 1 and inherited completed false.",
+          "For each appearance, the original real Maestro output has 2 completed exact MARKER assertVisible operations bound to the submitted marker and run; final screenshots are described as the usable Retry/composer state and not independent full-marker proof.",
+          "A new create-once disposition receipt hashes the original attempts and source bytes, records not_reproduced and no_repair, and refuses missing/mismatched evidence. Original cycle-1/2/3 and not-reproduced.json bytes remain unchanged.",
+          "0 YAML, native driver, app, hook, backend, caller, model, prompt or lockfile changes are attributed to this disposition; the separately reviewed task-wrapper delta only handles disposition, validation and existing supervision."
         ],
         "must_not_observe": [
-          "0 captured runtime failures called RED, a manufactured failure by deleting a product behavior, a hierarchy-only visible-marker claim, or an unreviewed patch reported as fixed.",
-          "A full two-engine matrix started before the slice diagnosis and green evidence."
+          "A manufactured failure, fictional RED/GREEN, rewritten historical execution SHA, complete=true on a partial slice, or an assertion that the old CONT failure was fixed.",
+          "A new native attempt solely to satisfy the obsolete mandatory-RED rule when the recorded behavioral executable hashes are unchanged.",
+          "Empty or missing real appearance outcomes accepted as a source-bound no-repair disposition."
         ]
       }
     }
@@ -197,9 +217,9 @@ SCENARIO:
 }
 ```
 
-#### AC-2: Preserve active Stop and retained-turn Retry on the real iOS slice
+#### AC-2: Retain real active Stop and Retry proof through the full live caller
 
-GIVEN both iOS appearances on the valid inherited model WHEN the actual composer sends a contextual exchange, an active long response is stopped, and the owned endpoint is lost then restored THEN each appearance has visible nonempty streamed output, a correlated abort before natural completion, and Retry completes a new request with exactly one retained failed user turn.
+GIVEN the verified unchanged iOS no-repair disposition WHEN the fresh full caller executes the inherited valid-model exchanges and owned endpoint-loss/Retry flows THEN preserve visible streamed output, active Stop with a same-request abort before natural completion, contextual behavior, and a new successful Retry request with exactly one retained user turn in both iOS appearances and every required target.
 
 - PRIMARY: false
 - FLOW_REF: null
@@ -208,8 +228,8 @@ GIVEN both iOS appearances on the valid inherited model WHEN the actual composer
 - SURFACE_POLICY: .spec/e2e-policy/surface.json
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/native-live-repair-proof_test.ts
-- TEST_FUNCTION: runIosRepairProof
-- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1`
+- TEST_FUNCTION: runFull
+- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4`
 - MAPS_TO_AC: null
 
 SCENARIO:
@@ -240,9 +260,9 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "Inspect the existing real iOS slice through marker, seed exchange, contextual follow-up, active Stop, and endpoint-loss/Retry; retain the existing commands and prompts.",
-          "Correlate visible growth and active Stop to the same request and appearance time window using screenshots/recording and real backend records.",
-          "Stop only the owned endpoint, send the retry probe, observe the sanitized error and accessible Retry, restart the owned endpoint, and activate Retry."
+          "Retain the original iOS attempt observations without claiming that their end-state screenshots independently prove every earlier stream state.",
+          "During the new full caller inspect both iOS appearances through marker, seed/context exchange, visible incremental output and active Stop; correlate each real abort with that same request and appearance interval.",
+          "Run the inherited endpoint-loss/Retry flow: stop only the owned endpoint, observe the sanitized error and accessible Retry, restart the endpoint and retry the retained turn; capture current real output and request records."
         ]
       },
       "end_state": {
@@ -263,7 +283,7 @@ SCENARIO:
 
 #### AC-3: Verify the unchanged caller with all six live engine/platform targets
 
-GIVEN the independently inspected green iOS slice WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the outer supervisor THEN all 6 live targets pass its existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004.
+GIVEN the verified source-matched no-repair disposition WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the existing outer supervisor THEN all 6 live targets pass existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004.
 
 - PRIMARY: false
 - FLOW_REF: null
@@ -272,8 +292,8 @@ GIVEN the independently inspected green iOS slice WHEN the unchanged ORI-AI-002 
 - SURFACE_POLICY: .spec/e2e-policy/surface.json
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/native-live-repair-proof_test.ts
-- TEST_FUNCTION: runFullLiveProof
-- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-1`
+- TEST_FUNCTION: runFull
+- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4`
 - MAPS_TO_AC: null
 
 SCENARIO:
@@ -304,7 +324,7 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "After slice green, run the existing run-live-example-proof.mjs for uniwind,nativewind and ios,android,web with a fresh task-owned output directory and run ID.",
+          "After verifying the no-repair disposition and current source binding, run the existing run-live-example-proof.mjs for uniwind,nativewind and ios,android,web with a fresh cycle-4/full-green/caller output and run ID.",
           "Inspect every reject/live/web-self phase and target result; require all existing caller validation and use its validate-only entry point for the same run ID.",
           "If a caller/provider-phase contract fails outside native ownership, stop and report exact phase/model/request evidence to its owner; do not patch it here."
         ]
@@ -327,7 +347,7 @@ SCENARIO:
 
 #### AC-4: Bound the owned processes and preserve exact evidence and scope
 
-GIVEN real isolated and full runs WHEN normal completion or failure triggers teardown and the static/source audit THEN owned resources are released, device appearance and reverse mappings are restored, immutable receipts retain exact source identities, and the committed task diff contains only implementationCommitAllowed paths and the allowed proof repair; generated runtime writes are separately recorded and excluded from that diff.
+GIVEN the preserved diagnostic attempts and a fresh full run WHEN disposition verification, normal completion or actual failure triggers the existing explicit audit and teardown THEN owned resources are released, appearances and reverse mappings are restored, immutable receipts retain exact source identities, and only permitted wrapper/evidence changes are committed; historical Git inspection stays in explicit task review rather than ordinary shallow aggregate guards.
 
 - PRIMARY: false
 - FLOW_REF: null
@@ -336,8 +356,8 @@ GIVEN real isolated and full runs WHEN normal completion or failure triggers tea
 - SURFACE_POLICY: null
 - TDD_STATE: none
 - TEST_FILE: tests/sprint-05-orient-search/native-live-repair-proof_test.ts
-- TEST_FUNCTION: auditNativeRepairProof
-- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-1`
+- TEST_FUNCTION: audit
+- VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-4`
 - MAPS_TO_AC: null
 
 SCENARIO:
@@ -368,17 +388,17 @@ SCENARIO:
       "action": {
         "actor": "cli_user",
         "steps": [
-          "Use an external supervisor process around the real proof child, record its owned process group and phase timestamps, and retain raw exits/signals before cleanup.",
-          "On RED failure and GREEN completion, inspect actual listeners and owned descendants, restore recorded appearances and owned reverse mappings, and snapshot immutable cycle evidence.",
-          "Run the inherited live-import-graph compiler, pnpm typecheck, scoped Biome, and explicit base-to-candidate diff audit; bind evidence source hashes to the exact reviewed candidate."
+          "Reuse the external supervisor around the real full caller, record the owned process group and actual phase timestamps, and retain raw exits/signals and observed cleanup.",
+          "Preserve diagnostic cycles bytewise; perform source/evidence verification in the task disposition and explicit audit. Do not add historical Git or receipt-history preconditions to Vitest-discovered tests, normal aggregate guards or package scripts.",
+          "Run the inherited compiler, pnpm typecheck, scoped Biome and explicit task base-to-candidate scope audit. Audit reads evidence without creating a cycle or relaunching native proof."
         ]
       },
       "end_state": {
         "must_observe": [
-          "The outer supervisor emits a heartbeat at least every 30 seconds; an iOS child is bounded by 2700 seconds and a full caller by 14400 seconds with the declared phase deadlines.",
-          "Both real failure and success receipts record child exit/signal and teardown observations: 0 surviving owned listeners/descendants, original device appearances restored, and no unrelated reverse mappings removed.",
-          "The compiler, typecheck and scoped Biome exit 0; the committed diff audit records 0 paths outside implementationCommitAllowed, 0 generated owner-runtime artifacts, and unchanged caller, model/prompts, product sources and locked-flow hashes.",
-          "Each cycle has 3 create-once phase/mode children with exact run IDs/source hashes; audit is read-only and 0 existing phase artifacts are overwritten."
+          "The existing outer supervisor remains independent of the synchronous driver and emits a heartbeat at least every 30 seconds; full caller maximum is 14400 seconds with the inherited phase deadlines.",
+          "Actual full-run success or failure retains raw exit/signal and teardown observations: 0 surviving owned listeners/descendants, original appearances restored, and no unrelated reverse mappings removed; earlier attempt limitations remain explicit.",
+          "Compiler, typecheck and scoped Biome exit 0; explicit task review records 0 paths outside implementationCommitAllowed, 0 generated owner-runtime artifacts in the commit, and unchanged native/product/caller/locked-flow behavioral bytes.",
+          "The fresh cycle has create-once disposition and full-green children, immutable references to cycles 2 and 3, and exact current source/run hashes. Audit is read-only, idempotent and creates 0 files; all prior diagnostic bytes remain unchanged."
         ],
         "must_not_observe": [
           "An empty ownership ledger, a global pkill, a changed provider/model/prompt to hide the failure, or a heartbeat stopped by the child synchronous event loop.",
@@ -392,17 +412,17 @@ SCENARIO:
 
 ### TEST CRITERIA
 
-- TC-1 → AC-1: GIVEN the unmodified current native proof and a real iOS session WHEN the isolated light-then-dark slice runs before any fix THEN preserve a concrete failing observation and its source-bound RED; after a bounded native-owner repair, the identical slice must pass both appearances with the exact marker visibly rendered and the composer usable. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1`
-- TC-2 → AC-2: GIVEN both iOS appearances on the valid inherited model WHEN the actual composer sends a contextual exchange, an active long response is stopped, and the owned endpoint is lost then restored THEN each appearance has visible nonempty streamed output, a correlated abort before natural completion, and Retry completes a new request with exactly one retained failed user turn. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1`
-- TC-3 → AC-3: GIVEN the independently inspected green iOS slice WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the outer supervisor THEN all 6 live targets pass its existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-1`
-- TC-4 → AC-4: GIVEN real isolated and full runs WHEN normal completion or failure triggers teardown and the static/source audit THEN owned resources are released, device appearance and reverse mappings are restored, immutable receipts retain exact source identities, and the committed task diff contains only implementationCommitAllowed paths and the allowed proof repair; generated runtime writes are separately recorded and excluded from that diff. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-1`
+- **TC-1 → AC-1**: GIVEN the immutable checkpoint f836d366 and its two real unchanged iOS light/dark attempts WHEN their bytes, native source hashes, run IDs, actual outcomes and temporal marker observations are verified against the current candidate THEN record not reproduced with 0 actual native failures and no YAML/driver repair; preserve every original receipt and permit the fresh full caller without fictional RED or a redundant same-slice run. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4`
+- **TC-2 → AC-2**: GIVEN the verified unchanged iOS no-repair disposition WHEN the fresh full caller executes the inherited valid-model exchanges and owned endpoint-loss/Retry flows THEN preserve visible streamed output, active Stop with a same-request abort before natural completion, contextual behavior, and a new successful Retry request with exactly one retained user turn in both iOS appearances and every required target. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4`
+- **TC-3 → AC-3**: GIVEN the verified source-matched no-repair disposition WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the existing outer supervisor THEN all 6 live targets pass existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4`
+- **TC-4 → AC-4**: GIVEN the preserved diagnostic attempts and a fresh full run WHEN disposition verification, normal completion or actual failure triggers the existing explicit audit and teardown THEN owned resources are released, appearances and reverse mappings are restored, immutable receipts retain exact source identities, and only permitted wrapper/evidence changes are committed; historical Git inspection stays in explicit task review rather than ordinary shallow aggregate guards. VERIFY: `pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-4`
 
 ### SHARED FIXTURES
 
 ```json
 {
   "native_live_session": {
-    "description": "The real committed apps/example /live-chat screen in SDK-57-compatible Expo Go on reserved iOS 81487B1E-A4D1-45AE-9BCE-D675802BACD1 and Android emulator-5554, driven by the existing native proof against its owned backend and official OpenAI Responses endpoint. The iOS slice executes the unchanged light-then-dark ordering before any full matrix.",
+    "description": "The real committed apps/example /live-chat screen in SDK-57-compatible Expo Go on reserved iOS 81487B1E-A4D1-45AE-9BCE-D675802BACD1 and Android emulator-5554, with the unchanged native driver, owned backend and official OpenAI Responses endpoint. Two immutable light-then-dark attempts at checkpoint f836d366 are diagnostic input; a new complete six-target caller invocation is still required.",
     "seed_method": "ui_flow",
     "records": [
       "Initial transcript has 0 turns and accessible \"Start a conversation\", \"Message\", and \"Send message\" controls. Each run submits a fresh nonsecret marker through that composer.",
@@ -463,70 +483,67 @@ writeProhibited:
 
 ### BOUNDARIES — Stop and report
 
-- No current reproducible native failure after at most 2 bounded attempts: report actual observations; do not manufacture RED or land the old attempted patch speculatively.
-- Product state, AI transport/backend, caller rejection contract, shared device adapter, or NativeWind driver requires change: report exact owner/path/request/phase evidence for a new scoped decision.
-- Required resource/credential/APK missing or foreign process owns a needed resource: preserve the checkout and stop before running proof.
-- A timeout or full-matrix failure repeats without a new supported hypothesis: stop the retry loop and retain evidence. Do not raise budgets or repeat the two-hour caller blindly.
-- Static gate failure outside owned files: report and route with exact output; do not stash shared WIP, bypass hooks or claim it unrelated without proof.
+- Missing/altered diagnostic evidence or a behavioral source mismatch: do not accept the no-repair disposition; preserve everything and name the exact mismatch.
+- A newly demonstrated native/product/caller defect: preserve the actual failure and route the exact owner/path through the existing governed decision. Do not import the unreviewed CONT patch or change provider behavior.
+- Missing resources, credentials or APK, or a foreign process owning required ports/devices: prerequisite block, not RED.
+- Repeated full-caller timeout/failure without a new supported hypothesis: stop blind retries and retain evidence.
+- Static gate failure outside owned files: report exact output; do not stash shared WIP, bypass hooks or claim it unrelated without proof.
 
 ### DELIVERABLE
 
-The smallest reviewed native proof repair; the task-local supervisor; immutable current RED, iOS GREEN, full-caller GREEN, compiler/static and cleanup evidence; and an exact-SHA handoff naming any remaining owner blocker. A blocked caller or unverified native behavior is not completion.
+Preserved diagnostic history, a reviewed no-repair disposition, the minimal existing-wrapper update, fresh full six-target proof and validate-only success, compiler/static checks, real cleanup and an exact-SHA handoff. A passing disposition alone is not completion.
 
 ### AGENT INSTRUCTIONS — EXECUTION ORDER
 
-1. Inspect assigned worktree and capture base/hash/dirty ownership. Read the current native driver, historical failure and unreviewed patch without changing CONT. Reserve exact resources.
-2. Build only the thin proof supervisor; prove the actual current iOS failure before the behavior edit. Ask the orchestrator to verify RED evidence through the existing sprint process.
-3. Make the minimal native proof change justified by the diagnosis. Run the identical iOS slice; inspect both appearances, active Stop and Retry visually and against real records.
-4. After slice GREEN, run one full caller attempt under the external supervisor. Any separate caller/provider defect stops completion and goes to its owner.
-5. Run compiler, typecheck and scoped Biome; audit source binding, cleanup, stubs/skips and allowed paths. Normal commit hooks apply. Independent review also executes required earlier sprint lanes under existing sprint policy.
-6. Commit scoped files on the task branch and report exact SHA. react-native-reusables-reviewer independently checks the candidate and real native/full-caller evidence, rerunning the relevant paths against that candidate. The orchestrator alone merges and resumes CONT.
+1. Resume the assigned native task branch containing checkpoint f836d366; capture its base/dirty ownership and preserve the ten modified ORI-RN-004 runtime outputs already reported. Do not reset or broadly restore that worktree. Coordinate any trunk integration with the orchestrator.
+2. Read original attempts and source hashes; verify no-repair eligibility. Make the minimal wrapper update and commit executable bytes through normal hooks before current proof where possible. Do not change YAML/driver behavior.
+3. Run disposition for a fresh cycle and inspect its links/interpretation. No repeated standalone slice is required when native/product executable hashes match.
+4. Run one full six-target caller attempt under the inherited supervisor, inspect live/native/provider/cleanup evidence and run validate-only for that exact run ID. Route any real failure by its actual parent phase/outcome.
+5. Run the compiler, typecheck and scoped Biome; run explicit read-only audit and task-scope/source review. Keep Git/history checks outside normal aggregate guards. Preserve generated runtime artifacts separately under the inherited commit boundary.
+6. Commit scoped evidence and report exact SHA. Independent native reviewer inspects the original diagnostic bytes, allowed wrapper delta, fresh native visuals/records, six-target result, cleanup and static gates; rerun where source changed or evidence is inadequate. The orchestrator alone merges and resumes CONT.
 
 ### READING LIST — maximum five
 
-1. `.kb-run-sprint/sprint-05-orient-search/ORI-CONT-004/cycle-4.blocked.json` and the authorized native-live-add decision; report SHA-256 `088f238f8a3d23aefe17960e8dfdec9813ba210b6a276d50f59ba32423e706ee`.
-2. `tests/sprint-05-orient-search/live-example.maestro.yaml` — current main SHA-256 `276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b`; compare via git show to `21b2bf9` and unreviewed `e44dbabb` without applying either.
-3. `tests/sprint-05-orient-search/support/live-example-proof.test.ts` — runLiveMaestro, runNativeLeg, runNativeAppearance, runIosEndpointLossRetry, countPlatformsPassed, CLI; read native-session/live-backend imports for existing resource contracts, do not edit them.
-4. ORI-CONT-004 worktree `tests/sprint-05-orient-search/evidence/ORI-RN-004/run-manifest.json`, SHA-256 `bfab03d15b681f534ce53199ca6a3c56ff989791b822918b96ec61a400328a19`, and its iOS dark screenshots; ORI-AI-002/uniwind manifest/result for attribution of the intentional reject-phase Stop diagnostic against the actual parent/caller verdict.
-5. `tests/sprint-05-orient-search/run-live-example-proof.mjs` and `live-example-proof.ts` — caller phase/model attribution, source/record validation and real teardown; read-only. Also read the inherited ORI-RN-004 charter's behavioral requirements.
+1. Authorized `closure-20260929/native-live-revise-decision.json` and `native-live-revise-refreshed-ask.json`; canonical `.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json` hash `9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d`.
+2. Checkpoint f836d366: the task wrapper, `not-reproduced.json`, cycle-2/3 reports, manifests, real Maestro logs and screenshots; exact hashes above.
+3. Current native YAML/driver and inherited ORI-RN-004 charter; read resource imports without editing their owners.
+4. Current `run-live-example-proof.mjs`, `live-example-proof.ts`, NativeWind proof and backend contracts; read-only. Inspect actual caller rejection/live validation rather than log substrings.
+5. Current task write-boundary and reserved-resource records. CONT's three YAML-only commits are read-only context, not permission to reconcile its branch.
 
 ### RUNTIME COMMANDS AND VERIFICATION GATES
 
 ```sh
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode red --cycle cycle-1
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-1
-pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-1
+pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4
+pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4
+pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-4
 pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --case ORI-RN-004-AC-5-live-import-graph-compiler
 pnpm typecheck
 pnpm exec biome ci tests/sprint-05-orient-search/support/live-example-proof.test.ts tests/sprint-05-orient-search/native-live-repair-proof_test.ts
 ```
 
-The wrapper records and executes the real inherited iOS child command `pnpm exec tsx tests/sprint-05-orient-search/support/live-example-proof.test.ts --platforms ios --run-id FIX-ORI-RN-004-4-cycle-1-ios-red` (green gets its distinct ID). The full child and validate-only commands are listed above. Cycle/phase/mode parsing must reject unknown values and an existing phase/mode child rather than silently run another mode. The prescribed RED → iOS GREEN → full GREEN → read-only audit sequence intentionally shares cycle-1 while creating distinct children.
-
-The audit phase executes no model substitute. It validates recorded current evidence, source hashes and ownership against actual Git/process/filesystem observations. Passing an audit cannot replace either live phase.
+The underlying full caller and validate-only argv are listed above. Strict parsing permits disposition/audit without mode and full only with green; refuse unknown values and existing execution children. The disposition → full → read-only audit sequence shares cycle-4 and never creates fake ios-red/ios-green receipts. Old attempts are not freshly executed proof; the new full caller supplies fresh complete live coverage.
 
 ### FLOW OWNERSHIP AND SPRINT BOUNDARY
 
-This task supplies a native dependency exercised by `FLOW-DOCS-02-quickstart-chat-screen`; it does not become the primary flow owner, claim FLOW_REF ownership or add a locked flow. ORI-CONT-004 remains the owner and must rerun its unchanged complete Quickstart command after this task lands. The plan adds only this task to the named flow's exercises membership, the sprint table and owning roadmap. No gate step, action, expected observation, command, or in-flight task charter changes.
+This task supplies a native dependency exercised by `FLOW-DOCS-02-quickstart-chat-screen`. ORI-CONT-004 remains its primary owner and must execute the unchanged complete Quickstart flow after this prerequisite lands and its branch uses reviewed native bytes. The no-repair disposition does not replace seed proof, full live proof, the locked flow, independent review, landing or sprint closure. This REVISE changes only this task charter; no SPRINT, ROADMAP, exercises, gate step/command or CONT edit is authorized.
 
 ### DEPENDENCIES
 
 Depends on: ORI-RN-004
 
-Sequence: NEXT, using only this completed dependency. No dependency on in-flight ORI-CONT-004. Existing real AI backend, NativeWind proof, and devices are execution preconditions, not authority to edit their owners.
+Sequence: NEXT, using only this completed dependency. No dependency on in-flight ORI-CONT-004. Existing backend, NativeWind proof and devices are execution preconditions, not authority to edit them.
 
-Provides: reviewed native proof repair plus current slice and full-caller evidence for CONT to consume after landing. Blocks CONT's resumption operationally until this prerequisite is reviewed and landed; do not alter CONT's contract.
+Provides: reviewed native no-repair disposition and full-caller evidence. Blocks CONT resumption operationally until reviewed and landed; do not alter CONT's contract.
 
-References: CAP-DOCS-01; UC-DOCS-02. Provenance: ask `ask-wave26-add-native-live-repair`, wave 26, source blocked report cycle 4.
+References: CAP-DOCS-01; UC-DOCS-02. Original provenance: ask `ask-wave26-add-native-live-repair`. Revision: `ask-wave28-revise-native-live-disposition-refreshed`, grounded in the exact cycle-1 blocked report.
 
 ### OUT OF SCOPE
 
-Product UI/design changes, styling/theme migrations, provider/prompt changes, general process framework, AI caller semantics, new locked flows, docs changes, CI/deployment, or closure of Sprint 05. No design subtask is required by this proof repair; a product design defect goes back to its owner.
+Product UI/design, styling/theme migration, provider/prompt changes, broad process infrastructure, caller semantics, new locked flows, docs content, CI/deployment, CONT history/WIP reconciliation or Sprint 05 closure. An integration recommendation is context only and needs the orchestrator's separate owner assignment before any CONT mutation.
 
 ### REVIEW AND COMPLETION
 
-APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native marker/stream/keyboard behavior, real abort/Retry correlation, all six caller targets, actual teardown, static gates and scoped diff. NEEDS_FIXES names the AC and artifact. The reviewer must not approve a hierarchy-only marker, a patch presumed to fix both failures, a natural completion called abort, or a skipped rejection phase. Workers never merge or rewrite sprint status.
+APPROVED requires an exact source-bound no-repair disposition, preserved attempts, justified wrapper-only changes, fresh complete caller proof, actual marker/stream/Stop/Retry/provider observations, teardown, static gates and permitted commit paths. Native RED is not required for a nonexistent native repair. Do not approve from hierarchy-only marker claims, ambiguous final screenshots, a natural completion called abort, a skipped rejection phase, copied Android history or a passing disposition without all six current targets. Workers never merge or rewrite sprint status.
 
 <!-- REQUIREMENT-CONTRACT v1 -->
 <!--
@@ -534,15 +551,15 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
   "version": "1",
   "task_id": "FIX-ORI-RN-004-4",
   "task_type": "FIX",
-  "tdd_mode": "red_first",
+  "tdd_mode": "verification_only",
   "verification_policy": {
     "requires_tests": true,
-    "requires_red_evidence": true,
+    "requires_red_evidence": false,
     "requires_seeded_evidence": true
   },
   "fixtures": {
     "native_live_session": {
-      "description": "The real committed apps/example /live-chat screen in SDK-57-compatible Expo Go on reserved iOS 81487B1E-A4D1-45AE-9BCE-D675802BACD1 and Android emulator-5554, driven by the existing native proof against its owned backend and official OpenAI Responses endpoint. The iOS slice executes the unchanged light-then-dark ordering before any full matrix.",
+      "description": "The real committed apps/example /live-chat screen in SDK-57-compatible Expo Go on reserved iOS 81487B1E-A4D1-45AE-9BCE-D675802BACD1 and Android emulator-5554, with the unchanged native driver, owned backend and official OpenAI Responses endpoint. Two immutable light-then-dark attempts at checkpoint f836d366 are diagnostic input; a new complete six-target caller invocation is still required.",
       "seed_method": "ui_flow",
       "records": [
         "Initial transcript has 0 turns and accessible \"Start a conversation\", \"Message\", and \"Send message\" controls. Each run submits a fresh nonsecret marker through that composer.",
@@ -593,13 +610,13 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
     {
       "id": "AC-1",
       "type": "acceptance_criterion",
-      "name": "Diagnose the current iOS failure before repairing its native proof",
+      "name": "Verify the unchanged iOS attempts and record a no-repair disposition",
       "primary": true,
-      "description": "GIVEN the unmodified current native proof and a real iOS session WHEN the isolated light-then-dark slice runs before any fix THEN preserve a concrete failing observation and its source-bound RED; after a bounded native-owner repair, the identical slice must pass both appearances with the exact marker visibly rendered and the composer usable.",
+      "description": "GIVEN the immutable checkpoint f836d366 and its two real unchanged iOS light/dark attempts WHEN their bytes, native source hashes, run IDs, actual outcomes and temporal marker observations are verified against the current candidate THEN record not reproduced with 0 actual native failures and no YAML/driver repair; preserve every original receipt and permit the fresh full caller without fictional RED or a redundant same-slice run.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
-      "test_function": "runIosRepairProof",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1",
+      "test_function": "recordNoRepairDisposition",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4",
       "test_tier": "e2e",
       "verification_service": "Real Expo Go, Maestro accessibility interaction, reserved iOS/Android devices, owned example backend, official OpenAI Responses, and real Chromium for the full matrix",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -615,9 +632,10 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
         "verification_service": "Real Expo Go, Maestro accessibility interaction, reserved iOS/Android devices, owned example backend, official OpenAI Responses, and real Chromium for the full matrix",
         "negative_control": {
           "would_fail_if": [
-            "The repair is accepted from hierarchy_has_marker alone while the marker is off screen, an assistant echo is substituted for the accepted user turn, or assertVisible is removed.",
-            "A historical receipt or the unreviewed e44dbabb patch is called current RED/GREEN without executing the candidate.",
-            "A stub app, scripted success receipt, disabled assertion, or added test-only label replaces the real native interaction."
+            "A passed attempt with actual_failure_count=0 is labeled RED, inherited exit 1 is called a native defect, or original diagnostic evidence is overwritten.",
+            "A final Retry screenshot or hierarchy substring is claimed to show the complete marker despite lacking those pixels; the earlier exact real assertVisible result is missing or mismatched.",
+            "The disposition accepts altered native/product executable bytes, a missing source receipt, another run ID, copied historical Android evidence, or an unreviewed CONT patch.",
+            "An empty manifest, stubbed native outcome or static success receipt is accepted instead of the original real iOS run evidence."
           ]
         },
         "evidence": {
@@ -630,20 +648,22 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
             "action": {
               "actor": "cli_user",
               "steps": [
-                "Run pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode red --cycle cycle-1 against the assigned task base before changing the YAML or native driver behavior.",
-                "Inspect the failing screenshot, accessibility hierarchy, keyboard state, Maestro step, provider phase/model, and source hashes; distinguish marker visibility from active Stop failure.",
-                "Apply only the demonstrated native proof repair. Rerun the same iOS slice with mode green and the same device/phase order."
+                "Read checkpoint f836d3665638efa16e877534ef17b5ecbdbfa182 and verify the original cycle-2 and cycle-3 ios-red reports, raw manifests, logs and evidence hashes without rewriting them.",
+                "Compare recorded native/product/caller source hashes with the current candidate; separately record and review only the allowed task-wrapper changes. Classify cycle 1 as a prerequisite interruption, not runtime RED.",
+                "Run pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4; the disposition records both actual passing attempts, unchanged behavioral source, exact temporal Maestro marker assertions and the limited final screenshot observation before permitting full proof."
               ]
             },
             "end_state": {
               "must_observe": [
-                "red.json records at least 1 actual native failure on the unmodified current task base, with exact command, candidate/source hashes, run ID, appearance, failing step, nonzero child exit, screenshot and raw log paths.",
-                "green.json records 2 iOS appearance outcomes, light and dark, both passed; each has a visibly rendered fresh user marker, actual assertVisible success, and the composer above the keyboard.",
-                "For the 1-platform slice the inherited completed flag remains false; acceptance requires exactly 2 passed iOS appearance legs and current source/run binding, not rewriting completed."
+                "2 real bounded attempts each contain exactly 2 passing iOS appearances, light and dark, actual_failure_count 0, raw child exit 1, no signal or timeout, passed_platforms 1 and inherited completed false.",
+                "For each appearance, the original real Maestro output has 2 completed exact MARKER assertVisible operations bound to the submitted marker and run; final screenshots are described as the usable Retry/composer state and not independent full-marker proof.",
+                "A new create-once disposition receipt hashes the original attempts and source bytes, records not_reproduced and no_repair, and refuses missing/mismatched evidence. Original cycle-1/2/3 and not-reproduced.json bytes remain unchanged.",
+                "0 YAML, native driver, app, hook, backend, caller, model, prompt or lockfile changes are attributed to this disposition; the separately reviewed task-wrapper delta only handles disposition, validation and existing supervision."
               ],
               "must_not_observe": [
-                "0 captured runtime failures called RED, a manufactured failure by deleting a product behavior, a hierarchy-only visible-marker claim, or an unreviewed patch reported as fixed.",
-                "A full two-engine matrix started before the slice diagnosis and green evidence."
+                "A manufactured failure, fictional RED/GREEN, rewritten historical execution SHA, complete=true on a partial slice, or an assertion that the old CONT failure was fixed.",
+                "A new native attempt solely to satisfy the obsolete mandatory-RED rule when the recorded behavioral executable hashes are unchanged.",
+                "Empty or missing real appearance outcomes accepted as a source-bound no-repair disposition."
               ]
             }
           }
@@ -653,13 +673,13 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
     {
       "id": "AC-2",
       "type": "acceptance_criterion",
-      "name": "Preserve active Stop and retained-turn Retry on the real iOS slice",
+      "name": "Retain real active Stop and Retry proof through the full live caller",
       "primary": false,
-      "description": "GIVEN both iOS appearances on the valid inherited model WHEN the actual composer sends a contextual exchange, an active long response is stopped, and the owned endpoint is lost then restored THEN each appearance has visible nonempty streamed output, a correlated abort before natural completion, and Retry completes a new request with exactly one retained failed user turn.",
+      "description": "GIVEN the verified unchanged iOS no-repair disposition WHEN the fresh full caller executes the inherited valid-model exchanges and owned endpoint-loss/Retry flows THEN preserve visible streamed output, active Stop with a same-request abort before natural completion, contextual behavior, and a new successful Retry request with exactly one retained user turn in both iOS appearances and every required target.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
-      "test_function": "runIosRepairProof",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1",
+      "test_function": "runFull",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4",
       "test_tier": "e2e",
       "verification_service": "Real Expo Go, Maestro accessibility interaction, reserved iOS/Android devices, owned example backend, official OpenAI Responses, and real Chromium for the full matrix",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -690,9 +710,9 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
             "action": {
               "actor": "cli_user",
               "steps": [
-                "Inspect the existing real iOS slice through marker, seed exchange, contextual follow-up, active Stop, and endpoint-loss/Retry; retain the existing commands and prompts.",
-                "Correlate visible growth and active Stop to the same request and appearance time window using screenshots/recording and real backend records.",
-                "Stop only the owned endpoint, send the retry probe, observe the sanitized error and accessible Retry, restart the owned endpoint, and activate Retry."
+                "Retain the original iOS attempt observations without claiming that their end-state screenshots independently prove every earlier stream state.",
+                "During the new full caller inspect both iOS appearances through marker, seed/context exchange, visible incremental output and active Stop; correlate each real abort with that same request and appearance interval.",
+                "Run the inherited endpoint-loss/Retry flow: stop only the owned endpoint, observe the sanitized error and accessible Retry, restart the endpoint and retry the retained turn; capture current real output and request records."
               ]
             },
             "end_state": {
@@ -715,11 +735,11 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
       "type": "acceptance_criterion",
       "name": "Verify the unchanged caller with all six live engine/platform targets",
       "primary": false,
-      "description": "GIVEN the independently inspected green iOS slice WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the outer supervisor THEN all 6 live targets pass its existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004.",
+      "description": "GIVEN the verified source-matched no-repair disposition WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the existing outer supervisor THEN all 6 live targets pass existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
-      "test_function": "runFullLiveProof",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-1",
+      "test_function": "runFull",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4",
       "test_tier": "e2e",
       "verification_service": "Real Expo Go, Maestro accessibility interaction, reserved iOS/Android devices, owned example backend, official OpenAI Responses, and real Chromium for the full matrix",
       "surface_policy": ".spec/e2e-policy/surface.json",
@@ -750,7 +770,7 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
             "action": {
               "actor": "cli_user",
               "steps": [
-                "After slice green, run the existing run-live-example-proof.mjs for uniwind,nativewind and ios,android,web with a fresh task-owned output directory and run ID.",
+                "After verifying the no-repair disposition and current source binding, run the existing run-live-example-proof.mjs for uniwind,nativewind and ios,android,web with a fresh cycle-4/full-green/caller output and run ID.",
                 "Inspect every reject/live/web-self phase and target result; require all existing caller validation and use its validate-only entry point for the same run ID.",
                 "If a caller/provider-phase contract fails outside native ownership, stop and report exact phase/model/request evidence to its owner; do not patch it here."
               ]
@@ -775,11 +795,11 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
       "type": "acceptance_criterion",
       "name": "Bound the owned processes and preserve exact evidence and scope",
       "primary": false,
-      "description": "GIVEN real isolated and full runs WHEN normal completion or failure triggers teardown and the static/source audit THEN owned resources are released, device appearance and reverse mappings are restored, immutable receipts retain exact source identities, and the committed task diff contains only implementationCommitAllowed paths and the allowed proof repair; generated runtime writes are separately recorded and excluded from that diff.",
+      "description": "GIVEN the preserved diagnostic attempts and a fresh full run WHEN disposition verification, normal completion or actual failure triggers the existing explicit audit and teardown THEN owned resources are released, appearances and reverse mappings are restored, immutable receipts retain exact source identities, and only permitted wrapper/evidence changes are committed; historical Git inspection stays in explicit task review rather than ordinary shallow aggregate guards.",
       "flow_ref": null,
       "test_file": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
-      "test_function": "auditNativeRepairProof",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-1",
+      "test_function": "audit",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-4",
       "test_tier": "integration",
       "verification_service": "Real Git, filesystem evidence, process/port inspection, TypeScript compiler, and Biome",
       "surface_policy": null,
@@ -810,17 +830,17 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
             "action": {
               "actor": "cli_user",
               "steps": [
-                "Use an external supervisor process around the real proof child, record its owned process group and phase timestamps, and retain raw exits/signals before cleanup.",
-                "On RED failure and GREEN completion, inspect actual listeners and owned descendants, restore recorded appearances and owned reverse mappings, and snapshot immutable cycle evidence.",
-                "Run the inherited live-import-graph compiler, pnpm typecheck, scoped Biome, and explicit base-to-candidate diff audit; bind evidence source hashes to the exact reviewed candidate."
+                "Reuse the external supervisor around the real full caller, record the owned process group and actual phase timestamps, and retain raw exits/signals and observed cleanup.",
+                "Preserve diagnostic cycles bytewise; perform source/evidence verification in the task disposition and explicit audit. Do not add historical Git or receipt-history preconditions to Vitest-discovered tests, normal aggregate guards or package scripts.",
+                "Run the inherited compiler, pnpm typecheck, scoped Biome and explicit task base-to-candidate scope audit. Audit reads evidence without creating a cycle or relaunching native proof."
               ]
             },
             "end_state": {
               "must_observe": [
-                "The outer supervisor emits a heartbeat at least every 30 seconds; an iOS child is bounded by 2700 seconds and a full caller by 14400 seconds with the declared phase deadlines.",
-                "Both real failure and success receipts record child exit/signal and teardown observations: 0 surviving owned listeners/descendants, original device appearances restored, and no unrelated reverse mappings removed.",
-                "The compiler, typecheck and scoped Biome exit 0; the committed diff audit records 0 paths outside implementationCommitAllowed, 0 generated owner-runtime artifacts, and unchanged caller, model/prompts, product sources and locked-flow hashes.",
-                "Each cycle has 3 create-once phase/mode children with exact run IDs/source hashes; audit is read-only and 0 existing phase artifacts are overwritten."
+                "The existing outer supervisor remains independent of the synchronous driver and emits a heartbeat at least every 30 seconds; full caller maximum is 14400 seconds with the inherited phase deadlines.",
+                "Actual full-run success or failure retains raw exit/signal and teardown observations: 0 surviving owned listeners/descendants, original appearances restored, and no unrelated reverse mappings removed; earlier attempt limitations remain explicit.",
+                "Compiler, typecheck and scoped Biome exit 0; explicit task review records 0 paths outside implementationCommitAllowed, 0 generated owner-runtime artifacts in the commit, and unchanged native/product/caller/locked-flow behavioral bytes.",
+                "The fresh cycle has create-once disposition and full-green children, immutable references to cycles 2 and 3, and exact current source/run hashes. Audit is read-only, idempotent and creates 0 files; all prior diagnostic bytes remain unchanged."
               ],
               "must_not_observe": [
                 "An empty ownership ledger, a global pkill, a changed provider/model/prompt to hide the failure, or a heartbeat stopped by the child synchronous event loop.",
@@ -834,29 +854,29 @@ APPROVED requires exact-SHA/source-bound current RED and GREEN, watched native m
     {
       "id": "TC-1",
       "type": "test_criterion",
-      "description": "GIVEN the unmodified current native proof and a real iOS session WHEN the isolated light-then-dark slice runs before any fix THEN preserve a concrete failing observation and its source-bound RED; after a bounded native-owner repair, the identical slice must pass both appearances with the exact marker visibly rendered and the composer usable.",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1",
+      "description": "GIVEN the immutable checkpoint f836d366 and its two real unchanged iOS light/dark attempts WHEN their bytes, native source hashes, run IDs, actual outcomes and temporal marker observations are verified against the current candidate THEN record not reproduced with 0 actual native failures and no YAML/driver repair; preserve every original receipt and permit the fresh full caller without fictional RED or a redundant same-slice run.",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase disposition --cycle cycle-4",
       "maps_to_ac": "AC-1"
     },
     {
       "id": "TC-2",
       "type": "test_criterion",
-      "description": "GIVEN both iOS appearances on the valid inherited model WHEN the actual composer sends a contextual exchange, an active long response is stopped, and the owned endpoint is lost then restored THEN each appearance has visible nonempty streamed output, a correlated abort before natural completion, and Retry completes a new request with exactly one retained failed user turn.",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase ios --mode green --cycle cycle-1",
+      "description": "GIVEN the verified unchanged iOS no-repair disposition WHEN the fresh full caller executes the inherited valid-model exchanges and owned endpoint-loss/Retry flows THEN preserve visible streamed output, active Stop with a same-request abort before natural completion, contextual behavior, and a new successful Retry request with exactly one retained user turn in both iOS appearances and every required target.",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4",
       "maps_to_ac": "AC-2"
     },
     {
       "id": "TC-3",
       "type": "test_criterion",
-      "description": "GIVEN the independently inspected green iOS slice WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the outer supervisor THEN all 6 live targets pass its existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004.",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-1",
+      "description": "GIVEN the verified source-matched no-repair disposition WHEN the unchanged ORI-AI-002 caller runs both engines across iOS, Android and Web under the existing outer supervisor THEN all 6 live targets pass existing validation with fresh source/run binding, native light/dark proof, real provider rejection/recovery, active abort and Retry; the complete locked Quickstart flow remains for ORI-CONT-004.",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase full --mode green --cycle cycle-4",
       "maps_to_ac": "AC-3"
     },
     {
       "id": "TC-4",
       "type": "test_criterion",
-      "description": "GIVEN real isolated and full runs WHEN normal completion or failure triggers teardown and the static/source audit THEN owned resources are released, device appearance and reverse mappings are restored, immutable receipts retain exact source identities, and the committed task diff contains only implementationCommitAllowed paths and the allowed proof repair; generated runtime writes are separately recorded and excluded from that diff.",
-      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-1",
+      "description": "GIVEN the preserved diagnostic attempts and a fresh full run WHEN disposition verification, normal completion or actual failure triggers the existing explicit audit and teardown THEN owned resources are released, appearances and reverse mappings are restored, immutable receipts retain exact source identities, and only permitted wrapper/evidence changes are committed; historical Git inspection stays in explicit task review rather than ordinary shallow aggregate guards.",
+      "verify": "pnpm exec tsx tests/sprint-05-orient-search/native-live-repair-proof_test.ts --phase audit --cycle cycle-4",
       "maps_to_ac": "AC-4"
     }
   ]
