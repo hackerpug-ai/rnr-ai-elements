@@ -5,8 +5,8 @@
  *   pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof --mode red
  *   pnpm exec tsx tests/sprint-05-orient-search/drive-web-return-proof.test.ts --entry runDriveWebReturnProof
  *
- * RED races one pre-fix driveWeb call for 180000 ms. A settle is not rewritten into a hang.
- * GREEN runs nativewind seed, then the uniwind baseline, disconnected, and restored serves.
+ * Diagnostic mode runs the unchanged uniwind baseline and disconnected serves.
+ * The default mode runs nativewind seed, then uniwind baseline, disconnected, and restored.
  * The vitest guard only reads source. It does not launch a browser or export.
  */
 
@@ -23,6 +23,7 @@ import {
 } from 'node:fs';
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
+import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -55,6 +56,10 @@ const NEWEST_SEED = 'Seed turn 24: Ready for your message.';
 const SUBMIT_CALLBACK = 'onSubmit={handleSubmit}';
 const DISCONNECTED_CALLBACK = 'onSubmit={() => {}}';
 const TASK = 'FIX-ORI-RN-003-3';
+const DISPOSITION = 'not_reproduced_no_driver_change';
+const EXPECTED_DRIVER_SHA = '69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33';
+const HISTORICAL_RED_SHA = 'fb844da4c2ecb882656f3fd2c987bf02a243ef7f31000b9fb08de35c603b6745';
+const CYCLE_2_RED_SHA = 'f09d5bb8dc4138b1cb0900f32eb086c2989c0bdb423cc63ed4a77e8fb994a4e8';
 const SHARED_FILES = ['quickstart-screen.tsx', 'quickstart-messages.ts'] as const;
 const CHECK_ASSIGNMENTS = [
   'result.seedVisible',
@@ -68,6 +73,8 @@ const ALLOWED = new Set([
   'tests/sprint-05-orient-search/drive-web-return-proof.test.ts',
   'tests/sprint-05-orient-search/evidence/ORI-RN-001/nativewind-install.txt',
   'tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt',
+  '.tmp/FIX-ORI-RN-003-3/green.json',
+  '.tmp/FIX-ORI-RN-003-3/run.json',
 ]);
 
 type WebBooleans = {
@@ -86,7 +93,13 @@ type LegRecord = {
   port: number;
   exportExit: number;
   settled_before_close: boolean;
+  settled_before_harness_cleanup: boolean;
   elapsed_ms: number;
+  started_at: string;
+  settled_at: string | null;
+  harness_cleanup_started_at: string | null;
+  harness_cleanup_finished_at: string | null;
+  promise_outcome: 'pending' | 'fulfilled' | 'rejected';
   browser_connected_at_observe: boolean;
   page_open_at_observe: boolean;
   harness_closed_browser_before_settle: boolean;
@@ -98,7 +111,11 @@ type LegRecord = {
 
 type LegCore = {
   settled_before_close: boolean;
+  settled_before_harness_cleanup: boolean;
   elapsed_ms: number;
+  started_at: string;
+  settled_at: string | null;
+  promise_outcome: 'pending' | 'fulfilled' | 'rejected';
   browser_connected_at_observe: boolean;
   page_open_at_observe: boolean;
   booleans: WebBooleans | null;
@@ -107,8 +124,12 @@ type LegCore = {
 
 type Watch = {
   started: number;
+  startedAt: string;
   settled: boolean;
+  settledAt: string | null;
+  outcome: 'pending' | 'fulfilled' | 'rejected';
   result?: WebLegResult;
+  rejection?: string;
   elapsed: () => number;
 };
 
@@ -129,10 +150,15 @@ function driveWebPath(): string {
   return join(REPO_ROOT, 'tests/sprint-05-orient-search/support/quickstart-web.ts');
 }
 
+function harnessPath(): string {
+  return fileURLToPath(import.meta.url);
+}
+
 function envHygiene(): void {
   delete process.env.NODE_ENV;
-  const scratch = '/tmp/fix-ori-rn-003-3-scratch';
+  const scratch = join(tmpdir(), 'fix-ori-rn-003-3-scratch');
   mkdirSync(scratch, { recursive: true });
+  if (!existsSync(scratch)) throw new Error(`scratch root unavailable: ${scratch}`);
   process.env.TMPDIR = scratch;
 }
 
@@ -174,9 +200,52 @@ function readJson(path: string): Record<string, unknown> {
   return objectJson(readFileSync(path, 'utf8'));
 }
 
+function fileSha(path: string): string {
+  return sha256(readFileSync(path, 'utf8'));
+}
+
+function sourceHashes(): Record<string, string> {
+  return {
+    drive_web_sha256: fileSha(driveWebPath()),
+    proof_harness_sha256: fileSha(harnessPath()),
+  };
+}
+
+function historicalHashes(): Record<string, string> {
+  return {
+    red_json_sha256: fileSha(join(cycleDir(), 'red.json')),
+    cycle_2_red_json_sha256: fileSha(join(cycleDir(), 'cycle-2/red.json')),
+  };
+}
+
+function baseRunFields(): Record<string, unknown> {
+  const paths = porcelainPaths();
+  const outside = outsideAllowlist(paths);
+  return {
+    task: TASK,
+    execution_head_sha: gitHead(),
+    disposition: DISPOSITION,
+    driver_changed: fileSha(driveWebPath()) !== EXPECTED_DRIVER_SHA,
+    red_evidence_claimed: false,
+    hang_reproduced: false,
+    downstream_live_gate_status: 'open',
+    watchdog_ms: WATCHDOG_MS,
+    full_matrix_budget_ms: GREEN_BUDGET_MS,
+    source_hashes: sourceHashes(),
+    historical_receipt_hashes: historicalHashes(),
+    expected_historical_receipt_hashes: {
+      red_json_sha256: HISTORICAL_RED_SHA,
+      cycle_2_red_json_sha256: CYCLE_2_RED_SHA,
+    },
+    changed_and_untracked_paths: paths,
+    scope_paths_outside_allowlist: outside.length,
+    outside_allowlist_paths: outside,
+  };
+}
+
 function mergeRun(patch: Record<string, unknown>): void {
   const path = join(cycleDir(), 'run.json');
-  writeJson(path, { ...readJson(path), ...patch, task: TASK, candidate_sha: gitHead() });
+  writeJson(path, { ...readJson(path), ...baseRunFields(), ...patch });
 }
 
 function errorText(error: unknown): string {
@@ -290,16 +359,24 @@ function startWatch(browser: Browser, url: string, marker: string): Watch {
   const started = Date.now();
   const watch: Watch = {
     started,
+    startedAt: new Date(started).toISOString(),
     settled: false,
+    settledAt: null,
+    outcome: 'pending',
     elapsed: () => Date.now() - started,
   };
   void driveWeb(browser, url, marker, OLDER_SEED).then(
     (value) => {
       watch.settled = true;
+      watch.settledAt = new Date().toISOString();
+      watch.outcome = 'fulfilled';
       watch.result = value;
     },
-    () => {
+    (error: unknown) => {
       watch.settled = true;
+      watch.settledAt = new Date().toISOString();
+      watch.outcome = 'rejected';
+      watch.rejection = errorText(error);
     },
   );
   return watch;
@@ -326,13 +403,18 @@ async function waitForSettle(watch: Watch): Promise<boolean> {
 async function observeDrive(browser: Browser, url: string, marker: string): Promise<LegCore> {
   const watch = startWatch(browser, url, marker);
   const settled = await waitForSettle(watch);
+  const settledBeforeCleanup = settled && browser.isConnected();
   return {
-    settled_before_close: settled && browser.isConnected(),
+    settled_before_close: settledBeforeCleanup,
+    settled_before_harness_cleanup: settledBeforeCleanup,
     elapsed_ms: watch.elapsed(),
+    started_at: watch.startedAt,
+    settled_at: watch.settledAt,
+    promise_outcome: watch.outcome,
     browser_connected_at_observe: browser.isConnected(),
     page_open_at_observe: pageStillOpen(browser),
     booleans: booleansOf(watch.result),
-    drive_error: errorOf(watch.result),
+    drive_error: watch.rejection ?? errorOf(watch.result),
   };
 }
 
@@ -353,10 +435,16 @@ function tagLeg(
     port,
     exportExit,
     settled_before_close: core.settled_before_close,
+    settled_before_harness_cleanup: core.settled_before_harness_cleanup,
     elapsed_ms: core.elapsed_ms,
+    started_at: core.started_at,
+    settled_at: core.settled_at,
+    harness_cleanup_started_at: null,
+    harness_cleanup_finished_at: null,
+    promise_outcome: core.promise_outcome,
     browser_connected_at_observe: core.browser_connected_at_observe,
     page_open_at_observe: core.page_open_at_observe,
-    harness_closed_browser_before_settle: false,
+    harness_closed_browser_before_settle: !core.settled_before_harness_cleanup,
     booleans: core.booleans,
     drive_error: core.drive_error,
     seed_text: NEWEST_SEED,
@@ -374,13 +462,19 @@ async function watchServed(
   const serve = await serveExport(receipt.distDir, port);
   logPhase(`drive ${phase} ${serve.url}`);
   const launched = await launchChromium();
+  let leg: LegRecord | undefined;
   try {
     const core = await observeDrive(launched.browser, serve.url, marker);
-    return tagLeg(core, phase, engine, serve.url, port, marker, receipt.exportExit);
+    leg = tagLeg(core, phase, engine, serve.url, port, marker, receipt.exportExit);
   } finally {
+    const cleanupStarted = new Date().toISOString();
+    if (leg) leg.harness_cleanup_started_at = cleanupStarted;
     await launched.browser.close().catch(() => {});
     await stopServe(serve);
+    if (leg) leg.harness_cleanup_finished_at = new Date().toISOString();
   }
+  if (!leg) throw new Error(`missing leg record for ${phase}`);
+  return leg;
 }
 
 async function exportAndWatch(
@@ -399,86 +493,108 @@ async function exportAndWatch(
   }
 }
 
-function redBody(
-  leg: LegRecord,
-  started: number,
-  prior: LegRecord | null,
-): Record<string, unknown> {
+function assertHistoricalReceipts(): void {
+  const actual = historicalHashes();
+  if (actual.red_json_sha256 !== HISTORICAL_RED_SHA) throw new Error('historical red changed');
+  if (actual.cycle_2_red_json_sha256 !== CYCLE_2_RED_SHA) throw new Error('cycle-2 red changed');
+}
+
+function assertDriverUnchanged(): void {
+  const actual = fileSha(driveWebPath());
+  if (actual !== EXPECTED_DRIVER_SHA) throw new Error(`driver hash changed: ${actual}`);
+}
+
+function assertDistinctMarkers(calls: LegRecord[]): void {
+  const markers = calls.map((call) => call.marker);
+  if (markers.some((marker) => marker.length === 0)) throw new Error('empty marker');
+  if (new Set(markers).size !== markers.length) throw new Error('duplicate marker');
+}
+
+async function collectDiagnostic(
+  consumer: ConsumerReceipt,
+  calls: LegRecord[],
+  note: HashNote,
+): Promise<void> {
+  const screen = screenPath(consumer.root);
+  const original = readFileSync(screen, 'utf8');
+  note.originalSha = sha256(original);
+  const baseline = await exportAndWatch(
+    consumer,
+    'diagnostic-uniwind-baseline',
+    markerFor('diagnostic-baseline'),
+  );
+  calls.push(baseline);
+  assertSettled(baseline);
+  assertSeed(baseline);
+  const mutated = singleSwap(original);
+  note.mutatedSha = sha256(mutated);
+  note.onlyCallback = onlyCallbackChanged(original, mutated);
+  writeFileSync(screen, mutated);
+  try {
+    const disconnected = await exportAndWatch(
+      consumer,
+      'diagnostic-uniwind-disconnected',
+      markerFor('diagnostic-disconnected'),
+    );
+    calls.push(disconnected);
+    assertSettled(disconnected);
+    assertDisconnected(disconnected);
+  } finally {
+    writeFileSync(screen, original);
+    note.restoredSha = sha256(readFileSync(screen, 'utf8'));
+  }
+  if (note.restoredSha !== note.originalSha) throw new Error('diagnostic restoration failed');
+  assertDistinctMarkers(calls);
+}
+
+function commandReceipt(exit: number): Record<string, unknown> {
   return {
-    task: TASK,
-    mode: 'red',
-    candidate_sha: gitHead(),
-    drive_web_sha256: sha256(readFileSync(driveWebPath(), 'utf8')),
-    phase: leg.phase,
-    serve_url: leg.serve_url,
-    exportExit: leg.exportExit,
-    settled_before_close: leg.settled_before_close,
-    elapsed_ms: leg.elapsed_ms,
-    browser_connected_at_observe: leg.browser_connected_at_observe,
-    page_open_at_observe: leg.page_open_at_observe,
-    harness_closed_browser_before_settle: false,
-    marker: leg.marker,
-    booleans: leg.booleans,
-    drive_error: leg.drive_error,
-    seed_text: leg.seed_text,
-    older_seed: leg.older_seed,
-    harness_elapsed_ms: Date.now() - started,
-    prior,
-    note: 'Closing the browser after the watchdog is cleanup, not a voluntary return.',
+    argv: process.argv.slice(1),
+    exit,
+    recorded_at: new Date().toISOString(),
   };
 }
 
-function finishRed(leg: LegRecord, started: number, prior: LegRecord | null): void {
-  const body = redBody(leg, started, prior);
-  writeJson(join(cycleDir(), 'red.json'), body);
-  console.log(JSON.stringify(body, null, 2));
-  if (leg.settled_before_close) {
-    console.error('RED_ALL_SETTLED');
-    process.exitCode = 2;
-    return;
-  }
-  console.log('RED_PENDING');
-}
-
-function assertRedAbsent(): void {
-  const path = join(cycleDir(), 'red.json');
-  if (!existsSync(path)) return;
-  throw new Error(`red.json already recorded at ${path}; refusing to overwrite`);
-}
-
-async function redSecond(
-  consumer: ConsumerReceipt,
-  baseline: LegRecord,
-  started: number,
-): Promise<void> {
-  const screen = join(consumer.root, 'shared/quickstart-screen.tsx');
-  writeFileSync(screen, singleSwap(readFileSync(screen, 'utf8')));
-  const disconnected = await exportAndWatch(
-    consumer,
-    'uniwind-disconnected',
-    markerFor('red-disconnected'),
-  );
-  finishRed(disconnected, started, baseline);
-}
-
-async function redLegs(consumer: ConsumerReceipt, started: number): Promise<void> {
-  const baseline = await exportAndWatch(consumer, 'uniwind-baseline', markerFor('red-baseline'));
-  if (!baseline.settled_before_close) {
-    finishRed(baseline, started, null);
-    return;
-  }
-  await redSecond(consumer, baseline, started);
-}
-
-async function runRed(): Promise<void> {
+async function runDiagnostic(): Promise<void> {
   envHygiene();
-  assertRedAbsent();
+  assertHistoricalReceipts();
+  assertDriverUnchanged();
   const started = Date.now();
-  const consumer = prepareReady('uniwind');
+  const runId = `${TASK}-diagnostic-${started}`;
+  const calls: LegRecord[] = [];
+  const note: HashNote = { originalSha: '', mutatedSha: '', restoredSha: '', onlyCallback: false };
   try {
-    await redLegs(consumer, started);
-  } finally {
-    cleanupConsumer(consumer.root);
+    const consumer = prepareReady('uniwind');
+    try {
+      await collectDiagnostic(consumer, calls, note);
+    } finally {
+      cleanupConsumer(consumer.root);
+    }
+    mergeRun({
+      diagnostic: {
+        run_id: runId,
+        exit: 0,
+        elapsed_ms: Date.now() - started,
+        calls,
+        restoration: note,
+      },
+      commands: { diagnostic: commandReceipt(0) },
+    });
+    console.log(JSON.stringify({ diagnostic: true, run_id: runId, calls }, null, 2));
+  } catch (error) {
+    mergeRun({
+      hang_reproduced: calls.some((call) => call.promise_outcome === 'pending'),
+      diagnostic: {
+        run_id: runId,
+        exit: 1,
+        elapsed_ms: Date.now() - started,
+        calls,
+        restoration: note,
+        error: errorText(error),
+      },
+      commands: { diagnostic: commandReceipt(1) },
+    });
+    throw error;
   }
 }
 
@@ -518,25 +634,29 @@ function hiddenMarker(booleans: WebBooleans): boolean {
 function disconnectedOk(leg: LegRecord): boolean {
   const booleans = leg.booleans;
   if (!booleans) return false;
-  return hiddenMarker(booleans) && booleans.seedVisible && booleans.olderSeedReached;
-}
-
-function markerCleared(leg: LegRecord): boolean {
-  const booleans = leg.booleans;
-  if (!booleans) return false;
-  return booleans.markerVisible && booleans.inputCleared;
+  return (
+    hiddenMarker(booleans) &&
+    !booleans.markerSubmitted &&
+    booleans.seedVisible &&
+    booleans.olderSeedReached
+  );
 }
 
 function restoredOk(leg: LegRecord, note: HashNote): boolean {
-  if (!markerCleared(leg)) return false;
+  if (!fiveTrue(leg)) return false;
   if (note.restoredSha !== note.originalSha) return false;
   return note.onlyCallback;
 }
 
 function assertSettled(leg: LegRecord): void {
-  if (leg.settled_before_close && leg.elapsed_ms < WATCHDOG_MS) return;
+  if (
+    leg.settled_before_harness_cleanup &&
+    leg.promise_outcome === 'fulfilled' &&
+    leg.elapsed_ms < WATCHDOG_MS
+  )
+    return;
   throw new Error(
-    `unsettled ${leg.phase} elapsed ${leg.elapsed_ms} settled ${String(leg.settled_before_close)}`,
+    `invalid settlement ${leg.phase} elapsed ${leg.elapsed_ms} outcome ${leg.promise_outcome}`,
   );
 }
 
@@ -575,16 +695,19 @@ async function collectUniwind(
   note.mutatedSha = sha256(mutated);
   note.onlyCallback = onlyCallbackChanged(original, mutated);
   writeFileSync(screen, mutated);
-  const disconnected = await exportAndWatch(
-    consumer,
-    'uniwind-disconnected',
-    markerFor('uniwind-disconnected'),
-  );
-  calls.push(disconnected);
-  assertSettled(disconnected);
-  assertDisconnected(disconnected);
-  writeFileSync(screen, original);
-  note.restoredSha = sha256(readFileSync(screen, 'utf8'));
+  try {
+    const disconnected = await exportAndWatch(
+      consumer,
+      'uniwind-disconnected',
+      markerFor('uniwind-disconnected'),
+    );
+    calls.push(disconnected);
+    assertSettled(disconnected);
+    assertDisconnected(disconnected);
+  } finally {
+    writeFileSync(screen, original);
+    note.restoredSha = sha256(readFileSync(screen, 'utf8'));
+  }
   const restored = await exportAndWatch(
     consumer,
     'uniwind-restored',
@@ -616,6 +739,7 @@ async function collectGreen(calls: LegRecord[]): Promise<HashNote> {
   } finally {
     cleanupConsumer(consumer.root);
   }
+  assertDistinctMarkers(calls);
   return note;
 }
 
@@ -639,12 +763,19 @@ function withRestore(leg: LegRecord, note: HashNote): Record<string, unknown> {
   };
 }
 
-function writeGreen(calls: LegRecord[], note: HashNote, started: number): void {
+function writeGreen(calls: LegRecord[], note: HashNote, started: number, runId: string): void {
   const elapsed = Date.now() - started;
   writeJson(join(cycleDir(), 'green.json'), {
     task: TASK,
-    mode: 'green',
-    candidate_sha: gitHead(),
+    mode: 'verification',
+    run_id: runId,
+    execution_head_sha: gitHead(),
+    disposition: DISPOSITION,
+    hang_reproduced: false,
+    driver_changed: false,
+    red_evidence_claimed: false,
+    downstream_live_gate_status: 'open',
+    source_hashes: sourceHashes(),
     elapsed_ms: elapsed,
     within_budget: elapsed < GREEN_BUDGET_MS,
     seed_legs: [findCall(calls, 'nativewind-seed'), findCall(calls, 'uniwind-baseline')],
@@ -663,27 +794,46 @@ function writeGreen(calls: LegRecord[], note: HashNote, started: number): void {
   });
 }
 
+function mergedCommands(name: string, receipt: Record<string, unknown>): Record<string, unknown> {
+  const prior = asRecord(readJson(join(cycleDir(), 'run.json')).commands);
+  return { ...prior, [name]: receipt };
+}
+
 async function runGreen(): Promise<void> {
   envHygiene();
+  assertHistoricalReceipts();
+  assertDriverUnchanged();
   const started = Date.now();
+  const runId = `${TASK}-full-${started}`;
   const calls: LegRecord[] = [];
   try {
     const note = await collectGreen(calls);
-    writeGreen(calls, note, started);
+    writeGreen(calls, note, started, runId);
     mergeRun({
-      mode: 'green',
-      green_elapsed_ms: Date.now() - started,
-      green_exit: 0,
-      within_budget: Date.now() - started < GREEN_BUDGET_MS,
+      full_matrix: {
+        run_id: runId,
+        exit: 0,
+        elapsed_ms: Date.now() - started,
+        within_budget: Date.now() - started < GREEN_BUDGET_MS,
+        calls,
+        restoration: note,
+      },
+      commands: mergedCommands('full_matrix', commandReceipt(0)),
     });
-    console.log(JSON.stringify({ green: true, elapsed_ms: Date.now() - started }));
+    console.log(
+      JSON.stringify({ verification: true, run_id: runId, elapsed_ms: Date.now() - started }),
+    );
   } catch (error) {
     mergeRun({
-      mode: 'green',
-      green_elapsed_ms: Date.now() - started,
-      green_exit: 1,
-      green_error: errorText(error),
-      partial_calls: calls,
+      hang_reproduced: calls.some((call) => call.promise_outcome === 'pending'),
+      full_matrix: {
+        run_id: runId,
+        exit: 1,
+        elapsed_ms: Date.now() - started,
+        error: errorText(error),
+        partial_calls: calls,
+      },
+      commands: mergedCommands('full_matrix', commandReceipt(1)),
     });
     throw error;
   }
@@ -714,7 +864,7 @@ function cliRequested(): boolean {
 
 async function runDriveWebReturnProof(): Promise<void> {
   if (selectedMode(process.argv) === 'red') {
-    await runRed();
+    await runDiagnostic();
     return;
   }
   await runGreen();
@@ -730,27 +880,6 @@ if (cliRequested()) {
 export { runDriveWebReturnProof };
 
 /* ------------------------------------------------- vitest guard (no browser) */
-
-function hasZeroTimeout(source: string): boolean {
-  if (/setDefaultTimeout\(\s*0\s*\)/.test(source)) return true;
-  return /timeout:\s*0\b/.test(source);
-}
-
-function timeoutInRange(item: string): boolean {
-  const value = Number(item.replace(/[^\d]/g, ''));
-  return value >= 10_000 && value <= 30_000;
-}
-
-function countActionTimeouts(source: string): number {
-  const matches = source.match(/setDefaultTimeout\(\s*([0-9][0-9_]*)\s*\)/g);
-  if (!matches) return 0;
-  return matches.filter((item) => timeoutInRange(item)).length;
-}
-
-function finiteActionTimeout(source: string): number {
-  if (hasZeroTimeout(source)) return 0;
-  return countActionTimeouts(source);
-}
 
 function hasCheckAssignments(source: string): boolean {
   if (!source.includes(NEWEST_SEED)) return false;
@@ -779,11 +908,14 @@ function allowlistClean(): boolean {
 }
 
 if (!directInvocation(process.argv[1])) {
-  describe('driveWeb action timeout', () => {
+  describe('driveWeb bounded diagnostic', () => {
     it('driveWebActionTimeoutStaysFinite', () => {
       const source = readFileSync(driveWebPath(), 'utf8');
-      expect(finiteActionTimeout(source)).toBe(1);
+      expect(sha256(source)).toBe(EXPECTED_DRIVER_SHA);
       expect(hasCheckAssignments(source)).toBe(true);
+      expect(WATCHDOG_MS).toBe(180_000);
+      expect(fileSha(join(cycleDir(), 'red.json'))).toBe(HISTORICAL_RED_SHA);
+      expect(fileSha(join(cycleDir(), 'cycle-2/red.json'))).toBe(CYCLE_2_RED_SHA);
       expect(directInvocation(process.argv[1])).toBe(false);
       expect(allowlistClean()).toBe(true);
     });

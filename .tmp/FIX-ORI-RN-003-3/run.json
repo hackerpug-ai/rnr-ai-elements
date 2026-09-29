@@ -1,0 +1,325 @@
+{
+  "task": "FIX-ORI-RN-003-3",
+  "execution_head_sha": "042dcd372fe1fc18adf560d600c563b34c949269",
+  "disposition": "not_reproduced_no_driver_change",
+  "driver_changed": false,
+  "red_evidence_claimed": false,
+  "hang_reproduced": false,
+  "downstream_live_gate_status": "open",
+  "watchdog_ms": 180000,
+  "full_matrix_budget_ms": 9000000,
+  "source_hashes": {
+    "drive_web_sha256": "69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33",
+    "proof_harness_sha256": "e114381a4837cec61f4ac81224fd5e411942dce6b9002100da40704db5a51360"
+  },
+  "historical_receipt_hashes": {
+    "red_json_sha256": "fb844da4c2ecb882656f3fd2c987bf02a243ef7f31000b9fb08de35c603b6745",
+    "cycle_2_red_json_sha256": "f09d5bb8dc4138b1cb0900f32eb086c2989c0bdb423cc63ed4a77e8fb994a4e8"
+  },
+  "expected_historical_receipt_hashes": {
+    "red_json_sha256": "fb844da4c2ecb882656f3fd2c987bf02a243ef7f31000b9fb08de35c603b6745",
+    "cycle_2_red_json_sha256": "f09d5bb8dc4138b1cb0900f32eb086c2989c0bdb423cc63ed4a77e8fb994a4e8"
+  },
+  "changed_and_untracked_paths": [
+    "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+    "tests/sprint-05-orient-search/evidence/ORI-RN-001/nativewind-install.txt",
+    "tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt",
+    ".tmp/FIX-ORI-RN-003-3/green.json",
+    ".tmp/FIX-ORI-RN-003-3/run.json"
+  ],
+  "untracked_owned_evidence_paths": [
+    ".tmp/FIX-ORI-RN-003-3/green.json",
+    ".tmp/FIX-ORI-RN-003-3/run.json"
+  ],
+  "scope_paths_outside_allowlist": 0,
+  "outside_allowlist_paths": [],
+  "diagnostic": {
+    "run_id": "FIX-ORI-RN-003-3-diagnostic-1790696703662",
+    "exit": 0,
+    "elapsed_ms": 76944,
+    "calls": [
+      {
+        "phase": "diagnostic-uniwind-baseline",
+        "engine": "uniwind",
+        "marker": "FIX-ORI-RN-003-3 diagnostic-baseline 1 1790696733515",
+        "serve_url": "http://127.0.0.1:51305",
+        "port": 51305,
+        "exportExit": 0,
+        "settled_before_close": true,
+        "settled_before_harness_cleanup": true,
+        "elapsed_ms": 1005,
+        "started_at": "2026-09-29T15:45:42.381Z",
+        "settled_at": "2026-09-29T15:45:43.236Z",
+        "harness_cleanup_started_at": "2026-09-29T15:45:43.387Z",
+        "harness_cleanup_finished_at": "2026-09-29T15:45:43.399Z",
+        "promise_outcome": "fulfilled",
+        "browser_connected_at_observe": true,
+        "page_open_at_observe": false,
+        "harness_closed_browser_before_settle": false,
+        "booleans": {
+          "seedVisible": true,
+          "olderSeedReached": true,
+          "markerVisible": true,
+          "inputCleared": true,
+          "markerSubmitted": true
+        },
+        "drive_error": null,
+        "seed_text": "Seed turn 24: Ready for your message.",
+        "older_seed": "Seed turn 01: Plan a weekend walk."
+      },
+      {
+        "phase": "diagnostic-uniwind-disconnected",
+        "engine": "uniwind",
+        "marker": "FIX-ORI-RN-003-3 diagnostic-disconnected 2 1790696743401",
+        "serve_url": "http://127.0.0.1:51473",
+        "port": 51473,
+        "exportExit": 0,
+        "settled_before_close": true,
+        "settled_before_harness_cleanup": true,
+        "elapsed_ms": 30930,
+        "started_at": "2026-09-29T15:45:45.125Z",
+        "settled_at": "2026-09-29T15:46:15.859Z",
+        "harness_cleanup_started_at": "2026-09-29T15:46:16.055Z",
+        "harness_cleanup_finished_at": "2026-09-29T15:46:16.068Z",
+        "promise_outcome": "fulfilled",
+        "browser_connected_at_observe": true,
+        "page_open_at_observe": false,
+        "harness_closed_browser_before_settle": false,
+        "booleans": {
+          "seedVisible": true,
+          "olderSeedReached": true,
+          "markerVisible": false,
+          "inputCleared": true,
+          "markerSubmitted": false
+        },
+        "drive_error": null,
+        "seed_text": "Seed turn 24: Ready for your message.",
+        "older_seed": "Seed turn 01: Plan a weekend walk."
+      }
+    ],
+    "restoration": {
+      "originalSha": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2",
+      "mutatedSha": "3a3884d24442d0d979d093500f74c80ccac7dcde99e60247a227c5d3b8ce344a",
+      "restoredSha": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2",
+      "onlyCallback": true
+    }
+  },
+  "commands": {
+    "diagnostic": {
+      "argv": [
+        "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-003-3/tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "--entry",
+        "runDriveWebReturnProof",
+        "--mode",
+        "red"
+      ],
+      "exit": 0,
+      "recorded_at": "2026-09-29T15:46:20.606Z"
+    },
+    "full_matrix": {
+      "argv": [
+        "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-003-3/tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "--entry",
+        "runDriveWebReturnProof"
+      ],
+      "exit": 0,
+      "recorded_at": "2026-09-29T15:48:10.544Z"
+    },
+    "vitest_selector": {
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "-t",
+        "driveWebActionTimeoutStaysFinite"
+      ],
+      "exit": 0,
+      "recorded_at": "2026-09-29T15:49:03Z"
+    },
+    "typecheck": {
+      "argv": [
+        "pnpm",
+        "typecheck"
+      ],
+      "exit": 0,
+      "recorded_at": "2026-09-29T15:49:03Z"
+    },
+    "scoped_biome": {
+      "argv": [
+        "pnpm",
+        "exec",
+        "biome",
+        "ci",
+        "tests/sprint-05-orient-search/support/quickstart-web.ts",
+        "tests/sprint-05-orient-search/drive-web-return-proof.test.ts"
+      ],
+      "exit": 0,
+      "recorded_at": "2026-09-29T15:49:03Z"
+    }
+  },
+  "static_gates": {
+    "vitest_selector": {
+      "exit": 0,
+      "test_files_passed": 1,
+      "tests_passed": 1
+    },
+    "typecheck": {
+      "exit": 0
+    },
+    "scoped_biome": {
+      "exit": 0,
+      "files_checked": 2,
+      "fixes_applied": 0
+    },
+    "recorded_at": "2026-09-29T15:49:03Z"
+  },
+  "downstream_historical_evidence": {
+    "caller_run_manifest": {
+      "path": "ORI-CONT-004 worktree tests/sprint-05-orient-search/evidence/ORI-RN-003/run-manifest.json",
+      "sha256": "eed15223b27a7d4e0f01eb54ab39d477fa11177d7fa7165c2be4c16f2c9ee22b",
+      "claim": "completed=true, passed_legs=6, and the negative control passed"
+    },
+    "live_run_manifest": {
+      "path": "ORI-CONT-004 worktree tests/sprint-05-orient-search/evidence/ORI-AI-002/uniwind/manifest.json",
+      "sha256": "5a362b6aebab236293e9b891a8de54e440c7b91be8c27dfbc2f471acab06f8f5",
+      "claim": "the downstream live gate remains open"
+    },
+    "live_ios_result": {
+      "path": "ORI-CONT-004 worktree tests/sprint-05-orient-search/evidence/ORI-AI-002/uniwind-ios/result.json",
+      "sha256": "6507206df8924bd98d662f25e0bc8e589209852342f66213f87f85d9153ccaa0",
+      "claim": "ORI-AI-002 Uniwind exit_code=1; the iOS Stop generating assertion remains open and was not rerun by this task"
+    }
+  },
+  "full_matrix": {
+    "run_id": "FIX-ORI-RN-003-3-full-1790696787007",
+    "exit": 0,
+    "elapsed_ms": 103537,
+    "within_budget": true,
+    "calls": [
+      {
+        "phase": "nativewind-seed",
+        "engine": "nativewind",
+        "marker": "FIX-ORI-RN-003-3 nativewind-seed 1 1790696810986",
+        "serve_url": "http://127.0.0.1:56759",
+        "port": 56759,
+        "exportExit": 0,
+        "settled_before_close": true,
+        "settled_before_harness_cleanup": true,
+        "elapsed_ms": 1004,
+        "started_at": "2026-09-29T15:47:00.965Z",
+        "settled_at": "2026-09-29T15:47:01.804Z",
+        "harness_cleanup_started_at": "2026-09-29T15:47:01.969Z",
+        "harness_cleanup_finished_at": "2026-09-29T15:47:01.982Z",
+        "promise_outcome": "fulfilled",
+        "browser_connected_at_observe": true,
+        "page_open_at_observe": false,
+        "harness_closed_browser_before_settle": false,
+        "booleans": {
+          "seedVisible": true,
+          "olderSeedReached": true,
+          "markerVisible": true,
+          "inputCleared": true,
+          "markerSubmitted": true
+        },
+        "drive_error": null,
+        "seed_text": "Seed turn 24: Ready for your message.",
+        "older_seed": "Seed turn 01: Plan a weekend walk."
+      },
+      {
+        "phase": "uniwind-baseline",
+        "engine": "uniwind",
+        "marker": "FIX-ORI-RN-003-3 uniwind-baseline 2 1790696848539",
+        "serve_url": "http://127.0.0.1:58938",
+        "port": 58938,
+        "exportExit": 0,
+        "settled_before_close": true,
+        "settled_before_harness_cleanup": true,
+        "elapsed_ms": 1004,
+        "started_at": "2026-09-29T15:47:30.797Z",
+        "settled_at": "2026-09-29T15:47:31.634Z",
+        "harness_cleanup_started_at": "2026-09-29T15:47:31.801Z",
+        "harness_cleanup_finished_at": "2026-09-29T15:47:31.815Z",
+        "promise_outcome": "fulfilled",
+        "browser_connected_at_observe": true,
+        "page_open_at_observe": false,
+        "harness_closed_browser_before_settle": false,
+        "booleans": {
+          "seedVisible": true,
+          "olderSeedReached": true,
+          "markerVisible": true,
+          "inputCleared": true,
+          "markerSubmitted": true
+        },
+        "drive_error": null,
+        "seed_text": "Seed turn 24: Ready for your message.",
+        "older_seed": "Seed turn 01: Plan a weekend walk."
+      },
+      {
+        "phase": "uniwind-disconnected",
+        "engine": "uniwind",
+        "marker": "FIX-ORI-RN-003-3 uniwind-disconnected 3 1790696851818",
+        "serve_url": "http://127.0.0.1:59106",
+        "port": 59106,
+        "exportExit": 0,
+        "settled_before_close": true,
+        "settled_before_harness_cleanup": true,
+        "elapsed_ms": 30736,
+        "started_at": "2026-09-29T15:47:33.540Z",
+        "settled_at": "2026-09-29T15:48:04.272Z",
+        "harness_cleanup_started_at": "2026-09-29T15:48:04.276Z",
+        "harness_cleanup_finished_at": "2026-09-29T15:48:04.290Z",
+        "promise_outcome": "fulfilled",
+        "browser_connected_at_observe": true,
+        "page_open_at_observe": false,
+        "harness_closed_browser_before_settle": false,
+        "booleans": {
+          "seedVisible": true,
+          "olderSeedReached": true,
+          "markerVisible": false,
+          "inputCleared": true,
+          "markerSubmitted": false
+        },
+        "drive_error": null,
+        "seed_text": "Seed turn 24: Ready for your message.",
+        "older_seed": "Seed turn 01: Plan a weekend walk."
+      },
+      {
+        "phase": "uniwind-restored",
+        "engine": "uniwind",
+        "marker": "FIX-ORI-RN-003-3 uniwind-restored 4 1790696884293",
+        "serve_url": "http://127.0.0.1:61261",
+        "port": 61261,
+        "exportExit": 0,
+        "settled_before_close": true,
+        "settled_before_harness_cleanup": true,
+        "elapsed_ms": 802,
+        "started_at": "2026-09-29T15:48:06.150Z",
+        "settled_at": "2026-09-29T15:48:06.946Z",
+        "harness_cleanup_started_at": "2026-09-29T15:48:06.952Z",
+        "harness_cleanup_finished_at": "2026-09-29T15:48:06.970Z",
+        "promise_outcome": "fulfilled",
+        "browser_connected_at_observe": true,
+        "page_open_at_observe": false,
+        "harness_closed_browser_before_settle": false,
+        "booleans": {
+          "seedVisible": true,
+          "olderSeedReached": true,
+          "markerVisible": true,
+          "inputCleared": true,
+          "markerSubmitted": true
+        },
+        "drive_error": null,
+        "seed_text": "Seed turn 24: Ready for your message.",
+        "older_seed": "Seed turn 01: Plan a weekend walk."
+      }
+    ],
+    "restoration": {
+      "originalSha": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2",
+      "mutatedSha": "3a3884d24442d0d979d093500f74c80ccac7dcde99e60247a227c5d3b8ce344a",
+      "restoredSha": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2",
+      "onlyCallback": true
+    }
+  }
+}
