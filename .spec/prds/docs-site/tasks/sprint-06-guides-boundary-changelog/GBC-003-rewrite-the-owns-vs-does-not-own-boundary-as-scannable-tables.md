@@ -3,7 +3,9 @@ TASK: GBC-003 - Rewrite the owns-vs-does-not-own boundary as scannable tables
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: dccf5d9fa7b89969cd44b07dd2d5270c61f94848
 PRIORITY:   P1
 POINTS:     5
 AGENT:      planner=techwriting-planner | implementer=techwriting-implementer | reviewer=techwriting-reviewer
@@ -553,3 +555,51 @@ Blocks:     ['GBC-006', 'GBC-009', 'GBC-014', 'GBC-017']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-003",
+  "commit_sha": "dccf5d9fa7b89969cd44b07dd2d5270c61f94848",
+  "done": "Landed on main as 3c96b6da (via merge fadb44d6 + cycle-2 commit dccf5d9f): the boundary page rewritten in place as apps/docs/src/content/docs/owns-vs-does-not-own.mdx (rename-as-move from .md, slug/section/order unchanged, exactly one source at close) with three GFM tables \u2014 ownership split (Primitives -> react-native-reusables, AI compositions -> this library), ships/does-not-ship (no transport, no streaming client, no tool executor, consumer wires AI SDK v7 useChat, every claim inside td/th), and five honest gaps under heading #gaps \u2014 plus a structured gaps frontmatter array (the five consumer-owned responsibilities, byte-identical to the gap-row first cells) and one info Callout hosting the single example-app anchor (GitHub apps/example, real HTTP 200); the sprint-05 renderer section and all its pinned strings were preserved so boundary-content.spec.ts AC-1/2/4 still pass. The locked spec tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts (five FLOW-DOCS-04-prefixed tests over the real built preview in chromium desktop/mobile/nojs, ledger-backed gap-name oracle, per-test status files aggregated into a truthful run.json) went from a run_flow-captured RED at the pre-rewrite tree to 15/15 green in cycle 2 once GBC-018's home teaser landed, with run_flow --expect green reporting exit=0, artifact_fresh, surface_ok, coldboot_ok, red_proof_ok -> PASS; tsc, biome ci, fallow, and the full docs build are green on the merged tree.",
+  "deviations": [
+    "AC-4's teaser-anchor counts are scoped to the article (<main>), excluding the docs-nav sidebar aside \u2014 whole-page scope on /docs/introduction would always read 2 and contradict the sidebar the section nav requires; after GBC-018 both readings are 1 so the landed assertion is unambiguous.",
+    "The gaps frontmatter array carries exactly the five consumer-owned responsibilities and deliberately does not duplicate GBC-004's nine notPorted names (permitted but not required \u2014 they are all absent from the 56-item ledger, so GBC-006's no-omission rule holds), because the gaps table's framing is 'what your app must build', which upstream elements are not."
+  ],
+  "concerns": [
+    "Any FULL playwright lane run (`pnpm e2e:docs`) is red on main from a pre-existing interaction I proved by counterfactual: tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:92 rmSyncs apps/docs/src/data wholesale (deleting tracked dev-client-matrix.json/token-usage.json), restores only families.json, and prebuild's matrix gate (scripts/docs-data/gates.ts:261, landed 9fdcef68 2026-09-13) throws GateError on the missing matrix so the regeneration leg dies mid-lane \u2014 observed 105 failed / 154 passed / 84 did not run with every failure downstream of registry-items.json ENOENT.",
+    "A lane killed mid-flight inside deliv-03's destructive window leaves apps/docs/src/data wiped including the tracked inputs \u2014 recovery is `git checkout -- apps/docs/src/data` then a full docs build (bit this session after a harness restart); a fresh lane re-run then re-trips the same deliv-03 failure.",
+    "Port 4321 is heavily contended during wave runs (a GBC-016 preview held it ~8.5 minutes mid-cycle; an orphaned preview from a killed run squatted it once) \u2014 always run lanes with CI=1 so the strict guard fails closed, and check a listener's cwd before ever killing it.",
+    "Sprint-05 lane debt is still red and untouched: search-contract.spec.ts:208 and not-found-search-recovery fail at '[data-search-slot] button' strict-mode (SearchDialog gained a data-search-close button after those tests were written), and boundary-content.spec.ts:220 (ORI-CONT-005-AC-3) fails on the theming page's #rendermarkdown heading reading 'renderMarkdown' where the test expects 'renderMarkdown seam' (theming.mdx diff-empty vs HEAD)."
+  ],
+  "findings": [
+    "Astro 7's satteri MDX compiler rejects multi-line opening tags for lowercase elements (`<a\\n ...\\n>text</a>` fails with mdx-jsx unexpected-character) while single-line tags and multi-line component props parse fine \u2014 any task authoring MDX with slotted anchors must keep the anchor on one line (working example: owns-vs-does-not-own.mdx Callout link).",
+    "This repo's Playwright re-evaluates a spec module per test even at workers:1, so module-level accumulation (sprint-05's anyFailure/afterAll exit pattern) silently under-reports \u2014 my spec writes per-test status files to gitignored scratch and aggregates them in afterAll (tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts), a pattern GBC-014's journey run.json writers should copy or their exit fields can be wrong.",
+    "The gate-evidence surface lint rejects bare generic-root selectors inside assertion windows (locator('main') etc.) but accepts compound ones ('main table', 'main td, main th'), and require_product_target_any only matches product paths appearing within six lines after an expect( line \u2014 structure ledger reads accordingly (see the sanity block at boundary-tables.spec.ts:53).",
+    "For GBC-006's reconciliation, 'a gap names a shipped item' must be exact-equality on the gap string plus absence-claim phrasing, never word-boundary matching \u2014 word-boundary false-flags the mandatory 'Tool execution' responsibility against the shipped 'tool' registry item and would contradict GBC-006's own AC-1; the landed gaps array is sentence-case and byte-identical to the gaps-table first cells to make any matcher's job unambiguous.",
+    "tests/sprint-05-orient-search/docs-collection.test.ts's scratch candidate omits the repo's scripts/ dir (TokenTable.astro:5 imports ../../../../scripts/docs-data/token-map -> UNRESOLVED_IMPORT) and packages/docs-snippets (quickstart readFileSync ENOENT), so 3 of its 4 tests fail on grounds independent of any content change \u2014 proven with HEAD's page failing identically."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-014",
+      "found": "GBC-014's full-lane and journey verification will inherit the pre-existing deliv-03-112/matrix-gate cascade (105 ENOENT failures) plus the search-dialog selector and theming-heading reds, none of which come from sprint-06 content work.",
+      "change": "Before requiring full-lane green, add a remediation task (or GBC-014 AC carve-out) that makes deliv-03-112-file-completeness.spec.ts restore the tracked src/data inputs before its runPrebuild leg (frozen-lane edit needs explicit approval), and triage the search-dialog selector and theming heading separately."
+    },
+    {
+      "target": "GBC-006",
+      "found": "GBC-006's checker will read the landed gaps frontmatter (five sentence-case consumer responsibilities) and the rendered gap rows, and must not implement item-name matching as word-boundary substring.",
+      "change": "Implement 'gap names a shipped item' as exact equality between the gap string and a ledger name, optionally plus the absence-claim phrase check used in boundary-tables.spec.ts (gapRowNamesItem), so the mandatory 'Tool execution' gap is not falsely flagged against the shipped 'tool' item."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "The cycle-1 block exposed a planning gap \u2014 GBC-003's AC-4 and UC-DOCS-04 assumed a home teaser that no sprint-06 task owned until remediation task GBC-018 was cut, costing one blocked cycle.",
+      "change": "When a task's ACs assume already-landed UI state ('home and Introduction carry one-line teasers'), have the planner verify that state against the tree at plan time and assign an owner task in the same sprint for anything missing."
+    }
+  ],
+  "feedback": [
+    "The blocked-with-precise-blocker protocol worked exactly as designed: the cycle-1 checkpoint commit plus a one-line blocker (index.astro teaser, outside WRITE-ALLOWED) let the orchestrator cut GBC-018, and my spec flipped to 15/15 with zero spec changes \u2014 keep requiring the failing AC to stay honestly asserted rather than scoped out.",
+    "run_flow.py's red/green capture with cmd_sha-bound proof.red and the surface/coldboot lints gave this content task a tamper-evident evidence trail at no extra cost; the only friction was environmental (rtk masking exit codes, buffered vitest output, port contention), all of which had documented workarounds in project memory."
+  ]
+}
+```
