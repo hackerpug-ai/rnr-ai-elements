@@ -1,0 +1,75 @@
+{
+  "task": "FIX-ORI-SUITE-2",
+  "mode": "red",
+  "captured_at": "2026-09-26T20:07:29.917Z",
+  "candidate_commit": "5f94a723f237697573206be9892d2b2b3deb69eb",
+  "selector_failures": 3,
+  "selectors": [
+    {
+      "name": "docs-collection",
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/docs-collection.test.ts",
+      "exit": 1,
+      "failed_tokens": 3,
+      "passed_tokens": 1,
+      "failed_token_names": [
+        "ORI-AST-001-collection-schema",
+        "ORI-AST-001-publication-contract",
+        "ORI-AST-001-mdx-code-copy",
+        "tests/sprint-05-orient-search/docs-collection.test.ts > ORI-AST-001-collection-schema",
+        "tests/sprint-05-orient-search/docs-collection.test.ts > ORI-AST-001-publication-contract",
+        "tests/sprint-05-orient-search/docs-collection.test.ts > ORI-AST-001-mdx-code-copy"
+      ],
+      "failing_assertions": [
+        "AssertionError: valid build exits 0: expected 1 to be +0 // Object.is equality",
+        "AssertionError: two published entries build: expected 1 to be +0 // Object.is equality",
+        "AssertionError: multiline scratch build exits 0: expected 1 to be +0 // Object.is equality"
+      ],
+      "duration_ms": 6475,
+      "log": ".tmp/FIX-ORI-SUITE-2/red/docs-collection.log"
+    },
+    {
+      "name": "docs-data-prebuild",
+      "command": "pnpm exec vitest run tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts",
+      "exit": 1,
+      "failed_tokens": 1,
+      "passed_tokens": 3,
+      "failed_token_names": [
+        "copies public r generated-only and byte-identical",
+        "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts > FUSE-05 docs-data prebuild > copies public r generated-only and byte-identical"
+      ],
+      "failing_assertions": [
+        "AssertionError: apps/docs/public must not be tracked: expected 'apps/docs/public/fonts/OFL.txt\\napps/…' to be '' // Object.is equality"
+      ],
+      "duration_ms": 154399,
+      "log": ".tmp/FIX-ORI-SUITE-2/red/docs-data-prebuild.log"
+    },
+    {
+      "name": "live-example-api-ac4",
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/live-example-api.test.ts -t AC-4",
+      "exit": 1,
+      "failed_tokens": 1,
+      "passed_tokens": 0,
+      "failed_token_names": [
+        "AC-4 pins the hook contract, compiles both graphs and tears down owned children",
+        "tests/sprint-05-orient-search/live-example-api.test.ts > FLOW-DOCS-02-live-example-api-stream-history-abort > AC-4 pins the hook contract, compiles both graphs and tears down owned children"
+      ],
+      "failing_assertions": [
+        "AssertionError: expected 'import { useChat } from \\'@ai-sdk/rea…' to contain 'from \\'expo/fetch\\''",
+        "629|     expect(hookSource).toContain(\"from '@ai-sdk/react'\");",
+        "630|     expect(hookSource).toContain(\"from 'ai'\");",
+        "631|     expect(hookSource).toContain(\"from 'expo/fetch'\");",
+        "632|     expect(hookSource).toContain('DefaultChatTransport');",
+        "633|     expect(hookSource).toContain('throttle: 50');"
+      ],
+      "duration_ms": 1813,
+      "log": ".tmp/FIX-ORI-SUITE-2/red/live-example-api-ac4.log"
+    }
+  ],
+  "suites_sha256": {
+    "tests/sprint-05-orient-search/docs-collection.test.ts": "cee6a83be305bb6035f9bac5b4ccbbbe9d12989d0b766f1551a619fd60460a6c",
+    "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts": "df13b7f3ac26bd3734ba5739bf3ffc6ecf643e3b711e30aa538c0a91fda9aa5b",
+    "tests/sprint-05-orient-search/live-example-api.test.ts": "6ea80d96e2b5abbdc4454e6eca055108b6458b42674c28c8455647d229a399f6",
+    "tests/sprint-05-orient-search/nativewind-live-example.test.ts": "2e84e9489a528116e4f96bea53a43400d91fd76f4c0ee611ed3372979767a0ef",
+    "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts": "2960093408c05ed761c9f404c5d5d7a53cf07a3b5b6c55b2bcde0c654f40ef82"
+  }
+}

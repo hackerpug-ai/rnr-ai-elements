@@ -15,15 +15,19 @@
  *   - ORI-AST-001-prose-navigation    (AC-3, e2e)
  *   - ORI-AST-001-mdx-code-copy       (AC-4, e2e)
  *
- * The scratch candidate mirrors the repo shape so the one repo-root-relative
- * reference (src/pages/index.astro imports ../../../../package.json for the
- * release version) resolves: <scratch>/package.json is a byte copy of the root
- * manifest, and <scratch>/apps/docs is a copy of apps/docs with node_modules
- * symlinked back to the real tree (pnpm's relative .pnpm links stay intact).
+ * The scratch candidate mirrors the repo shape so every repo-root-relative
+ * reference resolves: <scratch>/package.json is a byte copy of the root manifest
+ * (src/pages/index.astro imports ../../../../package.json for the release
+ * version), <scratch>/scripts/ and <scratch>/packages/docs-snippets/ are copies
+ * of the two root trees the landed app references (TokenTable.astro's token-map
+ * import; the quickstart page's render-time snippet reads), and
+ * <scratch>/apps/docs is a copy of apps/docs with node_modules symlinked back
+ * to the real tree (pnpm's relative .pnpm links stay intact).
  */
 import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
+  copyFileSync,
   cpSync,
   existsSync,
   mkdirSync,
@@ -95,14 +99,31 @@ function makeScratch(): void {
   // The one repo-root-relative import (index.astro -> ../../../../package.json).
   cpSync(join(REPO_ROOT, 'package.json'), join(SCRATCH_ROOT, 'package.json'));
   const EXCLUDED = new Set(['node_modules', 'dist', '.astro', '.git']);
-  cpSync(DOCS_DIR, DOCS_APP_DIR, {
-    recursive: true,
-    filter: (src) => {
-      const rel = relative(DOCS_DIR, src);
-      if (rel === '') return true;
-      return !rel.split(sep).some((segment) => EXCLUDED.has(segment));
-    },
-  });
+  const copyTree = (srcDir: string, destDir: string): void => {
+    cpSync(srcDir, destDir, {
+      recursive: true,
+      filter: (src) => {
+        const rel = relative(srcDir, src);
+        if (rel === '') return true;
+        return !rel.split(sep).some((segment) => EXCLUDED.has(segment));
+      },
+    });
+  };
+  copyTree(DOCS_DIR, DOCS_APP_DIR);
+  // Two further repo-root trees the landed app now references (mirroring the
+  // root-package.json precedent above) — without them every scratch build dies
+  // UNRESOLVED_IMPORT and the quickstart render fails ENOENT:
+  // - scripts/ — TokenTable.astro imports ../../../../scripts/docs-data/token-map
+  //   (landed by ORI-AST-003);
+  // - packages/docs-snippets/ — the quickstart page render-reads
+  //   packages/docs-snippets/shared/quickstart-messages.ts and its siblings
+  //   (the ORI-CONT-003/FIX-ORI-CI-001-1 tutorial designation).
+  copyTree(join(REPO_ROOT, 'scripts'), join(SCRATCH_ROOT, 'scripts'));
+  mkdirSync(join(SCRATCH_ROOT, 'packages'), { recursive: true });
+  copyTree(
+    join(REPO_ROOT, 'packages', 'docs-snippets'),
+    join(SCRATCH_ROOT, 'packages', 'docs-snippets'),
+  );
   symlinkSync(join(DOCS_DIR, 'node_modules'), join(DOCS_APP_DIR, 'node_modules'), 'dir');
   mkdirSync(CONTENT_DIR, { recursive: true });
 }
@@ -159,6 +180,7 @@ interface Frontmatter {
   section?: string;
   order?: number | string;
   draft?: boolean | string;
+  tutorial?: boolean;
 }
 
 /** Serialize one collection entry (frontmatter + the real README body). */
@@ -190,6 +212,39 @@ function writeValidEntries(): void {
   });
 }
 
+/**
+ * The two collection manuscripts the app's build-time gates require of EVERY
+ * build, copied byte-identical from the real tree into each isolated set:
+ * - quickstart.mdx — the single-tutorial gate (ORI-CI-001/FIX-ORI-CI-001-1,
+ *   scripts/docs-data/single-tutorial.ts, loaded by the route generator) fails
+ *   any build whose published collection lacks exactly one `tutorial: true`
+ *   entry at /docs/quickstart ("tutorial-cardinality; observed 0 versus 1");
+ * - theming.mdx — the static /docs/theming route (ORI-AST-003) throws unless
+ *   the reviewed theming entry exists ("the reviewed theming collection entry
+ *   is missing") and renders the anchors the reserved-slug assertions read.
+ * Both gates landed after this suite's isolated-content drills; the real
+ * manuscripts (not synthetic stand-ins) keep every existing theming/tutorial
+ * assertion byte-effective on isolated sets.
+ */
+function copyGateManuscripts(): void {
+  copyFileSync(
+    join(DOCS_DIR, 'src', 'content', 'docs', 'quickstart.mdx'),
+    join(CONTENT_DIR, 'quickstart.mdx'),
+  );
+  copyFileSync(
+    join(DOCS_DIR, 'src', 'content', 'docs', 'theming.mdx'),
+    join(CONTENT_DIR, 'theming.mdx'),
+  );
+}
+
+/** Reset the content dir to an isolated set that still satisfies the
+ * build-time gates: empty, plus the two gate-required manuscripts. */
+function resetIsolatedContent(): void {
+  rmSync(CONTENT_DIR, { recursive: true, force: true });
+  mkdirSync(CONTENT_DIR, { recursive: true });
+  copyGateManuscripts();
+}
+
 /** Assert a build output names the entry id and the offending field. */
 function expectSchemaFailure(result: BuildResult, id: string, field: string): void {
   expect(result.exit, `build must fail (id=${id}, field=${field})`).not.toBe(0);
@@ -205,8 +260,7 @@ function expectSchemaFailure(result: BuildResult, id: string, field: string): vo
  * JS string literal (backslash-n escapes) so the evaluated prop equals `codeSource`.
  */
 function writeMultilineCodeEntry(codeSource: string): void {
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
+  resetIsolatedContent();
   const escaped = codeSource.replace(/\\/g, '\\\\').replace(/\n/g, '\\n');
   const mdx = [
     '---',
@@ -258,8 +312,7 @@ test('ORI-AST-001-collection-schema', { timeout: 240_000 }, () => {
 
   // All three declared section values pass the schema (isolated copies each).
   for (const section of ['getting-started', 'guides', 'porting'] as const) {
-    rmSync(CONTENT_DIR, { recursive: true, force: true });
-    mkdirSync(CONTENT_DIR, { recursive: true });
+    resetIsolatedContent();
     writeEntry(`section-${section}.md`, {
       title: `Section ${section}`,
       description: `A ${section} section entry`,
@@ -272,8 +325,7 @@ test('ORI-AST-001-collection-schema', { timeout: 240_000 }, () => {
   }
 
   // Omitted draft and boolean draft both validate without inventing routes.
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
+  resetIsolatedContent();
   writeEntry('draft-omitted.md', {
     title: 'Draft omitted',
     description: 'No draft field',
@@ -346,16 +398,14 @@ test('ORI-AST-001-collection-schema', { timeout: 240_000 }, () => {
     },
   ];
   for (const c of invalidCases) {
-    rmSync(CONTENT_DIR, { recursive: true, force: true });
-    mkdirSync(CONTENT_DIR, { recursive: true });
+    resetIsolatedContent();
     writeEntry('collection-reference.md', c.fm);
     const build = runBuild();
     expectSchemaFailure(build, c.id, c.field);
   }
 
   // Restored valid source rebuilds clean.
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
+  resetIsolatedContent();
   writeValidEntries();
   result = runBuild();
   expect(result.exit, 'restored valid build exits 0').toBe(0);
@@ -375,8 +425,7 @@ test('ORI-AST-001-publication-contract', { timeout: 240_000 }, () => {
   );
 
   // Set the second entry to draft:true and rebuild from fresh output.
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
+  resetIsolatedContent();
   writeEntry('collection-reference.md', {
     title: 'AI Elements Example',
     description: 'published',
@@ -408,8 +457,7 @@ test('ORI-AST-001-publication-contract', { timeout: 240_000 }, () => {
   expect(readDocHtml('collection-reference-mdx'), 'draft has 0 emitted routes').toBeNull();
 
   // Restore draft:false and rebuild: the route count returns to 2.
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
+  resetIsolatedContent();
   writeValidEntries();
   result = runBuild();
   expect(result.exit, 'restored build exits 0').toBe(0);
@@ -423,16 +471,10 @@ test('ORI-AST-001-publication-contract', { timeout: 240_000 }, () => {
   expect(themingHtml, 'Theming route exists').not.toBeNull();
   expect(themingHtml, 'textclasscontext anchor preserved').toContain('id="textclasscontext"');
   expect(themingHtml, 'rendermarkdown anchor preserved').toContain('id="rendermarkdown"');
-  // Adding an isolated entry with the reserved theming ID must not emit a second
-  // /docs/theming destination (catch-all excludes the reserved slug).
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
-  writeEntry('theming.md', {
-    title: 'Theming (reserved)',
-    description: 'must not duplicate the static route',
-    section: 'getting-started',
-    order: 1,
-  });
+  // An isolated entry with the reserved theming ID must not emit a second
+  // /docs/theming destination (catch-all excludes the reserved slug). The
+  // isolated set's gate-required theming.mdx copy IS that reserved-ID source.
+  resetIsolatedContent();
   result = runBuild();
   expect(result.exit, 'reserved theming copy does not break the build').toBe(0);
   const themingRoutes = listDocRoutes().filter((r) => r === 'theming');
@@ -441,8 +483,7 @@ test('ORI-AST-001-publication-contract', { timeout: 240_000 }, () => {
   expect(themingAfter, 'static Theming content stays intact').toContain('id="rendermarkdown"');
 
   // Duplicate destination: two real source copies resolving to one published ID.
-  rmSync(CONTENT_DIR, { recursive: true, force: true });
-  mkdirSync(CONTENT_DIR, { recursive: true });
+  resetIsolatedContent();
   writeEntry('collision test.md', {
     title: 'Collision A',
     description: 'first',
@@ -472,10 +513,13 @@ test('ORI-AST-001-publication-contract', { timeout: 240_000 }, () => {
   rmSync(join(CONTENT_DIR, 'collision test.md'), { force: true });
   result = runBuild();
   expect(result.exit, 'collision removed, rebuild exits 0').toBe(0);
+  // 'quickstart' is the fixture-supplied designated tutorial entry every
+  // isolated set now carries (the single-tutorial gate); the duplicate-
+  // destination guarantee under test is still exact: one collision-test route.
   expect(
     listDocRoutes().filter((r) => r !== 'theming'),
     'single destination after duplicate removal',
-  ).toEqual(['collision-test']);
+  ).toEqual(['collision-test', 'quickstart']);
 });
 
 // AC-3: real prose, navigation, metadata, and heading destinations (e2e).

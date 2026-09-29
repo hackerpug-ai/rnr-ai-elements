@@ -628,7 +628,11 @@ describe('FLOW-DOCS-02-live-example-api-stream-history-abort', () => {
     const hookSource = readFileSync(join(REPO_ROOT, 'apps/example/lib/use-live-chat.ts'), 'utf8');
     expect(hookSource).toContain("from '@ai-sdk/react'");
     expect(hookSource).toContain("from 'ai'");
-    expect(hookSource).toContain("from 'expo/fetch'");
+    // FIX-ORI-AI-001-1 (755edeae) moved the expo/fetch import to the lazy form
+    // at use-live-chat.ts:46 — `const { fetch: expoFetch } = await import('expo/fetch')`
+    // — so the module also loads outside Metro. The static import literal is
+    // superseded; the lazy import form is the current oracle.
+    expect(hookSource).toContain("await import('expo/fetch')");
     expect(hookSource).toContain('DefaultChatTransport');
     expect(hookSource).toContain('throttle: 50');
     expect(hookSource).toContain('messages: []');

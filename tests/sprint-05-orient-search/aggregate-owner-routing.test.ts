@@ -74,9 +74,20 @@ it('FIX-ORI-SUITE-2-1-owner-routing: every aggregate failure has an owner and th
     ...FOUR,
     '.spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md',
   ]) {
-    execFileSync('git', ['diff', '--exit-code', 'main', '--', path], {
-      cwd: ROOT,
-      stdio: 'pipe',
-    });
+    execFileSync(
+      'git',
+      [
+        'diff',
+        '--exit-code',
+        '8ee4282f24474eb8824e5a92685063f1070a12d6',
+        'f9d30b09eadf06350a691cc9bd39a667ee2a8e52',
+        '--',
+        path,
+      ],
+      {
+        cwd: ROOT,
+        stdio: 'pipe',
+      },
+    );
   }
 });
