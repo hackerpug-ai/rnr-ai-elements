@@ -42,6 +42,12 @@ type DriverManifest = {
   legs: Leg[];
 };
 
+type ProgressState = {
+  phase: string;
+  timeoutMs: number;
+  source: string;
+};
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..', '..');
 const TASK = 'FIX-ORI-RN-004-4';
@@ -315,7 +321,7 @@ async function supervise(
   timeoutMs: number,
   phaseDir: string,
   env: NodeJS.ProcessEnv,
-  progressProbe?: () => string,
+  progressProbe?: (processGroupId: number | null) => ProgressState,
 ): Promise<Record<string, unknown>> {
   const logPath = join(phaseDir, 'child.log');
   const heartbeatPath = join(phaseDir, 'supervisor-heartbeat.jsonl');
@@ -328,14 +334,29 @@ async function supervise(
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   const pgid = child.pid ?? null;
-  let observedPhase = 'process-start';
-  const recordHeartbeat = (event: string): void => {
-    const probed = progressProbe?.();
-    if (probed) observedPhase = probed;
+  let observedProgress: ProgressState = {
+    phase: 'process-start',
+    timeoutMs,
+    source: 'supervisor',
+  };
+  let phaseStartedAt = Date.now();
+  let timedOutPhase: string | null = null;
+  const appendHeartbeat = (event: string): void => {
     appendFileSync(
       heartbeatPath,
-      `${JSON.stringify({ ts: new Date().toISOString(), event, observed_phase: observedPhase, child_pid: child.pid ?? null, process_group_id: pgid, last_child_output_at: lastOutputAt })}\n`,
+      `${JSON.stringify({ ts: new Date().toISOString(), event, observed_phase: observedProgress.phase, observed_phase_source: observedProgress.source, observed_phase_timeout_ms: observedProgress.timeoutMs, observed_phase_started_at: new Date(phaseStartedAt).toISOString(), child_pid: child.pid ?? null, process_group_id: pgid, last_child_output_at: lastOutputAt })}\n`,
     );
+  };
+  const refreshProgress = (): void => {
+    const probed = progressProbe?.(pgid);
+    if (!probed || probed.phase === observedProgress.phase) return;
+    observedProgress = probed;
+    phaseStartedAt = Date.now();
+    appendHeartbeat('phase-transition');
+  };
+  const recordHeartbeat = (event: string): void => {
+    refreshProgress();
+    appendHeartbeat(event);
   };
   const writeChunk = (chunk: Buffer): void => {
     lastOutputAt = new Date().toISOString();
@@ -348,8 +369,11 @@ async function supervise(
   const heartbeat = setInterval(() => recordHeartbeat('supervisor-heartbeat'), HEARTBEAT_MS);
   heartbeat.unref();
   let timedOut = false;
-  const timer = setTimeout(() => {
+  let escalation: ReturnType<typeof setTimeout> | null = null;
+  const terminateForTimeout = (reason: string): void => {
+    if (timedOut) return;
     timedOut = true;
+    timedOutPhase = reason;
     recordHeartbeat('timeout');
     if (pgid !== null) {
       try {
@@ -357,8 +381,23 @@ async function supervise(
       } catch {
         // The process group may already have exited between the timeout and signal.
       }
+      escalation = setTimeout(() => {
+        try {
+          process.kill(-pgid, 'SIGKILL');
+        } catch {
+          // The process group exited during the bounded TERM grace period.
+        }
+      }, 10_000);
+      escalation.unref();
     }
-  }, timeoutMs);
+  };
+  const phaseWatch = setInterval(() => {
+    refreshProgress();
+    if (Date.now() - phaseStartedAt > observedProgress.timeoutMs)
+      terminateForTimeout(`phase:${observedProgress.phase}`);
+  }, 5_000);
+  phaseWatch.unref();
+  const timer = setTimeout(() => terminateForTimeout('overall'), timeoutMs);
   timer.unref();
   const termination = await new Promise<{ code: number | null; signal: NodeJS.Signals | null }>(
     (resolvePromise) => {
@@ -367,6 +406,8 @@ async function supervise(
     },
   );
   clearTimeout(timer);
+  if (escalation !== null) clearTimeout(escalation);
+  clearInterval(phaseWatch);
   clearInterval(heartbeat);
   recordHeartbeat('child-exited');
   return {
@@ -375,7 +416,9 @@ async function supervise(
     ended_at: new Date().toISOString(),
     child_pid: child.pid ?? null,
     process_group_id: pgid,
-    last_observed_phase: observedPhase,
+    last_observed_phase: observedProgress.phase,
+    last_observed_phase_source: observedProgress.source,
+    timed_out_phase: timedOutPhase,
     last_child_output_at: lastOutputAt,
     timeout_ms: timeoutMs,
     timed_out: timedOut,
@@ -386,27 +429,124 @@ async function supervise(
   };
 }
 
-// fallow-ignore-next-line complexity -- parses the last complete event from an append-only journal.
-function callerPhase(callerDir: string): string {
+function processGroupCommands(processGroupId: number | null): string {
+  if (processGroupId === null) return '';
+  return commandOutput('ps', ['-o', 'command=', '-g', String(processGroupId)]).stdout;
+}
+
+function latestDriverStep(logPath: string): string {
+  if (!existsSync(logPath)) return '';
+  const matches = [...readFileSync(logPath, 'utf8').matchAll(/\[heartbeat [^\]]+\] ([^\n—]+)/g)];
+  return matches.at(-1)?.[1]?.trim() ?? '';
+}
+
+// fallow-ignore-next-line complexity -- derives enforced progress from the live journal, driver and owned process group.
+function callerProgress(
+  callerDir: string,
+  logPath: string,
+  processGroupId: number | null,
+): ProgressState {
   const journal = join(callerDir, 'server-events.jsonl');
-  if (!existsSync(journal)) return 'caller-startup';
-  const lines = readFileSync(journal, 'utf8').trim().split('\n').filter(Boolean);
+  let journalEngine = 'unknown';
+  let journalPhase = 'startup';
+  let journalKind = 'startup';
+  const lines = existsSync(journal)
+    ? readFileSync(journal, 'utf8').trim().split('\n').filter(Boolean)
+    : [];
   for (let index = lines.length - 1; index >= 0; index -= 1) {
     try {
       const event = JSON.parse(lines[index]) as {
-        event?: string;
+        kind?: string;
         engine?: string;
         phase?: string;
       };
-      if (event.event === 'phase-start' || event.event === 'phase-end')
-        return `${event.engine ?? 'unknown'}:${event.phase ?? 'unknown'}:${event.event}`;
-      if (event.event === 'engine-start') return `${event.engine ?? 'unknown'}:engine-start`;
-      if (event.event === 'matrix-start') return 'matrix-start';
+      if (
+        event.kind === 'phase-start' ||
+        event.kind === 'phase-end' ||
+        event.kind === 'engine-start' ||
+        event.kind === 'matrix-start' ||
+        event.kind === 'matrix-teardown'
+      ) {
+        journalEngine = event.engine ?? journalEngine;
+        journalPhase = event.phase ?? journalPhase;
+        journalKind = event.kind;
+        break;
+      }
     } catch {
       // An in-progress final line is ignored until the next heartbeat.
     }
   }
-  return 'caller-startup';
+  const commands = processGroupCommands(processGroupId);
+  const driverStep = latestDriverStep(logPath);
+  if (/backend\/(stop|restart)|endpoint-loss/.test(driverStep))
+    return {
+      phase: `${journalEngine}:${journalPhase}:backend:${driverStep}`,
+      timeoutMs: 120_000,
+      source: 'driver-heartbeat',
+    };
+  if (/maestro\.cli|maestro .*test/.test(commands)) {
+    const platform = commands.includes(IOS_UDID) ? 'ios' : 'android';
+    return {
+      phase: `${journalEngine}:${journalPhase}:${platform}-leg`,
+      timeoutMs: 2_400_000,
+      source: 'owned-process-group',
+    };
+  }
+  if (/expo export --platform web|chrom(e|ium)|playwright/i.test(commands))
+    return {
+      phase: `${journalEngine}:${journalPhase}:web-leg`,
+      timeoutMs: 900_000,
+      source: 'owned-process-group',
+    };
+  if (driverStep.includes('native-prep'))
+    return {
+      phase: `${journalEngine}:${journalPhase}:native-prep`,
+      timeoutMs: 300_000,
+      source: 'driver-heartbeat',
+    };
+  if (/(^|\/)(ios|android)(\/|$)/.test(driverStep))
+    return {
+      phase: `${journalEngine}:${journalPhase}:${driverStep.includes('android') ? 'android' : 'ios'}-leg`,
+      timeoutMs: 2_400_000,
+      source: 'driver-heartbeat',
+    };
+  if (driverStep.includes('web'))
+    return {
+      phase: `${journalEngine}:${journalPhase}:web-leg`,
+      timeoutMs: 900_000,
+      source: 'driver-heartbeat',
+    };
+  if (driverStep.includes('teardown'))
+    return {
+      phase: `${journalEngine}:${journalPhase}:cleanup`,
+      timeoutMs: 180_000,
+      source: 'driver-heartbeat',
+    };
+  if (journalKind === 'matrix-teardown' || journalKind === 'phase-end')
+    return {
+      phase: `${journalEngine}:${journalPhase}:cleanup`,
+      timeoutMs: 180_000,
+      source: 'caller-journal',
+    };
+  if (
+    journalEngine === 'nativewind' &&
+    /pnpm install|expo-doctor|tsc|react-native-reusables/i.test(commands) &&
+    !/expo start --port/.test(commands)
+  )
+    return {
+      phase: 'nativewind:consumer-preparation',
+      timeoutMs: 3_600_000,
+      source: 'owned-process-group',
+    };
+  if (journalPhase === 'web-self')
+    return { phase: `${journalEngine}:web-self`, timeoutMs: 900_000, source: 'caller-journal' };
+  if (journalKind === 'phase-start')
+    return {
+      phase: `${journalEngine}:${journalPhase}:backend-start`,
+      timeoutMs: 120_000,
+      source: 'caller-journal',
+    };
+  return { phase: journalKind, timeoutMs: 300_000, source: 'caller-journal' };
 }
 
 function snapshotDriverEvidence(phaseDir: string): string {
@@ -842,6 +982,178 @@ function processGroupMembers(processGroupId: unknown): string[] {
   return result.exit === 0 ? result.stdout.split('\n').filter(Boolean) : [];
 }
 
+function sleepSync(milliseconds: number): void {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
+}
+
+function listenerPids(ports: number[]): number[] {
+  return [
+    ...new Set(
+      ports.flatMap((port) => {
+        const result = commandOutput('lsof', ['-nP', '-t', `-iTCP:${port}`, '-sTCP:LISTEN']);
+        return result.exit === 0
+          ? result.stdout
+              .split('\n')
+              .map((value) => Number(value.trim()))
+              .filter(Number.isInteger)
+          : [];
+      }),
+    ),
+  ];
+}
+
+function processIdentity(pid: number): {
+  pid: number;
+  pgid: number | null;
+  command: string;
+  cwd: string;
+} {
+  const process = commandOutput('ps', ['-o', 'pgid=,command=', '-p', String(pid)]).stdout;
+  const match = process.match(/^\s*(\d+)\s+([\s\S]+)$/);
+  const cwdOutput = commandOutput('lsof', ['-a', '-p', String(pid), '-d', 'cwd', '-Fn']).stdout;
+  const cwd = cwdOutput
+    .split('\n')
+    .find((line) => line.startsWith('n'))
+    ?.slice(1);
+  return {
+    pid,
+    pgid: match ? Number(match[1]) : null,
+    command: match?.[2] ?? '',
+    cwd: cwd ?? '',
+  };
+}
+
+function reversePort(mapping: string): string | null {
+  const tokens = mapping.trim().split(/\s+/);
+  return tokens.find((token) => /^tcp:\d+$/.test(token)) ?? null;
+}
+
+// fallow-ignore-next-line complexity -- cleanup must verify ownership before every destructive action.
+function cleanupOwnedRuntime(
+  ports: number[],
+  devicesBefore: Record<string, unknown>,
+  recordedProcessGroupId: unknown,
+  additionalOwnedRoots: string[],
+): Record<string, unknown> {
+  const listenerIdentities = listenerPids(ports).map(processIdentity);
+  const ownedRoots = [REPO_ROOT, ...additionalOwnedRoots];
+  const owned = listenerIdentities.filter(
+    (identity) =>
+      ownedRoots.some((root) => identity.cwd === root || identity.cwd.startsWith(`${root}/`)) &&
+      /expo|metro|vite|live-backend|live-example-proof|run-live-example-proof/i.test(
+        identity.command,
+      ),
+  );
+  const rejected = listenerIdentities.filter(
+    (identity) => !owned.some((candidate) => candidate.pid === identity.pid),
+  );
+  const recordedGroup =
+    typeof recordedProcessGroupId === 'number' &&
+    processGroupMembers(recordedProcessGroupId).length > 0
+      ? [recordedProcessGroupId]
+      : [];
+  const groups = [
+    ...new Set(
+      recordedGroup.concat(
+        owned
+          .map((identity) => identity.pgid)
+          .filter((processGroupId): processGroupId is number => processGroupId !== null),
+      ),
+    ),
+  ];
+  for (const processGroupId of groups) {
+    try {
+      process.kill(-processGroupId, 'SIGTERM');
+    } catch {
+      // The verified owned group may already have exited.
+    }
+  }
+  const graceDeadline = Date.now() + 10_000;
+  while (groups.some((processGroupId) => processGroupMembers(processGroupId).length > 0)) {
+    if (Date.now() >= graceDeadline) break;
+    sleepSync(250);
+  }
+  const escalatedGroups = groups.filter(
+    (processGroupId) => processGroupMembers(processGroupId).length > 0,
+  );
+  for (const processGroupId of escalatedGroups) {
+    try {
+      process.kill(-processGroupId, 'SIGKILL');
+    } catch {
+      // The verified owned group exited after the final membership check.
+    }
+  }
+
+  const reverseBefore = new Set(
+    Array.isArray(devicesBefore.android_reverse) ? devicesBefore.android_reverse.map(String) : [],
+  );
+  const reverseNow = commandOutput('adb', ['-s', ANDROID_SERIAL, 'reverse', '--list'])
+    .stdout.split('\n')
+    .filter(Boolean);
+  const allowedReversePorts = new Set(ports.map((port) => `tcp:${port}`));
+  const removedReverseMappings: string[] = [];
+  for (const mapping of reverseNow) {
+    const port = reversePort(mapping);
+    if (reverseBefore.has(mapping) || port === null || !allowedReversePorts.has(port)) continue;
+    const removal = commandOutput('adb', ['-s', ANDROID_SERIAL, 'reverse', '--remove', port]);
+    if (removal.exit === 0) removedReverseMappings.push(mapping);
+  }
+
+  const restoredAppearances: string[] = [];
+  const iosAppearance = String(devicesBefore.ios_appearance ?? '').trim();
+  if (iosAppearance === 'light' || iosAppearance === 'dark') {
+    const current = commandOutput('xcrun', ['simctl', 'ui', IOS_UDID, 'appearance']).stdout.trim();
+    if (current !== iosAppearance) {
+      const restoration = commandOutput('xcrun', [
+        'simctl',
+        'ui',
+        IOS_UDID,
+        'appearance',
+        iosAppearance,
+      ]);
+      if (restoration.exit === 0) restoredAppearances.push(`ios:${iosAppearance}`);
+    }
+  }
+  const androidAppearance = String(devicesBefore.android_appearance ?? '');
+  const androidMode = androidAppearance.includes('yes')
+    ? 'yes'
+    : androidAppearance.includes('no')
+      ? 'no'
+      : androidAppearance.includes('auto')
+        ? 'auto'
+        : null;
+  if (androidMode !== null) {
+    const current = commandOutput('adb', [
+      '-s',
+      ANDROID_SERIAL,
+      'shell',
+      'cmd',
+      'uimode',
+      'night',
+    ]).stdout;
+    if (current !== androidAppearance) {
+      const restoration = commandOutput('adb', [
+        '-s',
+        ANDROID_SERIAL,
+        'shell',
+        'cmd',
+        'uimode',
+        'night',
+        androidMode,
+      ]);
+      if (restoration.exit === 0) restoredAppearances.push(`android:${androidMode}`);
+    }
+  }
+  return {
+    listener_processes_inspected: listenerIdentities,
+    rejected_unowned_listeners: rejected,
+    terminated_owned_process_groups: groups,
+    escalated_owned_process_groups: escalatedGroups,
+    removed_reverse_mappings: removedReverseMappings,
+    restored_appearances: restoredAppearances,
+  };
+}
+
 // fallow-ignore-next-line complexity -- one linear full-caller proof writes a single immutable report.
 async function runFull(cycle: string, phaseDir: string): Promise<void> {
   const cycleDir = dirname(phaseDir);
@@ -873,8 +1185,19 @@ async function runFull(cycle: string, phaseDir: string): Promise<void> {
     '--android-serial',
     ANDROID_SERIAL,
   ];
-  const execution = await supervise('node', args, FULL_TIMEOUT_MS, phaseDir, env, () =>
-    callerPhase(callerDir),
+  const execution = await supervise(
+    'node',
+    args,
+    FULL_TIMEOUT_MS,
+    phaseDir,
+    env,
+    (processGroupId) => callerProgress(callerDir, join(phaseDir, 'child.log'), processGroupId),
+  );
+  const cleanup = cleanupOwnedRuntime(
+    FULL_PORTS,
+    preflight.devices as Record<string, unknown>,
+    execution.process_group_id,
+    [scratch],
   );
   const runtimeArtifacts = snapshotAndRestoreRuntimeRoots(runtimeBackups, phaseDir);
   const validate = commandOutput('node', [
@@ -921,6 +1244,7 @@ async function runFull(cycle: string, phaseDir: string): Promise<void> {
     disposition_sha256: disposition.sha256,
     preflight,
     execution,
+    cleanup,
     validate,
     caller_manifest: existsSync(manifestPath) ? relative(REPO_ROOT, manifestPath) : null,
     caller_outcome: {
