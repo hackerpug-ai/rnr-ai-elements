@@ -1,0 +1,178 @@
+---
+/**
+ * IndexList (TR-07 NEW 3/4, section-index wireframe R5) — the linked
+ * non-registry entry-row primitive for the section-index pages (/guides,
+ * /changelog). ComponentCard is registry-imagery-specific; these entries are
+ * plain linked rows: title + one-liner, an optional meta Chip (a release
+ * date), and optional sibling anchors (touched components). Zero JS; tokens
+ * only.
+ *
+ * ONE composition model: rows arrive as the typed `rows` prop and this
+ * component owns the single row markup. No default-slot form — a slot would
+ * fork the one <li> into every consuming page, and the data-hooks contract
+ * (data-index-list / -row / -title / -description) lives or dies here.
+ *
+ * The whole row is the touch target: the li carries the 44px min-height, and
+ * the title anchor stretches over it via an absolutely-positioned ::after.
+ * The Chip and the sibling links are NEVER inside the title anchor (an anchor
+ * inside an anchor is invalid HTML); the links ride above the stretch so a
+ * touched component stays its own click. Render order is the caller's —
+ * /changelog sorts its collection newest-first before passing it in.
+ */
+import Chip from './Chip.astro';
+
+/** A sibling anchor of the row title — a touched-component link. */
+interface IndexListLink {
+  href: string;
+  label: string;
+}
+
+/** One linked entry row; the optional fields select the row's form. */
+interface IndexListRow {
+  /** Deep-link target; anchor jumps stop clear of the sticky Header. */
+  id?: string;
+  /** The row's destination — the stretched title anchor's href. */
+  href: string;
+  /** The linked title text. */
+  title: string;
+  /** The one-line muted description under the title (guide rows). */
+  description?: string;
+  /** Meta pill (a release date) through Chip's counter-less form. */
+  meta?: string | number;
+  /** Sibling anchors (changelog touched components), in first-seen order. */
+  links?: readonly IndexListLink[];
+}
+
+interface Props {
+  rows: readonly IndexListRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<ul class="index-list" data-index-list>
+  {
+    rows.map((row) => {
+      const hasMeta = row.meta !== undefined || (row.links?.length ?? 0) > 0;
+      return (
+        <li class="index-list__row" id={row.id} data-index-list-row>
+          <div class="index-list__main">
+            <a class="index-list__title" href={row.href} data-index-list-title>
+              {row.title}
+            </a>
+            {row.description && (
+              <p class="index-list__description" data-index-list-description>
+                {row.description}
+              </p>
+            )}
+          </div>
+          {hasMeta && (
+            <div class="index-list__meta">
+              {row.meta !== undefined && <Chip value={row.meta} />}
+              {row.links?.map((link) => (
+                <a class="index-list__link" href={link.href}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .index-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* One row markup: the li is the >=44px touch target the stretched title
+     anchor covers. Divider bands the rows; hover fills with the accent. */
+  .index-list__row {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem 1rem;
+    min-height: 44px;
+    padding: 0.625rem 1rem;
+    border-block-end: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    /* A deep-linked row id jumps clear of the sticky Header. */
+    scroll-margin-block-start: calc(var(--layout-header-h) + 1rem);
+  }
+
+  .index-list__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .index-list__title {
+    color: var(--foreground);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* The stretch: the title anchor's ::after covers the whole row, so the
+     44px li is a single tap/click target for the title link. */
+  .index-list__title::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .index-list__description {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+  }
+
+  .index-list__meta {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+  }
+
+  /* Sibling anchors ride above the stretched title so each touched
+     component keeps its own click; the Prose link idiom carries them. */
+  .index-list__link {
+    position: relative;
+    z-index: 1;
+    color: var(--foreground);
+    text-decoration: underline;
+    text-decoration-color: var(--muted-foreground);
+    text-underline-offset: 0.2em;
+  }
+
+  .index-list__link:hover {
+    color: var(--primary);
+    text-decoration-color: var(--primary);
+  }
+
+  /* Hover fill — the ledger row idiom, never a shadow. */
+  .index-list__row:hover {
+    background: var(--accent);
+  }
+
+  /* Motion only for visitors who allow it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .index-list__row {
+      transition: background-color 120ms ease;
+    }
+  }
+
+  /* Mobile: the meta block drops under the title — single column. */
+  @media (max-width: 48rem) {
+    .index-list__row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>
