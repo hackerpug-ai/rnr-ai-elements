@@ -172,22 +172,55 @@ function writeJson(path: string, value: unknown): void {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function commandOutput(
-  command: string,
-  args: string[],
-  timeoutMs = 30_000,
-): { exit: number; stdout: string; timedOut: boolean } {
+type CommandResult = {
+  exit: number;
+  stdout: string;
+  stderr: string;
+  timedOut: boolean;
+  signal: NodeJS.Signals | null;
+  spawnErrorCode: string | null;
+  spawnErrorMessage: string | null;
+};
+
+function commandText(value: string | null | undefined): string {
+  return typeof value === 'string' ? value : '';
+}
+
+function normalizeCommandResult(
+  status: number | null,
+  stdout: string | null | undefined,
+  stderr: string | null | undefined,
+  signal: NodeJS.Signals | null,
+  error: Error | undefined,
+): CommandResult {
+  const spawnError = error as NodeJS.ErrnoException | undefined;
+  const stdoutText = commandText(stdout);
+  const stderrText = commandText(stderr);
+  return {
+    exit: status ?? 1,
+    stdout: `${stdoutText}${stderrText}`.trim(),
+    stderr: stderrText.trim(),
+    timedOut: spawnError?.code === 'ETIMEDOUT',
+    signal,
+    spawnErrorCode: spawnError?.code ?? null,
+    spawnErrorMessage: spawnError?.message ?? null,
+  };
+}
+
+function commandOutput(command: string, args: string[], timeoutMs = 30_000): CommandResult {
   const result = spawnSync(command, args, {
     cwd: REPO_ROOT,
     encoding: 'utf8',
     timeout: timeoutMs,
     maxBuffer: 64 * 1024 * 1024,
   });
-  return {
-    exit: result.status ?? 1,
-    stdout: `${result.stdout ?? ''}${result.stderr ?? ''}${result.error?.message ?? ''}`.trim(),
-    timedOut: (result.error as NodeJS.ErrnoException | undefined)?.code === 'ETIMEDOUT',
-  };
+  return normalizeCommandResult(
+    result.status,
+    result.stdout,
+    result.stderr,
+    result.signal,
+    result.error,
+  );
 }
 
 function listeners(ports: number[]): Array<{ port: number; output: string }> {
@@ -1243,14 +1276,54 @@ function sleepSync(milliseconds: number): void {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
 
-type CommandResult = ReturnType<typeof commandOutput>;
-type CommandRunner = (command: string, args: string[]) => CommandResult;
+type CommandPolicy = 'required' | 'lsof-listeners';
+type CommandRunner = (command: string, args: string[], policy?: CommandPolicy) => CommandResult;
 
-function listenerPids(ports: number[], run: CommandRunner = commandOutput): number[] {
+class CleanupCommandError extends Error {
+  readonly command: string[];
+  readonly result: CommandResult;
+
+  constructor(command: string, args: string[], reason: string, result: CommandResult) {
+    super(`cleanup command failed (${reason}): ${command} ${args.join(' ')}`);
+    this.name = 'CleanupCommandError';
+    this.command = [command, ...args];
+    this.result = result;
+  }
+}
+
+function cleanupTransportFailure(result: CommandResult): string | null {
+  if (result.timedOut) return 'timeout';
+  if (result.spawnErrorCode !== null)
+    return `spawn ${result.spawnErrorCode}: ${result.spawnErrorMessage ?? 'unknown error'}`;
+  if (result.signal !== null) return `signal ${result.signal}`;
+  return null;
+}
+
+function cleanupExitAllowed(result: CommandResult, policy: CommandPolicy): boolean {
+  if (result.exit === 0) return true;
+  if (policy !== 'lsof-listeners') return false;
+  return result.exit === 1 && result.stdout.length === 0 && result.stderr.length === 0;
+}
+
+function cleanupCommandFailure(result: CommandResult, policy: CommandPolicy): string | null {
+  const transportFailure = cleanupTransportFailure(result);
+  if (transportFailure !== null) return transportFailure;
+  if (cleanupExitAllowed(result, policy)) return null;
+  return `exit ${result.exit}${result.stderr ? `: ${result.stderr}` : ''}`;
+}
+
+function listenerPids(
+  ports: number[],
+  run: CommandRunner = (command, args) => commandOutput(command, args),
+): number[] {
   return [
     ...new Set(
       ports.flatMap((port) => {
-        const result = run('lsof', ['-nP', '-t', `-iTCP:${port}`, '-sTCP:LISTEN']);
+        const result = run(
+          'lsof',
+          ['-nP', '-t', `-iTCP:${port}`, '-sTCP:LISTEN'],
+          'lsof-listeners',
+        );
         return result.exit === 0
           ? result.stdout
               .split('\n')
@@ -1264,7 +1337,7 @@ function listenerPids(ports: number[], run: CommandRunner = commandOutput): numb
 
 function processIdentity(
   pid: number,
-  run: CommandRunner = commandOutput,
+  run: CommandRunner = (command, args) => commandOutput(command, args),
 ): {
   pid: number;
   pgid: number | null;
@@ -1309,13 +1382,20 @@ function cleanupOwnedRuntime(
 ): Record<string, unknown> {
   const deadlineMs = Date.now() + 180_000;
   const commandLedger: Array<Record<string, unknown>> = [];
-  const run: CommandRunner = (command, args) => {
+  const run: CommandRunner = (command, args, policy = 'required') => {
     const remainingMs = deadlineMs - Date.now();
     if (remainingMs <= 0) throw new Error('cleanup deadline expired before external command');
     const startedAt = new Date().toISOString();
     const result = commandOutput(command, args, Math.min(15_000, remainingMs));
-    commandLedger.push({ command: [command, ...args], started_at: startedAt, ...result });
-    if (result.timedOut) throw new Error(`cleanup command timed out: ${command} ${args.join(' ')}`);
+    const failure = cleanupCommandFailure(result, policy);
+    commandLedger.push({
+      command: [command, ...args],
+      started_at: startedAt,
+      policy,
+      failure,
+      ...result,
+    });
+    if (failure !== null) throw new CleanupCommandError(command, args, failure, result);
     return result;
   };
   const recordedGroups =
@@ -1467,6 +1547,10 @@ function runInternalCleanup(): void {
     writeJson(outputPath, {
       status: 'failed',
       error: error instanceof Error ? error.message : String(error),
+      failure:
+        error instanceof CleanupCommandError
+          ? { command: error.command, result: error.result }
+          : null,
     });
     throw error;
   }
