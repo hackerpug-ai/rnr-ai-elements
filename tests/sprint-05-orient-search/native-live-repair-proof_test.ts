@@ -42,10 +42,25 @@ type DriverManifest = {
   legs: Leg[];
 };
 
-type ProgressState = {
-  phase: string;
+type ProgressBudget = {
+  key: string;
   timeoutMs: number;
   source: string;
+  startedAtMs?: number;
+};
+
+type ProgressState = {
+  phase: string;
+  source: string;
+  budgets: ProgressBudget[];
+};
+
+type CallerProgressTracker = {
+  phaseKey: string;
+  nativewindStage: 'consumer' | 'native-prep' | 'ios' | 'android' | 'web';
+  consumerCommandSeen: boolean;
+  consumerAbsentAtMs: number | null;
+  nativeLegStartedAtMs: number | null;
 };
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -157,9 +172,22 @@ function writeJson(path: string, value: unknown): void {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function commandOutput(command: string, args: string[]): { exit: number; stdout: string } {
-  const result = spawnSync(command, args, { cwd: REPO_ROOT, encoding: 'utf8' });
-  return { exit: result.status ?? 1, stdout: `${result.stdout}${result.stderr}`.trim() };
+function commandOutput(
+  command: string,
+  args: string[],
+  timeoutMs = 30_000,
+): { exit: number; stdout: string; timedOut: boolean } {
+  const result = spawnSync(command, args, {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+    timeout: timeoutMs,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  return {
+    exit: result.status ?? 1,
+    stdout: `${result.stdout ?? ''}${result.stderr ?? ''}${result.error?.message ?? ''}`.trim(),
+    timedOut: (result.error as NodeJS.ErrnoException | undefined)?.code === 'ETIMEDOUT',
+  };
 }
 
 function listeners(ports: number[]): Array<{ port: number; output: string }> {
@@ -314,6 +342,34 @@ function iosVerdict(manifest: DriverManifest): Record<string, unknown> {
   };
 }
 
+function observeProgress(
+  progressProbe: ((processGroupId: number | null) => ProgressState) | undefined,
+  processGroupId: number | null,
+): { progress?: ProgressState; error?: string } {
+  try {
+    return { progress: progressProbe?.(processGroupId) };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+function retainBudgetStarts(
+  budgets: ProgressBudget[],
+  activeBudgets: Map<string, ProgressBudget & { startedAtMs: number }>,
+  now: number,
+): Map<string, ProgressBudget & { startedAtMs: number }> {
+  const nextBudgets = new Map<string, ProgressBudget & { startedAtMs: number }>();
+  for (const budget of budgets) {
+    const previous = activeBudgets.get(budget.key);
+    const proposedStart = Math.min(budget.startedAtMs ?? now, now);
+    nextBudgets.set(budget.key, {
+      ...budget,
+      startedAtMs: previous ? Math.min(previous.startedAtMs, proposedStart) : proposedStart,
+    });
+  }
+  return nextBudgets;
+}
+
 // fallow-ignore-next-line complexity -- one linear child lifecycle keeps the raw process ledger coherent.
 async function supervise(
   command: string,
@@ -336,22 +392,34 @@ async function supervise(
   const pgid = child.pid ?? null;
   let observedProgress: ProgressState = {
     phase: 'process-start',
-    timeoutMs,
     source: 'supervisor',
+    budgets: [{ key: 'process-start', timeoutMs, source: 'supervisor' }],
   };
   let phaseStartedAt = Date.now();
+  let activeBudgets = new Map<string, ProgressBudget & { startedAtMs: number }>();
   let timedOutPhase: string | null = null;
+  let progressProbeError: string | null = null;
   const appendHeartbeat = (event: string): void => {
     appendFileSync(
       heartbeatPath,
-      `${JSON.stringify({ ts: new Date().toISOString(), event, observed_phase: observedProgress.phase, observed_phase_source: observedProgress.source, observed_phase_timeout_ms: observedProgress.timeoutMs, observed_phase_started_at: new Date(phaseStartedAt).toISOString(), child_pid: child.pid ?? null, process_group_id: pgid, last_child_output_at: lastOutputAt })}\n`,
+      `${JSON.stringify({ ts: new Date().toISOString(), event, observed_phase: observedProgress.phase, observed_phase_source: observedProgress.source, observed_phase_started_at: new Date(phaseStartedAt).toISOString(), active_phase_budgets: [...activeBudgets.values()].map((budget) => ({ ...budget, started_at: new Date(budget.startedAtMs).toISOString(), deadline_at: new Date(budget.startedAtMs + budget.timeoutMs).toISOString() })), progress_probe_error: progressProbeError, child_pid: child.pid ?? null, process_group_id: pgid, last_child_output_at: lastOutputAt })}\n`,
     );
   };
   const refreshProgress = (): void => {
-    const probed = progressProbe?.(pgid);
-    if (!probed || probed.phase === observedProgress.phase) return;
+    const observation = observeProgress(progressProbe, pgid);
+    if (observation.error !== undefined) {
+      progressProbeError = observation.error;
+      return;
+    }
+    const probed = observation.progress;
+    if (!probed) return;
+    const now = Date.now();
+    activeBudgets = retainBudgetStarts(probed.budgets, activeBudgets, now);
+    const transitioned =
+      probed.phase !== observedProgress.phase || probed.source !== observedProgress.source;
     observedProgress = probed;
-    phaseStartedAt = Date.now();
+    if (!transitioned) return;
+    phaseStartedAt = now;
     appendHeartbeat('phase-transition');
   };
   const recordHeartbeat = (event: string): void => {
@@ -393,9 +461,16 @@ async function supervise(
   };
   const phaseWatch = setInterval(() => {
     refreshProgress();
-    if (Date.now() - phaseStartedAt > observedProgress.timeoutMs)
-      terminateForTimeout(`phase:${observedProgress.phase}`);
-  }, 5_000);
+    if (progressProbeError !== null) {
+      terminateForTimeout('progress-probe-error');
+      return;
+    }
+    const now = Date.now();
+    const expired = [...activeBudgets.values()].find(
+      (budget) => now - budget.startedAtMs > budget.timeoutMs,
+    );
+    if (expired) terminateForTimeout(`phase:${expired.key}`);
+  }, 1_000);
   phaseWatch.unref();
   const timer = setTimeout(() => terminateForTimeout('overall'), timeoutMs);
   timer.unref();
@@ -429,124 +504,306 @@ async function supervise(
   };
 }
 
-function processGroupCommands(processGroupId: number | null): string {
-  if (processGroupId === null) return '';
-  return commandOutput('ps', ['-o', 'command=', '-g', String(processGroupId)]).stdout;
+type JournalEvent = {
+  ts?: string;
+  kind?: string;
+  engine?: string;
+  phase?: string;
+  run_id?: string;
+};
+
+type DriverHeartbeat = { atMs: number; step: string };
+
+function processGroupCommandLines(processGroupId: number | null): string[] {
+  if (processGroupId === null) return [];
+  const result = commandOutput('ps', ['-axo', 'pgid=,command=']);
+  if (result.exit !== 0) return [];
+  return result.stdout.split('\n').flatMap((line) => {
+    const match = line.match(/^\s*(\d+)\s+(.*)$/);
+    return match && Number(match[1]) === processGroupId ? [match[2]] : [];
+  });
 }
 
-function latestDriverStep(logPath: string): string {
-  if (!existsSync(logPath)) return '';
-  const matches = [...readFileSync(logPath, 'utf8').matchAll(/\[heartbeat [^\]]+\] ([^\n—]+)/g)];
-  return matches.at(-1)?.[1]?.trim() ?? '';
+function driverHeartbeats(logPath: string): DriverHeartbeat[] {
+  if (!existsSync(logPath)) return [];
+  const matches = [...readFileSync(logPath, 'utf8').matchAll(/\[heartbeat ([^\]]+)\] ([^\n—]+)/g)];
+  return matches.flatMap((match) => {
+    const atMs = Date.parse(match[1]);
+    return Number.isFinite(atMs) ? [{ atMs, step: match[2].trim() }] : [];
+  });
 }
 
-// fallow-ignore-next-line complexity -- derives enforced progress from the live journal, driver and owned process group.
+function journalEvents(callerDir: string): JournalEvent[] {
+  const path = join(callerDir, 'server-events.jsonl');
+  if (!existsSync(path)) return [];
+  return readFileSync(path, 'utf8')
+    .split('\n')
+    .filter(Boolean)
+    .flatMap((line) => {
+      try {
+        return [JSON.parse(line) as JournalEvent];
+      } catch {
+        return [];
+      }
+    });
+}
+
+function eventTime(event: JournalEvent | undefined, fallback = Date.now()): number {
+  const parsed = Date.parse(event?.ts ?? '');
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function phaseBudget(
+  key: string,
+  timeoutMs: number,
+  source: string,
+  startedAtMs: number,
+): ProgressBudget {
+  return { key, timeoutMs, source, startedAtMs };
+}
+
+function activeMaestroPlatform(commands: string[]): 'ios' | 'android' | null {
+  for (const command of commands) {
+    if (!/maestro(?:\.cli)? .*test|maestro\.cli/i.test(command)) continue;
+    const match = command.match(/--udid(?:=|\s+)([^\s]+)/);
+    if (match?.[1] === IOS_UDID) return 'ios';
+    if (match?.[1] === ANDROID_SERIAL) return 'android';
+  }
+  return null;
+}
+
+function nativewindManifestStage(
+  scratch: string,
+  runId: string,
+  phase: string,
+): { stage: 'android' | 'web'; startedAtMs: number } | null {
+  const path = join(scratch, `ori-ai-002-${runId}-nativewind`, phase, 'manifest.json');
+  if (!existsSync(path)) return null;
+  try {
+    const manifest = readJson<{ legs?: Array<{ platform?: string }> }>(path);
+    const platforms = manifest.legs?.map((leg) => leg.platform) ?? [];
+    const startedAtMs = statSync(path).mtimeMs;
+    if (platforms.filter((platform) => platform === 'android').length >= 2)
+      return { stage: 'web', startedAtMs };
+    if (platforms.filter((platform) => platform === 'ios').length >= 2)
+      return { stage: 'android', startedAtMs };
+  } catch {
+    // An in-progress manifest is retried at the next supervisor tick.
+  }
+  return null;
+}
+
+function resetCallerTracker(
+  tracker: CallerProgressTracker,
+  phaseKey: string,
+  engine: string,
+  startedAtMs: number,
+): void {
+  tracker.phaseKey = phaseKey;
+  tracker.nativewindStage = engine === 'nativewind' ? 'consumer' : 'native-prep';
+  tracker.consumerCommandSeen = false;
+  tracker.consumerAbsentAtMs = null;
+  tracker.nativeLegStartedAtMs = engine === 'nativewind' ? null : startedAtMs;
+}
+
+function stageRank(stage: CallerProgressTracker['nativewindStage']): number {
+  return ['consumer', 'native-prep', 'ios', 'android', 'web'].indexOf(stage);
+}
+
+function advanceNativewindStage(
+  tracker: CallerProgressTracker,
+  stage: CallerProgressTracker['nativewindStage'],
+  startedAtMs: number,
+): void {
+  if (stageRank(stage) < stageRank(tracker.nativewindStage)) return;
+  if (stage !== tracker.nativewindStage) tracker.nativeLegStartedAtMs = startedAtMs;
+  tracker.nativewindStage = stage;
+}
+
+function heartbeatBackendBudget(
+  phaseKey: string,
+  heartbeat: DriverHeartbeat | null,
+): ProgressBudget | null {
+  if (!heartbeat) return null;
+  if (!/backend\/(stop|restart)|endpoint-loss/.test(heartbeat.step)) return null;
+  if (!/\/start$/.test(heartbeat.step)) return null;
+  return phaseBudget(
+    `${phaseKey}:backend:${heartbeat.atMs}:${heartbeat.step}`,
+    120_000,
+    'driver-heartbeat',
+    heartbeat.atMs,
+  );
+}
+
+function journalBackendBudget(
+  phaseKey: string,
+  latestEvent: JournalEvent | undefined,
+  heartbeat: DriverHeartbeat | null,
+): ProgressBudget | null {
+  if (latestEvent?.kind !== 'backend-stop' && latestEvent?.kind !== 'backend-restart') return null;
+  const startedAtMs = eventTime(latestEvent);
+  if (heartbeat && heartbeat.atMs > startedAtMs) return null;
+  return phaseBudget(
+    `${phaseKey}:backend:${startedAtMs}:${latestEvent.kind}`,
+    120_000,
+    'caller-journal',
+    startedAtMs,
+  );
+}
+
+function backendBudget(
+  phaseKey: string,
+  latestEvent: JournalEvent | undefined,
+  heartbeat: DriverHeartbeat | null,
+): ProgressBudget | null {
+  return (
+    heartbeatBackendBudget(phaseKey, heartbeat) ??
+    journalBackendBudget(phaseKey, latestEvent, heartbeat)
+  );
+}
+
+// fallow-ignore-next-line complexity -- composes persistent phase budgets from real journal, driver and process evidence.
 function callerProgress(
   callerDir: string,
   logPath: string,
   processGroupId: number | null,
+  tracker: CallerProgressTracker,
+  scratch: string,
 ): ProgressState {
-  const journal = join(callerDir, 'server-events.jsonl');
-  let journalEngine = 'unknown';
-  let journalPhase = 'startup';
-  let journalKind = 'startup';
-  const lines = existsSync(journal)
-    ? readFileSync(journal, 'utf8').trim().split('\n').filter(Boolean)
-    : [];
-  for (let index = lines.length - 1; index >= 0; index -= 1) {
-    try {
-      const event = JSON.parse(lines[index]) as {
-        kind?: string;
-        engine?: string;
-        phase?: string;
-      };
-      if (
-        event.kind === 'phase-start' ||
-        event.kind === 'phase-end' ||
-        event.kind === 'engine-start' ||
-        event.kind === 'matrix-start' ||
-        event.kind === 'matrix-teardown'
-      ) {
-        journalEngine = event.engine ?? journalEngine;
-        journalPhase = event.phase ?? journalPhase;
-        journalKind = event.kind;
-        break;
+  const events = journalEvents(callerDir);
+  const phaseStart = [...events].reverse().find((event) => event.kind === 'phase-start');
+  const structural = [...events]
+    .reverse()
+    .find((event) =>
+      ['phase-start', 'phase-end', 'engine-start', 'matrix-start', 'matrix-teardown'].includes(
+        event.kind ?? '',
+      ),
+    );
+  const matrixStart = events.find((event) => event.kind === 'matrix-start');
+  if (!phaseStart) {
+    const startedAtMs = eventTime(matrixStart);
+    return {
+      phase: structural?.kind ?? 'caller-startup',
+      source: 'caller-journal',
+      budgets: [phaseBudget('caller-startup', 300_000, 'caller-journal', startedAtMs)],
+    };
+  }
+  const engine = phaseStart.engine ?? 'unknown';
+  const phase = phaseStart.phase ?? 'unknown';
+  const phaseStartedAtMs = eventTime(phaseStart);
+  const phaseKey = `${engine}:${phase}:${phaseStartedAtMs}`;
+  if (tracker.phaseKey !== phaseKey)
+    resetCallerTracker(tracker, phaseKey, engine, phaseStartedAtMs);
+  if (phase === 'web-self') {
+    tracker.nativewindStage = 'web';
+    tracker.nativeLegStartedAtMs = phaseStartedAtMs;
+  }
+  const latestEvent = events.at(-1);
+  const heartbeats = driverHeartbeats(logPath);
+  const heartbeat = heartbeats.at(-1) ?? null;
+  const currentHeartbeat = heartbeat && heartbeat.atMs >= phaseStartedAtMs ? heartbeat : null;
+  const stageHeartbeat = [...heartbeats]
+    .reverse()
+    .find(
+      (entry) =>
+        entry.atMs >= phaseStartedAtMs &&
+        /^(legs\/native-prep\/start|legs\/ios\/start|leg\/ios\/budget-start|legs\/android\/start|leg\/android\/budget-start|web\/leg\/start)$/.test(
+          entry.step,
+        ),
+    );
+  const backend = backendBudget(phaseKey, latestEvent, currentHeartbeat);
+  if (structural?.kind === 'phase-end' || structural?.kind === 'matrix-teardown') {
+    const startedAtMs = eventTime(structural);
+    return {
+      phase: `${engine}:${phase}:cleanup`,
+      source: 'caller-journal',
+      budgets: [phaseBudget(`${phaseKey}:cleanup`, 180_000, 'caller-journal', startedAtMs)],
+    };
+  }
+
+  const commands = processGroupCommandLines(processGroupId);
+  const webProcess = commands.some((command) =>
+    /expo export --platform web|chrom(e|ium)|playwright/i.test(command),
+  );
+  if (engine === 'uniwind') {
+    const step = stageHeartbeat?.step ?? '';
+    if (step === 'legs/native-prep/start') {
+      tracker.nativewindStage = 'native-prep';
+      tracker.nativeLegStartedAtMs = stageHeartbeat?.atMs ?? phaseStartedAtMs;
+    } else if (step === 'legs/ios/start' || step === 'leg/ios/budget-start') {
+      tracker.nativewindStage = 'ios';
+      tracker.nativeLegStartedAtMs = stageHeartbeat?.atMs ?? phaseStartedAtMs;
+    } else if (step === 'legs/android/start' || step === 'leg/android/budget-start') {
+      tracker.nativewindStage = 'android';
+      tracker.nativeLegStartedAtMs = stageHeartbeat?.atMs ?? phaseStartedAtMs;
+    } else if (step === 'web/leg/start' || webProcess) {
+      tracker.nativewindStage = 'web';
+      tracker.nativeLegStartedAtMs = stageHeartbeat?.atMs ?? Date.now();
+    }
+  } else if (engine === 'nativewind') {
+    const manifestStage = nativewindManifestStage(scratch, matrixStart?.run_id ?? 'unknown', phase);
+    if (manifestStage) {
+      advanceNativewindStage(tracker, manifestStage.stage, manifestStage.startedAtMs);
+    } else {
+      const consumerCommand = commands.some((command) =>
+        /nativewind-clean-consumer-recipe|pnpm install|npx expo install|expo install --check|react-native-reusables\/cli|pnpm exec tsc|\/typescript\/.*\/tsc|expo-doctor/i.test(
+          command,
+        ),
+      );
+      if (consumerCommand && tracker.nativewindStage === 'consumer') {
+        tracker.consumerCommandSeen = true;
+        tracker.consumerAbsentAtMs = null;
+      } else if (tracker.nativewindStage === 'consumer' && tracker.consumerCommandSeen) {
+        tracker.consumerAbsentAtMs ??= Date.now();
+        if (Date.now() - tracker.consumerAbsentAtMs >= 10_000) {
+          advanceNativewindStage(tracker, 'native-prep', tracker.consumerAbsentAtMs);
+        }
       }
-    } catch {
-      // An in-progress final line is ignored until the next heartbeat.
+      const maestroPlatform = activeMaestroPlatform(commands);
+      if (maestroPlatform) advanceNativewindStage(tracker, maestroPlatform, Date.now());
+      else if (webProcess) advanceNativewindStage(tracker, 'web', Date.now());
     }
   }
-  const commands = processGroupCommands(processGroupId);
-  const driverStep = latestDriverStep(logPath);
-  if (/backend\/(stop|restart)|endpoint-loss/.test(driverStep))
-    return {
-      phase: `${journalEngine}:${journalPhase}:backend:${driverStep}`,
-      timeoutMs: 120_000,
-      source: 'driver-heartbeat',
-    };
-  if (/maestro\.cli|maestro .*test/.test(commands)) {
-    const platform = commands.includes(IOS_UDID) ? 'ios' : 'android';
-    return {
-      phase: `${journalEngine}:${journalPhase}:${platform}-leg`,
-      timeoutMs: 2_400_000,
-      source: 'owned-process-group',
-    };
-  }
-  if (/expo export --platform web|chrom(e|ium)|playwright/i.test(commands))
-    return {
-      phase: `${journalEngine}:${journalPhase}:web-leg`,
-      timeoutMs: 900_000,
-      source: 'owned-process-group',
-    };
-  if (driverStep.includes('native-prep'))
-    return {
-      phase: `${journalEngine}:${journalPhase}:native-prep`,
-      timeoutMs: 300_000,
-      source: 'driver-heartbeat',
-    };
-  if (/(^|\/)(ios|android)(\/|$)/.test(driverStep))
-    return {
-      phase: `${journalEngine}:${journalPhase}:${driverStep.includes('android') ? 'android' : 'ios'}-leg`,
-      timeoutMs: 2_400_000,
-      source: 'driver-heartbeat',
-    };
-  if (driverStep.includes('web'))
-    return {
-      phase: `${journalEngine}:${journalPhase}:web-leg`,
-      timeoutMs: 900_000,
-      source: 'driver-heartbeat',
-    };
-  if (driverStep.includes('teardown'))
-    return {
-      phase: `${journalEngine}:${journalPhase}:cleanup`,
-      timeoutMs: 180_000,
-      source: 'driver-heartbeat',
-    };
-  if (journalKind === 'matrix-teardown' || journalKind === 'phase-end')
-    return {
-      phase: `${journalEngine}:${journalPhase}:cleanup`,
-      timeoutMs: 180_000,
-      source: 'caller-journal',
-    };
-  if (
-    journalEngine === 'nativewind' &&
-    /pnpm install|expo-doctor|tsc|react-native-reusables/i.test(commands) &&
-    !/expo start --port/.test(commands)
-  )
-    return {
-      phase: 'nativewind:consumer-preparation',
-      timeoutMs: 3_600_000,
-      source: 'owned-process-group',
-    };
-  if (journalPhase === 'web-self')
-    return { phase: `${journalEngine}:web-self`, timeoutMs: 900_000, source: 'caller-journal' };
-  if (journalKind === 'phase-start')
-    return {
-      phase: `${journalEngine}:${journalPhase}:backend-start`,
-      timeoutMs: 120_000,
-      source: 'caller-journal',
-    };
-  return { phase: journalKind, timeoutMs: 300_000, source: 'caller-journal' };
+
+  const budgets: ProgressBudget[] = [];
+  const stageStartedAtMs = tracker.nativeLegStartedAtMs ?? phaseStartedAtMs;
+  if (tracker.nativewindStage === 'consumer')
+    budgets.push(
+      phaseBudget(
+        `${phaseKey}:nativewind-consumer-preparation`,
+        3_600_000,
+        'caller-journal+owned-process-group',
+        phaseStartedAtMs,
+      ),
+    );
+  else if (tracker.nativewindStage === 'native-prep') {
+    budgets.push(
+      phaseBudget(`${phaseKey}:native-prep`, 300_000, 'owned-process-group', stageStartedAtMs),
+      phaseBudget(`${phaseKey}:ios-leg`, 2_400_000, 'ordered-native-stage', stageStartedAtMs),
+    );
+  } else if (tracker.nativewindStage === 'ios' || tracker.nativewindStage === 'android')
+    budgets.push(
+      phaseBudget(
+        `${phaseKey}:${tracker.nativewindStage}-leg`,
+        2_400_000,
+        engine === 'uniwind' ? 'driver-heartbeat' : 'manifest+owned-process-group',
+        stageStartedAtMs,
+      ),
+    );
+  else if (tracker.nativewindStage === 'web')
+    budgets.push(
+      phaseBudget(`${phaseKey}:web-leg`, 900_000, 'driver-or-process-evidence', stageStartedAtMs),
+    );
+  if (backend) budgets.push(backend);
+  if (budgets.length === 0)
+    budgets.push(
+      phaseBudget(`${phaseKey}:phase-start`, 300_000, 'caller-journal', phaseStartedAtMs),
+    );
+  return {
+    phase: `${engine}:${phase}:${tracker.nativewindStage}${backend ? '+backend' : ''}`,
+    source: engine === 'uniwind' ? 'driver-heartbeat+caller-journal' : 'caller-journal+runtime',
+    budgets,
+  };
 }
 
 function snapshotDriverEvidence(phaseDir: string): string {
@@ -986,11 +1243,14 @@ function sleepSync(milliseconds: number): void {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
 
-function listenerPids(ports: number[]): number[] {
+type CommandResult = ReturnType<typeof commandOutput>;
+type CommandRunner = (command: string, args: string[]) => CommandResult;
+
+function listenerPids(ports: number[], run: CommandRunner = commandOutput): number[] {
   return [
     ...new Set(
       ports.flatMap((port) => {
-        const result = commandOutput('lsof', ['-nP', '-t', `-iTCP:${port}`, '-sTCP:LISTEN']);
+        const result = run('lsof', ['-nP', '-t', `-iTCP:${port}`, '-sTCP:LISTEN']);
         return result.exit === 0
           ? result.stdout
               .split('\n')
@@ -1002,15 +1262,18 @@ function listenerPids(ports: number[]): number[] {
   ];
 }
 
-function processIdentity(pid: number): {
+function processIdentity(
+  pid: number,
+  run: CommandRunner = commandOutput,
+): {
   pid: number;
   pgid: number | null;
   command: string;
   cwd: string;
 } {
-  const process = commandOutput('ps', ['-o', 'pgid=,command=', '-p', String(pid)]).stdout;
+  const process = run('ps', ['-o', 'pgid=,command=', '-p', String(pid)]).stdout;
   const match = process.match(/^\s*(\d+)\s+([\s\S]+)$/);
-  const cwdOutput = commandOutput('lsof', ['-a', '-p', String(pid), '-d', 'cwd', '-Fn']).stdout;
+  const cwdOutput = run('lsof', ['-a', '-p', String(pid), '-d', 'cwd', '-Fn']).stdout;
   const cwd = cwdOutput
     .split('\n')
     .find((line) => line.startsWith('n'))
@@ -1028,6 +1291,15 @@ function reversePort(mapping: string): string | null {
   return tokens.find((token) => /^tcp:\d+$/.test(token)) ?? null;
 }
 
+function processGroupExists(processGroupId: number): boolean {
+  try {
+    process.kill(-processGroupId, 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // fallow-ignore-next-line complexity -- cleanup must verify ownership before every destructive action.
 function cleanupOwnedRuntime(
   ports: number[],
@@ -1035,7 +1307,41 @@ function cleanupOwnedRuntime(
   recordedProcessGroupId: unknown,
   additionalOwnedRoots: string[],
 ): Record<string, unknown> {
-  const listenerIdentities = listenerPids(ports).map(processIdentity);
+  const deadlineMs = Date.now() + 180_000;
+  const commandLedger: Array<Record<string, unknown>> = [];
+  const run: CommandRunner = (command, args) => {
+    const remainingMs = deadlineMs - Date.now();
+    if (remainingMs <= 0) throw new Error('cleanup deadline expired before external command');
+    const startedAt = new Date().toISOString();
+    const result = commandOutput(command, args, Math.min(15_000, remainingMs));
+    commandLedger.push({ command: [command, ...args], started_at: startedAt, ...result });
+    if (result.timedOut) throw new Error(`cleanup command timed out: ${command} ${args.join(' ')}`);
+    return result;
+  };
+  const recordedGroups =
+    typeof recordedProcessGroupId === 'number' && processGroupExists(recordedProcessGroupId)
+      ? [recordedProcessGroupId]
+      : [];
+  for (const processGroupId of recordedGroups) {
+    try {
+      process.kill(-processGroupId, 'SIGTERM');
+    } catch {
+      // The recorded caller group may already have exited.
+    }
+  }
+  const recordedGraceDeadline = Math.min(deadlineMs, Date.now() + 10_000);
+  while (recordedGroups.some(processGroupExists) && Date.now() < recordedGraceDeadline)
+    sleepSync(250);
+  const escalatedRecordedGroups = recordedGroups.filter(processGroupExists);
+  for (const processGroupId of escalatedRecordedGroups) {
+    try {
+      process.kill(-processGroupId, 'SIGKILL');
+    } catch {
+      // The recorded caller group exited after the membership check.
+    }
+  }
+
+  const listenerIdentities = listenerPids(ports, run).map((pid) => processIdentity(pid, run));
   const ownedRoots = [REPO_ROOT, ...additionalOwnedRoots];
   const owned = listenerIdentities.filter(
     (identity) =>
@@ -1047,14 +1353,9 @@ function cleanupOwnedRuntime(
   const rejected = listenerIdentities.filter(
     (identity) => !owned.some((candidate) => candidate.pid === identity.pid),
   );
-  const recordedGroup =
-    typeof recordedProcessGroupId === 'number' &&
-    processGroupMembers(recordedProcessGroupId).length > 0
-      ? [recordedProcessGroupId]
-      : [];
   const groups = [
     ...new Set(
-      recordedGroup.concat(
+      recordedGroups.concat(
         owned
           .map((identity) => identity.pgid)
           .filter((processGroupId): processGroupId is number => processGroupId !== null),
@@ -1069,13 +1370,11 @@ function cleanupOwnedRuntime(
     }
   }
   const graceDeadline = Date.now() + 10_000;
-  while (groups.some((processGroupId) => processGroupMembers(processGroupId).length > 0)) {
+  while (groups.some(processGroupExists)) {
     if (Date.now() >= graceDeadline) break;
     sleepSync(250);
   }
-  const escalatedGroups = groups.filter(
-    (processGroupId) => processGroupMembers(processGroupId).length > 0,
-  );
+  const escalatedGroups = groups.filter(processGroupExists);
   for (const processGroupId of escalatedGroups) {
     try {
       process.kill(-processGroupId, 'SIGKILL');
@@ -1087,7 +1386,7 @@ function cleanupOwnedRuntime(
   const reverseBefore = new Set(
     Array.isArray(devicesBefore.android_reverse) ? devicesBefore.android_reverse.map(String) : [],
   );
-  const reverseNow = commandOutput('adb', ['-s', ANDROID_SERIAL, 'reverse', '--list'])
+  const reverseNow = run('adb', ['-s', ANDROID_SERIAL, 'reverse', '--list'])
     .stdout.split('\n')
     .filter(Boolean);
   const allowedReversePorts = new Set(ports.map((port) => `tcp:${port}`));
@@ -1095,22 +1394,16 @@ function cleanupOwnedRuntime(
   for (const mapping of reverseNow) {
     const port = reversePort(mapping);
     if (reverseBefore.has(mapping) || port === null || !allowedReversePorts.has(port)) continue;
-    const removal = commandOutput('adb', ['-s', ANDROID_SERIAL, 'reverse', '--remove', port]);
+    const removal = run('adb', ['-s', ANDROID_SERIAL, 'reverse', '--remove', port]);
     if (removal.exit === 0) removedReverseMappings.push(mapping);
   }
 
   const restoredAppearances: string[] = [];
   const iosAppearance = String(devicesBefore.ios_appearance ?? '').trim();
   if (iosAppearance === 'light' || iosAppearance === 'dark') {
-    const current = commandOutput('xcrun', ['simctl', 'ui', IOS_UDID, 'appearance']).stdout.trim();
+    const current = run('xcrun', ['simctl', 'ui', IOS_UDID, 'appearance']).stdout.trim();
     if (current !== iosAppearance) {
-      const restoration = commandOutput('xcrun', [
-        'simctl',
-        'ui',
-        IOS_UDID,
-        'appearance',
-        iosAppearance,
-      ]);
+      const restoration = run('xcrun', ['simctl', 'ui', IOS_UDID, 'appearance', iosAppearance]);
       if (restoration.exit === 0) restoredAppearances.push(`ios:${iosAppearance}`);
     }
   }
@@ -1123,16 +1416,9 @@ function cleanupOwnedRuntime(
         ? 'auto'
         : null;
   if (androidMode !== null) {
-    const current = commandOutput('adb', [
-      '-s',
-      ANDROID_SERIAL,
-      'shell',
-      'cmd',
-      'uimode',
-      'night',
-    ]).stdout;
+    const current = run('adb', ['-s', ANDROID_SERIAL, 'shell', 'cmd', 'uimode', 'night']).stdout;
     if (current !== androidAppearance) {
-      const restoration = commandOutput('adb', [
+      const restoration = run('adb', [
         '-s',
         ANDROID_SERIAL,
         'shell',
@@ -1151,7 +1437,108 @@ function cleanupOwnedRuntime(
     escalated_owned_process_groups: escalatedGroups,
     removed_reverse_mappings: removedReverseMappings,
     restored_appearances: restoredAppearances,
+    deadline_ms: 180_000,
+    completed_within_deadline: Date.now() <= deadlineMs,
+    command_ledger: commandLedger,
   };
+}
+
+type CleanupInput = {
+  ports: number[];
+  devicesBefore: Record<string, unknown>;
+  recordedProcessGroupId: unknown;
+  additionalOwnedRoots: string[];
+};
+
+function runInternalCleanup(): void {
+  const inputPath = flag('--input');
+  const outputPath = flag('--output');
+  if (!inputPath || !outputPath) throw new Error('internal cleanup requires --input and --output');
+  try {
+    const input = readJson<CleanupInput>(inputPath);
+    const result = cleanupOwnedRuntime(
+      input.ports,
+      input.devicesBefore,
+      input.recordedProcessGroupId,
+      input.additionalOwnedRoots,
+    );
+    writeJson(outputPath, { status: 'completed', result });
+  } catch (error) {
+    writeJson(outputPath, {
+      status: 'failed',
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
+  }
+}
+
+async function runCleanupPhase(
+  phaseDir: string,
+  env: NodeJS.ProcessEnv,
+  input: CleanupInput,
+): Promise<Record<string, unknown>> {
+  const cleanupDir = join(phaseDir, 'cleanup-supervisor');
+  mkdirSync(cleanupDir, { recursive: false });
+  const inputPath = join(cleanupDir, 'input.json');
+  const outputPath = join(cleanupDir, 'output.json');
+  const statusPath = join(cleanupDir, 'status.json');
+  const startedPath = join(cleanupDir, 'started.json');
+  const startedAt = new Date().toISOString();
+  writeJson(inputPath, input);
+  const startedReceipt = {
+    status: 'started',
+    started_at: startedAt,
+    deadline_ms: 180_000,
+    recorded_process_group_id: input.recordedProcessGroupId,
+  };
+  writeJson(startedPath, startedReceipt);
+  writeJson(statusPath, startedReceipt);
+  let execution: Record<string, unknown>;
+  try {
+    execution = await supervise(
+      'pnpm',
+      [
+        'exec',
+        'tsx',
+        WRAPPER_PATH,
+        '--internal-cleanup',
+        '--input',
+        inputPath,
+        '--output',
+        outputPath,
+      ],
+      180_000,
+      cleanupDir,
+      env,
+    );
+  } catch (error) {
+    execution = {
+      exit_code: null,
+      signal: null,
+      timed_out: false,
+      supervisor_error: error instanceof Error ? error.message : String(error),
+    };
+  }
+  const output = existsSync(outputPath)
+    ? readJson<Record<string, unknown>>(outputPath)
+    : { status: 'missing', error: 'cleanup child produced no output receipt' };
+  const completed =
+    execution.exit_code === 0 &&
+    execution.signal === null &&
+    execution.timed_out === false &&
+    output.status === 'completed';
+  const status = {
+    status: completed ? 'completed' : 'failed',
+    started_at: startedAt,
+    ended_at: new Date().toISOString(),
+    deadline_ms: 180_000,
+    recorded_process_group_id: input.recordedProcessGroupId,
+    started_receipt: startedPath,
+    execution,
+    output,
+  };
+  writeJson(statusPath, status);
+  return status;
 }
 
 // fallow-ignore-next-line complexity -- one linear full-caller proof writes a single immutable report.
@@ -1185,20 +1572,28 @@ async function runFull(cycle: string, phaseDir: string): Promise<void> {
     '--android-serial',
     ANDROID_SERIAL,
   ];
+  const tracker: CallerProgressTracker = {
+    phaseKey: '',
+    nativewindStage: 'consumer',
+    consumerCommandSeen: false,
+    consumerAbsentAtMs: null,
+    nativeLegStartedAtMs: null,
+  };
   const execution = await supervise(
     'node',
     args,
     FULL_TIMEOUT_MS,
     phaseDir,
     env,
-    (processGroupId) => callerProgress(callerDir, join(phaseDir, 'child.log'), processGroupId),
+    (processGroupId) =>
+      callerProgress(callerDir, join(phaseDir, 'child.log'), processGroupId, tracker, scratch),
   );
-  const cleanup = cleanupOwnedRuntime(
-    FULL_PORTS,
-    preflight.devices as Record<string, unknown>,
-    execution.process_group_id,
-    [scratch],
-  );
+  const cleanup = await runCleanupPhase(phaseDir, env, {
+    ports: FULL_PORTS,
+    devicesBefore: preflight.devices as Record<string, unknown>,
+    recordedProcessGroupId: execution.process_group_id,
+    additionalOwnedRoots: [scratch],
+  });
   const runtimeArtifacts = snapshotAndRestoreRuntimeRoots(runtimeBackups, phaseDir);
   const validate = commandOutput('node', [
     'tests/sprint-05-orient-search/run-live-example-proof.mjs',
@@ -1279,6 +1674,7 @@ async function runFull(cycle: string, phaseDir: string): Promise<void> {
     execution.exit_code !== 0 ||
     execution.signal !== null ||
     execution.timed_out ||
+    cleanup.status !== 'completed' ||
     validate.exit !== 0 ||
     postListeners.length > 0 ||
     processGroupMembersAfter.length > 0 ||
@@ -1318,6 +1714,7 @@ function audit(cycleDir: string): void {
     source_sha256?: Record<string, string>;
     disposition_sha256?: string;
     execution?: { exit_code?: number; signal?: string | null; timed_out?: boolean };
+    cleanup?: { status?: string };
     validate?: { exit?: number };
     caller_evidence_sha256?: Record<string, string>;
     caller_manifest?: string;
@@ -1360,6 +1757,7 @@ function audit(cycleDir: string): void {
     full.execution?.exit_code === 0 &&
       full.execution.signal === null &&
       full.execution.timed_out === false &&
+      full.cleanup?.status === 'completed' &&
       full.validate?.exit === 0,
     'full process or validate-only result failed',
   );
@@ -1425,6 +1823,10 @@ function audit(cycleDir: string): void {
 }
 
 async function main(): Promise<void> {
+  if (process.argv.includes('--internal-cleanup')) {
+    runInternalCleanup();
+    return;
+  }
   const { phase, mode, cycle } = parseArgs();
   const cycleDir = join(EVIDENCE_ROOT, cycle);
   if (phase === 'audit') {
