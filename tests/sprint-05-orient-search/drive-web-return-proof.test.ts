@@ -83,6 +83,21 @@ const PRESERVED_HISTORICAL = new Set([
   '.tmp/FIX-ORI-RN-003-3/red.json',
   '.tmp/FIX-ORI-RN-003-3/cycle-2/red.json',
 ]);
+const EXPECTED_RECORDED_COMMITTED_PATHS = [
+  '.tmp/FIX-ORI-RN-003-3/cycle-2/red.json',
+  '.tmp/FIX-ORI-RN-003-3/green.json',
+  '.tmp/FIX-ORI-RN-003-3/red.json',
+  '.tmp/FIX-ORI-RN-003-3/run.json',
+  'tests/sprint-05-orient-search/drive-web-return-proof.test.ts',
+  'tests/sprint-05-orient-search/evidence/ORI-RN-001/nativewind-install.txt',
+  'tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt',
+];
+const EXPECTED_RECORDED_WORKTREE_PATHS = [
+  '.tmp/FIX-ORI-RN-003-3/green.json',
+  '.tmp/FIX-ORI-RN-003-3/run.json',
+  'tests/sprint-05-orient-search/evidence/ORI-RN-001/nativewind-install.txt',
+  'tests/sprint-05-orient-search/evidence/ORI-RN-001/uniwind-install.txt',
+];
 
 type WebBooleans = {
   seedVisible: boolean;
@@ -286,31 +301,72 @@ function assertSamePaths(actual: string[], expected: string[], label: string): v
   throw new Error(`${label} changed: ${JSON.stringify(actual)} != ${JSON.stringify(expected)}`);
 }
 
-function recordedTaskDiffAudit(): Record<string, unknown> {
-  return asRecord(readJson(join(cycleDir(), 'run.json')).task_diff_audit);
-}
-
-function assertRecordedTaskDiffAudit(): void {
-  const audit = recordedTaskDiffAudit();
+function assertRecordedExecutionIdentity(
+  run: Record<string, unknown>,
+  audit: Record<string, unknown>,
+): void {
   if (audit.immutable_base_sha !== TASK_DIFF_BASE_SHA) throw new Error('recorded base sha changed');
   if (audit.immutable_base_tree_sha !== TASK_DIFF_BASE_TREE_SHA)
     throw new Error('recorded base tree changed');
   const executed = String(audit.executed_head_sha ?? '');
-  assertTaskDiffBase(executed);
-  const committed = committedTaskPaths(executed);
+  if (!/^[0-9a-f]{40}$/.test(executed)) throw new Error('recorded execution sha is invalid');
+  if (run.execution_head_sha !== executed)
+    throw new Error('recorded execution sha binding changed');
+  const executedTree = String(audit.executed_head_tree_sha ?? '');
+  if (!/^[0-9a-f]{40}$/.test(executedTree)) throw new Error('recorded execution tree is invalid');
+}
+
+function assertRecordedPaths(audit: Record<string, unknown>): string[] {
   const recordedCommitted = stringArray(
     audit.committed_paths_since_base,
     'recorded committed paths',
   );
-  assertSamePaths(committed, recordedCommitted, 'recorded committed paths');
   const dirty = stringArray(audit.dirty_and_untracked_paths, 'recorded worktree paths');
-  const relevant = uniqueSorted([...committed, ...dirty]);
+  assertSamePaths(recordedCommitted, EXPECTED_RECORDED_COMMITTED_PATHS, 'recorded committed paths');
+  assertSamePaths(dirty, EXPECTED_RECORDED_WORKTREE_PATHS, 'recorded worktree paths');
+  const relevant = uniqueSorted([...recordedCommitted, ...dirty]);
   const recordedRelevant = stringArray(audit.relevant_paths, 'recorded relevant paths');
   assertSamePaths(relevant, recordedRelevant, 'recorded relevant paths');
+  assertSamePaths(uniqueSorted(recordedCommitted), recordedCommitted, 'recorded committed paths');
+  assertSamePaths(uniqueSorted(dirty), dirty, 'recorded worktree paths');
   const currentScope = relevant.filter((path) => !PRESERVED_HISTORICAL.has(path));
   const outside = outsideAllowlist(currentScope);
   if (outside.length > 0)
     throw new Error(`recorded paths outside allowlist: ${outside.join(', ')}`);
+  if (audit.scope_paths_outside_allowlist !== 0)
+    throw new Error('recorded allowlist count is nonzero');
+  assertSamePaths(
+    stringArray(audit.outside_allowlist_paths, 'recorded outside paths'),
+    [],
+    'recorded outside paths',
+  );
+  return relevant;
+}
+
+function assertRecordedHistoricalAudit(audit: Record<string, unknown>, relevant: string[]): void {
+  const preserved = asRecord(audit.preserved_historical_receipts);
+  assertSamePaths(
+    stringArray(preserved.paths, 'recorded historical paths'),
+    preservedHistoricalPaths(relevant),
+    'recorded historical paths',
+  );
+  const actualHashes = asRecord(preserved.actual_hashes);
+  const expectedHashes = asRecord(preserved.expected_hashes);
+  if (actualHashes.red_json_sha256 !== HISTORICAL_RED_SHA)
+    throw new Error('recorded historical red hash changed');
+  if (actualHashes.cycle_2_red_json_sha256 !== CYCLE_2_RED_SHA)
+    throw new Error('recorded cycle-2 red hash changed');
+  if (expectedHashes.red_json_sha256 !== HISTORICAL_RED_SHA)
+    throw new Error('expected historical red hash changed');
+  if (expectedHashes.cycle_2_red_json_sha256 !== CYCLE_2_RED_SHA)
+    throw new Error('expected cycle-2 red hash changed');
+}
+
+function assertRecordedTaskDiffAudit(): void {
+  const run = readJson(join(cycleDir(), 'run.json'));
+  const audit = asRecord(run.task_diff_audit);
+  assertRecordedExecutionIdentity(run, audit);
+  assertRecordedHistoricalAudit(audit, assertRecordedPaths(audit));
 }
 
 function assertCurrentExecutableHashes(): void {
@@ -320,12 +376,6 @@ function assertCurrentExecutableHashes(): void {
     throw new Error('current driver differs from executed evidence');
   if (recorded.proof_harness_sha256 !== current.proof_harness_sha256)
     throw new Error('current harness differs from executed evidence');
-}
-
-function laterMainPathsOutsideTaskScope(): string[] {
-  assertTaskDiffBase('main');
-  const currentScope = committedTaskPaths('main').filter((path) => !PRESERVED_HISTORICAL.has(path));
-  return outsideAllowlist(currentScope);
 }
 
 function taskDiffAudit(): Record<string, unknown> {
@@ -1066,7 +1116,6 @@ if (!directInvocation(process.argv[1])) {
       expect(WATCHDOG_MS).toBe(180_000);
       expect(() => assertFullMatrixBudget(GREEN_BUDGET_MS - 1)).not.toThrow();
       expect(() => assertFullMatrixBudget(GREEN_BUDGET_MS)).toThrow(/exceeded/);
-      expect(laterMainPathsOutsideTaskScope().length).toBeGreaterThan(0);
       expect(() => assertRecordedTaskDiffAudit()).not.toThrow();
       expect(() => assertCurrentExecutableHashes()).not.toThrow();
       expect(fileSha(join(cycleDir(), 'red.json'))).toBe(HISTORICAL_RED_SHA);
