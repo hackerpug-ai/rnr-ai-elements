@@ -9,6 +9,7 @@
  * stays renderer-agnostic for .md and .mdx.
  */
 import DocsLayout from './DocsLayout.astro';
+import DocsNav from '../components/DocsNav.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Prose from '../components/Prose.astro';
 import Toc from '../components/Toc.astro';
@@ -33,12 +34,6 @@ interface Props {
 }
 
 const { title, description, section, headings, nav, editUrl, id } = Astro.props;
-
-const SECTION_LABELS: Record<DocsSection, string> = {
-  'getting-started': 'Getting started',
-  guides: 'Guides',
-  porting: 'Porting',
-};
 ---
 
 <DocsLayout title={`${title} — RNR AI Elements`}>
@@ -47,27 +42,7 @@ const SECTION_LABELS: Record<DocsSection, string> = {
   </Fragment>
   <div class="markdown-doc">
     <aside class="markdown-doc__nav">
-      <nav class="docs-nav" data-docs-nav aria-label="Documentation">
-        {
-          nav.map((group) => (
-            <section class="docs-nav__section">
-              <h2 class="docs-nav__section-title">{SECTION_LABELS[group.section]}</h2>
-              <ul class="docs-nav__list">
-                {group.entries.map((entry) => (
-                  <li>
-                    <a
-                      href={entry.href}
-                      aria-current={entry.id === id ? 'page' : undefined}
-                    >
-                      {entry.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))
-        }
-      </nav>
+      <DocsNav nav={nav} currentId={id} />
     </aside>
 
     <main
@@ -94,39 +69,6 @@ const SECTION_LABELS: Record<DocsSection, string> = {
     max-width: 96rem;
     margin-inline: auto;
     padding: 1.5rem;
-  }
-  .docs-nav__section {
-    margin-block-end: 1rem;
-  }
-  .docs-nav__section-title {
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted-foreground);
-    margin: 0 0 0.25rem;
-  }
-  .docs-nav__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .docs-nav__list a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px; /* touch target */
-    padding-inline: 0.5rem;
-    color: var(--muted-foreground);
-    text-decoration: none;
-    border-radius: var(--radius-md);
-  }
-  .docs-nav__list a:hover {
-    color: var(--foreground);
-    background: var(--accent);
-  }
-  .docs-nav__list a[aria-current='page'] {
-    color: var(--foreground);
-    background: var(--secondary);
   }
   .markdown-doc__edit {
     display: inline-flex;

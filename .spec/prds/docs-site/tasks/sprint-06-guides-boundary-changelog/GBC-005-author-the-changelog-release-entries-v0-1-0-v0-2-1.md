@@ -3,7 +3,9 @@ TASK: GBC-005 - Author the changelog release entries (v0.1.0–v0.2.1)
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 24d41b3f5e432b77563cbe89f40ad04b4ecd8acb
 PRIORITY:   P1
 POINTS:     3
 AGENT:      planner=techwriting-planner | implementer=techwriting-implementer | reviewer=techwriting-reviewer
@@ -544,3 +546,40 @@ Blocks:     ['GBC-006', 'GBC-007', 'GBC-008']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-005",
+  "commit_sha": "24d41b3f5e432b77563cbe89f40ad04b4ecd8acb",
+  "done": "Landed three authored changelog entries \u2014 apps/docs/src/content/changelog/0.1.0.md (2026-09-07, all 56 registry slugs linked grouped by the 9 real families, Changed/Fixed read 'none'), 0.2.0.md (2026-09-08, seven polished items, dependency declarations matching imports, meta.permissions, gates, tag-pinned self-URLs), and 0.2.1.md (2026-09-08, six sibling-file fixes, Added reads 'none') \u2014 plus tests/sprint-06-guides-boundary-changelog/changelog-content.test.ts, a strictly read-only source scan closing AC-5/AC-6 (16 checks: exact three-file set, frontmatter equality, h2 count/order, 'none' literals, per-file git-log citation, slug membership in registry.json), with RED (16/16 failing on missing entries) and GREEN evidence committed under .tmp/GBC-005/cycle-1/; all gates green (vitest 16/16, tsc root+registry, biome ci exit 0, docs build + link-check 0 errors).",
+  "deviations": [
+    "None from the task file \u2014 every file written is inside WRITE-ALLOWED, and the bare changelog-release-pages.spec.ts entry in that list was treated as a never-edit binding per sprint convention, so it was never created (GBC-008 owns it).",
+    "Frontmatter values are quoted strings (e.g. apps/docs/src/content/changelog/0.2.1.md:2-3) rather than bare YAML, an authoring choice the task did not specify, made so any zod schema GBC-007 registers accepts them (z.string() and z.coerce.date() both pass; a bare date would parse as a YAML Date object and fail z.string())."
+  ],
+  "concerns": [
+    "AC-2's e2e asserts the article's level-2 headings are EXACTLY ['Added','Changed','Fixed'] in DOM order \u2014 my bodies contain no other h2, so GBC-008's /changelog/[version] template must not inject its own h2s into the article body or remap heading levels, or the e2e fails for template reasons rather than content reasons.",
+    "Each entry body opens with 'Released <date>.' so the AC-2 date-literal observable holds even if the template does not render the frontmatter date \u2014 if GBC-008's template does render it, the page shows the date twice (harmless to the e2e's at-least-1 check, but a reviewer may flag it as duplication; it was deliberate).",
+    "The unit test pins the exact three-file set and per-file citations at tests/sprint-06-guides-boundary-changelog/changelog-content.test.ts:26, so the next release (v0.3.0) must extend EXPECTED_ENTRIES and add the entry file in the same change \u2014 a maintenance tripwire that is intentional per the 'no fourth entry beyond the tags' rule but will read as a test failure to whoever tags next.",
+    "Trunk carries pre-existing warning-level biome diagnostics (biome.json 'recommended' deprecation, useLiteralKeys warnings in sprint-05 test files) with which `biome ci .` still exits 0 \u2014 reviewers should not mistake those warnings for regressions from this change."
+  ],
+  "findings": [
+    "RTK truncates wrapped `git log` output at 50 lines: the true history through v0.1.0 is 64 non-merge commits, and the rtk-filtered view silently drops waves 1-7 plus the root commit 5f13ec4a \u2014 GBC-006's reconciliation must derive from `/usr/bin/git log` or it will wrongly conclude the 0.1.0 entry cites history that is not there (rtk also masks exit codes and can garble displayed identifiers; trust explicit exit markers).",
+    "Root `pnpm exec tsc --noEmit` fails in a fresh worktree with 7 cascading errors (TS2307 + TS7006, all in tests/sprint-04-generated-reference/code-primitives-contract.test.ts:6) because apps/docs/src/data/registry-items.json is a gitignored generated artifact \u2014 run `pnpm registry:build && pnpm gallery:manifest && pnpm exec tsx scripts/docs-data/prebuild.ts` before judging typecheck; GBC-008's verify chain self-heals because its build step runs the prebuild, but any bare-typecheck gate does not.",
+    "The docs build passes with src/content/changelog/ present but unregistered \u2014 Astro's glob loaders ignore the directory \u2014 so GBC-007's collection registration can land independently with no interim breakage.",
+    "The repo currently holds exactly 3 v* tags and local main has moved well past v0.2.1 without new tags, so AC-3's literal prebuild line '[docs-data] changelog: 3 tags, 3 entries' is time-locked: GBC-007 should compute the counts from the real tag and entry sets so the printed number stays truthful when v0.3.0 ships.",
+    "AC-4 and AC-6 name two different files for the same 56-item ledger \u2014 packages/registry/registry.json (tracked, always present) and apps/docs/src/data/registry-items.json (generated, absent in fresh worktrees); they hold identical names today, and the unit test deliberately reads the tracked one (tests/sprint-06-guides-boundary-changelog/changelog-content.test.ts:23).",
+    "`pnpm exec biome ci .` intermittently dies with exit 254 'Linter process terminated abnormally' while the direct binary `./node_modules/.bin/biome ci .` matches CI's verdict \u2014 use the direct binary when the pnpm-wrapped form crashes.",
+    "The PreToolUse subagent-git-guard can false-positive on compound shell lines containing `--no-merges` inside command substitution ('Offending: git merge'), so downstream implementers should keep git-log commands simple when running them from subagent shells.",
+    "0.2.1's sibling-file fix means model-selector, mic-selector and voice-selector ship ui/command.logic.ts because the consumer install flattens every item's files into one directory \u2014 documented in the 0.2.1 entry body so the /components dependency panels and GBC-006 can reconcile it."
+  ],
+  "scope_impact": [],
+  "feedback": [
+    "AC-6's 'cites a git-log commit range' is ambiguous for the first release, where the deriving spec is the single-ref `git log v0.1.0` rather than a two-endpoint range \u2014 the entries cite the command plus the SHA endpoints (apps/docs/src/content/changelog/0.1.0.md:8), and the task should state which form it wants next time.",
+    "The task's Verification Gates list `pnpm exec tsc --noEmit` without noting it requires the gitignored-data generation chain first in a fresh worktree \u2014 a one-line prerequisite in the task file would have saved a red-herring typecheck failure.",
+    "Pointing AC-4 at apps/docs/src/data/registry-items.json while AC-6 uses packages/registry/registry.json splits one ledger across two names; name the tracked registry.json as canonical and let the e2e read what the build guarantees to exist.",
+    "The VERIFY commands for AC-1 to AC-4 reference a spec file this task is forbidden to create \u2014 correct by design and clearly stated in the NEVER block, but a first reader still has to reconcile 'my verify commands cannot run at my close' against the verification gates; an explicit 'e2e verifies deferred to GBC-008' line in the gates section would remove the ambiguity."
+  ]
+}
+```

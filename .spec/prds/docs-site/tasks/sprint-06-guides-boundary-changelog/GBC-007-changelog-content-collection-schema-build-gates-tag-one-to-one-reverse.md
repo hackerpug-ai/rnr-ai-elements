@@ -3,7 +3,9 @@ TASK: GBC-007 - Changelog content collection + schema + build gates (tag one-to-
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 14250e33e501d7d41bb099f01fe8144f115679ed
 PRIORITY:   P1
 POINTS:     5
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -402,3 +404,43 @@ Blocks:     ['GBC-008']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-007",
+  "commit_sha": "14250e33e501d7d41bb099f01fe8144f115679ed",
+  "done": "Landed the changelog content collection, shared schema, and three fail-closed prebuild gates: apps/docs/src/lib/changelog-schema.ts exports changelogSchema (semver version regex, z.coerce.date per the contract's supersede) plus the compareReleaseDesc/compareSemverDesc comparators; scripts/docs-data/changelog-gates.ts holds the pure assertChangelogSync (tag one-to-one with `git tag --list 'v*'` via arg-array execFileSync, duplicate detection, reverse-chronological consistency), the pure assertChangelogBody (exactly one ## Added/## Changed/## Fixed in order, each a list item or bare `none`, HTML comments ignored), and the strict flat key:scalar frontmatter reader feeding changelogSchema; scripts/docs-data/prebuild.ts runs runChangelogGates before any output byte and prints the computed-count success line; apps/docs/src/content.config.ts:52 registers the changelog collection on ./src/content/changelog and adds the optional mapping/notPorted/upstream fields to the docs schema. RED evidence for all five unit ACs is committed under .tmp/GBC-007/cycle-1/red/ (module-not-found), GREEN plus real-tree proof under green/: the real prebuild exits 0 printing '[docs-data] changelog: 3 tags, 3 entries \u2014 one-to-one, reverse-chronological' against the real v0.1.0/v0.2.0/v0.2.1 tags and GBC-005's three entries, a scratch-copy negative control (## Fixed removed) exits 1 naming '0.2.1 missing ## Fixed', and all four verification gates pass (tsc 0, biome ci 0, full docs build 0, vitest 5/5).",
+  "deviations": [],
+  "concerns": [
+    "In this environment `pnpm exec biome ci .` (the pre-commit hook's `pnpm lint` leg) dies with exit 254 '[warn] Linter process terminated abnormally' \u2014 the task brief's documented artifact \u2014 so lint verification must use the direct binary ./node_modules/.bin/biome ci ., which matches CI.",
+    "Invoking `git commit` through the rtk-wrapped path mangled the hook environment (rtk's own broken-pipe panic surfaced in the failed attempt); `rtk proxy git commit` lands cleanly with all three righthook legs green \u2014 future implementers in this repo should commit through rtk proxy.",
+    "AC-1's formal closure still rides on GBC-008's changelog-release-pages spec; my run proved TC-3's mechanics on the real tree (exit 0, correct stdout line, tag count cross-checked) but the FLOW-DOCS-06 Playwright selector does not exist yet.",
+    "Every docs build emits pre-existing link-check warnings because authored docs point at github.com/hackerpug-ai/rnr-ai-elements (stale org) \u2014 techwriting-owned, warnings only, but they will keep appearing in every build log."
+  ],
+  "findings": [
+    "compareReleaseDesc is a direct Array.sort comparator (negative means a first) \u2014 GBC-008 must pass it straight to .sort() and must not re-derive ordering; my first implementation had the sign inverted and a naive reimplementation would reintroduce that bug.",
+    "assertChangelogSync is input-order-independent (it walks a semver-DESC copy internally), so GBC-008 and future callers can pass entries in any array order and readdir order no longer matters.",
+    "The prebuild gate's strict flat reader and astro's sync now both validate changelog frontmatter with different error surfaces: the reader rejects non-flat YAML lines before zod (naming the file), while astro's loader reports invalid-content-entry-data-error with field paths \u2014 a malformed entry fails the build twice by design.",
+    "fallow skips prebuild.ts as a package.json entry point ('incomplete import graph' caveats) and fails new modules on unused exports \u2014 changelog-gates.ts needed five symbols un-exported and assertChangelogBody decomposed into four helpers to pass its complexity threshold (cyclomatic 18 breach), so future gate modules should keep their export surface minimal from the start.",
+    "SEMVER_PATTERN is now module-private (apps/docs/src/lib/changelog-schema.ts:25) and compareSemverDesc ignores prerelease precedence \u2014 extend there, not in the gates, if a v0.3.0-rc.1 tag ever ships.",
+    "The success line's 3/3 counts are computed at run time per the GBC-005 relay, so the '3 tags, 3 entries' pin belongs only in GBC-008's test assertions, never in gate code."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-008",
+      "found": "changelog-release-pages.spec.ts will assert the AC-1 stdout line and needs the release ordering for page rendering.",
+      "change": "Import compareReleaseDesc (and compareSemverDesc if needed) from apps/docs/src/lib/changelog-schema.ts rather than re-deriving ordering, pin the exact line '[docs-data] changelog: 3 tags, 3 entries \u2014 one-to-one, reverse-chronological' in test assertions only, and note the run_cmd already prints it via scripts/docs-data/changelog-gates.ts runChangelogGates wired in scripts/docs-data/prebuild.ts."
+    },
+    {
+      "target": "GBC-012",
+      "found": "The porting-frontmatter fields its gate consumes are now schema-typed in apps/docs/src/content.config.ts: mapping is z.array(z.object({ upstream: z.string(), item: z.string() })), notPorted and upstream are z.array(z.string()).",
+      "change": "Type the gate's consumer against the {upstream, item} object shape for mapping \u2014 a string-array assumption will fail typecheck against the authored porting.md data (40 pairs)."
+    }
+  ],
+  "feedback": [
+    "Saved RED/GREEN evidence captured through the default rtk-wrapped vitest invocation truncates to 'PASS (0) FAIL (0)' and hides assertion output \u2014 evidence commands for drills should run under `rtk proxy` so the captured logs are readable."
+  ]
+}
+```

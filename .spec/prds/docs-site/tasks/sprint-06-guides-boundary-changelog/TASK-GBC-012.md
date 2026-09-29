@@ -33,6 +33,7 @@ STRICTLY:
 - AC-1 runs at this task's own close and needs GBC-009's porting-map.spec.ts on the trunk (wave B lands before wave C). If that spec is missing, report AC-1 blocked, never passed.
 - Drill mutations live only in $TMPDIR copies: after the drill, `git status --porcelain apps/docs/src/content packages/registry` prints nothing.
 - FRONTMATTER PARSER (supersedes the STRICTLY line naming gray-matter/js-yaml, which cannot be imported from scripts/ under the isolated pnpm linker): parse porting.md and owns-vs-does-not-own frontmatter only with Astro's own parser. Build `createRequire` from `apps/docs/package.json`, resolve `astro/package.json`, build a second `createRequire` from that path, resolve `@astrojs/internal-helpers/frontmatter`, import it, and call `parseFrontmatter(text)`; use the returned `.frontmatter` (arrays come back intact; unquoted dates come back as JS Date). The gate and its drill both use this one route, over the real files and the $TMPDIR copies alike. Add no YAML dependency and hand-roll no parser: if the resolve or import fails, the gate throws naming `@astrojs/internal-helpers/frontmatter` and the build fails closed.
+- LANDED SOURCE SHAPE (Amendment 2026-09-29, from GBC-004's implementer handoff approved at 7384dd14): porting.md's `mapping` array holds objects `{ upstream: <lowercase kebab name>, item: <registry slug> }` (e.g. `{ upstream: conversation, item: conversation }`), while `upstream` and `notPorted` are bare lowercase kebab strings (the nine not-ported: canvas, connection, controls, edge, jsx-preview, node, panel, sandbox, toolbar). Take mapped names from `mapping[].upstream` and resolution slugs from `mapping[].item`, and write every drill mutation and expected message literal in the lowercase kebab form the frontmatter actually holds — never a capitalized display name like `Conversation`.
 
 ## Specification
 Objective: Fail the build when the /porting mapping references a non-existent registry slug or the not-ported list is not the exact complement of the mapping against the upstream total.
@@ -59,9 +60,9 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
           MUST_NOT_OBSERVE: ['a non-zero build exit naming a porting-consistency violation', 'an empty not-ported list (0 entries)', 'a mapping table with no deviation column']
 
 ### AC-2: Unknown mapping slug fails the build
-  GIVEN: a drill copy of porting.md whose Conversation row maps to `chat-conversation` (the real slug is `conversation`)
+  GIVEN: a drill copy of porting.md whose `conversation` mapping entry (`{ upstream: conversation, item: conversation }`) has its `item` rewritten to `chat-conversation` (the real slug is `conversation`)
   WHEN:  the drill runs the real porting-consistency check over that copy and the tracked registry.json
-  THEN:  it fails naming the Conversation row and the unknown slug `chat-conversation`
+  THEN:  it fails naming the `conversation` mapping entry and the unknown slug `chat-conversation`
   TEST_TIER: unit
   VERIFICATION_SERVICE: Real exported porting-consistency check (the function prebuild.ts calls) run by vitest over $TMPDIR copies of the real porting.md and boundary gaps array plus the tracked packages/registry/registry.json, no mocks
   UNIT_TEST_JUSTIFIED: Gate drill: vitest runs the real exported check over $TMPDIR copies of the real porting.md and gaps array plus the tracked registry.json with no mocks; it is tier-labelled unit only because FLOW-DOCS-05's rendered proof belongs to GBC-009 and these planted-drift cases are this task's own artifact.
@@ -72,12 +73,12 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
         NEGATIVE_CONTROL: would fail if ['the check is warn-only or omitted (disconnected), so an unresolved slug passes', 'the 56 names are hardcoded in the gate instead of read from packages/registry/registry.json']
         EVIDENCE: stdout
         - START_REF: unknown_slug_copy
-          ACTION: ["Copy the real porting.md to a $TMPDIR path and rewrite the Conversation row's slug to `chat-conversation`.", 'Run the exported check prebuild.ts calls over the copy, the real gaps array and packages/registry/registry.json; capture the thrown error or exit code and message.', 'Run the same check over the unmodified real files as the control.']
-          MUST_OBSERVE: ['the check exits non-zero or throws (exit code != 0) on the copy', 'the message contains `chat-conversation`', 'the message names the offending row `Conversation`', 'the control run over the real files passes with exit code 0']
+          ACTION: ["Copy the real porting.md to a $TMPDIR path and rewrite the `conversation` mapping entry's `item` to `chat-conversation`.", 'Run the exported check prebuild.ts calls over the copy, the real gaps array and packages/registry/registry.json; capture the thrown error or exit code and message.', 'Run the same check over the unmodified real files as the control.']
+          MUST_OBSERVE: ['the check exits non-zero or throws (exit code != 0) on the copy', 'the message contains `chat-conversation`', 'the message names the offending mapping entry `conversation` (lowercase kebab, exactly as its `upstream` key appears in the frontmatter)', 'the control run over the real files passes with exit code 0']
           MUST_NOT_OBSERVE: ['exit code 0 on the mutated copy', 'a failure message with no slug named (empty offender)']
 
 ### AC-3: Mapped-but-still-not-ported fails the build
-  GIVEN: a drill copy of porting.md where Conversation stays mapped and is also listed in notPorted
+  GIVEN: a drill copy of porting.md where `conversation` stays mapped and is also listed in notPorted
   WHEN:  the drill runs the real porting-consistency check over that copy
   THEN:  it fails naming the element and both lists involved
   TEST_TIER: unit
@@ -90,8 +91,8 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
         NEGATIVE_CONTROL: would fail if ['the complement is not computed (the check only resolves slugs), so an element in both lists passes', 'the gaps cross-check is omitted, so a boundary gap naming a shipped slug passes']
         EVIDENCE: stdout
         - START_REF: mapped_and_not_ported_copy
-          ACTION: ['Copy the real porting.md to $TMPDIR and append `Conversation` to `notPorted`, keeping its mapping row.', 'Run the exported check over the copy; capture the error or exit code and message.']
-          MUST_OBSERVE: ['the check exits non-zero or throws (exit code != 0) on the copy', 'the message contains `Conversation`', 'the message names both `mapping` and `notPorted`']
+          ACTION: ['Copy the real porting.md to $TMPDIR and append `conversation` to `notPorted`, keeping its mapping entry.', 'Run the exported check over the copy; capture the error or exit code and message.']
+          MUST_OBSERVE: ['the check exits non-zero or throws (exit code != 0) on the copy', 'the message contains `conversation`', 'the message names both `mapping` and `notPorted`']
           MUST_NOT_OBSERVE: ['exit code 0 on the mutated copy', 'a message naming only one list or no list']
         - START_REF: gap_names_shipped_slug_copy
           ACTION: ['Copy the real owns-vs-does-not-own frontmatter to $TMPDIR and append `conversation` to `gaps`.', 'Run the exported check with the real porting.md and the mutated gaps copy; capture the error or exit code and message.']
@@ -118,13 +119,14 @@ Success state: A healthy build has every mapping slug resolving to one of the 56
 
 ## Test Criteria
 - TC-1: the FLOW-DOCS-05 run_cmd exits 0 with the check running in prebuild, and porting-map.spec.ts passes  (maps_to: AC-1)
-- TC-2: a mapping slug `chat-conversation` fails the check naming the Conversation row and the slug, while the real files pass  (maps_to: AC-2)
-- TC-3: `Conversation` in both mapping and notPorted fails naming the element and both lists  (maps_to: AC-3)
+- TC-2: a mapping slug `chat-conversation` fails the check naming the `conversation` mapping entry and the slug, while the real files pass  (maps_to: AC-2)
+- TC-3: `conversation` in both mapping and notPorted fails naming the element and both lists  (maps_to: AC-3)
 - TC-4: an upstream element in neither list fails naming the element  (maps_to: AC-4)
 - TC-5: a boundary gap naming the shipped slug `conversation` fails naming the gap  (maps_to: AC-3)
 
 ## Reading List
 - packages/registry/registry.json (tracked 56-item source)
+- apps/docs/src/content/docs/porting.md (landed GBC-004 source: `mapping` entries are `{ upstream, item }` objects; `upstream`/`notPorted` are bare lowercase kebab arrays)
 - scripts/docs-data/prebuild.ts
 - scripts/docs-data/gates.ts
 - scripts/docs-data/check-dist-links.ts
@@ -142,7 +144,7 @@ WRITE-PROHIBITED:
 
 ## Design
 References: ['scripts/docs-data/gates.ts (cross-check vs pinned dataset)', 'scripts/docs-data/check-dist-links.ts (DEFAULT_REQUIRED_REFERENCES already covers prior-art liveness)']
-Interaction notes: Depends on GBC-004 producing mapping/notPorted/upstream as porting.md frontmatter arrays plus a pinned upstream element set; this task validates that source against registry-items.json. Prior-art link liveness is already covered by check-dist-links.ts DEFAULT_REQUIRED_REFERENCES.
+Interaction notes: Depends on GBC-004's landed porting.md (commit 7384dd14) producing mapping/notPorted/upstream as frontmatter arrays — `mapping` entries are `{ upstream, item }` objects, `upstream`/`notPorted` bare lowercase kebab strings — plus a pinned upstream element set; this task validates that source against the tracked packages/registry/registry.json. Prior-art link liveness is already covered by check-dist-links.ts DEFAULT_REQUIRED_REFERENCES.
 Pattern: Cross-dataset consistency gate (porting.md frontmatter vs packages/registry/registry.json + boundary gaps array) + RED-first fixture drill (scripts/docs-data/gates.ts)
 Anti-pattern: Hardcoding the 56-item list inside the gate, or reading the gitignored registry-items.json instead of the tracked registry.json
 
@@ -155,6 +157,9 @@ Anti-pattern: Hardcoding the 56-item list inside the gate, or reading the gitign
 ## Dependencies
 Depends on: ['GBC-004', 'GBC-009']
 Blocks:     none
+
+## Amendments
+- 2026-09-29 (astro-planner, orchestrator ask-1): Aligned AC-2 and AC-3 (with their TC-2/TC-3 mirrors, contract fixtures, and scenario steps) to the landed GBC-004 source shape reported in its implementer handoff — `.kb-run-sprint/sprint-06-guides-boundary-changelog/GBC-004/handoff.json`, approved at 7384dd14b3989631ce3b4565232e6d41d23a4d08, scope_impact[0] targeting GBC-012. The landed mapping frontmatter entries are `{ upstream: <kebab name>, item: <registry slug> }` with lowercase kebab upstream names (porting.md:6,56,137), so the drills' capitalized `Conversation` literals became the lowercase kebab `conversation` the file actually holds: AC-2's MUST_OBSERVE now names the offending mapping entry `conversation` exactly as its `upstream` key appears (exact literal chosen over case-insensitive matching — the message echoes the parsed key deterministically), and AC-3's notPorted append now plants the mapped-and-also-not-ported contradiction under the same name the mapping uses (a capitalized append would fall into the not-in-upstream drift class instead). Added the LANDED SOURCE SHAPE STRICTLY line, porting.md to the reading list, and corrected the Design note's validation target from the gitignored registry-items.json to the tracked packages/registry/registry.json the STRICTLY block already mandates. No verify command, gate step, or check strength was weakened: every drill still must exit non-zero naming its offender, and the healthy control must pass.
 
 <!-- REQUIREMENT-CONTRACT v1 -->
 <!--
@@ -169,7 +174,7 @@ Blocks:     none
   },
   "fixtures": {
     "healthy_porting_candidate": {
-      "description": "The candidate at GBC-012's close: GBC-004's apps/docs/src/content/docs/porting.md with `mapping`, `notPorted` and `upstream` frontmatter arrays, GBC-003's owns-vs-does-not-own `gaps` array, the tracked packages/registry/registry.json (56 items), GBC-009's /porting route and porting-map.spec.ts, and this task's check wired into scripts/docs-data/prebuild.ts, built by the run_cmd's own docs build and served by the Playwright-owned preview at http://localhost:4321.",
+      "description": "The candidate at GBC-012's close: GBC-004's apps/docs/src/content/docs/porting.md with `mapping` (entries `{ upstream, item }`), `notPorted` and `upstream` frontmatter arrays, GBC-003's owns-vs-does-not-own `gaps` array, the tracked packages/registry/registry.json (56 items), GBC-009's /porting route and porting-map.spec.ts, and this task's check wired into scripts/docs-data/prebuild.ts, built by the run_cmd's own docs build and served by the Playwright-owned preview at http://localhost:4321.",
       "seed_method": "cli",
       "records": [
         "Run `pnpm --filter @rnr-ai-elements/docs build`; its prebuild runs the porting-consistency check over the real files.",
@@ -178,17 +183,17 @@ Blocks:     none
       ]
     },
     "unknown_slug_copy": {
-      "description": "A $TMPDIR copy of the real porting.md whose `Conversation` mapping row names slug `chat-conversation` instead of `conversation`; the gaps array and registry.json are the real tracked files.",
+      "description": "A $TMPDIR copy of the real porting.md whose `conversation` mapping entry (object `{ upstream, item }`) names slug `chat-conversation` instead of `conversation`; the gaps array and registry.json are the real tracked files.",
       "seed_method": "cli",
       "records": [
-        "mapping row Conversation -> chat-conversation"
+        "mapping entry { upstream: conversation, item: chat-conversation }"
       ]
     },
     "mapped_and_not_ported_copy": {
-      "description": "A $TMPDIR copy of the real porting.md where `Conversation` keeps its mapping row and is also appended to `notPorted`.",
+      "description": "A $TMPDIR copy of the real porting.md where `conversation` keeps its mapping entry and is also appended to `notPorted`.",
       "seed_method": "cli",
       "records": [
-        "Conversation in `mapping` and in `notPorted`"
+        "conversation in `mapping` and in `notPorted`"
       ]
     },
     "gap_names_shipped_slug_copy": {
@@ -274,7 +279,7 @@ Blocks:     none
       "id": "AC-2",
       "type": "acceptance_criterion",
       "primary": false,
-      "description": "GIVEN a drill copy of porting.md whose Conversation row maps to `chat-conversation` (the real slug is `conversation`) WHEN the drill runs the real porting-consistency check over that copy and the tracked registry.json THEN it fails naming the Conversation row and the unknown slug `chat-conversation`",
+      "description": "GIVEN a drill copy of porting.md whose `conversation` mapping entry (`{ upstream: conversation, item: conversation }`) has its `item` rewritten to `chat-conversation` (the real slug is `conversation`) WHEN the drill runs the real porting-consistency check over that copy and the tracked registry.json THEN it fails naming the `conversation` mapping entry and the unknown slug `chat-conversation`",
       "flow_ref": null,
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts",
       "test_function": "GBC-012-unknown-slug-rejected",
@@ -309,7 +314,7 @@ Blocks:     none
             "action": {
               "actor": "system",
               "steps": [
-                "Copy the real porting.md to a $TMPDIR path and rewrite the Conversation row's slug to `chat-conversation`.",
+                "Copy the real porting.md to a $TMPDIR path and rewrite the `conversation` mapping entry's `item` to `chat-conversation`.",
                 "Run the exported check prebuild.ts calls over the copy, the real gaps array and packages/registry/registry.json; capture the thrown error or exit code and message.",
                 "Run the same check over the unmodified real files as the control."
               ]
@@ -318,7 +323,7 @@ Blocks:     none
               "must_observe": [
                 "the check exits non-zero or throws (exit code != 0) on the copy",
                 "the message contains `chat-conversation`",
-                "the message names the offending row `Conversation`",
+                "the message names the offending mapping entry `conversation` (lowercase kebab, exactly as its `upstream` key appears in the frontmatter)",
                 "the control run over the real files passes with exit code 0"
               ],
               "must_not_observe": [
@@ -335,7 +340,7 @@ Blocks:     none
       "id": "AC-3",
       "type": "acceptance_criterion",
       "primary": false,
-      "description": "GIVEN a drill copy of porting.md where Conversation stays mapped and is also listed in notPorted WHEN the drill runs the real porting-consistency check over that copy THEN it fails naming the element and both lists involved",
+      "description": "GIVEN a drill copy of porting.md where `conversation` stays mapped and is also listed in notPorted WHEN the drill runs the real porting-consistency check over that copy THEN it fails naming the element and both lists involved",
       "flow_ref": null,
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts",
       "test_function": "GBC-012-mapped-and-not-ported-rejected",
@@ -370,14 +375,14 @@ Blocks:     none
             "action": {
               "actor": "system",
               "steps": [
-                "Copy the real porting.md to $TMPDIR and append `Conversation` to `notPorted`, keeping its mapping row.",
+                "Copy the real porting.md to $TMPDIR and append `conversation` to `notPorted`, keeping its mapping entry.",
                 "Run the exported check over the copy; capture the error or exit code and message."
               ]
             },
             "end_state": {
               "must_observe": [
                 "the check exits non-zero or throws (exit code != 0) on the copy",
-                "the message contains `Conversation`",
+                "the message contains `conversation`",
                 "the message names both `mapping` and `notPorted`"
               ],
               "must_not_observe": [
@@ -486,7 +491,7 @@ Blocks:     none
       "id": "TC-2",
       "type": "test_criterion",
       "primary": false,
-      "description": "a mapping slug `chat-conversation` fails the check naming the Conversation row and the slug, while the real files pass",
+      "description": "a mapping slug `chat-conversation` fails the check naming the `conversation` mapping entry and the slug, while the real files pass",
       "flow_ref": null,
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts",
       "test_function": "GBC-012-unknown-slug-rejected",
@@ -500,7 +505,7 @@ Blocks:     none
       "id": "TC-3",
       "type": "test_criterion",
       "primary": false,
-      "description": "`Conversation` in both mapping and notPorted fails naming the element and both lists",
+      "description": "`conversation` in both mapping and notPorted fails naming the element and both lists",
       "flow_ref": null,
       "test_file": "tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts",
       "test_function": "GBC-012-mapped-and-not-ported-rejected",

@@ -11,7 +11,7 @@ planned_at: 2026-09-29
 
 # Sprint 06: guides-boundary-changelog
 
-**Status:** planned
+**Status:** in_progress
 **Sequence:** 6
 **Timeline:** Phase 2
 
@@ -21,7 +21,7 @@ Complete the documentation set's orientation and maintenance surfaces: five capp
 
 This sprint depends on Sprint 05's content shell (content collections, MarkdownLayout, Prose/Toc/PageHeader, SectionHeader, Callout, /docs/[...id].astro). It provides the CAP-LLMS-01 changelog collection input that llms.txt and GitHub release-notes generation consume at Sprint 10.
 
-The plan contains **17 tasks / 63 points**, compared with the roadmap sketch of ~8 items / 26–42 points: **21 points above its upper bound**. The band under-counted three engineering realities: a changelog system is a collection + schema + three distinct fail-closed gates + two generated routes (not one item); section-aware routing (/guides/[slug] + /porting) required a publication-contract refactor the sketch never sized; and three separate build gates (changelog tag-sync/ordering/section-presence, five-guides cap, porting consistency) are each independent fail-closed checks. The sketch also listed "engine-choice/port-next" as guides, but UC-DOCS-03 AC-6 and the section-index wireframe are authoritative: the five guides are re-theme, update, preview, customize-rendering, troubleshooting — engine choice stays on Installation, port-next stays on /porting.
+The plan contains **18 tasks / 64 points**, compared with the roadmap sketch of ~8 items / 26–42 points: **22 points above its upper bound**. The band under-counted three engineering realities: a changelog system is a collection + schema + three distinct fail-closed gates + two generated routes (not one item); section-aware routing (/guides/[slug] + /porting) required a publication-contract refactor the sketch never sized; and three separate build gates (changelog tag-sync/ordering/section-presence, five-guides cap, porting consistency) are each independent fail-closed checks. The sketch also listed "engine-choice/port-next" as guides, but UC-DOCS-03 AC-6 and the section-index wireframe are authoritative: the five guides are re-theme, update, preview, customize-rendering, troubleshooting — engine choice stays on Installation, port-next stays on /porting. GBC-018 (home boundary teaser, 1 pt) was inserted 2026-09-29 by astro-planner via orchestrator ask-3, closing the un-owned scope gap GBC-003's blocked report exposed — see the Waves note.
 
 All implementation, functional RED, and product verification are future work. This document records a plan, not a passing gate.
 
@@ -82,8 +82,9 @@ All implementation, functional RED, and product verification are future work. Th
 | GBC-015 | IndexList component (NEW) | frontend-designer | 3 | A | ⬜ Pending |
 | GBC-016 | Section-index page layout | frontend-designer | 2 | B | ⬜ Pending |
 | GBC-017 | Boundary + porting table presentation | frontend-designer | 3 | C | ⬜ Pending |
+| GBC-018 | Home boundary teaser (R11): one line, one anchor | astro-implementer | 1 | next | ⬜ Pending |
 
-**Waves:** A(4) → B(3) → C(3) → D(2) → E(3) → F(1) → G(1) — 7 waves over 17 tasks, derived from each task's declared dependencies (a task runs one wave after its latest dependency). Tasks in one wave share no NEW/MODIFY write path; shared entries are bare never-edit references to a spec another task writes.
+**Waves:** A(4) → B(3) → C(3) → D(2) → E(3) → F(1) → G(1) — 7 waves over 17 tasks, derived from each task's declared dependencies (a task runs one wave after its latest dependency). Tasks in one wave share no NEW/MODIFY write path; shared entries are bare never-edit references to a spec another task writes. GBC-018 (added 2026-09-29, ask-3) inserts outside the lettered waves as a `next` task — no task dependencies, sequenced next: it lands the R11 home teaser (one line + exactly one anchor to /docs/owns-vs-does-not-own in apps/docs/src/pages/index.astro) that GBC-003's committed boundary-tables.spec.ts asserts and no prior task owned; if that spec is not yet on the trunk at GBC-018's close, GBC-018 reports blocked rather than authoring a substitute (its STRICTLY guard).
 
 **Gate timing:** content tasks GBC-001..006 complete on build-green + prose review at their own wave; playwright VERIFY executes at the task owning the locked spec (boundary-tables → GBC-003, porting-map → GBC-009, guides-index → GBC-010, changelog-release-pages → GBC-008, journeys → GBC-014) or at the human gate — never 'verified later' at a content task's close.
 
@@ -129,9 +130,10 @@ Repaired by /kb-sprint-tasks-plan on 2026-09-29 (proof bindings re-authored by t
 - GBC-009-section-aware-routing-guides-slug-porting-exclude-from-docs-catch-all.md
 - GBC-010-guides-section-index-page-capped-at-five.md
 - GBC-011-five-guides-cap-gate-t-docs-014-mirror.md
-- GBC-012-porting-consistency-gates-mapping-slugs-resolve-not-ported-exact-compl.md
+- TASK-GBC-012.md
 - GBC-013-header-footer-nav-wiring-r1-registry-guides-porting-changelog.md
 - GBC-014-post-integration-journey-proofs-docs-integrator-arc-docs-themer-arc.md
 - GBC-015-indexlist-component-new-the-section-index-linked-entry-row-primitive.md
 - GBC-016-section-index-page-layout-the-shared-guides-changelog-visual-shell.md
 - GBC-017-boundary-porting-scannable-table-and-callout-presentation.md
+- TASK-GBC-018.md

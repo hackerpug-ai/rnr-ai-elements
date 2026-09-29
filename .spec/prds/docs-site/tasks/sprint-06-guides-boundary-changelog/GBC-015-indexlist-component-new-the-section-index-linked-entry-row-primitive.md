@@ -3,7 +3,9 @@ TASK: GBC-015 - IndexList component (NEW) — the section-index linked entry-row
 ================================================================================
 
 TASK_TYPE:  DESIGN
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 7902caaeec7cefc72c62b119bf9f13d02279465a
 PRIORITY:   P0
 POINTS:     3
 AGENT:      planner=frontend-designer | implementer=frontend-designer | reviewer=react-native-reusables-reviewer
@@ -584,3 +586,46 @@ Blocks:     ['GBC-008', 'GBC-010', 'GBC-016']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-015",
+  "commit_sha": "7902caaeec7cefc72c62b119bf9f13d02279465a",
+  "done": "IndexList.astro, the section-index linked entry-row primitive, landed at 7902caae (merged to main as 370fb9f7) together with its AC-5 source-contract test tests/sprint-06-guides-boundary-changelog/index-list-source.test.ts and RED/GREEN plus render-harness evidence under .tmp/GBC-015/. The component exposes one composition model — a typed rows prop (href, title, optional description, meta, links, id) at apps/docs/src/components/IndexList.astro:47 driving one li row markup (IndexList.astro:58) for both forms (guide row: title + one-liner; changelog row: version title + date meta Chip at IndexList.astro:71 + touched-component sibling links) — with the title anchor stretched over the >=44px row via an absolutely-positioned ::after (IndexList.astro:123), Chip and sibling links stacked above the stretch, token-only styling, zero JS, scroll-margin clearing the sticky Header, and all four data-index-list* hooks. All four task gates verified green (vitest source contract, tsc, biome via direct binary, ordered docs build) plus a scratch Astro-container render harness that rendered both row forms through the real Astro compiler + SSR; the commit is preceded on the branch by the sanctioned fallow remediation eb404029.",
+  "deviations": [
+    "Commit eb404029aa819188bd8dedd63feb40c256b8887c added one out-of-scope key to .fallowrc.json:5 — \"dynamicallyLoaded\": [\"apps/docs/src/components/IndexList.astro\"] — sanctioned by the coordinator with precedent 75e5cc9e, because the pre-commit fallow gate fails any commit introducing an import-graph-orphan file and IndexList's importers (GBC-008, GBC-010, GBC-016) land later in the sprint."
+  ],
+  "concerns": [
+    "Touched-component link clickability rests entirely on .index-list__link { position: relative; z-index: 1; } (IndexList.astro:146): the GBC-008 spec GETs hrefs but never clicks, so dropping the z-index in a future refactor would pass every spec while making the links unclickable under the stretched ::after — the source-contract test pins it only as a string match (tests/sprint-06-guides-boundary-changelog/index-list-source.test.ts:114).",
+    "The .fallowrc.json dynamicallyLoaded entry is a temporary seed that must be removed once GBC-008/GBC-010 import IndexList, or it permanently masks real dead-code findings for that file.",
+    "The committed render harness (.tmp/GBC-015/cycle-1/green/render-harness.mjs) hardcodes absolute worktree paths, so it is evidence of this run only and will not execute as-is from main after the merge."
+  ],
+  "findings": [
+    "Astro 7's container API renders partials with no <style> tags and vite's SSR pipeline discards CSS, so asserting rendered styles requires fetching the client transform of the '?astro&type=style' module (the technique is captured in .tmp/GBC-015/cycle-1/green/render-harness.mjs) — any future component-level render test hits the same wall.",
+    "GBC-016's MUST 'render the IndexList rows via the default slot' refers to SectionIndexLayout's OWN default slot, not IndexList's surface: IndexList ships a typed rows prop and deliberately no slot (pinned by the source-contract test), so GBC-016/GBC-008/GBC-010 pages must pass <IndexList rows={...} /> into the layout's slot.",
+    "The pre-commit fallow gate (righthook.yml) structurally fails every commit that introduces a file unreachable from the import graph, so GBC-016 will hit the identical wall for SectionIndexLayout.astro and DocsNav.astro and needs its own .fallowrc.json dynamicallyLoaded entries until its consumers land.",
+    "The docs build never compiles an orphan component — a syntactically broken .astro passes 'pnpm --filter @rnr-ai-elements/docs build' as long as no page imports it (verified: the build was green before the component was ever rendered), so primitive tasks need a render/compile proof of their own.",
+    "The orchestrator's recorded session_id values (e.g. a0a3a474d568c5e1a) are 16-hex dispatch handles, not Claude Code session UUIDs — no dispatched agent in this sprint can self-match them against its harness session id (verified for GBC-003/004/005 and the reviewer), so provenance checks can only rely on routing into the original conversation, plus content match of the recorded responses.",
+    "A fresh kb-run-sprint worktree shows 8 phantom tsc errors in tests/sprint-04-generated-reference/code-primitives-contract.test.ts until the gitignored generation chain runs — run the docs build (which runs the chain) before judging typecheck, or 'pnpm registry:build && pnpm gallery:manifest && pnpm exec tsx scripts/docs-data/prebuild.ts' directly."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-016",
+      "found": "Its MUST says 'render the IndexList rows via the default slot' while the landed IndexList has a typed rows prop and no slot (GBC-015's AC-5 pins the single li inside the component), and its own new files SectionIndexLayout.astro + DocsNav.astro will be import-graph orphans that fail the pre-commit fallow gate until GBC-008/GBC-010 compose them.",
+      "change": "Reword the MUST to 'render the IndexList (composed with its rows prop) via SectionIndexLayout's default slot', and either pre-seed or dispatch .fallowrc.json dynamicallyLoaded entries for SectionIndexLayout.astro and DocsNav.astro alongside the task."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "Any task split that lands a primitive before its consumers structurally fails the repo's pre-commit fallow gate on the orphan-file finding, discovered only at commit time (this task required a sanctioned out-of-scope one-liner to clear it).",
+      "change": "The sprint template should pair primitive-before-consumer tasks with a .fallowrc.json dynamicallyLoaded dispatch (as done here per precedent 75e5cc9e) or sequence primitives to land with their first consumer, and list the righthook pre-commit gates (typecheck, biome, fallow) among every task's verification gates."
+    }
+  ],
+  "feedback": [
+    "The task's Verification Gates list (tsc, biome, docs build, vitest) omits the repo's pre-commit righthook gates, so the fallow orphan-file failure was only discovered at commit time after all listed gates were green — include the pre-commit gates in the gate list for tasks that land files no one imports yet.",
+    "The Props/slot instruction 'rows via the default slot or a typed rows prop — ONE composition model' is resolvable only by noticing that AC-5 pins exactly one '<li' tag inside IndexList.astro — name the typed rows prop as the required surface outright, since a default-slot form silently contradicts the AC-5 source scan.",
+    "The AC-5 verify command passes but vitest 4 intercepts console.log in non-TTY runs, hiding the seeded EVIDENCE:stdout record that 'requires_seeded_evidence: true' asks for — append --disable-console-intercept to the verify command (or accept exit 0 plus the file artifact as the record)."
+  ]
+}
+```

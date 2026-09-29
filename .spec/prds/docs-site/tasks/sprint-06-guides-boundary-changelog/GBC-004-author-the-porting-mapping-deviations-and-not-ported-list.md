@@ -3,7 +3,9 @@ TASK: GBC-004 - Author the /porting mapping, deviations, and not-ported list
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 7384dd14b3989631ce3b4565232e6d41d23a4d08
 PRIORITY:   P1
 POINTS:     5
 AGENT:      planner=techwriting-planner | implementer=techwriting-implementer | reviewer=techwriting-reviewer
@@ -417,3 +419,49 @@ Blocks:     ['GBC-006', 'GBC-008', 'GBC-009', 'GBC-012', 'GBC-017']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-004",
+  "commit_sha": "7384dd14b3989631ce3b4565232e6d41d23a4d08",
+  "done": "Authored apps/docs/src/content/docs/porting.md (section: porting, order 1) as the /porting manuscript — a 40-row upstream-to-port mapping table with an explicit Deviations column (each cell prefixed None/Adapted/Substituted and grounded in the as-built registry sources), the exact 9-element not-ported list (the seven react-flow canvas-family parts plus jsx-preview and sandbox), a 16-row port-side additions table reconciling 40 mapped + 16 created = the 56-item ledger, and prior-art credit for elements.ai-sdk.dev and muratcakmak/expo-ai-elements with a why-differs statement naming both engines — with the upstream set pinned to the vercel/ai-elements registry listing at commit 6a9d5b1822ffb10bba4bd97175f01edd7d8651cd (2026-08-21, 49 elements) noted as a dated snapshot in the intro, and mapping/notPorted/upstream emitted as structured frontmatter arrays (porting.md:6,56,137). Added tests/sprint-06-guides-boundary-changelog/porting-content.test.ts, the read-only source scan owning AC-2 (exact complement, disjoint lists, no not-ported name among the 56, every mapping slug resolved, rendered table and list mirroring the frontmatter), AC-4 (both prior-art hrefs absolute https), and AC-5 (no boundary-table header copy), each with a $TMPDIR mutation control, frontmatter parsed through Astro's own @astrojs/internal-helpers/frontmatter. Landed as cf852306 (cycle 1) and 7384dd14 (cycle 2 review fix correcting the shimmer, audio-player, and attachments deviation cells against the as-built sources); RED/GREEN evidence committed under .tmp/GBC-004/cycle-1/ and cycle-2/, with the ordered docs build exit 0 and the rendered page verified in dist (h2#mapping with 40 body rows and one Deviations th, h2#prior-art, h3#why-differs naming nativewind and uniwind, exactly one anchor per prior-art URL, 40 /components/{slug} links).",
+  "deviations": [
+    "Mapping frontmatter entries use the shape { upstream: <kebab name>, item: <registry slug> } rather than a bare list, because GBC-012's gate needs both the upstream name for complement arithmetic and the slug for ledger resolution and the task file specified only that the arrays exist.",
+    "The upstream pin is the repo commit 6a9d5b1822ffb10bba4bd97175f01edd7d8651cd (49 elements, including question) rather than the live elements.ai-sdk.dev listing, which serves 48 and lacks question — the live listing cannot ground our shipped question item, so the page records the commit and notes the live listing can lag it.",
+    "The review fix touched a third cell beyond the reviewer's two named rows — attachments at apps/docs/src/content/docs/porting.md:163, alongside shimmer at :188 and audio-player at :164 — because re-auditing every cell against the component sources found the identical ownership-inversion class in it."
+  ],
+  "concerns": [
+    "The AC-5 boundary-copy check is vacuous until GBC-003 lands: the boundary manuscript on disk (owns-vs-does-not-own.md) is currently prose-only with zero tables, so '0 shared header rows' passes trivially, and the check only gains teeth when GBC-003's .mdx tables arrive — the mutation control proves the checker catches a real collision, but GBC-003 must not reuse the headers 'Upstream element | Registry item | Deviations' or 'Registry item | Kind | Job'.",
+    "The Deviations-cell kind prefixes (None/Adapted/Substituted with an em dash) are asserted by porting-content.test.ts, so any future prose edit that drops or rewords a prefix fails the scan — deliberate (the page's Mapping intro promises the three kinds) but a maintenance tripwire GBC-006's review pass should know about.",
+    "The intro says tooling 'can diff' the frontmatter arrays, but at the current trunk only my test diffs them — GBC-012's build gate does not exist yet, so until wave C lands the arrays and the rendered tables are held in step by the test alone.",
+    "The page's 'live listing can lag that commit' claim is rot-proof wording over a fact I verified today (48 vs 49, missing question) that will silently become stale when Vercel redeploys, which is fine for the page but worth remembering if anyone re-checks the pin."
+  ],
+  "findings": [
+    "The upstream registry listing is not a tracked registry.json — it is generated at request time by apps/docs/app/api/registry/[component]/route.ts from packages/elements/src/*.tsx (one registry:component item per .tsx file), so the only satisfiable pin is a repo commit enumerated from the tree, and the live listing currently lags that commit at 48 elements without question.",
+    "The MVP component inventory's verdict header counts contradict its own rows (header claims 18 port-at-parity and 13 port-adapted, the post-v2.1.0 rows tally 17/14, and persona and checkpoint diverge from parity in the as-built descriptions), so I built the table from the rows plus the registry's own item descriptions and kept only the machine-verified numbers (49/40/9) in prose.",
+    "The as-built component sources correct the planning inventory in a recurring class — inverted ownership: shimmer ships no masked view (it is the RNR Skeleton opacity pulse, 'new visual vocabulary rather than a port' per packages/registry/src/components/ai/shimmer.tsx:17-29), while audio-player, speech-input, and attachments ship caller-supplied seams with no dependency in anyone's install graph — so anyone authoring boundary or gaps content (GBC-003, GBC-006) must read the component source headers, not the inventory verdicts.",
+    "The task's literal verify commands need two documented worktree facts to run: `pnpm exec biome ci .` dies locally with 'Linter process terminated abnormally' (run ./node_modules/.bin/biome ci . — CI's verdict matches the direct binary), and a fresh worktree fails `tsc --noEmit` until the generation chain (registry:build, gallery:manifest, docs prebuild) regenerates the gitignored apps/docs/src/data/registry-items.json that sprint-04 contract tests import.",
+    "The zod content schema silently strips the extra frontmatter arrays (z.object strip semantics), so porting.md builds clean with mapping/notPorted/upstream present and the arrays survive only in the source file — exactly what GBC-012's source-parsing gate needs, but it means no build-time validation of the arrays exists until that gate lands."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-012",
+      "found": "My mapping frontmatter entries are { upstream, item } with lowercase kebab upstream names (e.g. conversation), while GBC-012's AC-2 drill expects its failure message to name the offending row 'Conversation' (capitalized) — the drill mutates the real file, so the message will name 'conversation' and the capitalized literal could false-fail the MUST_OBSERVE.",
+      "change": "GBC-012's AC-2 MUST_OBSERVE should expect the row named as it appears in the frontmatter ('conversation', lowercase kebab) or match case-insensitively, and its implementer should read mapping entries as { upstream, item }."
+    },
+    {
+      "target": "GBC-003",
+      "found": "The not-ported names the gaps cross-check can reference are exactly the nine kebab strings in porting.md's notPorted array (canvas, connection, controls, edge, jsx-preview, node, panel, sandbox, toolbar), and my AC-5 scan reads the boundary manuscript as .mdx or .md whichever exists.",
+      "change": "GBC-003's gaps entries that name not-ported upstream elements should use those exact kebab strings, and its table headers must stay distinct from 'Upstream element | Registry item | Deviations' and 'Registry item | Kind | Job' or porting-content.test.ts fails (correctly)."
+    }
+  ],
+  "feedback": [
+    "The task file never specified the mapping frontmatter entry shape — the one thing GBC-012's gate mechanically diffs — so one MUST line ('mapping entries are { upstream, item }') would have removed the only real guess in the implementation.",
+    "'Pin the upstream enumeration to the vercel/ai-elements registry listing at a recorded URL/commit' undersells what the upstream registry is (a route-generated listing over packages/elements/src, not a tracked file) and that the live listing lags the repo commit, both of which the implementer must discover by fetching and comparing.",
+    "AC-5's GIVEN ('the boundary manuscript on disk') is ambiguous during wave A because GBC-003 renames .md to .mdx in the same wave, so the task should say the scan reads whichever exists rather than implying a single stable path.",
+    "The Verify section lists `pnpm exec biome ci .`, which cannot pass in this environment (documented local spawn artifact — the direct binary is the runnable form), and `pnpm exec tsc --noEmit` fails on any fresh worktree until the gitignored generated data chain runs — both are repo-memory facts the task file could carry to save the implementer a false 'pre-existing failure' investigation."
+  ]
+}
+```
