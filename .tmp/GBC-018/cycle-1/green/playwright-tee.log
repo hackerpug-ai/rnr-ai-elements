@@ -1,0 +1,1055 @@
+{
+  "config": {
+    "argv": [
+      "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node",
+      "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/node_modules/@playwright/test/cli.js",
+      "test",
+      "--reporter=json",
+      "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+      "--grep",
+      "FLOW-DOCS-04-boundary-ownership-tables"
+    ],
+    "configFile": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/playwright.config.ts",
+    "rootDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests",
+        "testIgnore": [
+          "**/*.remote.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-mobile",
+        "name": "chromium-mobile",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests",
+        "testIgnore": [
+          "**/*.remote.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-nojs",
+        "name": "chromium-nojs",
+        "testDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests",
+        "testIgnore": [
+          "**/*.remote.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node -e 'const net=require(\"node:net\");const s=net.connect(4321,\"127.0.0.1\",()=>{console.error(\"strict port: 4321 is already in use; astro preview must own it\");s.destroy();process.exit(1)});s.on(\"error\",()=>process.exit(0))' && ASTRO_PREVIEW_BACKGROUND=1 exec pnpm --filter @rnr-ai-elements/docs exec astro preview --host 127.0.0.1 --port 4321 --ignore-lock",
+      "url": "http://localhost:4321",
+      "reuseExistingServer": false
+    }
+  },
+  "suites": [
+    {
+      "title": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+      "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 621,
+                  "error": {
+                    "message": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:114:69",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 69,
+                      "line": 114
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 112 |\u001b[39m   \u001b[36mconst\u001b[39m tables \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main table'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 113 |\u001b[39m   \u001b[36mconst\u001b[39m tableCount \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m tables\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 114 |\u001b[39m   expect(tableCount\u001b[33m,\u001b[39m \u001b[32m'the boundary page renders at least 2 tables'\u001b[39m)\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m2\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 115 |\u001b[39m   \u001b[36mconst\u001b[39m rowsPerTable\u001b[33m:\u001b[39m number[] \u001b[33m=\u001b[39m []\u001b[33m;\u001b[39m\n \u001b[90m 116 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m index \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m index \u001b[33m<\u001b[39m tableCount\u001b[33m;\u001b[39m index \u001b[33m+=\u001b[39m \u001b[35m1\u001b[39m) {\n \u001b[90m 117 |\u001b[39m     \u001b[36mconst\u001b[39m bodyRows \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m tables\u001b[33m.\u001b[39mnth(index)\u001b[33m.\u001b[39mlocator(\u001b[32m'tbody tr'\u001b[39m)\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 69,
+                        "line": 114
+                      },
+                      "message": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  112 |   const tables = page.locator('main table');\n  113 |   const tableCount = await tables.count();\n> 114 |   expect(tableCount, 'the boundary page renders at least 2 tables').toBeGreaterThanOrEqual(2);\n      |                                                                     ^\n  115 |   const rowsPerTable: number[] = [];\n  116 |   for (let index = 0; index < tableCount; index += 1) {\n  117 |     const bodyRows = await tables.nth(index).locator('tbody tr').count();\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:114:69"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:43:54.127Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 69,
+                    "line": 114
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-b111f43448c791a60cea",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-2 ownership-split table and honest gaps list",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 628,
+                  "error": {
+                    "message": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:157:68",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 68,
+                      "line": 157
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 155 |\u001b[39m   \u001b[36mconst\u001b[39m splitRows \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main h2#what-the-library-supplies ~ table'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m   \u001b[36mconst\u001b[39m splitRowCount \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m splitRows\u001b[33m.\u001b[39mlocator(\u001b[32m'tbody tr'\u001b[39m)\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 157 |\u001b[39m   expect(splitRowCount\u001b[33m,\u001b[39m \u001b[32m'the ownership-split table has body rows'\u001b[39m)\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 158 |\u001b[39m   \u001b[36mlet\u001b[39m primitivesOwner\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 159 |\u001b[39m   \u001b[36mlet\u001b[39m compositionsOwner\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 160 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m index \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m index \u001b[33m<\u001b[39m splitRowCount\u001b[33m;\u001b[39m index \u001b[33m+=\u001b[39m \u001b[35m1\u001b[39m) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 68,
+                        "line": 157
+                      },
+                      "message": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  155 |   const splitRows = page.locator('main h2#what-the-library-supplies ~ table').first();\n  156 |   const splitRowCount = await splitRows.locator('tbody tr').count();\n> 157 |   expect(splitRowCount, 'the ownership-split table has body rows').toBeGreaterThan(0);\n      |                                                                    ^\n  158 |   let primitivesOwner: string | null = null;\n  159 |   let compositionsOwner: string | null = null;\n  160 |   for (let index = 0; index < splitRowCount; index += 1) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:157:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:43:55.201Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--0365e--table-and-honest-gaps-list-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--0365e--table-and-honest-gaps-list-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 68,
+                    "line": 157
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-3a9ba7cd0cadcc729a5d",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 145,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-3 example-app link resolves",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 948,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:43:56.270Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-c4478425c786b716cc98",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 212,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 622,
+                  "error": {
+                    "message": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:257:5",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 5,
+                      "line": 257
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 255 |\u001b[39m     boundaryToolTables\u001b[33m,\u001b[39m\n \u001b[90m 256 |\u001b[39m     \u001b[32m\"at least 1 table containing 'tool executor' on the boundary page\"\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 257 |\u001b[39m   )\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 258 |\u001b[39m\n \u001b[90m 259 |\u001b[39m   \u001b[90m// Home: no boundary table, exactly 1 one-line teaser link in the article.\u001b[39m\n \u001b[90m 260 |\u001b[39m   \u001b[36mconst\u001b[39m homeResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m navigateLocalhost(page\u001b[33m,\u001b[39m \u001b[33mHOME_ROUTE\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 5,
+                        "line": 257
+                      },
+                      "message": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  255 |     boundaryToolTables,\n  256 |     \"at least 1 table containing 'tool executor' on the boundary page\",\n> 257 |   ).toBeGreaterThanOrEqual(1);\n      |     ^\n  258 |\n  259 |   // Home: no boundary table, exactly 1 one-line teaser link in the article.\n  260 |   const homeResponse = await navigateLocalhost(page, HOME_ROUTE);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:257:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:43:57.345Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 5,
+                    "line": 257
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-8dc10cff7b73fac1a2aa",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 242,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-5 no ownership overclaim",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 666,
+                  "error": {
+                    "message": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:329:5",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 5,
+                      "line": 329
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 327 |\u001b[39m     noStreamingClientCells\u001b[33m,\u001b[39m\n \u001b[90m 328 |\u001b[39m     \u001b[32m'at least 1 td cell states the library ships no streaming client'\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 329 |\u001b[39m   )\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 330 |\u001b[39m\n \u001b[90m 331 |\u001b[39m   record(testInfo\u001b[33m,\u001b[39m \u001b[32m'ac-5'\u001b[39m\u001b[33m,\u001b[39m {\n \u001b[90m 332 |\u001b[39m     overclaims\u001b[33m,\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 5,
+                        "line": 329
+                      },
+                      "message": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  327 |     noStreamingClientCells,\n  328 |     'at least 1 td cell states the library ships no streaming client',\n> 329 |   ).toBeGreaterThanOrEqual(1);\n      |     ^\n  330 |\n  331 |   record(testInfo, 'ac-5', {\n  332 |     overclaims,\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:329:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:43:58.392Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--42cd0-AC-5-no-ownership-overclaim-chromium-desktop/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--42cd0-AC-5-no-ownership-overclaim-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 5,
+                    "line": 329
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-b97a183e8221790ea72b",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 311,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 642,
+                  "error": {
+                    "message": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:114:69",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 69,
+                      "line": 114
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 112 |\u001b[39m   \u001b[36mconst\u001b[39m tables \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main table'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 113 |\u001b[39m   \u001b[36mconst\u001b[39m tableCount \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m tables\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 114 |\u001b[39m   expect(tableCount\u001b[33m,\u001b[39m \u001b[32m'the boundary page renders at least 2 tables'\u001b[39m)\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m2\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 115 |\u001b[39m   \u001b[36mconst\u001b[39m rowsPerTable\u001b[33m:\u001b[39m number[] \u001b[33m=\u001b[39m []\u001b[33m;\u001b[39m\n \u001b[90m 116 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m index \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m index \u001b[33m<\u001b[39m tableCount\u001b[33m;\u001b[39m index \u001b[33m+=\u001b[39m \u001b[35m1\u001b[39m) {\n \u001b[90m 117 |\u001b[39m     \u001b[36mconst\u001b[39m bodyRows \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m tables\u001b[33m.\u001b[39mnth(index)\u001b[33m.\u001b[39mlocator(\u001b[32m'tbody tr'\u001b[39m)\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 69,
+                        "line": 114
+                      },
+                      "message": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  112 |   const tables = page.locator('main table');\n  113 |   const tableCount = await tables.count();\n> 114 |   expect(tableCount, 'the boundary page renders at least 2 tables').toBeGreaterThanOrEqual(2);\n      |                                                                     ^\n  115 |   const rowsPerTable: number[] = [];\n  116 |   for (let index = 0; index < tableCount; index += 1) {\n  117 |     const bodyRows = await tables.nth(index).locator('tbody tr').count();\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:114:69"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:43:59.564Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 69,
+                    "line": 114
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-f96ff40400543072f8e5",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-2 ownership-split table and honest gaps list",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 641,
+                  "error": {
+                    "message": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:157:68",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 68,
+                      "line": 157
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 155 |\u001b[39m   \u001b[36mconst\u001b[39m splitRows \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main h2#what-the-library-supplies ~ table'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m   \u001b[36mconst\u001b[39m splitRowCount \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m splitRows\u001b[33m.\u001b[39mlocator(\u001b[32m'tbody tr'\u001b[39m)\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 157 |\u001b[39m   expect(splitRowCount\u001b[33m,\u001b[39m \u001b[32m'the ownership-split table has body rows'\u001b[39m)\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 158 |\u001b[39m   \u001b[36mlet\u001b[39m primitivesOwner\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 159 |\u001b[39m   \u001b[36mlet\u001b[39m compositionsOwner\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 160 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m index \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m index \u001b[33m<\u001b[39m splitRowCount\u001b[33m;\u001b[39m index \u001b[33m+=\u001b[39m \u001b[35m1\u001b[39m) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 68,
+                        "line": 157
+                      },
+                      "message": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  155 |   const splitRows = page.locator('main h2#what-the-library-supplies ~ table').first();\n  156 |   const splitRowCount = await splitRows.locator('tbody tr').count();\n> 157 |   expect(splitRowCount, 'the ownership-split table has body rows').toBeGreaterThan(0);\n      |                                                                    ^\n  158 |   let primitivesOwner: string | null = null;\n  159 |   let compositionsOwner: string | null = null;\n  160 |   for (let index = 0; index < splitRowCount; index += 1) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:157:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:00.721Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--0365e--table-and-honest-gaps-list-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--0365e--table-and-honest-gaps-list-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 68,
+                    "line": 157
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-a5570d160388dec3e0b9",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 145,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-3 example-app link resolves",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1381,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:01.867Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-27a1c9ff957702d4c8a0",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 212,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 598,
+                  "error": {
+                    "message": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:257:5",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 5,
+                      "line": 257
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 255 |\u001b[39m     boundaryToolTables\u001b[33m,\u001b[39m\n \u001b[90m 256 |\u001b[39m     \u001b[32m\"at least 1 table containing 'tool executor' on the boundary page\"\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 257 |\u001b[39m   )\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 258 |\u001b[39m\n \u001b[90m 259 |\u001b[39m   \u001b[90m// Home: no boundary table, exactly 1 one-line teaser link in the article.\u001b[39m\n \u001b[90m 260 |\u001b[39m   \u001b[36mconst\u001b[39m homeResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m navigateLocalhost(page\u001b[33m,\u001b[39m \u001b[33mHOME_ROUTE\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 5,
+                        "line": 257
+                      },
+                      "message": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  255 |     boundaryToolTables,\n  256 |     \"at least 1 table containing 'tool executor' on the boundary page\",\n> 257 |   ).toBeGreaterThanOrEqual(1);\n      |     ^\n  258 |\n  259 |   // Home: no boundary table, exactly 1 one-line teaser link in the article.\n  260 |   const homeResponse = await navigateLocalhost(page, HOME_ROUTE);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:257:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:03.382Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 5,
+                    "line": 257
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-695a84411d66d55247c7",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 242,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-5 no ownership overclaim",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 634,
+                  "error": {
+                    "message": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:329:5",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 5,
+                      "line": 329
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 327 |\u001b[39m     noStreamingClientCells\u001b[33m,\u001b[39m\n \u001b[90m 328 |\u001b[39m     \u001b[32m'at least 1 td cell states the library ships no streaming client'\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 329 |\u001b[39m   )\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 330 |\u001b[39m\n \u001b[90m 331 |\u001b[39m   record(testInfo\u001b[33m,\u001b[39m \u001b[32m'ac-5'\u001b[39m\u001b[33m,\u001b[39m {\n \u001b[90m 332 |\u001b[39m     overclaims\u001b[33m,\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 5,
+                        "line": 329
+                      },
+                      "message": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  327 |     noStreamingClientCells,\n  328 |     'at least 1 td cell states the library ships no streaming client',\n> 329 |   ).toBeGreaterThanOrEqual(1);\n      |     ^\n  330 |\n  331 |   record(testInfo, 'ac-5', {\n  332 |     overclaims,\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:329:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:04.338Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--42cd0-AC-5-no-ownership-overclaim-chromium-mobile/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--42cd0-AC-5-no-ownership-overclaim-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 5,
+                    "line": 329
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-baa1a539f885f0f5b9bb",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 311,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 112,
+                  "error": {
+                    "message": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:114:69",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 69,
+                      "line": 114
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 112 |\u001b[39m   \u001b[36mconst\u001b[39m tables \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main table'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 113 |\u001b[39m   \u001b[36mconst\u001b[39m tableCount \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m tables\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 114 |\u001b[39m   expect(tableCount\u001b[33m,\u001b[39m \u001b[32m'the boundary page renders at least 2 tables'\u001b[39m)\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m2\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 115 |\u001b[39m   \u001b[36mconst\u001b[39m rowsPerTable\u001b[33m:\u001b[39m number[] \u001b[33m=\u001b[39m []\u001b[33m;\u001b[39m\n \u001b[90m 116 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m index \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m index \u001b[33m<\u001b[39m tableCount\u001b[33m;\u001b[39m index \u001b[33m+=\u001b[39m \u001b[35m1\u001b[39m) {\n \u001b[90m 117 |\u001b[39m     \u001b[36mconst\u001b[39m bodyRows \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m tables\u001b[33m.\u001b[39mnth(index)\u001b[33m.\u001b[39mlocator(\u001b[32m'tbody tr'\u001b[39m)\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 69,
+                        "line": 114
+                      },
+                      "message": "Error: the boundary page renders at least 2 tables\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  112 |   const tables = page.locator('main table');\n  113 |   const tableCount = await tables.count();\n> 114 |   expect(tableCount, 'the boundary page renders at least 2 tables').toBeGreaterThanOrEqual(2);\n      |                                                                     ^\n  115 |   const rowsPerTable: number[] = [];\n  116 |   for (let index = 0; index < tableCount; index += 1) {\n  117 |     const bodyRows = await tables.nth(index).locator('tbody tr').count();\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:114:69"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:05.432Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 69,
+                    "line": 114
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-f119af7509a734007ca1",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-2 ownership-split table and honest gaps list",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 122,
+                  "error": {
+                    "message": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:157:68",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 68,
+                      "line": 157
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 155 |\u001b[39m   \u001b[36mconst\u001b[39m splitRows \u001b[33m=\u001b[39m page\u001b[33m.\u001b[39mlocator(\u001b[32m'main h2#what-the-library-supplies ~ table'\u001b[39m)\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n \u001b[90m 156 |\u001b[39m   \u001b[36mconst\u001b[39m splitRowCount \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m splitRows\u001b[33m.\u001b[39mlocator(\u001b[32m'tbody tr'\u001b[39m)\u001b[33m.\u001b[39mcount()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 157 |\u001b[39m   expect(splitRowCount\u001b[33m,\u001b[39m \u001b[32m'the ownership-split table has body rows'\u001b[39m)\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 158 |\u001b[39m   \u001b[36mlet\u001b[39m primitivesOwner\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 159 |\u001b[39m   \u001b[36mlet\u001b[39m compositionsOwner\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[36mnull\u001b[39m \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 160 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m index \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m index \u001b[33m<\u001b[39m splitRowCount\u001b[33m;\u001b[39m index \u001b[33m+=\u001b[39m \u001b[35m1\u001b[39m) {\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 68,
+                        "line": 157
+                      },
+                      "message": "Error: the ownership-split table has body rows\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  155 |   const splitRows = page.locator('main h2#what-the-library-supplies ~ table').first();\n  156 |   const splitRowCount = await splitRows.locator('tbody tr').count();\n> 157 |   expect(splitRowCount, 'the ownership-split table has body rows').toBeGreaterThan(0);\n      |                                                                    ^\n  158 |   let primitivesOwner: string | null = null;\n  159 |   let compositionsOwner: string | null = null;\n  160 |   for (let index = 0; index < splitRowCount; index += 1) {\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:157:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:05.996Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--0365e--table-and-honest-gaps-list-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--0365e--table-and-honest-gaps-list-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 68,
+                    "line": 157
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-61c3bec1cc40199df793",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 145,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-3 example-app link resolves",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:06.598Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-150653488536afd78ebd",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 212,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 125,
+                  "error": {
+                    "message": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:257:5",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 5,
+                      "line": 257
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 255 |\u001b[39m     boundaryToolTables\u001b[33m,\u001b[39m\n \u001b[90m 256 |\u001b[39m     \u001b[32m\"at least 1 table containing 'tool executor' on the boundary page\"\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 257 |\u001b[39m   )\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 258 |\u001b[39m\n \u001b[90m 259 |\u001b[39m   \u001b[90m// Home: no boundary table, exactly 1 one-line teaser link in the article.\u001b[39m\n \u001b[90m 260 |\u001b[39m   \u001b[36mconst\u001b[39m homeResponse \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m navigateLocalhost(page\u001b[33m,\u001b[39m \u001b[33mHOME_ROUTE\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 5,
+                        "line": 257
+                      },
+                      "message": "Error: at least 1 table containing 'tool executor' on the boundary page\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  255 |     boundaryToolTables,\n  256 |     \"at least 1 table containing 'tool executor' on the boundary page\",\n> 257 |   ).toBeGreaterThanOrEqual(1);\n      |     ^\n  258 |\n  259 |   // Home: no boundary table, exactly 1 one-line teaser link in the article.\n  260 |   const homeResponse = await navigateLocalhost(page, HOME_ROUTE);\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:257:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:07.242Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--9b1d7-gle-canonical-boundary-page-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 5,
+                    "line": 257
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-dcb8e65cbae5c092291a",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 242,
+          "column": 1
+        },
+        {
+          "title": "FLOW-DOCS-04-boundary-ownership-tables AC-5 no ownership overclaim",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-nojs",
+              "projectName": "chromium-nojs",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 137,
+                  "error": {
+                    "message": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:329:5",
+                    "location": {
+                      "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                      "column": 5,
+                      "line": 329
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 327 |\u001b[39m     noStreamingClientCells\u001b[33m,\u001b[39m\n \u001b[90m 328 |\u001b[39m     \u001b[32m'at least 1 td cell states the library ships no streaming client'\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 329 |\u001b[39m   )\u001b[33m.\u001b[39mtoBeGreaterThanOrEqual(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 330 |\u001b[39m\n \u001b[90m 331 |\u001b[39m   record(testInfo\u001b[33m,\u001b[39m \u001b[32m'ac-5'\u001b[39m\u001b[33m,\u001b[39m {\n \u001b[90m 332 |\u001b[39m     overclaims\u001b[33m,\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                        "column": 5,
+                        "line": 329
+                      },
+                      "message": "Error: at least 1 td cell states the library ships no streaming client\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  327 |     noStreamingClientCells,\n  328 |     'at least 1 td cell states the library ships no streaming client',\n> 329 |   ).toBeGreaterThanOrEqual(1);\n      |     ^\n  330 |\n  331 |   record(testInfo, 'ac-5', {\n  332 |     overclaims,\n    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:329:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-29T22:44:07.746Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--42cd0-AC-5-no-ownership-overclaim-chromium-nojs/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/test-results/sprint-06-guides-boundary--42cd0-AC-5-no-ownership-overclaim-chromium-nojs/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-018/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+                    "column": 5,
+                    "line": 329
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91da6369ba010a03c22c-51d1053a2e57d70a7da9",
+          "file": "sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+          "line": 311,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-29T22:43:51.888Z",
+    "duration": 16211.807,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 12,
+    "flaky": 0
+  }
+}
+
