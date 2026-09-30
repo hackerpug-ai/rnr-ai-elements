@@ -1,0 +1,99 @@
+URL: http://localhost:4321/docs/owns-vs-does-not-own
+HTTP_STATUS: 200
+TITLE: What the library owns — RNR AI Elements
+----BODY-TEXT----
+RNR
+Components
+Registry
+Guides
+Porting
+Changelog
+Search
+Theme
+GETTING STARTED
+Introduction
+Installation
+Quickstart
+CLI
+Dark mode
+Theming
+What the library owns
+GUIDES
+Re-theme your app
+Update installed items
+Preview on a device
+Customize rendering
+Troubleshooting
+PORTING
+Porting from Vercel AI Elements
+What the library owns
+
+What the registry items supply, what your app must supply, and what the optional markdown renderer choice costs in Expo Go.
+
+This page explains who supplies what in an RNR AI Elements chat. Read it to decide which pieces your application must build before any component renders useful output. It covers the ownership split between the library and your app, and the consequences of the markdown renderer choice. It does not cover installation steps or the token system — Theming covers the token system and its seams.
+
+What the library supplies
+
+The registry items are AI UI compositions over React Native Reusables (RNR) primitives. The following table maps each layer of a chat screen to its owner:
+
+Layer	What it covers	Owned by
+AI compositions	The AI UI compositions — chat surface registry items such as Conversation, Message, Prompt input, Tool, and Reasoning.	this library
+Primitives	The base registry items from React Native Reusables — Button, Text, Icon, and the other reused building blocks the compositions are built on.	react-native-reusables
+Transcript state	The running transcript state — the messages and session your hook owns.	your app
+
+You copy each registry item into your app’s own source tree and style it with your theme tokens. The components are prop-driven and hold no model state.
+
+What your app supplies
+
+Your application supplies everything the model interaction needs. The following table states, for each model-side responsibility, what ships in this library and what your app supplies:
+
+Responsibility	Ships in this library	What your app supplies
+Transcript state	No. Registry items hold no chat state; every composition re-renders from the props you pass.	Your state hook owns the message list.
+Transport	No. This library ships no transport.	You wire the network path to your model route.
+Streaming client	No. This library ships no streaming client.	You wire AI SDK v7 useChat, or a client you write.
+Provider calls	No. The library makes no provider calls and executes no tools.	Your route calls the model provider.
+Tool executor	No. This library ships no tool executor.	Your code owns tool execution — it runs tool calls and returns results.
+Gaps
+
+The split leaves real work in your app. The following table lists each gap, and every gap is a responsibility the tables above already assign to you:
+
+Gap	What is missing	Where your app provides it
+Transcript state	Nothing shipped stores the running chat.	Your state hook — useChat or one you write.
+Transport	No network code ships here.	Your model route and its transport.
+Streaming client	No streaming client ships here.	AI SDK v7 useChat or a client you write.
+Provider calls	No provider code ships here.	The route that calls your model provider.
+Tool execution	No executor ships here.	Your tool-running code.
+The markdown renderer choice
+
+The components that render model output do not bundle a markdown renderer. MessageResponse in the Message registry item and ReasoningContent in the Reasoning registry item both accept a renderMarkdown prop. Omit the prop and each component renders the string as plain Text; supply one and the component renders your function’s output. Half-streamed markdown is repaired before rendering either way, so incomplete **bold never flashes literal asterisks mid-stream.
+
+The plain-Text core runs in Expo Go with no extra dependency. Expo Go cannot load the native modules the optional renderers need, so choosing streamdown or enriched-markdown introduces a dev client requirement. A dev client is a development build of your app that includes native modules Expo Go cannot load.
+
+enriched-markdown adds one peer package, react-native-enriched-markdown. streamdown adds four peers, among them react-native-streamdown itself and react-native-worklets. The exact peers and permissions for both choices are listed with peers in the install docs matrix. The Message reference documents the full prop list.
+
+See the worked example app
+
+The source shows installation and composition today; it does not yet include a live streaming chat.
+
+example app source (apps/example)
+Where to look next
+
+For the styling side of the same split, read Theming: the renderMarkdown seam.
+
+Edit this page
+ON THIS PAGE
+What the library supplies
+What your app supplies
+Gaps
+The markdown renderer choice
+Where to look next
+
+RNR AI Elements
+
+Components
+Registry
+Guides
+Porting
+Changelog
+
+Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.

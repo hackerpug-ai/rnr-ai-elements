@@ -1,0 +1,55 @@
+URL: http://localhost:4321/changelog/0.2.1
+HTTP_STATUS: 200
+TITLE: Release 0.2.1 — RNR AI Elements
+----BODY-TEXT----
+RNR
+Components
+Registry
+Guides
+Porting
+Changelog
+Search
+Theme
+GETTING STARTED
+Introduction
+Installation
+Quickstart
+CLI
+Dark mode
+Theming
+What the library owns
+GUIDES
+Re-theme your app
+Update installed items
+Preview on a device
+Customize rendering
+Troubleshooting
+PORTING
+Porting from Vercel AI Elements
+0.2.1
+
+Registry release 0.2.1: what shipped, what changed, and what it fixed.
+
+Released 2026-09-08
+
+Released 2026-09-08. Hotfix release: six registry items shipped without the sibling files their sources import, so installing them through the CLI produced a broken tree. This release completes those file sets.
+
+Added
+
+none
+
+Changed
+The example app now installs the full 56-item set through the real RNR CLI, replacing the walking-skeleton subset from v0.1.0.
+Fixed
+Six items shipped without the sibling files their sources import — consumers got prompt-input.tsx referencing ./prompt-input.logic with no such file. prompt-input now ships prompt-input.logic and attachments.logic, agent ships persona, plan ships task.logic, and model-selector, mic-selector and voice-selector ship command.logic.
+The installed icon.tsx in the example app carried a usage comment pointing at a registry-internal path that does not exist in a consumer tree; the comment now shows the consumer alias.
+
+RNR AI Elements
+
+Components
+Registry
+Guides
+Porting
+Changelog
+
+Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.

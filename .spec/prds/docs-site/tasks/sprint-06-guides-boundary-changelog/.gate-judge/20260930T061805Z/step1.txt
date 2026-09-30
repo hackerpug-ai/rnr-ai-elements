@@ -1,0 +1,294 @@
+URL: http://localhost:4321/
+HTTP_STATUS: 200
+TITLE: RNR AI Elements — Docs
+----BODY-TEXT----
+RNR
+Components
+Registry
+Guides
+Porting
+Changelog
+Search
+Theme
+Universal AI chat and agent UI components for React Native
+
+A copy-paste registry: the CLI copies each registry item's source into your project. This is NOT an npm package — you read, change, and own every line.
+
+Version
+0.2.1
+Registry items
+56
+Components
+39
+UI primitives
+11
+Libs
+6
+nativewind
+uniwind
+npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json
+Copy
+Get started
+Browse components
+
+Where the registry ends and your app begins: transport, streaming, and tool execution stay yours.
+
+Read the ownership boundary — what the library owns, and what it does not
+Conversation
+3
+Checkpoint
+
+A restorable point, rendered as a divider through the transcript. Restoring TRUNCATES the conversation, so it confirms…
+
+component
+runs in Expo Go
+Conversation
+
+Virtualized transcript. Inverted FlatList with maintainVisibleContentPosition, so stick-to-bottom is free and releases…
+
+component
+runs in Expo Go
+Open In Chat
+
+The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same six targets and the same menu as the web, with the…
+
+component
+runs in Expo Go
+Message
+7
+Shimmer
+
+The still-generating signal, applied to text. React Native has no background-clip:text, so this reuses RNR Skeleton's…
+
+component
+runs in Expo Go
+Image
+
+A model-generated image. Takes the AI SDK result object and builds the data URI internally, preserving the web prop…
+
+component
+runs in Expo Go
+Persona
+
+Identity surface: avatar, name, description, status. DIVERGES from the web original, which is a Rive animation — the…
+
+component
+runs in Expo Go
+Message
+
+One turn. The prop is `from`, not `role`. Markdown is INJECTED via renderMarkdown and defaults to plain Text, which…
+
+component
+runs in Expo Go
+Question
+
+The agent asks, the user answers with one tap — the PRD's touch verdict, where a tap IS the submission and the choice…
+
+component
+runs in Expo Go
+Queue
+
+The queued-actions list: a collapsible section with the count on the trigger and a remove action per row. The component…
+
+component
+runs in Expo Go
+Attachments
+
+The pending-attachment chips above the composer (UC-CHAT-03 AC-3), in the web original's grid/inline/list variants,…
+
+component
+runs in Expo Go
+Prompt Input
+6
+Speech Input
+
+Push-to-talk. Ships the web original's caller-supplied-transcriber contract as the ONLY contract, so no speech…
+
+component
+runs in Expo Go
+Prompt Input
+
+The composer at web parity: provider/controller context, attachment chips over the native pickers, the + tools menu…
+
+component
+runs in Expo Go
+Model Selector
+
+The searchable model picker, composed on the command atom. Port-adapted per the PRD verdict: a dropdown on web becomes…
+
+component
+runs in Expo Go
+Mic Selector
+
+The audio input route picker (UC-VOICE-01 AC-3). Native-substitute per the PRD verdict: iOS and Android expose audio…
+
+component
+runs in Expo Go
+Voice Selector
+
+The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD verdict: a bottom sheet whose voice set comes from…
+
+component
+runs in Expo Go
+Transcription
+
+The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD verdict — display-only; capture belongs to…
+
+component
+runs in Expo Go
+Reasoning
+7
+Reasoning
+
+The collapsible thinking trace. Auto-opens while streaming, auto-closes one second after the answer begins, never…
+
+component
+runs in Expo Go
+Task
+
+What the agent did or is doing: status per row, animated on change, with file chips that flow and wrap. Collapsed by…
+
+component
+runs in Expo Go
+Agent
+
+The identity/run surface: the persona molecule in the header plus a run-state badge and the thumb-reachable…
+
+component
+runs in Expo Go
+Chain of Thought
+
+The multi-step reasoning list — distinct from reasoning, which stays the single collapsible trace. Ordered steps with…
+
+component
+runs in Expo Go
+Plan
+
+The agent's plan: a card + collapsible shell whose steps are the TASK organism's own rows — composed by the consumer,…
+
+component
+runs in Expo Go
+Confirmation
+
+Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING without an approval or while arguments are still…
+
+component
+runs in Expo Go
+Context
+
+The context-window budget chip and its press-opened breakdown (the PRD verdict turns the web's hover card into a…
+
+component
+runs in Expo Go
+Sources
+4
+Sources
+
+The grouped sources behind an answer: a collapsible whose trigger reads the web original's Used N sources and whose…
+
+component
+runs in Expo Go
+Inline Citation
+
+The reference chip inline with the claim it backs, rendered as nested Text so it sits inside a text run exactly as the…
+
+component
+runs in Expo Go
+Audio Player
+
+Transport controls and a scrubbable progress bar for a generated audio response (UC-VOICE-02 AC-1/AC-4).…
+
+component
+runs in Expo Go
+Web Preview
+
+A live page rendered inside the app (UC-CODE-03), native-substitute per the PRD verdict: the iframe is replaced by a…
+
+component
+runs in Expo Go
+Suggestion
+1
+Suggestion
+
+Starter prompts and follow-up chips a user taps instead of typing. Horizontal scrolling row; onPress receives the…
+
+component
+runs in Expo Go
+Tool
+11
+Tool
+
+The tool-call card: status badge and disclosure for arguments and result. Covers every AI SDK tool-part state with no…
+
+component
+runs in Expo Go
+Artifact
+
+The container for a generated deliverable, with the web original's header chrome: title, description, actions, close,…
+
+component
+runs in Expo Go
+Snippet
+
+The small copyable command the assistant hands over, composed on the registered input-group exactly as the web composes…
+
+component
+runs in Expo Go
+Commit
+
+A commit reference row with its changed files behind a disclosure: hash chip, message, author, relative timestamp, and…
+
+component
+runs in Expo Go
+Terminal
+
+Read-only, horizontally scrollable monospace log view with ANSI colors mapped to theme tokens (UC-CODE-02 AC-1/AC-4).…
+
+component
+runs in Expo Go
+File Tree
+
+The agent workspace browser (UC-CODE-01 AC-1: expand and collapse directories on a phone-width screen). Port-adapted…
+
+component
+runs in Expo Go
+Environment Variables
+
+Masked key/value rows for the agent's environment (UC-CODE-01 AC-4: masked by default, reveal a single value on…
+
+component
+runs in Expo Go
+Package Info
+
+Card of package name, version, and a copyable install command (UC-CODE-01 AC-3) — port-at-parity per the PRD verdict,…
+
+component
+runs in Expo Go
+Stack Trace
+
+The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: every frame's file and line legible at phone width;…
+
+component
+runs in Expo Go
+Schema Display
+
+A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's parameter schema in a nested view that remains legible at…
+
+component
+runs in Expo Go
+Test Results
+
+A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/failed/skipped counts and a failing test that expands…
+
+component
+runs in Expo Go
+
+RNR AI Elements
+
+Components
+Registry
+Guides
+Porting
+Changelog
+
+Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.

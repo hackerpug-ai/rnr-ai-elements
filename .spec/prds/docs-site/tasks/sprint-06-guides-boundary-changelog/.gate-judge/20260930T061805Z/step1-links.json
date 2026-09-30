@@ -1,0 +1,234 @@
+[
+ {
+  "text": "RNR",
+  "href": "/"
+ },
+ {
+  "text": "Components",
+  "href": "/components"
+ },
+ {
+  "text": "Registry",
+  "href": "/registry"
+ },
+ {
+  "text": "Guides",
+  "href": "/guides"
+ },
+ {
+  "text": "Porting",
+  "href": "/porting"
+ },
+ {
+  "text": "Changelog",
+  "href": "/changelog"
+ },
+ {
+  "text": "Components",
+  "href": "/components"
+ },
+ {
+  "text": "Registry",
+  "href": "/registry"
+ },
+ {
+  "text": "Guides",
+  "href": "/guides"
+ },
+ {
+  "text": "Porting",
+  "href": "/porting"
+ },
+ {
+  "text": "Changelog",
+  "href": "/changelog"
+ },
+ {
+  "text": "Get started",
+  "href": "/registry"
+ },
+ {
+  "text": "Browse components",
+  "href": "/components"
+ },
+ {
+  "text": "Read the ownership boundary — what the library owns, and what it does not",
+  "href": "/docs/owns-vs-does-not-own"
+ },
+ {
+  "text": "Checkpoint A restorable point, rendered as a divider through the transcript. Res",
+  "href": "/components/checkpoint"
+ },
+ {
+  "text": "Conversation Virtualized transcript. Inverted FlatList with maintainVisibleConte",
+  "href": "/components/conversation"
+ },
+ {
+  "text": "Open In Chat The open-this-query-elsewhere hand-off (UC-CHAT-05 AC-4): the same ",
+  "href": "/components/open-in-chat"
+ },
+ {
+  "text": "Shimmer The still-generating signal, applied to text. React Native has no backgr",
+  "href": "/components/shimmer"
+ },
+ {
+  "text": "Image A model-generated image. Takes the AI SDK result object and builds the dat",
+  "href": "/components/image"
+ },
+ {
+  "text": "Persona Identity surface: avatar, name, description, status. DIVERGES from the w",
+  "href": "/components/persona"
+ },
+ {
+  "text": "Message One turn. The prop is `from`, not `role`. Markdown is INJECTED via rende",
+  "href": "/components/message"
+ },
+ {
+  "text": "Question The agent asks, the user answers with one tap — the PRD's touch verdict",
+  "href": "/components/question"
+ },
+ {
+  "text": "Queue The queued-actions list: a collapsible section with the count on the trigg",
+  "href": "/components/queue"
+ },
+ {
+  "text": "Attachments The pending-attachment chips above the composer (UC-CHAT-03 AC-3), i",
+  "href": "/components/attachments"
+ },
+ {
+  "text": "Speech Input Push-to-talk. Ships the web original's caller-supplied-transcriber ",
+  "href": "/components/speech-input"
+ },
+ {
+  "text": "Prompt Input The composer at web parity: provider/controller context, attachment",
+  "href": "/components/prompt-input"
+ },
+ {
+  "text": "Model Selector The searchable model picker, composed on the command atom. Port-a",
+  "href": "/components/model-selector"
+ },
+ {
+  "text": "Mic Selector The audio input route picker (UC-VOICE-01 AC-3). Native-substitute ",
+  "href": "/components/mic-selector"
+ },
+ {
+  "text": "Voice Selector The TTS voice picker (UC-VOICE-02 AC-2). Port-adapted per the PRD",
+  "href": "/components/voice-selector"
+ },
+ {
+  "text": "Transcription The live transcript (UC-VOICE-01 AC-2), port-at-parity per the PRD",
+  "href": "/components/transcription"
+ },
+ {
+  "text": "Reasoning The collapsible thinking trace. Auto-opens while streaming, auto-close",
+  "href": "/components/reasoning"
+ },
+ {
+  "text": "Task What the agent did or is doing: status per row, animated on change, with fi",
+  "href": "/components/task"
+ },
+ {
+  "text": "Agent The identity/run surface: the persona molecule in the header plus a run-st",
+  "href": "/components/agent"
+ },
+ {
+  "text": "Chain of Thought The multi-step reasoning list — distinct from reasoning, which ",
+  "href": "/components/chain-of-thought"
+ },
+ {
+  "text": "Plan The agent's plan: a card + collapsible shell whose steps are the TASK organ",
+  "href": "/components/plan"
+ },
+ {
+  "text": "Confirmation Human-in-the-loop approve/deny sized for a thumb. Renders NOTHING w",
+  "href": "/components/confirmation"
+ },
+ {
+  "text": "Context The context-window budget chip and its press-opened breakdown (the PRD v",
+  "href": "/components/context"
+ },
+ {
+  "text": "Sources The grouped sources behind an answer: a collapsible whose trigger reads ",
+  "href": "/components/sources"
+ },
+ {
+  "text": "Inline Citation The reference chip inline with the claim it backs, rendered as n",
+  "href": "/components/inline-citation"
+ },
+ {
+  "text": "Audio Player Transport controls and a scrubbable progress bar for a generated au",
+  "href": "/components/audio-player"
+ },
+ {
+  "text": "Web Preview A live page rendered inside the app (UC-CODE-03), native-substitute ",
+  "href": "/components/web-preview"
+ },
+ {
+  "text": "Suggestion Starter prompts and follow-up chips a user taps instead of typing. Ho",
+  "href": "/components/suggestion"
+ },
+ {
+  "text": "Tool The tool-call card: status badge and disclosure for arguments and result. C",
+  "href": "/components/tool"
+ },
+ {
+  "text": "Artifact The container for a generated deliverable, with the web original's head",
+  "href": "/components/artifact"
+ },
+ {
+  "text": "Snippet The small copyable command the assistant hands over, composed on the reg",
+  "href": "/components/snippet"
+ },
+ {
+  "text": "Commit A commit reference row with its changed files behind a disclosure: hash c",
+  "href": "/components/commit"
+ },
+ {
+  "text": "Terminal Read-only, horizontally scrollable monospace log view with ANSI colors ",
+  "href": "/components/terminal"
+ },
+ {
+  "text": "File Tree The agent workspace browser (UC-CODE-01 AC-1: expand and collapse dire",
+  "href": "/components/file-tree"
+ },
+ {
+  "text": "Environment Variables Masked key/value rows for the agent's environment (UC-CODE",
+  "href": "/components/environment-variables"
+ },
+ {
+  "text": "Package Info Card of package name, version, and a copyable install command (UC-C",
+  "href": "/components/package-info"
+ },
+ {
+  "text": "Stack Trace The parsed error trace behind a disclosure (UC-CODE-02 AC-3/AC-4: ev",
+  "href": "/components/stack-trace"
+ },
+ {
+  "text": "Schema Display A REST endpoint's schema card (UC-AGENT-05 AC-5: a tool's paramet",
+  "href": "/components/schema-display"
+ },
+ {
+  "text": "Test Results A test run summarized rather than dumped (UC-CODE-02 AC-2: passed/f",
+  "href": "/components/test-results"
+ },
+ {
+  "text": "Components",
+  "href": "/components"
+ },
+ {
+  "text": "Registry",
+  "href": "/registry"
+ },
+ {
+  "text": "Guides",
+  "href": "/guides"
+ },
+ {
+  "text": "Porting",
+  "href": "/porting"
+ },
+ {
+  "text": "Changelog",
+  "href": "/changelog"
+ }
+]

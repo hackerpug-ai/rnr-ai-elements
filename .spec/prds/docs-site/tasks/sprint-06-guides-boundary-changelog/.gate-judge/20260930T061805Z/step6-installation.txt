@@ -1,0 +1,100 @@
+URL: http://localhost:4321/docs/installation
+HTTP_STATUS: 200
+TITLE: Installation — RNR AI Elements
+----BODY-TEXT----
+RNR
+Components
+Registry
+Guides
+Porting
+Changelog
+Search
+Theme
+GETTING STARTED
+Introduction
+Installation
+Quickstart
+CLI
+Dark mode
+Theming
+What the library owns
+GUIDES
+Re-theme your app
+Update installed items
+Preview on a device
+Customize rendering
+Troubleshooting
+PORTING
+Porting from Vercel AI Elements
+Installation
+
+This guide shows you how to choose your engine from project facts and install a registry item into an existing Expo project.
+
+This guide shows you how to choose your engine and install the Conversation registry item into an existing Expo project. Each step states what you should see when it works.
+
+This page does not cover creating a new project, wiring a provider, or troubleshooting a broken install — start with the RNR CLI for project creation, and read What the library owns for the wiring your app supplies.
+
+Prerequisites
+
+Before you start, have the following:
+
+An Expo project you can already build and run.
+Your project’s package.json open, so you can read its installed packages.
+A terminal at the project root.
+Which engine does your project use?
+
+One question decides every command on this page: which engine does your project already use? The engine is a fact about your project, not a preference you set here — install from the engine tree that matches it.
+
+If your project…	Use this engine
+Uses NativeWind 4.2.6 — Tailwind v3, with styles configured through a tailwind.config.js file	nativewind
+Uses Tailwind v4, with design tokens declared in a @theme block in global CSS and no tailwind.config.js	uniwind
+
+To check, read your dependencies: a nativewind entry means the nativewind engine tree; a uniwind entry means the uniwind engine tree. Keep the package version and the Tailwind major straight — NativeWind 4.2.6 pairs with Tailwind v3, and Tailwind v4 is the CSS-first major where Uniwind lives.
+
+Install the Conversation registry item
+Open a terminal at your project root. You should see your project’s package.json in the current directory.
+Select the tab for your engine below and copy the complete command it shows. Your clipboard should hold exactly one command naming your engine’s tree.
+nativewind
+uniwind
+npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json
+Copy
+Paste the command into your terminal and run it, and confirm when the CLI asks. The CLI writes the item’s files into your project — for example components/ai/conversation.tsx — installs the peers the item needs, and prints the paths it wrote.
+Open the Conversation reference and add the item to your screen. Its props and usage sections show the import and the minimal render, and you should see your first transcript view on the next app start.
+
+Every item page carries the same engine tabs, so you can repeat steps 2 and 3 for any other registry item.
+
+Dev client requirements
+
+Opt-in items requires a dev client — install the listed peers and declare the platform permissions before the first dev-client build.
+
+Dev-client items: peer dependencies and platform permissions
+Item	Peer dependencies	iOS permissions	Android permissions
+Enriched markdown	react-native-enriched-markdown 1.0.2	NSPhotoLibraryAddUsageDescription	INTERNET
+Streamdown	react-native-streamdown 0.3.0, react-native-enriched-markdown >=1.0.0, react-native-worklets >=0.10.0, remend 1.3.0	NSPhotoLibraryAddUsageDescription	INTERNET
+Speech recognition	expo-speech-recognition 57.0.0	NSMicrophoneUsageDescription, NSSpeechRecognitionUsageDescription	RECORD_AUDIO
+Extended audio	expo-audio 57.0.5	NSMicrophoneUsageDescription	RECORD_AUDIO
+
+Everything this guide installs runs in Expo Go. The opt-in items in the matrix above require a dev client instead — a development build of your app that includes native modules Expo Go cannot load.
+
+Next steps
+Read the full URL and destination contract: CLI
+Point the items at your tokens: Theming
+Decide light and dark on your terms: Dark mode
+See the whole ownership split: What the library owns
+Recover from a broken install: Troubleshooting
+Edit this page
+ON THIS PAGE
+Prerequisites
+Which engine does your project use?
+Install the Conversation registry item
+Next steps
+
+RNR AI Elements
+
+Components
+Registry
+Guides
+Porting
+Changelog
+
+Universal AI chat and agent UI components for React Native, distributed as a copy-paste registry — not an npm package.

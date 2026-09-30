@@ -1,0 +1,443 @@
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological
+[docs-data] porting: 40 mapped, 9 not-ported of 49 upstream elements — every mapping slug resolves against 56 registry items, notPorted is the exact complement, gaps cross-check passes
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": true,
+  "root": "/Users/justinrich/Projects/rnr-ai-elements",
+  "docsRoot": "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/guides/customize-rendering.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/guides/preview-on-device.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/guides/re-theme.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/guides/troubleshooting.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/guides/update-installed-items.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/owns-vs-does-not-own.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/porting.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-0",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/example/components/ai/message.tsx",
+      "region": {
+        "sha256": "272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222",
+        "length": 302
+      },
+      "byteLength": 302,
+      "sha256": "272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-1",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/example/components/ai/reasoning.tsx",
+      "region": {
+        "sha256": "5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313",
+        "length": 689
+      },
+      "byteLength": 689,
+      "sha256": "5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-2",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/harness/src/stories/Chat.stories.tsx",
+      "region": {
+        "sha256": "0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89",
+        "length": 529
+      },
+      "byteLength": 529,
+      "sha256": "0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9",
+        "length": 186
+      },
+      "byteLength": 186,
+      "sha256": "8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-1",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-2",
+      "kind": "configuration",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/nativewind/tailwind.config.js",
+      "region": {
+        "sha256": "673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870",
+        "length": 276
+      },
+      "byteLength": 276,
+      "sha256": "673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/update-installed-items.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/update.sh",
+      "region": {
+        "sha256": "27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d",
+        "length": 195
+      },
+      "byteLength": 195,
+      "sha256": "27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 2,
+    "tsx": 7,
+    "css": 3,
+    "configuration": 16,
+    "ts": 2
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [
+    {
+      "engine": "nativewind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-9FU6K6",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 951,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "uniwind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-uniwind-case-NiPxDY",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 734,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "live-chat",
+      "executable": "/Users/justinrich/Projects/rnr-ai-elements/apps/example/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/Projects/rnr-ai-elements/apps/example",
+      "config": "/Users/justinrich/Projects/rnr-ai-elements/apps/example/tsconfig.live-chat.json",
+      "args": [
+        "-p",
+        "tsconfig.live-chat.json"
+      ],
+      "exit": 0,
+      "durationMs": 861,
+      "typescriptVersion": "6.0.3"
+    }
+  ],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4",
+    "uniwind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff"
+  },
+  "emitted": null,
+  "errors": []
+}
+01:00:25 [content] Syncing content
+01:00:25 [content] Synced content
+01:00:25 [types] Generated 293ms
+01:00:25 [build] output: "static"
+01:00:25 [build] mode: "static"
+01:00:25 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/apps/docs/dist/
+01:00:25 [build] Collecting build info...
+01:00:25 [build] ✓ Completed in 342ms.
+01:00:26 [build] Building static entrypoints...
+01:00:26 [vite] ✓ built in 250ms
+01:00:26 [vite] ✓ built in 54ms
+01:00:26 [build] Rearranging server assets...
+
+ generating static routes 
+[docs-data] guides: 5 guides — cap satisfied
+01:00:26   ├─ /404.html (+14ms) 
+01:00:26   ├─ /changelog/0.2.1/index.html (+2ms) 
+01:00:26   ├─ /changelog/0.2.0/index.html (+1ms) 
+01:00:26   ├─ /changelog/0.1.0/index.html (+1ms) 
+01:00:26   ├─ /changelog/index.html (+2ms) 
+01:00:26   ├─ /components/streamdown/index.html (+2ms) 
+01:00:26   ├─ /components/shimmer/index.html (+6ms) 
+01:00:26   ├─ /components/checkpoint/index.html (+3ms) 
+01:00:26   ├─ /components/image/index.html (+2ms) 
+01:00:26   ├─ /components/persona/index.html (+2ms) 
+01:00:26   ├─ /components/speech-input/index.html (+2ms) 
+01:00:26   ├─ /components/kbd/index.html (+2ms) 
+01:00:26   ├─ /components/breadcrumb/index.html (+2ms) 
+01:00:26   ├─ /components/button-group/index.html (+1ms) 
+01:00:26   ├─ /components/slider/index.html (+1ms) 
+01:00:26   ├─ /components/table/index.html (+1ms) 
+01:00:26   ├─ /components/command/index.html (+1ms) 
+01:00:26   ├─ /components/mono/index.html (+1ms) 
+01:00:26   ├─ /components/markdown/index.html (+1ms) 
+01:00:26   ├─ /components/code-block/index.html (+1ms) 
+01:00:26   ├─ /components/conversation/index.html (+1ms) 
+01:00:26   ├─ /components/message/index.html (+7ms) 
+01:00:26   ├─ /components/prompt-input/index.html (+54ms) 
+01:00:26   ├─ /components/empty/index.html (+6ms) 
+01:00:26   ├─ /components/item/index.html (+3ms) 
+01:00:26   ├─ /components/input-group/index.html (+2ms) 
+01:00:26   ├─ /components/sheet/index.html (+6ms) 
+01:00:26   ├─ /components/suggestion/index.html (+2ms) 
+01:00:26   ├─ /components/status/index.html (+7ms) 
+01:00:26   ├─ /components/reasoning-lifecycle/index.html (+2ms) 
+01:00:26   ├─ /components/tool/index.html (+2ms) 
+01:00:26   ├─ /components/reasoning/index.html (+1ms) 
+01:00:26   ├─ /components/task/index.html (+1ms) 
+01:00:26   ├─ /components/question/index.html (+2ms) 
+01:00:26   ├─ /components/agent/index.html (+1ms) 
+01:00:26   ├─ /components/chain-of-thought/index.html (+1ms) 
+01:00:26   ├─ /components/plan/index.html (+1ms) 
+01:00:26   ├─ /components/confirmation/index.html (+2ms) 
+01:00:26   ├─ /components/queue/index.html (+1ms) 
+01:00:26   ├─ /components/url/index.html (+2ms) 
+01:00:26   ├─ /components/sources/index.html (+1ms) 
+01:00:26   ├─ /components/inline-citation/index.html (+1ms) 
+01:00:26   ├─ /components/artifact/index.html (+2ms) 
+01:00:26   ├─ /components/snippet/index.html (+1ms) 
+01:00:26   ├─ /components/commit/index.html (+2ms) 
+01:00:26   ├─ /components/attachments/index.html (+2ms) 
+01:00:26   ├─ /components/context/index.html (+1ms) 
+01:00:26   ├─ /components/open-in-chat/index.html (+1ms) 
+01:00:26   ├─ /components/model-selector/index.html (+1ms) 
+01:00:26   ├─ /components/mic-selector/index.html (+2ms) 
+01:00:26   ├─ /components/voice-selector/index.html (+5ms) 
+01:00:26   ├─ /components/audio-player/index.html (+2ms) 
+01:00:26   ├─ /components/transcription/index.html (+1ms) 
+01:00:26   ├─ /components/terminal/index.html (+1ms) 
+01:00:26   ├─ /components/file-tree/index.html (+1ms) 
+01:00:26   ├─ /components/environment-variables/index.html (+1ms) 
+01:00:26   ├─ /components/package-info/index.html (+12ms) 
+01:00:26   ├─ /components/stack-trace-parser/index.html (+1ms) 
+01:00:26   ├─ /components/stack-trace/index.html (+1ms) 
+01:00:26   ├─ /components/schema-display/index.html (+1ms) 
+01:00:26   ├─ /components/test-results/index.html (+1ms) 
+01:00:26   ├─ /components/web-preview/index.html (+1ms) 
+01:00:26   ├─ /components/index.html (+3ms) 
+01:00:26   ├─ /docs/theming/index.html (+5ms) 
+01:00:26   ├─ /docs/introduction/index.html (+1ms) 
+01:00:26   ├─ /docs/installation/index.html (+2ms) 
+01:00:26   ├─ /docs/quickstart/index.html (+2ms) 
+01:00:26   ├─ /docs/cli/index.html (+1ms) 
+01:00:26   ├─ /docs/dark-mode/index.html (+0ms) 
+01:00:26   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+01:00:26   ├─ /guides/re-theme/index.html (+1ms) 
+01:00:26   ├─ /guides/update-installed-items/index.html (+0ms) 
+01:00:26   ├─ /guides/preview-on-device/index.html (+0ms) 
+01:00:26   ├─ /guides/customize-rendering/index.html (+0ms) 
+01:00:26   ├─ /guides/troubleshooting/index.html (+1ms) 
+01:00:26   ├─ /guides/index.html (+1ms) 
+01:00:26   ├─ /islands/copy-button/index.html (+1ms) 
+01:00:26   ├─ /porting/index.html (+1ms) 
+01:00:26   ├─ /registry/index.html (+2ms) 
+01:00:26   ├─ /index.html (+2ms) 
+01:00:26 ✓ Completed in 287ms.
+
+01:00:26 [build] ✓ Completed in 613ms.
+01:00:26 [build] 80 page(s) built in 985ms
+01:00:26 [build] Complete!
+
+> @rnr-ai-elements/docs@0.1.0 search:index /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/search-index.ts
+
+[search-index] 64 expected destinations (56 items, 8 docs) derived from the real sources
+[search-index] all expected destinations emitted under /Users/justinrich/Projects/rnr-ai-elements/apps/docs/dist
+Running Pagefind v1.5.2 (Extended)
+Running from: "/Users/justinrich/Projects/rnr-ai-elements"
+Source:       "apps/docs/dist"
+Output:       "apps/docs/dist/pagefind"
+
+[Walking source directory]
+Found 80 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: en
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 70 pages
+  Indexed 7417 words
+  Indexed 0 filters
+  Indexed 0 sorts
+
+Finished in 0.092 seconds
+[search-index] index complete: 70 pages cover all 64 expected destinations
+
+> @rnr-ai-elements/docs@0.1.0 check:links /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/check-dist-links.ts
+
+[docs-data] link-check: warning docs/cli/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/cli.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/dark-mode/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/dark-mode.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/installation/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/installation.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/introduction/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/introduction.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/owns-vs-does-not-own/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/owns-vs-does-not-own.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/quickstart/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/quickstart.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/theming/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/theming.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/customize-rendering/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/customize-rendering.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/preview-on-device/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/preview-on-device.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/re-theme/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/re-theme.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/troubleshooting/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/troubleshooting.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/update-installed-items/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/update-installed-items.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning porting/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/porting.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: 80 html files, 3106 links (3086 internal, 20 external), 0 error(s), 13 warning(s)

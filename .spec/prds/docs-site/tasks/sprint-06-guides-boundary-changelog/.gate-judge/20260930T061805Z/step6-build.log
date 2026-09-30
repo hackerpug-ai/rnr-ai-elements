@@ -1,0 +1,44 @@
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+/Users/justinrich/Projects/rnr-ai-elements/scripts/docs-data/gates.ts:341
+  if (violations.length > 0) throw new GateError(violations);
+                                   ^
+
+GateError: [docs-data] matrix: item "<matrix>" dev-client-matrix.json unreadable — restore apps/docs/src/data/dev-client-matrix.json (ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/data/dev-client-matrix.json')
+    at runAllGates (/Users/justinrich/Projects/rnr-ai-elements/scripts/docs-data/gates.ts:341:36)
+    at main (/Users/justinrich/Projects/rnr-ai-elements/scripts/docs-data/prebuild.ts:260:3)
+    at <anonymous> (/Users/justinrich/Projects/rnr-ai-elements/scripts/docs-data/prebuild.ts:365:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  violations: [
+    {
+      gate: 'matrix',
+      item: '<matrix>',
+      detail: "dev-client-matrix.json unreadable — restore apps/docs/src/data/dev-client-matrix.json (ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/apps/docs/src/data/dev-client-matrix.json')"
+    }
+  ]
+}
+
+Node.js v24.14.0
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/Projects/rnr-ai-elements/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+STEP6_BUILD_EXIT=1
