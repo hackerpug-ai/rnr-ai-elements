@@ -3,7 +3,9 @@ TASK: GBC-008 - /changelog section-index and /changelog/[version] release pages
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: c0917f33e2f5f2f5e99b110cb7dd78afaa3276cf
 PRIORITY:   P1
 POINTS:     3
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -412,3 +414,50 @@ Blocks:     ['GBC-013', 'GBC-014']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-008",
+  "commit_sha": "c0917f33e2f5f2f5e99b110cb7dd78afaa3276cf",
+  "done": "Landed /changelog (apps/docs/src/pages/changelog/index.astro) composing SectionIndexLayout+IndexList, /changelog/[version] (apps/docs/src/pages/changelog/[version].astro) with exactly one article per release whose only h2s are the body's Added/Changed/Fixed, and the single derivation both routes read (apps/docs/src/lib/changelog.ts:43 regex extraction, compareReleaseDesc sort, UTC-day formatting); the FLOW-DOCS-06 spec (tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts) carries 12 tests covering GBC-008 AC-1..3 plus all 9 bound claims, RED-proven at 33/36 failed and GREEN 36/36 across chromium-desktop, chromium-mobile and chromium-nojs, merged to main as fdac4bae.",
+  "deviations": [],
+  "concerns": [
+    "The tracked evidence run.json is overwritten by every green Playwright run (afterAll in changelog-release-pages.spec.ts:305); proof.red is the only durable red artifact, so future re-runs must not be expected to preserve the original run.json.",
+    "Every full FLOW-DOCS-06 run spawns the real prebuild 6 times (GBC-005/AC-3 and GBC-007/AC-1 each run unguarded in all 3 projects), which is most of the lane's wall time; if the sprint grows more claims in this spec, consider gating CLI tests to the desktop project only \u2014 that would require a task-file change to the claims' UNGUARDED wording.",
+    "The per-test status directory (.tmp/sprint-06-guides-boundary-changelog/e2e-evidence/FLOW-DOCS-06-changelog-release-pages-statuses/) accumulates across runs and must be cleared before a run whose run.json should reflect only that run; a stale file counts as a failure in afterAll by design.",
+    "pnpm exec biome ci . OOMs the linter at the repo root in this worktree; the direct binary ./node_modules/.bin/biome ci . passes with exit 0."
+  ],
+  "findings": [
+    "MarkdownLayout cannot host the release pages as-is: its Props require section: DocsSection (apps/docs/src/layouts/MarkdownLayout.astro:27) and changelog is none of the three, so a page composed through it would write a false data-pagefind-meta and release pages currently stay out of the pagefind index \u2014 widening the type to accept a changelog section is the seam if search coverage of releases is ever wanted.",
+    "DocsNav renders .docs-nav__section-title with text-transform: uppercase (apps/docs/src/components/DocsNav.astro:59), so innerText returns 'GETTING STARTED' while the claim text is the source label \u2014 any future spec asserting DocsNav titles must read textContent, as GBC-016/AC-5 in the landed spec now does.",
+    "/changelog now holds two chip populations (the SectionHeader count chip and one date chip per row), so page-wide '.chip' locators over-count; assertions must scope to [data-index-list-row] exactly as GBC-015/AC-2's test does.",
+    "The touched-component extraction matches only markdown inline links `](/components/slug)` (apps/docs/src/lib/changelog.ts:43); an entry linking via HTML or reference-style markdown would silently produce no row links \u2014 the regex is the single place to extend (ponytail ceiling, documented in the module).",
+    "Playwright has no `-t` flag (that is vitest); a targeted rerun of this lane must use --grep, and the rtk wrapper can swallow playwright output entirely \u2014 reading run.json or redirecting to a file is the reliable result channel."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-005",
+      "found": "AC-1..AC-4 are worded 'proven when GBC-008 closes'",
+      "change": "Mark the four e2e ACs proven by FLOW-DOCS-06 green at c0917f33 (36/36); their assertions passed verbatim with no task-file-driven test edits."
+    },
+    {
+      "target": "GBC-007",
+      "found": "AC-1 is worded 'this early AC is proven when GBC-008 closes'",
+      "change": "Mark AC-1 proven: the spawned prebuild printed exactly '[docs-data] changelog: 3 tags, 3 entries \u2014 one-to-one, reverse-chronological' and the tag figure matched run-time git tag --list 'v*'."
+    },
+    {
+      "target": "GBC-015",
+      "found": "AC-2 and AC-4 are worded 'proven when GBC-008 closes'",
+      "change": "Mark both proven; note for future authors that AC-2's 'exactly 1 .chip per row' holds while the page-wide chip count is 4 (SectionHeader count + 3 date chips), which is why the spec scopes to rows."
+    },
+    {
+      "target": "GBC-016",
+      "found": "AC-2 and AC-5 are worded 'proven when GBC-008 closes'",
+      "change": "Mark both proven; AC-5's spec test needed textContent (not innerText) because of DocsNav's uppercase transform \u2014 worth a line in the task file if more nav-title assertions are planned."
+    }
+  ],
+  "feedback": []
+}
+```
