@@ -1,0 +1,47 @@
+---
+/**
+ * /changelog — the changelog section index (GBC-008, TR-07 section-index
+ * wireframe). Composes GBC-016's SectionIndexLayout — PageHeader 'Changelog',
+ * one SectionHeader 'Releases' with the row count, the docs-section nav, and
+ * no on-this-page rail — around GBC-015's IndexList. One row per release,
+ * newest first through the shared comparator (the layout never re-sorts): the
+ * row's single Chip is the release's UTC calendar day, and its
+ * touched-component links (the one body extraction in lib/changelog) ride as
+ * sibling anchors of the title — never inside it. Zero JS.
+ */
+import { getCollection } from 'astro:content';
+import IndexList from '../../components/IndexList.astro';
+import SectionIndexLayout from '../../layouts/SectionIndexLayout.astro';
+import {
+  changelogReleases,
+  formatReleaseDate,
+  touchedComponents,
+} from '../../lib/changelog';
+import {
+  sectionNavigation,
+  type DocsCollectionEntry,
+  type SectionNavGroup,
+} from '../../lib/docs-navigation';
+
+const docs = (await getCollection('docs')) as unknown as DocsCollectionEntry[];
+const nav: SectionNavGroup[] = sectionNavigation(docs);
+const releases = await changelogReleases();
+
+const rows = releases.map((release) => ({
+  href: `/changelog/${release.version}`,
+  title: release.version,
+  meta: formatReleaseDate(release.date),
+  links: touchedComponents(release.entry.body),
+}));
+---
+
+<SectionIndexLayout
+  title="Changelog"
+  description="Every registry release, newest first: what shipped, what changed, and what it fixed."
+  sectionTitle="Releases"
+  anchor="releases"
+  count={rows.length}
+  nav={nav}
+>
+  <IndexList rows={rows} />
+</SectionIndexLayout>
