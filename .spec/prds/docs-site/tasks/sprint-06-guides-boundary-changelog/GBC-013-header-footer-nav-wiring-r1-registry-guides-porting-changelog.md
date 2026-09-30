@@ -3,7 +3,9 @@ TASK: GBC-013 - Header/footer nav wiring — R1: Registry Guides Porting Changel
 ================================================================================
 
 TASK_TYPE:  CHORE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: ce9d4068b0f5ce7036d2eb8882772cd2ccc98490
 PRIORITY:   P1
 POINTS:     2
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -282,3 +284,32 @@ Blocks:     ['GBC-014']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-013",
+  "commit_sha": "ce9d4068b0f5ce7036d2eb8882772cd2ccc98490",
+  "done": "GBC-013 landed at ce9d4068 on branch kb-run-sprint/sprint-06-guides-boundary-changelog/GBC-013 and merged to main as 4069dc9: Header.astro's NAV_LINKS extended to the five sections (apps/docs/src/components/Header.astro:16), whose single array both the desktop nav and the zero-JS <details> drawer already map, Footer.astro's nav rewritten from a hardcoded 2-link list to a mapped five-link FOOTER_LINKS array (apps/docs/src/components/Footer.astro:18), and tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts added with both contract claims \u2014 RED evidence (both exact greps failing, expected 5 / received 2, on the 2-link pre-sprint header) and GREEN evidence (both full VERIFY commands exit 0 plus screenshots of the desktop header and open mobile drawer on /guides) committed under .tmp/GBC-013/cycle-1/.",
+  "deviations": [],
+  "concerns": [
+    "The five-section list now exists in three places \u2014 Header.astro NAV_LINKS, Footer.astro FOOTER_LINKS, and the spec's SECTION_LINKS constant (tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:28) \u2014 because WRITE-ALLOWED listed no shared module; a sixth section must change all three, and the spec's toEqual assertions are the only drift alarm.",
+    "Playwright's junit reporter wrote nothing this session (apps/docs/playwright-report/junit.xml never appeared), so review automation looking for junit output will find only the committed terminal logs and summaries under .tmp/GBC-013/."
+  ],
+  "findings": [
+    "page.waitForResponse resolves before the browser commits an MPA navigation, so reading page.url() immediately after it races and reads the previous path \u2014 observed as 'Expected /porting, received /guides' in the first green run and fixed with the auto-waiting toHaveURL (tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:154); GBC-014's journey specs will hit the same race on every drawer tap they replay.",
+    "rtk compresses the Playwright line reporter to 'PASS (n) FAIL (n)' in captured logs, so grepping green evidence for 'passed|failed' matches nothing \u2014 the full per-test JSON lands in the rtk tee (~/Library/Application Support/rtk/tee/) and the assertion context in the committed logs.",
+    "getAttribute('href') returns string | null and the spec deliberately keeps null in scope so a missing href fails the toEqual order assertions loudly (tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:66) rather than being typed away \u2014 worth copying in GBC-014's link reads.",
+    "The mobile drawer screenshot catches the 120ms site-drawer-in fade mid-animation, so the open-drawer evidence PNG shows faded-but-visible links \u2014 expected behavior, not a defect, and reviewers should not read the low contrast as a styling regression."
+  ],
+  "scope_impact": [
+    {
+      "target": "ROADMAP",
+      "found": "The section-nav list is duplicated between Header.astro (NAV_LINKS) and Footer.astro (FOOTER_LINKS) because GBC-013's WRITE-ALLOWED list permitted no shared module.",
+      "change": "A small future chore could extract a shared site-nav module consumed by header, footer, and the e2e constant once a task's write scope permits touching apps/docs/src/lib/."
+    }
+  ],
+  "feedback": []
+}
+```
