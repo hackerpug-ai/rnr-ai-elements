@@ -3,7 +3,9 @@ TASK: GBC-012 - Porting consistency gates (mapping slugs resolve; not-ported exa
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: ddb87b9a3136c43db9abf53e6169afdf5ecba155
 PRIORITY:   P1
 POINTS:     3
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -546,3 +548,39 @@ Blocks:     none
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-012",
+  "commit_sha": "ddb87b9a3136c43db9abf53e6169afdf5ecba155",
+  "done": "GBC-012 landed as ddb87b9a on kb-run-sprint/sprint-06-guides-boundary-changelog/GBC-012 (merged to main as 9c73de7e): scripts/docs-data/porting-consistency.ts (436 lines) fail-closed cross-checks porting.md frontmatter against the tracked packages/registry/registry.json (unknown mapping slugs, exact-complement notPorted incl. mapped-and-not-ported naming both lists, untracked-upstream, partition outliers, duplicates) and GBC-003's gaps array (exact-equality rejection of any gap naming one of the 56 shipped slugs), parsing frontmatter through Astro's own parser via the createRequire chain apps/docs -> astro -> @astrojs/internal-helpers/frontmatter; scripts/docs-data/prebuild.ts wires the gate beside the changelog gates before any output byte; the RED-first drill tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts plants all four AC drifts as $TMPDIR copies and passes 4/4, with RED evidence under .tmp/GBC-012/cycle-1/red/; final gates on the committed tree: tsc clean, biome ci . 0 errors, fallow 0 findings, docs build exit 0 with the gate line live in prebuild, FLOW-DOCS-05 18/18, and the contract clean-tree check prints nothing.",
+  "deviations": [],
+  "concerns": [
+    "The full vitest suite (69 files, 809 tests, including two multi-minute docs-build drills) cannot complete within this harness's command limits \u2014 three runs were killed at the 10-minute foreground and 30-minute background caps with zero output flushed, so no task should assume `pnpm exec vitest run` is one runnable command; verification has to be split per directory.",
+    "A vitest run killed mid-flight can strand a destructive test mid-rmSync: this session found apps/docs/src/data/dev-client-matrix.json and token-usage.json left deleted in the worktree (restored via git checkout), which had cascaded ~50 false build-dependent failures into a later suite run \u2014 anyone seeing mass 'docs build exited 1' failures should check `git status` for stranded deletions before chasing code.",
+    "`pnpm lint` (the pnpm-wrapped biome) intermittently dies with exit 254 'Linter process terminated abnormally (possibly out of memory)' while ./node_modules/.bin/biome ci . exits 0 on the identical tree, and the righthook pre-commit runs the pnpm form \u2014 a healthy tree can still fail its first commit attempt (a retry succeeded).",
+    "Running the FLOW-DOCS-05 verify rewrites GBC-009's evidence artifact tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-05-porting-map-and-prior-art/run.json (runIdentity timestamp on line 1); I restored it before committing, but every future re-verify will dirty it again and its owner should decide whether re-baselining is expected."
+  ],
+  "findings": [
+    "The pre-commit hook (righthook, config righthook.yml, jobs biome + fallow) gates new modules on unused exports AND unit size >60 lines / complexity (CRAP), so gate-module authors should internalize helpers and keep functions under ~45 lines from the first draft \u2014 my first porting-consistency.ts version failed the hook until three exports were internalized and two functions were split.",
+    "The gate's exported surface is deliberately minimal after that gate: only runPortingConsistencyGates plus the path constants REGISTRY_JSON/PORTING_MD/OWNS_MD are exported from scripts/docs-data/porting-consistency.ts; any future consumer (e.g. a route-side re-check) will need to re-export the pure check deliberately.",
+    "Unproven observation from the contaminated suite run, not stash-verified per-file: content-assertion failures in tests/sprint-05-orient-search/live-example-api.test.ts (expects an 'expo/fetch' import), tests/sprint-03-family-browse/ledger-filter-contract.test.ts (expects 'hidden = false'), tests/sprint-04-generated-reference/seam-contract.test.ts (TextClassContext section count), and REF-006 data-table assertions \u2014 treat as suspected trunk drift until individually re-run on a quiet tree.",
+    "The orchestrator's known pre-existing list (ORI-AST-001 x3, ORI-AST-004-index-model, SHELL-002, REF-006, deliv-03 cascade, search-slot strict-mode, theming heading) matches failures seen in the cascade log, so that list remains accurate as of c921ac15."
+  ],
+  "scope_impact": [
+    {
+      "target": "ROADMAP",
+      "found": "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts (FUSE-05 'copies public r generated-only and byte-identical') asserts apps/docs/public must contain zero tracked files, but `git ls-files apps/docs/public` at c921ac15 shows 5 tracked font files (fonts/OFL.txt, spline-sans-mono-var-latin*.woff2, spline-sans-var-latin-ext.woff2) \u2014 the test fails on a pristine trunk checkout, proven by ls-files at HEAD, unrelated to GBC-012.",
+      "change": "Schedule a task to reconcile: either untrack/gitignore apps/docs/public/fonts/* (if fonts are meant to be sourced) or amend the FUSE-05 assertion to allow the tracked fonts (if they are deliberately committed)."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "tests/sprint-02-shell-hero/copy-pass.test.ts (SHELL-010 copy contract) fails on pristine trunk because the copy-stable anchor 'ship no tokens' no longer appears in the authored theming content \u2014 stash-proven identical with and without the GBC-012 diff.",
+      "change": "Have the sprint-02 owner (or techwriting) either restore the 'ship no tokens' anchor sentence to the theming manuscript or re-pin SHELL-010's anchor list to the current authored copy."
+    }
+  ],
+  "feedback": []
+}
+```
