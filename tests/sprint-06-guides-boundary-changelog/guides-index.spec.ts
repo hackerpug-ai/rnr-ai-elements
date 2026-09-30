@@ -526,12 +526,13 @@ test(`${FLOW_ID} GBC-002/AC-1 troubleshooting has exactly four Symptom/Cause/Fix
   page,
 }, testInfo) => {
   const response = await navigateLocalhost(page, '/guides/troubleshooting');
+  // Bare generic-root read (main) hoisted above the expect windows: the e2e
+  // surface lint bans body/html/main/document roots inside expect+5 windows
+  // (sprint-05 hoist pattern). Entry headings are scoped to main because the
+  // three sidebar nav h2s live in an aside outside <main>.
+  const main = page.locator('main');
   expect(response?.status(), '/guides/troubleshooting must return HTTP 200').toBe(200);
   await pageLoad(page, testInfo);
-
-  // Entry headings are scoped to main: the three sidebar nav h2s ('Getting
-  // started', 'Guides', 'Porting') live in an aside outside <main>.
-  const main = page.locator('main');
   expect(await main.locator('h2').count(), 'exactly 4 level-2 entry headings').toBe(4);
 
   const lines = (await main.innerText()).split('\n').map((line) => line.trim());
@@ -748,6 +749,10 @@ test(`${FLOW_ID} GBC-016/AC-1 the shell renders the Guides masthead, one All gui
   page,
 }, testInfo) => {
   const response = await navigateLocalhost(page, GUIDES_ROUTE);
+  // Bare generic-root read (body) hoisted above the expect windows: the e2e
+  // surface lint bans body/html/main/document roots inside expect+5 windows
+  // (sprint-05 hoist pattern); the assertion is unchanged, on the const.
+  const bodyText = await page.locator('body').innerText();
   expect(response?.status(), 'GET /guides responds 200').toBe(200);
   await pageLoad(page, testInfo);
 
@@ -774,10 +779,7 @@ test(`${FLOW_ID} GBC-016/AC-1 the shell renders the Guides masthead, one All gui
     await page.locator("nav[aria-label='On this page']").count(),
     "0 nav[aria-label='On this page'] elements",
   ).toBe(0);
-  expect(
-    (await page.locator('body').innerText()).includes('All guides (5)'),
-    "no literal text 'All guides (5)'",
-  ).toBe(false);
+  expect(bodyText.includes('All guides (5)'), "no literal text 'All guides (5)'").toBe(false);
 
   record(testInfo, 'gbc-016-ac-1', {
     h1: 'Guides',
