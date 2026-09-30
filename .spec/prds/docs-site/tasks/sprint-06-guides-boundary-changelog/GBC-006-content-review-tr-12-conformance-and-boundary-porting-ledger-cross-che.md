@@ -3,7 +3,9 @@ TASK: GBC-006 - Content review: TR-12 conformance and boundary/porting/ledger cr
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 2d0850734125162d512119702568ec5b9dc39db0
 PRIORITY:   P1
 POINTS:     3
 AGENT:      planner=techwriting-planner | implementer=techwriting-implementer | reviewer=techwriting-reviewer
@@ -362,3 +364,46 @@ Blocks:     none
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-006",
+  "commit_sha": "2d0850734125162d512119702568ec5b9dc39db0",
+  "done": "Landed the sprint-06 content-reconciliation pass as commit 2d085073 (merged to main as a7616e0f): tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts carries the contract's four named checks \u2014 the one pure AC-1 checker (exact case-insensitive gap-vs-ledger equality per the review-endorsed GBC-003 semantics plus the absence-claim oracle mirrored from boundary-tables.spec.ts's gapRowNamesItem, consumer-responsibility statement, notPorted-vs-ledger, and the upstream complement 40+9=49), the AC-2 terminology lock and verdict-row bijection, the AC-4 planted-fixture rejection by name, and the AC-5 no-boundary-copy scan \u2014 alongside tests/sprint-06-guides-boundary-changelog/evidence/tr12-verdicts.md (one checklist row for each of the 10 authored pages, all pass) and the GBC-005 per-entry git-log reconciliation plus all gate logs under .tmp/GBC-006/. The landed content itself already reconciled with zero contradictions and zero omissions, so no content files were edited; gates green: tsc, biome, fallow (the pre-commit righthook suite), docs build, sprint-06 vitest 56/56, and the AC-3 locked command (docs build + CI=1 playwright FLOW-DOCS-05) at 18/18 across desktop, mobile, and no-JS.",
+  "deviations": [
+    "AC-4's fixture plants two gaps \u2014 the contract's literal 'button' plus the genuinely shipped 'tool' \u2014 because 'button' is not among the 56 shipped items and could only exercise the omission branch, while 'tool' exercises the exact-equality branch the AC's GIVEN describes (documented and asserted at tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:469-470)."
+  ],
+  "concerns": [
+    "tr12-verdicts.md is machine-coupled to the AUTHORED_PAGES list (tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:53 and :392-412): any task that adds, renames, or removes an authored sprint-06 page must update both together or AC-2 fails.",
+    "The gaps frontmatter must equal the rendered Gaps-table row count (tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:445), so a future gap edit must move the frontmatter array and the boundary page's table row together \u2014 a deliberate drift guard, not a flaky assertion.",
+    "The full-repo vitest suite cannot pass when run from a linked worktree (sprint-05 scratch-copy drills die on a dangling copied .git file) and exceeds 30 minutes regardless because serialized drills rebuild docs; keep targeting named lanes for gates.",
+    "Killing a full-suite vitest run mid-drill leaves tracked files mutated (deleted apps/docs/src/data/*.json, modified evidence run.json files) \u2014 restore with /usr/bin/git checkout -- before any commit, exactly as this session did.",
+    "The pre-commit righthook runs fallow audit --base HEAD: suppressions must be bare '// fallow-ignore-next-line complexity' (tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:190) because trailing prose tokens parse as issue-kind names and become stale-suppression failures; the 68 unused-dependency findings it prints are pre-existing and non-fatal."
+  ],
+  "findings": [
+    "The task contract's AC-4 GIVEN is factually wrong: it calls 'button' a shipped registry item, but the 56-item ledger carries 'button-group' and not 'button' ('button' is an RNR primitive resolved from RNR's own registry).",
+    "The landed GBC-003/004/005 content satisfied the human-gate cross-check invariant as-authored \u2014 zero contradictions, zero omissions \u2014 so GBC-006's MUST to 'fix any contradiction by editing the owning file' had nothing to fix; the invariant is now machine-enforced rather than repaired.",
+    "The GBC-005 changelog entries verify against real history with /usr/bin/git: 64 non-merge commits through v0.1.0, every 0.2.0/0.2.1 body bullet maps to a commit in its cited range, and the v0.2.1 broken-tree claim is true in the emitted registry JSON (prompt-input siblings and agent's persona absent at v0.2.0, present at v0.2.1) \u2014 evidence at .tmp/GBC-006/changelog-git-reconciliation.md.",
+    "Every docs build prints 13 fail-soft external-link warnings because source-file links to github.com main 404 while GitHub main is stale relative to local trunk \u2014 pre-existing, resolves when trunk is pushed.",
+    "rtk's hook compresses vitest and pnpm-exec output even when redirected to a file ('PASS (4) FAIL (0)' replaces the reporter lines); evidence capture must invoke ./node_modules/.bin/<binary> directly, extending GBC-005's /usr/bin/git note to the test tooling."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-014",
+      "found": "Non-sprint-06 vitest lanes (ORI-CI-001/002, ORI-AST-005, docs-build-pipeline, docs-data-prebuild, live-example-api AC-4, ORI-RN-005) fail structurally when the suite runs from a linked worktree: those drills copy the tree to ~/.cache/agent-scratch/ and run git tag inside the copy, where the copied .git file dangles ('fatal: not a git repository'); root cause captured in .tmp/GBC-006/preexisting-proof-single-tutorial-gate.txt.",
+      "change": "Treat those lanes' failures as worktree-environmental, not regressions: run them from the primary checkout, or make the drills resolve the real git dir (e.g., copy through git archive or rev-parse --git-common-dir) before asserting on git output."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "AC-2's authored-page set is hardcoded at tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:53 and bijection-checked against evidence/tr12-verdicts.md.",
+      "change": "Any later task that authors a new sprint-06 docs page must add it to AUTHORED_PAGES and add its verdict row in the same commit, and the plan should name that step in such tasks' contracts."
+    }
+  ],
+  "feedback": [
+    "Task contracts should have their example fixtures checked against the tracked ledger before dispatch \u2014 AC-4's 'button' example cost a resolution cycle that an assert in the task file would have prevented.",
+    "Worth adding to the sprint's environment notes: evidence capture requires direct ./node_modules/.bin invocations (rtk compresses redirected pnpm-exec output), and full-suite vitest runs must never be left to die mid-drill without a git checkout -- afterwards."
+  ]
+}
+```
