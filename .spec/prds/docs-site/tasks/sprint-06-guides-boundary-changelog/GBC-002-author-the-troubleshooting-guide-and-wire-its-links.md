@@ -3,7 +3,9 @@ TASK: GBC-002 - Author the troubleshooting guide and wire its links
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: a6b480efe9d8ce673cd61c9f405398eecf6f2f11
 PRIORITY:   P1
 POINTS:     5
 AGENT:      planner=techwriting-planner | implementer=techwriting-implementer | reviewer=techwriting-reviewer
@@ -405,3 +407,43 @@ Blocks:     ['GBC-006', 'GBC-010', 'GBC-011']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-002",
+  "commit_sha": "a6b480efe9d8ce673cd61c9f405398eecf6f2f11",
+  "done": "Landed the fifth guides entry at apps/docs/src/content/docs/guides/troubleshooting.md (section: guides, order 5) with exactly four symptom-cause-fix entries at lines 10, 24, 38 and 52, each with one Symptom/Cause/Fix label set, exactly one Fix, and a canonical owning-page link (/docs/cli, /docs/installation + /guides/update-installed-items, /guides/preview-on-device, /components/streamdown); wired the two inbound links as one Next-steps line at apps/docs/src/content/docs/installation.mdx:66 and a second Callout anchor at apps/docs/src/components/DependencyPanel.astro:83 beside the kept /registry link; and added the read-only AC-3/4/5 source scan tests/sprint-06-guides-boundary-changelog/troubleshooting-content.test.ts (10/10 green, Astro frontmatter parser, no build/network/browser), with gates green (tsc clean, biome exit 0, docs build link-check 0 errors, sprint-06 suite 52/52) and built-dist verification in .tmp/GBC-002/cycle-1/green/.",
+  "deviations": [],
+  "concerns": [
+    "Guide pages render three sidebar navigation h2s ('Getting started', 'Guides', 'Porting') alongside the entry headings \u2014 a page-wide h2 count on /guides/troubleshooting observes 7 elements (5 grep lines), not 4, so GBC-010's AC-1 'exactly 4 level-2 entry headings' must scope to the entry/prose area rather than all h2 elements.",
+    "The Expo Go entry names the four opt-in items in their documented prose forms ('enriched markdown, streamdown, speech recognition, or extended audio' at apps/docs/src/content/docs/guides/troubleshooting.md:42, packages at :46), so the hyphenated matrix id 'extended-audio' and the string 'expo-audio' never appear verbatim \u2014 a GBC-010 grep for matrix ids would miss item 4 unless it matches label or package forms.",
+    "The built /docs/installation page carries two anchors with href '/guides/troubleshooting' (the Next steps link at installation.mdx:66 plus the sidebar nav entry), which satisfies AC-2's 'at least 1' but would break any exact-1 page-wide assertion.",
+    "During the pre-existing proof, a failed scoped 'git stash push' followed by 'git stash pop' popped the repo's shared sprint-05 stash (ORI-RN-005 rn005-cycle2-wip) into the worktree; all 12 conflicted out-of-scope files were restored to HEAD, my four files re-verified byte-exact, and the stash entry kept (never dropped), but the shared-stash hazard itself remains for every worktree session (refs/stash is common across worktrees)."
+  ],
+  "findings": [
+    "The three docs-collection failures (ORI-AST-001-collection-schema, ORI-AST-001-publication-contract, ORI-AST-001-mdx-code-copy) are proven pre-existing at HEAD 99bbde8e by a clean-baseline rerun with my files fully removed \u2014 identical 3 failures \u2014 evidence at .tmp/GBC-002/cycle-1/green/pre-existing-proof.txt, so no downstream task needs to re-litigate them.",
+    "The troubleshooting manuscript is deliberately fence-free, so scripts/docs-data/authored-snippets.ts gained no COMMITTED_BINDINGS entries; any future fence added to this guide must budget a binding the GBC-001 way (packages/docs-snippets/commands/update.sh pattern).",
+    "The guide carries exactly one 'This guide shows you how to' sentence in the body and none in the frontmatter description, so a GBC-010 generalization of GBC-001's goal-sentence scan to all five guides passes as authored.",
+    "The docs build link-check emits 13 fail-soft warnings, all external edit URLs 404ing against the stale GitHub main (documented as stale since 09-08) \u2014 0 errors, and the count includes one per page including the new guide, so it is not a regression signal.",
+    "The built /components/message dependency panel footer Callout holds exactly 1 '/registry' and exactly 1 '/guides/troubleshooting' anchor (verified in dist), matching AC-2's must-observe exactly."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-010",
+      "found": "AC-1's 'exactly 4 level-2 entry headings' and the four-item naming are ambiguous against the real DOM: sidebar h2s inflate page-wide counts, and the fourth opt-in item appears only as 'extended audio' (label) / capture-surface prose, never as the id 'extended-audio' or package 'expo-audio'.",
+      "change": "Scope the entry-heading count to the guide's prose/entry area (or exclude sidebar nav headings) and match the four items by their rendered label or package forms rather than dev-client-matrix.json ids."
+    },
+    {
+      "target": "GBC-011",
+      "found": "troubleshooting.md intentionally has exactly four h2s (the entries) and no Prerequisites/Next steps headings, unlike the four TR-12 job guides.",
+      "change": "If GBC-011 writes a template-conformance gate over guides-section pages (prerequisites/next-steps headings, goal-sentence placement), exempt the troubleshooting page or assert its symptom-cause-fix shape instead of the job-guide shape."
+    }
+  ],
+  "feedback": [
+    "Worktree implementers should avoid 'git stash' entirely for baseline proofs \u2014 refs/stash is shared across worktrees, so a pop can pull a foreign sprint's WIP into the tree; the mv-aside plus 'git checkout HEAD -- <paths>' baseline used after the incident achieved the same proof with zero blast radius.",
+    "The contract's seeded-evidence requirement worked well paired with committed .tmp/GBC-002 evidence; future tasks hitting 'pre-existing' failures should be required to attach exactly this clean-baseline proof rather than asserting staleness."
+  ]
+}
+```
