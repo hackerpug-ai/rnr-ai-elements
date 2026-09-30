@@ -3,7 +3,9 @@ TASK: GBC-017 - boundary + porting scannable-table and callout presentation
 ================================================================================
 
 TASK_TYPE:  DESIGN
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 199bcb514699ada8bd4f923e57518f942b484a28
 PRIORITY:   P1
 POINTS:     3
 AGENT:      planner=frontend-designer | implementer=frontend-designer | reviewer=react-native-reusables-reviewer
@@ -667,3 +669,50 @@ Blocks:     none
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-017",
+  "commit_sha": "199bcb514699ada8bd4f923e57518f942b484a28",
+  "done": "Prose.astro at apps/docs/src/components/Prose.astro:103-148 now carries the markdown-table chrome declared a known twin of DataTable.astro (block/scroll table, var(--muted) zebra at :138, var(--border) dividers, muted caption, overflow-wrap:anywhere td, 48rem first-column cap at :143), with the new AC-6 source-contract test at tests/sprint-06-guides-boundary-changelog/prose-table-source.test.ts, RED-then-GREEN evidence plus Chromium computed-style metrics and desktop/mobile screenshots under .tmp/GBC-017/cycle-1/, and both late-bound flows left green over the real ordered build (FLOW-DOCS-04: 15 passed, FLOW-DOCS-05: 18 passed).",
+  "deviations": [
+    "The MUST 'render th with scope=\"col\" on every Prose table plus a muted caption' was resolved CSS-only (caption styled at apps/docs/src/components/Prose.astro:124-128, floor declared content's at :115-116) because GFM pipe tables emit no scope/caption attributes, content is WRITE-PROHIBITED, and wrappers/rehype plugins are forbidden by the STRICTLY lines.",
+    "DataTable's background:var(--card) cell base was deliberately omitted \u2014 it exists only to give DataTable's pinned column an opaque cover, and the pin is cut for these tables (documented in the twin comment at apps/docs/src/components/Prose.astro:113-115).",
+    "The first-column cap value 10rem at apps/docs/src/components/Prose.astro:146 was my choice \u2014 the contract pinned the media query and property but not the value; 10rem keeps label columns intact while wrapped deviation cells hold a scannable band (verified no horizontal overflow at 390px)."
+  ],
+  "concerns": [
+    "The stated accessibility floor is not actually rendered anywhere yet: no table on /docs/owns-vs-does-not-own or /porting carries th[scope] or a caption today, because GFM cannot emit them \u2014 the styling is ready but the floor waits on content authoring or a sanctioned transform.",
+    "The horizontal scroller is currently a latent affordance, not an active behavior: with overflow-wrap:anywhere, every table on both pages fits at 390px (measured horizontalOverflow:false), so overflow-x:auto only becomes live if future content adds an unbreakable column (mono keys, URLs).",
+    "Every re-run of the FLOW-DOCS-04/FLOW-DOCS-05 gates rewrites the tracked evidence run.json files (both were left dirty in the GBC-017 worktree and excluded from the commit per scope rules), so verification runs inherently dirty the tree."
+  ],
+  "findings": [
+    "The Astro/lightningcss build rewrites source CSS literals in dist \u2014 :nth-child(even) becomes :nth-child(2n) and @media (max-width: 48rem) becomes @media (width<=48rem) in apps/docs/dist/_astro/docs-navigation.JoNiSX2d.css \u2014 so any future assertion must match the minified forms or read source, never grep dist for the authored strings.",
+    "Prose.astro's compiled styles do not land in a Prose-named or inlined file: they share the docs-navigation.<hash>.css chunk, which made them look missing until located \u2014 do not hunt for a Prose.css in dist.",
+    "The house first-match ruleFor regex pattern has a shadowing trap: a query for '.prose :global(td)' first-matches the combined th/td rule's second selector line, not the standalone td rule, so the AC-6 test uses matchAll at tests/sprint-06-guides-boundary-changelog/prose-table-source.test.ts:96-103 \u2014 future contract tests hitting multi-selector rules need the same treatment.",
+    "biome ci . exits 0 while printing 15 informational diagnostics that exist identically on trunk (useLiteralKeys at scripts/docs-data/authored-snippets.ts:900:14 and in tests/sprint-05-orient-search/{authored-snippet-gate,live-example-proof,rnw-pin-proof}.test.ts, useTemplate in the first) \u2014 proven by a stash-rerun; treat them as noise, not failures."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-017",
+      "found": "The task's own MUST requiring th scope=\"col\" plus a muted caption on every Prose table is unimplementable from its write-allowed surface (one CSS file, content prohibited, no wrapper or rehype plugin).",
+      "change": "Strike the scope/caption half of that MUST or re-route it: either a techwriting task authors raw-HTML tables with scope/caption in the .mdx sources, or the plan sanctions a remark/rehype transform \u2014 the CSS side (muted caption) is already landed and waiting."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "No markdown table on the site emits th[scope] or caption, so the docs site's table accessibility floor is open despite the chrome being in place at apps/docs/src/components/Prose.astro:124-128.",
+      "change": "If the floor is meant to be real rather than aspirational, add a small follow-up task owning the content-side or transform-side fix; an accessibility audit against WCAG 1.3.1 would currently flag every prose table."
+    },
+    {
+      "target": "GATE:FLOW-DOCS-04",
+      "found": "The gate's run.json artifact under tests/sprint-06-guides-boundary-changelog/evidence/ is tracked but stamped with a fresh runIdentity on every run, so any verifier re-run dirties the tree.",
+      "change": "Either move the volatile per-run fields out of the tracked file or make regenerating-and-committing the evidence an explicit step of the gate, so post-merge verification runs don't leave unexplained dirt."
+    }
+  ],
+  "feedback": [
+    "STRICTLY line 36's sticky-thead supersession was correct in real behavior, not just on paper: display:block plus overflow-x:auto really does make each table its own scroll container, and the landed chrome renders full-measure tables with no overflow on current content \u2014 keep that supersede-with-reasoning pattern for contract contradictions.",
+    "Binding a late presentation task's ACs to specs owned by earlier tasks (write-allowed but never-edit) worked exactly as intended here: the styling change was forced to prove it broke nothing, and the one new proof that only source could observe landed as a justified unit-tier contract test."
+  ]
+}
+```
