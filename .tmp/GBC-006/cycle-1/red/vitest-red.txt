@@ -1,0 +1,60 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-006
+
+ × tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts > GBC-006 content reconciliation > gaps, ledger and not-ported reconcile with zero contradictions and omissions 11ms
+   → expected 5 to be 6 // Object.is equality
+ ✓ tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts > GBC-006 content reconciliation > terminology lock holds and every authored page has a verdict row 2ms
+ × tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts > GBC-006 content reconciliation > planted gap naming a shipped item is rejected by name 7ms
+   → expected [Function] to not throw an error but 'Error: GBC-006 reconciliation: 1 cont…' was thrown
+ ✓ tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts > GBC-006 content reconciliation > porting source has no boundary table copy 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts > GBC-006 content reconciliation > gaps, ledger and not-ported reconcile with zero contradictions and omissions
+AssertionError: expected 5 to be 6 // Object.is equality
+
+- Expected
++ Received
+
+- 6
++ 5
+
+ ❯ tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:445:33
+    443|     const real = await loadRealInput();
+    444|     expect(real.gaps.length).toBeGreaterThan(0);
+    445|     expect(real.gapRows.length).toBe(real.gaps.length);
+       |                                 ^
+    446|     // The pure checker over the real files: silence is the pass condi…
+    447|     expect(() => reconcileGapsLedgerNotPorted(real)).not.toThrow();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts > GBC-006 content reconciliation > planted gap naming a shipped item is rejected by name
+AssertionError: expected [Function] to not throw an error but 'Error: GBC-006 reconciliation: 1 cont…' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"Error: GBC-006 reconciliation: 1 contradiction(s)/omission(s):
+- gap 'button' is neither stated in the consumer-responsibility section nor a not-ported element"
+
+ ❯ tests/sprint-06-guides-boundary-changelog/content-reconciliation.test.ts:459:58
+    457|     const real = await loadRealInput();
+    458|     // The real files from AC-1 still pass.
+    459|     expect(() => reconcileGapsLedgerNotPorted(real)).not.toThrow();
+       |                                                          ^
+    460|
+    461|     // Two plants, both rejected by name in one throw:
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  21:27:19
+   Duration  105ms (transform 15ms, setup 0ms, import 19ms, tests 24ms, environment 0ms)
+

@@ -1,0 +1,396 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-006
+
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts (5 tests | 5 failed) 53966ms
+   × ORI-CI-001-positive 3ms
+   × ORI-CI-001-duplicate 0ms
+   × ORI-CI-001-missing 0ms
+   × ORI-CI-001-noncanonical 2ms
+   × ORI-CI-001-restored 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/single-tutorial-gate.test.ts > ORI-CI-001-positive
+AssertionError: positive build output:
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+fatal: not a git repository (or any of the parent directories): .git
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: git tag --list v*
+fatal: not a git repository (or any of the parent directories): .git
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at listVersionTags (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10)
+    at runChangelogGates (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16)
+    at main (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3)
+    at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    '',
+    'fatal: not a git repository (or any of the parent directories): .git\n'
+  ],
+  pid: 62935,
+  stdout: '',
+  stderr: 'fatal: not a git repository (or any of the parent directories): .git\n'
+}
+
+Node.js v24.14.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ listVersionTags ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10
+ ❯ runChangelogGates ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16
+ ❯ main ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3
+ ❯ <anonymous> ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts:442:86
+    440|   const report = reportOrThrow();
+    441|   const build = buildOf(report, 'positive');
+    442|   expect(build.exitCode, `positive build output:\n${build.stdout}\n${b…
+       |                                                                                      ^
+    443|   expect(build.dist.quickstart, 'fresh Quickstart HTML must exist in d…
+    444|   expect(report.quickstartH1, 'Quickstart HTML must carry the source t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/single-tutorial-gate.test.ts > ORI-CI-001-duplicate
+AssertionError: expected '\n> @rnr-ai-elements/docs@0.1.0 build…' to match /\[docs-data\] single-tutorial: item "…/
+
+- Expected:
+/\[docs-data\] single-tutorial: item "tutorial-cardinality"/
+
++ Received:
+"
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+fatal: not a git repository (or any of the parent directories): .git
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: git tag --list v*
+fatal: not a git repository (or any of the parent directories): .git
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at listVersionTags (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10)
+    at runChangelogGates (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16)
+    at main (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3)
+    at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    '',
+    'fatal: not a git repository (or any of the parent directories): .git\\n'
+  ],
+  pid: 64591,
+  stdout: '',
+  stderr: 'fatal: not a git repository (or any of the parent directories): .git\\n'
+}
+
+Node.js v24.14.0
+"
+
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts:461:18
+    459|   ).not.toBe(0);
+    460|   const output = `${published.stdout}\n${published.stderr}`;
+    461|   expect(output).toMatch(/\[docs-data\] single-tutorial: item "tutoria…
+       |                  ^
+    462|   expect(output).toContain('observed 2 versus 1');
+    463|   expect(output).toContain(`"${DUPLICATE_SLUG}"`);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/single-tutorial-gate.test.ts > ORI-CI-001-missing
+AssertionError: expected '\n> @rnr-ai-elements/docs@0.1.0 build…' to match /\[docs-data\] single-tutorial: item "…/
+
+- Expected:
+/\[docs-data\] single-tutorial: item "tutorial-cardinality"/
+
++ Received:
+"
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+fatal: not a git repository (or any of the parent directories): .git
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: git tag --list v*
+fatal: not a git repository (or any of the parent directories): .git
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at listVersionTags (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10)
+    at runChangelogGates (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16)
+    at main (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3)
+    at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    '',
+    'fatal: not a git repository (or any of the parent directories): .git\\n'
+  ],
+  pid: 66554,
+  stdout: '',
+  stderr: 'fatal: not a git repository (or any of the parent directories): .git\\n'
+}
+
+Node.js v24.14.0
+"
+
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts:483:18
+    481|   expect(build.exitCode, `missing build output:\n${build.stdout}\n${bu…
+    482|   const output = `${build.stdout}\n${build.stderr}`;
+    483|   expect(output).toMatch(/\[docs-data\] single-tutorial: item "tutoria…
+       |                  ^
+    484|   expect(output).toContain('observed 0 versus 1');
+    485|   expect(output).toContain('/docs/quickstart');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/single-tutorial-gate.test.ts > ORI-CI-001-noncanonical
+AssertionError: expected '\n> @rnr-ai-elements/docs@0.1.0 build…' to contain '"ori-ci-001-moved-tutorial"'
+
+- Expected
++ Received
+
+- "ori-ci-001-moved-tutorial"
++
++ > @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
++ > pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
++
++
++ > rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
++ > tsx packages/registry/scripts/build-registry.ts
++
++ registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
++
++ > rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
++ > tsx scripts/build-gallery-manifest.ts
++
++ gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
++
++ > @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
++ > tsx ../../scripts/docs-data/prebuild.ts
++
++  ELIFECYCLE  Command failed with exit code 1.
++ /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs:
++  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
++ Exit status 1
++
++ fatal: not a git repository (or any of the parent directories): .git
++ node:internal/errors:985
++   const err = new Error(message);
++               ^
++
++ Error: Command failed: git tag --list v*
++ fatal: not a git repository (or any of the parent directories): .git
++
++     at genericNodeError (node:internal/errors:985:15)
++     at wrappedFn (node:internal/errors:539:14)
++     at checkExecSyncError (node:child_process:925:11)
++     at execFileSync (node:child_process:961:15)
++     at listVersionTags (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10)
++     at runChangelogGates (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16)
++     at main (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3)
++     at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3)
++     at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
++     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26) {
++   status: 128,
++   signal: null,
++   output: [
++     null,
++     '',
++     'fatal: not a git repository (or any of the parent directories): .git\n'
++   ],
++   pid: 67284,
++   stdout: '',
++   stderr: 'fatal: not a git repository (or any of the parent directories): .git\n'
++ }
++
++ Node.js v24.14.0
++
+
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts:496:18
+    494|   );
+    495|   const output = `${build.stdout}\n${build.stderr}`;
+    496|   expect(output).toContain(`"${MOVED_SLUG}"`);
+       |                  ^
+    497|   expect(output).toContain(`/docs/${MOVED_SLUG}`);
+    498|   expect(output).toContain('/docs/quickstart');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/sprint-05-orient-search/single-tutorial-gate.test.ts > ORI-CI-001-restored
+AssertionError: restored build output:
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+ ELIFECYCLE  Command failed with exit code 1.
+/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+
+fatal: not a git repository (or any of the parent directories): .git
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: git tag --list v*
+fatal: not a git repository (or any of the parent directories): .git
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at listVersionTags (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10)
+    at runChangelogGates (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16)
+    at main (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3)
+    at <anonymous> (/Users/justinrich/.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    '',
+    'fatal: not a git repository (or any of the parent directories): .git\n'
+  ],
+  pid: 67991,
+  stdout: '',
+  stderr: 'fatal: not a git repository (or any of the parent directories): .git\n'
+}
+
+Node.js v24.14.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ listVersionTags ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:270:10
+ ❯ runChangelogGates ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/changelog-gates.ts:301:16
+ ❯ main ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:259:3
+ ❯ <anonymous> ../../../../../../.cache/agent-scratch/ori-ci-001-scratch/1790738413593-67fb0c2c/scripts/docs-data/prebuild.ts:348:3
+ ❯ tests/sprint-05-orient-search/single-tutorial-gate.test.ts:515:86
+    513|   }
+    514|   const build = buildOf(report, 'restored');
+    515|   expect(build.exitCode, `restored build output:\n${build.stdout}\n${b…
+       |                                                                                      ^
+    516|   expect(build.dist.quickstart, 'fresh Quickstart HTML must exist afte…
+    517|   expect(report.quickstartH1).toBe(report.quickstartTitle);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  21:20:13
+   Duration  54.05s (transform 13ms, setup 0ms, import 20ms, tests 53.97s, environment 0ms)
+
