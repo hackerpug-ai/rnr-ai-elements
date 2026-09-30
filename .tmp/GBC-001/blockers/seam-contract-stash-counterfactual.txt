@@ -1,0 +1,6 @@
+== stashed (trunk c921ac15, no GBC-001 changes): exit=PASS (3) FAIL (1)
+== with GBC-001 changes: exit=PASS (2) FAIL (2)
+
+Attribution detail:
+- The FAIL on stashed trunk is REF-004-theming-seam-sections (expects <section id="textclasscontext"> in apps/docs/src/pages/docs/theming.astro) — the documented pre-existing "theming #rendermarkdown heading" failure, present without any GBC-001 change.
+- The additional FAIL with GBC-001 changes is REF-004-seam-scoping-no-invention: its TC-8 loop asserts every SEAM_LINK_TARGETS value matches /^\/docs\/theming#/ ("stays on /docs/theming this sprint"). The GBC-001 contract mandates /guides/customize-rendering#* — the lane pin predates sprint-06 and needs retargeting by its owner.

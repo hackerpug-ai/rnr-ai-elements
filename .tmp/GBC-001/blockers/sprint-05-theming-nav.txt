@@ -1,0 +1,9 @@
+GREEN FAILED (8 assertion[s]):
+- guides group count 0, expected exactly 1
+- guides group hrefs [], expected ["/docs/theming"]
+- theming must be ordered after every getting-started entry in the derivation
+- build page count 74, expected the RED count 69
+- theming anchor must sit inside the Guides section, got Getting started
+- built nav theming anchor must follow every Getting started anchor
+- publishedDocs derivation must be identical to its RED baseline
+- tracked diff outside the allowlist: ["apps/docs/src/content/docs/theming.mdx","apps/docs/src/lib/seam-map.ts","scripts/docs-data/authored-snippets.ts","apps/docs/src/content/docs/guides/customize-rendering.md","apps/docs/src/content/docs/guides/preview-on-device.md","apps/docs/src/content/docs/guides/re-theme.md","apps/docs/src/content/docs/guides/update-installed-items.md","packages/docs-snippets/commands/update.sh","tests/sprint-06-guides-boundary-changelog/guides-content.test.ts"]
