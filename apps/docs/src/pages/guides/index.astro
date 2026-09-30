@@ -1,0 +1,41 @@
+---
+/**
+ * /guides — the guides section-index (GBC-010). Everything derives at build
+ * from the ONE publication contract GBC-009's route reads: the published,
+ * non-draft guides-section entries through docs-navigation (order 1..5), so a
+ * retitled, reordered or re-sectioned manuscript moves its row without a page
+ * edit — nothing here hardcodes a guide title or href. The shell is GBC-016's
+ * SectionIndexLayout (docs-section nav + PageHeader + SectionHeader + slot);
+ * the rows compose GBC-015's IndexList. Short page — the shell renders no
+ * on-this-page rail. Zero JS; tokens only.
+ */
+import { getCollection } from 'astro:content';
+import IndexList from '../../components/IndexList.astro';
+import SectionIndexLayout from '../../layouts/SectionIndexLayout.astro';
+import {
+  publishedDocs,
+  sectionNavigation,
+  type DocsCollectionEntry,
+} from '../../lib/docs-navigation';
+
+const entries = await getCollection('docs');
+const typed = entries as unknown as DocsCollectionEntry[];
+const guides = publishedDocs(typed).filter((doc) => doc.section === 'guides');
+const nav = sectionNavigation(typed);
+const rows = guides.map((doc) => ({
+  href: doc.href,
+  title: doc.title,
+  description: doc.description,
+}));
+---
+
+<SectionIndexLayout
+  title="Guides"
+  description="Task-oriented how-to guides for the installed items: re-theme your app, update installed items, preview on a device, customize rendering, and troubleshoot failed installs."
+  sectionTitle="All guides"
+  anchor="all-guides"
+  count={rows.length}
+  nav={nav}
+>
+  <IndexList rows={rows} />
+</SectionIndexLayout>
