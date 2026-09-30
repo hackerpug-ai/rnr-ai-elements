@@ -42,6 +42,12 @@ import {
 import { ENGINES } from '../../packages/registry/scripts/build-registry';
 import { CHANGELOG_DIR, runChangelogGates } from './changelog-gates';
 import { type EnrichedItem, type Expectation, runAllGates } from './gates';
+import {
+  OWNS_MD,
+  PORTING_MD,
+  REGISTRY_JSON,
+  runPortingConsistencyGates,
+} from './porting-consistency';
 import { createDocsProject, extractProps, type PropInfo, type RegistryItem } from './props';
 import { buildThemingNotes } from './theming-note';
 import { extractUsageSnippets } from './usage-snippet';
@@ -257,6 +263,17 @@ function main(): void {
   // reverse-chronological order, and Added/Changed/Fixed section presence —
   // read-only over apps/docs/src/content/changelog, failing before any write.
   runChangelogGates(join(REPO_ROOT, CHANGELOG_DIR), REPO_ROOT);
+
+  // GBC-012 porting-consistency gates: every /porting mapping slug resolves
+  // against the tracked 56-item registry, notPorted is the exact complement of
+  // mapping against porting.md's upstream array, and no boundary gap disowns a
+  // shipped item — over the real porting.md, owns-vs-does-not-own.mdx and
+  // packages/registry/registry.json, failing before any output byte.
+  runPortingConsistencyGates({
+    portingPath: join(REPO_ROOT, PORTING_MD),
+    gapsPath: join(REPO_ROOT, OWNS_MD),
+    registryPath: join(REPO_ROOT, REGISTRY_JSON),
+  });
 
   // SHELL-006 gate: every {engine} template in the dataset must resolve to a
   // concrete URL for BOTH engines through the one resolver (resolve-deps.ts) —

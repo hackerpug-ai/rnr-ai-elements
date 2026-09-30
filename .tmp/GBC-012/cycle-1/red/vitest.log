@@ -1,0 +1,29 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-012
+
+ ❯ tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts [ tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts ]
+Error: Cannot find module '../../scripts/docs-data/porting-consistency' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-012/tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts
+ ❯ tests/sprint-06-guides-boundary-changelog/porting-consistency.test.ts:35:1
+     33| import { fileURLToPath } from 'node:url';
+     34| import { afterEach, expect, test } from 'vitest';
+     35| import { runPortingConsistencyGates } from '../../scripts/docs-data/po…
+       | ^
+     36|
+     37| const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  18:37:16
+   Duration  192ms (transform 23ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+EXIT:1
