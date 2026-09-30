@@ -1,0 +1,219 @@
+================================================================================
+TASK: APX-025 - Prove the docs-delivery-arc journey: merged registry edit reaches the apex within the 300s TTL
+================================================================================
+
+TASK_TYPE:  FEATURE
+STATUS:     Backlog
+PRIORITY:   P0
+POINTS:     5
+AGENT:      planner=ghactions-planner | implementer=ghactions-implementer | reviewer=ghactions-reviewer
+
+PROPOSED BY: ghactions-planner
+TDD_MODE: red_first
+RED_GREEN_REQUIRED: yes
+Sprint: [SPRINT.md](./SPRINT.md)
+
+---
+## Background
+Problem: each piece of the delivery arc is proven alone, but nothing proves the whole chain: a registry edit lands behind green jobs, deploys, and shows up as identical bytes on the live domain inside the cache window.
+
+Why it matters: an integrator installs from the live JSON. The arc fails if a stale `public/r` tree, a red job or a hand-edited generated file can reach production, or if the docs and the registry JSON come from different deploys.
+
+Current: no main push run has a deploy job, so no registry edit has ever reached the apex through CI.
+
+Desired: a post-integration journey test that takes the landing commit of a real registry edit and ties three real hashes together: the committed file at that commit, the run's `docs-dist` artifact, and the live `/r/nativewind/<item>.json`, within the 300s TTL plus a 60s margin.
+
+## Critical Constraints
+MUST:
+- MUST read the merge commit from the ARC_SHA environment variable, which may be a full SHA or a git ref such as `origin/main`, and MUST resolve it to a SHA with `git rev-parse --verify <ref>^{commit}`. It MUST fail closed, naming ARC_SHA, when the variable is unset, when the ref does not resolve, or when the resolved commit changed no public/r JSON.
+- MUST compare three real hashes for one item: `git show <resolved sha>:public/r/nativewind/<item>.json`, the same file inside the run's downloaded docs-dist artifact, and the live `/r/nativewind/<item>.json`.
+- MUST capture the journey's proof.red before APX-023 reaches GitHub main: it fails because no ci push run has a deploy job.
+NEVER:
+- NEVER push, merge, dispatch a workflow, or hand-write run.json.
+- NEVER edit public/r, packages/registry, ci.yml, the live lane config, or support/github-run.ts.
+STRICTLY:
+- STRICTLY treat the journey's GREEN as gated by human-owned preconditions: the CLOUDFLARE_API_TOKEN repo secret, the sync PR, the production environment, Sprint 05's ORI-CI-003 and ORI-DEP-003, and one human-merged registry-edit PR (gate step 17). Without them the journey stays red, which is the honest state.
+- STRICTLY keep the four task-local checks on real data. They use real git history, real gh runs and the real live apex, and never a mock.
+
+## Specification
+Objective: Prove the whole delivery arc: a merged registry edit passes the ordered ci chain on GitHub, deploys, and shows up as identical bytes on the live domain within the 300s TTL, tied to the same deploy's artifact.
+Success state: With ARC_SHA set to the human's merge commit, the journey test exits 0 and records hashes showing git, artifact and live bytes equal. Before the sync it exits non-zero, and the four task-local checks pass against real git, gh and the live apex.
+
+Provides:
+- tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts: the post-integration journey test `journeys/docs-delivery-arc` plus four task-local checks of its parts
+- evidence/journeys-docs-delivery-arc/run.json (ARC_SHA, run id, artifact hash, live hash, deploy completed_at, seconds until the live bytes matched)
+- evidence/journeys-docs-delivery-arc/proof.red
+
+Consumes:
+- tests/sprint-07-deploy-live-at-apex/support/github-run.ts (APX-021)
+- tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts (APX-006)
+- the deploy job and docs-dist artifact (APX-022, APX-023)
+- the live apex, with the `/r/*.json` max-age=300 tier from the cloudflare-workers lens
+- a real human-merged registry edit PR that changed a public/r JSON
+
+Boundary contracts:
+- CAP-DEP-01 and CAP-INST-01 consumer view: the journey ends at what an integrator's install command would fetch, the live registry JSON bytes, and ties them to one deploy by hash.
+- Observe only. The spec never pushes, merges, or triggers a workflow. The human's registry-edit PR is the real action.
+- The 300s claim is asserted against served bytes within 300s plus a 60s margin after the deploy job's completed_at, and against the `cache-control: public, max-age=300` header the TTL claim rests on. The header tier itself is owned by FLOW-DELIV-02-header-and-domain-contract.
+
+Capabilities: CAP-DEP-01, CAP-INST-01. PRD refs: UC-DELIV-01; UC-DELIV-02; UC-DELIV-03; journeys/docs-delivery-arc; 12-e2e-testing-criteria T-DELIV-011, T-DELIV-012; 11-technical-requirements/09 CAP-DEP-01 and CAP-INST-01.
+
+## Acceptance Criteria
+### AC-1: The arc input guard accepts a registry commit and rejects the rest
+  GIVEN: a real commit that changed a public/r JSON, a real commit that changed none, a real git ref that resolves (`HEAD`) and one that does not (`refs/heads/apx-025-no-such-ref`), and an environment with ARC_SHA unset
+  WHEN:  the journey's input guard runs on each
+  THEN:  the ref resolver returns the 40-hex SHA that `git rev-parse HEAD` prints for `HEAD` and throws naming `apx-025-no-such-ref` for the missing ref; the registry commit is accepted and yields its changed item path; the non-registry commit is rejected with an error containing `changed no public/r JSON`; and the unset variable is rejected with an error containing `ARC_SHA`
+  TDD_STATE: RED
+  FLOW_REF: null
+  TEST_FILE: tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts
+  TEST_FUNCTION: APX-025-arc-input-guard
+  VERIFY: CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard
+  TEST_TIER: integration
+  VERIFICATION_SERVICE: real git repository on the real filesystem
+  SURFACE_POLICY: null
+  SCENARIO:
+```json
+{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real git repository on the real filesystem","topology":"single-node","negative_control":{"would_fail_if":["the guard accepts any SHA","the guard accepts a commit that changed no registry JSON","the guard ignores an unset ARC_SHA","the guard is a stub that returns a hardcoded changed-file list"]},"evidence":{"artifact_type":"stdout","required_capture":true},"cases":[{"start_ref":"real_git_history","action":{"actor":"spec","steps":["run the guard on the latest commit touching public/r/nativewind"]},"end_state":{"must_observe":["the guard returns a list of `1` or more paths matching the pattern `public/r/(nativewind|uniwind)/<item>.json`"],"must_not_observe":["an empty list","a thrown error"]}},{"start_ref":"real_git_history","action":{"actor":"spec","steps":["resolve the ref `HEAD` with the ref resolver and read `git rev-parse HEAD` independently","resolve the ref `refs/heads/apx-025-no-such-ref`"]},"end_state":{"must_observe":["the resolved value == the independent `git rev-parse HEAD` output (`40` hex characters)","the missing ref throws with `apx-025-no-such-ref` in the message"],"must_not_observe":["a resolved value for the missing ref","a value that is not 40 hex characters","an empty value resolved for the ref"]}},{"start_ref":"real_git_history","action":{"actor":"spec","steps":["run the guard on a real commit whose diff lists no public/r path","run the guard with ARC_SHA deleted from the environment"]},"end_state":{"must_observe":["the first call throws with `changed no public/r JSON`","the second call throws with `ARC_SHA`"],"must_not_observe":["either call passing","no thrown error from either call (0 errors)"]}}]}
+```
+
+### AC-2: Polling accepts the live bytes and times out on other bytes
+  GIVEN: the live nativewind conversation.json, and the sha256 of the live uniwind conversation.json as a hash that never matches it
+  WHEN:  the journey's poll function waits for each expected hash, with a 5 second window for the mismatching one
+  THEN:  the poll for the live bytes' own hash resolves on the first attempt with status 200 and content-type application/json, and the poll for the other engine's hash rejects after at least two attempts with an error naming both hashes
+  TDD_STATE: RED
+  FLOW_REF: null
+  TEST_FILE: tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts
+  TEST_FUNCTION: APX-025-poll-matches-live-bytes
+  VERIFY: CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-poll-matches-live-bytes
+  TEST_TIER: integration
+  VERIFICATION_SERVICE: real apex https://rnraielements.com over HTTPS
+  SURFACE_POLICY: null
+  SCENARIO:
+```json
+{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real apex https://rnraielements.com over HTTPS","topology":"single-node","negative_control":{"would_fail_if":["the poll returns success without comparing bytes","the poll never times out","the poll compares only status codes","the live fetch is replaced by a static fixture, so the bytes can never differ"]},"evidence":{"artifact_type":"api_response","required_capture":true},"cases":[{"start_ref":"live_registry_json","action":{"actor":"spec","steps":["fetch the live nativewind conversation.json and hash it","poll for that hash"]},"end_state":{"must_observe":["resolved with attempts equal to 1","status equals 200","`content-type` starts with `application/json`"],"must_not_observe":["a rejection","attempts greater than 1","an empty response body (0 bytes)"]}},{"start_ref":"live_registry_json","action":{"actor":"spec","steps":["hash the live uniwind conversation.json","poll nativewind conversation.json for that hash with a 5000 ms window"]},"end_state":{"must_observe":["the poll rejects after a `5000` ms window","the error contains the expected `sha256` hash and the actual `sha256` hash (`64` hex characters each)","attempts is at least 2"],"must_not_observe":["a resolved value","no rejection within the window, meaning nothing was thrown"]}}]}
+```
+
+### AC-3: The run-graph gate rejects a commit that has no push run
+  GIVEN: the head SHA of a real pull_request ci run for which no push run exists
+  WHEN:  the journey's run-graph gate looks up the ci push run for that SHA
+  THEN:  the gate rejects with an error containing `no push run` and the SHA
+  TDD_STATE: RED
+  FLOW_REF: null
+  TEST_FILE: tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts
+  TEST_FUNCTION: APX-025-run-graph-rejects-commit-without-push-run
+  VERIFY: CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-run-graph-rejects-commit-without-push-run
+  TEST_TIER: integration
+  VERIFICATION_SERVICE: real GitHub REST API through the gh CLI
+  SURFACE_POLICY: null
+  SCENARIO:
+```json
+{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real GitHub REST API through the gh CLI","topology":"single-node","negative_control":{"would_fail_if":["the gate accepts a pull_request run as the deploy run","the gate returns an empty run without throwing"]},"evidence":{"artifact_type":"stdout","required_capture":true},"cases":[{"start_ref":"real_pr_head_without_push_run","action":{"actor":"spec","steps":["call the run-graph gate with that PR head SHA"]},"end_state":{"must_observe":["the gate throws for a `pull_request` head SHA","the error contains `no push run` and the SHA"],"must_not_observe":["a resolved run","the gate passing","an empty run object returned by the gate"]}}]}
+```
+
+### AC-4: The hash comparator rejects different bytes and accepts identical bytes
+  GIVEN: the committed nativewind and uniwind conversation.json files, which differ in their registry import segments
+  WHEN:  the journey's hash comparator compares each file with itself and then with the other engine's file
+  THEN:  identical files compare equal, and the two engines' files are rejected with an error containing both sha256 values
+  TDD_STATE: RED
+  FLOW_REF: null
+  TEST_FILE: tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts
+  TEST_FUNCTION: APX-025-hash-comparator-rejects-different-bytes
+  VERIFY: CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-hash-comparator-rejects-different-bytes
+  TEST_TIER: integration
+  VERIFICATION_SERVICE: real committed registry files on the real filesystem, read through git
+  SURFACE_POLICY: null
+  SCENARIO:
+```json
+{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real committed registry files on the real filesystem, read through git","topology":"single-node","negative_control":{"would_fail_if":["the comparator compares file names instead of bytes","the comparator always passes","the comparator compares only lengths","the comparator is a stub that returns equal for any input"]},"evidence":{"artifact_type":"stdout","required_capture":true},"cases":[{"start_ref":"committed_engine_files","action":{"actor":"spec","steps":["read public/r/nativewind/conversation.json through `git show HEAD:` twice and compare"]},"end_state":{"must_observe":["the comparator resolves for `2` identical files","both hashes are 64 hex characters and equal"],"must_not_observe":["a thrown error","an empty hash (0 hex characters)"]}},{"start_ref":"committed_engine_files","action":{"actor":"spec","steps":["compare the nativewind file with the uniwind file"]},"end_state":{"must_observe":["the comparator throws for the `nativewind` file versus the `uniwind` file","the error contains two different 64-hex sha256 values"],"must_not_observe":["the comparator passing","no thrown error (0 errors from the comparator)"]}}]}
+```
+
+## Test Criteria
+| ID | Statement | Maps to | Verify |
+|----|-----------|---------|--------|
+| TC-1 | The guard returns a public/r JSON path for a commit that changed a registry file | AC-1 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard |
+| TC-2 | The guard throws with `changed no public/r JSON` for a commit that changed no registry file | AC-1 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard |
+| TC-3 | The guard throws naming ARC_SHA when the variable is unset | AC-1 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard |
+| TC-4 | The ref resolver returns the same 40-hex SHA as `git rev-parse HEAD` for the ref HEAD | AC-1 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard |
+| TC-5 | The ref resolver throws naming the ref when the ref does not exist | AC-1 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard |
+| TC-6 | The poll for the live bytes' own hash resolves on attempt 1 | AC-2 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-poll-matches-live-bytes |
+| TC-7 | The poll rejects naming both hashes when the expected hash never matches | AC-2 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-poll-matches-live-bytes |
+| TC-8 | The run-graph gate throws containing `no push run` for a pull_request head SHA | AC-3 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-run-graph-rejects-commit-without-push-run |
+| TC-9 | The comparator resolves when both inputs are the same committed file | AC-4 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-hash-comparator-rejects-different-bytes |
+| TC-10 | The comparator throws when the inputs are the nativewind and uniwind files | AC-4 | CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-hash-comparator-rejects-different-bytes |
+
+## Reading List
+- .spec/scenarios/journeys/docs-delivery-arc.scenario.md (all): the visible journey this task proves
+- tests/sprint-07-deploy-live-at-apex/support/github-run.ts (all): observation helpers from APX-021, read only
+- tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts (all): shared live lane from APX-006, read only
+- .github/workflows/ci.yml (all): docs-dist artifact and the deploy job under test
+- .spec/e2e-policy/surface.json (all): patterns the journey spec must match
+
+## Guardrails
+WRITE-ALLOWED:
+- tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts (NEW)
+- tests/sprint-07-deploy-live-at-apex/evidence/journeys-docs-delivery-arc/run.json (NEW)
+- tests/sprint-07-deploy-live-at-apex/evidence/journeys-docs-delivery-arc/proof.red (NEW)
+WRITE-PROHIBITED:
+- .github/workflows/** - workflow edits belong to APX-022 and APX-023
+- packages/registry/** - registry sources
+- public/r/** - generated registry output
+- tests/sprint-05-orient-search/** - other sprint lane
+- tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts - owned by APX-006, never edit
+- tests/sprint-07-deploy-live-at-apex/support/github-run.ts - owned by APX-021, never edit
+- vitest.config.ts - root runner
+- playwright.config.ts - root runner
+
+## Design
+References: SPRINT.md gate step 17; journeys/docs-delivery-arc.scenario.md; 07-uc-deliv.md UC-DELIV-01..03
+Pattern: test('journeys/docs-delivery-arc', async ({ request }) => { const sha = resolveArcRef(process.env.ARC_SHA); const changed = guardArcSha(sha); const run = await runGraphGate(sha); const art = await downloadArtifact(run.id, 'docs-dist'); compareHashes(git(sha, item), file(art, item)); await pollLive(item, expectedHash, { windowMs: (300 + 60) * 1000, since: run.deploy.completed_at }); }) where resolveArcRef runs `git rev-parse --verify <ref>^{commit}`. (tests/sprint-05-orient-search/completed-site.remote.spec.ts (live public-origin spec style))
+Anti-pattern: Comparing the live JSON to the working tree instead of the merge commit, or asserting only that the deploy job was green.
+
+## Verification Gates
+- typecheck: `pnpm typecheck` - Exit 0
+- lint: `./node_modules/.bin/biome ci tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts` - Exit 0
+- complexity: `pnpm check:fallow` - Exit 0
+- tests: `CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard` - Exit 0 with one passing test, in a repo with real git history
+- journeys/docs-delivery-arc: `ARC_SHA=origin/main CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep journeys/docs-delivery-arc` - Post-integration. Before the sync: non-zero exit, saved as proof.red. After the human's registry-edit PR merges and deploys: exit 0 and run.json written
+
+## Agent Instructions
+TDD_MODE is red_first. The four task-local tests are RED-first and turn GREEN with the spec. The journey itself turns GREEN only after the human preconditions and one landed registry-edit PR.
+1. RED: write `docs-delivery-arc.remote.spec.ts` with the journey test titled exactly `journeys/docs-delivery-arc` and the four task-local tests. Run the journey command before APX-023 reaches GitHub main. It must fail because no ci push run has a deploy job. Save the failing output unedited as `evidence/journeys-docs-delivery-arc/proof.red`.
+2. Guard: resolve `ARC_SHA` with `git rev-parse --verify <ref>^{commit}` (a full SHA or a ref such as `origin/main`), fail closed naming `ARC_SHA` when it is unset or does not resolve, and fail with `changed no public/r JSON` when that commit changed no registry file.
+3. Build the chain from real data only: `runGraphGate(sha)` over the run helpers and `jobs()` from `support/github-run.ts` (APX-021, read only), `downloadArtifact(runId, 'docs-dist')`, the committed file read at that commit with `git show <sha>:public/r/nativewind/<item>.json`, and `request.get` against the live apex.
+4. Poll the live JSON until its sha256 equals the committed hash, for at most 300s plus 60s after the deploy job's `completed_at`. Also require `200`, `application/json` and `cache-control: public, max-age=300`.
+5. Write the four task-local tests on real git history, real gh runs and the live apex. Find runs by query at run time and hardcode no run id.
+6. When a landed registry-edit run exists, rerun the journey command and let the test write `run.json`. Run every gate. Commit on the task's worktree. Do not land anything yourself.
+
+## Orchestrator Verification Protocol
+The orchestrator re-runs typecheck, lint, complexity and the four task-local tests with real gh authentication and network access. It opens proof.red and confirms it is real failing output. It confirms the spec pushes, lands and dispatches nothing, uses no mock, and that `git diff` touches only the three WRITE-ALLOWED files. When a landed registry-edit run exists, it reruns the journey command with `ARC_SHA` set and compares run.json with `gh run view`, the artifact and a fresh curl.
+
+## Evidence Gates
+- proof.red: unedited failing output of the journey command captured before the deploy job reached GitHub main.
+- Playwright output for the four task-local tests.
+- After the human preconditions and one landed registry-edit PR: the journey command exiting 0 with run.json holding ARC_SHA, the run id, the artifact hash, the live hash, the deploy `completed_at` and the seconds until the live bytes matched.
+
+## Review Criteria
+REVIEWER CHECKS:
+- The journey compares three real hashes for one item: the committed file at the landing commit, the run's downloaded docs-dist artifact, and the live JSON.
+- The poll window is 300s plus 60s from the deploy job's completed_at, and the test also requires 200, application/json and `cache-control: public, max-age=300`.
+- ARC_SHA resolves through `git rev-parse --verify <ref>^{commit}`. Unset, unresolvable and non-registry commits all fail closed.
+- The spec never pushes, lands or dispatches a workflow, and hand-writes no run.json.
+- The four task-local tests use real git history, real gh runs and the live apex, and hardcode no run id.
+
+## Dependencies
+Depends on: ['APX-006', 'APX-021', 'APX-022', 'APX-023']
+Blocks:     []
+
+## Notes
+- Human-owned preconditions, stated plainly. The journey's GREEN needs all of them: (1) the `CLOUDFLARE_API_TOKEN` repo secret; (2) the sync PR that lands local main (605 commits ahead on 2026-09-29) on GitHub main; (3) the `production` environment limited to main; (4) the Cloudflare token scope Account Workers Scripts Edit, Account Settings Read and Zone Workers Routes Edit; (5) one human-landed PR that edits a registry component source with the regenerated public/r JSON committed (gate step 17); (6) Sprint 05's ORI-CI-003 and ORI-DEP-003, which are cross-sprint ids and not dependencies. Until they are met the journey is honestly RED and proof.red records it. Never record GREEN by any other means.
+- Journey proof owned by this task (post-integration, `journeys/docs-delivery-arc`). It is recorded in the plan's journey_proofs and is not bound to any task flow:
+```json
+{"flow_ref":"journeys/docs-delivery-arc","phase":"post-integration","owner_task_id":"APX-025","test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"journeys/docs-delivery-arc","verify":"ARC_SHA=origin/main CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep journeys/docs-delivery-arc","test_tier":"e2e","verification_service":"real GitHub Actions run, real docs-dist artifact, real Cloudflare Workers apex over HTTPS","surface_policy":".spec/e2e-policy/surface.json"}
+```
+- `origin/main` in that command is only a ref name. If origin/main is not fetched, or its tip changed no public/r JSON, the guard refuses. That is the intended fail-closed behaviour before the human's registry-edit PR lands.
+- The specs run in the shared live lane (`live.playwright.config.ts`, owned by APX-006). Root vitest and the root playwright config never collect `*.remote.spec.ts`.
+
+<!-- REQUIREMENT-CONTRACT v1 -->
+<!--
+{"version":"1","task_id":"APX-025","tdd_mode":"red_first","verification_policy":{"requires_tests":true,"requires_red_evidence":true,"requires_seeded_evidence":true},"fixtures":{"real_git_history":{"description":"The repo's real local git history. It holds commits that changed public/r JSON (for example from `git log -1 --format=%H -- public/r/nativewind`) and commits that changed no public/r file.","seed_method":"cli","records":["git log -1 --format=%H -- public/r/nativewind","a commit found by `git log -n 50` whose diff-tree lists no public/r path"]},"real_pr_head_without_push_run":{"description":"The head commit SHA of a real completed pull_request ci run for which `gh run list --event push --commit <sha>` returns no run.","seed_method":"public_api","records":["gh run list --workflow ci.yml --event pull_request --status completed --limit 1 --json headSha","gh run list --workflow ci.yml --event push --commit <sha>"]},"live_registry_json":{"description":"The real live https://rnraielements.com/r/nativewind/conversation.json and https://rnraielements.com/r/uniwind/conversation.json. The two engines' bytes differ.","seed_method":"public_api","records":["GET https://rnraielements.com/r/nativewind/conversation.json","GET https://rnraielements.com/r/uniwind/conversation.json"]},"committed_engine_files":{"description":"The committed public/r/nativewind/conversation.json and public/r/uniwind/conversation.json at HEAD, which differ in their registry import segments.","seed_method":"cli","records":["public/r/nativewind/conversation.json","public/r/uniwind/conversation.json"]}},"requirements":[{"id":"AC-1","type":"acceptance_criterion","description":"GIVEN a real commit that changed a public/r JSON, a real commit that changed none, a real git ref that resolves (`HEAD`) and one that does not (`refs/heads/apx-025-no-such-ref`), and an environment with ARC_SHA unset WHEN the journey's input guard runs on each THEN the ref resolver returns the 40-hex SHA that `git rev-parse HEAD` prints for `HEAD` and throws naming `apx-025-no-such-ref` for the missing ref; the registry commit is accepted and yields its changed item path; the non-registry commit is rejected with an error containing `changed no public/r JSON`; and the unset variable is rejected with an error containing `ARC_SHA`","primary":false,"flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-arc-input-guard","verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard","test_tier":"integration","verification_service":"real git repository on the real filesystem","surface_policy":null,"unit_test_justified":null,"maps_to_ac":null,"scenario":{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real git repository on the real filesystem","topology":"single-node","negative_control":{"would_fail_if":["the guard accepts any SHA","the guard accepts a commit that changed no registry JSON","the guard ignores an unset ARC_SHA","the guard is a stub that returns a hardcoded changed-file list"]},"evidence":{"artifact_type":"stdout","required_capture":true},"cases":[{"start_ref":"real_git_history","action":{"actor":"spec","steps":["run the guard on the latest commit touching public/r/nativewind"]},"end_state":{"must_observe":["the guard returns a list of `1` or more paths matching the pattern `public/r/(nativewind|uniwind)/<item>.json`"],"must_not_observe":["an empty list","a thrown error"]}},{"start_ref":"real_git_history","action":{"actor":"spec","steps":["resolve the ref `HEAD` with the ref resolver and read `git rev-parse HEAD` independently","resolve the ref `refs/heads/apx-025-no-such-ref`"]},"end_state":{"must_observe":["the resolved value == the independent `git rev-parse HEAD` output (`40` hex characters)","the missing ref throws with `apx-025-no-such-ref` in the message"],"must_not_observe":["a resolved value for the missing ref","a value that is not 40 hex characters","an empty value resolved for the ref"]}},{"start_ref":"real_git_history","action":{"actor":"spec","steps":["run the guard on a real commit whose diff lists no public/r path","run the guard with ARC_SHA deleted from the environment"]},"end_state":{"must_observe":["the first call throws with `changed no public/r JSON`","the second call throws with `ARC_SHA`"],"must_not_observe":["either call passing","no thrown error from either call (0 errors)"]}}]}},{"id":"AC-2","type":"acceptance_criterion","description":"GIVEN the live nativewind conversation.json, and the sha256 of the live uniwind conversation.json as a hash that never matches it WHEN the journey's poll function waits for each expected hash, with a 5 second window for the mismatching one THEN the poll for the live bytes' own hash resolves on the first attempt with status 200 and content-type application/json, and the poll for the other engine's hash rejects after at least two attempts with an error naming both hashes","primary":false,"flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-poll-matches-live-bytes","verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-poll-matches-live-bytes","test_tier":"integration","verification_service":"real apex https://rnraielements.com over HTTPS","surface_policy":null,"unit_test_justified":null,"maps_to_ac":null,"scenario":{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real apex https://rnraielements.com over HTTPS","topology":"single-node","negative_control":{"would_fail_if":["the poll returns success without comparing bytes","the poll never times out","the poll compares only status codes","the live fetch is replaced by a static fixture, so the bytes can never differ"]},"evidence":{"artifact_type":"api_response","required_capture":true},"cases":[{"start_ref":"live_registry_json","action":{"actor":"spec","steps":["fetch the live nativewind conversation.json and hash it","poll for that hash"]},"end_state":{"must_observe":["resolved with attempts equal to 1","status equals 200","`content-type` starts with `application/json`"],"must_not_observe":["a rejection","attempts greater than 1","an empty response body (0 bytes)"]}},{"start_ref":"live_registry_json","action":{"actor":"spec","steps":["hash the live uniwind conversation.json","poll nativewind conversation.json for that hash with a 5000 ms window"]},"end_state":{"must_observe":["the poll rejects after a `5000` ms window","the error contains the expected `sha256` hash and the actual `sha256` hash (`64` hex characters each)","attempts is at least 2"],"must_not_observe":["a resolved value","no rejection within the window, meaning nothing was thrown"]}}]}},{"id":"AC-3","type":"acceptance_criterion","description":"GIVEN the head SHA of a real pull_request ci run for which no push run exists WHEN the journey's run-graph gate looks up the ci push run for that SHA THEN the gate rejects with an error containing `no push run` and the SHA","primary":false,"flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-run-graph-rejects-commit-without-push-run","verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-run-graph-rejects-commit-without-push-run","test_tier":"integration","verification_service":"real GitHub REST API through the gh CLI","surface_policy":null,"unit_test_justified":null,"maps_to_ac":null,"scenario":{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real GitHub REST API through the gh CLI","topology":"single-node","negative_control":{"would_fail_if":["the gate accepts a pull_request run as the deploy run","the gate returns an empty run without throwing"]},"evidence":{"artifact_type":"stdout","required_capture":true},"cases":[{"start_ref":"real_pr_head_without_push_run","action":{"actor":"spec","steps":["call the run-graph gate with that PR head SHA"]},"end_state":{"must_observe":["the gate throws for a `pull_request` head SHA","the error contains `no push run` and the SHA"],"must_not_observe":["a resolved run","the gate passing","an empty run object returned by the gate"]}}]}},{"id":"AC-4","type":"acceptance_criterion","description":"GIVEN the committed nativewind and uniwind conversation.json files, which differ in their registry import segments WHEN the journey's hash comparator compares each file with itself and then with the other engine's file THEN identical files compare equal, and the two engines' files are rejected with an error containing both sha256 values","primary":false,"flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-hash-comparator-rejects-different-bytes","verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-hash-comparator-rejects-different-bytes","test_tier":"integration","verification_service":"real committed registry files on the real filesystem, read through git","surface_policy":null,"unit_test_justified":null,"maps_to_ac":null,"scenario":{"primary":false,"tier":"visible","test_tier":"integration","verification_service":"real committed registry files on the real filesystem, read through git","topology":"single-node","negative_control":{"would_fail_if":["the comparator compares file names instead of bytes","the comparator always passes","the comparator compares only lengths","the comparator is a stub that returns equal for any input"]},"evidence":{"artifact_type":"stdout","required_capture":true},"cases":[{"start_ref":"committed_engine_files","action":{"actor":"spec","steps":["read public/r/nativewind/conversation.json through `git show HEAD:` twice and compare"]},"end_state":{"must_observe":["the comparator resolves for `2` identical files","both hashes are 64 hex characters and equal"],"must_not_observe":["a thrown error","an empty hash (0 hex characters)"]}},{"start_ref":"committed_engine_files","action":{"actor":"spec","steps":["compare the nativewind file with the uniwind file"]},"end_state":{"must_observe":["the comparator throws for the `nativewind` file versus the `uniwind` file","the error contains two different 64-hex sha256 values"],"must_not_observe":["the comparator passing","no thrown error (0 errors from the comparator)"]}}]}},{"id":"TC-1","type":"test_criterion","primary":false,"description":"The guard returns a public/r JSON path for a commit that changed a registry file","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-arc-input-guard","test_tier":"integration","verification_service":"real git repository on the real filesystem","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard","maps_to_ac":"AC-1"},{"id":"TC-2","type":"test_criterion","primary":false,"description":"The guard throws with `changed no public/r JSON` for a commit that changed no registry file","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-arc-input-guard","test_tier":"integration","verification_service":"real git repository on the real filesystem","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard","maps_to_ac":"AC-1"},{"id":"TC-3","type":"test_criterion","primary":false,"description":"The guard throws naming ARC_SHA when the variable is unset","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-arc-input-guard","test_tier":"integration","verification_service":"real git repository on the real filesystem","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard","maps_to_ac":"AC-1"},{"id":"TC-4","type":"test_criterion","primary":false,"description":"The ref resolver returns the same 40-hex SHA as `git rev-parse HEAD` for the ref HEAD","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-arc-input-guard","test_tier":"integration","verification_service":"real git repository on the real filesystem","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard","maps_to_ac":"AC-1"},{"id":"TC-5","type":"test_criterion","primary":false,"description":"The ref resolver throws naming the ref when the ref does not exist","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-arc-input-guard","test_tier":"integration","verification_service":"real git repository on the real filesystem","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-arc-input-guard","maps_to_ac":"AC-1"},{"id":"TC-6","type":"test_criterion","primary":false,"description":"The poll for the live bytes' own hash resolves on attempt 1","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-poll-matches-live-bytes","test_tier":"integration","verification_service":"real apex https://rnraielements.com over HTTPS","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-poll-matches-live-bytes","maps_to_ac":"AC-2"},{"id":"TC-7","type":"test_criterion","primary":false,"description":"The poll rejects naming both hashes when the expected hash never matches","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-poll-matches-live-bytes","test_tier":"integration","verification_service":"real apex https://rnraielements.com over HTTPS","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-poll-matches-live-bytes","maps_to_ac":"AC-2"},{"id":"TC-8","type":"test_criterion","primary":false,"description":"The run-graph gate throws containing `no push run` for a pull_request head SHA","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-run-graph-rejects-commit-without-push-run","test_tier":"integration","verification_service":"real GitHub REST API through the gh CLI","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-run-graph-rejects-commit-without-push-run","maps_to_ac":"AC-3"},{"id":"TC-9","type":"test_criterion","primary":false,"description":"The comparator resolves when both inputs are the same committed file","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-hash-comparator-rejects-different-bytes","test_tier":"integration","verification_service":"real committed registry files on the real filesystem, read through git","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-hash-comparator-rejects-different-bytes","maps_to_ac":"AC-4"},{"id":"TC-10","type":"test_criterion","primary":false,"description":"The comparator throws when the inputs are the nativewind and uniwind files","flow_ref":null,"test_file":"tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts","test_function":"APX-025-hash-comparator-rejects-different-bytes","test_tier":"integration","verification_service":"real committed registry files on the real filesystem, read through git","surface_policy":null,"unit_test_justified":null,"verify":"CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep APX-025-hash-comparator-rejects-different-bytes","maps_to_ac":"AC-4"}]}
+-->
