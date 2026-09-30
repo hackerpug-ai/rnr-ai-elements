@@ -11,8 +11,8 @@
  * - one engine-tabbed DataTable of the resolved registry dependency URLs per
  *   engine — both forms render; the inactive one is hidden-attribute only,
  * - the project-level AI SDK peers line verbatim from site-facts.json,
- * - a footer Callout (REF-004) linking the registry ledger for
- *   troubleshooting.
+ * - a footer Callout (REF-004, GBC-002) linking both the registry ledger
+ *   and the troubleshooting guide for failed installs.
  *
  * Table mechanics live in the generic DataTable; this panel owns every domain
  * string and the sprint-02 data-testid surface. Every rendered string arrives
@@ -80,6 +80,7 @@ const engineRows = (engine: 'nativewind' | 'uniwind') =>
 <footer class="deps-footer">
   <Callout variant="info" title="A dependency URL not resolving?">
     <a slot="link" href="/registry">Open the registry ledger</a>
+    <a slot="link" href="/guides/troubleshooting">Read Troubleshooting</a>
   </Callout>
 </footer>
 
