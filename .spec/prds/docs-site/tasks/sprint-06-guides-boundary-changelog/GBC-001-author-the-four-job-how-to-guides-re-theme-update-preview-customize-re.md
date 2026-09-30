@@ -3,7 +3,9 @@ TASK: GBC-001 - Author the four job how-to guides (re-theme, update, preview, cu
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: 601a34c2e8ae039f90a0a69145d4a416b53c2da2
 PRIORITY:   P1
 POINTS:     5
 AGENT:      planner=techwriting-planner | implementer=techwriting-implementer | reviewer=techwriting-reviewer
@@ -559,3 +561,56 @@ Blocks:     ['GBC-002', 'GBC-006', 'GBC-008', 'GBC-010', 'GBC-011', 'GBC-014']
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-001",
+  "commit_sha": "601a34c2e8ae039f90a0a69145d4a416b53c2da2",
+  "done": "Landed at 601a34c2 (merged to main as 99bbde8e): four TR-12 how-to guides under apps/docs/src/content/docs/guides/ (re-theme 1, update-installed-items 2, preview-on-device 3, customize-rendering 4), the SEAM_LINK_TARGETS repoint to /guides/customize-rendering#rendermarkdown and #textclasscontext in apps/docs/src/lib/seam-map.ts:52-55, theming.mdx re-sectioned to getting-started order 5 (reserved slug keeps /docs/theming), seven byte-bound fences via new COMMITTED_BINDINGS in scripts/docs-data/authored-snippets.ts and the new live-verified recipe packages/docs-snippets/commands/update.sh, plus tests/sprint-06-guides-boundary-changelog/guides-content.test.ts (AC-5/AC-6, 7/7); all gates green (snippets ok:true, docs build 0 link errors, tsc, biome) and every CLI/expo command in the guides was run for real against the live rnraielements.com registry with transcripts under .tmp/GBC-001/.",
+  "deviations": [
+    "Two files outside WRITE-ALLOWED were necessarily touched because the build's snippet gate fails any unbound fence: scripts/docs-data/authored-snippets.ts (7 new COMMITTED_BINDINGS entries) and packages/docs-snippets/commands/update.sh (new committed recipe carrying the AC-2 literal commands), neither of which is WRITE-PROHIBITED.",
+    "The update guide documents the CLI's real three-state behavior (identical files skip silently, differing files prompt '(y/N)' with default N, --overwrite updates unprompted) instead of the task-assumed always-prompt model, based on live controlled-state runs recorded in .tmp/GBC-001/cycle-1/green/cli-update-flow.txt."
+  ],
+  "concerns": [
+    "Three landed lanes still fail on pre-sprint-06 pins that my approved diff flips by design \u2014 tests/sprint-04-generated-reference/seam-contract.test.ts:238-242 (/^\\/docs\\/theming#/ on SEAM_LINK_TARGETS), tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:629 (a[href=\"/docs/theming#rendermarkdown\"]), and the direct-run script tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts (8 assertions pinning theming as the sole Guides entry and a 69-page RED baseline) \u2014 none are in any sprint-06 task's write scope, so they need an owner before a full-suite run goes green.",
+    "PageHeader renders the frontmatter description into the page body, so any guide whose description starts with 'This guide shows you how to' breaks the 'exactly 1 goal sentence' e2e pattern that GBC-010 will encode."
+  ],
+  "findings": [
+    "The docs build runs check:snippets, which fails on ANY unbound fenced block anywhere under apps/docs/src/content/docs \u2014 every future guide fence must ship with a COMMITTED_BINDINGS entry and byte-equal a real committed file.",
+    "The site's canonical add command has no --yes (apps/docs/src/components/InstallCommand.astro:36) while the committed batch recipes do use npx --yes, and an AC-2-style substring check does not match the --yes form, so guide fences and specs must pin the exact no---yes literal that now lives at packages/docs-snippets/commands/update.sh:17-18.",
+    "Expressive-code wraps fence lines in spans, so no-JS assertions must read the textContent of <pre> rather than a raw-HTML single-line substring; the two update commands render as consecutive lines inside one <pre> on /guides/update-installed-items.",
+    "The anchor ids rendermarkdown and textclasscontext derive from github-slugger over the literal headings '## renderMarkdown' and '## TextClassContext' in apps/docs/src/content/docs/guides/customize-rendering.md:52,68 \u2014 retitling either heading silently breaks AC-3 and the seam Callout targets.",
+    "theming-nav-inclusion-proof.test.ts is a direct-run script (isMain guard), so plain 'vitest run' reports a file-level 'No test suite found' failure on trunk too; its real assertions only execute via 'pnpm exec tsx tests/sprint-05-orient-search/theming-nav-inclusion-proof.test.ts'.",
+    "A stale snippet-gate consumer cache at ~/.cache/agent-scratch/ori-ast-005-consumers (manifest pointing at a deleted case directory) fails check:snippets with ENOENT; deleting that cache dir fixes it and the gate rebuilds it.",
+    "The CLI protects local edits by default: re-add answers N (or Enter) keeps a modified file, and --overwrite is the only unprompted path back to the registry copy \u2014 the update guide's step 3 encodes exactly this."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-002",
+      "found": "The troubleshooting guide lands as the fifth guides-section entry at order 5 and will likely want fenced snippets",
+      "change": "Budget an edit to COMMITTED_BINDINGS in scripts/docs-data/authored-snippets.ts for each fence (or author fence-free), keep the description free of the 'This guide shows you how to' opener, and note the existing four guides deliberately do not link /guides/troubleshooting yet because the dist link gate fails unresolved routes until GBC-002's page exists"
+    },
+    {
+      "target": "GBC-010",
+      "found": "The guides-index spec encodes the AC-1..AC-4 literal observations over my built pages",
+      "change": "Read code blocks via <pre> textContent for the no-JS project, pin the exact no---yes add literal from /guides/update-installed-items (present verbatim in static HTML), count goal sentences over full body text including the rendered description, and rely on the existing heading-derived ids rendermarkdown/textclasscontext rather than adding anchors"
+    },
+    {
+      "target": "GBC-013",
+      "found": "Theming now sits in the getting-started nav group at order 5, between Dark mode (4) and What the library owns (50)",
+      "change": "Expect the sidebar order Introduction, Installation, Quickstart, CLI, Dark mode, Theming, What the library owns plus a Guides group of five, and do not 'restore' theming to Guides"
+    },
+    {
+      "target": "GATE:FLOW-DOCS-03-five-guides-index",
+      "found": "Full-suite runs in wave C will hit the three stale-pin lane failures documented in .tmp/GBC-001/blockers/ (with a stash counterfactual isolating the one seam-contract assertion my repoint flips from the pre-existing theming-sections failure)",
+      "change": "Assign retargeting of the two seam-target pins and the nav-proof expectations to the lanes' keeper before the flow's aggregate green is judged"
+    }
+  ],
+  "feedback": [
+    "Contracts that mandate a docs-content change plus a lane re-run (the seam-map MUST) should also list the landed lanes pinning the old world in some task's write scope, so the repoint and its lane retarget land in the same sprint instead of surfacing as blockers.",
+    "Task write-allowlists for authored docs should include scripts/docs-data/authored-snippets.ts and a recipe path under packages/docs-snippets/commands/ whenever fences are expected, since the snippet gate makes those edits unavoidable."
+  ]
+}
+```
