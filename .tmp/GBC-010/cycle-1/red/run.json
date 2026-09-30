@@ -1,0 +1,213 @@
+{
+  "runIdentity": "gbc-010-1790734885648",
+  "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts --grep FLOW-DOCS-03-five-guides-index",
+  "exit": 1,
+  "testStatuses": {
+    "chromium-desktop--ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-001-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-001-ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-001-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:gbc-001-ac-3": {
+          "status": 200,
+          "ids": 2,
+          "seamAnchor": true,
+          "staleAnchors": 0
+        }
+      }
+    },
+    "chromium-desktop--gbc-001-ac-4": {
+      "status": "timedOut",
+      "observations": {
+        "chromium-desktop:gbc-001-ac-3": {
+          "status": 200,
+          "ids": 2,
+          "seamAnchor": true,
+          "staleAnchors": 0
+        }
+      }
+    },
+    "chromium-desktop--gbc-002-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-002-ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-009-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-015-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-015-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-016-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-016-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-desktop--gbc-016-ac-4": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-001-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-001-ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-001-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-001-ac-4": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-002-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-002-ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-009-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-015-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-015-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-016-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-016-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-mobile--gbc-016-ac-4": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-001-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-001-ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-001-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-001-ac-4": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-002-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-002-ac-2": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-009-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-015-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-015-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-016-ac-1": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-016-ac-3": {
+      "status": "failed",
+      "observations": {}
+    },
+    "chromium-nojs--gbc-016-ac-4": {
+      "status": "failed",
+      "observations": {}
+    }
+  },
+  "sourceHashes": {
+    "guidesIndexPage": "absent",
+    "guidesRoute": "730be388af84d943aef660646b7d81698d78d38de837d728845872e711d46b95",
+    "indexList": "da24bfb0fd8a42ccc3498b52319ef58b1fd82dcc22374b585c49a40dd13adf44",
+    "sectionIndexLayout": "8c61e22bc349c4eab4adfd142d5ca159111e45ec0389a8e47ef13beb34c7b28a",
+    "docsNavigation": "9abd1ac5944351ebcb55dd0d929327b481174e40bcef4ce589f56d61739af925",
+    "testFile": "9d36e94b02decd06405714c39b68f7cfc9f5265f5317a40fc036b774dd883045",
+    "distGuidesIndex": "absent"
+  },
+  "references": [
+    "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-03-five-guides-index/proof.red"
+  ]
+}
