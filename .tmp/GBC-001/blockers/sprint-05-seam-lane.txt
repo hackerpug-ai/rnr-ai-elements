@@ -1,0 +1,40 @@
+         |                                                                  ^
+     631 |   ok &&= seamLinks === 1;
+     632 |
+     633 |   if (ok) {
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-001/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:630:66
+2. ORI-AST-008-component-regression
+   Error: message: renderMarkdown seam link preserved
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m1[39m
+   Received: [31m0[39m
+   
+     628 |   await navigateLocalhost(page, '/components/message');
+     629 |   const seamLinks = await page.locator('main a[href="/docs/theming#rendermarkdown"]').count();
+   > 630 |   soft(seamLinks, 'message: renderMarkdown seam link preserved').toBe(1);
+         |                                                                  ^
+     631 |   ok &&= seamLinks === 1;
+     632 |
+     633 |   if (ok) {
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-001/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:630:66
+3. ORI-AST-008-component-regression
+   Error: message: renderMarkdown seam link preserved
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m1[39m
+   Received: [31m0[39m
+   
+     628 |   await navigateLocalhost(page, '/components/message');
+     629 |   const seamLinks = await page.locator('main a[href="/docs/theming#rendermarkdown"]').count();
+   > 630 |   soft(seamLinks, 'message: renderMarkdown seam link preserved').toBe(1);
+         |                                                                  ^
+     631 |   ok &&= seamLinks === 1;
+     632 |
+     633 |   if (ok) {
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-001/tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:630:66
+
+Time: 9142ms
+[full output: ~/Library/Application Support/rtk/tee/1790730488_playwright.log]

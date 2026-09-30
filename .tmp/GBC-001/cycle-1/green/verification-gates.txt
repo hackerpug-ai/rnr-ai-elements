@@ -1,0 +1,17 @@
+== GBC-001 verification gates (2026-09-29/30, worktree at c921ac15 + GBC-001 changes)
+1. vitest tests/sprint-06-guides-boundary-changelog/guides-content.test.ts: PASS 7/7 (AC-5, AC-6)
+2. pnpm --filter @rnr-ai-elements/docs check:snippets: ok:true, 15 blocks, 0 errors (all 7 new fences byte-verified)
+3. pnpm --filter @rnr-ai-elements/docs build: exit 0; link-check 74 files, 1958 links, 0 errors, 12 external edit-source warnings (pre-existing stale GitHub main)
+4. pnpm exec tsc --noEmit: no errors
+5. biome ci .: 0 errors (format applied to guides-content.test.ts); warnings/infos identical count to stashed trunk
+
+== dist verification (apps/docs/dist)
+- guides/{re-theme,update-installed-items,preview-on-device,customize-rendering}/index.html all exist
+- customize-rendering: exactly 1 id=rendermarkdown, 1 id=textclasscontext
+- re-theme: oklch present, @theme present, href=/docs/theming present, exactly 1 'This guide shows you how to'
+- update-installed-items: <pre> textContent contains 'npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/item.json' (static HTML, no-JS safe)
+- preview-on-device: 'Expo Go' x11; all four opt-in names present; /docs/installation link present
+- /components/message: 1 anchor href=/guides/customize-rendering#rendermarkdown, 0 anchors href=/docs/theming#rendermarkdown
+
+== live CLI verification (real rnraielements.com registry, scratch consumer from packages/docs-snippets/nativewind)
+See cli-update-flow.txt + cli-uniwind-flow.txt for full transcripts.

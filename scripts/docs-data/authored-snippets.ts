@@ -116,6 +116,78 @@ export const COMMITTED_BINDINGS: BlockBinding[] = [
       length: 838,
     },
   },
+  {
+    // GBC-001 guides: re-theme shows both token locations through the real
+    // consumer sources — the uniwind @theme block (apps/example/global.css,
+    // two regions) and the nativewind config mapping (docs-snippets consumer).
+    doc: 'apps/docs/src/content/docs/guides/re-theme.md',
+    snippet: 'fence-0',
+    source: 'apps/example/global.css',
+    region: {
+      sha256: '8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9',
+      length: 186,
+    },
+  },
+  {
+    doc: 'apps/docs/src/content/docs/guides/re-theme.md',
+    snippet: 'fence-1',
+    source: 'apps/example/global.css',
+    region: {
+      sha256: '218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e',
+      length: 838,
+    },
+  },
+  {
+    doc: 'apps/docs/src/content/docs/guides/re-theme.md',
+    snippet: 'fence-2',
+    source: 'packages/docs-snippets/nativewind/tailwind.config.js',
+    region: {
+      sha256: '673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870',
+      length: 276,
+    },
+  },
+  {
+    // GBC-001 update guide: the verified re-add forms, byte-for-byte from the
+    // committed update recipe (live-verified against rnraielements.com,
+    // 2026-09-29 — see .tmp/GBC-001/cycle-1/green/cli-update-flow.txt).
+    doc: 'apps/docs/src/content/docs/guides/update-installed-items.md',
+    snippet: 'fence-0',
+    source: 'packages/docs-snippets/commands/update.sh',
+    region: {
+      sha256: '27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d',
+      length: 195,
+    },
+  },
+  {
+    // GBC-001 customize-rendering guide: both real renderMarkdown call sites
+    // (the installed message and reasoning items) plus the harness story that
+    // injects a pure-JS renderer through the seam.
+    doc: 'apps/docs/src/content/docs/guides/customize-rendering.md',
+    snippet: 'fence-0',
+    source: 'apps/example/components/ai/message.tsx',
+    region: {
+      sha256: '272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222',
+      length: 302,
+    },
+  },
+  {
+    doc: 'apps/docs/src/content/docs/guides/customize-rendering.md',
+    snippet: 'fence-1',
+    source: 'apps/example/components/ai/reasoning.tsx',
+    region: {
+      sha256: '5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313',
+      length: 689,
+    },
+  },
+  {
+    doc: 'apps/docs/src/content/docs/guides/customize-rendering.md',
+    snippet: 'fence-2',
+    source: 'apps/harness/src/stories/Chat.stories.tsx',
+    region: {
+      sha256: '0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89',
+      length: 529,
+    },
+  },
 ];
 
 /** The engine packages' committed configuration inputs (the configuration kind). */

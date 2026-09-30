@@ -10,8 +10,9 @@
  * - rendermarkdown: the injected renderMarkdown seam over the
  *   react-native-enriched-markdown native module.
  *
- * SEAM_LINK_TARGETS is the SINGLE retarget point: sprint-06 repoints these
- * two values at /guides/* in one edit, no consumer changes.
+ * SEAM_LINK_TARGETS is the SINGLE retarget point: sprint-06 (GBC-001) points
+ * both values at the customize-rendering guide's anchored sections — change
+ * them here again in one edit, no consumer changes.
  */
 
 /** The two real seams — exactly these kinds exist, in deterministic order. */
@@ -47,8 +48,8 @@ export function deriveSeams(sourceFiles: readonly SeamSourceFile[]): SeamKind[] 
   return SEAM_KINDS.filter((kind) => hits.has(kind));
 }
 
-/** Where each seam's explanatory section lives — the one sprint-06 retarget. */
+/** Where each seam's how-to section lives — the customize-rendering guide (GBC-001). */
 export const SEAM_LINK_TARGETS: Record<SeamKind, string> = {
-  textclasscontext: '/docs/theming#textclasscontext',
-  rendermarkdown: '/docs/theming#rendermarkdown',
+  textclasscontext: '/guides/customize-rendering#textclasscontext',
+  rendermarkdown: '/guides/customize-rendering#rendermarkdown',
 };
