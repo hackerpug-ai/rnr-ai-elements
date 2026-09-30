@@ -3,7 +3,9 @@ TASK: GBC-011 - Five-guides cap gate (T-DOCS-014 mirror)
 ================================================================================
 
 TASK_TYPE:  FEATURE
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: b01913647623f36214e6aec84725896f9cdd9f10
 PRIORITY:   P1
 POINTS:     3
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -352,3 +354,38 @@ Blocks:     none
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-011",
+  "commit_sha": "b01913647623f36214e6aec84725896f9cdd9f10",
+  "done": "Landed on the task branch and merged to main as 15fc3e10: assertGuidesCap with the module-pinned GUIDES_CAP = 5 in apps/docs/src/lib/docs-navigation.ts:182-206, wired into the /guides/[slug] getStaticPaths at apps/docs/src/pages/guides/[slug].astro:39 over the exact publishedDocs list the route maps, failing the build on any published guides-section count but 5 (observed count, the phrase 'five-page launch cap', and every guides-section source path named; theming and drafts structurally excluded by the section key) and printing the computed '[docs-data] guides: 5 guides \u2014 cap satisfied' line at exactly 5; tests/sprint-06-guides-boundary-changelog/guides-cap.test.ts drills the real production chain with transient sixth-guide and four-guide fixtures (RED evidence at .tmp/GBC-011/cycle-1/red/, GREEN at .tmp/GBC-011/cycle-1/green/), all verification gates green, content tree restored to exactly the five launch guides.",
+  "deviations": [
+    "GUIDES_CAP is a module-local const rather than the exported pin the design reference (scripts/docs-data/gates.ts EXPECTED_ITEM_COUNT) models, because the repo's fallow pre-commit gate fails on unused exports and no consumer existed; the pin still lives in the one module that asserts it.",
+    "The rejection message names every guides-section source path instead of a single inferred offender file, because a sixth guide carrying an out-of-order value (e.g. order 3) is indistinguishable from the set by data; the AC's required substring 'guides/migrating-from-v0.md' is always contained in the full membership list.",
+    "Durable build-stdout evidence was captured by a scripted fourth pass outside vitest (.tmp/GBC-011/cycle-1/green/capture-evidence.sh), because vitest does not echo a spawned build's captured stdout when assertions pass, so a green run alone leaves no stdout artifact."
+  ],
+  "concerns": [
+    "The cmux-injected NODE_OPTIONS (--require shim plus --max-old-space-size=4096) makes biome die with 'linter process terminated abnormally' (exit 254) whenever it launches through pnpm's script shim, which is exactly how the righthook pre-commit job invokes it; commits from cmux sessions need `env -u NODE_OPTIONS git commit` until that shim interaction is fixed.",
+    "guides-cap.test.ts intentionally leaves apps/docs/dist in a partial failed-build state (its last drill is the rejected four-guide build), so anything reading apps/docs/dist after this file must run a fresh docs build first.",
+    "Four fallow clone groups span docs/[...id].astro, guides/[slug].astro, porting.astro and docs-navigation.ts; they pass only as 'inherited findings' exclusions, so future edits to those four files can trip the fallow gate on duplication that predates this task."
+  ],
+  "findings": [
+    "The exact failure shape for output-greps is '[docs-data] guides: found <n> published guides-section entries; the five-page launch cap pins exactly 5 \u2014 guides-section sources: <repo-relative paths>' (apps/docs/src/lib/docs-navigation.ts:195), so matchers should grep the count via 'found <n> published guides-section entries' rather than a bare digit.",
+    "The cap-satisfied line prints once per build from getStaticPaths during astro build, so it appears both in the full `pnpm --filter @rnr-ai-elements/docs build` stdout and in a bare `astro build` (TC-3's path) \u2014 a grepper need not run the full chain to observe it.",
+    "The gate counts the same publishedDocs list the route maps (apps/docs/src/pages/guides/[slug].astro:38-41), so any future consumer needing the guides count (for example a guides index gate) should reuse assertGuidesCap or publishedDocs rather than re-deriving from the filesystem."
+  ],
+  "scope_impact": [
+    {
+      "target": "GBC-010",
+      "found": "Within tests/sprint-06-guides-boundary-changelog/, vitest's alphabetical file order runs guides-cap.test.ts before guides-index.spec.ts, and guides-cap's last drill leaves apps/docs/dist holding a rejected four-guide build while the content tree is restored to five.",
+      "change": "GBC-010's guides-index.spec.ts should build its own dist (or assert only after a fresh `pnpm --filter @rnr-ai-elements/docs build`) rather than reading a dist assumed green from a prior task's run."
+    }
+  ],
+  "feedback": [
+    "righthook's fallow job re-flags long-accepted duplication the moment any of the four clone-bearing files is touched, which cost this task a remediation cycle on inherited code; consider fallow-ignore markers on the accepted clone blocks (the house pattern already used for complexity) or a wider inherited-exclusion window in .fallowrc.json."
+  ]
+}
+```
