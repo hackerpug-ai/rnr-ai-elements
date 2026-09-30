@@ -100,6 +100,53 @@
     height: auto;
   }
 
+  /*
+   * Markdown tables (GBC-017) — the declared twin of DataTable.astro's table
+   * chrome, kept in lockstep with it: var(--muted) zebra on even rows,
+   * var(--border) row dividers, the muted caption, the same cell rhythm,
+   * border-collapse, tokens only, zero JS. Two deliberate divergences, both
+   * because these prose tables hold ~5-7 rows where DataTable's chrome is
+   * sized for 56 mono-key rows: the thead is NOT sticky — display:block plus
+   * overflow-x:auto makes each table its own scroll container (overflow-x:auto
+   * forces overflow-y to auto), so a sticky header would pin inside the table,
+   * never below the site header, a computed 'sticky' that visibly does nothing
+   * — and the first column is NOT pinned, so cells keep transparent surfaces
+   * (DataTable's opaque var(--card) base exists only to cover scrolled content
+   * under the pin). The accessibility floor for scope/caption is content's:
+   * this block styles a caption when one is authored; it cannot add one.
+   */
+  .prose :global(table) {
+    display: block;
+    overflow-x: auto;
+    margin: 0 0 1rem;
+    border-collapse: collapse;
+  }
+  .prose :global(caption) {
+    padding: 0.375rem 0.75rem;
+    text-align: left;
+    color: var(--muted-foreground);
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    padding: 0.375rem 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  /* Sentence-length deviation cells wrap instead of blowing the layout. */
+  .prose :global(td) {
+    overflow-wrap: anywhere;
+  }
+  .prose :global(tbody tr:nth-child(even) td) {
+    background: var(--muted);
+  }
+  /* Below 48rem the first column caps at a label width, keeping the wrapped
+     deviation cells a scannable band rather than a crushed sliver. */
+  @media (max-width: 48rem) {
+    .prose :global(th:first-child),
+    .prose :global(td:first-child) {
+      max-width: 10rem;
+    }
+  }
+
   /* Rendered code fences (Expressive Code) stay full-width inside the measure
      and scroll their own pre when a line outgrows it. */
   .prose :global(.expressive-code) {
