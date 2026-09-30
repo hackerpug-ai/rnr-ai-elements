@@ -1,0 +1,86 @@
+{
+  "sprint": "sprint-06-guides-boundary-changelog",
+  "sprint_identity": {
+    "resolved_sprint_path": "/Users/justinrich/Projects/rnr-ai-elements/.spec/prds/docs-site/tasks/sprint-06-guides-boundary-changelog",
+    "sprint_slug": "sprint-06-guides-boundary-changelog"
+  },
+  "run_id": "2026-09-30T06:18:05Z",
+  "verdict": "fail",
+  "steps_total": 6,
+  "steps_executed": 6,
+  "steps_passed": 5,
+  "ui_driver": "playwright-chromium",
+  "exec_surface": "judge-run-dir (blind judge, background agent)",
+  "judge_blind": true,
+  "steps": [
+    {
+      "n": 1,
+      "text": "",
+      "type": "ui",
+      "executed": true,
+      "result": "pass",
+      "evidence": "{\"lsof_4321_before\": \"empty (exit 1, no listeners)\", \"build_chain\": \"pnpm registry:build && pnpm --filter @rnr-ai-elements/docs build\", \"build_exit\": 0, \"registry_build_stdout\": \"registry built \\u2014",
+      "log": ".gate-judge/20260930T061805Z/run.jsonl#n1",
+      "ui_evidence": "step1.png"
+    },
+    {
+      "n": 2,
+      "text": "",
+      "type": "ui",
+      "executed": true,
+      "result": "pass",
+      "evidence": "{\"owns_vs_does_not_own\": {\"http\": 200, \"ships_does_not_ship_table\": \"present as a real table (Responsibility / Ships in this library / What your app supplies)\", \"does_not_ship_cells\": \"Transport: 'No.",
+      "log": ".gate-judge/20260930T061805Z/run.jsonl#n2",
+      "ui_evidence": "step2-owns.png"
+    },
+    {
+      "n": 3,
+      "text": "",
+      "type": "ui",
+      "executed": true,
+      "result": "pass",
+      "evidence": "{\"guides_index\": {\"http\": 200, \"count\": 5, \"entries\": [\"Re-theme your app\", \"Update installed items\", \"Preview on a device\", \"Customize rendering\", \"Troubleshooting\"]}, \"guide_pages\": {\"re-theme\": {\"h",
+      "log": ".gate-judge/20260930T061805Z/run.jsonl#n3",
+      "ui_evidence": "step3-guides-index.png"
+    },
+    {
+      "n": 4,
+      "text": "",
+      "type": "ui",
+      "executed": true,
+      "result": "pass",
+      "evidence": "{\"changelog_index\": {\"http\": 200, \"releases\": 3, \"order\": [\"0.2.1 (2026-09-08)\", \"0.2.0 (2026-09-08)\", \"0.1.0 (2026-09-07)\"], \"reverse_chronological\": true}, \"release_021\": {\"http\": 200, \"literal_date",
+      "log": ".gate-judge/20260930T061805Z/run.jsonl#n4",
+      "ui_evidence": "step4-021.png"
+    },
+    {
+      "n": 5,
+      "text": "",
+      "type": "ui",
+      "executed": true,
+      "result": "fail",
+      "evidence": "{\"conditions\": \"preview server stopped, port 4321 free before run\", \"e2e_exit\": 1, \"e2e_summary\": \"112 failed / 206 passed / 24 skipped / 132 did not run (29.2m), no flaky, retries: 0\", \"failed_lanes\"",
+      "log": ".gate-judge/20260930T061805Z/run.jsonl#n5",
+      "ui_evidence": "step5-header.png",
+      "failure": {
+        "expected": "pnpm e2e:docs exits 0 with retries: 0, all lanes green including the sprint-06 lane and journey specs writing evidence",
+        "actual": "exit 1 \u2014 56 failed / 386 passed / retries 0; every failure in sprint-01/03/04/05 lanes (frozen earlier-sprint files); sprint-06 lanes and both journeys green with evidence",
+        "evidence_pointer": "run.jsonl#n5 + judge report.md step-5 section",
+        "root_cause_hypothesis": "HYPOTHESIS: frozen earlier-sprint lane files pin superseded state (deliv-03-112 wipes tracked apps/docs/src/data; three GBC-001-repoint stale-pin lanes; search-slot strict-mode; theming heading; FUSE-05 tracked-fonts; SHELL-010 copy anchor)",
+        "remedy_suggestion": "HYPOTHESIS: open a remediation task owning those six frozen lane fixes (outside sprint-06 scope per its write rules)",
+        "remedy_file_guess": "HYPOTHESIS: tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:92 et al."
+      }
+    },
+    {
+      "n": 6,
+      "text": "",
+      "type": "ui",
+      "executed": true,
+      "result": "pass",
+      "evidence": "{\"context\": \"operator restored apps/docs/src/data/dev-client-matrix.json and token-usage.json via git (judge run rules forbid the write); files verified on disk before launch; port 4321 free, no stale",
+      "log": ".gate-judge/20260930T061805Z/run.jsonl#n6",
+      "ui_evidence": "step6-home.png"
+    }
+  ],
+  "notes": "Verdict composed from the blind judge's ledger (last attempt per step). Step 6 first attempt blocked by an external mid-gate deletion of tracked data files (deliv-03-112 destructive-spec residue); operator restored via git; retry passed. Step 5 fails on frozen earlier-sprint lanes outside sprint-06 write scope \u2014 see failure block and sprint summary's Human question."
+}
