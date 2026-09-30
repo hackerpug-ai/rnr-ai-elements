@@ -9,7 +9,7 @@ prd_version: 2.0.0
 | # | Risk | Mitigation | Owner |
 |---|------|------------|-------|
 | R1 | CSP `unsafe-inline` vs pre-paint scripts / Astro inline islands | Compatible by design (site is static, zero user input); tightening to hashes stays mechanical because is:inline output is deterministic per build | cloudflare/astro implementer |
-| R2 | Pagefind vs CSP connect-src | Same-origin only; no CSP edit ever needed | astro implementer |
+| R2 | Pagefind vs CSP (connect-src + WebAssembly) | Same-origin fetches need only `connect-src 'self'`; Pagefind compiles its index as WebAssembly, which needs `'wasm-unsafe-eval'` in `script-src` (measured 2026-09-29: without it Chromium and WebKit return 0 search results — "Failed to load the Pagefind WASM"). Amended at Sprint 07 promotion with owner approval | astro implementer |
 | R3 | Expressive Code dark theme following OS instead of `.dark` class (discussion #410 failure) | `themes: ['github-light','github-dark']`, `useDarkModeMediaQuery: false`, `themeCssSelector` keyed to `.dark`/`:root` — verified option names | astro implementer |
 | R4 | Astro v7 Sätteri + MDX + EC is a new codepath | EC has official v7 support, versions pinned; documented fallback `markdown.processor = unified()` + `@astrojs/markdown-remark`, EC config unchanged | astro implementer |
 | R5 | Engine tab lost after ClientRouter swaps (swapRootAttributes overwrite) | Server-render both panels; pre-paint `is:inline` + `data-astro-rerun` script re-applies `data-engine`; island owns clicks; standing regression scenario (FLOW-SHELL-15) | astro implementer |

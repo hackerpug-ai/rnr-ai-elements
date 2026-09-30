@@ -15,7 +15,7 @@ The site exposes no request/response API — everything is static build output. 
 | `https://rnraielements.com/llms-full.txt` | GET | 200 text/plain; contains the not-npm statement, literal absolute-URL install commands for both engines, engine-detection heuristics, per-item peer/permission contracts, Expo Go vs dev-client flags — generated from the same data as the site UI, byte-consistent with the ledger's copy-button commands. |
 | `https://rnraielements.com/robots.txt` | GET | 200 text/plain; must Disallow nothing under `/r/` or `/llms*`; references sitemap.xml. |
 | `https://rnraielements.com/sitemap.xml` | GET | 200; @astrojs/sitemap output over content + generated routes. |
-| All HTML routes | GET | 200 with `cache-control: public, max-age=0, must-revalidate` and the security-header baseline (CSP `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'`, HSTS, nosniff, frame-deny, strict-origin-when-cross-origin). |
+| All HTML routes | GET | 200 with `cache-control: public, max-age=0, must-revalidate` and the security-header baseline (CSP `default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'`, HSTS, nosniff, frame-deny, strict-origin-when-cross-origin). |
 | `/_astro/*` | GET | 200, `cache-control: public, max-age=31536000, immutable`. |
 | `www.rnraielements.com/*` | GET | single 301 to the apex counterpart (zone Redirect Rule). |
 | `/docs`, `/install` | GET | single-hop 301 to `/docs/introduction` / `/docs/installation`. |

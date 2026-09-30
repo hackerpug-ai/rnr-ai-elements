@@ -18,5 +18,5 @@ Header and cache tiers are the delivery contract for every response.
 - `/docs/introduction` -> `200`, `cache-control: public, max-age=0, must-revalidate`.
 - `/_astro/<hashed>.js` -> `cache-control: public, max-age=31536000, immutable`.
 - `/r/nativewind/conversation.json` -> `200`, `content-type: application/json`, `cache-control: public, max-age=300`.
-- Every response carries: `content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'`, `strict-transport-security: max-age=31536000; includeSubDomains`, `x-content-type-options: nosniff`, `x-frame-options: DENY`, `referrer-policy: strict-origin-when-cross-origin`.
+- Every response carries: `content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'`, `strict-transport-security: max-age=31536000; includeSubDomains`, `x-content-type-options: nosniff`, `x-frame-options: DENY`, `referrer-policy: strict-origin-when-cross-origin`.
 - `curl -sI https://www.rnraielements.com/docs/introduction` -> exactly one `301` whose `location` is the apex counterpart.

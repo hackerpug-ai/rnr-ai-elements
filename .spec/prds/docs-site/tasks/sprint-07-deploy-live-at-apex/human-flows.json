@@ -1,0 +1,158 @@
+{
+ "flows": [
+  {
+   "artifact": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-02-gated-deploy-order/run.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "On a real GitHub Actions push run on main, the deploy job runs `Preflight dist` and then cloudflare/wrangler-action `deploy --message <sha>` only after registry, typecheck, lint, test and docs-e2e all conclude success, the active Worker version's message equals the run's commit SHA, and the apex serves 200 text/html. The test reads the workflow's needs and steps, the run's job timings, conclusions and log through gh api, and the Worker version through wrangler. It never uses act or a local runner.",
+   "gate_steps": [
+    2,
+    3
+   ],
+   "id": "FLOW-DELIV-02-gated-deploy-order",
+   "manual_physical": false,
+   "red_proof": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-02-gated-deploy-order/proof.red",
+   "run_cmd": "CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/gated-deploy-order.remote.spec.ts --grep FLOW-DELIV-02-gated-deploy-order",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-07-deploy-live-at-apex/gated-deploy-order.remote.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-DELIV-02"
+  },
+  {
+   "artifact": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-02-header-and-domain-contract/run.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "Against the live apex over real HTTP, every path tier (HTML, a hashed /_astro asset, a registry JSON, a 404) returns its exact single cache-control value and the five security headers, and www answers exactly one 301 to the apex counterpart for a docs path and for the root path. The spec calls request.get with maxRedirects 0 so an unresolved www host, a served 200 or a comma-joined header value all fail.",
+   "gate_steps": [
+    5,
+    6,
+    7
+   ],
+   "id": "FLOW-DELIV-02-header-and-domain-contract",
+   "manual_physical": false,
+   "red_proof": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-02-header-and-domain-contract/proof.red",
+   "run_cmd": "CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts --grep FLOW-DELIV-02-header-and-domain-contract",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-DELIV-02"
+  },
+  {
+   "artifact": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-03-112-file-completeness/run.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "Both engine trees are swept item by item against the 56 names in packages/registry/registry.json on the live apex. Every one of the 112 URLs must return 200 application/json with cache-control exactly `public, max-age=300`, and a per-engine present/expected count is recorded. The max-age=300 assertion is added on top of the visible scenario's status/type check, because that check alone is already green today (see promotion_notes).",
+   "gate_steps": [
+    8
+   ],
+   "id": "FLOW-DELIV-03-112-file-completeness",
+   "manual_physical": false,
+   "red_proof": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-03-112-file-completeness/proof.red",
+   "run_cmd": "CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts --grep FLOW-DELIV-03-112-file-completeness",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-DELIV-03"
+  },
+  {
+   "artifact": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-03-live-registry-round-trip/run.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "An integrator runs the site's exact command, `npx @react-native-reusables/cli@latest add https://rnraielements.com/r/{engine}/conversation.json`, with the real CLI in a fresh Expo SDK 57 app for each engine. It exits 0. It writes conversation.tsx and its same-origin dependency empty.tsx identical to the served files[].content, except the import lines rewritten from `@/registry/{engine}/` to the app's components.json aliases. The app then compiles with `tsc --noEmit`. The served JSON returns 200, application/json, and `cache-control: public, max-age=300` with no redirect. Its sha256 equals the item rebuilt in memory with `buildItem` at the commit named by the live Worker version's `workers/message` annotation.",
+   "gate_steps": [
+    12,
+    13,
+    14,
+    15,
+    16
+   ],
+   "id": "FLOW-DELIV-03-live-registry-round-trip",
+   "manual_physical": false,
+   "red_proof": "tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-03-live-registry-round-trip/proof.red",
+   "run_cmd": "CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts --grep FLOW-DELIV-03-live-registry-round-trip",
+   "scope": "task",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts",
+   "type": "core",
+   "uc_ref": "UC-DELIV-03"
+  },
+  {
+   "artifact": "tests/sprint-07-deploy-live-at-apex/evidence/journeys-docs-delivery-arc/run.json",
+   "coldboot_policy": ".spec/e2e-policy/coldboot.json",
+   "desc": "Post-integration journey. A merged registry edit flows through the ordered ci chain on real GitHub Actions and deploys. Within the 300s TTL the live /r/nativewind/<item>.json hash equals the merge commit's public/r hash and the same run's docs-dist artifact hash. The test takes the merge commit in ARC_SHA (a SHA or a ref such as origin/main, resolved with git rev-parse --verify <ref>^{commit}), then reads the run and jobs with gh api, downloads the artifact with gh run download, and polls the real apex. It never pushes and never triggers a workflow.",
+   "gate_steps": [
+    17
+   ],
+   "id": "journeys/docs-delivery-arc",
+   "manual_physical": false,
+   "red_proof": "tests/sprint-07-deploy-live-at-apex/evidence/journeys-docs-delivery-arc/proof.red",
+   "run_cmd": "ARC_SHA=origin/main CI=1 pnpm exec playwright test --config tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts --grep journeys/docs-delivery-arc",
+   "scope": "journey",
+   "surface_policy": ".spec/e2e-policy/surface.json",
+   "test": "tests/sprint-07-deploy-live-at-apex/docs-delivery-arc.remote.spec.ts",
+   "type": "core",
+   "uc_refs": [
+    "UC-DELIV-01",
+    "UC-DELIV-02",
+    "UC-DELIV-03"
+   ]
+  }
+ ],
+ "deferred_journeys": [
+  {
+   "covers_ucs": [
+    "UC-DELIV-03",
+    "UC-EXT-01"
+   ],
+   "id": "journeys/docs-agent-arc--edge-robots-blocks-registry-json",
+   "outstanding_ucs": [
+    "UC-EXT-01"
+   ]
+  },
+  {
+   "covers_ucs": [
+    "UC-DELIV-03",
+    "UC-EXT-01",
+    "UC-GEND-04"
+   ],
+   "id": "journeys/docs-agent-arc",
+   "outstanding_ucs": [
+    "UC-EXT-01"
+   ]
+  },
+  {
+   "covers_ucs": [
+    "UC-DELIV-03",
+    "UC-DELIV-04"
+   ],
+   "id": "journeys/docs-delivery-arc--edge-rollback-leaves-stale-registry",
+   "outstanding_ucs": [
+    "UC-DELIV-04"
+   ]
+  }
+ ],
+ "derived_from": {
+  "prior_scope": [
+   "UC-DELIV-01",
+   "UC-DOCS-01",
+   "UC-DOCS-02",
+   "UC-DOCS-03",
+   "UC-DOCS-04",
+   "UC-DOCS-05",
+   "UC-DOCS-06",
+   "UC-GEND-01",
+   "UC-GEND-02",
+   "UC-GEND-03",
+   "UC-GEND-04",
+   "UC-GEND-06",
+   "UC-GEND-07",
+   "UC-SHELL-01",
+   "UC-SHELL-02",
+   "UC-SHELL-03"
+  ],
+  "scenarios": ".spec/scenarios",
+  "scope": [
+   "UC-DELIV-02",
+   "UC-DELIV-03"
+  ]
+ }
+}
