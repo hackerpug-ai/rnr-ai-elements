@@ -47,8 +47,26 @@ function itemDestinationHref(itemName: string): string {
   return `/components/${itemName}`;
 }
 
-/** The published destination for one published documentation source. */
-function docDestinationHref(docId: string): string {
+/**
+ * The reserved slugs the static routes own (docs-navigation's
+ * RESERVED_DOC_SLUGS): they publish at /docs/{id} regardless of authored
+ * section — theming sits in the guides nav group, but the static /docs/theming
+ * route owns its destination.
+ */
+const RESERVED_SEARCH_SLUGS: readonly string[] = ['theming'];
+
+/**
+ * The published destination for one published documentation source. Section
+ * mirrors docs-navigation's hrefFor derivation (GBC-009): getting-started at
+ * /docs/{id}, guides at /guides/{basename(id)}, porting at /porting. This
+ * module must stay browser-pure (no node: imports), so it cannot import
+ * docs-navigation directly; the guides-routing drill pins the two derivations
+ * to the same destinations.
+ */
+function docDestinationHref(docId: string, section?: string): string {
+  if (RESERVED_SEARCH_SLUGS.includes(docId)) return `/docs/${docId}`;
+  if (section === 'guides') return `/guides/${docId.split('/').at(-1) ?? docId}`;
+  if (section === 'porting') return '/porting';
   return `/docs/${docId}`;
 }
 
@@ -78,6 +96,8 @@ export interface DestinationDocSource {
   id: string;
   draft?: boolean;
   title?: string;
+  /** The authored section (docs-navigation vocabulary); decides the destination. */
+  section?: string;
 }
 
 /**
@@ -103,7 +123,7 @@ export function deriveExpectedDestinations(
       .filter((doc) => doc.draft !== true)
       .map(
         (doc): ExpectedDestination => ({
-          href: docDestinationHref(doc.id),
+          href: docDestinationHref(doc.id, doc.section),
           category: 'pages',
           kind: 'doc',
           title: doc.title,
