@@ -1,0 +1,11 @@
+ORI-AST-001 pre-existing proof (mv + git checkout HEAD baseline, no stash):
+- Baseline (my 4 files removed, tracked files at HEAD):
+  docs-collection.test.ts -> PASS (1) FAIL (3):
+  ORI-AST-001-collection-schema, ORI-AST-001-publication-contract,
+  ORI-AST-001-mdx-code-copy
+- With my changes: identical 3 failures (the documented "ORI-AST-001 x3"
+  pre-existing set). My changes do not cause them.
+- Note: an accidental `git stash pop` during this proof pulled the shared
+  stash (sprint-05 ORI-RN-005 rn005-cycle2-wip) into the worktree; all 12
+  conflicted files were restored to HEAD and the stash entry was kept
+  (never dropped). My 4 files were re-verified byte-exact afterwards.
