@@ -1,0 +1,123 @@
+{
+  "runIdentity": "gbc-014-1790747509546",
+  "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc --project=chromium-desktop",
+  "exit": 0,
+  "testStatuses": {
+    "chromium-desktop--ac-3-themer": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-3": {
+          "themingStatus": 200,
+          "tokenRowCount": 20,
+          "swatchBefore": "oklch(1 0 0)",
+          "swatchAfter": "oklch(0.145 0 0)",
+          "rootClassAfter": "dark",
+          "storedTheme": "dark",
+          "reloadsBetweenReads": 0,
+          "firstFrameAfterReload": "dark",
+          "guidesStatus": 200,
+          "reThemeStatus": 200,
+          "guidesRootClass": "dark",
+          "reThemeRootClass": "dark",
+          "guideCarriesThemeLiterals": {
+            "atTheme": true,
+            "oklch": true
+          }
+        }
+      }
+    },
+    "chromium-desktop--ac-4-both": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-3": {
+          "themingStatus": 200,
+          "tokenRowCount": 20,
+          "swatchBefore": "oklch(1 0 0)",
+          "swatchAfter": "oklch(0.145 0 0)",
+          "rootClassAfter": "dark",
+          "storedTheme": "dark",
+          "reloadsBetweenReads": 0,
+          "firstFrameAfterReload": "dark",
+          "guidesStatus": 200,
+          "reThemeStatus": 200,
+          "guidesRootClass": "dark",
+          "reThemeRootClass": "dark",
+          "guideCarriesThemeLiterals": {
+            "atTheme": true,
+            "oklch": true
+          }
+        },
+        "chromium-desktop:ac-4": {
+          "messageStatus": 200,
+          "calloutLinks": {
+            "renderMarkdown": 1,
+            "textClassContext": 1
+          },
+          "staleLinks": {
+            "renderMarkdown": 0,
+            "textClassContext": 0
+          },
+          "guideStatus": 200,
+          "firstClick": {
+            "status": 200,
+            "landedPath": "/guides/customize-rendering",
+            "renderMarkdownIdCount": 1,
+            "textClassContextIdCount": 1
+          },
+          "secondClick": {
+            "status": 200,
+            "landedPath": "/guides/customize-rendering",
+            "textClassContextIdCount": 1
+          }
+        }
+      }
+    }
+  },
+  "negativeControls": [
+    {
+      "mutation": "prepaint-theme-script-removed",
+      "ac": "AC-3",
+      "description": "The DocsLayout.astro is:inline pre-paint script (stored rnr-theme > system scheme > dark, plus the engine pre-paint) removed on an isolated copy of the candidate, so the first frame paints the dark-first default and the toggle's click flips into light instead of dark; the same locked run_cmd must fail there and passes on the restored candidate.",
+      "source": "apps/docs/src/layouts/DocsLayout.astro",
+      "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc --project=chromium-desktop",
+      "buildExit": 0,
+      "runExit": 1,
+      "failing": [
+        "chromium-desktop AC-3: Error: the background swatch computes to light oklch(1 0 0) before the toggle (the mutated start state)"
+      ],
+      "passingUnaffected": [
+        "chromium-desktop AC-4 passed (the seam links are untouched by this mutation — attribution is AC-3's failure alone)"
+      ],
+      "log": ".tmp/GBC-014/nc-ac3-tee-playwright.log",
+      "at": "2026-09-30T06:05:00Z"
+    },
+    {
+      "mutation": "seam-link-targets-reverted",
+      "ac": "AC-4",
+      "description": "SEAM_LINK_TARGETS in apps/docs/src/lib/seam-map.ts reverted to the pre-sprint '/docs/theming#rendermarkdown' / '#textclasscontext' on an isolated copy of the candidate, so the /components/message seam Callouts never reach the guide; the same locked run_cmd must fail there and passes on the restored candidate.",
+      "source": "apps/docs/src/lib/seam-map.ts",
+      "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts --grep journeys/docs-themer-arc --project=chromium-desktop",
+      "buildExit": 0,
+      "runExit": 1,
+      "failing": [
+        "chromium-desktop AC-4: Error: exactly 1 aside.callout anchor with href '/guides/customize-rendering#rendermarkdown' (0 on the mutated copy)"
+      ],
+      "passingUnaffected": [
+        "chromium-desktop AC-3 passed (the theme flow is untouched by this mutation — attribution is AC-4's failure alone)"
+      ],
+      "log": ".tmp/GBC-014/nc-ac4-tee-playwright.log",
+      "at": "2026-09-30T06:20:00Z"
+    }
+  ],
+  "sourceHashes": {
+    "docsLayout": "5403f6679c616e8611f549bea66e330e33a0c8aa4d0e6a91261af5f7ceff2d9f",
+    "themeToggle": "8bb38fcf6f8b1c859647a9ec30d9846437f623040cbeb94d5af802971d68cd50",
+    "tokenTable": "95336b181151cc69886a9b9f54a9677a01206f8b419e23074e452f1c734665d8",
+    "seamMap": "8d878db3aa07560b414d0ce259b4ff8a277718c719fb0007bbc692d7e1b84bd1",
+    "itemPage": "2966dbcd3e1e10888b293dfc2619f7fab4691b5be85435e50b5117237201310e",
+    "testFile": "c94de8f146184f5fb3dac68f263bbecc75447ae711092269dd87b51c198f7d7d"
+  },
+  "references": [
+    "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-themer-arc/proof.red"
+  ]
+}

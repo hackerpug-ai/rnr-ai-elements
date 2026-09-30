@@ -1,0 +1,778 @@
+{
+  "runIdentity": "gbc-014-1790747452683",
+  "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc --project=chromium-desktop --project=chromium-mobile",
+  "exit": 0,
+  "testStatuses": {
+    "chromium-desktop--ac-1-desktop": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-1-desktop": {
+          "pageStatuses": {
+            "/docs/installation": 200,
+            "/docs/quickstart": 200,
+            "/registry": 200,
+            "/docs/owns-vs-does-not-own": 200
+          },
+          "quickstartCommand": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "ledgerRowCount": 56,
+          "clipboard": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "useChatTds": 3,
+          "exampleAnchor": {
+            "count": 1,
+            "href": "https://github.com/hackerpug-ai/rnr-ai-elements/tree/main/apps/example"
+          },
+          "installCommandCount": 120,
+          "installCommands": [
+            {
+              "page": "/docs/installation",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json"
+              ]
+            },
+            {
+              "page": "/docs/quickstart",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/prompt-input.json https://rnraielements.com/r/nativewind/item.json https://rnraielements.com/r/nativewind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/prompt-input.json https://rnraielements.com/r/uniwind/item.json https://rnraielements.com/r/uniwind/sheet.json"
+              ]
+            },
+            {
+              "page": "/registry",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/shimmer.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/shimmer.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/checkpoint.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/checkpoint.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/image.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/image.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/persona.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/persona.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/speech-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/speech-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/kbd.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/kbd.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/breadcrumb.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/breadcrumb.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/button-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/button-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/slider.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/slider.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/table.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/table.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/command.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/command.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mono.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mono.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/markdown.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/markdown.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/code-block.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/code-block.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/prompt-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/prompt-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/empty.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/empty.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/item.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/item.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/input-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/input-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/suggestion.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/suggestion.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/status.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/status.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/reasoning-lifecycle.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/reasoning-lifecycle.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/tool.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/tool.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/reasoning.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/reasoning.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/task.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/task.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/question.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/question.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/agent.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/agent.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/chain-of-thought.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/chain-of-thought.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/plan.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/plan.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/confirmation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/confirmation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/queue.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/queue.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/url.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/url.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sources.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sources.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/inline-citation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/inline-citation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/artifact.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/artifact.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/snippet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/snippet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/commit.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/commit.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/attachments.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/attachments.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/context.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/context.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/open-in-chat.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/open-in-chat.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/model-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/model-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mic-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mic-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/voice-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/voice-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/audio-player.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/audio-player.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/transcription.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/transcription.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/terminal.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/terminal.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/file-tree.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/file-tree.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/environment-variables.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/environment-variables.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/package-info.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/package-info.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/stack-trace-parser.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/stack-trace-parser.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/stack-trace.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/stack-trace.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/schema-display.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/schema-display.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/test-results.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/test-results.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/web-preview.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/web-preview.json"
+              ]
+            },
+            {
+              "page": "/docs/owns-vs-does-not-own",
+              "commands": []
+            }
+          ],
+          "header": {
+            "count": 5,
+            "texts": [
+              "Components",
+              "Registry",
+              "Guides",
+              "Porting",
+              "Changelog"
+            ],
+            "hrefs": [
+              "/components",
+              "/registry",
+              "/guides",
+              "/porting",
+              "/changelog"
+            ],
+            "statuses": {
+              "/components": 200,
+              "/registry": 200,
+              "/guides": 200,
+              "/porting": 200,
+              "/changelog": 200
+            }
+          }
+        }
+      }
+    },
+    "chromium-desktop--ac-1-mobile": {
+      "status": "skipped",
+      "observations": {
+        "chromium-desktop:ac-1-desktop": {
+          "pageStatuses": {
+            "/docs/installation": 200,
+            "/docs/quickstart": 200,
+            "/registry": 200,
+            "/docs/owns-vs-does-not-own": 200
+          },
+          "quickstartCommand": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "ledgerRowCount": 56,
+          "clipboard": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "useChatTds": 3,
+          "exampleAnchor": {
+            "count": 1,
+            "href": "https://github.com/hackerpug-ai/rnr-ai-elements/tree/main/apps/example"
+          },
+          "installCommandCount": 120,
+          "installCommands": [
+            {
+              "page": "/docs/installation",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json"
+              ]
+            },
+            {
+              "page": "/docs/quickstart",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/prompt-input.json https://rnraielements.com/r/nativewind/item.json https://rnraielements.com/r/nativewind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/prompt-input.json https://rnraielements.com/r/uniwind/item.json https://rnraielements.com/r/uniwind/sheet.json"
+              ]
+            },
+            {
+              "page": "/registry",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/shimmer.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/shimmer.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/checkpoint.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/checkpoint.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/image.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/image.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/persona.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/persona.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/speech-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/speech-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/kbd.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/kbd.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/breadcrumb.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/breadcrumb.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/button-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/button-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/slider.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/slider.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/table.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/table.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/command.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/command.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mono.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mono.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/markdown.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/markdown.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/code-block.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/code-block.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/prompt-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/prompt-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/empty.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/empty.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/item.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/item.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/input-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/input-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/suggestion.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/suggestion.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/status.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/status.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/reasoning-lifecycle.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/reasoning-lifecycle.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/tool.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/tool.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/reasoning.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/reasoning.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/task.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/task.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/question.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/question.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/agent.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/agent.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/chain-of-thought.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/chain-of-thought.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/plan.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/plan.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/confirmation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/confirmation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/queue.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/queue.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/url.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/url.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sources.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sources.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/inline-citation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/inline-citation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/artifact.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/artifact.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/snippet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/snippet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/commit.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/commit.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/attachments.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/attachments.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/context.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/context.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/open-in-chat.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/open-in-chat.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/model-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/model-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mic-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mic-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/voice-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/voice-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/audio-player.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/audio-player.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/transcription.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/transcription.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/terminal.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/terminal.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/file-tree.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/file-tree.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/environment-variables.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/environment-variables.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/package-info.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/package-info.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/stack-trace-parser.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/stack-trace-parser.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/stack-trace.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/stack-trace.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/schema-display.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/schema-display.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/test-results.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/test-results.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/web-preview.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/web-preview.json"
+              ]
+            },
+            {
+              "page": "/docs/owns-vs-does-not-own",
+              "commands": []
+            }
+          ],
+          "header": {
+            "count": 5,
+            "texts": [
+              "Components",
+              "Registry",
+              "Guides",
+              "Porting",
+              "Changelog"
+            ],
+            "hrefs": [
+              "/components",
+              "/registry",
+              "/guides",
+              "/porting",
+              "/changelog"
+            ],
+            "statuses": {
+              "/components": 200,
+              "/registry": 200,
+              "/guides": 200,
+              "/porting": 200,
+              "/changelog": 200
+            }
+          }
+        }
+      }
+    },
+    "chromium-desktop--ac-2-one": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-1-desktop": {
+          "pageStatuses": {
+            "/docs/installation": 200,
+            "/docs/quickstart": 200,
+            "/registry": 200,
+            "/docs/owns-vs-does-not-own": 200
+          },
+          "quickstartCommand": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "ledgerRowCount": 56,
+          "clipboard": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "useChatTds": 3,
+          "exampleAnchor": {
+            "count": 1,
+            "href": "https://github.com/hackerpug-ai/rnr-ai-elements/tree/main/apps/example"
+          },
+          "installCommandCount": 120,
+          "installCommands": [
+            {
+              "page": "/docs/installation",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json"
+              ]
+            },
+            {
+              "page": "/docs/quickstart",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/prompt-input.json https://rnraielements.com/r/nativewind/item.json https://rnraielements.com/r/nativewind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/prompt-input.json https://rnraielements.com/r/uniwind/item.json https://rnraielements.com/r/uniwind/sheet.json"
+              ]
+            },
+            {
+              "page": "/registry",
+              "commands": [
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/shimmer.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/shimmer.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/checkpoint.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/checkpoint.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/image.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/image.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/persona.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/persona.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/speech-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/speech-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/kbd.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/kbd.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/breadcrumb.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/breadcrumb.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/button-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/button-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/slider.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/slider.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/table.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/table.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/command.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/command.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mono.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mono.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/markdown.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/markdown.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/code-block.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/code-block.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/message.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/prompt-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/prompt-input.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/empty.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/empty.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/item.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/item.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/input-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/input-group.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sheet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/suggestion.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/suggestion.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/status.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/status.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/reasoning-lifecycle.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/reasoning-lifecycle.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/tool.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/tool.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/reasoning.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/reasoning.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/task.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/task.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/question.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/question.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/agent.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/agent.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/chain-of-thought.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/chain-of-thought.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/plan.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/plan.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/confirmation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/confirmation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/queue.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/queue.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/url.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/url.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/sources.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/sources.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/inline-citation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/inline-citation.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/artifact.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/artifact.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/snippet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/snippet.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/commit.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/commit.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/attachments.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/attachments.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/context.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/context.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/open-in-chat.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/open-in-chat.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/model-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/model-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/mic-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/mic-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/voice-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/voice-selector.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/audio-player.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/audio-player.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/transcription.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/transcription.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/terminal.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/terminal.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/file-tree.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/file-tree.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/environment-variables.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/environment-variables.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/package-info.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/package-info.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/stack-trace-parser.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/stack-trace-parser.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/stack-trace.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/stack-trace.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/schema-display.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/schema-display.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/test-results.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/test-results.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/nativewind/web-preview.json",
+                "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/web-preview.json"
+              ]
+            },
+            {
+              "page": "/docs/owns-vs-does-not-own",
+              "commands": []
+            }
+          ],
+          "header": {
+            "count": 5,
+            "texts": [
+              "Components",
+              "Registry",
+              "Guides",
+              "Porting",
+              "Changelog"
+            ],
+            "hrefs": [
+              "/components",
+              "/registry",
+              "/guides",
+              "/porting",
+              "/changelog"
+            ],
+            "statuses": {
+              "/components": 200,
+              "/registry": 200,
+              "/guides": 200,
+              "/porting": 200,
+              "/changelog": 200
+            }
+          }
+        },
+        "chromium-desktop:ac-2": {
+          "beforeStorage": null,
+          "beforeEngine": "nativewind",
+          "records": [
+            {
+              "path": "/docs/installation",
+              "url": "http://localhost:4321/docs/installation",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": "true"
+            },
+            {
+              "path": "/docs/quickstart",
+              "url": "http://localhost:4321/docs/quickstart",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": "true"
+            },
+            {
+              "path": "/registry",
+              "url": "http://localhost:4321/registry",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": "true"
+            },
+            {
+              "path": "/docs/owns-vs-does-not-own",
+              "url": "http://localhost:4321/docs/owns-vs-does-not-own",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": false
+            },
+            {
+              "path": "/guides",
+              "url": "http://localhost:4321/guides",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": false
+            }
+          ]
+        }
+      }
+    },
+    "chromium-mobile--ac-1-desktop": {
+      "status": "skipped",
+      "observations": {}
+    },
+    "chromium-mobile--ac-1-mobile": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-1-mobile": {
+          "pageStatuses": {
+            "/docs/installation": 200,
+            "/docs/quickstart": 200,
+            "/registry": 200,
+            "/docs/owns-vs-does-not-own": 200
+          },
+          "quickstartCommand": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "ledgerRowCount": 56,
+          "clipboard": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "drawer": {
+            "count": 5,
+            "texts": [
+              "Components",
+              "Registry",
+              "Guides",
+              "Porting",
+              "Changelog"
+            ],
+            "hrefs": [
+              "/components",
+              "/registry",
+              "/guides",
+              "/porting",
+              "/changelog"
+            ],
+            "statuses": {
+              "/components": 200,
+              "/registry": 200,
+              "/guides": 200,
+              "/porting": 200,
+              "/changelog": 200
+            }
+          }
+        }
+      }
+    },
+    "chromium-mobile--ac-2-one": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-1-mobile": {
+          "pageStatuses": {
+            "/docs/installation": 200,
+            "/docs/quickstart": 200,
+            "/registry": 200,
+            "/docs/owns-vs-does-not-own": 200
+          },
+          "quickstartCommand": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "ledgerRowCount": 56,
+          "clipboard": "npx @react-native-reusables/cli@latest add https://rnraielements.com/r/uniwind/conversation.json",
+          "drawer": {
+            "count": 5,
+            "texts": [
+              "Components",
+              "Registry",
+              "Guides",
+              "Porting",
+              "Changelog"
+            ],
+            "hrefs": [
+              "/components",
+              "/registry",
+              "/guides",
+              "/porting",
+              "/changelog"
+            ],
+            "statuses": {
+              "/components": 200,
+              "/registry": 200,
+              "/guides": 200,
+              "/porting": 200,
+              "/changelog": 200
+            }
+          }
+        },
+        "chromium-mobile:ac-2": {
+          "beforeStorage": null,
+          "beforeEngine": "nativewind",
+          "records": [
+            {
+              "path": "/docs/installation",
+              "url": "http://localhost:4321/docs/installation",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": "true"
+            },
+            {
+              "path": "/docs/quickstart",
+              "url": "http://localhost:4321/docs/quickstart",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": "true"
+            },
+            {
+              "path": "/registry",
+              "url": "http://localhost:4321/registry",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": "true"
+            },
+            {
+              "path": "/docs/owns-vs-does-not-own",
+              "url": "http://localhost:4321/docs/owns-vs-does-not-own",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": false
+            },
+            {
+              "path": "/guides",
+              "url": "http://localhost:4321/guides",
+              "storage": "uniwind",
+              "dataEngine": "uniwind",
+              "uniwindTabSelected": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "negativeControls": [
+    {
+      "mutation": "nav-links-cut-to-2",
+      "ac": "AC-1",
+      "description": "NAV_LINKS in apps/docs/src/components/Header.astro cut back to the 2 pre-sprint entries (Components, Registry) on an isolated copy of the candidate; the same locked run_cmd must fail there and passes on the restored candidate.",
+      "source": "apps/docs/src/components/Header.astro",
+      "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc --project=chromium-desktop --project=chromium-mobile",
+      "buildExit": 0,
+      "runExit": 1,
+      "failing": [
+        "chromium-desktop AC-1: Error: exactly 5 anchors in .site-header__nav (received 2, the mutated count)",
+        "chromium-mobile AC-1: Error: exactly 5 anchors in .site-drawer__nav (received 2, the mutated count)"
+      ],
+      "log": ".tmp/GBC-014/nc-ac1/tee-1790744460-playwright.log",
+      "at": "2026-09-30T05:20:00Z"
+    },
+    {
+      "mutation": "tab-group-engine-write-removed",
+      "ac": "AC-2",
+      "description": "The TabGroup activate() localStorage.setItem('rnr-engine', ...) write removed on an isolated copy of the candidate, so the pick is not persisted and /docs/quickstart reverts to 'nativewind'; the same locked run_cmd must fail there and passes on the restored candidate.",
+      "source": "apps/docs/src/scripts/tab-group.ts",
+      "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts --grep journeys/docs-integrator-arc --project=chromium-desktop --project=chromium-mobile",
+      "buildExit": 0,
+      "runExit": 1,
+      "failing": [
+        "chromium-desktop AC-2: Error: localStorage 'rnr-engine' equals 'uniwind' on /docs/installation (the removed write)",
+        "chromium-mobile AC-2: Error: localStorage 'rnr-engine' equals 'uniwind' on /docs/installation (the removed write)",
+        "chromium-desktop AC-1: timedOut (downstream: with the pick unpersisted the next page reverts to nativewind and the hidden uniwind copy button never becomes clickable)",
+        "chromium-mobile AC-1: timedOut (same downstream revert)"
+      ],
+      "log": ".tmp/GBC-014/nc-ac2-tee-playwright.log",
+      "at": "2026-09-30T05:45:00Z"
+    }
+  ],
+  "sourceHashes": {
+    "header": "6566ae3e684992c06609222baf94d736a4506dfc6d979077b539db035d88b525",
+    "tabGroup": "c06e6f54da30c7faa7f53a38172feca32838e45ca6e1955093416fe5cc7e97ed",
+    "docsLayout": "5403f6679c616e8611f549bea66e330e33a0c8aa4d0e6a91261af5f7ceff2d9f",
+    "ledgerTable": "ef726dfa1bc1e119f4197eb1fa433c91e0a3a3f2acec8a467a72baff1876646f",
+    "testFile": "088c3630b05ae943b83b8fd289305ccf88e347b7388262f67a10fddde6c44bac"
+  },
+  "references": [
+    "tests/sprint-06-guides-boundary-changelog/evidence/journeys/docs-integrator-arc/proof.red"
+  ]
+}

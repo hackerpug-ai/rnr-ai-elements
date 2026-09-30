@@ -133,8 +133,11 @@ function record(testInfo: TestInfo, key: string, data: unknown): void {
 }
 
 function statusKey(testInfo: TestInfo): string {
-  const claim = /AC-\d+[-a-z]*/.exec(testInfo.title)?.[0] ?? 'unknown';
-  return `${testInfo.project.name}--${claim.toLowerCase()}`;
+  // The claim includes the variant word ('ac-1-desktop' vs 'ac-1-mobile'):
+  // both AC-1 tests collide on one project's status file otherwise, and the
+  // cross-project skip would overwrite the passing status with 'skipped'.
+  const claim = /AC-\d+ [a-z]+/.exec(testInfo.title)?.[0] ?? 'unknown';
+  return `${testInfo.project.name}--${claim.toLowerCase().replace(' ', '-')}`;
 }
 
 // biome-ignore lint/correctness/noEmptyPattern: Playwright hook signature requires object destructuring.
@@ -169,7 +172,9 @@ test.afterAll(() => {
         status: entry.status ?? null,
         observations: entry.observations,
       };
-      if (entry.status !== 'passed') failed += 1;
+      // A cross-project test.skip is a legitimate gate, not a failure; only
+      // a real bad outcome (or an unreadable file above) counts as failed.
+      if (entry.status !== 'passed' && entry.status !== 'skipped') failed += 1;
     } catch {
       // An unreadable status file must never fabricate a pass; count it failed.
       testStatuses[name.replace(/\.json$/, '')] = { status: null, observations: null };
