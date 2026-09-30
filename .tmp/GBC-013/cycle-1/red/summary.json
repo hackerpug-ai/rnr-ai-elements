@@ -1,0 +1,17 @@
+{
+  "task": "GBC-013",
+  "cycle": "red",
+  "claim": "Both exact VERIFY greps fail on the 2-link pre-sprint header (NAV_LINKS = Components/Registry only).",
+  "runs": [
+    {
+      "command": "CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts --grep GBC-013-header-section-links --project=chromium-desktop (after docs build exit 0)",
+      "exit": 1,
+      "failure": "header anchors on / \u2014 expected 5, received 2"
+    },
+    {
+      "command": "CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts --grep GBC-013-drawer-section-links --project=chromium-mobile",
+      "exit": 1,
+      "failure": "drawer anchors on / \u2014 expected 5, received 2"
+    }
+  ]
+}

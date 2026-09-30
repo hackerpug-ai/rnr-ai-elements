@@ -1,0 +1,21 @@
+PASS (0) FAIL (1)
+
+1. GBC-013-drawer-section-links: the mobile drawer opens with one click and carries the same five links, each resolving 200
+   Error: drawer anchors on /
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m5[39m
+   Received: [31m2[39m
+   
+     128 |     expect(await drawer.getAttribute('open'), `drawer open after 1 click on ${path}`).toBe('');
+     129 |
+   > 130 |     expect(await drawerLinks.count(), `drawer anchors on ${path}`).toBe(SECTION_LINKS.length);
+         |                                                                    ^
+     131 |     expect(await linkTexts(drawerLinks), `drawer link text order on ${path}`).toEqual(
+     132 |       SECTION_LABELS,
+     133 |     );
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-013/tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:130:68
+
+Time: 1334ms
+[full output: ~/Library/Application Support/rtk/tee/1790740230_playwright.log]
