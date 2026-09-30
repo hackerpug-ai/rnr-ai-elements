@@ -1,0 +1,8 @@
+  1) [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:811:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-4 at a 393px viewport the section index is single-track, the docs nav is a visible 44px touch surface, and nothing overflows 
+    Error: documentElement scrollWidth - clientWidth equals 0 (no horizontal overflow)
+    Expected: 0
+    Received: 54
+      852 |     overflow,
+      853 |     'documentElement scrollWidth - clientWidth equals 0 (no horizontal overflow)',
+      856 |   record(testInfo, 'gbc-016-ac-4', { columns, navWidth: navBox?.width, tallLinks, overflow });
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GATE-FIX-footer-overflow/tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:854:5

@@ -51,6 +51,7 @@ const FOOTER_LINKS = [
   }
   .site-footer__nav {
     display: flex;
+    flex-wrap: wrap; /* five links overflow a 393px row — wrap instead of widening the page */
     gap: 1rem;
   }
   .site-footer__nav a {
