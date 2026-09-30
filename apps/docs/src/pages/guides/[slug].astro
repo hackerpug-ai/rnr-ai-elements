@@ -13,6 +13,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import { join } from 'node:path';
 import MarkdownLayout from '../../layouts/MarkdownLayout.astro';
 import {
+  assertGuidesCap,
   assertUniqueDestinations,
   publishedDocs,
   sectionNavigation,
@@ -31,7 +32,12 @@ export async function getStaticPaths() {
   const entries = await getCollection('docs');
   const typed = entries as unknown as DocsCollectionEntry[];
   const nav = sectionNavigation(typed);
-  const guides = publishedDocs(typed).filter((doc) => doc.section === 'guides');
+  const published = publishedDocs(typed);
+  // The five-page launch cap gate (GBC-011): the route can never emit a sixth
+  // — or a fourth — guide page. Runs over the exact publishedDocs list this
+  // route maps, before any route is generated.
+  assertGuidesCap(published);
+  const guides = published.filter((doc) => doc.section === 'guides');
   return guides.map((doc) => ({
     params: { slug: doc.href.replace(/^\/guides\//, '') },
     props: { doc, nav },

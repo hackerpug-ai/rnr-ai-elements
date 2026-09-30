@@ -1,0 +1,318 @@
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": true,
+  "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011",
+  "docsRoot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/guides/customize-rendering.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/guides/re-theme.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/guides/troubleshooting.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/guides/update-installed-items.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/owns-vs-does-not-own.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/porting.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-0",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/example/components/ai/message.tsx",
+      "region": {
+        "sha256": "272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222",
+        "length": 302
+      },
+      "byteLength": 302,
+      "sha256": "272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-1",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/example/components/ai/reasoning.tsx",
+      "region": {
+        "sha256": "5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313",
+        "length": 689
+      },
+      "byteLength": 689,
+      "sha256": "5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-2",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/harness/src/stories/Chat.stories.tsx",
+      "region": {
+        "sha256": "0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89",
+        "length": 529
+      },
+      "byteLength": 529,
+      "sha256": "0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9",
+        "length": 186
+      },
+      "byteLength": 186,
+      "sha256": "8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-1",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-2",
+      "kind": "configuration",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/nativewind/tailwind.config.js",
+      "region": {
+        "sha256": "673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870",
+        "length": 276
+      },
+      "byteLength": 276,
+      "sha256": "673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/update-installed-items.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/update.sh",
+      "region": {
+        "sha256": "27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d",
+        "length": 195
+      },
+      "byteLength": 195,
+      "sha256": "27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 2,
+    "tsx": 7,
+    "css": 3,
+    "configuration": 16,
+    "ts": 2
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [
+    {
+      "engine": "nativewind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-HYmsNJ",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 1370,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "uniwind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-uniwind-case-1YP4aj",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 1257,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "live-chat",
+      "executable": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/example/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/example",
+      "config": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/example/tsconfig.live-chat.json",
+      "args": [
+        "-p",
+        "tsconfig.live-chat.json"
+      ],
+      "exit": 0,
+      "durationMs": 1373,
+      "typescriptVersion": "6.0.3"
+    }
+  ],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4",
+    "uniwind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff"
+  },
+  "emitted": null,
+  "errors": []
+}
+20:19:16 [content] Syncing content
+20:19:16 [content] Synced content
+20:19:16 [types] Generated 676ms
+20:19:16 [build] output: "static"
+20:19:16 [build] mode: "static"
+20:19:16 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/dist/
+20:19:16 [build] Collecting build info...
+20:19:16 [build] ✓ Completed in 726ms.
+20:19:16 [build] Building static entrypoints...
+20:19:17 [vite] ✓ built in 284ms
+20:19:17 [vite] ✓ built in 131ms
+20:19:17 [build] Rearranging server assets...
+
+ generating static routes 
+[docs-data] guides: found 4 published guides-section entries; the five-page launch cap pins exactly 5 — guides-section sources: apps/docs/src/content/docs/guides/customize-rendering.md, apps/docs/src/content/docs/guides/re-theme.md, apps/docs/src/content/docs/guides/troubleshooting.md, apps/docs/src/content/docs/guides/update-installed-items.md
+  Stack trace:
+    at assertGuidesCap (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs/dist/.prerender/chunks/docs-navigation_iPuwmOey.mjs:835:9)
+    at async callGetStaticPaths (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/render/route-cache.js:32:17)
+    at async StaticPaths.getAll (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/runtime/prerender/static-paths.js:32:23)
+    at async BasicMinimalPluginContext.handler (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:118:11)
+    at async buildEnvironments (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/node_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@26.4.1_jiti@2.7.0_te_e24f87b6e87fd9ab64c7aaf626364c47/node_modules/astro/dist/core/build/static-build.js:196:3)
+/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-011/apps/docs:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @rnr-ai-elements/docs@0.1.0 build: `pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links`
+Exit status 1
+four-guide exit: 1
+git status after four-guide restore: []

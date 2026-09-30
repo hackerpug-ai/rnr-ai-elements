@@ -176,6 +176,37 @@ export function portingEntry(entries: DocsCollectionEntry[]): PublishedDoc {
   return doc;
 }
 
+/** The five-page launch cap (GBC-011 / T-DOCS-014): the guides section ships
+ * exactly this many published entries. PINNED here — never derived from the
+ * dataset under test, so a sixth guide cannot raise its own cap. */
+const GUIDES_CAP = 5;
+
+/**
+ * The five-page launch cap gate (GBC-011). Counts the guides-section entries
+ * of the passed publication list — the same publishedDocs output the
+ * /guides/[slug] route maps, so the gate and the route can never disagree.
+ * The `section: guides` key is the only counter: drafts and reserved slugs
+ * are already excluded upstream by publishedDocs, and the re-sectioned
+ * `theming` manuscript (getting-started) can never count toward the cap.
+ * Any count but the pin throws naming the observed count, the cap, and every
+ * guides-section source path — fail-closed, never a warning; exactly the pin
+ * prints the computed success line the build logs carry.
+ */
+export function assertGuidesCap(docs: PublishedDoc[]): void {
+  const guides = docs.filter((doc) => doc.section === 'guides');
+  if (guides.length !== GUIDES_CAP) {
+    const sources = guides
+      .map((doc) => doc.sourcePath)
+      .sort()
+      .join(', ');
+    throw new Error(
+      `[docs-data] guides: found ${guides.length} published guides-section entries; ` +
+        `the five-page launch cap pins exactly ${GUIDES_CAP} — guides-section sources: ${sources}`,
+    );
+  }
+  console.log(`[docs-data] guides: ${guides.length} guides — cap satisfied`);
+}
+
 export interface SectionNavGroup {
   section: DocsSection;
   entries: PublishedDoc[];
