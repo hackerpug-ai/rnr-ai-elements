@@ -328,37 +328,8 @@ test(`${JOURNEY_ID} AC-4 both seam Callout links on /components/message land on 
   const staleRenderMarkdownCount = await staleRenderMarkdownLinks.count();
   const staleTextClassContextCount = await staleTextClassContextLinks.count();
 
-  const guideHref = '/guides/customize-rendering';
-  const guideStatus = await request
-    .get(new URL(guideHref, PREVIEW_URL).href)
-    .then((response) => response.status());
-
-  // Click 1: the renderMarkdown seam link.
-  const renderMarkdownNav = page.waitForResponse(
-    (candidate) => new URL(candidate.url()).pathname === guideHref,
-  );
-  await renderMarkdownLink.click();
-  const renderMarkdownResponse = await renderMarkdownNav;
-  await expect(page).toHaveURL(new URL(guideHref, PREVIEW_URL).href);
-  await waitForAstroPageLoad(page);
-  const renderMarkdownLandedPath = new URL(page.url()).pathname;
-  const renderMarkdownIdCount = await page.locator('#rendermarkdown').count();
-  const textClassContextIdCount = await page.locator('#textclasscontext').count();
-
-  // Back to the component page, then click 2: the TextClassContext seam link.
-  await navigateLocalhost(page, '/components/message');
-  await waitForAstroPageLoad(page);
-  const textClassNav = page.waitForResponse(
-    (candidate) => new URL(candidate.url()).pathname === guideHref,
-  );
-  await textClassContextLink.click();
-  const textClassResponse = await textClassNav;
-  await expect(page).toHaveURL(new URL(guideHref, PREVIEW_URL).href);
-  await waitForAstroPageLoad(page);
-  const textClassLandedPath = new URL(page.url()).pathname;
-  const textClassIdCountAfterSecond = await page.locator('#textclasscontext').count();
-
-  // --- MUST_OBSERVE ----------------------------------------------------------
+  // The counts are asserted BEFORE any click (the AC's action order): a
+  // reverted or emptied seam map fails here, never as a click timeout.
   expect(messageStatus, '/components/message must return HTTP 200').toBe(200);
   expect(
     renderMarkdownCount,
@@ -372,6 +343,43 @@ test(`${JOURNEY_ID} AC-4 both seam Callout links on /components/message land on 
   expect(staleTextClassContextCount, 'no stale /docs/theming#textclasscontext callout link').toBe(
     0,
   );
+
+  const guideHref = '/guides/customize-rendering';
+  const guideStatus = await request
+    .get(new URL(guideHref, PREVIEW_URL).href)
+    .then((response) => response.status());
+
+  // Click 1: the renderMarkdown seam link. The landed URL keeps the section
+  // fragment, so the URL assertion accepts exactly the two seam fragments.
+  const guideUrlPattern = new RegExp(
+    `^${(new URL(guideHref, PREVIEW_URL).href).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(#rendermarkdown|#textclasscontext)?$`,
+  );
+  const renderMarkdownNav = page.waitForResponse(
+    (candidate) => new URL(candidate.url()).pathname === guideHref,
+  );
+  await renderMarkdownLink.click();
+  const renderMarkdownResponse = await renderMarkdownNav;
+  await expect(page).toHaveURL(guideUrlPattern);
+  await waitForAstroPageLoad(page);
+  const renderMarkdownLandedPath = new URL(page.url()).pathname;
+  const renderMarkdownIdCount = await page.locator('#rendermarkdown').count();
+  const textClassContextIdCount = await page.locator('#textclasscontext').count();
+
+  // Back to the component page, then click 2: the TextClassContext seam link.
+  await navigateLocalhost(page, '/components/message');
+  await waitForAstroPageLoad(page);
+  const textClassNav = page.waitForResponse(
+    (candidate) => new URL(candidate.url()).pathname === guideHref,
+  );
+  await textClassContextLink.click();
+  const textClassResponse = await textClassNav;
+  await expect(page).toHaveURL(guideUrlPattern);
+  await waitForAstroPageLoad(page);
+  const textClassLandedPath = new URL(page.url()).pathname;
+  const textClassIdCountAfterSecond = await page.locator('#textclasscontext').count();
+
+  // --- MUST_OBSERVE (landing claims; the link-count claims were asserted
+  // before the clicks, in the AC's action order) -----------------------------
   expect(renderMarkdownResponse?.status(), 'the renderMarkdown seam click lands on a 200').toBe(
     200,
   );

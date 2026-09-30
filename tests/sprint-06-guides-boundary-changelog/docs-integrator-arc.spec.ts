@@ -321,8 +321,13 @@ test(`${JOURNEY_ID} AC-1 desktop arc: engine pick, quickstart command, registry 
   const allCommands = installCommands.flatMap((entry) => entry.commands);
   expect(allCommands.length, 'install commands were collected on all 4 pages').toBeGreaterThan(0);
   for (const command of allCommands) {
+    // The family form names EVERY member after 'add'; each token must be an
+    // absolute registry URL ending .json (a short name or relative path fails).
     const args = addArgumentsOf(command);
-    expect(args.length, `every collected command names its target after 'add': ${command}`).toBe(1);
+    expect(
+      args.length,
+      `every collected command names its target after 'add': ${command}`,
+    ).toBeGreaterThan(0);
     for (const arg of addArgumentsOf(command)) {
       expect(
         arg.startsWith('https://rnraielements.com/r/'),
