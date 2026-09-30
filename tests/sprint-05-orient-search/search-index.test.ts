@@ -128,6 +128,7 @@ describe('ORI-AST-004 real Pagefind index', () => {
     const docDestinations = destinations.filter((destination) => destination.kind === 'doc');
 
     // 56 actual registry items plus every published document; nothing invented.
+    // (GBC-009: the porting section publishes at /porting, not /docs/porting.)
     expect(itemDestinations.length, 'all 56 registry item destinations').toBe(56);
     expect(docDestinations.map((destination) => destination.href)).toEqual([
       '/docs/cli',
@@ -137,6 +138,7 @@ describe('ORI-AST-004 real Pagefind index', () => {
       '/docs/owns-vs-does-not-own',
       '/docs/quickstart',
       '/docs/theming',
+      '/porting',
     ]);
     expect(
       new Set(destinations.map((destination) => destination.href)).size,

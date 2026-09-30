@@ -1,0 +1,52 @@
+---
+/**
+ * /porting (GBC-009) — the single destination of the porting-section
+ * manuscript. The portingEntry guard (docs-navigation) fails the build unless
+ * the published collection carries exactly one porting-section entry — a zero
+ * or multi-porting collection names the count instead of building — and hands
+ * back the published doc whose section-aware href is /porting. The /docs
+ * catch-all no longer generates porting (it is scoped to getting-started), so
+ * this static route is the page's only destination. Rendering, layout, and the
+ * edit URL follow the catch-all contract exactly.
+ */
+import { getCollection, getEntry, render } from 'astro:content';
+import { join } from 'node:path';
+import MarkdownLayout from '../layouts/MarkdownLayout.astro';
+import {
+  assertUniqueDestinations,
+  portingEntry,
+  sectionNavigation,
+  type DocsCollectionEntry,
+  type SectionNavGroup,
+} from '../lib/docs-navigation';
+
+// The same deterministic collision gate the catch-all runs, plus the one-porting
+// count gate; the navigation derives from the same published set.
+const contentDir = join(process.cwd(), 'src', 'content', 'docs');
+await assertUniqueDestinations(contentDir);
+const entries = await getCollection('docs');
+const typed = entries as unknown as DocsCollectionEntry[];
+const nav: SectionNavGroup[] = sectionNavigation(typed);
+const doc = portingEntry(typed);
+
+const entry = await getEntry('docs', doc.id);
+if (!entry) {
+  throw new Error('[porting] the single porting collection entry is missing');
+}
+
+const { Content, headings } = await render(entry);
+
+const editUrl = `https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/${doc.sourcePath}`;
+---
+
+<MarkdownLayout
+  title={doc.title}
+  description={doc.description}
+  section={doc.section}
+  headings={headings}
+  nav={nav}
+  editUrl={editUrl}
+  id={doc.id}
+>
+  <Content />
+</MarkdownLayout>

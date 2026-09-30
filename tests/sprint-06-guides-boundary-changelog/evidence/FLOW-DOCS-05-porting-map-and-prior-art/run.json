@@ -1,0 +1,3807 @@
+{
+  "runIdentity": "gbc-009-1790725748136",
+  "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts --grep FLOW-DOCS-05-porting-map-and-prior-art",
+  "exit": 0,
+  "testStatuses": {
+    "chromium-desktop--ac-2": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        }
+      }
+    },
+    "chromium-desktop--gbc-004-ac-1": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-desktop:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        }
+      }
+    },
+    "chromium-desktop--gbc-004-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-desktop:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-desktop:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        }
+      }
+    },
+    "chromium-desktop--gbc-006-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-desktop:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-desktop:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-desktop:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        }
+      }
+    },
+    "chromium-desktop--gbc-012-ac-1": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-desktop:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-desktop:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-desktop:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        },
+        "chromium-desktop:gbc-012-ac-1": {
+          "rowCount": 40,
+          "rowSlugs": [
+            "agent",
+            "artifact",
+            "attachments",
+            "audio-player",
+            "chain-of-thought",
+            "checkpoint",
+            "code-block",
+            "commit",
+            "confirmation",
+            "context",
+            "conversation",
+            "environment-variables",
+            "file-tree",
+            "image",
+            "inline-citation",
+            "message",
+            "mic-selector",
+            "model-selector",
+            "open-in-chat",
+            "package-info",
+            "persona",
+            "plan",
+            "prompt-input",
+            "question",
+            "queue",
+            "reasoning",
+            "schema-display",
+            "shimmer",
+            "snippet",
+            "sources",
+            "speech-input",
+            "stack-trace",
+            "suggestion",
+            "task",
+            "terminal",
+            "test-results",
+            "tool",
+            "transcription",
+            "voice-selector",
+            "web-preview"
+          ],
+          "outside": [],
+          "notPortedCount": 9,
+          "upstreamLength": 49,
+          "mappingFrontmatterCount": 40
+        }
+      }
+    },
+    "chromium-desktop--gbc-017-ac-2": {
+      "status": "passed",
+      "observations": {
+        "chromium-desktop:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-desktop:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-desktop:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-desktop:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        },
+        "chromium-desktop:gbc-012-ac-1": {
+          "rowCount": 40,
+          "rowSlugs": [
+            "agent",
+            "artifact",
+            "attachments",
+            "audio-player",
+            "chain-of-thought",
+            "checkpoint",
+            "code-block",
+            "commit",
+            "confirmation",
+            "context",
+            "conversation",
+            "environment-variables",
+            "file-tree",
+            "image",
+            "inline-citation",
+            "message",
+            "mic-selector",
+            "model-selector",
+            "open-in-chat",
+            "package-info",
+            "persona",
+            "plan",
+            "prompt-input",
+            "question",
+            "queue",
+            "reasoning",
+            "schema-display",
+            "shimmer",
+            "snippet",
+            "sources",
+            "speech-input",
+            "stack-trace",
+            "suggestion",
+            "task",
+            "terminal",
+            "test-results",
+            "tool",
+            "transcription",
+            "voice-selector",
+            "web-preview"
+          ],
+          "outside": [],
+          "notPortedCount": 9,
+          "upstreamLength": 49,
+          "mappingFrontmatterCount": 40
+        },
+        "chromium-desktop:gbc-017-ac-2": {
+          "proseDeviationTables": 1,
+          "proseRows": 40,
+          "notPortedItems": 9,
+          "upstreamAnchors": 1,
+          "priorAnchors": 1
+        }
+      }
+    },
+    "chromium-mobile--ac-2": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        }
+      }
+    },
+    "chromium-mobile--gbc-004-ac-1": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-mobile:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        }
+      }
+    },
+    "chromium-mobile--gbc-004-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-mobile:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-mobile:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        }
+      }
+    },
+    "chromium-mobile--gbc-006-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-mobile:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-mobile:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-mobile:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        }
+      }
+    },
+    "chromium-mobile--gbc-012-ac-1": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-mobile:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-mobile:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-mobile:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        },
+        "chromium-mobile:gbc-012-ac-1": {
+          "rowCount": 40,
+          "rowSlugs": [
+            "agent",
+            "artifact",
+            "attachments",
+            "audio-player",
+            "chain-of-thought",
+            "checkpoint",
+            "code-block",
+            "commit",
+            "confirmation",
+            "context",
+            "conversation",
+            "environment-variables",
+            "file-tree",
+            "image",
+            "inline-citation",
+            "message",
+            "mic-selector",
+            "model-selector",
+            "open-in-chat",
+            "package-info",
+            "persona",
+            "plan",
+            "prompt-input",
+            "question",
+            "queue",
+            "reasoning",
+            "schema-display",
+            "shimmer",
+            "snippet",
+            "sources",
+            "speech-input",
+            "stack-trace",
+            "suggestion",
+            "task",
+            "terminal",
+            "test-results",
+            "tool",
+            "transcription",
+            "voice-selector",
+            "web-preview"
+          ],
+          "outside": [],
+          "notPortedCount": 9,
+          "upstreamLength": 49,
+          "mappingFrontmatterCount": 40
+        }
+      }
+    },
+    "chromium-mobile--gbc-017-ac-2": {
+      "status": "passed",
+      "observations": {
+        "chromium-mobile:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-mobile:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-mobile:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-mobile:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        },
+        "chromium-mobile:gbc-012-ac-1": {
+          "rowCount": 40,
+          "rowSlugs": [
+            "agent",
+            "artifact",
+            "attachments",
+            "audio-player",
+            "chain-of-thought",
+            "checkpoint",
+            "code-block",
+            "commit",
+            "confirmation",
+            "context",
+            "conversation",
+            "environment-variables",
+            "file-tree",
+            "image",
+            "inline-citation",
+            "message",
+            "mic-selector",
+            "model-selector",
+            "open-in-chat",
+            "package-info",
+            "persona",
+            "plan",
+            "prompt-input",
+            "question",
+            "queue",
+            "reasoning",
+            "schema-display",
+            "shimmer",
+            "snippet",
+            "sources",
+            "speech-input",
+            "stack-trace",
+            "suggestion",
+            "task",
+            "terminal",
+            "test-results",
+            "tool",
+            "transcription",
+            "voice-selector",
+            "web-preview"
+          ],
+          "outside": [],
+          "notPortedCount": 9,
+          "upstreamLength": 49,
+          "mappingFrontmatterCount": 40
+        },
+        "chromium-mobile:gbc-017-ac-2": {
+          "proseDeviationTables": 1,
+          "proseRows": 40,
+          "notPortedItems": 9,
+          "upstreamAnchors": 1,
+          "priorAnchors": 1
+        }
+      }
+    },
+    "chromium-nojs--ac-2": {
+      "status": "passed",
+      "observations": {
+        "chromium-nojs:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        }
+      }
+    },
+    "chromium-nojs--gbc-004-ac-1": {
+      "status": "passed",
+      "observations": {
+        "chromium-nojs:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-nojs:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        }
+      }
+    },
+    "chromium-nojs--gbc-004-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-nojs:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-nojs:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-nojs:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        }
+      }
+    },
+    "chromium-nojs--gbc-006-ac-3": {
+      "status": "passed",
+      "observations": {
+        "chromium-nojs:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-nojs:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-nojs:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-nojs:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        }
+      }
+    },
+    "chromium-nojs--gbc-012-ac-1": {
+      "status": "passed",
+      "observations": {
+        "chromium-nojs:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-nojs:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-nojs:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-nojs:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        },
+        "chromium-nojs:gbc-012-ac-1": {
+          "rowCount": 40,
+          "rowSlugs": [
+            "agent",
+            "artifact",
+            "attachments",
+            "audio-player",
+            "chain-of-thought",
+            "checkpoint",
+            "code-block",
+            "commit",
+            "confirmation",
+            "context",
+            "conversation",
+            "environment-variables",
+            "file-tree",
+            "image",
+            "inline-citation",
+            "message",
+            "mic-selector",
+            "model-selector",
+            "open-in-chat",
+            "package-info",
+            "persona",
+            "plan",
+            "prompt-input",
+            "question",
+            "queue",
+            "reasoning",
+            "schema-display",
+            "shimmer",
+            "snippet",
+            "sources",
+            "speech-input",
+            "stack-trace",
+            "suggestion",
+            "task",
+            "terminal",
+            "test-results",
+            "tool",
+            "transcription",
+            "voice-selector",
+            "web-preview"
+          ],
+          "outside": [],
+          "notPortedCount": 9,
+          "upstreamLength": 49,
+          "mappingFrontmatterCount": 40
+        }
+      }
+    },
+    "chromium-nojs--gbc-017-ac-2": {
+      "status": "passed",
+      "observations": {
+        "chromium-nojs:ac-2": {
+          "portingStatus": 200,
+          "aliasStatus": 404,
+          "h1": "Porting from Vercel AI Elements",
+          "deviationTh": 1,
+          "bodyRows": 40
+        },
+        "chromium-nojs:gbc-004-ac-1": {
+          "tableCount": 1,
+          "deviationTh": 1,
+          "rowCount": 40,
+          "rows": [
+            {
+              "slug": "agent",
+              "deviations": "Adapted — an identity and run card: persona, run-state badge, and a Start/Pause/Stop bar the web config card never had. The web card’s model badge, instructions box, tools accordion, and output-schema block are absent.",
+              "inLedger": true
+            },
+            {
+              "slug": "artifact",
+              "deviations": "Adapted — the container and header chrome match the web part set; the web’s side-panel presentation becomes a host-mounted sheet, and the action tooltip becomes an accessibility label.",
+              "inLedger": true
+            },
+            {
+              "slug": "attachments",
+              "deviations": "Substituted — the chip row ports at parity, but file acquisition does not: the native image and document pickers are the caller’s wiring, with their permission contracts in the consumer’s app; none of it ships here.",
+              "inLedger": true
+            },
+            {
+              "slug": "audio-player",
+              "deviations": "Substituted — the HTML audio element is dropped: transport controls and the scrubbable progress bar are the item, and the caller supplies the player (expo-audio, a native player, or an <audio> element on web) through a state-in/callbacks-out seam; no audio dependency enters the install graph.",
+              "inLedger": true
+            },
+            {
+              "slug": "chain-of-thought",
+              "deviations": "None — the ordered step list with per-step status and a rail; the disclosure reuses the reasoning lifecycle, as on web.",
+              "inLedger": true
+            },
+            {
+              "slug": "checkpoint",
+              "deviations": "Adapted — restore confirms first because it truncates the conversation; the web hides that warning behind a hover tooltip, which does not exist on touch.",
+              "inLedger": true
+            },
+            {
+              "slug": "code-block",
+              "deviations": "Substituted — the DOM-emitting highlighter becomes a tokenizer rendering Text spans, with horizontal scroll and a copy action; ships as a registry:ui base primitive rather than registry:component.",
+              "inLedger": true
+            },
+            {
+              "slug": "commit",
+              "deviations": "None — commit reference row with hash chip, message, author, and changed files behind a disclosure; one-tap hash copy.",
+              "inLedger": true
+            },
+            {
+              "slug": "confirmation",
+              "deviations": "Adapted — a card rather than the web Alert container, with full-width Approve and Deny actions sized to platform touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "context",
+              "deviations": "Adapted — the hover reveal becomes a press-opened popover; the token and cost data shown is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "conversation",
+              "deviations": "Substituted — the overflow container and scroll hook become an inverted FlatList with maintainVisibleContentPosition plus keyboard and safe-area handling; same surface, different implementation.",
+              "inLedger": true
+            },
+            {
+              "slug": "environment-variables",
+              "deviations": "None — masked key and value rows with a single-value reveal, at parity with the web part set.",
+              "inLedger": true
+            },
+            {
+              "slug": "file-tree",
+              "deviations": "Adapted — the nested rows port, with horizontal scroll keeping deep indentation legible at phone width; the chevron and the name get separate touch targets.",
+              "inLedger": true
+            },
+            {
+              "slug": "image",
+              "deviations": "None — the AI SDK result object and prop shape are preserved; alt maps to accessibilityLabel.",
+              "inLedger": true
+            },
+            {
+              "slug": "inline-citation",
+              "deviations": "Adapted — the hover card becomes a pressable inline chip, nested in Text exactly as the web nests spans, reporting onSelect.",
+              "inLedger": true
+            },
+            {
+              "slug": "message",
+              "deviations": "None — role alignment, surface, and avatar match; markdown rendering is injected through renderMarkdown because the web renderer does not run on React Native.",
+              "inLedger": true
+            },
+            {
+              "slug": "mic-selector",
+              "deviations": "Substituted — the media devices API has no native equivalent; ships as the audio-route picker (built-in, wired, Bluetooth) doing the same job.",
+              "inLedger": true
+            },
+            {
+              "slug": "model-selector",
+              "deviations": "Adapted — the dropdown becomes a bottom sheet with search, composed on the command primitive; the selection contract is unchanged.",
+              "inLedger": true
+            },
+            {
+              "slug": "open-in-chat",
+              "deviations": "Adapted — the same six targets and menu, with target=\"_blank\" replaced by the platform link handler behind an http/https allowlist; unavailable targets are hidden.",
+              "inLedger": true
+            },
+            {
+              "slug": "package-info",
+              "deviations": "None — card of package name, version, and a copyable install command, all RNR primitives.",
+              "inLedger": true
+            },
+            {
+              "slug": "persona",
+              "deviations": "Adapted — the web original is a Rive animated avatar; the animation is not ported, so no consumer inherits a native animation runtime.",
+              "inLedger": true
+            },
+            {
+              "slug": "plan",
+              "deviations": "None — card and collapsible shell with per-step status; the steps compose the task rows, and title and description shimmer while streaming.",
+              "inLedger": true
+            },
+            {
+              "slug": "prompt-input",
+              "deviations": "Substituted — the composer surface is at parity, but attachments arrive through the native pickers, enter-to-submit becomes an explicit send button, and the composer owns keyboard avoidance and safe-area insets.",
+              "inLedger": true
+            },
+            {
+              "slug": "question",
+              "deviations": "Adapted — the select-then-submit form is dropped: an option tap is the submission, and the choice persists in the transcript.",
+              "inLedger": true
+            },
+            {
+              "slug": "queue",
+              "deviations": "None — collapsible queued-actions list with the count on the trigger and a remove action per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "reasoning",
+              "deviations": "None — auto-opens while streaming, auto-closes one second after the answer begins, and shows the frozen duration on the collapsed header.",
+              "inLedger": true
+            },
+            {
+              "slug": "schema-display",
+              "deviations": "Adapted — the upstream collapse structure ports; nesting depth and key widths collapse and scroll to stay legible at phone width.",
+              "inLedger": true
+            },
+            {
+              "slug": "shimmer",
+              "deviations": "Substituted — the web effect is a linear-gradient with background-clip on text, which React Native does not have, so the signal becomes the RNR Skeleton house pulse (opacity 1 to 0.5 over 1000ms, repeating) on text at text-muted-foreground — a new visual treatment rather than an equivalent one, and no masked view ships.",
+              "inLedger": true
+            },
+            {
+              "slug": "snippet",
+              "deviations": "Adapted — clipboard access moves to the native clipboard module, and long commands scroll horizontally.",
+              "inLedger": true
+            },
+            {
+              "slug": "sources",
+              "deviations": "None — collapsible grouped sources with title and domain per row.",
+              "inLedger": true
+            },
+            {
+              "slug": "speech-input",
+              "deviations": "Substituted — the web’s two browser engines do not exist in React Native, so the caller-supplied recorder-and-transcribe contract is the only contract; a denied-permission state is distinct from no engine.",
+              "inLedger": true
+            },
+            {
+              "slug": "stack-trace",
+              "deviations": "None — mono frame list with expandable frames; every file and line legible through horizontal scroll.",
+              "inLedger": true
+            },
+            {
+              "slug": "suggestion",
+              "deviations": "None — the horizontally scrolling chip row maps to a horizontal ScrollView.",
+              "inLedger": true
+            },
+            {
+              "slug": "task",
+              "deviations": "Adapted — collapsed by default where the web opens by default, so the transcript stays scannable; the collapsed trigger row carries the status badge.",
+              "inLedger": true
+            },
+            {
+              "slug": "terminal",
+              "deviations": "Adapted — read-only and horizontally scrollable, with ANSI colors mapped to theme tokens; an interactive pseudo-terminal is out of scope.",
+              "inLedger": true
+            },
+            {
+              "slug": "test-results",
+              "deviations": "None — passed, failed, and skipped counts with a failing test expanding to its message.",
+              "inLedger": true
+            },
+            {
+              "slug": "tool",
+              "deviations": "None — status header plus input and output disclosure, covering every AI SDK tool-part state.",
+              "inLedger": true
+            },
+            {
+              "slug": "transcription",
+              "deviations": "None — display-only live transcript; capture belongs to speech-input, so nothing was substituted.",
+              "inLedger": true
+            },
+            {
+              "slug": "voice-selector",
+              "deviations": "Adapted — the picker becomes a bottom sheet, and the voice set comes from the caller’s native speech synthesis provider.",
+              "inLedger": true
+            },
+            {
+              "slug": "web-preview",
+              "deviations": "Substituted — the iframe becomes a native webview with the same URL bar and reload affordance, and the console pane is dropped; the one registry item that names a native module (react-native-webview) as an install-time dependency.",
+              "inLedger": true
+            }
+          ]
+        },
+        "chromium-nojs:gbc-004-ac-3": {
+          "upstreamCount": 1,
+          "priorCount": 1,
+          "whyHeadingCount": 1,
+          "whyParagraph": "This port differs from both in one structural decision: it stays on React Native Reusables. The web original is React DOM over shadcn/ui with a single styling setup; this registry is universal React Native over RNR primitives, fanned from one source into two engine trees — nativewind, for Tailwind v3 projects, and uniwind, for Tailwind v4 — so the same item installs into either project as source compiled for its engine. The earlier port began on RNR, but its SDK 57 rewrite drops RNR for a private primitives set, and its npm package ships no component code, so registry-URL install is the only path that works there. This registry never publishes an npm package — distribution is the copy-paste registry alone, which is why the two engine trees exist."
+        },
+        "chromium-nojs:gbc-006-ac-3": {
+          "boundaryToolTables": 1,
+          "portingBoundaryTables": 0,
+          "deviationTables": 1,
+          "phantomStatuses": {
+            "/boundary": 404,
+            "/docs/boundary": 404
+          }
+        },
+        "chromium-nojs:gbc-012-ac-1": {
+          "rowCount": 40,
+          "rowSlugs": [
+            "agent",
+            "artifact",
+            "attachments",
+            "audio-player",
+            "chain-of-thought",
+            "checkpoint",
+            "code-block",
+            "commit",
+            "confirmation",
+            "context",
+            "conversation",
+            "environment-variables",
+            "file-tree",
+            "image",
+            "inline-citation",
+            "message",
+            "mic-selector",
+            "model-selector",
+            "open-in-chat",
+            "package-info",
+            "persona",
+            "plan",
+            "prompt-input",
+            "question",
+            "queue",
+            "reasoning",
+            "schema-display",
+            "shimmer",
+            "snippet",
+            "sources",
+            "speech-input",
+            "stack-trace",
+            "suggestion",
+            "task",
+            "terminal",
+            "test-results",
+            "tool",
+            "transcription",
+            "voice-selector",
+            "web-preview"
+          ],
+          "outside": [],
+          "notPortedCount": 9,
+          "upstreamLength": 49,
+          "mappingFrontmatterCount": 40
+        },
+        "chromium-nojs:gbc-017-ac-2": {
+          "proseDeviationTables": 1,
+          "proseRows": 40,
+          "notPortedItems": 9,
+          "upstreamAnchors": 1,
+          "priorAnchors": 1
+        }
+      }
+    }
+  },
+  "sourceHashes": {
+    "portingManuscript": "868ba377a4786d20fadc09e661dad9ad30194f35bbdb57fca16103dc88fe77a3",
+    "boundaryManuscript": "e2193a1369845807f67604a348082ba8d8ecd6744859eba184ae1f611d9883a4",
+    "ledger": "0de700ab12b775b3cd20d3d8304aa917f1a884da3e62456e6095a9d63a6cdb26",
+    "registry": "6de89f9f6af05e11cf8f707ce73c18845e631ebbfc1309aa158bf05cad67e1e0",
+    "testFile": "3fd9ef987cdbe6cd90a22774ea08cb86012308fd1c0834e47dfcb4d5665c228c",
+    "distPortingPage": "cf4cfdec69a31fc13eba1576fb6fa3f328b0915d41998f40a4bcb3e8b1eb6542"
+  },
+  "references": [
+    "tests/sprint-06-guides-boundary-changelog/evidence/FLOW-DOCS-05-porting-map-and-prior-art/proof.red"
+  ]
+}

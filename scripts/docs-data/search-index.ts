@@ -61,6 +61,17 @@ function frontmatterTitle(sourcePath: string): string | undefined {
   return title ? title[1].trim() : undefined;
 }
 
+/** The `section:` frontmatter value, when present (first line only). Feeds the
+ * section-aware destination derivation (GBC-009): porting publishes at
+ * /porting, so the expected-destination list must not pin /docs/porting. */
+function frontmatterSection(sourcePath: string): string | undefined {
+  const source = readFileSync(sourcePath, 'utf8');
+  const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!frontmatter) return undefined;
+  const section = frontmatter[1].match(/^\s*section:\s*["']?([a-z-]+)["']?\s*$/m);
+  return section ? section[1] : undefined;
+}
+
 /** The published-destination list derived from the candidate's real sources. */
 function deriveExpectedDestinationsFromSources(
   itemsJsonPath: string = ITEMS_JSON,
@@ -76,7 +87,12 @@ function deriveExpectedDestinationsFromSources(
     .map((entry) => {
       const sourcePath = join(contentDocsDir, entry);
       const id = entry.replace(/\.(md|mdx)$/, '');
-      return { id, draft: isDraftSource(sourcePath), title: frontmatterTitle(sourcePath) };
+      return {
+        id,
+        draft: isDraftSource(sourcePath),
+        title: frontmatterTitle(sourcePath),
+        section: frontmatterSection(sourcePath),
+      };
     });
   return deriveExpectedDestinations(items, docs);
 }
