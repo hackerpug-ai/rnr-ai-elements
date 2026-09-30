@@ -3,7 +3,9 @@ TASK: GBC-014 - Post-integration journey proofs (docs-integrator-arc + docs-them
 ================================================================================
 
 TASK_TYPE:  TEST
-STATUS:     Backlog
+STATUS:     Completed
+
+Commit: c0df38bbb69b8fba0af15f70a1fe0d6de1a60fd8
 PRIORITY:   P0
 POINTS:     5
 AGENT:      planner=astro-planner | implementer=astro-implementer | reviewer=astro-reviewer
@@ -524,3 +526,53 @@ Blocks:     none
   ]
 }
 -->
+
+## Handoff
+
+```json
+{
+  "task": "GBC-014",
+  "commit_sha": "c0df38bbb69b8fba0af15f70a1fe0d6de1a60fd8",
+  "done": "GBC-014 landed as three commits on kb-run-sprint/sprint-06-guides-boundary-changelog/GBC-014 \u2014 d68d82ef (both journey specs RED-first plus canonical proof.red per journey, captured by run_flow.py --expect red against an isolated checkout of the sprint-06 base commit 53ad8908 where /guides 404s and the header carries 2 links), 1a586619 (two spec corrections the negative-control phase exposed), and c0df38bb (green runs of both locked run_cmds via run_flow.py --expect green with governed surface/coldboot lints and valid red proofs, plus the committed evidence run.json files with the four real negative-control records embedded) \u2014 and merged to main as 6d98c140; the landed artifacts are tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts, tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts, and tests/sprint-06-guides-boundary-changelog/evidence/journeys/{docs-integrator-arc,docs-themer-arc}/{run.json,proof.red}, with every AC proven by real Playwright runs against the real built preview on localhost:4321 (never a stub), including all four negative controls on isolated copies of the real source where the same locked commands failed and passed again on the restored candidate.",
+  "deviations": [],
+  "concerns": [
+    "SPRINT.md gate step 5 (`pnpm e2e:docs` exit 0 with ALL lanes green) is still blocked by frozen earlier-sprint lanes outside this task's write scope \u2014 the deliv-03-112 data-wipe cascade (~105 failures), the three GBC-001-repoint stale-pin lanes (seam-contract.test.ts, registry-item-reference-pages.spec.ts, theming-nav-inclusion-proof.test.ts), search-slot strict-mode, the theming #rendermarkdown heading, FUSE-05 tracked-fonts, and SHELL-010 copy anchor \u2014 while GBC-014's own journeys are proven clean under the same runner (6 passed / 0 failed / 9 legitimate project-gate skips across all three projects).",
+    "Any Playwright run of these two spec files rewrites the committed evidence run.json (afterEach writes status files, afterAll re-aggregates), so a re-runner must either `git checkout --` the evidence paths afterward or commit the fresh run deliberately \u2014 the 3-project collection check I ran post-commit produced a harmless superset that I restored from HEAD.",
+    "Re-running the journeys by hand requires first deleting the real status directories .tmp/sprint-06-guides-boundary-changelog/e2e-evidence/journeys/docs-{integrator,themer}-arc-statuses (note the journeys/ path segment), or stale status files flow into the aggregated run.json.",
+    "Five scratch git worktrees remain registered under this task worktree's gitignored .tmp/GBC-014/ (red-base plus four negative-control copies); subagents are barred from `git worktree remove`, so the orchestrator should prune them during sprint cleanup.",
+    "Playwright locator clicks run with no actionTimeout in playwright.config.ts, so a locator that never appears blocks until the test-level timeout (300s/240s) instead of failing fast \u2014 visible in the NC runs as multi-minute `timedOut` results where a pre-click count assertion now fails in seconds."
+  ],
+  "findings": [
+    "run_flow.py's red-proof validation binds only the sha256 of the locked run_cmd plus a non-zero @@GATE-EXIT@@ trailer \u2014 never the test-file hash \u2014 so spec corrections made after a RED capture (mine at 1a586619) do not invalidate the proof (~/Projects/brain/tools/gate-evidence/gate_evidence_check.py:216-239).",
+    "Two tests that share an AC prefix on one project overwrite each other's evidence status file, so statusKey must include the variant word after the AC number, and the afterAll exit computation must treat cross-project test.skip as a legitimate gate rather than a failure (tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts, statusKey and the afterAll aggregator).",
+    "toHaveURL is exact-match and a ClientRouter landing keeps its section fragment, so a link to /guides/customize-rendering#rendermarkdown fails a bare-path expectation \u2014 the themer spec builds a fragment-tolerant regex accepting exactly the two seam fragments (tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts, guideUrlPattern in the AC-4 test).",
+    "InstallCommand's family form emits MULTIPLE absolute URLs after 'add' (quickstart step 3 names prompt-input, item, and sheet in one command), so any token check must validate each URL individually instead of asserting exactly one argument (apps/docs/src/components/InstallCommand.astro:40-43).",
+    "fallow-ignore-next-line only works as the LAST comment line directly above the flagged node \u2014 a directive followed by a second comment line is ignored \u2014 and for `test(..., async ({ ... })` the flagged node is the arrow line, not the call line, so the suppression sits above `test(` while the reported line number points at the arrow.",
+    "Symlinking the workspace root node_modules into a fresh `git worktree add` copy does not work for pnpm monorepo builds \u2014 apps/docs resolves its own node_modules and the prebuild dies with ERR_MODULE_NOT_FOUND for astro \u2014 so isolated-copy experiments need a real `pnpm install` per worktree.",
+    "rtk swallows `> file.log` redirects on pnpm/playwright commands (the redirect file never appears) and `cmd | tail; echo $?` reports tail's exit \u2014 read run output from the rtk tee at ~/Library/Application Support/rtk/tee/<epoch>_<cmd>.log (Playwright writes a full JSON report there) and capture the runner exit before any pipe.",
+    "Removing DocsLayout's is:inline pre-paint script (apps/docs/src/layouts/DocsLayout.astro:68-109) collapses the site to its dark-first CSS default \u2014 the start swatch reads dark and one toggle click flips INTO light \u2014 proving that script is the sole light-resolution owner and the theme-toggle island only mutates.",
+    "The four mutations each produced distinct, attributable failure signatures (NAV_LINKS cut -> 5-anchor counts fail; rnr-engine write removed -> storage assertion fails plus downstream click timeouts as pages revert to nativewind; pre-paint removed -> start-swatch assertion fails; SEAM_LINK_TARGETS reverted -> zero-count assertions fail), which is the shape future negative-control evidence should take."
+  ],
+  "scope_impact": [
+    {
+      "target": "GATE:pnpm e2e:docs (SPRINT.md gate step 5)",
+      "found": "Full-lane exit 0 remains unreachable because of frozen earlier-sprint lane failures, while GBC-014's journeys pass on every project they are not project-gated out of under the same playwright.config.ts.",
+      "change": "Open a remediation task owning the frozen failing lanes (deliv-03-112 cascade, the three GBC-001-repoint stale-pin lanes, search-slot strict-mode, theming #rendermarkdown heading, FUSE-05 tracked-fonts, SHELL-010 copy anchor) rather than reopening GBC-014."
+    },
+    {
+      "target": "GBC-001",
+      "found": "quickstart.mdx installs through InstallCommand's family form, whose step-3 command carries three absolute registry URLs after 'add'.",
+      "change": "Any future guide edit or spec assertion over quickstart install commands must check every URL token after 'add' rather than assuming a single argument."
+    },
+    {
+      "target": "ROADMAP",
+      "found": "Five scratch worktrees registered under the GBC-014 task worktree's .tmp/GBC-014/ (red-base, nc-ac1-nav-links, nc-ac2-engine-write, nc-ac3-prepaint, nc-ac4-seam-targets) cannot be pruned by a subagent.",
+      "change": "Orchestrator cleanup should `git worktree remove` those five paths when pruning the sprint's worktrees."
+    }
+  ],
+  "feedback": [
+    "The pre-GREEN negative-control phase did double duty: it proved each AC's negative control AND caught two real spec bugs (multi-URL family commands, fragment-keeping landings) before the green run instead of at review \u2014 running mutations before GREEN is cheap spec-level mutation testing and worth keeping in the sprint convention.",
+    "The coordinator relays (GBC-013's MPA-race/toHaveURL fact, GBC-010's hoist/evaluate idioms) directly shaped correct code on the first pass, and the fallow-gate discovery (directive must be the last comment line) would have cost a cycle if the surface/coldboot lints had not been pre-run locally before the first commit attempt."
+  ]
+}
+```
