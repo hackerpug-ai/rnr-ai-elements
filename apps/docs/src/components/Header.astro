@@ -1,7 +1,8 @@
 ---
 /**
  * Header (wireframe R1 desktop / M1+M2 mobile) — the sticky site bar: the RNR
- * wordmark, the Components/Registry section nav, and two inert mount slots.
+ * wordmark, the five-section site nav (GBC-013: Components, Registry, Guides,
+ * Porting, Changelog), and two inert mount slots.
  *
  * Zero-JS by construction: the mobile drawer is a <details> element, and the
  * Cmd+K trigger plus the ThemeToggle are mount slots only — their islands are
@@ -11,6 +12,9 @@
 const NAV_LINKS = [
   { href: '/components', label: 'Components' },
   { href: '/registry', label: 'Registry' },
+  { href: '/guides', label: 'Guides' },
+  { href: '/porting', label: 'Porting' },
+  { href: '/changelog', label: 'Changelog' },
 ];
 ---
 

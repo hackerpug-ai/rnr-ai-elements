@@ -1,17 +1,27 @@
 ---
 /**
- * Footer (wireframe R14) — the DocsLayout footer slot: brand line, the two
- * sprint-02 section links, and the one-line product statement. Token-only
- * styling; no islands, no scripts.
+ * Footer (wireframe R14) — the DocsLayout footer slot: brand line, the
+ * five-section site nav (GBC-013), and the one-line product statement.
+ * Token-only styling; no islands, no scripts.
+ *
+ * GBC-013: the nav mirrors Header.astro's NAV_LINKS — same five hrefs, same
+ * order (Components, Registry, Guides, Porting, Changelog). Header.astro is
+ * the section-nav source of truth; keep the two lists identical.
  */
+const FOOTER_LINKS = [
+  { href: '/components', label: 'Components' },
+  { href: '/registry', label: 'Registry' },
+  { href: '/guides', label: 'Guides' },
+  { href: '/porting', label: 'Porting' },
+  { href: '/changelog', label: 'Changelog' },
+];
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner">
     <p class="site-footer__brand">RNR AI Elements</p>
     <nav class="site-footer__nav" aria-label="Footer">
-      <a href="/components">Components</a>
-      <a href="/registry">Registry</a>
+      {FOOTER_LINKS.map((link) => <a href={link.href}>{link.label}</a>)}
     </nav>
     <p class="site-footer__note">
       Universal AI chat and agent UI components for React Native, distributed as a

@@ -1,0 +1,22 @@
+{
+  "task": "GBC-013",
+  "cycle": "green",
+  "claim": "Both exact VERIFY commands pass after the Header/Footer five-section wiring.",
+  "runs": [
+    {
+      "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts --grep GBC-013-header-section-links --project=chromium-desktop",
+      "exit": 0,
+      "observed": "5 header anchors in order Components/Registry/Guides/Porting/Changelog on /, /docs/installation and /guides; all hrefs answer 200 (page.request.get); footer nav[aria-label=Footer] carries the same 5 hrefs in order; screenshot chromium-desktop--header-on-guides.png"
+    },
+    {
+      "command": "pnpm --filter @rnr-ai-elements/docs build && CI=1 pnpm exec playwright test tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts --grep GBC-013-drawer-section-links --project=chromium-mobile",
+      "exit": 0,
+      "observed": "desktop nav hidden below 64rem on all 3 pages; details.site-drawer open after exactly 1 click on each; 5 visible drawer anchors, text+href order identical to desktop; all 5 hrefs answer 200; tapping Porting lands on /porting with 200; screenshot chromium-mobile--drawer-open-on-guides.png"
+    }
+  ],
+  "gates": {
+    "tsc --noEmit": "0 errors",
+    "biome ci .": "exit 0 (env -u NODE_OPTIONS)",
+    "docs build": "exit 0, 0 link errors"
+  }
+}

@@ -1,0 +1,21 @@
+PASS (0) FAIL (1)
+
+1. GBC-013-header-section-links: the desktop header and the footer carry the five section links, each resolving 200
+   Error: header anchors on /
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m5[39m
+   Received: [31m2[39m
+   
+     79 |     pageStatuses[path] = response?.status() ?? null;
+     80 |
+   > 81 |     expect(await headerLinks.count(), `header anchors on ${path}`).toBe(SECTION_LINKS.length);
+        |                                                                    ^
+     82 |     expect(await linkTexts(headerLinks), `header link text order on ${path}`).toEqual(
+     83 |       SECTION_LABELS,
+     84 |     );
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/GBC-013/tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:81:68
+
+Time: 1544ms
+[full output: ~/Library/Application Support/rtk/tee/1790740222_playwright.log]
