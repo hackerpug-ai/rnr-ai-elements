@@ -1,0 +1,94 @@
+---
+/**
+ * /changelog/[version] — one release page per changelog entry (GBC-008).
+ * getStaticPaths fans one page per entry with the route param taken from
+ * `entry.data.version` — never entry.id (the glob loader's id for `0.2.1.md`
+ * is `021`) — so /changelog/v0.2.1 has no route and 404s. The page is the
+ * authored reading surface: the docs-section nav and PageHeader stay outside,
+ * and exactly one <article> holds the release date and the rendered entry
+ * body, whose only h2 headings are the body's Added, Changed and Fixed. The
+ * date renders as the UTC calendar day through the shared formatter (the
+ * entries also open with 'Released <date>.' in prose — the deliberate
+ * duplication GBC-005's handoff recorded). Zero JS.
+ */
+import { getCollection, render } from 'astro:content';
+import DocsNav from '../../components/DocsNav.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Prose from '../../components/Prose.astro';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import {
+  changelogReleases,
+  formatReleaseDate,
+  type ChangelogRelease,
+} from '../../lib/changelog';
+import {
+  sectionNavigation,
+  type DocsCollectionEntry,
+  type SectionNavGroup,
+} from '../../lib/docs-navigation';
+
+export async function getStaticPaths() {
+  const releases = await changelogReleases();
+  return releases.map((release) => ({
+    params: { version: release.version },
+    props: { release },
+  }));
+}
+
+interface Props {
+  release: ChangelogRelease;
+}
+
+const { release } = Astro.props;
+const { version } = release;
+const dateText = formatReleaseDate(release.date);
+const { Content } = await render(release.entry);
+
+const docs = (await getCollection('docs')) as unknown as DocsCollectionEntry[];
+const nav: SectionNavGroup[] = sectionNavigation(docs);
+---
+
+<DocsLayout title={`Release ${version} — RNR AI Elements`}>
+  <div class="changelog-release">
+    <aside class="changelog-release__nav">
+      <DocsNav nav={nav} />
+    </aside>
+    <main class="changelog-release__body">
+      <PageHeader
+        title={version}
+        description={`Registry release ${version}: what shipped, what changed, and what it fixed.`}
+      />
+      <article class="changelog-release__entry">
+        <Prose>
+          <p class="changelog-release__date">
+            Released <time datetime={dateText}>{dateText}</time>
+          </p>
+          <Content />
+        </Prose>
+      </article>
+    </main>
+  </div>
+</DocsLayout>
+
+<style>
+  /* The MarkdownLayout reading grid minus the rail: docs nav + body, one
+     column below lg. Measure and padding match the other shells. */
+  .changelog-release {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .changelog-release {
+      grid-template-columns: var(--layout-sidebar-w) minmax(0, 1fr);
+    }
+  }
+
+  .changelog-release__date {
+    color: var(--muted-foreground);
+  }
+</style>
