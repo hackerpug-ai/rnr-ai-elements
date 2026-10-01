@@ -1,0 +1,127 @@
+{
+  "task": "FIX-ORI-RN-004-4",
+  "phase": "disposition",
+  "status": "not_reproduced",
+  "no_repair": true,
+  "accepted": true,
+  "diagnostic_checkpoint": "f836d3665638efa16e877534ef17b5ecbdbfa182",
+  "diagnostic_base": "713eee79f70a15bba4c04dfa796151d69e1e6093",
+  "current_candidate": "493e25317f425623e88c1f35d9180974f5495955",
+  "immutable_diagnostic_sha256": {
+    "not-reproduced.json": "c9c787364311f07a4a3f98a4592efdc2eb5950e793b79fa4fe5d4c003b114e92",
+    "cycle-2/ios-red/run.json": "319f3c5d5f93b381721d07155ed7081884144c4ed4c3c7d0938ede9c1da8a843",
+    "cycle-3/ios-red/run.json": "96736ebf536a043725d1a8ce2c734bd5cb3e4050754f6da797ddaa85965bbfe4",
+    "cycle-2/ios-red/driver-evidence/run-manifest.json": "fe8bf5f261ee1cd94544b8d3df42aac273d8db1e0500ff32abfc0173e0cd0055",
+    "cycle-3/ios-red/driver-evidence/run-manifest.json": "6ce3dd09bdc6b2c9fd67d498473d3725716818c59494e7fd0121b125be228d05"
+  },
+  "attempts": [
+    {
+      "cycle": "cycle-2",
+      "run_id": "FIX-ORI-RN-004-4-cycle-2-ios-red",
+      "report_sha256": "319f3c5d5f93b381721d07155ed7081884144c4ed4c3c7d0938ede9c1da8a843",
+      "manifest_sha256": "fe8bf5f261ee1cd94544b8d3df42aac273d8db1e0500ff32abfc0173e0cd0055",
+      "driver_evidence_tree_sha256": "7cd5905e036ba570ba83cd9aa73931564e8dcc0adf3249dab86b8d5b7d64e7a7",
+      "executed_head": "713eee79f70a15bba4c04dfa796151d69e1e6093",
+      "raw_child_exit": 1,
+      "timed_out": false,
+      "signal": null,
+      "passed_platforms": 1,
+      "completed": false,
+      "actual_failure_count": 0,
+      "observations": [
+        {
+          "appearance": "light",
+          "submitted_marker": "ORI-RN-004:FIX-ORI-RN-004-4-cycle-2-ios-red:ios",
+          "exact_assert_visible_completed": 2,
+          "final_screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/light/screenshot.png",
+          "final_screenshot_claim": "Retry/composer end state only; not complete-marker proof"
+        },
+        {
+          "appearance": "dark",
+          "submitted_marker": "ORI-RN-004:FIX-ORI-RN-004-4-cycle-2-ios-red:ios",
+          "exact_assert_visible_completed": 2,
+          "final_screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/dark/screenshot.png",
+          "final_screenshot_claim": "Retry/composer end state only; not complete-marker proof"
+        }
+      ],
+      "source_sha256": {
+        "tests/sprint-05-orient-search/live-example.maestro.yaml": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+        "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "e92d1afabb5dc1dd5e0d43dd2e1b3a3db429cdc964342d415743e03472f15b39",
+        "tests/sprint-05-orient-search/native-live-repair-proof_test.ts": "ea3d1e00babc1faf47d541c6080ba53eec3d46eddff2671f8d841c2c05991058",
+        "tests/sprint-05-orient-search/live-example-proof.ts": "967f841e20562e72a47dd98e208551435c0d396612f1e791047c7628d3c614cd",
+        "tests/sprint-05-orient-search/run-live-example-proof.mjs": "56182ddf0ae69990a02b8fd54fd1787f2c27c9846d8d87bea04a75c0532060f8",
+        "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+        "apps/example/components/live-chat-screen.tsx": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+        "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+        "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+        "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+      }
+    },
+    {
+      "cycle": "cycle-3",
+      "run_id": "FIX-ORI-RN-004-4-cycle-3-ios-red",
+      "report_sha256": "96736ebf536a043725d1a8ce2c734bd5cb3e4050754f6da797ddaa85965bbfe4",
+      "manifest_sha256": "6ce3dd09bdc6b2c9fd67d498473d3725716818c59494e7fd0121b125be228d05",
+      "driver_evidence_tree_sha256": "ec90e9312b155d5491ed0963eeb6be1af789211358f00b542f4f8bfb80a576b3",
+      "executed_head": "713eee79f70a15bba4c04dfa796151d69e1e6093",
+      "raw_child_exit": 1,
+      "timed_out": false,
+      "signal": null,
+      "passed_platforms": 1,
+      "completed": false,
+      "actual_failure_count": 0,
+      "observations": [
+        {
+          "appearance": "light",
+          "submitted_marker": "ORI-RN-004:FIX-ORI-RN-004-4-cycle-3-ios-red:ios",
+          "exact_assert_visible_completed": 2,
+          "final_screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/light/screenshot.png",
+          "final_screenshot_claim": "Retry/composer end state only; not complete-marker proof"
+        },
+        {
+          "appearance": "dark",
+          "submitted_marker": "ORI-RN-004:FIX-ORI-RN-004-4-cycle-3-ios-red:ios",
+          "exact_assert_visible_completed": 2,
+          "final_screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/dark/screenshot.png",
+          "final_screenshot_claim": "Retry/composer end state only; not complete-marker proof"
+        }
+      ],
+      "source_sha256": {
+        "tests/sprint-05-orient-search/live-example.maestro.yaml": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+        "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "e92d1afabb5dc1dd5e0d43dd2e1b3a3db429cdc964342d415743e03472f15b39",
+        "tests/sprint-05-orient-search/native-live-repair-proof_test.ts": "ea3d1e00babc1faf47d541c6080ba53eec3d46eddff2671f8d841c2c05991058",
+        "tests/sprint-05-orient-search/live-example-proof.ts": "967f841e20562e72a47dd98e208551435c0d396612f1e791047c7628d3c614cd",
+        "tests/sprint-05-orient-search/run-live-example-proof.mjs": "56182ddf0ae69990a02b8fd54fd1787f2c27c9846d8d87bea04a75c0532060f8",
+        "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+        "apps/example/components/live-chat-screen.tsx": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+        "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+        "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+        "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+      }
+    }
+  ],
+  "source_binding": {
+    "original_execution_wrapper_sha256": "ea3d1e00babc1faf47d541c6080ba53eec3d46eddff2671f8d841c2c05991058",
+    "checkpoint_wrapper_sha256": "ce8ea18507320ee31cafdfafe4f43ce7356b1aafb255acebab46e0c1d755ef05",
+    "current_wrapper_sha256": "c61b669106030b61a627a4cad31859e2b6449da097e237f4d191854a341c6cb1",
+    "current_source_sha256": {
+      "tests/sprint-05-orient-search/live-example.maestro.yaml": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+      "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "e92d1afabb5dc1dd5e0d43dd2e1b3a3db429cdc964342d415743e03472f15b39",
+      "tests/sprint-05-orient-search/native-live-repair-proof_test.ts": "c61b669106030b61a627a4cad31859e2b6449da097e237f4d191854a341c6cb1",
+      "tests/sprint-05-orient-search/live-example-proof.ts": "967f841e20562e72a47dd98e208551435c0d396612f1e791047c7628d3c614cd",
+      "tests/sprint-05-orient-search/run-live-example-proof.mjs": "56182ddf0ae69990a02b8fd54fd1787f2c27c9846d8d87bea04a75c0532060f8",
+      "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "apps/example/components/live-chat-screen.tsx": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+      "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+      "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb"
+    },
+    "behavioral_sources_unchanged": true,
+    "repair_paths_changed": []
+  },
+  "temporal_marker_observation": "Each real Maestro leg completed the exact submitted MARKER assertVisible operation twice.",
+  "final_screenshot_limitation": "Final screenshots prove the usable Retry/composer end state only. They do not independently prove that the complete marker remained visible; cycle-3 dark shows only its suffix.",
+  "copied_android_limitation": "The android/** files carried inside the old iOS snapshots are historical artifacts and are not current Android proof.",
+  "cleanup_limitation": "Preserved iOS attempts prove zero listeners on checked ports only. Current appearance, reverse mapping, reservation and descendant teardown must come from the fresh full run.",
+  "cycle_1_classification": "prerequisite interruption; no runtime failure"
+}

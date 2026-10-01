@@ -1,0 +1,362 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-1790254489381",
+  "engine": "uniwind",
+  "platform": "ios",
+  "native": true,
+  "device": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "nonce_first": "ORI-RN-004:ORI-AI-002-1790254489381-live:ios",
+  "phases": {
+    "reject": {
+      "run_id": "ORI-AI-002-1790254489381-reject",
+      "legs": [
+        {
+          "platform": "ios",
+          "status": "failed",
+          "diagnostic": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nTap on \"Send message\"... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${SEED_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${FOLLOW_UP_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${LONG_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Stop generating\" is visible... FAILED\n\nAssertion is false: \"Stop generating\" is visible\n\nAssertion '\"Stop generating\" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state\n- This could be a real regression that needs to be addressed\n\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-24_065457\n",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-1790254489381-reject:ios",
+            "appearance": "light",
+            "maestro_exit": 1,
+            "maestro_output": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nTap on \"Send message\"... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${SEED_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${FOLLOW_UP_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${LONG_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Stop generating\" is visible... FAILED\n\nAssertion is false: \"Stop generating\" is visible\n\nAssertion '\"Stop generating\" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state\n- This could be a real regression that needs to be addressed\n\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-24_065457\n",
+            "retry_log": null,
+            "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/light/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": {
+              "requestId": "byI4ghrqY6XR9lvE",
+              "provider": "openai",
+              "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790254489381",
+              "responseId": null,
+              "callId": null,
+              "outcome": "error",
+              "deltaCount": 0,
+              "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "durationMs": 336,
+              "errorText": "An error occurred while generating the response.",
+              "activeGenerations": 0
+            }
+          }
+        },
+        {
+          "platform": "ios",
+          "status": "failed",
+          "diagnostic": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nTap on \"Send message\"... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${SEED_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${FOLLOW_UP_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${LONG_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Stop generating\" is visible... FAILED\n\nAssertion is false: \"Stop generating\" is visible\n\nAssertion '\"Stop generating\" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state\n- This could be a real regression that needs to be addressed\n\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-24_065638\n",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-1790254489381-reject:ios",
+            "appearance": "dark",
+            "maestro_exit": 1,
+            "maestro_output": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nTap on \"Send message\"... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${SEED_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${FOLLOW_UP_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${LONG_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Stop generating\" is visible... FAILED\n\nAssertion is false: \"Stop generating\" is visible\n\nAssertion '\"Stop generating\" is visible' failed. Check the UI hierarchy in debug artifacts to verify the element state and properties.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state\n- This could be a real regression that needs to be addressed\n\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-09-24_065638\n",
+            "retry_log": null,
+            "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/dark/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": {
+              "requestId": "MY36C1gFaSZWHc9N",
+              "provider": "openai",
+              "providerModel": "rnr-s05-nonexistent-ORI-AI-002-1790254489381",
+              "responseId": null,
+              "callId": null,
+              "outcome": "error",
+              "deltaCount": 0,
+              "textHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "durationMs": 943,
+              "errorText": "An error occurred while generating the response.",
+              "activeGenerations": 0
+            }
+          }
+        }
+      ]
+    },
+    "live": {
+      "run_id": "ORI-AI-002-1790254489381-live",
+      "legs": [
+        {
+          "platform": "ios",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-1790254489381-live:ios",
+            "appearance": "light",
+            "maestro_exit": 0,
+            "maestro_output": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nTap on \"Send message\"... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${SEED_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${FOLLOW_UP_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${LONG_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Stop generating\" is visible... COMPLETED\nTap on \"Stop generating\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\n",
+            "retry_log": "endpoint loss + retry OK (new request FoYYSmq1M3XtugXz, exactly 1 retained user turn — oracle channel: hierarchy-after-scrollUntilVisible)",
+            "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/light/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": true,
+            "latest_backend_record": {
+              "requestId": "FoYYSmq1M3XtugXz",
+              "provider": "openai",
+              "providerModel": "gpt-4.1-mini-2025-04-14",
+              "responseId": "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc",
+              "callId": "call-PxPmL1xFcBQLd7TNG8jfBQZa",
+              "outcome": "completed",
+              "deltaCount": 2,
+              "inputTokens": 392,
+              "outputTokens": 3,
+              "totalTokens": 395,
+              "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+              "durationMs": 1949,
+              "errorText": null,
+              "activeGenerations": 0
+            }
+          }
+        },
+        {
+          "platform": "ios",
+          "status": "passed",
+          "evidence": {
+            "marker": "ORI-RN-004:ORI-AI-002-1790254489381-live:ios",
+            "appearance": "dark",
+            "maestro_exit": 0,
+            "maestro_output": "Running on iPhone 17 - iOS 26.3 - 81487B1E-A4D1-45AE-9BCE-D675802BACD1\n > Flow live-example.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Live chat\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nAssert that \"Start a conversation\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on (Optional) \"Dismiss\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Dismiss\nTap on (Optional) \"Minimize\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Minimize\nTap on \"Send message\"... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${SEED_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${FOLLOW_UP_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${LONG_PROMPT}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Stop generating\" is visible... COMPLETED\nTap on \"Stop generating\"... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\n",
+            "retry_log": "endpoint loss + retry OK (new request FoYYSmq1M3XtugXz, exactly 1 retained user turn — oracle channel: hierarchy-after-scrollUntilVisible)",
+            "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AI-002/tests/sprint-05-orient-search/evidence/ORI-RN-004/ios/dark/screenshot.png",
+            "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+            "hierarchy_has_marker": false,
+            "latest_backend_record": {
+              "requestId": "w0lmSpNYbsNLsy65",
+              "provider": "openai",
+              "providerModel": "gpt-4.1-mini-2025-04-14",
+              "responseId": "resp_0c05c24b51c6350a006ab52271844887d0a527afc30df6843c",
+              "callId": "call-atkCvuCpJ4zopLItNBrLpLvo",
+              "outcome": "completed",
+              "deltaCount": 2,
+              "inputTokens": 467,
+              "outputTokens": 3,
+              "totalTokens": 470,
+              "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+              "durationMs": 1026,
+              "errorText": null,
+              "activeGenerations": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "streaming": {
+    "distinct_prefix_count": 47
+  },
+  "context": {
+    "followup_answer_contains_nonce": true,
+    "latest_user_message_nonce_occurrences": 0,
+    "prior_exchange_count": 2
+  },
+  "correlation": {
+    "completed_request_ids": [
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz"
+    ],
+    "response_ids": [
+      "resp_00e3acf192e0c7e6006ab5215d6fc087d0b124199b64b44aac",
+      "resp_00e3acf192e0c7e6006ab52166b00487d0b77b04dd3e7fbdea",
+      "resp_00e3acf192e0c7e6006ab5216d5b8487d0878db42dced3d1d0",
+      "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc",
+      "resp_00e3acf192e0c7e6006ab5215d6fc087d0b124199b64b44aac",
+      "resp_00e3acf192e0c7e6006ab52166b00487d0b77b04dd3e7fbdea",
+      "resp_00e3acf192e0c7e6006ab5216d5b8487d0878db42dced3d1d0",
+      "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc",
+      "resp_00e3acf192e0c7e6006ab5215d6fc087d0b124199b64b44aac",
+      "resp_00e3acf192e0c7e6006ab52166b00487d0b77b04dd3e7fbdea",
+      "resp_00e3acf192e0c7e6006ab5216d5b8487d0878db42dced3d1d0",
+      "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc",
+      "resp_00e3acf192e0c7e6006ab5215d6fc087d0b124199b64b44aac",
+      "resp_00e3acf192e0c7e6006ab52166b00487d0b77b04dd3e7fbdea",
+      "resp_00e3acf192e0c7e6006ab5216d5b8487d0878db42dced3d1d0",
+      "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc",
+      "resp_00e3acf192e0c7e6006ab5215d6fc087d0b124199b64b44aac",
+      "resp_00e3acf192e0c7e6006ab52166b00487d0b77b04dd3e7fbdea",
+      "resp_00e3acf192e0c7e6006ab5216d5b8487d0878db42dced3d1d0",
+      "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc",
+      "resp_00e3acf192e0c7e6006ab5215d6fc087d0b124199b64b44aac",
+      "resp_00e3acf192e0c7e6006ab52166b00487d0b77b04dd3e7fbdea",
+      "resp_00e3acf192e0c7e6006ab5216d5b8487d0878db42dced3d1d0",
+      "resp_00e3acf192e0c7e6006ab521b355fc87d0b4e985023af2fbdc"
+    ],
+    "model": "gpt-4.1-mini-2025-04-14",
+    "positive_usage": true,
+    "usage_samples": [
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 203
+      },
+      {
+        "total_tokens": 249
+      },
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 203
+      },
+      {
+        "total_tokens": 249
+      },
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 203
+      },
+      {
+        "total_tokens": 249
+      },
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 203
+      },
+      {
+        "total_tokens": 249
+      },
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 203
+      },
+      {
+        "total_tokens": 249
+      },
+      {
+        "total_tokens": 395
+      },
+      {
+        "total_tokens": 95
+      },
+      {
+        "total_tokens": 203
+      },
+      {
+        "total_tokens": 249
+      },
+      {
+        "total_tokens": 395
+      }
+    ],
+    "text_hashes_recorded": [
+      "b3899c565a1fb75c4a1e51ac5db8260b4c905cb0b93b829688c174112228c5a9",
+      "41f3a9b6a978680691b2001db58385cd7d37461c109a9491f52bcbe34ed18725",
+      "2de735656837488d3e2a5fd0f494cb620459ba007f8226faaa0d03f5c5ae29af",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "b3899c565a1fb75c4a1e51ac5db8260b4c905cb0b93b829688c174112228c5a9",
+      "41f3a9b6a978680691b2001db58385cd7d37461c109a9491f52bcbe34ed18725",
+      "2de735656837488d3e2a5fd0f494cb620459ba007f8226faaa0d03f5c5ae29af",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "b3899c565a1fb75c4a1e51ac5db8260b4c905cb0b93b829688c174112228c5a9",
+      "41f3a9b6a978680691b2001db58385cd7d37461c109a9491f52bcbe34ed18725",
+      "2de735656837488d3e2a5fd0f494cb620459ba007f8226faaa0d03f5c5ae29af",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "b3899c565a1fb75c4a1e51ac5db8260b4c905cb0b93b829688c174112228c5a9",
+      "41f3a9b6a978680691b2001db58385cd7d37461c109a9491f52bcbe34ed18725",
+      "2de735656837488d3e2a5fd0f494cb620459ba007f8226faaa0d03f5c5ae29af",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "b3899c565a1fb75c4a1e51ac5db8260b4c905cb0b93b829688c174112228c5a9",
+      "41f3a9b6a978680691b2001db58385cd7d37461c109a9491f52bcbe34ed18725",
+      "2de735656837488d3e2a5fd0f494cb620459ba007f8226faaa0d03f5c5ae29af",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+      "b3899c565a1fb75c4a1e51ac5db8260b4c905cb0b93b829688c174112228c5a9",
+      "41f3a9b6a978680691b2001db58385cd7d37461c109a9491f52bcbe34ed18725",
+      "2de735656837488d3e2a5fd0f494cb620459ba007f8226faaa0d03f5c5ae29af",
+      "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c"
+    ],
+    "web_raw_text_hash_match": null
+  },
+  "stop_proof": {
+    "aborted_request_id": "FoYYSmq1M3XtugXz",
+    "delta_count_at_abort": 71,
+    "completed_before_stop": false,
+    "source": "driver-flow"
+  },
+  "retry_after_failure": [
+    {
+      "trigger": "endpoint-loss",
+      "new_request_completed": true,
+      "single_user_turn": true,
+      "request_id": "FoYYSmq1M3XtugXz"
+    }
+  ],
+  "endpoint_loss": {
+    "visible_error": true,
+    "sanitized": true,
+    "retry_completed": true,
+    "single_user_turn": true
+  },
+  "provider_rejection": {
+    "model": "rnr-s05-nonexistent-ORI-AI-002-1790254489381",
+    "rejected_request_ids": [
+      "byI4ghrqY6XR9lvE",
+      "byI4ghrqY6XR9lvE"
+    ],
+    "sanitized": true,
+    "visible_error_screenshot": "provider-rejection.png",
+    "restore_completed_request_ids": [
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz",
+      "FoYYSmq1M3XtugXz"
+    ]
+  },
+  "source": {
+    "repo_head": "89e5be8d155e56dc6e9abf1a30a159fdb5caa133",
+    "source_sha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3"
+  }
+}

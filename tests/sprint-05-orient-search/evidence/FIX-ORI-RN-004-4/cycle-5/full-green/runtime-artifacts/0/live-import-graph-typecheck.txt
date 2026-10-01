@@ -1,0 +1,16 @@
+ORI-RN-004 AC-5 live-import-graph compiler — PASS
+candidate HEAD: db04b8e56ebacef38d2fb38210141db033170b69
+scoped command: pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json
+scoped exit: 0
+program includes: {
+  "app/live-chat.tsx": true,
+  "components/live-chat-screen.tsx": true,
+  "components/live-chat-message.tsx": true,
+  "components/ai/conversation.tsx": true,
+  "components/ai/message.tsx": true,
+  "components/ai/prompt-input.tsx": true
+}
+negative control (omit route -> route absent): true
+--- scoped compiler output (verbatim) ---
+
+--- end ---

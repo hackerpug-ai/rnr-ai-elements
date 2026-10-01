@@ -1,0 +1,103 @@
+{
+  "task": "ORI-AI-002",
+  "run_id": "ORI-AI-002-1790254489381",
+  "generated_at": "2026-09-24T13:29:00.979Z",
+  "repo_head": "89e5be8d155e56dc6e9abf1a30a159fdb5caa133",
+  "engines": [
+    "uniwind"
+  ],
+  "commands": {
+    "matrix": "node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines uniwind --platforms ios,android,web --output tests/sprint-05-orient-search/evidence/ORI-AI-002"
+  },
+  "phases": [
+    {
+      "engine": "uniwind",
+      "phase": "reject",
+      "driver": "runLiveExampleProof",
+      "run_id": "ORI-AI-002-1790254489381-reject",
+      "completed": false,
+      "error": null
+    },
+    {
+      "engine": "uniwind",
+      "phase": "live",
+      "driver": "runLiveExampleProof",
+      "run_id": "ORI-AI-002-1790254489381-live",
+      "completed": true,
+      "error": null
+    },
+    {
+      "engine": "uniwind",
+      "phase": "web-self",
+      "driver": "web-self-session",
+      "run_id": "ORI-AI-002-1790254489381-web-self",
+      "completed": true,
+      "error": null
+    }
+  ],
+  "source_digests": {
+    "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+    "pnpm-lock.yaml": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+    "packages/registry/registry.json": "6de89f9f6af05e11cf8f707ce73c18845e631ebbfc1309aa158bf05cad67e1e0",
+    "tests/sprint-05-orient-search/nativewind-live-source-manifest.json": "df55fff78536c26d34e77b272f93c7447b5602914a2f76655906f3a54e067a1d",
+    "tests/sprint-05-orient-search/support/live-example-proof.test.ts": "e92d1afabb5dc1dd5e0d43dd2e1b3a3db429cdc964342d415743e03472f15b39",
+    "tests/sprint-05-orient-search/support/nativewind-live-example.ts": "d80c45db0a0042bdac53e7aac7a00a876d8e18bf40f4b4b8deb7e87f22487b75",
+    "tests/sprint-05-orient-search/support/live-backend.ts": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
+    "tests/sprint-05-orient-search/support/native-session.ts": "7e1b4e0e2b35044a6b52d22c77c36584c5e8e414fb6d16ddf25399d48b6d13ae",
+    ".spec/e2e-policy/surface.json": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b"
+  },
+  "api_origin": "official OpenAI Responses endpoint (gpt-4.1-mini-2025-04-14 via the owned example backend)",
+  "devices": {
+    "ios_udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+    "android_serial": "emulator-5554",
+    "web_browser": "chromium (playwright, headless)"
+  },
+  "targets": {
+    "uniwind-ios": {
+      "engine": "uniwind",
+      "platform": "ios",
+      "native": true,
+      "artifacts": {
+        "stream.jsonl": "3e03e8ddd77f0a6f1821cb74a62d83cc921f818e3bdce4f251b7b4acf178d136",
+        "screen-recording.mp4": "03f703990731611b4aba31d2b196fd838110618ec343a373c4d38820cfb97e66",
+        "streaming.png": "09801a695c5a01523b70e0d3ebe13995fb13d5d9ece9154739d751e5b0cdb5f9",
+        "recovered.png": "703054f5c8512f4f890797af5e3c4124b0126b1e7bb0f1f952d019633d77e34f",
+        "result.json": "c4d4df23ad5e1e6c6693c4a1c008fda777b47278a6685ce2e1fb6a624de2a6f3"
+      }
+    },
+    "uniwind-android": {
+      "engine": "uniwind",
+      "platform": "android",
+      "native": true,
+      "artifacts": {
+        "stream.jsonl": "029843fd26668f4e46b11e23bd461caa0f62bad473b1dc4b0069cc09149809e1",
+        "screen-recording.mp4": "8d5d713c774df66db30240b5b5a11460e38972079f1e96e2b5bd12d99e74ede7",
+        "streaming.png": "4e46165bcd1db3a2dbf2e3a2843f3a2cce7e5d9670830f265c4ae34c631ef598",
+        "recovered.png": "23320dd1a7d1dce639d5e48fec1867ff955cf8dbb0f6c13db1d43d4963ee4e88",
+        "result.json": "7bb1b1fa95d402a1502f97b1b5c6e45d2b5b8d3b12df54ea2a053183f402b3d9"
+      }
+    },
+    "uniwind-web": {
+      "engine": "uniwind",
+      "platform": "web",
+      "native": false,
+      "artifacts": {
+        "stream.jsonl": "4383d5061423727a89f2c4446750ca1704b12677541ec9ef5dec9954cb781590",
+        "screen-recording.mp4": "729369f14601b32d50e071c2bdd020924012520cb9de785ba013f07aea71edc7",
+        "streaming.png": "77e950b1e18119681f1b55b193f6620d7a1aa26801a3fc92819a0d98337a5c07",
+        "recovered.png": "512120ac616f0d78524e964a3513b06b448d3ada87287cf1af27b0fe5561687b",
+        "result.json": "982eb65887166018ac4c61adbf778f0a5283652a6106713a4f8a1b65e91ab021"
+      }
+    }
+  },
+  "validation": {
+    "ok": true,
+    "accepted_targets": [
+      "uniwind-ios",
+      "uniwind-android",
+      "uniwind-web"
+    ],
+    "rejections": []
+  },
+  "exit_code": 0
+}

@@ -1,0 +1,352 @@
+{
+  "task": "ORI-RN-005",
+  "engine": "nativewind",
+  "run_id": "ORI-RN-005-1789808618192",
+  "candidate_head_sha": "6096f40112403c90e5d884d75cd262224713f9e5",
+  "generated_at": "2026-09-19T09:38:07.228Z",
+  "commands": [
+    "pnpm exec tsx tests/sprint-05-orient-search/support/nativewind-live-example.ts --platforms ios,android,web"
+  ],
+  "source_manifest": "tests/sprint-05-orient-search/nativewind-live-source-manifest.json",
+  "source_sha": {
+    "apps/example/app/live-chat.tsx": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+    "apps/example/components/live-chat-screen.tsx": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+    "apps/example/components/live-chat-message.tsx": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+    "apps/example/lib/live-chat-config.ts": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+    "apps/example/lib/use-live-chat.ts": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87"
+  },
+  "copy_pairs": [
+    {
+      "source": "apps/example/app/live-chat.tsx",
+      "target": "app/live-chat.tsx",
+      "sourceSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "targetSha": "06af1efffcfdbb3d70a35857df324922cc8a4b3ee9e905a91494cc72de7c9ea3",
+      "match": true
+    },
+    {
+      "source": "apps/example/components/live-chat-screen.tsx",
+      "target": "components/live-chat-screen.tsx",
+      "sourceSha": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+      "targetSha": "34af58320d1f4ed8f4dbfb103b330b56485a423aa99609cea6c8c15d37f64d73",
+      "match": true
+    },
+    {
+      "source": "apps/example/components/live-chat-message.tsx",
+      "target": "components/live-chat-message.tsx",
+      "sourceSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+      "targetSha": "5cf19ae4c9afd64648277c0bfc0c3774567f881dfe151071a0e6b91b2a179c4b",
+      "match": true
+    },
+    {
+      "source": "apps/example/lib/live-chat-config.ts",
+      "target": "lib/live-chat-config.ts",
+      "sourceSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+      "targetSha": "6e4d6b8a3acdb55c1ecf37fdb9eb122a18a3695e0cd300e260139fc56be2b297",
+      "match": true
+    },
+    {
+      "source": "apps/example/lib/use-live-chat.ts",
+      "target": "lib/use-live-chat.ts",
+      "sourceSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "targetSha": "1f747a7d680a227478eca3a4a75804dda74fe1ba0ba2f67d4d8a1c25191d6c87",
+      "match": true
+    }
+  ],
+  "consumer": {
+    "root_existed_outside_monorepo": true,
+    "script_exit": 0,
+    "cli_version": "1.0.0",
+    "resolved_versions": {
+      "expo": "57.0.24",
+      "react-native": "0.86.3",
+      "react": "19.2.3",
+      "typescript": "6.0.3",
+      "nativewind": "4.2.6",
+      "uniwind": "missing",
+      "tailwindcss": "3.4.19",
+      "@rn-primitives/dialog": "1.5.2",
+      "react-native-safe-area-context": "5.7.0"
+    },
+    "tsc_exit": 0,
+    "expo_doctor_exit": 0,
+    "public_registry_hashes": {
+      "https://rnraielements.com/r/nativewind/conversation.json": "c84d855da4e4e557705d5b93727f5fda186b177b1071bf0a3dc374575b43576f",
+      "https://rnraielements.com/r/nativewind/message.json": "c2faccb66abd23eb8d840805886ff02eeabbd3d13d9fd54de63ec1a9bc45943d",
+      "https://rnraielements.com/r/nativewind/prompt-input.json": "dc64dfbce4e8e284f19d18446756707972ab197b6c431755ec14ef9b2ece8246",
+      "https://rnraielements.com/r/nativewind/item.json": "a0d2c46de0ec000123387c5ee15b20977ee85cfbe5fc095bd9e38230508dcaed",
+      "https://rnraielements.com/r/nativewind/sheet.json": "b39706723eec6acfad5a3cf87d026bf1ee33c9784f48ef23e11518865495fb14"
+    }
+  },
+  "backend": {
+    "model": "gpt-4.1-mini-2025-04-14",
+    "host": "127.0.0.1",
+    "port": 4010,
+    "record_count": 24
+  },
+  "passed_platforms": 3,
+  "completed": true,
+  "legs": [
+    {
+      "platform": "ios",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789808618192:ios",
+        "appearance": "light",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 110, 79, 116)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 3-text baseline)\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (KKZQ0h81I1ptjaDW) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          110,
+          79,
+          116,
+          63,
+          234,
+          1358
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/abort-error-retry/ios/light/screenshot.png",
+        "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "KKZQ0h81I1ptjaDW",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0fc710e82f1f05be006aae51c53da487d08e393460338f190c",
+          "callId": "call-MK8C6QZdFWNhlMSLNSE4EYlj",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 553,
+          "outputTokens": 3,
+          "totalTokens": 556,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 991,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "ios",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789808618192:ios",
+        "appearance": "dark",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 184, 79, 119)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (gE6ieRx8gzMx8Tgg) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          184,
+          79,
+          119,
+          66,
+          234,
+          1146
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/abort-error-retry/ios/dark/screenshot.png",
+        "hierarchy": "None: \n{\n  \"attributes\" : {\n    \"accessibilityText\" : \"\",\n    \"title\" : \"\",\n    \"value\" : \"\",\n    \"text\" : \"\",\n    \"hintText\" : \"\",\n    \"resource-id\" : \"\",\n    \"bounds\" : \"[0,0][0,0]\",\n    \"enabled\" : \"false\",\n    \"focused\" : \"false\",\n    \"selected\" : \"false\",\n    \"checked\" : \"false\"\n  },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"accessibilityText\" : \"Expo Go\",\n      \"title\" : \"\",\n      \"value\" : \"\",\n      \"text\" : \"\",\n      \"hintText\" : \"\",\n      \"resource-id\" : \"\",\n      \"bounds\" : \"[0,0][402,874]\",\n      \"enabled\" : \"true\",\n      \"focused\" : \"false\",\n      \"selected\" : \"false\",\n      \"checked\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"accessibilityText\" : \"\",\n        \"title\" : \"\",\n        \"value\" : \"\",\n        \"text\" : \"\",\n        \"hintText\" : \"\",\n        \"resource-id\" : \"\",\n        \"bounds\" : \"[0,0][402,874]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"selected\" : \"false\",\n        \"checked\" : \"false\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"accessibilityText\" : \"\",\n          \"title\" : \"\",\n          \"value\" : \"\",\n          \"text\" : \"\",\n          \"hintText\" : \"\",\n          \"resource-id\" : \"\",\n          \"bounds\" : \"[0,0][402,874]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"selected\" : \"false\",\n          \"checked\" : \"false\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"accessibilityText\" : \"\",\n            \"title\" : \"\",\n            \"value\" : \"\",\n            \"text\" : \"\",\n            \"hintText\" : \"\",\n            \"resource-id\" : \"\",\n            \"bounds\" : \"[0,0][402,874]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"selected\" : \"false\",\n            \"checked\" : \"false\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"accessibilityText\" : \"\",\n              \"title\" : \"\",\n              \"value\" : \"\",\n              \"text\" : \"\",\n              \"hintText\" : \"\",\n              \"resource-id\" : \"\",\n              \"bounds\" : \"[0,0][402,874]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"selected\" : \"false\",\n              \"checked\" : \"false\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"accessibilityText\" : \"\",\n                \"title\" : \"\",\n                \"value\" : \"\",\n                \"text\" : \"\",\n                \"hintText\" : \"\",\n                \"resource-id\" : \"\",\n                \"bounds\" : \"[0,0][402,874]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"selected\" : \"false\",\n                \"checked\" : \"false\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"accessibilityText\" : \"\",\n                  \"title\" : \"\",\n                  \"value\" : \"\",\n                  \"text\" : \"\",\n                  \"hintText\" : \"\",\n                  \"resource-id\" : \"\",\n                  \"bounds\" : \"[0,0][402,874]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"checked\" : \"false\"\n                },\n                \"children\" : [ {\n                  \"attributes\" : {\n                    \"accessibilityText\" : \"\",\n                    \"title\" : \"\",\n                    \"value\" : \"\",\n                    \"text\" : \"\",\n                    \"hintText\" : \"\",\n                    \"resource-id\" : \"\",\n                    \"bounds\" : \"[0,0][402,874]\",\n                    \"enabled\" : \"true\",\n                    \"focused\" : \"false\",\n                    \"selected\" : \"false\",\n                    \"checked\" : \"false\"\n                  },\n                  \"children\" : [ {\n                    \"attributes\" : {\n                      \"accessibilityText\" : \"\",\n                      \"title\" : \"\",\n                      \"value\" : \"\",\n                      \"text\" : \"\",\n                      \"hintText\" : \"\",\n                     ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "gE6ieRx8gzMx8Tgg",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0de83c6e8f703a41006aae53bd5d7487d0a811b797af9895cd",
+          "callId": "call-ynkB7kISymzWt9hw4GD8yK0W",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 538,
+          "outputTokens": 3,
+          "totalTokens": 541,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 1254,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "android",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789808618192:android",
+        "appearance": "light",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 107, 83, 287, 43, 50, 51)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 4-text baseline)\nOK: coordinate send + stop tap at 954,2232\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (QfUioZn1qP1isUGU) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          107,
+          83,
+          287,
+          43,
+          50,
+          51,
+          70,
+          234
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/abort-error-retry/android/light/screenshot.png",
+        "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,2400]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,2337]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.LinearLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,136][1080,2337]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"false\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"host.exp.exponent:id/action_bar_root\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[0,136][1080,2337]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"android:id/content\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[0,136][1080,2337]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"android.widget.FrameLayout\",\n                \"important-for-accessibility\" : \"false\",\n                \"error\" : \"\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"text\" : \"\",\n                  \"accessibilityText\" : \"\",\n                  \"hintText\" : \"\",\n                  \"ignoreBoundsFiltering\" : \"false\",\n                  \"resource-id\" : \"\",\n                  \"clickable\" : \"false\",\n                  \"bounds\" : \"[0,136][1080,2337]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"checked\" : \"false\",\n                  \"scrollable\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"class\" : \"android.widget.FrameLayout\",\n                  \"important-for-accessibility\" : \"false\",\n                  \"error\" : \"\"\n                },\n                \"children\" : [ {\n             ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "QfUioZn1qP1isUGU",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0c88ac066afa31a9006aae55cb45c887d08e9c1e6886f3ca8a",
+          "callId": "call-fthId2jiWtSeqfbnPBZ3op3c",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 561,
+          "outputTokens": 3,
+          "totalTokens": 564,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 989,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "android",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789808618192:android",
+        "appearance": "dark",
+        "flow_exit": 0,
+        "flow_output": "OK: composer ready, transcript empty\nOK: marker submitted, echoed, and its reply completed\nOK: seed reply streamed to a completed provider record (growth samples: 121, 83, 223, 43, 50, 51)\nOK: follow-up streamed and recalled the marker (new marker-bearing text beyond the 3-text baseline)\nOK: coordinate send + stop tap at 954,2232\nOK: active stop aborted the stream (aborted provider record)\nOK: endpoint loss surfaced a sanitized error with an accessible Retry\nOK: retry completed on a new request (xgne6Zy9OL5e8W5E) with exactly 1 retained user turn (oracle channel: hierarchy-after-scrollUntilVisible)",
+        "assistant_text_growth": [
+          121,
+          83,
+          223,
+          43,
+          50,
+          51,
+          64,
+          234
+        ],
+        "screenshot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-RN-005/.tmp/ORI-RN-005/abort-error-retry/android/dark/screenshot.png",
+        "hierarchy": "{\n  \"attributes\" : { },\n  \"children\" : [ {\n    \"attributes\" : {\n      \"ignoreBoundsFiltering\" : \"false\"\n    },\n    \"children\" : [ {\n      \"attributes\" : {\n        \"text\" : \"\",\n        \"accessibilityText\" : \"\",\n        \"hintText\" : \"\",\n        \"ignoreBoundsFiltering\" : \"false\",\n        \"resource-id\" : \"\",\n        \"clickable\" : \"false\",\n        \"bounds\" : \"[0,0][1080,2400]\",\n        \"enabled\" : \"true\",\n        \"focused\" : \"false\",\n        \"checked\" : \"false\",\n        \"scrollable\" : \"false\",\n        \"selected\" : \"false\",\n        \"class\" : \"android.widget.FrameLayout\",\n        \"important-for-accessibility\" : \"true\",\n        \"error\" : \"\"\n      },\n      \"children\" : [ {\n        \"attributes\" : {\n          \"text\" : \"\",\n          \"accessibilityText\" : \"\",\n          \"hintText\" : \"\",\n          \"ignoreBoundsFiltering\" : \"false\",\n          \"resource-id\" : \"\",\n          \"clickable\" : \"false\",\n          \"bounds\" : \"[0,0][1080,2337]\",\n          \"enabled\" : \"true\",\n          \"focused\" : \"false\",\n          \"checked\" : \"false\",\n          \"scrollable\" : \"false\",\n          \"selected\" : \"false\",\n          \"class\" : \"android.widget.LinearLayout\",\n          \"important-for-accessibility\" : \"false\",\n          \"error\" : \"\"\n        },\n        \"children\" : [ {\n          \"attributes\" : {\n            \"text\" : \"\",\n            \"accessibilityText\" : \"\",\n            \"hintText\" : \"\",\n            \"ignoreBoundsFiltering\" : \"false\",\n            \"resource-id\" : \"\",\n            \"clickable\" : \"false\",\n            \"bounds\" : \"[0,136][1080,2337]\",\n            \"enabled\" : \"true\",\n            \"focused\" : \"false\",\n            \"checked\" : \"false\",\n            \"scrollable\" : \"false\",\n            \"selected\" : \"false\",\n            \"class\" : \"android.widget.FrameLayout\",\n            \"important-for-accessibility\" : \"false\",\n            \"error\" : \"\"\n          },\n          \"children\" : [ {\n            \"attributes\" : {\n              \"text\" : \"\",\n              \"accessibilityText\" : \"\",\n              \"hintText\" : \"\",\n              \"ignoreBoundsFiltering\" : \"false\",\n              \"resource-id\" : \"host.exp.exponent:id/action_bar_root\",\n              \"clickable\" : \"false\",\n              \"bounds\" : \"[0,136][1080,2337]\",\n              \"enabled\" : \"true\",\n              \"focused\" : \"false\",\n              \"checked\" : \"false\",\n              \"scrollable\" : \"false\",\n              \"selected\" : \"false\",\n              \"class\" : \"android.widget.LinearLayout\",\n              \"important-for-accessibility\" : \"false\",\n              \"error\" : \"\"\n            },\n            \"children\" : [ {\n              \"attributes\" : {\n                \"text\" : \"\",\n                \"accessibilityText\" : \"\",\n                \"hintText\" : \"\",\n                \"ignoreBoundsFiltering\" : \"false\",\n                \"resource-id\" : \"android:id/content\",\n                \"clickable\" : \"false\",\n                \"bounds\" : \"[0,136][1080,2337]\",\n                \"enabled\" : \"true\",\n                \"focused\" : \"false\",\n                \"checked\" : \"false\",\n                \"scrollable\" : \"false\",\n                \"selected\" : \"false\",\n                \"class\" : \"android.widget.FrameLayout\",\n                \"important-for-accessibility\" : \"false\",\n                \"error\" : \"\"\n              },\n              \"children\" : [ {\n                \"attributes\" : {\n                  \"text\" : \"\",\n                  \"accessibilityText\" : \"\",\n                  \"hintText\" : \"\",\n                  \"ignoreBoundsFiltering\" : \"false\",\n                  \"resource-id\" : \"\",\n                  \"clickable\" : \"false\",\n                  \"bounds\" : \"[0,136][1080,2337]\",\n                  \"enabled\" : \"true\",\n                  \"focused\" : \"false\",\n                  \"checked\" : \"false\",\n                  \"scrollable\" : \"false\",\n                  \"selected\" : \"false\",\n                  \"class\" : \"android.widget.FrameLayout\",\n                  \"important-for-accessibility\" : \"false\",\n                  \"error\" : \"\"\n                },\n                \"children\" : [ {\n             ",
+        "hierarchy_has_marker": false,
+        "latest_backend_record": {
+          "requestId": "xgne6Zy9OL5e8W5E",
+          "provider": "openai",
+          "providerModel": "gpt-4.1-mini-2025-04-14",
+          "responseId": "resp_0a358d10c94603c3006aae57a3af1487d09e1c316c9cc71663",
+          "callId": "call-O4PSSzsZJxp8fAcGetD5OyJb",
+          "outcome": "completed",
+          "deltaCount": 2,
+          "inputTokens": 462,
+          "outputTokens": 3,
+          "totalTokens": 465,
+          "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+          "durationMs": 1206,
+          "errorText": null,
+          "activeGenerations": 0
+        }
+      }
+    },
+    {
+      "platform": "web",
+      "status": "passed",
+      "evidence": {
+        "marker": "ORI-RN-005:ORI-RN-005-1789808618192:web",
+        "url": "http://127.0.0.1:8408",
+        "drive_result": {
+          "emptyStateVisible": true,
+          "markerSubmitted": true,
+          "inputCleared": true,
+          "assistantResponded": true,
+          "growthSamples": [
+            79,
+            294,
+            234,
+            63,
+            116
+          ],
+          "followUpRecallVisible": true,
+          "stopControlVisible": true,
+          "retryControlVisible": true,
+          "retryErrorSanitized": true,
+          "retryCompleted": true,
+          "retrySingleUserTurn": true
+        },
+        "backend_records": [
+          {
+            "requestId": "xgne6Zy9OL5e8W5E",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0a358d10c94603c3006aae57a3af1487d09e1c316c9cc71663",
+            "callId": "call-O4PSSzsZJxp8fAcGetD5OyJb",
+            "outcome": "completed",
+            "deltaCount": 2,
+            "inputTokens": 462,
+            "outputTokens": 3,
+            "totalTokens": 465,
+            "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+            "durationMs": 1206,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "Brc87qRSyW8qLDJM",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0630e9cab51f8886006aae57ea74f087d08306021091ca6843",
+            "callId": "call-xtkynqxYxFZJphgXBXohIatf",
+            "outcome": "completed",
+            "deltaCount": 72,
+            "inputTokens": 58,
+            "outputTokens": 73,
+            "totalTokens": 131,
+            "textHash": "e49578efe7afa9908a1130d9e98dbad49c432797a279fbc4770dfd6ec062d253",
+            "durationMs": 1596,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "Brc87qRSyW8qLDJM",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0630e9cab51f8886006aae57ec14d887d0bbcceae4e073ba66",
+            "callId": "call-euddjws0ILeRrN2AC66mS3WY",
+            "outcome": "completed",
+            "deltaCount": 65,
+            "inputTokens": 168,
+            "outputTokens": 66,
+            "totalTokens": 234,
+            "textHash": "ebc97d04a1d1881cbfb07b752e3e89c180c1644c2fa952676530a8e6089ee299",
+            "durationMs": 1417,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "Brc87qRSyW8qLDJM",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0630e9cab51f8886006aae57eddd7887d0b0757c37364a614d",
+            "callId": "call-GGM1Ufglm2MvuuVyi4mpPUJB",
+            "outcome": "completed",
+            "deltaCount": 25,
+            "inputTokens": 248,
+            "outputTokens": 26,
+            "totalTokens": 274,
+            "textHash": "897494adc2595d10a750d72f80736d1b7e37e1a9e412b8e0026e2f5ce6169eee",
+            "durationMs": 1069,
+            "errorText": null,
+            "activeGenerations": 0
+          },
+          {
+            "requestId": "Brc87qRSyW8qLDJM",
+            "provider": "openai",
+            "providerModel": "gpt-4.1-mini-2025-04-14",
+            "responseId": "resp_0630e9cab51f8886006aae57f4cdbc87d0932c125bb8a8f3ae",
+            "callId": "call-gvtnLWKzHIgukVlK8LuiYuso",
+            "outcome": "completed",
+            "deltaCount": 2,
+            "inputTokens": 342,
+            "outputTokens": 3,
+            "totalTokens": 345,
+            "textHash": "b0fef621727ff82a7d334d9f1f047dc662ed0e27e05aa8fd1aefd19b0fff312c",
+            "durationMs": 817,
+            "errorText": null,
+            "activeGenerations": 0
+          }
+        ],
+        "retry_request_id": "Brc87qRSyW8qLDJM"
+      }
+    }
+  ]
+}
