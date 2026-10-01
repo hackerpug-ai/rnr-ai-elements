@@ -41660,7 +41660,13 @@
    "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004",
    "blocker_discharged": {
     "by": "FIX-ORI-RN-004-4 closure 2026-10-01",
-    "effect": "Reviewed-native-repair precondition discharged via no-repair disposition. Six-target obligation lives here (SC-ORI-CONT-004-3): fresh seed + live matrices, no receipt reuse. STILL REQUIRED before rerun: reconcile unreviewed YAML-only commits 2e5a18bc, 21b2bf92, e44dbabb."
+    "effect": "Reviewed-native-repair precondition discharged via no-repair disposition. Six-target obligation lives here (SC-ORI-CONT-004-3): fresh seed + live matrices, no receipt reuse. STILL REQUIRED before rerun: reconcile unreviewed YAML-only commits 2e5a18bc, 21b2bf92, e44dbabb.",
+    "yaml_reconciled": {
+     "restore_commit": "485ecd72 (worktree, no history rewrite)",
+     "verdict_file": ".kb-run-sprint/sprint-05-orient-search/closure-20261001/cont004-yaml-reconciliation.verdict.json",
+     "file_sha256": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+     "result": "Both pre-rerun conditions discharged. Rerun gated only on device-window availability (FIX-ORI-SUITE-2-2 holds it for NativeWind selectors)."
+    }
    }
   },
   "ORI-CONT-005": {
