@@ -1,0 +1,77 @@
+{
+  "task": "FIX-ORI-RN-004-4",
+  "proposal": "no-repair green closure",
+  "verdict": "NEEDS_FIXES",
+  "reviewer": "react-native-reusables-reviewer",
+  "reviewed_at": "2026-10-01T23:02:39Z",
+  "evidence_checked": [
+    ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+    ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/not-reproduced.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/red.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/run.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/child.log",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-2/ios-red/driver-evidence/run-manifest.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-3/ios-red/driver-evidence/run-manifest.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-4/identity.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-4/disposition/disposition.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-4/full-green/run.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-5/identity.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-5/disposition/disposition.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-5/full-green/run.json",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-5/full-green/child.log",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-5/full-green/supervisor-heartbeat.jsonl",
+    ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/tests/sprint-05-orient-search/live-example.maestro.yaml",
+    ".kb-run-sprint/sprint-05-orient-search/closure-20260929/native-live-revise-decision.json",
+    ".kb-run-sprint/sprint-05-orient-search/closure-20260929/native-live-revise-refreshed-ask.json",
+    ".kb-run-sprint/sprint-05-orient-search/closure-20260929/native-live-refreshed.check.json",
+    ".kb-run-sprint/sprint-05-orient-search/state.json",
+    ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+    ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md"
+  ],
+  "ac_coverage": [
+    {
+      "ac": "AC-1",
+      "status": "satisfied",
+      "note": "No-repair disposition verified against raw bytes, not summaries. All five contract-pinned SHA-256 hashes match on disk (not-reproduced.json c9c78736, cycle-2/3 run.json 319f3c5d/96736ebf, manifests fe8bf5f2/6ce3dd09); not-reproduced.json and cycle-3 run.json also verified byte-identical at checkpoint f836d366, which is an ancestor of main. Raw Maestro output embedded in both run-manifests shows 'Assert that \"${MARKER}\" is visible... COMPLETED' exactly twice in each of the 4 appearance legs (cycle-2 light/dark, cycle-3 light/dark), maestro_exit 0, status passed, 4 distinct real retry request IDs (0lpMddhiLZC4irgC, PsplsiNjBkOHFEHZ, mzMqJcszwjLNUmnf, KEbARo3iFbIR2ybw). child.log corroborates the exit-1 interpretation: 'pipeline/manifest-written — passed=1 completed=false' (inherited one-platform result, not a native failure). Source binding re-verified independently: all 9 behavioral sources (YAML 276cdcf5, driver, proof, caller, live-chat.tsx, live-chat-screen.tsx, use-live-chat.ts, live-backend.ts, pnpm-lock.yaml) at current main HEAD a7ab0fb5 hash EXACTLY to the disposition's recorded values, and no commits since base 713eee79 touch the native/product/caller paths. Accepted disposition receipts exist (cycle-4 873386cc, cycle-5 0d66be59) with honest limitation statements (final screenshots = Retry/composer state only, cycle-3 dark shows marker suffix; android/** carried artifacts are historical; causation_claimed false)."
+    },
+    {
+      "ac": "AC-2",
+      "status": "covered_downstream",
+      "note": "NOT satisfied by this task's evidence, and the closure premise that the full caller 'was never run' is factually wrong: under the revised authorized contract it WAS attempted twice. Cycle-4 full run (17:04Z Sep 29) failed at caller-startup — validate exit 1, 'invalid server configuration: EXAMPLE_CHAT_MODEL/EXAMPLE_CHAT_WEB_ORIGIN undefined', manifest missing, 0 targets, SIGTERM, leaky teardown (listener on 8095 survived, reverse mappings unrestored). Cycle-5 (19:29Z) completed BOTH iOS appearance legs (seed/context/stop/endpoint-loss/retry heartbeats verified) and was externally SIGTERM'd at 33min during uniwind:live:android — no timeout fired, phase deadline was 20:35Z; validate exit 1, 0 accepted targets, no manifest. No accepted six-target Stop/Retry proof exists. Downstream coverage is real: ORI-CONT-004 SC-ORI-CONT-004-3 requires 'Stop generating aborts an active provider request on all 6 targets' with real request/response IDs and exactly-1 retained-turn Retry, fresh in its own invocation, fail-closed ('Reject missing legs... or prior-run receipts'). FIX-ORI-SUITE-2-2 provides NO such coverage (zero references to run-live-example-proof/six-target; it is a vitest-level foreign-suite repair) and must not be cited as covering this."
+    },
+    {
+      "ac": "AC-3",
+      "status": "covered_downstream",
+      "note": "NOT satisfied: 0 of 6 targets validated in any cycle (cycle-4 and cycle-5 both validate exit 1, caller_manifest null, targets []). Same downstream coverage as AC-2: ORI-CONT-004 contract lines require 'both six-target seed/live matrices in this invocation, including the genuine NativeWind live consumer; missing required dependencies fail closed' — a superset of this AC. The task's own charter states 'Do not approve from... a passing disposition without all six current targets', so this transfer must be recorded as an explicit human-authorized scope decision, not as task-green."
+    },
+    {
+      "ac": "AC-4",
+      "status": "not_covered",
+      "note": "Partially demonstrated, not closed out. Supervisor heartbeat/phase-budget machinery and owned cleanup demonstrably work in cycle-5 (heartbeat ≤30s, phase budgets enforced, cleanup completed within 180s deadline, owned process group 34007 terminated, reverse mappings tcp:4000/tcp:8095 removed, appearances restored). But: no explicit audit receipt exists for any cycle; cycle-4/5 evidence dirs are UNTRACKED in the worktree; the ten ORI-RN-004 runtime files are dirty; wrapper commits 493e2531..63fea9b9 (disposition machinery + supervisor remediations 2 rounds) exist only on the unmerged worktree branch — nothing from the revised-contract execution is on main. The cycle-4-era teardown defects were remediated by 63fea9b9; if the wrapper lands, land the tip."
+    }
+  ],
+  "residual_risks": [
+    "The historical iOS dark-marker failure is NOT reproduced but also NOT root-caused: not-reproduced.json honestly sets causation_claimed=false; the failed CONT candidate's YAML added tap/scrollUntilVisible/coordinate-tap steps (4cd1efcc... vs current 276cdcf5...). If ORI-CONT-004's locked flow or any future YAML re-introduces similar scroll/wait/centering steps, the failure mode could recur with no explanation on file.",
+    "Zero current Android proof anywhere in this task (android/** in iOS snapshots explicitly historical; cycle-5 Android leg killed mid-run). Entirely dependent on ORI-CONT-004 running its mandatory android legs.",
+    "Evidence is environment-bound (Expo Go 57.0.9, iPhone 17 iOS 26.3 UDID 81487B1E, Sep 29 2026). Reuse of the no-repair evidence is valid only while the 9 behavioral sources stay byte-identical — true at main HEAD a7ab0fb5 today, false after any native/product/caller/lockfile change (the disposition encodes this fail-closed rule).",
+    "Three unreviewed CONT YAML-only commits (2e5a18bc, 21b2bf92, e44dbabb) flagged in the blocked report's scope_impact remain unreviewed and unresolved by this closure; ORI-CONT-004 must not build on them unreviewed.",
+    "Closing a task 'green' against its own charter's approval bar sets sprint-precedent; without an explicit human-authorization record this reads as silent contract violation rather than governed scope transfer.",
+    "Sprint state.json still records status in_progress with only the cycle-1 blocked withdrawal; state must be updated to match whatever closure wording is adopted."
+  ],
+  "conditions": [
+    "REWORD the closure: it may truthfully claim 'AC-1 no-repair disposition verified and accepted; iOS dark-marker failure not present on current base (two real-device light+dark attempts, source-hash-bound to current main)'. It may NOT claim 'already-green' or task completion: the task's authorized charter bars approval of 'a passing disposition without all six current targets', and AC-2/AC-3/AC-4 are unmet. Accurate label: no-repair disposition closed with six-target obligation transferred by human authorization.",
+    "CORRECT THE RECORD on the full caller: state that it WAS attempted twice under the revised contract — cycle-4 prerequisite/env failure (EXAMPLE_CHAT_MODEL/EXAMPLE_CHAT_WEB_ORIGIN undefined) and cycle-5 external termination mid-Android-leg after both iOS legs completed — citing cycle-4/full-green/run.json and cycle-5/full-green/run.json. 'Never run (gated on a RED that never came)' is false under the current contract (the RED gate was removed by authorized ask-wave28) and launders two failed attempts out of history.",
+    "LAND THE EVIDENCE before or with closure: land the worktree branch tip 63fea9b9 (wrapper + disposition machinery + both supervisor remediations) or otherwise durably commit the cycle-4/cycle-5 receipts, and resolve the ten dirty ORI-RN-004 runtime files per the task's commit boundary (restore from verified backups / preserve as runtime artifacts). A closure resting on evidence that exists only in an unmerged worktree is not auditable from main.",
+    "ORI-CONT-004 must treat this closure as transferring NOTHING executable: its own fresh six-target seed and live matrices (SC-ORI-CONT-004-3, fail-closed on missing legs or prior-run receipts) remain the gate for exactly the coverage AC-2/AC-3 demanded. Do not cite FIX-ORI-SUITE-2-2 as covering any of it.",
+    "Record the human authorization (explicit 'close it as green' direction, 2026-10-01) inside the closure artifact so the deviation from the charter's approval bar is owned and traceable.",
+    "Preserve the reuse limit: the no-repair evidence is reusable only while the 9 recorded behavioral sources remain byte-identical on the consuming base; any change requires a new disposition per the task contract."
+  ],
+  "findings": [
+    "VERIFIED (supports closure): the bug this task existed to fix is not present on current base. Two independent real-device iOS runs passed light AND dark with actual_failure_count 0; the exact contract-named ${MARKER} assertVisible completed twice per appearance in the raw Maestro logs (counted in both run-manifests); child exit 1 is the inherited one-platform completed=false; all five pinned hashes match; and the passing runs' 9 behavioral source files hash EXACTLY equal at current main HEAD — the tested bytes ARE the current bytes.",
+    "BLOCKING (wording/record): the proposal's stated premise that the six-target caller 'was never run (contract gated it on the RED that never came)' is false in both halves. The revised contract (on disk, authorized by ask-wave28 and ACCEPTED by native-live-refreshed.check.json) removed the RED gate and required the run; the run was attempted twice and did not complete — cycle-4 failed on undefined EXAMPLE_CHAT_MODEL/EXAMPLE_CHAT_WEB_ORIGIN at caller-startup; cycle-5 was externally SIGTERM'd 33 minutes in during uniwind:live:android after both iOS legs completed. Receipts exist in the worktree. A closure that says 'never run' erases this history.",
+    "BLOCKING (label): 'already-green' overclaims. AC-2/AC-3 have 0 accepted targets across all cycles; the charter's own approval bar forbids approving a passing disposition without all six current targets. The defensible closure is a no-repair disposition with the six-target obligation explicitly transferred to ORI-CONT-004 — whose contract independently requires fresh, fail-closed six-target seed AND live matrices (verified: lines 21, 50, SC-ORI-CONT-004-3, line 342 of its task file), a superset of this task's obligation. FIX-ORI-SUITE-2-2 does not cover it.",
+    "NON-BLOCKING: current Android proof and final-capture marker proof are absent but honestly declared absent in the artifacts themselves (android/** marked historical; cycle-3 dark final screenshot marked suffix-only; marker visibility rests on the completed temporal assertVisible steps, which I verified in the raw logs). No overclaim found in not-reproduced.json, disposition.json, or the blocked report — the overclaim risk is confined to the proposed closure wording.",
+    "HOUSEKEEPING: cycles 4-5 and the wrapper commits live only on the unmerged worktree branch (main HEAD lacks native-live-repair-proof_test.ts entirely); ten ORI-RN-004 runtime files are dirty; state.json still says in_progress."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "task": "FIX-ORI-RN-004-4",
+  "closed_at": "2026-10-01",
+  "closed_by": "orchestrator",
+  "mode": "no-repair-disposition-verified",
+  "human_authorization": {
+    "directive": "close it as green ... then we'll continue",
+    "date": "2026-10-01",
+    "scope": "Accept the no-repro evidence as the task disposition; transfer the six-target obligation rather than re-running it here."
+  },
+  "disposition": "AC-1 no-repair disposition verified and accepted: the iOS dark-marker failure is not present on current base. Two real-device attempts (cycle-2 2026-09-29T16:22:38Z, cycle-3 2026-09-29T16:29:42Z) ran the unchanged iOS light and dark flows against real services; both appearance legs passed with actual_native_failures=0 and the contract-named marker assertVisible completed exactly twice per appearance. The 9 behavioral source files from the passing runs hash exactly equal at the merge base — the tested bytes are the current bytes. This closure is NOT a claim that all task ACs are green: AC-2/AC-3 have zero accepted targets.",
+  "full_caller_record": {
+    "claim_corrected": "The full six-target caller WAS attempted twice under the revised (ask-wave28) contract, which had removed the RED gate and required the run. It was never completed.",
+    "cycle_4": "Prerequisite/env failure: caller startup died on undefined EXAMPLE_CHAT_MODEL / EXAMPLE_CHAT_WEB_ORIGIN. Receipt: tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-4/full-green/run.json",
+    "cycle_5": "Both iOS legs completed; externally SIGTERM'd 33 minutes in during the Android leg. Receipt: tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/cycle-5/full-green/run.json"
+  },
+  "obligation_transfer": {
+    "transferred_to": "ORI-CONT-004",
+    "authority": "SC-ORI-CONT-004-3 independently mandates fresh, fail-closed six-target seed and live matrices — a superset of this task's remaining obligation. The transfer moves NOTHING executable: ORI-CONT-004 must not reuse any prior-run receipt.",
+    "explicitly_not_covered_by": "FIX-ORI-SUITE-2-2 (vitest-level suite repair; zero coverage of native targets)"
+  },
+  "reuse_limit": "The no-repair evidence is reusable only while the 9 recorded behavioral source files remain byte-identical on the consuming base. Any change requires a new disposition per the task contract.",
+  "evidence_landed_on_main": {
+    "branch_tip": "63fea9b939282f6b90ac5cd8dccfd83a3f7dc8d0",
+    "evidence_commit": "9c2f470a",
+    "merge_commit": "5f84d3dde1f82a77a37a5c0b271718a674f4e3dc",
+    "primary_artifact": "tests/sprint-05-orient-search/evidence/FIX-ORI-RN-004-4/not-reproduced.json"
+  },
+  "review": {
+    "reviewer": "react-native-reusables-reviewer",
+    "verdict": "NEEDS_FIXES (conditions satisfied by this record)",
+    "verdict_file": ".kb-run-sprint/sprint-05-orient-search/closure-20261001/rn0044-green-closure.verdict.json",
+    "verdict_sha256": "fb1e2cf6c9a012dfeb89ccb2229f3858d292b21c4b205a4de60aa6e13b3cf92c"
+  },
+  "open_flags": [
+    "Historical failure un-root-caused (causation_claimed: false; the failing ORI-CONT-004 candidate had added tap/scrollUntilVisible YAML steps). If a future flow re-adds similar scroll/wait steps it can recur with nothing on file explaining it.",
+    "ORI-CONT-004 branch retains three unreviewed YAML-only commits (2e5a18bc, 21b2bf92, e44dbabb) that must be reconciled or restored to reviewed bytes before its rerun."
+  ]
+}
