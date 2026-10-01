@@ -56,25 +56,6 @@ appId: host.exp.Exponent
     text: "Minimize"
     optional: true
 - tapOn: "Send message"
-# Expo Go's composer does not expose a standard keyboard dismiss, so hideKeyboard
-# fails the flow. A tap on the "Live chat" title also misses the list, so the
-# composer stays focused and the keyboard stays up. A tap in the transcript hits
-# no child, and keyboardShouldPersistTaps="handled" resigns the composer. The
-# exact marker string is then on screen (user bubble and the assistant quote).
-- tapOn:
-    point: "50%, 30%"
-- waitForAnimationToEnd:
-    timeout: 3000
-# The assistant node that quotes the marker is taller than the keyboard-shrunk
-# viewport. Centering it never succeeds and the scroll reports the marker missing
-# even when assertVisible would pass. Accept the node once 40% of it is on screen.
-- scrollUntilVisible:
-    element:
-      text: ${MARKER}
-    direction: UP
-    timeout: 30000
-    visibilityPercentage: 40
-    centerElement: false
 # The accepted turn lands as exactly one user message; PromptInput clears its own field.
 - extendedWaitUntil:
     visible: ${MARKER}
