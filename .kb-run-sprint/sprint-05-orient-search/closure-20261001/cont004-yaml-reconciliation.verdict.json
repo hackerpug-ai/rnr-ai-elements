@@ -1,0 +1,44 @@
+{
+  "reviewer": "techwriting-reviewer",
+  "reviewed_at": "2026-10-01",
+  "scope": "Reconciliation of the three unreviewed YAML-only commits on kb-run-sprint/sprint-05-orient-search/ORI-CONT-004 before the ORI-CONT-004 rerun, per closure-20261001/closure.json open_flags[1].",
+  "baseline_facts": {
+    "main_ref": "9210bc0c60b3bdbad4300caea041274cb4963750 (contains closure merge 5f84d3dd)",
+    "main_yaml_sha256": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
+    "branch_tip_yaml_sha256": "55c170aa2347423e6b78dcfc9087f655c7fe6910f01fe4bc6bba9627369fd4f5 (e44dbabb, clean working copy)",
+    "no_repair_current_yaml_sha256": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b (matches main byte-for-byte)",
+    "net_branch_delta_vs_main": "+19 lines in tests/sprint-05-orient-search/live-example.maestro.yaml inserted between the first Send and the extendedWaitUntil MARKER assert; zero other files touched by the three commits"
+  },
+  "commits": [
+    {
+      "sha": "2e5a18bc31b4c840d1406f2d73664f76aa456b5c",
+      "summary": "Adds hideKeyboard + scrollUntilVisible(direction UP, timeout 30000, visibilityPercentage 40, centerElement true) before the extendedWaitUntil MARKER assert.",
+      "verdict": "RESTORE",
+      "reason": "Its own successor commit (21b2bf92) documents that hideKeyboard ABORTS the Expo Go flow ('the composer has no standard dismiss action'), so this commit ships a step proven to fail the flow. The scrollUntilVisible step is part of the exact tap/scroll family the closure flags as the un-root-caused recurrence risk."
+    },
+    {
+      "sha": "21b2bf92673fa465aba3ba3dbc0ccd622ea24417",
+      "summary": "Replaces hideKeyboard with tapOn 'Live chat' (title tap to dismiss keyboard); keeps scrollUntilVisible centerElement true.",
+      "verdict": "RESTORE",
+      "reason": "This is the commit the closure record itself names: not-reproduced.json source_comparison.failed_cont_candidate == this SHA ('Adds a tap on the Live chat title and scrollUntilVisible for MARKER ... causation_claimed: false'). It failed the CONT run, and its successor documents the title tap left the keyboard up."
+    },
+    {
+      "sha": "e44dbabbaa28e31f70beeaaddd65aeb79ccb3962",
+      "summary": "Replaces the title tap with tapOn point '50%, 30%' + waitForAnimationToEnd 3000ms, and flips centerElement true -> false.",
+      "verdict": "RESTORE",
+      "reason": "The closure record explicitly calls this tip 'unverified': 'Replaces the title tap with an unverified 50%,30% coordinate tap'. A blind coordinate tap is layout/simulator-resolution-dependent. Decisive fact: the verified no-repro evidence (cycle-2 2026-09-29T16:22:38Z and cycle-3 2026-09-29T16:29:42Z, real devices, iOS light+dark) ran this flow WITHOUT any tap/wait/scroll steps and passed with actual_native_failures=0. No evidence exists that any of these steps are needed; the reuse_limit clause additionally requires this file to hash 276cdcf5 on the consuming base, which only main's bytes satisfy."
+    }
+  ],
+  "recurrence_risk": {
+    "scroll_steps_present": true,
+    "note": "All three commits add or mutate exactly the flagged tap/wait/scrollUntilVisible family (closure open_flags[0]: 'If a future flow re-adds similar scroll/wait steps it can recur with nothing on file explaining it'). The only configuration verified against real services is main's YAML, which contains none of these steps. If a future ORI-CONT-004 cycle hits a genuine keyboard/visibility failure, the remedy must be a fresh, separately-reviewed change with its own disposition - not a resurrection of these commits."
+  },
+  "unreviewed_beyond_commits": [
+    "Unmerged reviewed-presumed task commits preserved on the branch (NOT in reconciliation scope, keep): 78f88b07 (task: verify completed content path), 47424da4 (task: bind claim ledger to pinned web consumer), 6e98cf4a (task: record orientation green and Quickstart wedge). Together they carry ~4.4k lines: 3 Playwright specs (getting-started-engine-decision.spec.ts, quickstart-chat-screen.spec.ts, theming-and-section-nav.spec.ts), ORI-CONT-004 cycle evidence/captures, and a 9-line edit to apps/docs/src/content/docs/owns-vs-does-not-own.md. The rnw-pin merges (7d4103ea/fbe1d2f6/a68c9a0e) are already in main.",
+    "Uncommitted WIP (run artifacts, not source; leave in place per the preserving-everything unblock condition): ~110 modified files under .tmp/** and tests/sprint-05-orient-search/evidence/** (captures, screenshots, run.json/manifest churn incl. evidence/ORI-RN-004/run-manifest.json - residue from RN-004 runs executed in this worktree).",
+    "Untracked: apps/docs/playwright-report/ and tests/sprint-05-orient-search/evidence/recovery/runs/ori-vis-005-1790385038403-855910998/. Harmless run output; does not affect the rerun.",
+    "tests/sprint-05-orient-search/live-example.maestro.yaml itself has NO uncommitted changes; the working copy is clean at e44dbabb."
+  ],
+  "recommendation": "# Run in the ORI-CONT-004 worktree (implementer, before the rerun):\ncd /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004\ngit checkout main -- tests/sprint-05-orient-search/live-example.maestro.yaml\ngit commit -m \"restore(ORI-CONT-004): reconcile live-example.maestro.yaml to reviewed main bytes\n\nReverts the net effect of 2e5a18bc, 21b2bf92, e44dbabb per the ORI-RN-004 no-repair\nclosure (open flag 2). The verified no-repro evidence (FIX-ORI-RN-004-4 cycle-2/3)\nran this flow WITHOUT the tap/wait/scroll steps and passed iOS light+dark on real\ndevices; the reuse_limit requires this file to hash 276cdcf5 on the consuming base.\nAll three commits remain in branch history for the record - nothing is rewritten.\"\n# Verify byte-identity with the verified baseline, then rerun:\nshasum -a 256 tests/sprint-05-orient-search/live-example.maestro.yaml   # MUST print 276cdcf5...\ngit diff main -- tests/sprint-05-orient-search/live-example.maestro.yaml  # MUST be empty",
+  "method_note": "A single restore commit (not git revert of three SHAs, not history rewrite) is prescribed because (a) the unblock condition requires preserving every CONT commit - the three fix attempts stay resolvable so the closure's source_comparison hashes remain meaningful, and (b) restore-from-main guarantees the exact reviewed bytes the reuse_limit hash check demands."
+}
