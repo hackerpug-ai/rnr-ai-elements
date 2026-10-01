@@ -1,0 +1,280 @@
+{
+  "status": "completed",
+  "result": {
+    "listener_processes_inspected": [
+      {
+        "pid": 34142,
+        "pgid": 34007,
+        "command": "node /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/apps/example/node_modules/.bin/../expo/bin/cli start --port 8095",
+        "cwd": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/apps/example"
+      }
+    ],
+    "rejected_unowned_listeners": [],
+    "terminated_owned_process_groups": [
+      34007
+    ],
+    "escalated_owned_process_groups": [],
+    "removed_reverse_mappings": [
+      "host-18 tcp:4000 tcp:4000",
+      "host-18 tcp:8095 tcp:8095"
+    ],
+    "restored_appearances": [],
+    "deadline_ms": 180000,
+    "completed_within_deadline": true,
+    "command_ledger": [
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:4000",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T20:03:36.376Z",
+        "policy": "lsof-listeners",
+        "failure": null,
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:8095",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T20:03:36.461Z",
+        "policy": "lsof-listeners",
+        "failure": null,
+        "exit": 0,
+        "stdout": "34142",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:8406",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T20:03:36.544Z",
+        "policy": "lsof-listeners",
+        "failure": null,
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:4010",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T20:03:36.637Z",
+        "policy": "lsof-listeners",
+        "failure": null,
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:8097",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T20:03:36.722Z",
+        "policy": "lsof-listeners",
+        "failure": null,
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:8408",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T20:03:36.807Z",
+        "policy": "lsof-listeners",
+        "failure": null,
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "ps",
+          "-o",
+          "pgid=,command=",
+          "-p",
+          "34142"
+        ],
+        "started_at": "2026-09-29T20:03:36.889Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "34007 node /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/apps/example/node_modules/.bin/../expo/bin/cli start --port 8095",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "lsof",
+          "-a",
+          "-p",
+          "34142",
+          "-d",
+          "cwd",
+          "-Fn"
+        ],
+        "started_at": "2026-09-29T20:03:36.892Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "p34142\nfcwd\nn/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-RN-004-4/apps/example",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "emulator-5554",
+          "reverse",
+          "--list"
+        ],
+        "started_at": "2026-09-29T20:03:37.206Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "host-18 tcp:4000 tcp:4000\nhost-18 tcp:8095 tcp:8095",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "emulator-5554",
+          "reverse",
+          "--remove",
+          "tcp:4000"
+        ],
+        "started_at": "2026-09-29T20:03:37.218Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "emulator-5554",
+          "reverse",
+          "--remove",
+          "tcp:8095"
+        ],
+        "started_at": "2026-09-29T20:03:37.230Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "xcrun",
+          "simctl",
+          "ui",
+          "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+          "appearance"
+        ],
+        "started_at": "2026-09-29T20:03:37.242Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "dark",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "emulator-5554",
+          "shell",
+          "cmd",
+          "uimode",
+          "night"
+        ],
+        "started_at": "2026-09-29T20:03:37.339Z",
+        "policy": "required",
+        "failure": null,
+        "exit": 0,
+        "stdout": "Night mode: yes",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      }
+    ]
+  }
+}

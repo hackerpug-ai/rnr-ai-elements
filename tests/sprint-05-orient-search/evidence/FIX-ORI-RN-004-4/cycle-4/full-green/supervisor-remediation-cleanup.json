@@ -1,0 +1,19 @@
+{
+  "task": "FIX-ORI-RN-004-4",
+  "cycle": "cycle-4",
+  "status": "failed_supervision_attempt_cleaned",
+  "reason": "The external supervisor read EvidenceJournal event instead of kind and did not enforce declared per-phase deadlines. The owned caller process group was stopped before further broad execution.",
+  "owned_caller_process_group": 5027,
+  "owned_metro_process_group": 5637,
+  "owned_metro_pid": 5724,
+  "removed_owned_reverse_mappings": [
+    "tcp:4000",
+    "tcp:8095"
+  ],
+  "listeners_after": [],
+  "reverse_mappings_after": [],
+  "zero_owned_listeners": true,
+  "zero_added_reverse_mappings": true,
+  "original_failure_report_sha256": "bf1603ec873872fe1f6c4aca352bca095b17d017a4a3901395fc863c7017de9d",
+  "recorded_at": "2026-09-29T17:08:52.455Z"
+}
