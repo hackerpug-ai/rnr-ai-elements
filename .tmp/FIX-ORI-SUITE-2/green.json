@@ -1,0 +1,130 @@
+{
+  "task": "FIX-ORI-SUITE-2",
+  "mode": "green",
+  "captured_at": "2026-09-28T06:27:58.084Z",
+  "candidate_commit": "5f94a723f237697573206be9892d2b2b3deb69eb",
+  "harness_sha256": "5d504cd0ec549f617e962cfbfd708dfc9f24bfe666df5a93e46019505a1dcf4e",
+  "suites_sha256": {
+    "tests/sprint-05-orient-search/docs-collection.test.ts": "594e8fc1fb826301e144d962aa2ae22123e1e3e91e2e8f4a94fb8fcb819b65cd",
+    "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts": "b5a0771ea60daa28895c230a2d148a67379b08c46974563e4c5e6adf0e708eda",
+    "tests/sprint-05-orient-search/live-example-api.test.ts": "cfb3257803b477263b166a48c62d6cc6a9f2d01e56afd492d26258dada8838a5",
+    "tests/sprint-05-orient-search/nativewind-live-example.test.ts": "2e84e9489a528116e4f96bea53a43400d91fd76f4c0ee611ed3372979767a0ef",
+    "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts": "5d504cd0ec549f617e962cfbfd708dfc9f24bfe666df5a93e46019505a1dcf4e"
+  },
+  "selectors": [
+    {
+      "name": "docs-collection",
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/docs-collection.test.ts",
+      "exit": 0,
+      "passed_tokens": 4,
+      "duration_ms": 38298,
+      "log": ".tmp/FIX-ORI-SUITE-2/green/docs-collection.log"
+    },
+    {
+      "name": "docs-data-prebuild",
+      "command": "pnpm exec vitest run tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts",
+      "exit": 0,
+      "passed_tokens": 4,
+      "duration_ms": 235110,
+      "log": ".tmp/FIX-ORI-SUITE-2/green/docs-data-prebuild.log"
+    },
+    {
+      "name": "live-example-api-ac4",
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/live-example-api.test.ts -t AC-4",
+      "exit": 0,
+      "passed_tokens": 1,
+      "duration_ms": 2351,
+      "log": ".tmp/FIX-ORI-SUITE-2/green/live-example-api-ac4.log"
+    },
+    {
+      "name": "nativewind-abort-error-retry",
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/nativewind-live-example.test.ts -t ORI-RN-005-abort-error-retry",
+      "exit": 0,
+      "passed_tokens": 1,
+      "duration_ms": 2229025,
+      "log": ".tmp/FIX-ORI-SUITE-2/green/nativewind-abort-error-retry.log",
+      "marathon": {
+        "manifest_completed": true,
+        "teardown_finished_at": "2026-09-28T05:39:11.293Z",
+        "teardown_fresh": true,
+        "provider_aborted_records": 4,
+        "provider_completed_records": 20
+      }
+    },
+    {
+      "name": "nativewind-fail-closed-cleanup",
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/nativewind-live-example.test.ts -t ORI-RN-005-fail-closed-cleanup",
+      "exit": 0,
+      "passed_tokens": 1,
+      "duration_ms": 2911315,
+      "log": ".tmp/FIX-ORI-SUITE-2/green/nativewind-fail-closed-cleanup.log",
+      "marathon": {
+        "manifest_completed": true,
+        "teardown_finished_at": "2026-09-28T06:27:44.105Z",
+        "teardown_fresh": true
+      }
+    }
+  ],
+  "static_gates": {
+    "typecheck": {
+      "exit": 0
+    },
+    "scoped-biome-ci": {
+      "exit": 0,
+      "targets": [
+        "tests/sprint-05-orient-search/docs-collection.test.ts",
+        "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts",
+        "tests/sprint-05-orient-search/live-example-api.test.ts",
+        "tests/sprint-05-orient-search/nativewind-live-example.test.ts",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts"
+      ]
+    }
+  },
+  "diff_boundary": {
+    "porcelain_inventory": [
+      " M .tmp/ORI-RN-005/abort-error-retry/android/dark/flow.log",
+      " M .tmp/ORI-RN-005/abort-error-retry/android/dark/retry-state.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/android/dark/screenshot.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/android/light/flow.log",
+      " M .tmp/ORI-RN-005/abort-error-retry/android/light/retry-state.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/android/light/screenshot.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/ios/dark/flow.log",
+      " M .tmp/ORI-RN-005/abort-error-retry/ios/dark/retry-state.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/ios/dark/screenshot.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/ios/light/flow.log",
+      " M .tmp/ORI-RN-005/abort-error-retry/ios/light/retry-state.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/ios/light/screenshot.png",
+      " M .tmp/ORI-RN-005/abort-error-retry/manifest.json",
+      " M .tmp/ORI-RN-005/abort-error-retry/metro.log",
+      " M .tmp/ORI-RN-005/abort-error-retry/provider-correlation.json",
+      " M .tmp/ORI-RN-005/abort-error-retry/teardown.json",
+      " M .tmp/ORI-RN-005/abort-error-retry/web/final-state.png",
+      " M .tmp/ORI-RN-005/fail-closed-absent-target/driver-error.log",
+      " M .tmp/ORI-RN-005/fail-closed-absent-target/teardown.json",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/android/dark/flow.log",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/android/dark/screenshot.png",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/android/light/flow.log",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/android/light/screenshot.png",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/ios/dark/flow.log",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/ios/dark/retry-state.png",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/ios/dark/screenshot.png",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/ios/light/flow.log",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/ios/light/retry-state.png",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/ios/light/screenshot.png",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/manifest.json",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/metro.log",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/provider-correlation.json",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/teardown.json",
+      " M .tmp/ORI-RN-005/fail-closed-cleanup/web/final-state.png",
+      " M .tmp/ORI-RN-005/fail-closed-hash-mismatch/driver-error.log",
+      " M tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts",
+      " M tests/sprint-05-orient-search/docs-collection.test.ts",
+      " M tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-live-example-api-stream-history-abort/run.json",
+      " M tests/sprint-05-orient-search/evidence/ORI-AI-001/teardown.json",
+      " M tests/sprint-05-orient-search/live-example-api.test.ts",
+      "?? tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts"
+    ],
+    "product_source_clean": true
+  },
+  "child_tmpdir": "/tmp/fix-ori-suite-2"
+}

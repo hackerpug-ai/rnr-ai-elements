@@ -317,10 +317,15 @@ describe('FUSE-05 docs-data prebuild', () => {
       const check = run('git', ['check-ignore', '--no-index', generated]);
       expect(check.status, `${generated} must be covered by an ignore pattern`).toBe(0);
     }
-    // Never committed: a fresh clone lacks the copy.
-    const tracked = run('git', ['ls-files', 'apps/docs/public']);
+    // Never committed: a fresh clone lacks the copy. Scoped to the GENERATED
+    // subtree — ORI-VIS-001 (1c732dc1) landed five AUTHORED font files under
+    // apps/docs/public/fonts/ (OFL.txt, spline-sans-mono-var-latin-ext.woff2,
+    // spline-sans-mono-var-latin.woff2, spline-sans-var-latin-ext.woff2,
+    // spline-sans-var-latin.woff2), which are tracked by design; nothing under
+    // the generated apps/docs/public/r subtree may ever be tracked.
+    const tracked = run('git', ['ls-files', 'apps/docs/public/r']);
     expect(tracked.status).toBe(0);
-    expect(tracked.stdout, 'apps/docs/public must not be tracked').toBe('');
+    expect(tracked.stdout, 'apps/docs/public/r must not be tracked').toBe('');
 
     // Delete + rebuild reproduces byte-identical output.
     const snapshot = new Map([...copied.entries()].map(([rel, bytes]) => [rel, sha256(bytes)]));
@@ -399,11 +404,11 @@ describe('FUSE-05 docs-data prebuild', () => {
    * REF-008 AC-1: the extended derivation. The real ordered chain emits the
    * 16-key contract dataset; every entry carries qrDeepLink derived from the
    * app.json expo.scheme (never a literal) and metaDescription built from the
-   * single-source oneLineDescription clamp (TR-03 pattern).
+   * single-source oneLineDescription clamp (TR-03 pattern). This remains one
+   * real ordered-chain oracle so every assertion observes the same generated run.
    */
-  it('REF-008-qr-metalink-derivation: 16-key dataset with app-derived qrDeepLink and clamped metaDescription', {
-    timeout: 900_000,
-  }, () => {
+  // fallow-ignore-next-line complexity
+  function proveQrMetalinkDerivation(): void {
     const chain = runOrderedChain();
     const evidence =
       `--- registry stdout ---\n${chain.registry.stdout}\n${chain.registry.stderr}` +
@@ -463,5 +468,11 @@ describe('FUSE-05 docs-data prebuild', () => {
     expect(String(conversation?.metaDescription)).toMatch(
       / for React Native, installable via the nativewind\/uniwind registry tree$/,
     );
-  });
+  }
+
+  it(
+    'REF-008-qr-metalink-derivation: 16-key dataset with app-derived qrDeepLink and clamped metaDescription',
+    { timeout: 900_000 },
+    proveQrMetalinkDerivation,
+  );
 });
