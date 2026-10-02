@@ -41518,7 +41518,7 @@
    "merge_sha": null,
    "points": 3,
    "reviewer": "techwriting-reviewer",
-   "status": "in_progress",
+   "status": "completed",
    "wave": 15,
    "withdrawals": [
     {
@@ -41683,6 +41683,18 @@
      "file_sha256": "276cdcf5743518d9c755e01c211819bf880bc4af454c2f5a18bfd9ef2181966b",
      "result": "Both pre-rerun conditions discharged. Rerun gated only on device-window availability (FIX-ORI-SUITE-2-2 holds it for NativeWind selectors)."
     }
+   },
+   "completion_note": {
+    "branch_tip": "7c379b081e281377df94473a6f678cbf84956529",
+    "merge_commit": "a1045aa3",
+    "verdict": "APPROVED (techwriting-reviewer, cycle-5.verdict.json)",
+    "merge_resolutions": "ORI-RN-004 evidence conflicts taken from branch (fresher reviewed cycle-5 receipts over Sep-29 no-repro artifacts). owns-vs-does-not-own.md old path removed (GBC-003 renamed to .mdx on main); CONT-004's live-chat correction ported into the .mdx Callout \u2014 GBC-003's rewrite had carried the stale 'does not yet include a live streaming chat' sentence.",
+    "open_conditions": [
+     "Binding-refresh: integrated-tree aggregate in the CI/deploy tail must rebind receipts to committed bytes (reviewer condition).",
+     "Lint pass on merge supplied by CI or any working biome env (local linter OOM flake); typecheck verified clean by reviewer.",
+     "Uncommitted failed rerun (03:11 local, uniwind/android light Maestro flake) preserved as churn in worktree \u2014 never merge; attribution pending cont004-rerun reply.",
+     "Cosmetic: seed failure message says /12 records; manifest carries 10 legs."
+    ]
    }
   },
   "ORI-CONT-005": {
