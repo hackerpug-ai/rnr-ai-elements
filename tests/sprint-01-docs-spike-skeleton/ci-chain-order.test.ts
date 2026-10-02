@@ -140,11 +140,13 @@ describe('FLOW-DELIV-01', () => {
 });
 
 // -----------------------------------------------------------------------------
-// FUSE-12 lane: the CI docs-e2e job invokes the ROOT `pnpm e2e:docs` verbatim, so
-// the proof has two halves — the ordered build chain really runs green against
+// FUSE-12 lane: the CI docs job invokes the docs package's public build verbatim,
+// so the proof has two halves — the ordered build chain really runs green against
 // the real repo (AC-1), and the workflow/script wiring is parse-provable from
 // disk (AC-2). This lane stops after the astro build: Playwright coverage is
 // FUSE-10's test above, so this lane never depends on FUSE-11 spec files.
+// ORI-CI-003 superseded the docs-e2e CI job with the credential-free docs-build
+// job (test/docs-e2e acceptance moved to ORI-CI-004's protected workflow).
 // -----------------------------------------------------------------------------
 
 interface StepResult {
@@ -267,47 +269,52 @@ describe('FLOW-DELIV-01 FUSE-12 lane', () => {
     }
   });
 
-  it('FLOW-DELIV-01-ci-chain-order AC-2 ci.yml docs-e2e wiring and root chain order are parse-provable', () => {
+  it('FLOW-DELIV-01-ci-chain-order AC-2 ci.yml docs-build wiring and root chain order are parse-provable', () => {
     const workflow = parse(readFileSync(join(repoRoot, '.github/workflows/ci.yml'), 'utf8')) as {
       on: Record<string, unknown>;
       jobs: Record<string, { needs?: string[]; steps: Array<Record<string, unknown>> } | undefined>;
     };
 
-    // The `on:` block is workflow-wide, so docs-e2e triggers on the same events as
-    // the four existing jobs by construction — assert it is really there.
-    expect(Object.keys(workflow.on)).toEqual(expect.arrayContaining(['pull_request', 'push']));
+    // ORI-CI-003 re-scoped this workflow to the four credential-free candidate
+    // jobs (typecheck, lint, registry, docs-build). The complete test and
+    // docs-e2e acceptance jobs live in ORI-CI-004's protected workflow, so
+    // their names must NOT appear here.
+    expect(Object.keys(workflow.jobs).sort()).toEqual([
+      'docs-build',
+      'lint',
+      'registry',
+      'typecheck',
+    ]);
 
-    const job = workflow.jobs['docs-e2e'];
-    expect(job, 'ci.yml declares no docs-e2e job').toBeDefined();
-    expect(job?.needs, 'docs-e2e must be ordered after all four required jobs').toEqual(
-      expect.arrayContaining(['typecheck', 'lint', 'test', 'registry']),
-    );
+    const job = workflow.jobs['docs-build'];
+    expect(job, 'ci.yml declares no docs-build job').toBeDefined();
+    expect(job?.needs, 'docs-build must be ordered after all three prerequisites').toEqual([
+      'typecheck',
+      'lint',
+      'registry',
+    ]);
 
     const runs = job?.steps.filter((step) => typeof step.run === 'string') as Array<{
       run: string;
     }>;
     expect(
-      runs.some((step) => step.run === 'pnpm e2e:docs'),
-      'docs-e2e must invoke the root script verbatim, never a re-implemented chain',
+      runs.some((step) => step.run.includes('pnpm --filter @rnr-ai-elements/docs build')),
+      'docs-build must invoke the public build verbatim, never a re-implemented chain',
     ).toBe(true);
     expect(
-      runs.filter((step) =>
-        /registry:build|gallery:manifest|docs build|playwright test/.test(step.run),
-      ),
-      'the chain must live only in the root script — no duplicated chain steps in ci.yml',
+      runs.filter((step) => /gallery:manifest|playwright test|e2e:docs/.test(step.run)),
+      'the chain must live only in the docs package build — no duplicated chain steps in ci.yml',
     ).toEqual([]);
 
     const uploads = job?.steps.filter(
       (step) =>
-        typeof step.uses === 'string' && String(step.uses).startsWith('actions/upload-artifact@v4'),
+        typeof step.uses === 'string' && String(step.uses).startsWith('actions/upload-artifact@'),
     );
     expect(
       uploads?.some((step) =>
-        String((step.with as { path?: string } | undefined)?.path).includes(
-          'apps/docs/playwright-report/',
-        ),
+        String((step.with as { path?: string } | undefined)?.path).includes('docs-build.log'),
       ),
-      'docs-e2e must upload the Playwright report from apps/docs/playwright-report/',
+      'docs-build must upload its build log for evidence retention',
     ).toBe(true);
 
     // Root script: every stage joined by &&, in order, ahead of the Playwright
