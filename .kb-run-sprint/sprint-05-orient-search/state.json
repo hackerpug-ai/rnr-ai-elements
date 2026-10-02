@@ -44041,6 +44041,25 @@
    "status": "completed",
    "wave": 14,
    "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-VIS-005"
+  },
+  "FIX-ORI-CI-003-1": {
+   "status": "completed",
+   "cycle": 1,
+   "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/FIX-ORI-CI-003-1-restore-tracked-data-files-in-deliv-03-112-wipe.md",
+   "implementer": "ghactions-implementer",
+   "reviewer": "ghactions-reviewer",
+   "completion_note": {
+    "branch_tip": "043addd7ff8448d09c224e7392fe0e38b859f6df",
+    "merge_commit": "d25aa7e4",
+    "verdict": "APPROVED (cycle-1.verdict.json)",
+    "effect": "e2e ENOENT class 116 -> 0",
+    "routed_findings": {
+     "rebaseline_scope": "~43 failures (drift ~31 + GBC-003 collateral ~12) with lane owners enumerated in implementer report 2026-10-02",
+     "diagnose_first": "14 FLOW-SHELL-15/16 search-slot strict-mode failures \u2014 [data-search-slot] renders 2 buttons where specs expect 1; possible product bug",
+     "environmental": "2 (device UDID lane config, mobile scroll)",
+     "low": "no try/finally around deliv-03-112 wipe-to-restore window (pre-existing)"
+    }
+   }
   }
  },
  "trunk": "main",
