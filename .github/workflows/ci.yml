@@ -1,26 +1,46 @@
 name: ci
 
-# Derived from brain template ts-pnpm-vitest-eslint.yml (brain-template-version: 2.0.0),
-# with eslint swapped for biome per project toolchain.
+# ORI-CI-003 — credential-free candidate checks.
 #
-# Every job is guarded on package.json existing. These five jobs are REQUIRED checks
-# on main; without the guard they could never pass before the app is scaffolded and
-# main would be unmergeable from day one. The guard disappears on its own the moment
-# package.json lands.
+# Four jobs: typecheck, lint, registry, docs-build. docs-build runs only after all
+# three prerequisites succeed. This lane takes no secrets, needs nothing beyond
+# contents: read, and pins every action to a verified full commit SHA:
+#   actions/checkout       11bd71901bbe5b1630ceea73d27597364c9af683 (v4.2.2)
+#   actions/setup-node     49933ea5288caeca8642d1e84afbd3f7d6820020 (v4.4.0)
+#   pnpm/action-setup      a7487c7e89a18df4991f7f222e4898a00d66ddda (v4.1.0)
+#   actions/upload-artifact ea165f8d65b6e75b540449e92b4886f43607fa02 (v4.6.2)
+#
+# It provides pull-request feedback only. The complete test, native, provider and
+# publication acceptance obligations stay with ORI-CI-004's protected workflow,
+# which calls this workflow at its exact candidate revision via workflow_call.
+#
+# No absence-success guards: a candidate missing package.json or
+# scripts.registry:build fails the jobs that need them — the real commands fail,
+# scaffold notices never turn into success.
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
   push:
     branches: [main]
+  workflow_call:
+    inputs:
+      candidate_sha:
+        description: >-
+          Exact 40-hex candidate revision the caller accepts. Every job refuses to
+          execute any other checked-out SHA.
+        type: string
+        required: true
 
 permissions:
   contents: read
-  pull-requests: read
-  checks: write
 
+# workflow + event + ref: automatic runs for the same PR or branch supersede each
+# other, while a workflow_call run never shares a group with an automatic run of
+# the same ref — a protected caller can never cancel, or be cancelled by, its own
+# callee. A cancelled run can never qualify as acceptance (ORI-CI-004).
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.head.sha || github.sha }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.head.ref || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -29,136 +49,206 @@ env:
 jobs:
   typecheck:
     name: typecheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - id: guard
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify candidate identity
+        if: github.event_name == 'workflow_call'
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          CHECKED_OUT_SHA: ${{ github.sha }}
         run: |
-          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
-          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to typecheck"; fi
-      - if: steps.guard.outputs.ready == 'true'
-        uses: pnpm/action-setup@v4
-      - if: steps.guard.outputs.ready == 'true'
-        uses: actions/setup-node@v4
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ -z "$(printf '%s' "$DECLARED_CANDIDATE" | tr -d '0-9a-f')" ] \
+            && [ "$DECLARED_CANDIDATE" = "$CHECKED_OUT_SHA" ]; then
+            echo "candidate identity verified: $CHECKED_OUT_SHA"
+          else
+            echo "::error::refusing to run: declared candidate '$DECLARED_CANDIDATE' is not the 40-hex checked-out revision '$CHECKED_OUT_SHA'"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm install --frozen-lockfile
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm exec tsc --noEmit && pnpm --filter @rnr-ai-elements/registry exec tsc --noEmit
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # The root typecheck graph imports apps/docs/src/data/registry-items.json, a
+      # gitignored generated file (sprint-04's contract test). A clean checkout has
+      # no such file, so the data is generated here before the compilers run — from
+      # the committed public/r tree; this never repairs or accepts registry drift
+      # (the registry job owns freshness).
+      - name: Generate gitignored docs data the typecheck graph imports
+        run: |
+          set -eo pipefail
+          pnpm gallery:manifest 2>&1 | tee -a typecheck.log
+          pnpm --filter @rnr-ai-elements/docs run prebuild 2>&1 | tee -a typecheck.log
+      - name: Compilers (live-chat import graph + root workspace)
+        run: |
+          set -eo pipefail
+          pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json 2>&1 | tee typecheck.log
+          pnpm typecheck 2>&1 | tee -a typecheck.log
+      - name: Upload typecheck evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: typecheck-log
+          path: typecheck.log
+          retention-days: 7
+          if-no-files-found: error
 
   lint:
     name: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - id: guard
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify candidate identity
+        if: github.event_name == 'workflow_call'
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          CHECKED_OUT_SHA: ${{ github.sha }}
         run: |
-          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
-          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to lint"; fi
-      - if: steps.guard.outputs.ready == 'true'
-        uses: pnpm/action-setup@v4
-      - if: steps.guard.outputs.ready == 'true'
-        uses: actions/setup-node@v4
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ -z "$(printf '%s' "$DECLARED_CANDIDATE" | tr -d '0-9a-f')" ] \
+            && [ "$DECLARED_CANDIDATE" = "$CHECKED_OUT_SHA" ]; then
+            echo "candidate identity verified: $CHECKED_OUT_SHA"
+          else
+            echo "::error::refusing to run: declared candidate '$DECLARED_CANDIDATE' is not the 40-hex checked-out revision '$CHECKED_OUT_SHA'"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm install --frozen-lockfile
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm exec biome ci .
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm check:tokens
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm check:contract
-
-  test:
-    name: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - id: guard
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Lint commands (biome, tokens, styling contract)
         run: |
-          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
-          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to test"; fi
-      - if: steps.guard.outputs.ready == 'true'
-        uses: pnpm/action-setup@v4
-      - if: steps.guard.outputs.ready == 'true'
-        uses: actions/setup-node@v4
+          set -eo pipefail
+          pnpm lint 2>&1 | tee lint.log
+          pnpm check:tokens 2>&1 | tee -a lint.log
+          pnpm check:contract 2>&1 | tee -a lint.log
+      - name: Upload lint evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm install --frozen-lockfile
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm exec vitest run --reporter=default --reporter=junit --outputFile.junit=./test-report.junit.xml
-      - if: always() && steps.guard.outputs.ready == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-report
-          path: test-report.junit.xml
+          name: lint-log
+          path: lint.log
           retention-days: 7
+          if-no-files-found: error
 
   registry:
     name: registry
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - id: guard
-        run: |
-          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
-          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to build"; fi
-      - if: steps.guard.outputs.ready == 'true'
-        uses: pnpm/action-setup@v4
-      - if: steps.guard.outputs.ready == 'true'
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm install --frozen-lockfile
-      # The deliverable is a copy-paste registry: public/r/*.json must stay in sync
-      # with the component sources, or `npx @react-native-reusables/cli add <url>`
-      # ships stale code to every consumer.
-      - if: steps.guard.outputs.ready == 'true'
+          persist-credentials: false
+      - name: Verify candidate identity
+        if: github.event_name == 'workflow_call'
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          CHECKED_OUT_SHA: ${{ github.sha }}
         run: |
-          if jq -e '.scripts["registry:build"]' package.json > /dev/null; then
-            pnpm registry:build
-            git diff --exit-code -- public/r \
-              || { echo "::error::public/r is stale — run 'pnpm registry:build' and commit"; exit 1; }
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ -z "$(printf '%s' "$DECLARED_CANDIDATE" | tr -d '0-9a-f')" ] \
+            && [ "$DECLARED_CANDIDATE" = "$CHECKED_OUT_SHA" ]; then
+            echo "candidate identity verified: $CHECKED_OUT_SHA"
           else
-            echo "::notice::no registry:build script yet — skipping"
+            echo "::error::refusing to run: declared candidate '$DECLARED_CANDIDATE' is not the 40-hex checked-out revision '$CHECKED_OUT_SHA'"
+            exit 1
           fi
-
-  # Docs e2e (FUSE-12): the ordered build chain lives ONLY in the root `e2e:docs`
-  # script (owned by FUSE-10) — this job invokes it verbatim so CI runs exactly what
-  # the human gate runs locally. needs: orders it after registry so docs never build
-  # over stale public/r JSON.
-  docs-e2e:
-    name: docs-e2e
-    needs: [typecheck, lint, test, registry]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - id: guard
-        run: |
-          if [ -f package.json ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
-          else echo "ready=false" >> "$GITHUB_OUTPUT"; echo "::notice::no package.json yet — nothing to e2e"; fi
-      - if: steps.guard.outputs.ready == 'true'
-        uses: pnpm/action-setup@v4
-      - if: steps.guard.outputs.ready == 'true'
-        uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm install --frozen-lockfile
-      - if: steps.guard.outputs.ready == 'true'
-        run: pnpm e2e:docs
-      - if: always() && steps.guard.outputs.ready == 'true'
-        uses: actions/upload-artifact@v4
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # The deliverable is a copy-paste registry: public/r/*.json must stay in sync
+      # with the component sources. Fresh generation must leave the tree clean —
+      # tracked drift (stale committed output) AND untracked generated output (a
+      # regenerated-but-uncommitted item) both fail. Generation never silently
+      # repairs an uncommitted release.
+      - name: Fresh generation and freshness proof
+        run: |
+          set -eo pipefail
+          pnpm registry:build 2>&1 | tee registry.log
+          drift="$(git status --porcelain -- public/r)"
+          if [ -n "$drift" ]; then
+            {
+              echo '::error::public/r is not fresh — tracked drift or untracked generated output after registry:build'
+              echo 'Drift entries:'
+              printf '%s\n' "$drift"
+            } | tee -a registry.log
+            exit 1
+          fi
+          echo 'public/r fresh: no tracked drift, no untracked generated output' | tee -a registry.log
+      - name: Upload registry evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: docs-playwright-report
-          path: apps/docs/playwright-report/
+          name: registry-log
+          path: registry.log
           retention-days: 7
+          if-no-files-found: error
+
+  docs-build:
+    name: docs-build
+    needs: [typecheck, lint, registry]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify candidate identity
+        if: github.event_name == 'workflow_call'
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          CHECKED_OUT_SHA: ${{ github.sha }}
+        run: |
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ -z "$(printf '%s' "$DECLARED_CANDIDATE" | tr -d '0-9a-f')" ] \
+            && [ "$DECLARED_CANDIDATE" = "$CHECKED_OUT_SHA" ]; then
+            echo "candidate identity verified: $CHECKED_OUT_SHA"
+          else
+            echo "::error::refusing to run: declared candidate '$DECLARED_CANDIDATE' is not the 40-hex checked-out revision '$CHECKED_OUT_SHA'"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Verbatim docs build after prerequisite success. Invalid authored content
+      # fails here for real — no continue-on-error, no diagnostic upload masking.
+      - name: Docs build
+        run: |
+          set -eo pipefail
+          pnpm --filter @rnr-ai-elements/docs build 2>&1 | tee docs-build.log
+          dist_count="$(find apps/docs/dist -type f | wc -l | tr -d ' ')"
+          dist_digest="$(find apps/docs/dist -type f -print0 | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | cut -d' ' -f1)"
+          echo "apps/docs/dist: $dist_count files, sha256-of-manifest $dist_digest" | tee -a docs-build.log
+          if [ "$dist_count" -eq 0 ]; then
+            echo '::error::docs build produced an empty dist'
+            exit 1
+          fi
+      - name: Upload docs-build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: docs-build-log
+          path: docs-build.log
+          retention-days: 7
+          if-no-files-found: error
