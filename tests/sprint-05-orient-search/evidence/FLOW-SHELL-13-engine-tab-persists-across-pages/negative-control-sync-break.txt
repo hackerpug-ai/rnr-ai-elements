@@ -1,0 +1,296 @@
+
+Running 3 tests using 1 worker
+FFF
+
+  1) [chromium-desktop] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages 
+
+    Error: localStorage 'rnr-engine' is 'uniwind' after selection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      237 |   // -- Step 3: storage and root dataset agree --------------------------------
+      238 |   state = await readState(page);
+    > 239 |   soft(state.rnrEngine, "localStorage 'rnr-engine' is 'uniwind' after selection").toBe('uniwind');
+          |                                                                                   ^
+      240 |   soft(state.rootEngine, "root 'data-engine' is 'uniwind' after selection").toBe('uniwind');
+      241 |   problems.push(...isEngineConsistent(state, 'uniwind', 'installation-selected'));
+      242 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:239:83
+
+    Error: root 'data-engine' is 'uniwind' after selection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: "nativewind"
+
+      238 |   state = await readState(page);
+      239 |   soft(state.rnrEngine, "localStorage 'rnr-engine' is 'uniwind' after selection").toBe('uniwind');
+    > 240 |   soft(state.rootEngine, "root 'data-engine' is 'uniwind' after selection").toBe('uniwind');
+          |                                                                             ^
+      241 |   problems.push(...isEngineConsistent(state, 'uniwind', 'installation-selected'));
+      242 |
+      243 |   // -- Step 4: follow the actual Quickstart link through ClientRouter --------
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:240:77
+
+    Error: engine state agrees across panels, storage and root on every surface
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 40
+
+    - Array []
+    + Array [
+    +   "installation-selected: root data-engine is nativewind, expected uniwind",
+    +   "installation-selected: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-soft: root data-engine is nativewind, expected uniwind",
+    +   "quickstart-soft: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-soft: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 0 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 1 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 2 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 2 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 3 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 3 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 4 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 4 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 5 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 5 visible [\"nativewind\"]",
+    +   "message-hardload: root data-engine is nativewind, expected uniwind",
+    +   "message-hardload: rnr-engine storage is null, expected uniwind",
+    +   "message-hardload: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "message-hardload: group 0 visible [\"nativewind\"]",
+    +   "message-hardload: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "message-hardload: group 1 visible [\"nativewind\"]",
+    +   "quickstart-later-block: rnr-engine storage is null, expected nativewind",
+    +   "quickstart-keyboard-right: root data-engine is nativewind, expected uniwind",
+    +   "quickstart-keyboard-right: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-keyboard-right: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 0 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 1 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 2 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 2 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 3 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 3 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 4 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 4 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-left: rnr-engine storage is null, expected nativewind",
+    +   "home: rnr-engine storage is null, expected nativewind",
+    +   "components: rnr-engine storage is null, expected nativewind",
+    + ]
+
+      346 |
+      347 |   // Every collected consistency problem fails the journey with its surface.
+    > 348 |   soft(problems, 'engine state agrees across panels, storage and root on every surface').toEqual(
+          |                                                                                          ^
+      349 |     [],
+      350 |   );
+      351 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:348:90
+
+    Error Context: test-results/sprint-05-orient-search-en-4c791-e-tab-persists-across-pages-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-en-4c791-e-tab-persists-across-pages-chromium-desktop/error-context.md
+
+  2) [chromium-mobile] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages 
+
+    Error: localStorage 'rnr-engine' is 'uniwind' after selection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      237 |   // -- Step 3: storage and root dataset agree --------------------------------
+      238 |   state = await readState(page);
+    > 239 |   soft(state.rnrEngine, "localStorage 'rnr-engine' is 'uniwind' after selection").toBe('uniwind');
+          |                                                                                   ^
+      240 |   soft(state.rootEngine, "root 'data-engine' is 'uniwind' after selection").toBe('uniwind');
+      241 |   problems.push(...isEngineConsistent(state, 'uniwind', 'installation-selected'));
+      242 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:239:83
+
+    Error: root 'data-engine' is 'uniwind' after selection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: "nativewind"
+
+      238 |   state = await readState(page);
+      239 |   soft(state.rnrEngine, "localStorage 'rnr-engine' is 'uniwind' after selection").toBe('uniwind');
+    > 240 |   soft(state.rootEngine, "root 'data-engine' is 'uniwind' after selection").toBe('uniwind');
+          |                                                                             ^
+      241 |   problems.push(...isEngineConsistent(state, 'uniwind', 'installation-selected'));
+      242 |
+      243 |   // -- Step 4: follow the actual Quickstart link through ClientRouter --------
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:240:77
+
+    Error: engine state agrees across panels, storage and root on every surface
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 40
+
+    - Array []
+    + Array [
+    +   "installation-selected: root data-engine is nativewind, expected uniwind",
+    +   "installation-selected: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-soft: root data-engine is nativewind, expected uniwind",
+    +   "quickstart-soft: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-soft: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 0 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 1 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 2 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 2 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 3 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 3 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 4 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 4 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 5 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 5 visible [\"nativewind\"]",
+    +   "message-hardload: root data-engine is nativewind, expected uniwind",
+    +   "message-hardload: rnr-engine storage is null, expected uniwind",
+    +   "message-hardload: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "message-hardload: group 0 visible [\"nativewind\"]",
+    +   "message-hardload: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "message-hardload: group 1 visible [\"nativewind\"]",
+    +   "quickstart-later-block: rnr-engine storage is null, expected nativewind",
+    +   "quickstart-keyboard-right: root data-engine is nativewind, expected uniwind",
+    +   "quickstart-keyboard-right: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-keyboard-right: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 0 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 1 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 2 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 2 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 3 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 3 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 4 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 4 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-left: rnr-engine storage is null, expected nativewind",
+    +   "home: rnr-engine storage is null, expected nativewind",
+    +   "components: rnr-engine storage is null, expected nativewind",
+    + ]
+
+      346 |
+      347 |   // Every collected consistency problem fails the journey with its surface.
+    > 348 |   soft(problems, 'engine state agrees across panels, storage and root on every surface').toEqual(
+          |                                                                                          ^
+      349 |     [],
+      350 |   );
+      351 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:348:90
+
+    Error Context: test-results/sprint-05-orient-search-en-4c791-e-tab-persists-across-pages-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-en-4c791-e-tab-persists-across-pages-chromium-mobile/error-context.md
+
+  3) [chromium-nojs] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages 
+
+    Error: localStorage 'rnr-engine' is 'uniwind' after selection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: null
+
+      237 |   // -- Step 3: storage and root dataset agree --------------------------------
+      238 |   state = await readState(page);
+    > 239 |   soft(state.rnrEngine, "localStorage 'rnr-engine' is 'uniwind' after selection").toBe('uniwind');
+          |                                                                                   ^
+      240 |   soft(state.rootEngine, "root 'data-engine' is 'uniwind' after selection").toBe('uniwind');
+      241 |   problems.push(...isEngineConsistent(state, 'uniwind', 'installation-selected'));
+      242 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:239:83
+
+    Error: root 'data-engine' is 'uniwind' after selection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "uniwind"
+    Received: "nativewind"
+
+      238 |   state = await readState(page);
+      239 |   soft(state.rnrEngine, "localStorage 'rnr-engine' is 'uniwind' after selection").toBe('uniwind');
+    > 240 |   soft(state.rootEngine, "root 'data-engine' is 'uniwind' after selection").toBe('uniwind');
+          |                                                                             ^
+      241 |   problems.push(...isEngineConsistent(state, 'uniwind', 'installation-selected'));
+      242 |
+      243 |   // -- Step 4: follow the actual Quickstart link through ClientRouter --------
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:240:77
+
+    Error: engine state agrees across panels, storage and root on every surface
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 40
+
+    - Array []
+    + Array [
+    +   "installation-selected: root data-engine is nativewind, expected uniwind",
+    +   "installation-selected: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-soft: root data-engine is nativewind, expected uniwind",
+    +   "quickstart-soft: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-soft: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 0 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 1 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 2 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 2 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 3 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 3 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 4 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 4 visible [\"nativewind\"]",
+    +   "quickstart-soft: group 5 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-soft: group 5 visible [\"nativewind\"]",
+    +   "message-hardload: root data-engine is nativewind, expected uniwind",
+    +   "message-hardload: rnr-engine storage is null, expected uniwind",
+    +   "message-hardload: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "message-hardload: group 0 visible [\"nativewind\"]",
+    +   "message-hardload: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "message-hardload: group 1 visible [\"nativewind\"]",
+    +   "quickstart-later-block: rnr-engine storage is null, expected nativewind",
+    +   "quickstart-keyboard-right: root data-engine is nativewind, expected uniwind",
+    +   "quickstart-keyboard-right: rnr-engine storage is null, expected uniwind",
+    +   "quickstart-keyboard-right: group 0 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 0 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 1 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 1 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 2 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 2 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 3 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 3 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-right: group 4 selected [\"nativewind\"], expected [\"uniwind\"]",
+    +   "quickstart-keyboard-right: group 4 visible [\"nativewind\"]",
+    +   "quickstart-keyboard-left: rnr-engine storage is null, expected nativewind",
+    +   "home: rnr-engine storage is null, expected nativewind",
+    +   "components: rnr-engine storage is null, expected nativewind",
+    + ]
+
+      346 |
+      347 |   // Every collected consistency problem fails the journey with its surface.
+    > 348 |   soft(problems, 'engine state agrees across panels, storage and root on every surface').toEqual(
+          |                                                                                          ^
+      349 |     [],
+      350 |   );
+      351 |
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-sync/tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:348:90
+
+    Error Context: test-results/sprint-05-orient-search-en-4c791-e-tab-persists-across-pages-chromium-nojs/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-en-4c791-e-tab-persists-across-pages-chromium-nojs/error-context.md
+
+  3 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages 
+    [chromium-mobile] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages 
+    [chromium-nojs] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages 

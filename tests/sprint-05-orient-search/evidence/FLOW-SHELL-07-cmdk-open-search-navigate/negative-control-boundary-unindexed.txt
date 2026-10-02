@@ -1,0 +1,76 @@
+
+Running 3 tests using 1 worker
+FF·
+
+  1) [chromium-desktop] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:175:1 › FLOW-SHELL-07-cmdk-open-search-navigate 
+
+    Error: renderMarkdown answers with the boundary page
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "/docs/owns-vs-does-not-own/"
+    Received array: ["/components/message/", "/components/reasoning/", "/components/streamdown/", "/components/context/", "/guides/customize-rendering/", "/docs/theming/", "/guides/troubleshooting/", "/porting/"]
+
+      295 |   await search(page, 'renderMarkdown');
+      296 |   const renderMarkdownHrefs = await resultHrefs(page);
+    > 297 |   soft(renderMarkdownHrefs, 'renderMarkdown answers with the boundary page').toContain(
+          |                                                                              ^
+      298 |     '/docs/owns-vs-does-not-own/',
+      299 |   );
+      300 |   soft(
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-boundary/tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:297:78
+
+    Error: could not activate /docs/owns-vs-does-not-own/; results were ["/components/message/","/components/reasoning/","/components/streamdown/","/components/context/","/guides/customize-rendering/","/docs/theming/","/guides/troubleshooting/","/porting/"]
+
+      142 |     await page.keyboard.press('ArrowDown');
+      143 |   }
+    > 144 |   throw new Error(
+          |         ^
+      145 |     `could not activate ${href}; results were ${JSON.stringify(await resultHrefs(page))}`,
+      146 |   );
+      147 | }
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-boundary/tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:144:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-boundary/tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:304:3
+
+    Error Context: test-results/sprint-05-orient-search-cm-383c0-7-cmdk-open-search-navigate-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-cm-383c0-7-cmdk-open-search-navigate-chromium-desktop/error-context.md
+
+  2) [chromium-mobile] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:175:1 › FLOW-SHELL-07-cmdk-open-search-navigate 
+
+    Error: renderMarkdown answers with the boundary page
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "/docs/owns-vs-does-not-own/"
+    Received array: ["/components/message/", "/components/reasoning/", "/components/streamdown/", "/components/context/", "/guides/customize-rendering/", "/docs/theming/", "/guides/troubleshooting/", "/porting/"]
+
+      295 |   await search(page, 'renderMarkdown');
+      296 |   const renderMarkdownHrefs = await resultHrefs(page);
+    > 297 |   soft(renderMarkdownHrefs, 'renderMarkdown answers with the boundary page').toContain(
+          |                                                                              ^
+      298 |     '/docs/owns-vs-does-not-own/',
+      299 |   );
+      300 |   soft(
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-boundary/tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:297:78
+
+    Error: could not activate /docs/owns-vs-does-not-own/; results were ["/components/message/","/components/reasoning/","/components/streamdown/","/components/context/","/guides/customize-rendering/","/docs/theming/","/guides/troubleshooting/","/porting/"]
+
+      142 |     await page.keyboard.press('ArrowDown');
+      143 |   }
+    > 144 |   throw new Error(
+          |         ^
+      145 |     `could not activate ${href}; results were ${JSON.stringify(await resultHrefs(page))}`,
+      146 |   );
+      147 | }
+        at activateResult (/Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-boundary/tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:144:9)
+        at /Users/justinrich/Projects/rnr-ai-elements/.tmp/ORI-AST-010/nc-boundary/tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:304:3
+
+    Error Context: test-results/sprint-05-orient-search-cm-383c0-7-cmdk-open-search-navigate-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-cm-383c0-7-cmdk-open-search-navigate-chromium-mobile/error-context.md
+
+  2 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:175:1 › FLOW-SHELL-07-cmdk-open-search-navigate 
+    [chromium-mobile] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:175:1 › FLOW-SHELL-07-cmdk-open-search-navigate 
+  1 passed (5.4s)

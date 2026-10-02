@@ -1,0 +1,133 @@
+{
+  "task_id": "ORI-AST-010",
+  "title": "Prove integrated engine and search flows after real content and recovery exist",
+  "status": "cycle_1_green_pending_review",
+  "captured_at": "2026-10-02T12:20:47Z",
+  "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-AST-010",
+  "candidate": {
+    "base_commit": "e661e784",
+    "branch": "kb-run-sprint/sprint-05-orient-search/ORI-AST-010",
+    "preview_origin": "http://localhost:4321",
+    "build": "pnpm --filter @rnr-ai-elements/docs build (ordered registry, gallery, docs-data prebuild, snippet gate, astro build, search index, link check: 80 html files, 3106 links, 0 errors)",
+    "dist_pages": 80,
+    "indexed_pages": 70
+  },
+  "red_source": {
+    "sha": "38034e972490945b684f5bd5a706bca0479dc659",
+    "location": ".tmp/ORI-AST-010/red-candidate (detached worktree, isolated scratch copy)",
+    "note": "Pre-implementation snapshot: /docs/* content routes, engine persistence islands, search dialog, Pagefind integration and the custom 404 are absent; every flow fails on real HTTP/DOM assertions (Expected 200, Received 404), never on runner or setup errors."
+  },
+  "negative_control_location": ".tmp/ORI-AST-010/nc-{sync,panel,index,boundary} (detached worktrees at e661e784, isolated scratch copies; candidate bytes never modified)",
+  "driver": "tests/harness/docs-preview.ts (strict 4321 port guard, localhost-only navigation, ClientRouter-aware settle)",
+  "projects": [
+    "chromium-desktop",
+    "chromium-mobile",
+    "chromium-nojs"
+  ],
+  "journey_proofs": {
+    "AC-1": {
+      "flow": "FLOW-SHELL-13-engine-tab-persists-across-pages",
+      "description": "Shared engine state across all five surfaces (Installation, Quickstart, Message, home, Components) without URL engine state.",
+      "run_id": "ori-ast-010-flow-shell-13-1790941558557",
+      "command": "pnpm exec playwright test tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts --grep FLOW-SHELL-13-engine-tab-persists-across-pages",
+      "restored_candidate_exit": 0,
+      "restored_pass_projects": 3,
+      "source_hashes": {
+        "tabGroupIsland": "5a4e281537ed335eb572f0b54c04e84bc0964b81f5f3baeaa383b038bfe67e14",
+        "tabGroupScript": "c06e6f54da30c7faa7f53a38172feca32838e45ca6e1955093416fe5cc7e97ed",
+        "installCommand": "08744fe309deab063b8a69f1fa342fc2907cff8c4c9ba505ea0edf92f159e26c",
+        "testFile": "5ddf283ff5d34e27a3e8b395470fb1f072dea0e5ab8b6f58fa72bf2139fc10d6",
+        "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "driver": "ce10afdd644f44b711f9178635c6d40a5ffbde8d2de2cb1f7f9449b03897b98c",
+        "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+        "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+        "pagefindEntry": "ec50cd41932bb3ddf1f7294937c729cd8bbf9d4dd546487520e523c589dcd2cd"
+      },
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/proof.red",
+      "red_supplemental": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/red.txt",
+      "negative_control": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/negative-control-sync-break.txt",
+      "negative_control_summary": "Shared synchronization disconnected in isolated copy nc-sync (tab-group.ts activate() reduced to this-group-only application) \u2014 journey FAILED on storage/root/cross-group sync assertions; candidate restored.",
+      "restored_pass": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/restored-pass.txt",
+      "run_json": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-13-engine-tab-persists-across-pages/run.json"
+    },
+    "AC-2": {
+      "flow": "FLOW-SHELL-14-tab-panels-in-initial-html",
+      "description": "Both complete labeled engine panels in initial HTTP bodies and real JavaScript-disabled rendering.",
+      "run_id": "ori-ast-010-flow-shell-14-1790941562586",
+      "command": "pnpm exec playwright test tests/sprint-05-orient-search/tab-panels-in-initial-html.spec.ts --grep FLOW-SHELL-14-tab-panels-in-initial-html",
+      "restored_candidate_exit": 0,
+      "restored_pass_projects": 3,
+      "source_hashes": {
+        "tabGroupIsland": "5a4e281537ed335eb572f0b54c04e84bc0964b81f5f3baeaa383b038bfe67e14",
+        "docsLayout": "c71cecc66d91f35769694b66a52cd6cd34d4ee22061265fd88d56b9c8362cecc",
+        "testFile": "751ec68d200df543feedc861adc237efdd856904491c8369a3a27fa3b9516f1e",
+        "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "driver": "ce10afdd644f44b711f9178635c6d40a5ffbde8d2de2cb1f7f9449b03897b98c",
+        "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+        "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420"
+      },
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/proof.red",
+      "red_supplemental": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/red.txt",
+      "negative_control": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/negative-control-panel-removal.txt",
+      "negative_control_summary": "Uniwind panel removed in isolated copy nc-panel (TabGroup.astro panel loop sliced to the first panel) \u2014 journey FAILED on raw-body panel/command assertions; candidate restored.",
+      "restored_pass": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/restored-pass.txt",
+      "run_json": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-14-tab-panels-in-initial-html/run.json"
+    },
+    "AC-3": {
+      "flow": "FLOW-SHELL-07-cmdk-open-search-navigate",
+      "description": "Complete search navigation, indexing, focus and real 404 recovery over the production Pagefind index.",
+      "run_id": "ori-ast-010-flow-shell-07-1790941573982",
+      "command": "pnpm exec playwright test tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts --grep FLOW-SHELL-07-cmdk-open-search-navigate",
+      "restored_candidate_exit": 0,
+      "restored_pass_projects": 3,
+      "source_hashes": {
+        "searchDialogIsland": "adf559f1f9f7d343afc804beb8799f8b46f3317b168edac312022dbef9c860b9",
+        "searchDialogScript": "bccde2fc62bb6154ab8ee6c20cf870b8b41d309fb001f68d180fd9f11750c248",
+        "recoverySurface": "3c68cc8890a047f45b377562b92a0932152cc68f410640bfc40d7c09b4768e78",
+        "searchIndexScript": "a133053e139ca032f1a6ce6e8e5cc5511522150dd675a7f31fe60592bfdaca73",
+        "testFile": "70ee176f046de8c1b842ff8d9d6b73ce5bec85b0f7595dfdc64263dd9d072f84",
+        "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "driver": "ce10afdd644f44b711f9178635c6d40a5ffbde8d2de2cb1f7f9449b03897b98c",
+        "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+        "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+        "pagefindEntry": "ec50cd41932bb3ddf1f7294937c729cd8bbf9d4dd546487520e523c589dcd2cd"
+      },
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/proof.red",
+      "red_supplemental": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/red.txt",
+      "negative_control": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/negative-control-boundary-unindexed.txt",
+      "negative_control_summary": "Boundary indexing removed in isolated copy nc-boundary (data-pagefind-body stripped from the built boundary page, index rebuilt: 70 -> 69 pages) \u2014 journey FAILED on the boundary-result assertions; candidate restored.",
+      "restored_pass": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/restored-pass.txt",
+      "run_json": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-07-cmdk-open-search-navigate/run.json"
+    },
+    "AC-4": {
+      "flow": "FLOW-SHELL-08-pagefind-lazy-load-on-first-open",
+      "description": "First-open-only Pagefind loading and zero no-JavaScript Pagefind requests.",
+      "run_id": "ori-ast-010-flow-shell-08-1790941591593",
+      "command": "pnpm exec playwright test tests/sprint-05-orient-search/pagefind-lazy-load-on-first-open.spec.ts --grep FLOW-SHELL-08-pagefind-lazy-load-on-first-open",
+      "restored_candidate_exit": 0,
+      "restored_pass_projects": 3,
+      "source_hashes": {
+        "searchDialogIsland": "adf559f1f9f7d343afc804beb8799f8b46f3317b168edac312022dbef9c860b9",
+        "searchDialogScript": "bccde2fc62bb6154ab8ee6c20cf870b8b41d309fb001f68d180fd9f11750c248",
+        "testFile": "33d86557fcd9321ad63e9e2fcac247339faa7837854ede3bd7da4ab7ffd0391f",
+        "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
+        "driver": "ce10afdd644f44b711f9178635c6d40a5ffbde8d2de2cb1f7f9449b03897b98c",
+        "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
+        "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
+        "pagefindEntry": "ec50cd41932bb3ddf1f7294937c729cd8bbf9d4dd546487520e523c589dcd2cd"
+      },
+      "red_proof": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/proof.red",
+      "red_supplemental": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/red.txt",
+      "negative_control": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/negative-control-index-withheld.txt",
+      "negative_control_summary": "Real Pagefind index withheld in isolated copy nc-index (dist/pagefind removed after the ordered build) \u2014 journey FAILED at Pagefind initialization; candidate restored.",
+      "restored_pass": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/restored-pass.txt",
+      "run_json": "tests/sprint-05-orient-search/evidence/FLOW-SHELL-08-pagefind-lazy-load-on-first-open/run.json"
+    }
+  },
+  "quality_gates": {
+    "typecheck": "tsc --noEmit: pass",
+    "lint": "biome ci .: pass (0 errors; pre-existing warnings/infos only)",
+    "test": "vitest run: see cycle report"
+  },
+  "final_cycle": "proofs rerun after complexity refactor (fallow gate clean); RED + negative controls + restored passes all carry final spec bytes"
+}
