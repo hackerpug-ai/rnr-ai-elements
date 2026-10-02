@@ -37,11 +37,18 @@ function runManifestScript(): void {
 
 // biome-ignore lint/suspicious/noExportsInTest: FUSE-02 contract keeps this exported for direct tsx runs
 export async function FLOW_DELIV_03_112_file_completeness(): Promise<void> {
-  // The committed families map — snapshotted because the delete-dir case
-  // below removes src/data wholesale (it regenerates only the manifest) and
-  // the FUSE-05 prebuild below consumes families.json.
-  const FAMILIES_JSON = join(DATA_DIR, 'families.json');
-  const familiesBytes = readFileSync(FAMILIES_JSON);
+  // Every tracked file under src/data — snapshotted because the delete-dir
+  // case below removes src/data wholesale (it regenerates only the manifest).
+  // Restoring only families.json left sprint-04's dev-client-matrix.json and
+  // token-usage.json deleted mid-suite, ENOENT-ing later specs and failing
+  // the docs matrix gate (gates.ts reads dev-client-matrix.json) — FIX-ORI-CI-003-1.
+  const trackedDataFiles = execFileSync('git', ['ls-files', '--', 'apps/docs/src/data/'], {
+    cwd: ROOT,
+  })
+    .toString()
+    .split('\n')
+    .filter(Boolean);
+  const trackedBytes = new Map(trackedDataFiles.map((rel) => [rel, readFileSync(join(ROOT, rel))]));
 
   // AC-1 case: single run, both emits, verdict consistency.
   runManifestScript();
@@ -95,9 +102,12 @@ export async function FLOW_DELIV_03_112_file_completeness(): Promise<void> {
 
   // FUSE-05 (AC-2): the apps/docs/public/r copy — generated-only, wholesale
   // from the root public/r, byte-identical, gitignored, deterministic under
-  // delete+rebuild. Restore the snapshotted families.json first: the
-  // delete-dir case above removed it along with the generated manifest.
-  writeFileSync(FAMILIES_JSON, familiesBytes);
+  // delete+rebuild. Restore every snapshotted tracked file first: the
+  // delete-dir case above removed them along with the generated manifest,
+  // and the prebuild below reads them (families.json, dev-client-matrix.json).
+  for (const [rel, bytes] of trackedBytes) {
+    writeFileSync(join(ROOT, rel), bytes);
+  }
   runPrebuild();
   const DOCS_PUBLIC_R = join(ROOT, 'apps/docs/public/r');
   const perEngine = (engine: string): string[] => {
