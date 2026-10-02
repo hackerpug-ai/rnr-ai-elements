@@ -1,19 +1,116 @@
 {
-  "runIdentity": "ori-cont-004-1790387557802",
+  "runIdentity": "ori-cont-004-1790931423723",
   "flow": "FLOW-DOCS-02-quickstart-chat-screen",
   "command": "pnpm exec playwright test tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts --grep FLOW-DOCS-02-quickstart-chat-screen --project=chromium-desktop",
-  "exit": 1,
+  "exit": 0,
   "seed": {
     "manifestPath": "tests/sprint-05-orient-search/evidence/ORI-RN-003/run-manifest.json",
-    "run_id": "ORI-CONT-004-2026-09-26T01-44-39-507Z",
-    "completed": false,
+    "run_id": "ORI-CONT-004-2026-10-02T07-28-25-376Z",
+    "completed": true,
     "canonical_source_hashes": {
       "quickstart-screen.tsx": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2",
       "quickstart-messages.ts": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
     },
-    "manifest_sha256": "3417bbb35a78d2e0e59418f082f6d2a6d66d40d9822e82345cf26cd581172f33"
+    "manifest_sha256": "7f0d551fe0279dbf70100444dd004029b82ab249ee6fa85a076413146d857d4f"
   },
-  "live": null,
+  "live": {
+    "uniwind": {
+      "run_id": "ORI-CONT-004-2026-10-02T07-28-25-376Z-live-uniwind",
+      "manifest_sha256": "30cb66c4797b1b8f91f9a5423f1e717e0ee009c2d7eb9ce739df0ff4e033e5e4",
+      "repo_head": "485ecd724ea9990759a0ec8ccd7dfd30b490d4a2",
+      "devices": {
+        "ios_udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+        "android_serial": "emulator-5554",
+        "web_browser": "chromium (playwright, headless)"
+      },
+      "targets": {
+        "uniwind-ios": {
+          "engine": "uniwind",
+          "platform": "ios",
+          "native": true,
+          "artifacts": {
+            "stream.jsonl": "a5e354ec589fdf5d0220d6379d8c697817b5c09866d7511b14ef0eff5f408d71",
+            "screen-recording.mp4": "87a094c4fc2318866694328cf26e9fa0db93ce63a223905a98ded37ba2e8379b",
+            "streaming.png": "11fdb6bd49928d722ec0f333675e724470f6b32c9101db54d930986ce5330955",
+            "recovered.png": "55090322b64fbfabacaf709719d2a75e67f4390164ba0a200b8c341d10a236f5",
+            "result.json": "1f9d1ab3f0303bb5885efd3a58282a4c3c487f03aad38d8cdefa42a3743c3e22"
+          }
+        },
+        "uniwind-android": {
+          "engine": "uniwind",
+          "platform": "android",
+          "native": true,
+          "artifacts": {
+            "stream.jsonl": "19aa7241968228aa1a4e2799daeb7553e0aadaa60db228f428cfe4672eb866d0",
+            "screen-recording.mp4": "0fee8530adf5c9e5bf88fc8b7f256587d803852dc2fb9027262aad77bb1d3f13",
+            "streaming.png": "8559a86aab69c67d98a1e8c9ac61bc6c9251243b831baffa32e673fcdd308a26",
+            "recovered.png": "a277a25defe85549f2cde4ae6f2b3f36ae8f47d4b3a039c182bd03776ebbda54",
+            "result.json": "0cda30ed55e281a2cc83cd448d45db2daafa8302ed3fd80f50bea9d3b8b7259e"
+          }
+        },
+        "uniwind-web": {
+          "engine": "uniwind",
+          "platform": "web",
+          "native": false,
+          "artifacts": {
+            "stream.jsonl": "0db0bdfe5dc3c603e08d7b55aac658a641587ed559d10d268752be02b7bf47e6",
+            "screen-recording.mp4": "50b2d4a9894edb37dd9f973425393322c66a1b5b7a5d254297073d5401159eba",
+            "streaming.png": "cea62cc679b987ef632cd612b78765596ce47169dfb4476508fb24db715a4faf",
+            "recovered.png": "3a3f15e88dba599445feec61d8d10ecef4f57b136eba357820489ba60d7fef26",
+            "result.json": "28528d81d305cc82a205a99a9bee437f27a67e0733fc219cee088081e8c0e6d3"
+          }
+        }
+      }
+    },
+    "nativewind": {
+      "run_id": "ORI-CONT-004-2026-10-02T07-28-25-376Z-live-nativewind",
+      "manifest_sha256": "7520f41cff7ac42d6fead526d84fa13c86394797dc4588536367e0ff6e415e2d",
+      "repo_head": "485ecd724ea9990759a0ec8ccd7dfd30b490d4a2",
+      "devices": {
+        "ios_udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+        "android_serial": "emulator-5554",
+        "web_browser": "chromium (playwright, headless)"
+      },
+      "targets": {
+        "nativewind-ios": {
+          "engine": "nativewind",
+          "platform": "ios",
+          "native": true,
+          "artifacts": {
+            "stream.jsonl": "4b088966851ae6730eb999414331153436fbe1c9cb82a8bd98620fca84bd4496",
+            "screen-recording.mp4": "d816a1cffec566c207d0f1ded7ceda1dcbce505dfc7a19aee2fa4562069319af",
+            "streaming.png": "e98a41600bd92956a2e6c0f482271408b668a11eb0f9eef51d23037cc3c16060",
+            "recovered.png": "3af0f61a179abb812b1de45dd78bdb924429b0b78c43cc5fac213aba2bbe6b55",
+            "result.json": "d45c088c8ee677088056f88dffa96e5e518c8604fd91e4cc686c1626b98aa54f"
+          }
+        },
+        "nativewind-android": {
+          "engine": "nativewind",
+          "platform": "android",
+          "native": true,
+          "artifacts": {
+            "stream.jsonl": "d6651abd8847be0e7f515f25861cfb4d01d729046229d32e31d4deec32f72138",
+            "screen-recording.mp4": "31bd565a57032eaa4c507facb25be761b975355694e7f07940f0472a87e31f0e",
+            "streaming.png": "ef17d34385516656ba1df05243988755d26439919a384c130608791614b47f65",
+            "recovered.png": "fa9e4464fcae066c23a438e0da9807d51b01323f1a4adcf75bbe48a3a28a9be3",
+            "result.json": "91b608eb087621dc57c561c3b112b4448737dd7309244cd8f2222a6d910b7f82"
+          }
+        },
+        "nativewind-web": {
+          "engine": "nativewind",
+          "platform": "web",
+          "native": false,
+          "artifacts": {
+            "stream.jsonl": "f5d604cfcab69e6783fb96156dec2a3b7438b4f0a59b9f12df1dc3fd8a8fe7c2",
+            "screen-recording.mp4": "fc4757aca355c55346c01af29cc385735dd6f9c57e7313c7d44cfe89527179c1",
+            "streaming.png": "263c3461ebe52ee210418669616c7fa0e2cc28c41d54b5152494de011b3b0c90",
+            "recovered.png": "4614ce242a3f927b7ada2d6dd7e4d3973600712f1f316d8664610301acfa9a01",
+            "result.json": "b6c3461fbd41e8b306062b91f019efceb35edffa5b71b0eaafaed8bfefc34c4d"
+          }
+        }
+      }
+    }
+  },
   "sourceHashes": {
     "quickstartManuscript": "506d7edaa1d88eac5fb94c5775ab3abfe8bd1f1a4b5ef688a3ed60aa0c80c5bd",
     "seedDriver": "d0eece1d8cb1082b0826f687f54f079a238eddf3cda4e4bbae72a46cb070aca9",
@@ -24,10 +121,10 @@
     "liveBackend": "4698a6fb6ae4101f133c08717e028a71f30440c7cfbd1bc35a2f2549724c08c6",
     "registryJson": "6de89f9f6af05e11cf8f707ce73c18845e631ebbfc1309aa158bf05cad67e1e0",
     "lockfile": "87be803bb28974756c3706fb89184e25e9ee40898030d1f6416ebe40517c79eb",
-    "distQuickstart": "59ecf3bddaff926963faf0f44a3952d62e4e1aa749c956a487ff419fd485d710",
+    "distQuickstart": "b4949d1c6c06a59278a86fdc6adc0fe6339074d8d7edabbb7447c3b5818fe7ce",
     "surfacePolicy": "f75b3ea90eb2d043fdc425be7a499585ec051e7cae3863a8ca03af4e1f2aa34b",
     "coldbootPolicy": "8ef05f2a886a1e7398c5aedaf2681973dd5650d5c41c7bc77b5ca8ad37fdb420",
-    "testFile": "10f21a06637a93cfc3807e004a1443f923cd4e687ac3ba07b65d1b58bfad91d2"
+    "testFile": "a9e0d0df4e29e21963ade0d38d86533841aa4a8e17d22ee5be264bdddd48b13e"
   },
   "references": [
     "tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-quickstart-chat-screen/proof.red"

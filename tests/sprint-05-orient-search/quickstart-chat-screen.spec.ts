@@ -201,6 +201,7 @@ test(`${READING_FLOOR_TOKEN}: engine panels readable without enhanced interactio
   capture(testInfo, 'reading-floor', { nojs: isNoJs(testInfo) });
 });
 
+// fallow-ignore-next-line complexity
 test(`${FLOW_TOKEN}: seed and live matrices awaited in this invocation`, async ({
   page,
 }, testInfo) => {
@@ -243,17 +244,61 @@ test(`${FLOW_TOKEN}: seed and live matrices awaited in this invocation`, async (
   delete process.env.NODE_ENV;
   process.env.TMPDIR = SHORT_TMPDIR;
   mkdirSync(SHORT_TMPDIR, { recursive: true });
-  const { runQuickstartProof } = await import('./support/quickstart-proof.test');
-  const seed = await runQuickstartProof({
-    engines: ['nativewind', 'uniwind'],
-    platforms: ['ios', 'android', 'web'],
-    runId,
-    sourceHash,
-  });
-  const passedLegs = seed.legs.filter((leg) => leg.status === 'passed');
+  // Process boundary, not an in-process import: executing runQuickstartProof inside
+  // the Playwright worker stalls deterministically in the negative-control
+  // disconnected round (cycle-5 attempts 2026-10-01 20:05 and 21:43 — worker idle in
+  // kevent, the round's chromium and serve socket left hanging, while the identical
+  // standalone drive completes; the committed Sep-28 green run used the driver's own
+  // tsx CLI). The driver runs unchanged in a fresh child; the spec binds to the same
+  // manifest it writes and asserts exactly what the in-process call asserted.
+  const seedChild = spawnSync(
+    process.execPath,
+    [
+      '--import',
+      'tsx',
+      '--input-type=module',
+      '-e',
+      [
+        'const { runQuickstartProof } = await import("./tests/sprint-05-orient-search/support/quickstart-proof.test.ts");',
+        'const result = await runQuickstartProof({',
+        '  engines: ["nativewind", "uniwind"],',
+        '  platforms: ["ios", "android", "web"],',
+        '  runId: process.env.SEED_RUN_ID,',
+        '  sourceHash: process.env.SEED_SOURCE_HASH,',
+        '});',
+        'console.log(JSON.stringify({ runId: result.runId, completed: result.completed }));',
+        'process.exitCode = result.completed ? 0 : 1;',
+      ].join('\n'),
+    ],
+    {
+      cwd: repoRoot,
+      env: {
+        ...process.env,
+        TMPDIR: SHORT_TMPDIR,
+        SEED_RUN_ID: runId,
+        SEED_SOURCE_HASH: sourceHash,
+        RNR_S05_IOS_UDID: process.env.RNR_S05_IOS_UDID ?? '',
+        RNR_S05_ANDROID_SERIAL: process.env.RNR_S05_ANDROID_SERIAL ?? '',
+      },
+      encoding: 'utf8',
+      timeout: 90 * 60 * 1000,
+      maxBuffer: 1024 * 1024 * 64,
+    },
+  );
+  expect(
+    seedChild.status,
+    `the seed matrix must complete in a fresh child process (exit ${seedChild.status}; the driver fails closed on any missing leg)\n${`${seedChild.stdout ?? ''}${seedChild.stderr ?? ''}`.slice(-4000)}`,
+  ).toBe(0);
+  const seedManifest = JSON.parse(readFileSync(join(repoRoot, SEED_MANIFEST_PATH), 'utf8'));
+  const seed = {
+    legs: seedManifest.legs ?? [],
+    completed: seedManifest.completed,
+    negativeControl: seedManifest.negative_control,
+  };
+  const passedLegs = seed.legs.filter((leg: { status?: string }) => leg.status === 'passed');
   expect(
     seed.completed,
-    `all six seed legs must pass in this invocation (got ${passedLegs.length}/12 appearance+web records; failures: ${JSON.stringify(seed.legs.filter((l) => l.status !== 'passed').map((l) => `${l.engine}/${l.platform}/${l.appearance ?? 'web'}: ${l.diagnostic?.slice(0, 200)}`))})`,
+    `all six seed legs must pass in this invocation (got ${passedLegs.length}/12 appearance+web records; failures: ${JSON.stringify(seed.legs.filter((l: { status?: string }) => l.status !== 'passed').map((l: { engine?: string; platform?: string; appearance?: string; diagnostic?: string }) => `${l.engine}/${l.platform}/${l.appearance ?? 'web'}: ${l.diagnostic?.slice(0, 200)}`))})`,
   ).toBe(true);
   expect(seed.negativeControl).toMatchObject({
     baseline_submission_passed: true,
@@ -261,17 +306,18 @@ test(`${FLOW_TOKEN}: seed and live matrices awaited in this invocation`, async (
     restored_marker_visible: true,
     restored_equals_original: true,
   });
-  const seedManifest = JSON.parse(readFileSync(join(repoRoot, SEED_MANIFEST_PATH), 'utf8'));
   expect(seedManifest.run_id).toBe(runId);
   capture(testInfo, 'seed-matrix', {
     runId,
     manifestPath: SEED_MANIFEST_PATH,
-    legs: seed.legs.map((leg) => ({
-      engine: leg.engine,
-      platform: leg.platform,
-      appearance: leg.appearance,
-      status: leg.status,
-    })),
+    legs: seed.legs.map(
+      (leg: { engine?: string; platform?: string; appearance?: string; status?: string }) => ({
+        engine: leg.engine,
+        platform: leg.platform,
+        appearance: leg.appearance,
+        status: leg.status,
+      }),
+    ),
   });
 
   // --- Live matrices: the AI-owned runner, one invocation per engine.
