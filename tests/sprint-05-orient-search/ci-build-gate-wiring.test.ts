@@ -538,7 +538,9 @@ describe('ORI-CI-003 credential-free candidate checks', () => {
       expect(scoped.diagnosticExcerpt?.join('\n')).toMatch(
         /TS2322.*not assignable to type 'number'/,
       );
-      expect(stageOf(run, 'typecheck.root').exit).toBe(0);
+      // The scoped compiler leads, so the lane stops before the root compiler —
+      // its exit-0 proof lives in the restored green run below.
+      expect(stageOf(run, 'typecheck.root').skipped).toBe(true);
       expect(run.jobConclusions).toEqual({
         typecheck: 'failure',
         lint: 'skipped',

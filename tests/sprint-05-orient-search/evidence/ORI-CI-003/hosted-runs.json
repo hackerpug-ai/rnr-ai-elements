@@ -1,0 +1,58 @@
+{
+ "schema": "ORI-CI-003-hosted-runs/1",
+ "records": [
+  {
+   "recordedAt": "2026-10-02T14:50:50.819Z",
+   "kind": "qualification",
+   "candidateSha": "fdf6ec33ab1c069b2cd2f622f428efd3e7675da1",
+   "proofSha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+   "evidenceDir": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-003/tests/sprint-05-orient-search/evidence/ORI-CI-003",
+   "sourceRunUrl": null,
+   "hostedStatus": "blocked",
+   "verdict": "rejected",
+   "reason": "candidate-mismatch",
+   "detail": "qualification asked for candidate fdf6ec33ab1c069b2cd2f622f428efd3e7675da1 but the proof is bound to 4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72; a green run for another SHA is never acceptance for this one"
+  },
+  {
+   "recordedAt": "2026-10-02T14:50:50.855Z",
+   "kind": "qualification",
+   "candidateSha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+   "proofSha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+   "evidenceDir": "/tmp/q-missing",
+   "sourceRunUrl": null,
+   "hostedStatus": "blocked",
+   "verdict": "rejected",
+   "reason": "missing-artifact",
+   "detail": "declared evidence files absent from the proof directory: generated-artifacts.json"
+  },
+  {
+   "recordedAt": "2026-10-02T14:50:50.884Z",
+   "kind": "qualification",
+   "candidateSha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+   "proofSha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+   "evidenceDir": "/tmp/q-altered",
+   "sourceRunUrl": null,
+   "hostedStatus": "blocked",
+   "verdict": "rejected",
+   "reason": "altered-artifact",
+   "detail": "evidence bytes differ from the manifest hashes: actionlint.log"
+  }
+ ],
+ "hostedStatus": {
+  "status": "blocked",
+  "reason": "No hosted GitHub Actions run exists for candidate 4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72. The candidate is 655 commits ahead of origin/main (5bfa77283a1182891ac8780fe477c3d676e2d918); it has never been pushed, so no hosted run can exist. GitHub API observed 0 run(s) for this head SHA. Pushing local main (654+ commits) to origin and observing hosted runs is an orchestrator decision; the preflight records the absence instead of fabricating runs.",
+  "observedAt": "2026-10-02T14:50:50.161Z",
+  "observation": {
+   "attemptedAt": "2026-10-02T14:50:50.161Z",
+   "originUrl": "git@github.com:hackerpug-ai/rnr-ai-elements.git",
+   "repoSlug": "hackerpug-ai/rnr-ai-elements",
+   "originMainSha": "5bfa77283a1182891ac8780fe477c3d676e2d918",
+   "localAheadOfOriginBy": 655,
+   "githubApi": {
+    "exit": 0,
+    "stdout": "{\"run_ids\":[],\"total_count\":0}",
+    "stderr": ""
+   }
+  }
+ }
+}
