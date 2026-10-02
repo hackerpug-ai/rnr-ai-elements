@@ -1,0 +1,70 @@
+[drive-web] install uniwind 2026-09-29T16:26:55.723Z
+[drive-web] export diagnostic-uniwind-baseline 2026-09-29T16:27:22.151Z
+[drive-web] drive diagnostic-uniwind-baseline http://127.0.0.1:62091 2026-09-29T16:27:31.471Z
+[drive-web] export diagnostic-uniwind-disconnected 2026-09-29T16:27:32.670Z
+[drive-web] drive diagnostic-uniwind-disconnected http://127.0.0.1:62349 2026-09-29T16:27:34.633Z
+[drive-web] still waiting 30025ms 2026-09-29T16:28:04.728Z
+{
+  "diagnostic": true,
+  "run_id": "FIX-ORI-RN-003-3-diagnostic-1790699215723",
+  "calls": [
+    {
+      "phase": "diagnostic-uniwind-baseline",
+      "engine": "uniwind",
+      "marker": "FIX-ORI-RN-003-3 diagnostic-baseline 1 1790699242151",
+      "serve_url": "http://127.0.0.1:62091",
+      "port": 62091,
+      "exportExit": 0,
+      "settled_before_close": true,
+      "settled_before_harness_cleanup": true,
+      "elapsed_ms": 1005,
+      "started_at": "2026-09-29T16:27:31.646Z",
+      "settled_at": "2026-09-29T16:27:32.526Z",
+      "harness_cleanup_started_at": "2026-09-29T16:27:32.651Z",
+      "harness_cleanup_finished_at": "2026-09-29T16:27:32.667Z",
+      "promise_outcome": "fulfilled",
+      "browser_connected_at_observe": true,
+      "page_open_at_observe": false,
+      "harness_closed_browser_before_settle": false,
+      "booleans": {
+        "seedVisible": true,
+        "olderSeedReached": true,
+        "markerVisible": true,
+        "inputCleared": true,
+        "markerSubmitted": true
+      },
+      "drive_error": null,
+      "seed_text": "Seed turn 24: Ready for your message.",
+      "older_seed": "Seed turn 01: Plan a weekend walk."
+    },
+    {
+      "phase": "diagnostic-uniwind-disconnected",
+      "engine": "uniwind",
+      "marker": "FIX-ORI-RN-003-3 diagnostic-disconnected 2 1790699252670",
+      "serve_url": "http://127.0.0.1:62349",
+      "port": 62349,
+      "exportExit": 0,
+      "settled_before_close": true,
+      "settled_before_harness_cleanup": true,
+      "elapsed_ms": 30829,
+      "started_at": "2026-09-29T16:27:34.703Z",
+      "settled_at": "2026-09-29T16:28:05.437Z",
+      "harness_cleanup_started_at": "2026-09-29T16:28:05.532Z",
+      "harness_cleanup_finished_at": "2026-09-29T16:28:05.545Z",
+      "promise_outcome": "fulfilled",
+      "browser_connected_at_observe": true,
+      "page_open_at_observe": false,
+      "harness_closed_browser_before_settle": false,
+      "booleans": {
+        "seedVisible": true,
+        "olderSeedReached": true,
+        "markerVisible": false,
+        "inputCleared": true,
+        "markerSubmitted": false
+      },
+      "drive_error": null,
+      "seed_text": "Seed turn 24: Ready for your message.",
+      "older_seed": "Seed turn 01: Plan a weekend walk."
+    }
+  ]
+}

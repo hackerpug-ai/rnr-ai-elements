@@ -1,0 +1,127 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "reason": "Historical focused receipts preserved and byte-checked. Fresh heavyweight selector acceptance not reviewed in this checkpoint.",
+      "evidence": [
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:21"
+      ]
+    },
+    {
+      "id": "AC-2",
+      "verdict": "PARTIAL",
+      "reason": "Historical browser receipts preserved and byte-checked. Fresh browser acceptance not reviewed in this checkpoint.",
+      "evidence": [
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:42"
+      ]
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PARTIAL",
+      "reason": "Both guard findings resolved by independent actual runner probes; static gates pass. The mandatory full aggregate remains unrun and its receipt exit remains null.",
+      "evidence": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:843",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:958",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:1007",
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:65"
+      ]
+    }
+  ],
+  "task": "FIX-ORI-SUITE-1",
+  "review_type": "independent guard checkpoint only",
+  "candidate": "02ff850a7d07fb9db1a428a8eea83bccc8b8f4d2",
+  "comparison_base": "c75dc2688dc86b014d814eae1065d0c48215bf84",
+  "checkpoint_verdict": "PASS",
+  "verdict": "NEEDS_FIXES",
+  "verdict_scope_note": "NEEDS_FIXES applies only to whole-task incompleteness under the AC gate. This guard code checkpoint passes; no further guard correction is requested.",
+  "whole_task_approved": false,
+  "completion_blockers": [
+    "Required full aggregate pnpm test has not run after prerequisites; final task acceptance and evidence review remain outstanding."
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "id": "S1-GUARD-001",
+      "verdict": "PASS",
+      "reason": "Default ordinary verification is portable in real full-history and depth-1 detached checkouts; strict fixture assertions stay separate.",
+      "evidence": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:86",
+        "suite1-guard-remediation2-review/ordinary-full-history.log",
+        "suite1-guard-remediation2-review/ordinary-shallow.log"
+      ]
+    },
+    {
+      "id": "S1-GUARD-002",
+      "verdict": "PASS",
+      "reason": "Recorded boundary is recomputed from literal ownership sets, duplicate/missing/unknown/inconsistent entries are rejected, and product status is derived. Both prior counterexamples now fail via the actual ordinary test runner.",
+      "evidence": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:843",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:958",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:1007",
+        "suite1-guard-remediation2-review/added-product-path.log",
+        "suite1-guard-remediation2-review/missing-required-repair.log"
+      ]
+    }
+  ],
+  "checks": {
+    "ordinary_full_history": "PASS: exit 0",
+    "ordinary_actual_depth1_detached": "PASS: exit 0, no main or historical base object",
+    "strict_clean_depth1_fixture": "PASS: exit 0",
+    "source_and_red_green_run_receipt_tamper": "PASS: each exits 1 with specific current-byte-mismatch token",
+    "added_product_path": "PASS: exits 1 with recorded boundary unknown paths",
+    "missing_required_repair": "PASS: exits 1 with recorded boundary missing required paths",
+    "duplicate_changed_and_proof_paths": "PASS: each exits 1",
+    "unknown_proof_metadata": "PASS: exits 1",
+    "inconsistent_proof_records_and_stored_status": "PASS: each exits 1",
+    "restoration": "PASS: exact source/receipt/audit bytes restored; ordinary and strict fixture both return to exit 0",
+    "typecheck": "PASS: exit 0",
+    "scoped_biome": "PASS: exit 0 over eight files",
+    "diff_check": "PASS: exit 0",
+    "stub_scan": {
+      "exit_code": 1,
+      "matches": 0
+    },
+    "actual_historical_inventory": "PASS: 25 recorded paths match real Git audit boundary",
+    "current_bytes": "PASS: all 17 source/evidence hashes match",
+    "aggregate": "NOT RUN; explicitly deferred by dispatch",
+    "native_browser_services": "NOT STARTED"
+  },
+  "evidence_root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-guard-remediation2-review",
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "shared_status_before_sha256": "f6335e5454c77cda2378e3ec97f5eb9da2ed7b3905a0a4396b9d6a620283da43",
+  "shared_status_after_sha256": "f6335e5454c77cda2378e3ec97f5eb9da2ed7b3905a0a4396b9d6a620283da43",
+  "shared_worktree_modified": false,
+  "scratch_worktree": "/Users/justinrich/.cache/agent-scratch/rnr-suite1-review-g2jy3i2a/detached",
+  "scratch_cleanup_owner": "root; all mutated bytes restored, checkout clean",
+  "workflow_files_changed": [],
+  "workflow_approval": "None. Twelve workflow-specific security checks are not applicable to this guard-only delta.",
+  "five_domain_review": {
+    "authoring_management": "Ordinary entrypoint corrected",
+    "consumption_troubleshooting": "Real shallow and full-history success plus specific failure diagnostics",
+    "custom_actions": "No action delta",
+    "enterprise_governance": "Recorded boundary now derives from literal permitted paths",
+    "security_optimization": "No hardcoded clean product claim, mocks, skipped required behavior, or workflow/secret changes found in this delta"
+  },
+  "fakeability_audit": [
+    {
+      "ac": "AC-1",
+      "verdict": "PARTIAL",
+      "reason": "Fresh focused acceptance not rerun; historical real receipts integrity-checked."
+    },
+    {
+      "ac": "AC-2",
+      "verdict": "PARTIAL",
+      "reason": "Fresh browser acceptance not rerun; historical real receipts integrity-checked."
+    },
+    {
+      "ac": "AC-3",
+      "verdict": "PARTIAL",
+      "could_stub_pass_guard": false,
+      "seeded_real_guard": true,
+      "watched_negative_controls": true,
+      "reason": "Guard passes actual filesystem/runner negative controls; aggregate still pending."
+    }
+  ]
+}

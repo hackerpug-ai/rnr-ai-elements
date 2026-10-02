@@ -1,0 +1,71 @@
+{
+ "reviewer": "ghactions-reviewer",
+ "reviewed_at": "2026-10-02T02:20:00Z",
+ "branch_tip": "4e005fda4f08ab5ddaff743dd664e4e10a009fbd",
+ "worktree": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-SUITE-2-2",
+ "task": "FIX-ORI-SUITE-2-2",
+ "verdict": "APPROVED",
+ "ac_coverage": [
+  {
+   "ac": "AC-1",
+   "status": "PASS",
+   "note": "The three repairs are substantive in the diff: docs-collection makeScratch() now copyTrees scripts/ and packages/docs-snippets/ plus the two gate manuscripts (quickstart.mdx, theming.mdx) byte-identical; docs-data-prebuild tracks-only assertion is scoped to apps/docs/public/r with the authored-fonts rationale documented; live-example-api AC-4 oracle asserts await import('expo/fetch') with DefaultChatTransport, throttle: 50, messages: [], PINS, and clearError-before-regenerate (live-example-api.test.ts:635-654) preserved. Recorded tallies: docs-collection 4/0/0, docs-data-prebuild 4/0/0, live-example-api-ac4 1/0/3, all exit 0. Evidence binds harness SHA-256 f6298057ecf50f3afceda2486bd2df1699545bb9537633ad86f6acc602451408 (re-hashed by this reviewer against the committed file: match) and execution candidate b705e26f. RED evidence is real: captured at base 5856cc64 with the chartered failure signatures (verified assertion text in red.json). Reviewer reran the exact harness post-commit at tip 4e005fda: 5/5 exit 0 via the recorded-evidence verify path."
+  },
+  {
+   "ac": "AC-2",
+   "status": "PASS",
+   "note": "Native proof mode is rerun, and this reviewer independently decoded all eight embedded receipts from green.json (python, not the harness): base64 canonical, SHA-256 of decoded bytes matches every claimed digest, run IDs consistent per selector across manifest/teardown/provider_correlation (ORI-RN-005-1790898804562 and ORI-RN-005-1790900528999), manifest.completed=true, exactly the five unique passed legs android:dark/light + ios:dark/light + web:default, provider correlation 4 aborted + 20 completed each with real OpenAI Responses records (provider openai, gpt-4.1-mini-2025-04-14, resp_* responseIds, token/delta counts), timestamps inside the child execution windows (2026-10-02T00:22/00:52 era \u2014 not the stale 2026-09-19 receipts), owned backend 127.0.0.1:4010, web leg driven at http://127.0.0.1:8408 with real drive_result booleans, iOS/Android legs carry screenshots/hierarchy/flow_output. Native suite file hashes to the charter-required 2e84e9489a528116e4f96bea53a43400d91fd76f4c0ee611ed3372979767a0ef. Execution inputs: 33 hashed inputs + 14 registry URLs bound and reverified against current bytes by the harness verify path."
+  },
+  {
+   "ac": "AC-3",
+   "status": "PASS",
+   "note": "Reviewer ran the routing selector standalone: 2 passed / 0 failed / exit 0, and again with OWNER_ROUTING_EXECUTION_AUDIT=1 (real git range 8ee4282f..f9d30b09 with per-blob SHA verification): exit 0. The immutable boundary diff over the four suites + original charter exits 0. Committed owner-routing.json holds residual_tokens exactly [FLOW-DELIV-01-ci-chain-order], residual_widened false, 36 routes each with a nonempty owner, none inside the four chartered suites. Ordinary mode binds the durable evidence bytes (hash-pinned in-test) and never resolves historical git objects; the audit is required, not silently skipped, in execution mode."
+  }
+ ],
+ "prior_findings_remediation": [
+  {
+   "id": "F1",
+   "status": "CLOSED",
+   "evidence": "foreign-suite-repair-proof.test.ts:738-765 (receiptBytes/exactRawReceipts decode embedded bytes, require canonical base64 + SHA-256 match + the exact four receipt names) and :776-818 (validateMarathonReceipts revalidates run identity, completed, timestamp-in-window, selector tally, provider counts, exact leg set). Negative controls at :1443-1484 prove tampered bytes and missing receipts are rejected."
+  },
+  {
+   "id": "F2",
+   "status": "CLOSED",
+   "evidence": ":1272-1320 assertSelectorInventory/assertRecordedSelector/assertRecordedSelectors require the exact six unique names, exact command strings, exact passed/failed/skipped tallies, and derive native selector_count from the actual named marathon records. :876-894 assertSelectorGreen enforces tallies at execution time. Negative controls at :1421-1501 (all-skipped output, duplicate legs, duplicate selector identities)."
+  },
+  {
+   "id": "F3",
+   "status": "CLOSED",
+   "evidence": "verifyRecordedGreen (:1332-1341) validates the recorded scope header, path-inventory digest, harness bytes, current suite/input hashes, embedded receipts, and static gates without resolving historical git objects; gitFileSha256/candidateScope run only at GREEN-capture time (:1038-1039, :405-433). Real depth-one shallow-clone probe at :1503-1575 passes and rejects drift. aggregate-owner-routing.test.ts:57-88/162-168 applies the same split: durable bound bytes ordinarily, real range audit under OWNER_ROUTING_EXECUTION_AUDIT=1 which the harness sets for the routing child."
+  }
+ ],
+ "incident_recovery": {
+  "claim": "rm -rf on tracked .tmp/ORI-RN-005 marathon dirs, restored via git checkout",
+  "status": "VERIFIED_NO_LOSS",
+  "evidence": "All 87 tracked .tmp/ORI-RN-005 blobs at HEAD are byte-identical (identical git blob IDs) to base 5856cc64 and to current main; worktree porcelain for those paths is empty, so working-tree bytes equal the committed pre-incident state."
+ },
+ "vacuous_pass_trap": {
+  "status": "ARMED_AND_EXERCISED",
+  "evidence": "timestampInsideChild (:615-626) + assertTeardownFresh (:634-641) are called for both manifest.generated_at and teardown.finished_at (:791-800). The tracked stale manifest at .tmp/ORI-RN-005/abort-error-retry/manifest.json is the 2026-09-19 run (ORI-RN-005-1789808618192, sha 8d9b6807...) while the embedded fresh receipt is a different hash (f5767d7d...) with 2026-10-02 timestamps \u2014 the GREEN run proved fresh execution, and reusing the stale receipt would fail the window check."
+ },
+ "findings": [],
+ "conditions": [],
+ "notes": [
+  "run.json for FIX-ORI-SUITE-2-2 has no implementer-recorded aggregate section this cycle; the harness header describes preserving one when present, and no AC requires it. Informational only.",
+  "The specific device UDIDs (iPhone 17 81487B1E, emulator-5554) appear in the implementer handoff but not in the committed receipts; the manifests prove three-platform coverage via per-leg evidence without naming devices. AC-2 does not require UDIDs. Informational only.",
+  "pnpm exec biome dies locally with 'Linter process terminated abnormally' \u2014 a known spawn artifact in this environment; the direct binary ./node_modules/.bin/biome ci over the six scoped targets exits 0 (Checked 6 files, no fixes), matching the recorded static gate."
+ ],
+ "validation": {
+  "final_harness_rerun": "pnpm exec vitest run tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts at tip 4e005fda \u2192 5/5 passed, exit 0 (recorded-evidence verify path, <1s)",
+  "routing_standalone": "2/0/0 exit 0; audit-mode rerun exit 0",
+  "typecheck": "exit 0",
+  "scoped_biome_direct": "exit 0, 6 files checked",
+  "diff_scope": "5856cc64..HEAD touches exactly the 13 implementationCommitAllowed paths; per-commit paths all within allowance; worktree clean; runtime artifacts absent from the candidate diff",
+  "historical_receipt_identity": ".tmp/FIX-ORI-SUITE-2/{red,green,run}.json blob-identical to 3dc22d71",
+  "native_suite_hash": "2e84e9489a528116e4f96bea53a43400d91fd76f4c0ee611ed3372979767a0ef verified against the working tree",
+  "main_integrity": "main at b189b8ce before and after this review; reviewer wrote only this verdict file"
+ },
+ "commit_sha": "4e005fda4f08ab5ddaff743dd664e4e10a009fbd",
+ "canonical_copy_of": ".kb-run-sprint/sprint-05-orient-search/closure-20261001/suite2-resume-review.verdict.json",
+ "note": "Transcribed to the driver-guard canonical path by the orchestrator; content verbatim from the ghactions-reviewer verdict except commit_sha (copied from branch_tip) and this note."
+}

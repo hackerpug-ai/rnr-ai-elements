@@ -1,0 +1,62 @@
+{
+  "scratch": "/Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "init",
+        "--bare",
+        "/Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex"
+      ],
+      "exit": 0,
+      "output": "Initialized empty Git repository in /Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex/\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex",
+        "fetch",
+        "--depth=1",
+        "/Users/justinrich/Projects/rnr-ai-elements",
+        "ea9400aea0ba6e7f804b8951e0462590b35b879f"
+      ],
+      "exit": 0,
+      "output": "From /Users/justinrich/Projects/rnr-ai-elements\n * branch            ea9400aea0ba6e7f804b8951e0462590b35b879f -> FETCH_HEAD\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "exit": 0,
+      "output": "true\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex",
+        "rev-parse",
+        "09123090d57f7747ac3760055a5932392b598351^{tree}"
+      ],
+      "exit": 128,
+      "output": "fatal: ambiguous argument '09123090d57f7747ac3760055a5932392b598351^{tree}': unknown revision or path not in the working tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n09123090d57f7747ac3760055a5932392b598351^{tree}\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/justinrich/.cache/agent-scratch/rnr-review-git-dsjm12ex",
+        "rev-parse",
+        "--verify",
+        "main"
+      ],
+      "exit": 128,
+      "output": "fatal: Needed a single revision\n"
+    }
+  ]
+}

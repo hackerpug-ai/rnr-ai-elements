@@ -1,0 +1,32 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "3dc22d71154d0bd43764cc33f4b8f78d2530aa75",
+  "reviewer": "ghactions-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Commit 3dc22d7 touches only writeAllowed paths (no apps/, packages/, or scripts/). makeScratch() mirrors scripts/ and packages/docs-snippets/ beside the root package.json, with comments naming ORI-AST-003 and ORI-CONT-003/FIX-ORI-CI-001-1. FUSE-05 now runs git ls-files apps/docs/public/r and the supersede comment names 1c732dc1 plus the five authored font files; the empty-tracked expectation remains. AC-4 expects await import('expo/fetch') and still expects both tsc --noEmit compiles, the four PINS, DefaultChatTransport, throttle: 50, messages: [], and clearError(); before regenerate();. Committed green.json captured_at 2026-09-28T06:27:58.084Z records docs-collection, docs-data-prebuild, and live-example-api-ac4 exiting 0 with 4, 4, and 1 passed tokens. Those three suite sha256 values match this commit. No .skip, deleted schema negative, or dropped duplicate-destination diagnostic."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "git diff 8ee4282f..3dc22d7 for tests/sprint-05-orient-search/nativewind-live-example.test.ts is empty (sha256 2e84e9489a528116e4f96bea53a43400d91fd76f4c0ee611ed3372979767a0ef, same as green.json). green.json records nativewind-abort-error-retry and nativewind-fail-closed-cleanup exiting 0, manifest_completed true, teardown_fresh true, teardown_finished_at 2026-09-28T05:39:11.293Z and 2026-09-28T06:27:44.105Z, both before green_captured_at 2026-09-28T06:27:58.084Z. Abort provider counts are 4 aborted and 20 completed. No timeout budget edit."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": false,
+      "evidence": "The one recorded pnpm test (run.json aggregate and p5-aggregate-inventory.json) exited 1 at head 8ee4282f, TMPDIR /tmp/fix-ori-suite-2, 2026-09-28T06:32:42Z–09:47:14Z: 36 failed files and 40 failed tests. collected_ori_vis_005_ac_5 is false and charter_residual_match is false. nativewind-live-example.test.ts passed 4/4, so the marathon tokens are not residual. ci-chain-order failed FLOW-DELIV-01-ci-chain-order (pnpm e2e:docs exited 1) and also AC-1 (docs build exited 1). The rest of the inventory is outside that token, including ENOENT on apps/docs/src/data/registry-items.json and docs-build-pipeline stage-order failures. The four repaired suites are not in the failing inventory. Not rerun.",
+      "fix": "Do not widen the residual and do not edit the four suites to absorb these failures. The chartered closure is only ci-chain-order's FLOW-DELIV-01-ci-chain-order token. Owner-route the extra failures; this task must not mask them.",
+      "fix_location": "outside writeAllowed — failing files are not the four chartered suites. Examples from the inventory: tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts (AC-1, beyond FLOW-DELIV-01), tests/sprint-02-shell-hero/item-pages-build.test.ts, tests/sprint-05-orient-search/docs-build-pipeline.test.ts."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "not_rerun",
+    "lint": "not_rerun",
+    "tests": "not_rerun"
+  },
+  "summary": "The three chartered repairs match the charter, stay inside writeAllowed, and green.json records those selectors plus both unchanged NativeWind marathon tokens exiting 0 with fresh teardown timestamps inside the 2026-09-28T06:27:58.084Z capture. The committed harness sha256 differs from green.json because proveGreen and marathonEvidence were split after that capture; the four suite hashes still match. AC-3 is not met: the single aggregate inventory sets charter_residual_match to false, with 36 failing files rather than only FLOW-DELIV-01-ci-chain-order, and the marathon tokens passed so they are not residual. Those extra failures are outside this task's four suites and must not be folded into the residual."
+}

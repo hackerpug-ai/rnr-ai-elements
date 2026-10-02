@@ -1,0 +1,68 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "b38975b163aa71d748e604a74f1849824e562bfb",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independent default CLI exited 0 on b38975b163aa71d748e604a74f1849824e562bfb. reviewer-cycle-4/full-matrix.run.json run FIX-ORI-RN-003-3-full-1790698332800: nativewind seed 1008 ms and uniwind baseline 1006 ms; all five booleans true. Both fulfill before external cleanup with browser still connected. Four distinct markers, both real public registry installs, real Expo exports and real Chromium calls verified. Matrix total 127985 ms."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Independent full-matrix receipt: uniwind disconnected 30816 ms with seedVisible/olderSeedReached/inputCleared true and markerVisible/markerSubmitted false; restored 807 ms with all five true. Exactly one callback mutation. Original/restored SHA256 270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2; mutation 3a3884d24442d0d979d093500f74c80ccac7dcde99e60247a227c5d3b8ce344a. All calls fulfill before harness cleanup. Independent diagnostic also passed at 1010/30837 ms."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": false,
+      "evidence": "Remaining integration defect: drive-web-return-proof.test.ts:197-200 compares immutable base09123090...current HEAD; :273-280 combines that whole diff with current worktree paths; Vitest invokes it at :1002-1022. Current main5a6aa62f already differs from base in ROADMAP.md, SPRINT.md, and TASK-FIX-ORI-SUITE-2-2.md, all outside the task allowlist (real git diff captured in reviewer-cycle-4/integration-scope-audit.json). After landing on that main, this task guard necessarily rejects those unrelated reviewed changes. The task-candidate audit is now adequate, but using it unchanged as an aggregate regression guard is not. This conclusion follows the actual Git diff and source path; no speculative merge or integration run was performed.",
+      "fix": "Separate immutable base-to-task-execution/candidate audit from the current-repository regression guard. Keep committed-path auditing; do not revert to status-only checks. The regression guard should validate the recorded immutable task boundary and relevant executable hashes without attributing later unrelated main commits or WIP to this task. Add a meaningful integration-boundary check using real Git history, then rerun the source guard/static gates and appropriately verify the revised exact source. Do not change quickstart-web.ts or invent RED.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Independent default CLI exited 0 on b38975b163aa71d748e604a74f1849824e562bfb. reviewer-cycle-4/full-matrix.run.json run FIX-ORI-RN-003-3-full-1790698332800: nativewind seed 1008 ms and uniwind baseline 1006 ms; all five booleans true. Both fulfill before external cleanup with browser still connected. Four distinct markers, both real public registry installs, real Expo exports and real Chromium calls verified. Matrix total 127985 ms."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Independent full-matrix receipt: uniwind disconnected 30816 ms with seedVisible/olderSeedReached/inputCleared true and markerVisible/markerSubmitted false; restored 807 ms with all five true. Exactly one callback mutation. Original/restored SHA256 270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2; mutation 3a3884d24442d0d979d093500f74c80ccac7dcde99e60247a227c5d3b8ce344a. All calls fulfill before harness cleanup. Independent diagnostic also passed at 1010/30837 ms."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": false,
+      "evidence": "Remaining integration defect: drive-web-return-proof.test.ts:197-200 compares immutable base09123090...current HEAD; :273-280 combines that whole diff with current worktree paths; Vitest invokes it at :1002-1022. Current main5a6aa62f already differs from base in ROADMAP.md, SPRINT.md, and TASK-FIX-ORI-SUITE-2-2.md, all outside the task allowlist (real git diff captured in reviewer-cycle-4/integration-scope-audit.json). After landing on that main, this task guard necessarily rejects those unrelated reviewed changes. The task-candidate audit is now adequate, but using it unchanged as an aggregate regression guard is not. This conclusion follows the actual Git diff and source path; no speculative merge or integration run was performed.",
+      "fix": "Separate immutable base-to-task-execution/candidate audit from the current-repository regression guard. Keep committed-path auditing; do not revert to status-only checks. The regression guard should validate the recorded immutable task boundary and relevant executable hashes without attributing later unrelated main commits or WIP to this task. Add a meaningful integration-boundary check using real Git history, then rerun the source guard/static gates and appropriately verify the revised exact source. Do not change quickstart-web.ts or invent RED.",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "verification_notes": {
+    "commands": "Independently ran both task CLI modes, Vitest selector (1/1 passed), pnpm typecheck, and scoped Biome (2 files). No unrelated broad suite was run, per orchestrator scope. Tests pass on the branch; AC-3 reports the concrete after-merge guard regression separately.",
+    "failure_cleanup": "A real missing-Chromium-dependency probe using isolated PLAYWRIGHT_BROWSERS_PATH exited 1 after an actual public install/export/serve. It left no listener on its owned port and no disposable consumer/export directory. Source inspection confirms finally now encloses server acquisition/browser launch and returned consumer install/overlay validation. Post-process listener checks alone are not claimed as a mutation proof of finally execution.",
+    "budget": "Guard directly invokes the real budget assertion below and at 9000000 ms; below passes, boundary throws. Runtime full matrix completed within the budget.",
+    "flow_scope": "No locked flow or journey is owned by this diagnostic. flows is empty deliberately. FLOW-DOCS-02 and all native/live obligations remain open; no native visual or provider proof is claimed."
+  },
+  "resolved_findings": [
+    "Immutable base SHA/tree and committed-plus-dirty path audit are recorded; prior status-only omission is fixed for the task candidate.",
+    "Acquired-resource failure cleanup now encloses the identified launch/install/overlay paths.",
+    "Full-matrix elapsed budget now fails before writing green; stale green is removed before the run."
+  ],
+  "source_binding": {
+    "executed_reviewer_candidate": "b38975b163aa71d748e604a74f1849824e562bfb",
+    "implementer_executable_commit": "11364244d06f9fa246e17586a854cbd5723e544f",
+    "final_commit_diff_from_executable": "Only green.json, run.json, and two install logs changed; no executable source changed. Implementer receipts therefore bind to the final candidate through exact matching hashes.",
+    "driver_sha256": "69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33",
+    "harness_sha256": "43325c2c8c353a9f035dc1050a06fe50c888893fabfd7e44a752634d43f6beed",
+    "reuse_limit": "Reviewer runtime receipts bind this candidate and harness hash. Preserve them as actual observations; never relabel them as execution of a later guard-only candidate. Any reuse needs explicit source comparison and verification consistent with the charter."
+  },
+  "summary": "NEEDS_FIXES for one remaining AC-3 integration regression in the scope guard. AC-1/AC-2 and their test criteria now have independent real runtime evidence. The diagnostic no-change disposition is truthful; driver and historical receipts remain unchanged. The three cycle-3 findings are resolved for the isolated candidate, but the new guard would break when integrated with existing main changes. All original canonical evidence was byte-restored, the candidate worktree is clean, and main remained 5a6aa62f0423ac1bec57c7fffad3727ca68124e5. Reviewer evidence is separate under reviewer-cycle-4."
+}

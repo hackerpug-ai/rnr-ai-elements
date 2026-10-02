@@ -1,0 +1,32 @@
+
+ RUN  v4.1.11 /Users/justinrich/.cache/agent-scratch/rnr-suite1-review-tij0t9wq/detached
+
+ ❯ tests/sprint-05-orient-search/suite-repair-proof.test.ts (1 test | 1 failed) 10ms
+   × runSuiteRepairProof 10ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  12:59:28
+   Duration  93ms (transform 18ms, setup 0ms, import 24ms, tests 10ms, environment 0ms)
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/suite-repair-proof.test.ts > runSuiteRepairProof
+Error: current byte mismatch: .tmp/FIX-ORI-SUITE-1/cycle-2/run.json (expected 2ce1c4dcb520e579f51e16417493a9b01588946256ba76dd273e2b76da638bb1, observed 306d298766da66c671e9954ed0b53bf89f8919a62e500436efb957b7739334e6)
+ ❯ readAndValidateScopeAudit tests/sprint-05-orient-search/suite-repair-proof.test.ts:867:13
+    865|     const actualHash = sha256File(path);
+    866|     if (actualHash !== expectedHash) {
+    867|       throw new Error(
+       |             ^
+    868|         `current byte mismatch: ${path} (expected ${expectedHash}, obs…
+    869|       );
+ ❯ runPortableProof tests/sprint-05-orient-search/suite-repair-proof.test.ts:898:10
+ ❯ runSuiteRepairProof tests/sprint-05-orient-search/suite-repair-proof.test.ts:1124:28
+ ❯ tests/sprint-05-orient-search/suite-repair-proof.test.ts:1141:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

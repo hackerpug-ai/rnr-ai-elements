@@ -1,0 +1,69 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "621a7d801ff73afaccec90e531b1358f9579d950",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Fresh author evidence at executable03a534c0 records nativewind seed1007 ms and uniwind baseline806 ms, all five booleans true, fulfilled before external cleanup. Final621a7d8 differs from executable03a534c0 only in four evidence/log files; current driver/harness hashes match the captures. Independent reviewer cycle5 real default matrix passed with nativewind1009 ms and uniwind805 ms. An independent ts-morph AST comparison confirms every install/export/browser/observation/settlement/runtime-Git-audit function remains byte-identical from cycle5 to cycle6. Per orchestrator instruction, this guard-only change did not trigger another browser replay; the new guard was independently tested instead."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Fresh cycle6 four-call matrix totals109542 ms and records disconnected30840 ms with markerVisible/markerSubmitted false and both seed observations true, then restored806 ms with all five true. Exact original/restored screen SHA256270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2 differs from the single-callback mutation. All source restoration and settlement timestamps independently checked. Reviewer cycle5 independently ran the same unchanged real negative-control path (disconnected30861/restored807 ms), preserved separately; it is not relabeled as cycle6 execution."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "Independent full-checkout source guard1/1, typecheck, and scoped Biome2files all pass. Independent real depth1 detached checkout of621a7d8 has no localmain and no base091 tree (both Git queries exit128); the exact Vitest selector passes1/1 there. Appending a comment to the real scratch harness causes exit1/current harness differs from executed evidence; restoring then removing an entry from committed_paths_since_base causes exit1/recorded committed paths changed; byte restoration returns selector to exit0. Real Git auditing remains in taskDiffAudit/runtime: reviewer independently recomputed base tree, execution tree, and base-to-execution path diff against the actual repository and matched the committed receipt. The ordinary guard validates the recorded boundary, path sets, historical hashes and actual current executable hashes without querying unavailable Git history. Driver and both historicalred hashes remain unchanged. The finite180000 ms watchdog,9000000 ms fail-closed budget and truthful no-driver-change/open-downstream disposition remain intact."
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Fresh author evidence at executable03a534c0 records nativewind seed1007 ms and uniwind baseline806 ms, all five booleans true, fulfilled before external cleanup. Final621a7d8 differs from executable03a534c0 only in four evidence/log files; current driver/harness hashes match the captures. Independent reviewer cycle5 real default matrix passed with nativewind1009 ms and uniwind805 ms. An independent ts-morph AST comparison confirms every install/export/browser/observation/settlement/runtime-Git-audit function remains byte-identical from cycle5 to cycle6. Per orchestrator instruction, this guard-only change did not trigger another browser replay; the new guard was independently tested instead."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Fresh cycle6 four-call matrix totals109542 ms and records disconnected30840 ms with markerVisible/markerSubmitted false and both seed observations true, then restored806 ms with all five true. Exact original/restored screen SHA256270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2 differs from the single-callback mutation. All source restoration and settlement timestamps independently checked. Reviewer cycle5 independently ran the same unchanged real negative-control path (disconnected30861/restored807 ms), preserved separately; it is not relabeled as cycle6 execution."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": true,
+      "evidence": "Independent full-checkout source guard1/1, typecheck, and scoped Biome2files all pass. Independent real depth1 detached checkout of621a7d8 has no localmain and no base091 tree (both Git queries exit128); the exact Vitest selector passes1/1 there. Appending a comment to the real scratch harness causes exit1/current harness differs from executed evidence; restoring then removing an entry from committed_paths_since_base causes exit1/recorded committed paths changed; byte restoration returns selector to exit0. Real Git auditing remains in taskDiffAudit/runtime: reviewer independently recomputed base tree, execution tree, and base-to-execution path diff against the actual repository and matched the committed receipt. The ordinary guard validates the recorded boundary, path sets, historical hashes and actual current executable hashes without querying unavailable Git history. Driver and both historicalred hashes remain unchanged. The finite180000 ms watchdog,9000000 ms fail-closed budget and truthful no-driver-change/open-downstream disposition remain intact."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "verification_notes": {
+    "flows": "No locked flow or journey is owned by this diagnostic. FLOW-DOCS-02 and all native/live/provider obligations remain open with their owners. Approval does not certify native appearance, Stop/Retry, provider behavior or sprint closure.",
+    "runtime_replay_scope": "No browser replay on cycle6: the executable diff changes only recorded-audit guard validation. Reviewer independently ran both real CLI modes during cycle5 and verified the entire runtime function set unchanged; author fresh cycle6 runs bind to current hashes. All changed behavior received independent full/shallow-checkout and discriminating filesystem mutation verification.",
+    "mutation_scope": "Mutations affected only the orchestrator-created disposable detached shallow worktree. Original candidate and canonical evidence stayed untouched. Scratch files were byte-restored, dependency symlink removed, both worktrees clean. No mocks, skips, fabricated RED or driver changes.",
+    "initial_probe_issue": "Two initial disposable primary repositories hit the local main-folder guard before checkout. No guard bypass occurred. Orchestrator created the detached worktree used for the successful proof."
+  },
+  "evidence_paths": [
+    "reviewer-cycle-6/shallow-detached/commands.json",
+    "reviewer-cycle-6/shallow-detached/shallow-clean.log",
+    "reviewer-cycle-6/shallow-detached/mutated-current-source.log",
+    "reviewer-cycle-6/shallow-detached/mutated-recorded-paths.log",
+    "reviewer-cycle-6/shallow-detached/shallow-restored.log",
+    "reviewer-cycle-6/final-preservation.json",
+    "reviewer-cycle-5/diagnostic.run.json",
+    "reviewer-cycle-5/full-matrix.run.json"
+  ],
+  "source_binding": {
+    "author_execution_commit": "03a534c0f5b4e78c92d2aea256ddd02611cdd88f",
+    "approved_candidate": "621a7d801ff73afaccec90e531b1358f9579d950",
+    "driver_sha256": "69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33",
+    "harness_sha256": "c5f92eb63722ef9337988f2a87bbd97f37af1558fbdcaeab0076afd99cfc5e5b",
+    "green_sha256": "1a9484f172b8b5ea2d170b6f4b242a4ef68f20d2931dc3c7f487eb432ec8dad5",
+    "run_sha256": "86acc8ba1159951ab98eb7ae07f74cb747ecaf6dce81693db37207424e358a27"
+  },
+  "summary": "APPROVED exact621a7d8. The final portability fix retains strict candidate-time real Git auditing while making the aggregate source guard independent of localmain/history. It passes a real depth1 detached checkout and rejects changed current source and altered recorded path evidence, then passes after restoration. Prior review findings are resolved. Real diagnostic and callback-control behavior remains truthful and source-bound; the final commit adds only evidence after executable capture. Main remained962f724943e4a841860b694b476099e69d537671. No source, task, primary evidence, or project Git refs were changed by this review."
+}

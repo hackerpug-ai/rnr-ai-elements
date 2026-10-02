@@ -1,0 +1,153 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:58",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:876",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1282"
+      ],
+      "reason": "The prior checkpoint verified the three bounded repairs and their standalone logs. This cycle fixes fresh and recorded exact selector tallies. The final combined harness has not run after the latest harness change; fresh green.json and run.json remain absent."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "FAIL",
+      "classification": "PENDING_REAL_NATIVE_PROOF",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:59",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:776",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1232"
+      ],
+      "reason": "Fresh native proof remains explicitly unexecuted. The filesystem-based receipt verifier tests validate parsing and rejection behavior; their synthetic metadata is not device/provider evidence. Both real native selectors must run through the exact final harness after the native prerequisite and device grant."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:60",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:50",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:65",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:119"
+      ],
+      "reason": "The real immutable Git audit passes, and both historical routing JSON files byte-match f9d30b09. Ordinary aggregate mode is shallow-safe but does not bind those current evidence bytes to the immutable record; the exact routing test also passes after a historical owner is changed. F3 remains partially unresolved."
+    },
+    {
+      "id": "DONE-WHEN-4",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:61"
+      ],
+      "reason": "Independent typecheck and scoped Biome pass on this exact candidate. This checkpoint enumerates all ACs, but final all-AC approval is blocked by the remaining verifier issue and missing native/final-harness execution."
+    }
+  ],
+  "verdict": "NEEDS_FIXES",
+  "checkpoint_status": "INCOMPLETE_DO_NOT_LAND",
+  "task": "FIX-ORI-SUITE-2-2",
+  "commit_sha": "cd61aed102dc49f15bdb6a1422bd893511c405f5",
+  "previous_checkpoint_sha": "9be71b2d5186b04b2efa6ebb09bd8c001a1fb078",
+  "base_sha": "5856cc641cac5faab0a4db8b1ba49cc3e3fc7198",
+  "reviewer": "ghactions-reviewer",
+  "review_scope": "Focused remediation review of F1/F2/F3; no native execution, full aggregate, unrelated workflow audit, product edit, task-state edit, or Git mutation.",
+  "worktree": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-SUITE-2-2",
+  "resolved_findings": [
+    {
+      "id": "F1",
+      "verdict": "RESOLVED",
+      "evidence": [
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:714",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:738",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:757",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:776",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1443"
+      ],
+      "reason": "Capture reads actual receipt files and embeds their bytes. Recorded verification requires exactly the four named receipts, decodes canonical base64, recomputes SHA-256, parses the bytes, checks consistent run identity and execution-window timestamps, validates completed manifests, provider counts and exact native legs, and compares the recorded summary with the decoded evidence. The real-filesystem negative tests reject changed embedded bytes and a missing selector log."
+    },
+    {
+      "id": "F2",
+      "verdict": "RESOLVED",
+      "evidence": [
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:675",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:687",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:876",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1272",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1282",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1302"
+      ],
+      "reason": "Fresh execution enforces the exact expected pass/skip counts and zero failures. Recorded proof requires the exact six unique selector names and commands, derives both native records from their names, and validates all five unique platform/appearance legs. The actual guard tests reject all-skipped success, duplicate selector identities and duplicate iOS legs."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F3",
+      "status": "PARTIALLY_RESOLVED",
+      "severity": "HIGH",
+      "location": "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:50",
+      "related_locations": [
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:80",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:114",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:119"
+      ],
+      "issue": "Ordinary routing verification reports a durable historical audit without binding the historical owner-map and inventory bytes.",
+      "evidence": "verifyDurableHistoricalAudit only validates constant SHA formats and a constant file-name inventory. It does not hash the current owner-routing.json or aggregate-inventory.json against the immutable owner-map commit. An isolated real-filesystem copy of the exact candidate routing suite and the two actual committed JSON files passed unchanged, then also passed after routes[0].owner was changed to CHANGED-HISTORICAL-OWNER. No suite, assertion, provider or transport was mocked. Both invocations exited 0 with 1 passing test.",
+      "resolved_part": "verifyRecordedGreen no longer resolves historical Git objects. It validates the recorded immutable range metadata plus current executable/input hashes and embedded receipt bytes. The real shallow-clone helper test passes and rejects changed bound bytes and altered range metadata. The routing Git audit is now explicitly execution/review-only and passes against the actual historical objects.",
+      "fix": "Pin owner-routing.json and aggregate-inventory.json to their actual immutable f9d30b09 bytes, and hash those current files in ordinary routing verification before making the durable-audit claim. In execution/review mode, verify the pinned evidence digests against real git show f9d30b09:path in addition to the existing range audit. Add a real-filesystem tamper negative that changes a historical owner or inventory record and requires ordinary routing verification to fail. Preserve the historical JSON files unchanged and keep ordinary verification independent of historical Git objects.",
+      "verified_immutable_sha256": {
+        "tests/sprint-05-orient-search/evidence/FIX-ORI-SUITE-2-1/owner-routing.json": "38e82ac499a39444a154c38051c0e595b76a098cc649d742e8288027e6078c03",
+        "tests/sprint-05-orient-search/evidence/FIX-ORI-SUITE-2-1/aggregate-inventory.json": "48e807babdeb5b1f71e2bc8d791097d6f9fb89b4e3801c3e66b7152fbbdd6909"
+      }
+    }
+  ],
+  "validation": {
+    "filtered_verifier_tests": {
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts -t verifier-contract",
+      "exit": 0,
+      "result": "4 passed; the native/full-proof test was deliberately not selected by this checkpoint command",
+      "real_shallow_check": "The test creates a real two-commit filesystem repository and depth-one clone, confirms HEAD^ is absent, verifies a current-file hash, and rejects changed bytes and altered scope metadata. It exercises verifier helpers, not a completed real native proof artifact."
+    },
+    "historical_routing_audit": {
+      "command": "OWNER_ROUTING_EXECUTION_AUDIT=1 pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts",
+      "exit": 0,
+      "result": "1 passed; real immutable Git range and blob checks executed"
+    },
+    "ordinary_routing_tamper_probe": {
+      "method": "Copied the exact candidate test and actual committed historical JSON files into a temporary filesystem directory, linked the existing installed dependencies, and ran the real Vitest test twice. The second run changed only routes[0].owner in the copied map. Removed the temporary directory afterward.",
+      "baseline_exit": 0,
+      "changed_historical_owner_exit": 0,
+      "result": "FAIL: changed historical owner was accepted"
+    },
+    "typecheck": {
+      "command": "pnpm exec tsc --noEmit",
+      "exit": 0
+    },
+    "scoped_biome": {
+      "command": "pnpm exec biome check tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts tests/sprint-05-orient-search/aggregate-owner-routing.test.ts",
+      "exit": 0,
+      "result": "Checked 2 files; no fixes applied"
+    },
+    "git_diff_check": "PASS for 9be71b2d..cd61aed",
+    "remediation_diff_scope": "Only foreign-suite-repair-proof.test.ts and aggregate-owner-routing.test.ts changed since the previous checkpoint",
+    "historical_routing_bytes": "Both actual current JSON files byte-match git show f9d30b09:path",
+    "harness_sha256": "a20cecd3509da5c1e1ab500c07ddc6488445be23fdf989a026546dc2b1e3e2fc",
+    "fresh_green_json": "ABSENT",
+    "fresh_run_json": "ABSENT",
+    "full_aggregate": "NOT_RUN",
+    "native_tests": "NOT_RUN",
+    "final_harness": "NOT_RUN",
+    "worktree_status_after": "clean",
+    "task_head_after": "cd61aed102dc49f15bdb6a1422bd893511c405f5",
+    "main_observed_during_review": [
+      "962f724943e4a841860b694b476099e69d537671",
+      "b43476cff075cbf0388216b14e110b1bef9774ec",
+      "08c14642fc73a0c025e239317196c16b024366bd"
+    ],
+    "main_movement": "The orchestrator confirmed both movements as its authorized driveWeb merge and task-completion metadata commit. This reviewer made no Git mutations.",
+    "edits": "Only this authorized verdict metadata file; temporary isolated test copies were removed"
+  },
+  "next_work": [
+    "Close the remaining ordinary-routing evidence-byte binding gap and obtain a focused checkpoint re-review.",
+    "After FIX-ORI-RN-004-4 and the device grant, execute the final harness against the real native targets/provider and preserve fresh raw receipts.",
+    "Run the final harness after its last byte change, bind the exact execution candidate and harness hash, and obtain independent all-AC approval before landing."
+  ],
+  "summary": "F1 and F2 are resolved. F3's shallow-history dependency is removed, but ordinary routing verification still accepts altered historical evidence. Correct that narrow gap while native proof remains pending. This is not full-task approval."
+}

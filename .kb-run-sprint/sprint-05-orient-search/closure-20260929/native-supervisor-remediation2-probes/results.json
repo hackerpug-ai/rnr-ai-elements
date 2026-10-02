@@ -1,0 +1,111 @@
+{
+  "candidate": "63fea9b939282f6b90ac5cd8dccfd83a3f7dc8d0",
+  "root": "/Users/justinrich/.cache/agent-scratch/rnr-supervisor-r2-CLVfry",
+  "probes": [
+    {
+      "name": "real lsof on released ephemeral port",
+      "port": 59299,
+      "result": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      "failure": null
+    },
+    {
+      "name": "missing-lsof",
+      "exit": 1,
+      "result": {
+        "status": "failed",
+        "error": "cleanup command failed (spawn ENOENT: spawnSync lsof ENOENT): lsof -nP -t -iTCP:59299 -sTCP:LISTEN",
+        "failure": {
+          "command": [
+            "lsof",
+            "-nP",
+            "-t",
+            "-iTCP:59299",
+            "-sTCP:LISTEN"
+          ],
+          "result": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "",
+            "timedOut": false,
+            "signal": null,
+            "spawnErrorCode": "ENOENT",
+            "spawnErrorMessage": "spawnSync lsof ENOENT"
+          }
+        }
+      }
+    },
+    {
+      "name": "missing-adb",
+      "exit": 1,
+      "result": {
+        "status": "failed",
+        "error": "cleanup command failed (spawn ENOENT: spawnSync adb ENOENT): adb -s emulator-5554 reverse --list",
+        "failure": {
+          "command": [
+            "adb",
+            "-s",
+            "emulator-5554",
+            "reverse",
+            "--list"
+          ],
+          "result": {
+            "exit": 1,
+            "stdout": "",
+            "stderr": "",
+            "timedOut": false,
+            "signal": null,
+            "spawnErrorCode": "ENOENT",
+            "spawnErrorMessage": "spawnSync adb ENOENT"
+          }
+        }
+      }
+    },
+    {
+      "name": "real-command-nonzero",
+      "result": {
+        "exit": 7,
+        "stdout": "review fault",
+        "stderr": "review fault",
+        "timedOut": false,
+        "signal": null,
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      "failure": "exit 7: review fault"
+    },
+    {
+      "name": "real-command-signal",
+      "result": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": false,
+        "signal": "SIGTERM",
+        "spawnErrorCode": null,
+        "spawnErrorMessage": null
+      },
+      "failure": "signal SIGTERM"
+    },
+    {
+      "name": "real-command-timeout",
+      "result": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "",
+        "timedOut": true,
+        "signal": "SIGTERM",
+        "spawnErrorCode": "ETIMEDOUT",
+        "spawnErrorMessage": "spawnSync /Users/justinrich/.nvm/versions/node/v24.14.0/bin/node ETIMEDOUT"
+      },
+      "failure": "timeout"
+    }
+  ]
+}

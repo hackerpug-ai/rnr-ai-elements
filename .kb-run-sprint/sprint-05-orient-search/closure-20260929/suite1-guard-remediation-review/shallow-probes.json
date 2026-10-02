@@ -1,0 +1,100 @@
+{
+  "candidate": "c75dc2688dc86b014d814eae1065d0c48215bf84",
+  "probes": [
+    {
+      "name": "ordinary-shallow",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "mode": null,
+      "duration_seconds": 0.4586026668548584,
+      "current_byte_mismatch_token": false
+    },
+    {
+      "name": "strict-scope-fixture",
+      "exit_code": 1,
+      "expected_exit": 0,
+      "mode": "scope",
+      "duration_seconds": 0.4916541576385498,
+      "current_byte_mismatch_token": false
+    },
+    {
+      "name": "source-tamper",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "mode": null,
+      "duration_seconds": 0.37335991859436035,
+      "current_byte_mismatch_token": true
+    },
+    {
+      "name": "red-tamper",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "mode": null,
+      "duration_seconds": 0.369844913482666,
+      "current_byte_mismatch_token": true
+    },
+    {
+      "name": "green-tamper",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "mode": null,
+      "duration_seconds": 0.37107205390930176,
+      "current_byte_mismatch_token": true
+    },
+    {
+      "name": "run-tamper",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "mode": null,
+      "duration_seconds": 0.37421488761901855,
+      "current_byte_mismatch_token": true
+    },
+    {
+      "name": "boundary-unowned-path-tamper",
+      "exit_code": 0,
+      "expected_exit": 1,
+      "mode": null,
+      "duration_seconds": 0.386843204498291,
+      "current_byte_mismatch_token": false
+    },
+    {
+      "name": "restored-ordinary-shallow",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "mode": null,
+      "duration_seconds": 0.3734750747680664,
+      "current_byte_mismatch_token": false
+    }
+  ],
+  "shape": {
+    "shallow": {
+      "exit": 0,
+      "stdout": "true",
+      "stderr": ""
+    },
+    "detached": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "depth": {
+      "exit": 0,
+      "stdout": "1",
+      "stderr": ""
+    },
+    "local_main": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "base": {
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: Not a valid object name 09123090d57f7747ac3760055a5932392b598351^{commit}"
+    }
+  },
+  "status_before": "?? node_modules\n",
+  "status_after": "?? node_modules\n",
+  "status_unchanged": true,
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949"
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "name": "typecheck",
+    "exit_code": 0,
+    "command": [
+      "pnpm",
+      "typecheck"
+    ]
+  },
+  {
+    "name": "biome",
+    "exit_code": 0,
+    "command": [
+      "pnpm",
+      "exec",
+      "biome",
+      "ci",
+      "tests/sprint-05-orient-search/single-tutorial-gate.test.ts",
+      "tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts",
+      "tests/sprint-04-generated-reference/data-table-contract.test.ts",
+      "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts",
+      "tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts",
+      "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts",
+      "tests/sprint-05-orient-search/search-contract.spec.ts",
+      "tests/sprint-05-orient-search/suite-repair-proof.test.ts"
+    ]
+  }
+]

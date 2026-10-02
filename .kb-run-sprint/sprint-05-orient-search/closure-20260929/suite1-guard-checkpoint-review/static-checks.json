@@ -1,0 +1,86 @@
+{
+  "typecheck": {
+    "exit_code": 0,
+    "command": "pnpm typecheck"
+  },
+  "biome": {
+    "exit_code": 0,
+    "files_checked": 8,
+    "command": "pnpm exec biome ci <eight task-owned files>"
+  },
+  "diff_check": {
+    "exit_code": 0
+  },
+  "stub_scan": {
+    "matches": 0,
+    "exit_code": 1
+  },
+  "scenario_validation": {
+    "exit_code": 0,
+    "scenarios": 3
+  },
+  "scope_audit": {
+    "historical_inventory_matches": true,
+    "historical_path_count": 21,
+    "current_hashes": {
+      "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts": {
+        "recorded": "eba821440c0a28eca9cfcb2500a0e306b8dd4dd02f6d698fc1e01f79beed9788",
+        "observed": "eba821440c0a28eca9cfcb2500a0e306b8dd4dd02f6d698fc1e01f79beed9788"
+      },
+      "tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts": {
+        "recorded": "03b4a3d567085118537473123fa843cd2e670599a86a7240fbcbae4e97b5cc9f",
+        "observed": "03b4a3d567085118537473123fa843cd2e670599a86a7240fbcbae4e97b5cc9f"
+      },
+      "tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts": {
+        "recorded": "9fa470797c7c9168efae14e3ba6155175f8026098b907c14ca0771097295c646",
+        "observed": "9fa470797c7c9168efae14e3ba6155175f8026098b907c14ca0771097295c646"
+      },
+      "tests/sprint-04-generated-reference/data-table-contract.test.ts": {
+        "recorded": "c7565d2be3a362853cd521162142b3ea14fb70a4a5b2b8e9bda35a22d7301b51",
+        "observed": "c7565d2be3a362853cd521162142b3ea14fb70a4a5b2b8e9bda35a22d7301b51"
+      },
+      "tests/sprint-05-orient-search/evidence/ORI-CI-001/duplicate.log": {
+        "recorded": "26db3a6d185366c7ad65bc9366f5582d2bde3031241d7e32a3142279aef4fb04",
+        "observed": "26db3a6d185366c7ad65bc9366f5582d2bde3031241d7e32a3142279aef4fb04"
+      },
+      "tests/sprint-05-orient-search/evidence/ORI-CI-001/manifest.json": {
+        "recorded": "4c8be26a8c94332c2a4029c99d52cf3df29ed169be099a782779200dba0b7cbb",
+        "observed": "4c8be26a8c94332c2a4029c99d52cf3df29ed169be099a782779200dba0b7cbb"
+      },
+      "tests/sprint-05-orient-search/evidence/ORI-CI-001/missing.log": {
+        "recorded": "c5d3d39d0169d082c2ad76c59faf9f402b0941c4d62f366f0281fbb4de398995",
+        "observed": "c5d3d39d0169d082c2ad76c59faf9f402b0941c4d62f366f0281fbb4de398995"
+      },
+      "tests/sprint-05-orient-search/evidence/ORI-CI-001/noncanonical.log": {
+        "recorded": "a6a14907fbe35a910dc0a285ff7d3f77dc29dae3dabe4de3b11e73b7aca300e7",
+        "observed": "a6a14907fbe35a910dc0a285ff7d3f77dc29dae3dabe4de3b11e73b7aca300e7"
+      },
+      "tests/sprint-05-orient-search/evidence/ORI-CI-001/positive.log": {
+        "recorded": "f81010840d4ba9872e2b6bd38ea23e7e7341bfb6ca7af5a8ce62e36b667759a2",
+        "observed": "f81010840d4ba9872e2b6bd38ea23e7e7341bfb6ca7af5a8ce62e36b667759a2"
+      },
+      "tests/sprint-05-orient-search/evidence/ORI-CI-001/restored.log": {
+        "recorded": "713b350bd2bb347214183a2fcddda44445f885cfa44f73e05d357f16fa679382",
+        "observed": "713b350bd2bb347214183a2fcddda44445f885cfa44f73e05d357f16fa679382"
+      },
+      "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts": {
+        "recorded": "e3292e382aff949a1a305bd242f173f4c13b8bd45e1b0532a876affac5d62ebf",
+        "observed": "e3292e382aff949a1a305bd242f173f4c13b8bd45e1b0532a876affac5d62ebf"
+      },
+      "tests/sprint-05-orient-search/search-contract.spec.ts": {
+        "recorded": "658773610465f5ba4051e7ea1b822be10499afd3d85f1515c1f5b7d4e0af5d4b",
+        "observed": "658773610465f5ba4051e7ea1b822be10499afd3d85f1515c1f5b7d4e0af5d4b"
+      },
+      "tests/sprint-05-orient-search/single-tutorial-gate.test.ts": {
+        "recorded": "a8ff6b3fd22f36345747c40f45c4cfce68011183a505c2024ddf9c5ecbc6375b",
+        "observed": "a8ff6b3fd22f36345747c40f45c4cfce68011183a505c2024ddf9c5ecbc6375b"
+      },
+      "tests/sprint-05-orient-search/suite-repair-proof.test.ts": {
+        "recorded": "026dfde423ff6ed53f0f4fb94d6ecca14b298abdbf189e480741893c326ac2bf",
+        "observed": "026dfde423ff6ed53f0f4fb94d6ecca14b298abdbf189e480741893c326ac2bf"
+      }
+    }
+  },
+  "heavy_aggregate_run": false,
+  "docs_and_native_started": false
+}

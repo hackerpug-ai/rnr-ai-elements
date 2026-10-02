@@ -1,0 +1,81 @@
+{
+  "main": "53ad890807079e0afdc256f602455bebaaf56949",
+  "remote_main": "5bfa77283a1182891ac8780fe477c3d676e2d918",
+  "remote_lag_commits": 545,
+  "github": {
+    "runners": 0,
+    "environments": 0,
+    "workflows": [
+      "ci.yml"
+    ],
+    "required_checks": [
+      "typecheck",
+      "lint",
+      "test",
+      "registry"
+    ]
+  },
+  "finding_source": "/root/hosted_contract_preflight read-only specialist report, 2026-09-29",
+  "findings": [
+    {
+      "id": "CI-cycle",
+      "ci003_lines": [
+        79,
+        170,
+        247
+      ],
+      "ci004_lines": [
+        204,
+        304
+      ],
+      "issue": "CI003 requires protected caller proof owned by CI004, which depends on completed CI003",
+      "disposition": "published planner revision distinguishing reusable CI acceptance and protected CI004 integration proof"
+    },
+    {
+      "id": "prepare-owner",
+      "dep002_line": 72,
+      "prepare_line": 218,
+      "issue": "DEP002 requires completed preparation, but prepare.ts supports bootstrap only and both tasks prohibit scripts edits",
+      "disposition": "publish immutable accepted-artifact verification owner and allowed path"
+    },
+    {
+      "id": "remote-selector",
+      "dep002_lines": [
+        123,
+        380
+      ],
+      "issue": "remote.ts glob selects zero remote.spec.ts files",
+      "disposition": "publish explicit intended file selector"
+    },
+    {
+      "id": "public-http",
+      "dep003_line": 251,
+      "public_http_lines": [
+        437,
+        475
+      ],
+      "issue": "completed phase unsupported and completed-site unimplemented; DEP003 cannot edit verifier",
+      "disposition": "publish phase/implementation owner/allowlist/byte assertions"
+    },
+    {
+      "id": "publication-gate",
+      "root_config_line": 18,
+      "publication_config_line": 12,
+      "issue": "DEP003 complete gates omit publication config, root config excludes remote specs",
+      "disposition": "publish existing publication command and evidence ownership"
+    },
+    {
+      "id": "hosted-bootstrap",
+      "issue": "no workflow_dispatch on default branch or eligible protected runner/environment",
+      "disposition": "bounded remote registration and host assignment"
+    }
+  ],
+  "real_refusal_probes": {
+    "public_http_completed_exit": 2,
+    "public_http_completed_site_exit": 2,
+    "prepare_completed_exit": 1,
+    "publication_discovery_tests": 3
+  },
+  "external_required_fact": "Approved clean macOS ARM64 host/account and independent GitHub approver",
+  "status": "read-only preflight, not hosted acceptance"
+}

@@ -1,0 +1,87 @@
+{
+  "item_id": "FIX-ORI-SUITE-1:blocked:2:scope_impact:0:bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe",
+  "wave_id": "wave-27",
+  "source_task": "FIX-ORI-SUITE-1",
+  "source_kind": "blocked",
+  "report_sha256": "bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "nothing",
+  "answers": [
+    {
+      "question": 1,
+      "answer": true,
+      "reason": "Names FIX-ORI-SUITE-2-2 and the required aggregate pnpm test.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-2.blocked.json",
+          "sha256": "bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "answer": false,
+      "reason": "This is an implementer blocked checkpoint, not a reviewer finding.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-2.blocked.json",
+          "sha256": "bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "answer": true,
+      "reason": "Suite1 aggregate acceptance and downstream CI require the missing repair.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-2.blocked.json",
+          "sha256": "bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "answer": false,
+      "reason": "Finishing the existing task changes no product decision, scope, or gate.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-2.blocked.json",
+          "sha256": "bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 5,
+      "answer": false,
+      "reason": "The in-flight corrective task already owns these exact repairs and real proof; unfinished implementation is not a charter contradiction or missing owner. Continue that task, then resume Suite1. No new planning ask.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-1/cycle-2.blocked.json",
+          "sha256": "bbf47153bad801e9725b0655d45c03b6aacbfaba3c47f7d698ce977a121e64fe"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    }
+  ]
+}

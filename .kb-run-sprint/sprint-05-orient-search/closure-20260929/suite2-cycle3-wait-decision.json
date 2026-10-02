@@ -1,0 +1,87 @@
+{
+  "item_id": "FIX-ORI-SUITE-2-2:blocked:3:scope_impact:0:3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188",
+  "wave_id": "wave-28",
+  "source_task": "FIX-ORI-SUITE-2-2",
+  "source_kind": "blocked",
+  "report_sha256": "3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "nothing",
+  "answers": [
+    {
+      "question": 1,
+      "answer": true,
+      "reason": "The blocked report names the native task and device window.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2-2/cycle-3.blocked.json",
+          "sha256": "3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "91e04088b4429c5b67d51a465bff085bf468a7aa225f68afe5859f5ade183f44"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "answer": false,
+      "reason": "This report identifies an execution dependency; prior reviewer code findings stay in remediation.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2-2/cycle-3.blocked.json",
+          "sha256": "3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "91e04088b4429c5b67d51a465bff085bf468a7aa225f68afe5859f5ade183f44"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "answer": true,
+      "reason": "Suite2 is needed by Sprint05 aggregate acceptance.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2-2/cycle-3.blocked.json",
+          "sha256": "3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "91e04088b4429c5b67d51a465bff085bf468a7aa225f68afe5859f5ade183f44"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "answer": false,
+      "reason": "Waiting for existing native proof and exclusive devices changes no gate/product scope.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2-2/cycle-3.blocked.json",
+          "sha256": "3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "91e04088b4429c5b67d51a465bff085bf468a7aa225f68afe5859f5ade183f44"
+        }
+      ]
+    },
+    {
+      "question": 5,
+      "answer": false,
+      "reason": "FIX-ORI-RN-004-4 already owns this proof and is executing its published disposition contract; no missing task or contradictory pending contract remains. Continue existing owner, then resume Suite2.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2-2/cycle-3.blocked.json",
+          "sha256": "3c7fe7d1c64117ba081b7e291c7d7b72ca1675b930300f27db5ab8d8dd960188"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "91e04088b4429c5b67d51a465bff085bf468a7aa225f68afe5859f5ade183f44"
+        }
+      ]
+    }
+  ]
+}

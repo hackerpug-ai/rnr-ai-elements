@@ -1,0 +1,67 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "ea9400aea0ba6e7f804b8951e0462590b35b879f",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "Independent default CLI passed on exact ea9400aea0ba6e7f804b8951e0462590b35b879f. reviewer-cycle-5/full-matrix.run.json run FIX-ORI-RN-003-3-full-1790699290719: nativewind seed 1009 ms and uniwind baseline 805 ms; all five observed booleans true, both fulfill before external cleanup with browser connected. Real public registry installs/Expo exports/Chromium; four distinct markers. Matrix elapsed 114059 ms."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "Same independent matrix: disconnected 30861 ms with markerVisible/markerSubmitted false and both seeds true; restored 807 ms with all five true. Exactly one callback mutation; original/restored SHA256 270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2, mutation 3a3884d24442d0d979d093500f74c80ccac7dcde99e60247a227c5d3b8ce344a. All calls fulfill before harness cleanup; exact bytes restored. Independent diagnostic mode also passed."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": false,
+      "evidence": "The prior later-main attribution defect is fixed in a full checkout: the independently run source guard passes with 175 unrelated paths on main962f7249. One concrete portability defect remains: drive-web-return-proof.test.ts:1069 unconditionally calls laterMainPathsOutsideTaskScope, which requires local main and historical base objects (:325-328); :1070 calls assertRecordedTaskDiffAudit, which also dereferences historical execution/base commits (:293-305). Current .github/workflows/ci.yml:80 uses plain actions/checkout@v4 and then runs Vitest. Checkout v4 defaults fetch-depth to1. reviewer-cycle-5/shallow-git-proof.json records a real isolated depth1 fetch of the exact candidate: is-shallow=true, rev-parse base091^{tree} exits128, rev-parse --verify main exits128. This ordinary test guard therefore fails in the configured required CI checkout before assessing the actual source. No source edits, mocked Git, or speculative merge were used to establish this.",
+      "fix": "Keep real immutable base-to-execution Git auditing in task runtime/review. Make the ordinary aggregate guard validate the recorded immutable boundary/path evidence and actual current driver/harness hashes without requiring a local main branch or unavailable historical objects. Preserve the committed-path evidence and fail-closed hash checks; do not revert to status-only checks, add a runtime-gated skip, or defer this to unfinished CI tasks. Verify the revised guard in a real shallow/detached checkout as well as the full checkout, and verify changed executable source under the task charter.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": true,
+      "evidence": "Independent default CLI passed on exact ea9400aea0ba6e7f804b8951e0462590b35b879f. reviewer-cycle-5/full-matrix.run.json run FIX-ORI-RN-003-3-full-1790699290719: nativewind seed 1009 ms and uniwind baseline 805 ms; all five observed booleans true, both fulfill before external cleanup with browser connected. Real public registry installs/Expo exports/Chromium; four distinct markers. Matrix elapsed 114059 ms."
+    },
+    {
+      "id": "TC-2",
+      "satisfied": true,
+      "evidence": "Same independent matrix: disconnected 30861 ms with markerVisible/markerSubmitted false and both seeds true; restored 807 ms with all five true. Exactly one callback mutation; original/restored SHA256 270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2, mutation 3a3884d24442d0d979d093500f74c80ccac7dcde99e60247a227c5d3b8ce344a. All calls fulfill before harness cleanup; exact bytes restored. Independent diagnostic mode also passed."
+    },
+    {
+      "id": "TC-3",
+      "satisfied": false,
+      "evidence": "The prior later-main attribution defect is fixed in a full checkout: the independently run source guard passes with 175 unrelated paths on main962f7249. One concrete portability defect remains: drive-web-return-proof.test.ts:1069 unconditionally calls laterMainPathsOutsideTaskScope, which requires local main and historical base objects (:325-328); :1070 calls assertRecordedTaskDiffAudit, which also dereferences historical execution/base commits (:293-305). Current .github/workflows/ci.yml:80 uses plain actions/checkout@v4 and then runs Vitest. Checkout v4 defaults fetch-depth to1. reviewer-cycle-5/shallow-git-proof.json records a real isolated depth1 fetch of the exact candidate: is-shallow=true, rev-parse base091^{tree} exits128, rev-parse --verify main exits128. This ordinary test guard therefore fails in the configured required CI checkout before assessing the actual source. No source edits, mocked Git, or speculative merge were used to establish this.",
+      "fix": "Keep real immutable base-to-execution Git auditing in task runtime/review. Make the ordinary aggregate guard validate the recorded immutable boundary/path evidence and actual current driver/harness hashes without requiring a local main branch or unavailable historical objects. Preserve the committed-path evidence and fail-closed hash checks; do not revert to status-only checks, add a runtime-gated skip, or defer this to unfinished CI tasks. Verify the revised guard in a real shallow/detached checkout as well as the full checkout, and verify changed executable source under the task charter.",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "pass"
+  },
+  "verification_notes": {
+    "scope": "Both real CLI modes, task Vitest selector1/1, typecheck, and scoped Biome2files passed independently in the full task checkout. Separate real Git shallow-checkout probe demonstrates the remaining AC-3 failure; no broad suite was run.",
+    "cleanup": "Six owned listener ports closed; zero disposable consumer/export directories remain. All four canonical evidence/log files were byte-restored; worktree clean. Prior cycle4 browser-launch failure proof remains prior-source evidence; the cleanup code is unchanged.",
+    "flows": "This diagnostic owns no locked flow or journey. FLOW-DOCS-02 and native/live obligations remain open; no native visual or provider claim is made."
+  },
+  "source_binding": {
+    "reviewer_executed_candidate": "ea9400aea0ba6e7f804b8951e0462590b35b879f",
+    "implementer_executable_commit": "cd8d76abdd2b228fce7dd467583289fac80626ae",
+    "final_commit_binding": "Only green.json/run.json/two install logs differ from the executable commit. Exact executable hashes match both implementer and reviewer captures.",
+    "driver_sha256": "69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33",
+    "harness_sha256": "1e7238d40e51b69d51baca223f4c8b2d891dd218d7150960a1962e0c32149136",
+    "reuse_limit": "These real receipts bind ea9400 and this harness hash; preserve them as prior-source evidence if the guard changes. Never relabel them as execution of a later candidate."
+  },
+  "reference": {
+    "url": "https://raw.githubusercontent.com/actions/checkout/v4/action.yml",
+    "lines": "69-71",
+    "fact": "fetch-depth defaults to1"
+  },
+  "summary": "NEEDS_FIXES for one remaining in-scope shallow/detached-checkout dependency in the aggregate source guard. The previous immutable candidate-boundary versus later-main attribution defect is resolved, and all real diagnostic/matrix behaviors passed independently on this exact candidate. Do not change the shared driver or invent RED. Reviewer evidence is separate under reviewer-cycle-5; original canonical receipts were restored. Main remained 962f724943e4a841860b694b476099e69d537671."
+}

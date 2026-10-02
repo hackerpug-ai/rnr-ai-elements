@@ -1,0 +1,89 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:58",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:181"
+      ],
+      "reason": "The final routing count mismatch is fixed and verified with actual child output. The exact final combined harness proof remains pending."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "FAIL",
+      "classification": "PENDING_REAL_NATIVE_PROOF",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:59"
+      ],
+      "reason": "Native AC2 is still unexecuted for this task. This bounded review used no devices, native selectors or service ports."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PASS",
+      "evidence": [
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:57",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:73",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:90"
+      ],
+      "reason": "Cycle3 accepted the immutable routing evidence binding and real mutation checks. Their code is unchanged. The actual execution-mode routing child passed 2/2 again as input to this focused count-contract probe."
+    },
+    {
+      "id": "DONE-WHEN-4",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:61"
+      ],
+      "reason": "All ACs are enumerated. Accepted code findings are closed, but no all-AC approval is possible before the final native and combined proof. Static checks were not repeated for this isolated numeric-literal change."
+    }
+  ],
+  "verdict": "NEEDS_FIXES",
+  "checkpoint_status": "CHECKPOINT_CODE_ACCEPTED",
+  "task_completion_status": "INCOMPLETE_DO_NOT_LAND",
+  "task": "FIX-ORI-SUITE-2-2",
+  "commit_sha": "b705e26f64dafad9a28fb859a2d55fe1d0e7bab7",
+  "previous_checkpoint_sha": "e7fe88a4df745556b13c7eead07dfc93833ec89d",
+  "reviewer": "ghactions-reviewer",
+  "review_scope": "Only the one-line ROUTING_SELECTOR.expectedPasses 1-to-2 correction and causal real output acceptance; no re-audit of accepted F1/F2/F3.",
+  "resolved_findings": [
+    {
+      "id": "F4",
+      "verdict": "RESOLVED",
+      "location": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:181",
+      "reason": "The exact diff changes only expectedPasses from 1 to 2. The actual candidate routing child exits zero with two passed, zero failed and zero skipped tests. The exact candidate tallyOf/assertSelectorGreen now accepts that actual result."
+    }
+  ],
+  "findings": [],
+  "carried_forward_findings": {
+    "F1": "RESOLVED in cycle2",
+    "F2": "RESOLVED in cycle2",
+    "F3": "RESOLVED in cycle3"
+  },
+  "validation": {
+    "exact_diff": "Only ROUTING_SELECTOR.expectedPasses changed from 1 to 2; no other file or line changed",
+    "git_diff_check": "PASS",
+    "causal_routing_probe": {
+      "method": "Parsed the actual candidate ROUTING_SELECTOR, tallyOf and assertSelectorGreen with the installed ts-morph compiler API; transpiled their unchanged bodies; spawned the real pnpm child using the actual selector args and execution-audit environment; parsed and validated its actual output. No service, transport or assertion was mocked.",
+      "child_exit": 0,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "expected_passes": 2,
+      "result": "routing_harness_contract: ACCEPTED",
+      "probe_exit": 0
+    },
+    "native_tests": "NOT_RUN",
+    "full_aggregate": "NOT_RUN",
+    "final_harness": "NOT_RUN",
+    "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+    "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+    "task_head_after": "b705e26f64dafad9a28fb859a2d55fe1d0e7bab7",
+    "worktree_status_after": "clean",
+    "edits": "Only this authorized metadata verdict; no task, product, state or main edits"
+  },
+  "next_work": [
+    "Run the exact final harness after the native prerequisite and exclusive device grant, preserving actual native/provider receipts and binding the executed harness/candidate bytes.",
+    "Obtain independent all-AC review of the final proven candidate before landing."
+  ],
+  "summary": "CHECKPOINT CODE ACCEPTED: all reported code findings are resolved. AC2 and the exact final combined proof remain pending. This is not whole-task APPROVED and does not authorize landing."
+}

@@ -38353,7 +38353,11 @@
      "remediation_dispatch_handle": null,
      "wip": null
     }
-   ]
+   ],
+   "blocker_discharged": {
+    "by": "FIX-ORI-SUITE-2-2 reviewed merge ad747617 (2026-10-02)",
+    "effect": "Repairs + real proof landed on main. AC-3 aggregate refresh (full pnpm test) may proceed. Device window remains with ORI-CONT-004 rerun \u2014 vitest aggregate does not need it."
+   }
   },
   "FIX-ORI-SUITE-2": {
    "approved_sha": "92d0f004aea8b2e311a58544cb6182fbf571b99a",
@@ -38727,11 +38731,17 @@
     "source_audit": ".kb-run-sprint/sprint-05-orient-search/closure-20260929/suite2-completion-audit.verdict.json"
    },
    "reviewer": "ghactions-reviewer",
-   "status": "in_progress",
+   "status": "completed",
    "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
    "blocker_discharged": {
     "by": "FIX-ORI-RN-004-4 closure 2026-10-01",
     "effect": "Native device window released; AC2 NativeWind selectors may run. See closure-20261001/closure.json"
+   },
+   "completion_note": {
+    "branch_tip": "4e005fda4f08ab5ddaff743dd664e4e10a009fbd",
+    "merge_commit": "ad747617",
+    "verdict": "APPROVED (ghactions-reviewer, cycle-2.verdict.json; canonical copy of closure-20261001/suite2-resume-review.verdict.json)",
+    "evidence": ".tmp/FIX-ORI-SUITE-2-2/green.json + run.json; runs ORI-RN-005-1790898804562 / ORI-RN-005-1790900528999"
    }
   },
   "FIX-ORI-VIS-001-1": {

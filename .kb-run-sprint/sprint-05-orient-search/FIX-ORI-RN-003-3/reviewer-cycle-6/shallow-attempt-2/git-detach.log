@@ -1,0 +1,5 @@
+BLOCKED (main-folder guard): branching off 'main' is forbidden in the primary checkout.
+Creating or switching a branch here moves the SHARED working tree and flattens every
+other actor in this folder. Use a worktree for isolation:
+  /usr/bin/git worktree add .claude/worktrees/<name>
+To override (release cuts, etc.): ALLOW_MAIN_BRANCH=1 <command>

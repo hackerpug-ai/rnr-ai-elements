@@ -1,0 +1,91 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "FAIL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md:78",
+        "tests/sprint-05-orient-search/docs-collection.test.ts:92",
+        "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts:321",
+        "tests/sprint-05-orient-search/live-example-api.test.ts:631"
+      ],
+      "reason": "Main still contains the original three unrepaired suite files. Their Git blobs equal 8ee4282f and differ from implementation commit 3dc22d71. The required foreign-suite-repair-proof.test.ts does not exist on main."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md:79",
+        ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2/cycle-2.verdict.json:11",
+        ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-SUITE-2/.tmp/FIX-ORI-SUITE-2/green.json:40"
+      ],
+      "reason": "Preserve the historical real native proof: both selectors recorded exit 0, completed manifests and fresh teardown; abort proof recorded 4 aborted and 20 completed provider records. Native test bytes and the source-manifest blob remain unchanged. However, the proof harness is absent from main, and its committed bytes differ from the harness that generated the retained evidence. This audit cannot approve the exact final candidate."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md:141",
+        ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2/cycle-3.verdict.json:5",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:73"
+      ],
+      "reason": "The owner-map closure and its historical approval are legitimate and must remain. The whole criterion starts with GIVEN the repaired tree, which is false on main. Its routing test also compares all four suite files against moving main, so it will reject an actual repair branch before landing. Bind that historical no-edit proof to the owner-map commit boundary instead."
+    }
+  ],
+  "verdict": "NEEDS_FIXES",
+  "task": "FIX-ORI-SUITE-2",
+  "audited_main": "53034655a3062e9fa0e9f942e271d12418fb7a62",
+  "approved_commit": "92d0f004aea8b2e311a58544cb6182fbf571b99a",
+  "unmerged_implementation": "3dc22d71154d0bd43764cc33f4b8f78d2530aa75",
+  "findings": [
+    {
+      "severity": "HIGH",
+      "issue": "A charter-only AC-3 approval was recorded as completion of the entire implementation task.",
+      "evidence": [
+        ".kb-run-sprint/sprint-05-orient-search/state.json:31234",
+        ".kb-run-sprint/sprint-05-orient-search/state.json:31318",
+        ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2/cycle-3.verdict.json:7",
+        ".kb-run-sprint/sprint-05-orient-search/handoffs/FIX-ORI-SUITE-2-92d0f004aea8b2e311a58544cb6182fbf571b99a.json:4"
+      ],
+      "verified_facts": [
+        "92d0f004 changes only TASK-FIX-ORI-SUITE-2.md and is an ancestor of main.",
+        "3dc22d71 is not an ancestor of main.",
+        "The handoff explicitly states that the four suite files were unchanged and 3dc22d71 was not merged.",
+        "Cycle-3 enumerates AC-3 only; AC-1 and AC-2 are omitted.",
+        "The task still has three unchecked DONE WHEN boxes and PROGRESS: 0/3."
+      ]
+    },
+    {
+      "severity": "HIGH",
+      "issue": "Existing green evidence does not certify the exact committed proof harness.",
+      "evidence": [
+        ".kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-SUITE-2/.tmp/FIX-ORI-SUITE-2/green.json:6",
+        ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-SUITE-2/cycle-1.verdict.json"
+      ],
+      "verified_facts": [
+        "All four suite SHA-256 values match implementation commit 3dc22d71.",
+        "Captured harness SHA-256 is 5d504cd0ec549f617e962cfbfd708dfc9f24bfe666df5a93e46019505a1dcf4e.",
+        "Committed harness SHA-256 is 6e50108c4b65b61f67beec6a5dd3f3b6c1a18bd96614a8a5de45e0874399c45f.",
+        "The commit message discloses a post-capture refactor; this audit did not establish behavioral equivalence.",
+        "No product changes exist between 8ee4282f and audited main under apps/example, scripts, packages/docs-snippets, or the NativeWind source-manifest path."
+      ]
+    }
+  ],
+  "minimal_correction": [
+    "Create a narrow remediation FIX through the existing supported task-contract process. Its contract must explicitly identify the premature completion and block sprint closure until AC-1, AC-2 and AC-3 are satisfied together.",
+    "Preserve the original completed entry, reviews, withdrawals, implementation commit, owner map and receipts. Add an auditable superseding correction; do not hand-edit state, invent a reopen command or rewrite historical review outcomes.",
+    "Use 3dc22d71 as implementation input in a clean worktree based on current main. Import the three suite repairs, proof harness and original historical evidence deliberately; do not merge the dirty existing worktree or treat its previous NEEDS_FIXES verdict as approval.",
+    "Preserve AC-3's owner map and residual token. Change the routing test's historical no-edit comparison from moving main to the immutable owner-map commit f9d30b09eadf06350a691cc9bd39a667ee2a8e52 and its parent. This proves the routing change did not edit the suites while allowing the separately required repairs.",
+    "Retain old RED/GREEN receipts with their original hashes and timestamps. Establish real proof for the exact final harness and candidate; never relabel the old capture. The retained native evidence remains useful, but this audit does not grant an exact-candidate approval.",
+    "Have an independent reviewer enumerate all three criteria on the final repair candidate, run the task's real verification and static gates, approve that SHA, and let the orchestrator land and complete the new FIX through the supported provenance path."
+  ],
+  "verification": {
+    "git_ancestry_and_blob_comparisons": "performed",
+    "committed_evidence_hash_comparisons": "performed",
+    "aggregate_tests": "not_run",
+    "native_tests": "not_run",
+    "product_or_state_edits": "none",
+    "main_unchanged_during_audit": true,
+    "workflow_security_review": "not_applicable_to_this_read_only_completion_audit"
+  }
+}

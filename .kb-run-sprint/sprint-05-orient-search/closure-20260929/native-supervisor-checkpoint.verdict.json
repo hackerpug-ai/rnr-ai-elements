@@ -1,0 +1,75 @@
+{
+  "task_id": "FIX-ORI-RN-004-4",
+  "review_type": "read_only_supervisor_checkpoint",
+  "verdict": "NEEDS_FIXES",
+  "candidate_sha": "db04b8e56ebacef38d2fb38210141db033170b69",
+  "parent_sha": "493e25317f425623e88c1f35d9180974f5495955",
+  "candidate_sha_correction": "Requested db04b8e52552a5a93f0a11e2d20b2483d9bfe723 does not exist; root confirmed actual worktree HEAD db04b8e56ebacef38d2fb38210141db033170b69.",
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "reviewed_wrapper_sha256": "b2da2f98ea6110f177cc0f0e0ff7acedcc2b9fa10f53a7ae5ea9060b1ad4d74c",
+  "findings": [
+    {
+      "id": "NS-01",
+      "severity": "error",
+      "path": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
+      "lines": [
+        346,
+        353,
+        479,
+        548
+      ],
+      "summary": "NativeWind classification is transient and does not enforce the required phase or per-leg deadlines.",
+      "evidence": [
+        "NativeWind support/nativewind-live-example.ts emits no [heartbeat] progress lines. buildNativeWindConsumer runs a whole bash recipe at lines 338-341; that recipe includes npx expo install and npx expo install --check, which are absent from callerProgress consumer-preparation command patterns.",
+        "With a copied real NativeWind phase-start journal and the actual completed driver log, callerProgress returns nativewind:reject:backend-start with a 120000 ms timeout. Nonmatching consumer setup and native activity use this same fallback.",
+        "A real detached process carrying the caller iOS flag and an Android Maestro command shape returned nativewind:reject:ios-leg. The production caller argv always contains the iOS UDID, so searching the whole group cannot identify the active Maestro target.",
+        "refreshProgress resets phaseStartedAt on every classification change. NativeWind interleaves short Maestro processes with adb/provider waits; ios-leg/backend-start alternation resets the 2400000 ms native-leg clock. The NativeWind driver has no enclosing 2400000 ms leg timer to compensate.",
+        "latestDriverStep discards timestamps; callerProgress can use prior phase/engine heartbeats before consulting the newer journal or consumer branch."
+      ],
+      "required_fix": "Use phase-scoped progress from actual journal/driver timestamps and exact owned process identities. Recognize the entire NativeWind consumer recipe and preparation interval, distinguish the active Maestro target from caller argv, and preserve monotonic per-phase/per-leg start times through child-command changes. Backend substeps must not reset the enclosing native-leg deadline. Validate against real retained logs plus bounded process probes; do not change driver/product behavior or run the full matrix until this is reviewed."
+    },
+    {
+      "id": "NS-02",
+      "severity": "error",
+      "path": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
+      "lines": [
+        160,
+        162,
+        406,
+        412,
+        1032,
+        1154,
+        1196,
+        1212
+      ],
+      "summary": "The declared 180-second cleanup limit is not enforced; cleanup can stall outside every supervisor timer.",
+      "evidence": [
+        "supervise clears the overall, phase, heartbeat and escalation timers before returning.",
+        "runFull then calls cleanupOwnedRuntime and deviceFacts synchronously. commandOutput uses spawnSync with no timeout, including adb reverse, appearance restoration, ps and lsof. Any hung command prevents the wrapper from writing run.json or completing.",
+        "Only the process-group TERM grace has a local 10000 ms limit. The 180000 ms cleanup value in phase_deadlines_ms does not cover the wrapper cleanup operation.",
+        "The runFull cleanup/evidence path has no try/finally or outer failure receipt if the supervisor/probe or cleanup command throws."
+      ],
+      "required_fix": "Keep a real bounded supervisory context through cleanup, give each external cleanup/observation command an explicit remaining deadline, and preserve a failure receipt before escalation. Guarantee cleanup/evidence finalization after supervisor errors, while terminating only recorded owned processes and preserving foreign resources. Independently exercise an actual hanging cleanup child and verify bounded termination, truthful failure, and resource absence."
+    }
+  ],
+  "checks": {
+    "typecheck": "pnpm typecheck: exit 0",
+    "biome": "pnpm exec biome ci tests/sprint-05-orient-search/native-live-repair-proof_test.ts: exit 0",
+    "diff_check": "git diff 493e253..candidate --check: exit 0",
+    "actual_overall_timeout": "TERM-resistant detached Node child was SIGKILLed after 500 ms limit plus 10000 ms grace; zero group members afterward.",
+    "actual_phase_timeout": "Real detached Node child terminated with SIGTERM on phase:owned-process-probe; 1000 ms phase limit was observed at the 5000 ms polling cadence; zero group members afterward.",
+    "kind_schema": "Actual caller journal uses kind; replacement parser reads it correctly.",
+    "device_mutations": false,
+    "native_or_full_caller_runs": false,
+    "source_mutations": false,
+    "worktree_preservation": "Same ten dirty ORI-RN-004 paths and untracked cycle-4 retained; reviewed source unchanged."
+  },
+  "limits": [
+    "Checkpoint only; no native UI behavior or whole-task approval.",
+    "Process classification probe used an actual harmless process with representative argv, not an actual Maestro/device call.",
+    "Existing journal/log bytes were replayed through unchanged function bodies in an isolated scratch module; original CLI entrypoint removed and HERE rebound to the source directory. No product services were stubbed."
+  ],
+  "evidence_directory": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/native-supervisor-checkpoint-probes",
+  "observed_at": "2026-09-29T18:57:55.061877+00:00"
+}

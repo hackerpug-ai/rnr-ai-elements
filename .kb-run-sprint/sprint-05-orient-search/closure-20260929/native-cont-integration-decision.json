@@ -1,0 +1,107 @@
+{
+  "item_id": "FIX-ORI-RN-004-4:blocked:1:scope_impact:1:9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d",
+  "wave_id": "wave-28",
+  "source_task": "FIX-ORI-RN-004-4",
+  "source_kind": "blocked",
+  "report_sha256": "9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d",
+  "field": "scope_impact",
+  "index": 1,
+  "outcome": "nothing",
+  "answers": [
+    {
+      "question": 1,
+      "answer": true,
+      "reason": "The item names CONT and three exact unreviewed YAML-only commits.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json",
+          "sha256": "9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "8d7a58d730f78f696c61c593cb7a0a4e36b6f7bceaf9367098ec11311a963ea4"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+          "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "answer": false,
+      "reason": "This is an implementer scope report, not a failed review.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json",
+          "sha256": "9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "8d7a58d730f78f696c61c593cb7a0a4e36b6f7bceaf9367098ec11311a963ea4"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+          "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "answer": true,
+      "reason": "CONT is an unfinished Sprint05 task needed by the locked Quickstart gate.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json",
+          "sha256": "9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "8d7a58d730f78f696c61c593cb7a0a4e36b6f7bceaf9367098ec11311a963ea4"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+          "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "answer": false,
+      "reason": "Preserving branch history while admitting only independently reviewed native bytes changes no required proof or product behavior.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json",
+          "sha256": "9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "8d7a58d730f78f696c61c593cb7a0a4e36b6f7bceaf9367098ec11311a963ea4"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+          "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+        }
+      ]
+    },
+    {
+      "question": 5,
+      "answer": false,
+      "reason": "The existing native-owner task already owns the YAML and proof; its revision is already dispatched. No separate missing product capability or additional task is established. Keep this as integration context for CONT and the native owner; unreviewed YAML commits must not be landed as incidental content changes.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-004-4/cycle-1.blocked.json",
+          "sha256": "9ad0238ec5792e75a3b8e179da1720c61c273ce607138106c60e37f07c4f340d"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-RN-004-4.md",
+          "sha256": "8d7a58d730f78f696c61c593cb7a0a4e36b6f7bceaf9367098ec11311a963ea4"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/ORI-CONT-004-verify-the-completed-content-path-and-bind-its-claims-to-real-integration-evidence.md",
+          "sha256": "11b394d07df2c051f033c8b1db4a0507724ca4bd5f786118b9f6cbe283f5cc68"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "task_id": "FIX-ORI-RN-004-4",
+  "review_type": "read_only_supervisor_checkpoint_ns02r1",
+  "verdict": "APPROVED_CHECKPOINT",
+  "candidate_sha": "63fea9b939282f6b90ac5cd8dccfd83a3f7dc8d0",
+  "previous_candidate_sha": "160e6fb2f90736fb5a1cc74db8b0a79514cb3258",
+  "prior_verdict_sha256": "e050053eb6f958621fc8e12399bb2766b6ec5b8aa7621827a94c4029e8b91094",
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "wrapper_sha256": "16c96a2b7df464480011fa3098f1188a360e0431ef5228909a10b02e2e3515e0",
+  "findings": [],
+  "resolved": [
+    "NS-02-R1: structured spawn errors, signals, timeouts and disallowed nonzero statuses now fail cleanup with an exact failed-command receipt. Only real empty lsof exit 1 is accepted.",
+    "NS-01 and earlier NS-02 timeout fixes retained unchanged from the preceding checkpoint review."
+  ],
+  "checks": {
+    "actual_missing_lsof": "Actual --internal-cleanup with unavailable lsof exited 1, status failed, exact ENOENT and argv recorded.",
+    "actual_missing_adb": "Actual --internal-cleanup with real lsof available and adb unavailable accepted the real empty listener observation, then exited 1 with exact adb ENOENT. No device call executed.",
+    "actual_empty_lsof": "Bound and released a real ephemeral TCP port; real lsof returned exit 1, empty stdout/stderr, no signal/spawn error. Cleanup policy accepted it.",
+    "actual_child_failures": "Real Node subprocesses exited 7 with stderr, terminated with SIGTERM, and timed out. The actual command normalization and cleanup policy rejected all three with the right reasons.",
+    "typecheck": "pnpm typecheck exit 0",
+    "scoped_biome": "pnpm exec biome ci tests/sprint-05-orient-search/native-live-repair-proof_test.ts exit 0",
+    "hooks": "pnpm hooks:check exit 0; actual Biome, Fallow and typecheck jobs ran. Warnings/informational diagnostics did not fail the configured gates.",
+    "diff_check": "git diff previous..candidate --check exit 0",
+    "scope": "One committed path: native-live-repair-proof_test.ts. No reviewer source edits. Same ten dirty ORI-RN-004 paths and untracked cycle-4 preserved.",
+    "device_calls": false,
+    "native_matrix_runs": false
+  },
+  "evidence_directory": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/native-supervisor-remediation2-probes",
+  "approval_boundary": "May proceed to a fresh cycle-5 disposition and six-target native proof on this exact executable. This approves only the supervisor checkpoint; it does not approve the full native task, landing or sprint closure.",
+  "limits": [
+    "No native UI proof was rerun. Fresh six-target proof and its independent task review remain mandatory.",
+    "Command-policy probes used exact function bodies extracted to scratch with the CLI entrypoint removed and HERE rebound to the source directory. Missing-dependency probes invoked the actual candidate wrapper. No API/device result was replaced with a canned success.",
+    "The prior independent 15.374-second hanging-cleanup probe remains applicable: timeout/supervision code was not weakened, and this delta additionally rejects the structured timeout result.",
+    "Evidence archival omits the scratch symlink to /usr/sbin/lsof; the system executable itself is not part of the artifact."
+  ],
+  "observed_at": "2026-09-29T19:28:34.771237+00:00"
+}

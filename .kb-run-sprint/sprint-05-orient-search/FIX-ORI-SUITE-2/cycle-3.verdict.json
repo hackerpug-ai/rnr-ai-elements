@@ -1,0 +1,20 @@
+{
+  "verdict": "APPROVED",
+  "commit_sha": "92d0f004aea8b2e311a58544cb6182fbf571b99a",
+  "reviewer": "ghactions-reviewer",
+  "requirements": [
+    {
+      "id": "AC-3",
+      "satisfied": true,
+      "evidence": "git diff 40e84949eff8acdcdc9c709d1fb2bfc6dd0e05b0..92d0f004aea8b2e311a58544cb6182fbf571b99a changes only .spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md. AC-3 VERIFY, TC-3, the how-to-verify block, the runtime section, and the requirement contract all use pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts. The chartered closure is tests/sprint-05-orient-search/evidence/FIX-ORI-SUITE-2-1/owner-routing.json, whose residual_tokens stays exactly [FLOW-DELIV-01-ci-chain-order] with residual_widened false; the 36 failed files are forbidden from the residual. The four suite paths are absent from the diff and are not to be edited to manufacture a one-token aggregate. Commit 3dc22d71154d0bd43764cc33f4b8f78d2530aa75 is stated not to satisfy AC-3 because its recorded pnpm test has charter_residual_match false. pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts passed 1/1."
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "not_rerun",
+    "lint": "not_rerun",
+    "tests": "pass"
+  },
+  "summary": "Commit 92d0f004aea8b2e311a58544cb6182fbf571b99a revises only the FIX-ORI-SUITE-2 charter so AC-3 closes on the already-landed owner map and the aggregate-owner-routing test, keeps the residual token FLOW-DELIV-01-ci-chain-order without adding the 36 failed files, does not edit the four suite files or tell anyone to edit them to force a one-token aggregate, and does not treat commit 3dc22d71154d0bd43764cc33f4b8f78d2530aa75 as the AC-3 proof. The allowed routing test passed."
+}

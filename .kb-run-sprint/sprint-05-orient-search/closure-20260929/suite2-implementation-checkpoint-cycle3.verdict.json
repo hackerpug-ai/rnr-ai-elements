@@ -1,0 +1,113 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:58",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:181",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:876"
+      ],
+      "reason": "The repairs and prior evidence remain unchanged. Final combined proof is pending; the newly added routing test now makes the harness reject the valid routing result because its expected count remains one. See F4."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "FAIL",
+      "classification": "PENDING_REAL_NATIVE_PROOF",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:59"
+      ],
+      "reason": "Native AC2 and final-harness proof remain pending. This review ran no native selectors and used no devices or service ports."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PASS",
+      "evidence": [
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:23",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:57",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:84",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:90"
+      ],
+      "reason": "Both ordinary and execution modes independently pass 2/2. Ordinary mode hashes the actual owner map and inventory against immutable digests; execution mode checks those pins against real f9d30b09 Git blobs. The actual filesystem mutation test rejects both changed owner and changed inventory bytes."
+    },
+    {
+      "id": "DONE-WHEN-4",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:61"
+      ],
+      "reason": "All ACs are enumerated. Prior static results and accepted F1/F2 findings are retained; this bounded cycle did not rerun them. Final all-AC approval remains blocked."
+    }
+  ],
+  "verdict": "NEEDS_FIXES",
+  "checkpoint_status": "CODE_REVIEW_ONLY_INCOMPLETE_DO_NOT_LAND",
+  "task": "FIX-ORI-SUITE-2-2",
+  "commit_sha": "e7fe88a4df745556b13c7eead07dfc93833ec89d",
+  "previous_checkpoint_sha": "cd61aed102dc49f15bdb6a1422bd893511c405f5",
+  "reviewer": "ghactions-reviewer",
+  "review_scope": "Only the remaining F3 fix and its immediate routing-selector integration; no broader audit, native tests, aggregate, product edits, state transitions or Git mutations.",
+  "resolved_findings": [
+    {
+      "id": "F3",
+      "verdict": "RESOLVED",
+      "evidence": [
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:65",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:84",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:90"
+      ],
+      "reason": "The current actual historical evidence bytes are now hashed against the previously independently verified immutable digests. Both real filesystem mutations fail. Ordinary mode retains no historical Git dependency; execution/review mode verifies the historical source blobs."
+    }
+  ],
+  "carried_forward_findings": {
+    "F1": "RESOLVED in cycle2; its source was unchanged and not rerun",
+    "F2": "RESOLVED in cycle2; its source was unchanged and not rerun"
+  },
+  "findings": [
+    {
+      "id": "F4",
+      "severity": "HIGH",
+      "location": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:181",
+      "related_locations": [
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:90",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:876"
+      ],
+      "issue": "Adding the routing tamper test changes the real routing result to two passing tests, but the final proof selector still expects exactly one.",
+      "evidence": "Both targeted routing modes report Tests 2 passed (2). An independent probe parsed the exact candidate ROUTING_SELECTOR, tallyOf and assertSelectorGreen definitions with ts-morph, transpiled them without changing their bodies, ran the real routing child with OWNER_ROUTING_EXECUTION_AUDIT=1, and passed its actual output through those functions. The actual tally was passed=2, failed=0, skipped=0 and child exit=0; the real assertion rejected it with: selector immutable-owner-routing executed 2 passed / 0 failed / 0 skipped tests; expected exactly 1 passed, 0 filtered skips, and no failures.",
+      "fix": "Set ROUTING_SELECTOR.expectedPasses to 2 so both fresh and recorded exact-count checks match the now-two-test routing suite. Retain exact equality, zero failed tests and zero skips. Verify this narrow contract using the real routing child output before the full native/final-harness proof."
+    }
+  ],
+  "validation": {
+    "ordinary_routing": {
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts",
+      "exit": 0,
+      "result": "2 passed"
+    },
+    "execution_routing": {
+      "command": "OWNER_ROUTING_EXECUTION_AUDIT=1 pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts",
+      "exit": 0,
+      "result": "2 passed; real immutable Git checks executed"
+    },
+    "filesystem_negatives": "PASS: the actual verifier rejects changed owner-routing.json and aggregate-inventory.json bytes in temporary filesystem copies; no fake provider or transport evidence",
+    "routing_harness_count_probe": {
+      "child_exit": 0,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "expected_passes": 1,
+      "result": "REJECTED by actual assertSelectorGreen"
+    },
+    "probe_note": "The first probe attempt could not load the root TypeScript compiler API and exited before invoking any test; retry with the installed ts-morph compiler API executed the real routing child and exact assertions.",
+    "git_diff_check": "PASS for cd61aed..e7fe88a",
+    "diff_scope": "Only aggregate-owner-routing.test.ts changed; accepted F1/F2 source is unchanged",
+    "native_tests": "NOT_RUN",
+    "full_aggregate": "NOT_RUN",
+    "final_harness": "NOT_RUN",
+    "static_checks": "Not rerun in this bounded cycle; author reports passed",
+    "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+    "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+    "task_head_after": "e7fe88a4df745556b13c7eead07dfc93833ec89d",
+    "worktree_status_after": "clean",
+    "edits": "Only this authorized metadata verdict; no task/source/main edits"
+  },
+  "summary": "F3 is resolved. Update the routing selector expected count from one to two, then obtain the final real native and combined-harness proof. This checkpoint does not approve the task for landing."
+}

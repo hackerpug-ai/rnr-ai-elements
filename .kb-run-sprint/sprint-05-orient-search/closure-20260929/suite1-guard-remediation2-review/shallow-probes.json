@@ -1,0 +1,172 @@
+{
+  "candidate": "02ff850a7d07fb9db1a428a8eea83bccc8b8f4d2",
+  "shape": {
+    "shallow": {
+      "exit": 0,
+      "stdout": "true",
+      "stderr": ""
+    },
+    "detached": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "depth": {
+      "exit": 0,
+      "stdout": "1",
+      "stderr": ""
+    },
+    "local_main": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "base": {
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: Not a valid object name 09123090d57f7747ac3760055a5932392b598351^{commit}"
+    }
+  },
+  "probes": [
+    {
+      "name": "ordinary-shallow",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_token": null,
+      "token_observed": null,
+      "duration_seconds": 0.4182162284851074,
+      "mode": null
+    },
+    {
+      "name": "strict-clean-fixture",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_token": null,
+      "token_observed": null,
+      "duration_seconds": 0.5089037418365479,
+      "mode": "scope"
+    },
+    {
+      "name": "source-tamper",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "current byte mismatch: tests/sprint-05-orient-search/search-contract.spec.ts",
+      "token_observed": true,
+      "duration_seconds": 0.3954951763153076,
+      "mode": null
+    },
+    {
+      "name": "red-tamper",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "current byte mismatch: .tmp/FIX-ORI-SUITE-1/red.json",
+      "token_observed": true,
+      "duration_seconds": 0.4029111862182617,
+      "mode": null
+    },
+    {
+      "name": "green-tamper",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "current byte mismatch: .tmp/FIX-ORI-SUITE-1/cycle-2/green.json",
+      "token_observed": true,
+      "duration_seconds": 0.38054895401000977,
+      "mode": null
+    },
+    {
+      "name": "run-tamper",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "current byte mismatch: .tmp/FIX-ORI-SUITE-1/cycle-2/run.json",
+      "token_observed": true,
+      "duration_seconds": 0.3804612159729004,
+      "mode": null
+    },
+    {
+      "name": "added-product-path",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "recorded boundary unknown paths",
+      "token_observed": true,
+      "duration_seconds": 0.3755300045013428,
+      "mode": null
+    },
+    {
+      "name": "missing-required-repair",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "recorded boundary missing required paths",
+      "token_observed": true,
+      "duration_seconds": 0.373507022857666,
+      "mode": null
+    },
+    {
+      "name": "duplicate-changed-path",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "recorded boundary duplicate changed paths",
+      "token_observed": true,
+      "duration_seconds": 0.37514781951904297,
+      "mode": null
+    },
+    {
+      "name": "duplicate-proof-record",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "recorded boundary duplicate proof records",
+      "token_observed": true,
+      "duration_seconds": 0.37474703788757324,
+      "mode": null
+    },
+    {
+      "name": "unknown-proof-metadata",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "recorded boundary unknown paths",
+      "token_observed": true,
+      "duration_seconds": 0.37703800201416016,
+      "mode": null
+    },
+    {
+      "name": "inconsistent-proof-records",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "recorded proof metadata inventory is exact",
+      "token_observed": true,
+      "duration_seconds": 0.3759458065032959,
+      "mode": null
+    },
+    {
+      "name": "inconsistent-status",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_token": "stored boundary status matches the derived boundary",
+      "token_observed": true,
+      "duration_seconds": 0.3758049011230469,
+      "mode": null
+    },
+    {
+      "name": "restored-ordinary",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_token": null,
+      "token_observed": null,
+      "duration_seconds": 0.3876769542694092,
+      "mode": null
+    },
+    {
+      "name": "restored-strict-fixture",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_token": null,
+      "token_observed": null,
+      "duration_seconds": 0.5053181648254395,
+      "mode": "scope"
+    }
+  ],
+  "status_before": "",
+  "restored_audit_sha256": "e390cdab4c6e4a40d54b630468b1d8d7b8ea00b539b562b2ef323631b25deb03",
+  "audit_exactly_restored": true,
+  "status_after": "",
+  "all_probes_match": true
+}

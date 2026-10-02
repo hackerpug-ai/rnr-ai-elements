@@ -1,0 +1,26 @@
+{
+  "assumptions": [
+    "The registered task base remains 09123090d57f7747ac3760055a5932392b598351.",
+    "The final seven-selector capture and aggregate run will occur only after the existing Suite 2 and native prerequisites finish.",
+    "This remediation requires no new task scope."
+  ],
+  "blockers": [
+    "FIX-ORI-SUITE-2-2 actual repairs and proof are still required before the final aggregate.",
+    "The required native proof prerequisite remains unfinished."
+  ],
+  "commit_sha": "c75dc2688dc86b014d814eae1065d0c48215bf84",
+  "scope_impact": [
+    {
+      "change": "Complete and land FIX-ORI-SUITE-2-2, then refresh and resume this existing Suite 1 session.",
+      "found": "Suite 1 portable verification is repaired, but the final aggregate still depends on the Suite 2 repairs and proof.",
+      "target": "FIX-ORI-SUITE-2-2"
+    },
+    {
+      "change": "Finish and land the native proof prerequisite, then coordinate the final seven-selector and aggregate run.",
+      "found": "Native verification remains incomplete, so the coordinated final proof window cannot start.",
+      "target": "Sprint 5 native proof prerequisites"
+    }
+  ],
+  "status": "blocked",
+  "summary": "Remediated S1-GUARD-001. Ordinary no-environment mode now runs the portable byte verifier in full-history and depth-1 detached checkouts. The immutable audit binds 14 implementation and drill paths plus three RED, GREEN, and run receipts. Source and receipt tampering fail with exact mismatch paths, restoration passes, and the strict shallow Git-shape assertions remain fixture-only. Explicit green still owns the real seven-selector capture, and the external aggregate remains mandatory. Scoped Biome, typecheck, commit hooks, cleanup, and resource checks passed."
+}

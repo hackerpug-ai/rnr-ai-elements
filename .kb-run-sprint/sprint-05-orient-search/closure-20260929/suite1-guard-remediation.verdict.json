@@ -1,0 +1,125 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "reason": "Prior three focused Vitest receipts retained; heavy real selector rerun excluded from this checkpoint.",
+      "evidence": [
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:21"
+      ]
+    },
+    {
+      "id": "AC-2",
+      "verdict": "PARTIAL",
+      "reason": "Prior four Playwright receipts retained; real browser rerun excluded from this checkpoint.",
+      "evidence": [
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:42"
+      ]
+    },
+    {
+      "id": "AC-3",
+      "verdict": "FAIL",
+      "reason": "Ordinary mode portability fixed, but recorded boundary accepts added unowned paths and missing required repairs. Full aggregate exit remains null.",
+      "evidence": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:853",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:887",
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:65"
+      ]
+    }
+  ],
+  "task": "FIX-ORI-SUITE-1",
+  "review_type": "independent remediation checkpoint only",
+  "candidate": "c75dc2688dc86b014d814eae1065d0c48215bf84",
+  "comparison_base": "e2a734a64c0596d1ef82a69559951236d0db99ac",
+  "verdict": "NEEDS_FIXES",
+  "whole_task_approved": false,
+  "resolved_findings": [
+    {
+      "id": "S1-GUARD-001",
+      "verdict": "PASS",
+      "evidence": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:83",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:1123",
+        "suite1-guard-remediation-review/full-history.json",
+        "suite1-guard-remediation-review/shallow-probes.json"
+      ],
+      "reason": "Default is portable verify. Real ordinary command passes full-history and shallow detached checkouts without local main or historical base objects. Strict fixture assertions are separate."
+    }
+  ],
+  "findings": [
+    {
+      "id": "S1-GUARD-002",
+      "severity": "HIGH",
+      "title": "Portable boundary validation trusts stored status instead of checking the recorded changed-path set",
+      "location": "tests/sprint-05-orient-search/suite-repair-proof.test.ts:853",
+      "supporting_locations": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:875",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:887",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:707"
+      ],
+      "observed": "In the actual c75dc268 depth-1 detached checkout, the ordinary no-env Vitest command exits 0 after scope-audit.boundaryProof.changed receives an unowned apps/docs/src/pages/unowned-review-probe.astro path. It also exits 0 when the required search-contract.spec.ts repair is removed from that list. All current source/receipt hashes remain unchanged. Both JSON mutations were restored byte-exactly.",
+      "cause": "readAndValidateScopeAudit validates implementationPaths, receiptPaths, hash keys, and stored withinBoundary/empty error arrays, but never derives the permitted inventory from boundaryProof.changed and proofRecords. The newly added portableInventory emits productSourceChanged=[] and productSourceByteUnchanged=true regardless of that path list.",
+      "fix": "Recompute the boundary from the recorded changed-path set: reject duplicates, unknown paths, missing required repair/evidence paths, and inconsistent proofRecords. Permit only explicitly owned proof metadata paths. Compare the recomputed implementation set with IMPLEMENTATION_PATHS and ensure stored summaries agree. Derive productSourceChanged and byte-unchanged status from the validated inventory instead of hardcoding success. Add real ordinary-mode negative probes for an added unowned product path and an omitted required repair, preserving source/receipt byte tamper tests. Keep actual task-time Git auditing, seven real selector proofs, and external aggregate completion requirement intact.",
+      "proof_logs": [
+        "suite1-guard-remediation-review/boundary-unowned-path-tamper.log",
+        "suite1-guard-remediation-review/boundary-missing-repair-tamper.log"
+      ],
+      "not_an_allegation": "The unmodified committed audit matches the real Git boundary and all 17 byte hashes. This finding concerns the verifier accepting a contradictory record, not fabricated author evidence."
+    }
+  ],
+  "checks": {
+    "ordinary_full_history": "PASS: exit 0",
+    "ordinary_depth1_detached": "PASS: exit 0",
+    "strict_clean_depth1_fixture": "PASS: exit 0 after excluding only dependency symlink in disposable Git info/exclude",
+    "source_tamper": "PASS: exit 1 with current byte mismatch",
+    "red_receipt_tamper": "PASS: exit 1 with current byte mismatch",
+    "green_receipt_tamper": "PASS: exit 1 with current byte mismatch",
+    "run_receipt_tamper": "PASS: exit 1 with current byte mismatch",
+    "added_unowned_recorded_path": "FAIL: ordinary verifier exits 0",
+    "missing_required_recorded_repair": "FAIL: ordinary verifier exits 0",
+    "restoration": "PASS: exact scope hash restored and disposable checkout clean",
+    "typecheck": "PASS: exit 0",
+    "scoped_biome": "PASS: exit 0 over 8 files",
+    "diff_check": "PASS: exit 0",
+    "explicit_stub_scan": "No grep matches; semantic hardcoded boundary success is S1-GUARD-002",
+    "historical_audit": "PASS: committed record matches real Git changed paths and all 17 current byte hashes",
+    "aggregate": "NOT RUN: prerequisites and whole-task acceptance remain outstanding"
+  },
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "shared_status_before_sha256": "f6335e5454c77cda2378e3ec97f5eb9da2ed7b3905a0a4396b9d6a620283da43",
+  "shared_status_after_sha256": "f6335e5454c77cda2378e3ec97f5eb9da2ed7b3905a0a4396b9d6a620283da43",
+  "shared_worktree_modified": false,
+  "scratch_worktree": "/Users/justinrich/.cache/agent-scratch/rnr-suite1-review-tij0t9wq/detached",
+  "scratch_cleanup_owner": "root; all tested files restored and checkout clean",
+  "evidence_root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-guard-remediation-review",
+  "workflow_files_changed": [],
+  "workflow_approval": "None; 12 workflow security checks not applicable to this code-only delta.",
+  "five_domain_review": {
+    "authoring_management": "Default entrypoint wiring fixed",
+    "consumption_troubleshooting": "Actual shallow checkout confirmed",
+    "custom_actions": "No action changes",
+    "enterprise_governance": "Recorded scope proof remains incomplete under tamper",
+    "security_optimization": "No workflow or credential changes; false boundary success blocks approval"
+  },
+  "fakeability_audit": [
+    {
+      "ac": "AC-1",
+      "verdict": "PARTIAL",
+      "reason": "Historical real receipts retained; fresh suite execution not within checkpoint scope."
+    },
+    {
+      "ac": "AC-2",
+      "verdict": "PARTIAL",
+      "reason": "Historical real receipts retained; fresh browser execution not within checkpoint scope."
+    },
+    {
+      "ac": "AC-3",
+      "verdict": "FAIL",
+      "could_stub_pass": true,
+      "seeded_real": true,
+      "watched_negative_control": true,
+      "reason": "Actual malformed boundary records pass real ordinary test runner; aggregate unrun."
+    }
+  ]
+}

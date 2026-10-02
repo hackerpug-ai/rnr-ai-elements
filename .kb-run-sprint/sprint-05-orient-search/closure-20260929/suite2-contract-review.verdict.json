@@ -1,0 +1,138 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:58",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:65",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:149"
+      ],
+      "reason": "Contract requires all three missing repairs, real child selectors, and a fresh final-harness execution after its last byte change. This is approval of that contract clause, not implementation completion."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "FAIL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:59",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:81",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:106"
+      ],
+      "reason": "Retained-bound proof lacks an exact authoritative raw receipt inventory and sufficient execution-input bindings. The mandatory rerun fallback writes native artifacts outside writeAllowed. See F3 and F4."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "FAIL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:60",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:94",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:96"
+      ],
+      "reason": "Immutable historical comparison is correct, but the surrounding contract asserts an unsupported current publication dependency. Preserve the old map as historical evidence and require new failures to be classified from their own evidence."
+    },
+    {
+      "id": "DONE-WHEN-4",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:61",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:166"
+      ],
+      "reason": "The contract explicitly requires exact-candidate static gates and independent enumeration of all three ACs."
+    }
+  ],
+  "verdict": "NEEDS_FIXES",
+  "review_scope": "Docs-only remediation contract; no implementation approval",
+  "task": "FIX-ORI-SUITE-2-2",
+  "commit_sha": "e19759dec45f4c5a1a67a029319b28394a035c87",
+  "base_sha": "53034655a3062e9fa0e9f942e271d12418fb7a62",
+  "reviewer": "ghactions-reviewer",
+  "author": "/root/suite2_remediation_author (ghactions-implementer)",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "MEDIUM",
+      "location": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:34",
+      "issue": "Proposed By incorrectly identifies ghactions-planner as the contract author.",
+      "fix": "Identify the actual ghactions-implementer remediation author and failed-review origin. The planner role declaration may remain a role declaration, but it must not claim a planner authored this contract."
+    },
+    {
+      "id": "F2",
+      "severity": "HIGH",
+      "location": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:96",
+      "issue": "The historical residual is described as a current ORI-DEP-002/003 publication blocker without current evidence.",
+      "evidence": [
+        "playwright.config.ts:18 excludes **/*.remote.spec.ts.",
+        "tests/sprint-05-orient-search/publication.playwright.config.ts:12 selects public-recovery.remote.spec.ts separately.",
+        "The retained owner map describes the earlier 8ee4282f aggregate. Its exact token and ownership are historical facts, not proof of the current cause of a local failure."
+      ],
+      "fix": "Explicitly label the exact map, residual token and owner assignments historical. Keep that artifact byte-identical and retain aggregate/publication closure gates separately. State that new aggregate failures must be diagnosed and routed from fresh evidence, without changing the historical map or assuming publication will fix them. Align AC-3 prose and requirement-contract wording."
+    },
+    {
+      "id": "F3",
+      "severity": "HIGH",
+      "location": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:81",
+      "issue": "The retained-bound branch does not specify a sufficient immutable evidence source or execution-input identity.",
+      "evidence": [
+        "Historical green.json records standalone teardown times 2026-09-28T05:39:11.293Z and 2026-09-28T06:27:44.105Z.",
+        "The native raw manifests committed in 3dc22d71 are older: abort generated 2026-09-19T09:38:07.228Z; cleanup generated 2026-09-19T03:13:20.031Z and completed=false.",
+        "The original task worktree now contains later aggregate outputs: abort teardown 2026-09-28T08:35:30.725Z; cleanup teardown 2026-09-28T09:02:48.829Z. They are not the standalone receipts cited by green.json.",
+        "nativewind-live-source-manifest.json:22 maps only five app files. The actual driver imports live-backend, native-session and quickstart-consumer at support/nativewind-live-example.ts:46,52,69. The consumer also depends on its template, recipe and dependency graph."
+      ],
+      "fix": "Require explicit immutable source locations and hashes for the original raw manifest, teardown, provider-correlation and selector log records, with consistent run IDs, timestamps, completed legs and both aborted/completed provider counts. A summary green.json alone or later same-path outputs must not qualify. Bind the native suite, driver/support modules, relevant backend/template/recipe and dependency inputs actually used by the run. Missing or mismatched original evidence or input identity must select a real rerun; do not manufacture retrospective hashes as proof of original identity. State that rerun is the expected path unless those original captures can actually be located."
+    },
+    {
+      "id": "F4",
+      "severity": "HIGH",
+      "location": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:106",
+      "issue": "The real native fallback cannot execute within the declared artifact write boundary.",
+      "evidence": [
+        "nativewind-live-example.test.ts:205 writes .tmp/ORI-RN-005/abort-error-retry.",
+        "nativewind-live-example.test.ts:275 and :283 write .tmp/ORI-RN-005/mismatched-manifest.json.",
+        "nativewind-live-example.test.ts:290 and :314 use fail-closed-hash-mismatch and fail-closed-absent-target output directories.",
+        "nativewind-live-example.test.ts:337 uses .tmp/ORI-RN-005/fail-closed-cleanup.",
+        "Current writeAllowed permits only three remediation summary JSONs and three historical summary JSONs, plus the named suite files and AI evidence."
+      ],
+      "fix": "Add a bounded drill-emitted artifact allowance for the exact native output paths and owned log/capture paths required by the real selectors, in both prose and requirement-contract guardrails. Separate permitted runtime artifacts from files allowed in the implementation commit. Preserve imported historical summaries unchanged and prohibit hand-authored native receipts."
+    }
+  ],
+  "fakeability_audit": [
+    {
+      "ac": "AC-1",
+      "could_stub_pass": false,
+      "verdict": "PASS",
+      "reason": "Requires actual selector counts/exits and executed harness hash; implementation remains to be reviewed."
+    },
+    {
+      "ac": "AC-2",
+      "could_stub_pass": true,
+      "verdict": "FAIL",
+      "reason": "As written, a binding verifier could accept historical summary booleans and five app-file hashes without proving that the original complete raw native run and its execution inputs remain identifiable."
+    },
+    {
+      "ac": "AC-3",
+      "could_stub_pass": false,
+      "verdict": "PARTIAL",
+      "reason": "Real immutable Git comparison and nonempty owner-map checks are concrete; their temporal meaning needs correction."
+    }
+  ],
+  "validation": {
+    "diff_scope": "PASS: exactly new TASK-FIX-ORI-SUITE-2-2.md plus SPRINT.md and ROADMAP.md",
+    "git_diff_check": "PASS",
+    "worktree_clean": "PASS at review start",
+    "commit_matches_read_task": "PASS",
+    "requirement_contract_json": "PASS",
+    "scenario_validator": {
+      "exit": 0,
+      "ok": true,
+      "scenario_count": 3,
+      "violations": []
+    },
+    "owner_map_parent": "Verified f9d30b09eadf06350a691cc9bd39a667ee2a8e52 parent is 8ee4282f24474eb8824e5a92685063f1070a12d6",
+    "runtime_tests": "Not run: docs-only review",
+    "workflows_changed": false,
+    "actionlint": "Not rerun: no workflow changes",
+    "main_before": "09123090d57f7747ac3760055a5932392b598351",
+    "main_after": "09123090d57f7747ac3760055a5932392b598351",
+    "task_or_state_edits": "None; only this authorized review metadata file written"
+  }
+}

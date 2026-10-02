@@ -1,0 +1,68 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "dfed235775adef66d2db2d36ed8e29e70d5895f1",
+  "reviewer": "react-native-reusables-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": false,
+      "evidence": "Committed green.json and run.json agree: nativewind seed 1004 ms and uniwind baseline 1004 ms, all five booleans true, fulfilled before harness cleanup. Independently recomputed driver/harness hashes match the receipts. The required independent real CLI replay has not run: the shared web window was occupied, then review stopped on confirmed AC-3 failures. This is an unverified acceptance requirement, not a claim that the captured calls failed.",
+      "fix": "After AC-3 remediation, rerun the default real four-call matrix independently against the exact candidate, retain reviewer output and refreshed source bindings.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-2",
+      "satisfied": false,
+      "evidence": "Committed receipts show disconnected 30736 ms with markerVisible=false and markerSubmitted=false; restored 802 ms with all five booleans true. Original/restored SHA256 is 270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2, mutation SHA256 differs, and source singleSwap requires exactly one callback. Independent runtime replay remains pending after the AC-3 stop.",
+      "fix": "On the repaired exact candidate, independently run baseline/disconnected/restored through actual exports and Chromium; retain exact restoration hashes and settlement-before-cleanup observations.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "AC-3",
+      "satisfied": false,
+      "evidence": "Missing required immutable diff baseline: run.json has no base/diff identity; drive-web-return-proof.test.ts:221-242 and 893-907 compute scope_paths_outside_allowlist solely from git status --porcelain. A clean commit can contain prohibited changes and still report zero. Charter AC-3 explicitly forbids a missing diff baseline. Cleanup also starts too late: :462-466 starts serveExport then awaits launchChromium before entering try/finally; a launch rejection never calls stopServe. :276-281 calls assertInstalled and overlayQuickstart before the caller receives the consumer receipt, so failed install/overlay leaves the owned consumer directory. These violate the explicit cleanup-on-failure constraint. Finally :810-825 writes exit=0/verification=true even when within_budget=false; GREEN_BUDGET_MS is reported but never enforced. These are source-confirmed failure paths, not executed fault-injection claims.",
+      "fix": "Record and validate an immutable task diff base and executed source identity in run.json; audit committed candidate paths plus current edits/untracked paths and explain preserved historical receipts separately. Wrap server acquisition/browser launch and consumer preparation in ownership-aware try/finally so every acquired resource is released when the following operation fails. Enforce the 150-minute full-matrix bound as a failure, preserving elapsed evidence. Keep the shared driver unchanged. Then run both real CLI commands, source guard, typecheck, scoped Biome, and independently review the new exact candidate.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-1",
+      "satisfied": false,
+      "evidence": "Maps to AC-1; captured matrix inspected, required independent real replay pending.",
+      "fix": "Complete the independent AC-1 runtime verification after remediation.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-2",
+      "satisfied": false,
+      "evidence": "Maps to AC-2; captured negative/restored records and source inspected, independent real replay pending.",
+      "fix": "Complete the independent AC-2 runtime verification after remediation.",
+      "fix_location": "in_scope"
+    },
+    {
+      "id": "TC-3",
+      "satisfied": false,
+      "evidence": "Maps to AC-3. Independent source guard passed 1/1, pnpm typecheck exited 0, and scoped Biome checked 2 files with exit 0. Those commands do not repair the missing immutable diff audit or failure-cleanup/budget paths.",
+      "fix": "Fix AC-3 and repeat its mandatory commands on the candidate.",
+      "fix_location": "in_scope"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "tests": "fail"
+  },
+  "verification_notes": {
+    "tests": "Overall review verification is incomplete, not an observed failed test command: the independently run source guard passed 1/1. Both real CLI replays and earlier sprint lanes were deliberately deferred after the confirmed AC-3 rejection, per orchestrator instruction.",
+    "lint": "The task-required scoped Biome command passed; no whole-repo lint or trunk-baseline suite was run.",
+    "flows": "This revised task owns no locked flow or journey proof. FLOW-DOCS-02 and all native/live obligations remain open with their owners; no native visual claim was reviewed or approved."
+  },
+  "summary": "NEEDS_FIXES on the exact candidate. The diagnostic disposition is valid in principle: no timeout defect or production-driver change is required. The existing six recorded diagnostic/matrix calls are coherent and source-bound, historical receipts are unchanged, and no fabricated result or mocked core behavior was found. Approval is blocked by the absent immutable diff audit and explicit harness failure-cleanup/budget violations; required independent runtime replay remains outstanding. Candidate worktree remained clean and main stayed 09123090d57f7747ac3760055a5932392b598351 throughout this review. No product files, task contracts, or existing evidence were edited.",
+  "evidence_hashes": {
+    "driver_sha256": "69e45cda55480d06b390637b48bd46fd97bad0ebee0af588c8175455439a3e33",
+    "harness_sha256": "e114381a4837cec61f4ac81224fd5e411942dce6b9002100da40704db5a51360",
+    "historical_red_sha256": "fb844da4c2ecb882656f3fd2c987bf02a243ef7f31000b9fb08de35c603b6745",
+    "cycle_2_red_sha256": "f09d5bb8dc4138b1cb0900f32eb086c2989c0bdb423cc63ed4a77e8fb994a4e8"
+  }
+}

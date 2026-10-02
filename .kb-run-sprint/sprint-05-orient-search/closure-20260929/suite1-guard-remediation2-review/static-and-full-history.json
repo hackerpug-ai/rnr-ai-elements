@@ -1,0 +1,54 @@
+[
+  {
+    "name": "ordinary-full-history",
+    "command": [
+      "pnpm",
+      "exec",
+      "vitest",
+      "run",
+      "tests/sprint-05-orient-search/suite-repair-proof.test.ts"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 0.4489879608154297
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "pnpm",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.2973401546478271
+  },
+  {
+    "name": "biome",
+    "command": [
+      "pnpm",
+      "exec",
+      "biome",
+      "ci",
+      "tests/sprint-05-orient-search/single-tutorial-gate.test.ts",
+      "tests/sprint-01-docs-spike-skeleton/scaffold.build.test.ts",
+      "tests/sprint-04-generated-reference/data-table-contract.test.ts",
+      "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts",
+      "tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts",
+      "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts",
+      "tests/sprint-05-orient-search/search-contract.spec.ts",
+      "tests/sprint-05-orient-search/suite-repair-proof.test.ts"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 0.21495985984802246
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "c75dc2688dc86b014d814eae1065d0c48215bf84",
+      "02ff850a7d07fb9db1a428a8eea83bccc8b8f4d2"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 0.011780738830566406
+  }
+]

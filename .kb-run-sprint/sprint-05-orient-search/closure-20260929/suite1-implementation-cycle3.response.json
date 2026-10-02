@@ -1,0 +1,26 @@
+{
+  "assumptions": [
+    "The registered task base remains 09123090d57f7747ac3760055a5932392b598351.",
+    "The final aggregate must run only after Suite 2 and native prerequisites land.",
+    "No new task scope is required to resume Suite 1."
+  ],
+  "blockers": [
+    "FIX-ORI-SUITE-2-2 actual repairs and proof are not yet available to the Suite 1 aggregate.",
+    "Required native proof prerequisites remain unfinished."
+  ],
+  "commit_sha": "e2a734a64c0596d1ef82a69559951236d0db99ac",
+  "scope_impact": [
+    {
+      "change": "Complete and land FIX-ORI-SUITE-2-2, then refresh and resume this existing Suite 1 session for the final aggregate.",
+      "found": "The corrective contract exists, but the actual repairs and proof required by the aggregate are not yet landed.",
+      "target": "FIX-ORI-SUITE-2-2"
+    },
+    {
+      "change": "Finish and land the native proof prerequisite, coordinate the device window, then run the final Suite 1 aggregate without creating new scope.",
+      "found": "The required native verification is unfinished, so Sprint 5 cannot enter final aggregate and closure.",
+      "target": "Sprint 5 native proof prerequisites"
+    }
+  ],
+  "status": "blocked",
+  "summary": "Corrected the Suite 1 proof guard. Cycle 5 records the immutable 14-path task boundary, validates current bytes independently of Git history, passes in a real clean depth-1 detached clone without local main or historical objects, and rejects separate source and evidence tampering. Typecheck, scoped Biome, commit hooks, cleanup, and resource checks passed. Held resource count is 0."
+}

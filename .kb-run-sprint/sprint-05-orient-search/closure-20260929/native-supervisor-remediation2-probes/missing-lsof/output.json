@@ -1,0 +1,22 @@
+{
+  "status": "failed",
+  "error": "cleanup command failed (spawn ENOENT: spawnSync lsof ENOENT): lsof -nP -t -iTCP:59299 -sTCP:LISTEN",
+  "failure": {
+    "command": [
+      "lsof",
+      "-nP",
+      "-t",
+      "-iTCP:59299",
+      "-sTCP:LISTEN"
+    ],
+    "result": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "timedOut": false,
+      "signal": null,
+      "spawnErrorCode": "ENOENT",
+      "spawnErrorMessage": "spawnSync lsof ENOENT"
+    }
+  }
+}

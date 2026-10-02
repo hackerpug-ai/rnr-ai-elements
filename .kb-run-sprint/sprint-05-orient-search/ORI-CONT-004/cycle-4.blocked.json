@@ -1,0 +1,20 @@
+{
+  "status": "blocked",
+  "commit_sha": "e44dbabbaa28e31f70beeaaddd65aeb79ccb3962",
+  "summary": "Task-owned orientation and theming proofs remain green, and the latest fresh seed proof completed with all recorded legs passing plus a working submission negative control. The locked Quickstart flow still exits 1 because its Uniwind live matrix fails on the iOS dark marker-visibility step. The latest canonical live manifest is bound to candidate 21b2bf92673fa465aba3ba3dbc0ccd622ea24417, records completed=false and passed_platforms=2, and shows hierarchy_has_marker=true despite Maestro failing scrollUntilVisible. Branch tip e44dbabbaa28e31f70beeaaddd65aeb79ccb3962 contains a later attempted edit to the native-owner file, but no completed canonical run, independent review, or landing proves it. After the native prerequisite lands, ORI-CONT-004 must rerun the unchanged FLOW-DOCS-02 command for fresh complete seed and live matrices, then run typecheck, lint, prior lanes, and the write-scope audit before review.",
+  "assumptions": [
+    "I treated e44dbabbaa28e31f70beeaaddd65aeb79ccb3962 as the existing branch checkpoint only, not as completed ORI-CONT-004 evidence; the last task-owned checkpoint is 6e98cf4ad9e00160cee84716cf2efedb1aa75ecc.",
+    "I did not rerun the multi-hour matrix because the current artifacts already isolate the failure and the later out-of-scope patch has no owner review or landed prerequisite."
+  ],
+  "blockers": [
+    "tests/sprint-05-orient-search/live-example.maestro.yaml is outside ORI-CONT-004 writeAllowed and belongs to the React Native Reusables proof owner. A new reviewed repair task, concretely FIX-ORI-RN-004-4 or an orchestrator-approved equivalent, must own the iOS dark marker-visibility fix, prove the exact failing leg against real Expo Go and the provider, run the required full native live proof, receive react-native-reusables-reviewer approval, and land before this task resumes.",
+    "FLOW-DOCS-02-quickstart-chat-screen has no fresh successful live receipt: tests/sprint-05-orient-search/evidence/FLOW-DOCS-02-quickstart-chat-screen/run.json records exit=1 and live=null for run ori-cont-004-1790629923806. ORI-CONT-004 cannot satisfy AC-3 or TC-3 until the reviewed native repair is present and the unchanged locked command completes all required live legs, active abort, endpoint-loss recovery, Retry, correlation, and cleanup."
+  ],
+  "scope_impact": [
+    {
+      "target": "GATE:FLOW-DOCS-02-quickstart-chat-screen",
+      "found": "The fresh seed prerequisite is healthy, but the live prerequisite fails in tests/sprint-05-orient-search/live-example.maestro.yaml on Uniwind iOS dark marker visibility. The canonical live manifest for candidate 21b2bf92673fa465aba3ba3dbc0ccd622ea24417 records completed=false, while the later e44dbabbaa28e31f70beeaaddd65aeb79ccb3962 patch is outside this task, unreviewed, unlanded, and has no completed canonical proof.",
+      "change": "Add and sequence a React Native Reusables-owned FIX task before ORI-CONT-004 to own tests/sprint-05-orient-search/live-example.maestro.yaml, preserve the real accessibility path, prove the iOS dark leg and full native live matrix, and land through independent review. Then resume ORI-CONT-004 on the unchanged contract to rerun FLOW-DOCS-02 and finish the remaining static and prior-lane gates."
+    }
+  ]
+}

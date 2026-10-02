@@ -1,0 +1,27 @@
+{
+  "status": "blocked",
+  "commit_sha": "f836d3665638efa16e877534ef17b5ecbdbfa182",
+  "summary": "Checkpointed the supervisor and immutable evidence. Cycle 1 stopped during preflight. Cycles 2 and 3 each ran unchanged iOS light and dark flows against real services; both appearances passed with zero actual native failures. Maestro's exact marker assertion completed twice per appearance. Final screenshots prove the usable Retry state, but do not independently show the complete marker. The full six-target caller was not run because the required current-base RED was not reproduced.",
+  "assumptions": [
+    "The assigned base 713eee79f70a15bba4c04dfa796151d69e1e6093 remains authoritative for these reproduction attempts.",
+    "The child exit code 1 is the existing one-platform completed=false result; run manifests report passed_platforms=1 while both iOS appearances passed.",
+    "The copied android/** screenshots are historical source artifacts and are not current Android proof.",
+    "The ten modified ORI-RN-004 files left in the worktree are preserved runtime outputs and are excluded from the checkpoint commit."
+  ],
+  "blockers": [
+    "The mandatory current-base RED could not be reproduced within the two permitted bounded attempts.",
+    "The task contract prohibits a repair, GREEN phase, and full six-target caller without that actual RED."
+  ],
+  "scope_impact": [
+    {
+      "target": "FIX-ORI-RN-004-4",
+      "found": "Both unchanged real iOS attempts passed light and dark with actual_failure_count=0.",
+      "change": "Revise the contract to accept a truthful no-repair disposition while retaining exact current iOS and full six-target proof requirements."
+    },
+    {
+      "target": "ORI-CONT-004",
+      "found": "The CONT branch retains unreviewed YAML-only commits 2e5a18bc, 21b2bf92, and e44dbabb while the current main YAML passes.",
+      "change": "Explicitly assign narrow reconciliation or restoration to reviewed native bytes before CONT reruns, preserving every CONT commit and existing work in progress."
+    }
+  ]
+}

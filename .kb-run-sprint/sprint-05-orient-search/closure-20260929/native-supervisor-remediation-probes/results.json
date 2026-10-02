@@ -1,0 +1,73 @@
+{
+  "candidate": "160e6fb2f90736fb5a1cc74db8b0a79514cb3258",
+  "root": "/Users/justinrich/.cache/agent-scratch/rnr-supervisor-rereview-96p6Je",
+  "probes": [
+    {
+      "name": "actual journal initial NativeWind stage",
+      "result": {
+        "phase": "nativewind:reject:consumer",
+        "source": "caller-journal+runtime",
+        "budgets": [
+          {
+            "key": "nativewind:reject:1790256894814:nativewind-consumer-preparation",
+            "timeoutMs": 3600000,
+            "source": "caller-journal+owned-process-group",
+            "startedAtMs": 1790256894814
+          }
+        ]
+      }
+    },
+    {
+      "name": "Android child command with iOS caller flag",
+      "commands": [
+        "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node -e setInterval(()=>{},1000) -- --ios-udid 81487B1E-A4D1-45AE-9BCE-D675802BACD1 maestro test --udid emulator-5554"
+      ],
+      "result": {
+        "phase": "nativewind:reject:android",
+        "source": "caller-journal+runtime",
+        "budgets": [
+          {
+            "key": "nativewind:reject:1790256894814:android-leg",
+            "timeoutMs": 2400000,
+            "source": "manifest+owned-process-group",
+            "startedAtMs": 1790709502884
+          }
+        ]
+      }
+    },
+    {
+      "name": "stage retained after child exit",
+      "result": {
+        "phase": "nativewind:reject:android",
+        "source": "caller-journal+runtime",
+        "budgets": [
+          {
+            "key": "nativewind:reject:1790256894814:android-leg",
+            "timeoutMs": 2400000,
+            "source": "manifest+owned-process-group",
+            "startedAtMs": 1790709502884
+          }
+        ]
+      }
+    },
+    {
+      "name": "actual cleanup with unavailable external tools and no device invocation",
+      "exit": 0,
+      "output": "{\n  \"status\": \"completed\",\n  \"result\": {\n    \"listener_processes_inspected\": [],\n    \"rejected_unowned_listeners\": [],\n    \"terminated_owned_process_groups\": [],\n    \"escalated_owned_process_groups\": [],\n    \"removed_reverse_mappings\": [],\n    \"restored_appearances\": [],\n    \"deadline_ms\": 180000,\n    \"completed_within_deadline\": true,\n    \"command_ledger\": [\n      {\n        \"command\": [\n          \"lsof\",\n          \"-nP\",\n          \"-t\",\n          \"-iTCP:65500\",\n          \"-sTCP:LISTEN\"\n        ],\n        \"started_at\": \"2026-09-29T19:18:23.022Z\",\n        \"exit\": 1,\n        \"stdout\": \"spawnSync lsof ENOENT\",\n        \"timedOut\": false\n      },\n      {\n        \"command\": [\n          \"adb\",\n          \"-s\",\n          \"emulator-5554\",\n          \"reverse\",\n          \"--list\"\n        ],\n        \"started_at\": \"2026-09-29T19:18:23.024Z\",\n        \"exit\": 1,\n        \"stdout\": \"spawnSync adb ENOENT\",\n        \"timedOut\": false\n      }\n    ]\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "name": "actual hanging cleanup observation with real owned TCP listener",
+      "port": 62421,
+      "pid": 70499,
+      "exit": 1,
+      "elapsedMs": 15374,
+      "result": {
+        "status": "failed",
+        "error": "cleanup command timed out: lsof -nP -t -iTCP:62421 -sTCP:LISTEN"
+      },
+      "recordedGroupAliveAfter": false,
+      "portObservation": ""
+    }
+  ]
+}

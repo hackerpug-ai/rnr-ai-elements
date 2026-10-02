@@ -1,0 +1,16 @@
+{
+  "base_sha": "09123090d57f7747ac3760055a5932392b598351",
+  "main_sha": "5a6aa62f0423ac1bec57c7fffad3727ca68124e5",
+  "actual_diff_command": [
+    "git",
+    "diff",
+    "--name-only",
+    "09123090d57f7747ac3760055a5932392b598351...5a6aa62f0423ac1bec57c7fffad3727ca68124e5"
+  ],
+  "main_paths_outside_task_allowlist": [
+    ".spec/prds/docs-site/ROADMAP.md",
+    ".spec/prds/docs-site/tasks/sprint-05-orient-search/SPRINT.md",
+    ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md"
+  ],
+  "failure_scenario": "After orchestrator merges task into this existing main, taskDiffAudit() in the Vitest source guard compares fixed base to merged HEAD and includes these reviewed non-task files; expect(allowlistClean()).toBe(true) fails."
+}

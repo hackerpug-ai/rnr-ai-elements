@@ -1,0 +1,44 @@
+{
+  "candidate": "e2a734a64c0596d1ef82a69559951236d0db99ac",
+  "scratch": "/Users/justinrich/.cache/agent-scratch/suite1-review-2o8vepge",
+  "checks": {
+    "candidate-init": {
+      "command": [
+        "git",
+        "init",
+        "/Users/justinrich/.cache/agent-scratch/suite1-review-2o8vepge/candidate"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.023,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-guard-checkpoint-review/candidate-init.log"
+    },
+    "candidate-fetch": {
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-SUITE-1",
+        "e2a734a64c0596d1ef82a69559951236d0db99ac"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 10.767,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-guard-checkpoint-review/candidate-fetch.log"
+    },
+    "candidate-checkout": {
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 126,
+      "duration_seconds": 0.082,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-guard-checkpoint-review/candidate-checkout.log"
+    }
+  },
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "status_before_sha256": "f6335e5454c77cda2378e3ec97f5eb9da2ed7b3905a0a4396b9d6a620283da43",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "status_after_sha256": "f6335e5454c77cda2378e3ec97f5eb9da2ed7b3905a0a4396b9d6a620283da43",
+  "scratch_removed": true
+}

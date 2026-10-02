@@ -1,0 +1,167 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "evidence": [
+        "tests/sprint-05-orient-search/docs-collection.test.ts:99",
+        "tests/sprint-01-docs-spike-skeleton/docs-data-prebuild.test.ts:320",
+        "tests/sprint-05-orient-search/live-example-api.test.ts:631",
+        ".tmp/FIX-ORI-SUITE-2-2/green/docs-collection.log",
+        ".tmp/FIX-ORI-SUITE-2-2/green/docs-data-prebuild.log",
+        ".tmp/FIX-ORI-SUITE-2-2/green/live-example-api-ac4.log",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:718"
+      ],
+      "reason": "The three actual repairs are present and their retained standalone logs report 4/4, 4/4 and 1/1. Exact final-harness GREEN/run evidence is absent, as explicitly disclosed. The harness also fails to enforce required execution counts; F2 must be corrected before the final proof."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "FAIL",
+      "classification": "PENDING_REAL_NATIVE_PROOF",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:77",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:758",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1007"
+      ],
+      "reason": "Fresh native proof was explicitly not run at this checkpoint; green.json and run.json for FIX-ORI-SUITE-2-2 are absent. Wait for FIX-ORI-RN-004-4 and device authorization, then run both real native selectors through the corrected final harness. This missing execution is distinct from implementation defects F1 and F2."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PASS",
+      "evidence": [
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:77"
+      ],
+      "reason": "The real routing test passed independently, 1/1. It uses the fixed 8ee4282f..f9d30b09 comparison and preserves the historical routing artifacts."
+    },
+    {
+      "id": "DONE-WHEN-4",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:61"
+      ],
+      "reason": "Independent typecheck and scoped Biome pass on the exact checkpoint; final all-AC approval is blocked by missing native execution and the verifier defects."
+    }
+  ],
+  "verdict": "NEEDS_FIXES",
+  "checkpoint_status": "INCOMPLETE_DO_NOT_LAND",
+  "task": "FIX-ORI-SUITE-2-2",
+  "commit_sha": "9be71b2d5186b04b2efa6ebb09bd8c001a1fb078",
+  "base_sha": "5856cc641cac5faab0a4db8b1ba49cc3e3fc7198",
+  "reviewer": "ghactions-reviewer",
+  "worktree": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/FIX-ORI-SUITE-2-2",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "HIGH",
+      "location": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1007",
+      "related_locations": [
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1012",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1048"
+      ],
+      "issue": "Future aggregate verification never verifies raw receipt bytes or their semantic content.",
+      "evidence": "assertNativeReceipts checks only that there are four entries, each has a nonempty path and each hash is syntactically SHA-256. It never opens or hashes those paths, checks required receipt names, or revalidates run identity/legs/provider outcomes. An isolated call to the exact extracted candidate function accepted four references to a confirmed nonexistent file with all-zero digests.",
+      "fix": "Preserve raw receipt evidence in an immutable form available to subsequent verification, such as bytes embedded in the allowed proof artifact or a durable content-addressed artifact. Require exactly manifest, teardown, provider_correlation and selector_log; read the retained bytes and verify their hashes, then validate original run IDs/timestamps, complete native legs and required provider outcomes. Reject missing or changed bytes. Do not rely on mutable .tmp paths that later selectors overwrite. Add discriminating negative checks using the actual verifier and real receipt files."
+    },
+    {
+      "id": "F2",
+      "severity": "HIGH",
+      "location": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1018",
+      "related_locations": [
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:718",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:733",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:631"
+      ],
+      "issue": "Proof completeness is accepted from counts without checking selector identities, executed-test counts or native leg identities.",
+      "evidence": "assertRecordedSelectors accepts six copies of {name:docs-collection,exit:0} while native_proof.selector_count is 2; the native receipt loop then executes zero times. assertSelectorGreen accepts exit 0 with output Tests 4 skipped (4), because tallyOf is never enforced. passedLegCount accepts five duplicated passed iOS legs without requiring Android or Web.",
+      "fix": "Require the exact six unique selector names and commands, exact expected passed-test counts (4,4,1,1,1,1) and zero failed tests in fresh and recorded proof. Derive the native selector count from the actual named records and require both marathon records. Validate the exact native platform/appearance set, including Web, with no duplicates or missing targets. Add negative checks for missing/duplicate selectors, all-skipped output and duplicate platform legs."
+    },
+    {
+      "id": "F3",
+      "severity": "HIGH",
+      "location": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1044",
+      "related_locations": [
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:380",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:381",
+        "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:953",
+        "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:77"
+      ],
+      "issue": "Ordinary aggregate verification requires historical Git objects unavailable in the existing shallow hosted checkout.",
+      "evidence": "verifyRecordedGreen calls assertRecordedScope, which calls candidateScope and cat-file for TASK_BASE_COMMIT plus the historical execution candidate. It then calls assertGitAndCurrentHashes, which git-shows each file at that historical candidate. The parent independently verified the current CI checkout is default depth 1 with detached HEAD and missing historical objects. No local main dependency exists here, but the historical-object dependency is enough to fail ordinary hosted aggregate verification. The separately collected aggregate-owner-routing.test.ts also unconditionally diffs 8ee4282f..f9d30b09, so its ordinary aggregate path has the same shallow-history failure.",
+      "fix": "Keep the real Git range and candidate-byte audit at execution/review time. Ordinary aggregate verification must validate the immutable recorded boundary, exact selector/raw-receipt evidence and current executable/input hashes from the durable proof artifact without requiring historical Git objects. Add an isolated real shallow-clone check that passes a valid bound artifact and rejects changed current bytes or altered evidence, without native execution. Apply the same execution-audit versus durable-verification separation to the routing test; never silently skip a missing historical audit."
+    }
+  ],
+  "pending_proof": {
+    "native_execution": "NOT_RUN as authorized; devices and native-owned ports were not touched",
+    "dependency": "FIX-ORI-RN-004-4 and explicit device grant",
+    "final_harness": "Must run after the last harness change and generate candidate/harness-bound GREEN and run evidence",
+    "landing": "Prohibited until the final independently reviewed candidate satisfies all ACs"
+  },
+  "positive_findings": [
+    "All 11 changed paths are in the approved implementation write allowance.",
+    "The three imported historical red/green/run JSON files are byte-identical to 3dc22d71.",
+    "All three drifted suite hashes in the fresh RED record match the declared base candidate.",
+    "The docs-collection repair copies real repository manuscripts and source trees while keeping schema, draft, duplicate-destination and reserved-route checks.",
+    "The public/r generated-tree assertion and exact lazy expo/fetch oracle remain substantive.",
+    "The execution-time task scope range is fixed rather than widened to future main, and executable/input hash checks are present. F3 identifies why this history-dependent audit cannot also be the ordinary shallow-checkout aggregate path.",
+    "The checkpoint honestly omits final GREEN rather than claiming native proof ran."
+  ],
+  "fakeability_audit": [
+    {
+      "ac": "AC-1",
+      "could_stub_pass": true,
+      "verdict": "FAIL",
+      "evidence": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:718",
+      "reason": "The wrapper does not reject zero executed tests when the child exits 0; required pass counts are recorded but not enforced."
+    },
+    {
+      "ac": "AC-2",
+      "could_stub_pass": true,
+      "verdict": "FAIL",
+      "evidence": "tests/sprint-05-orient-search/foreign-suite-repair-proof.test.ts:1007",
+      "reason": "The recorded verifier accepts absent raw receipts and can avoid both native records using duplicate non-native selector names."
+    },
+    {
+      "ac": "AC-3",
+      "could_stub_pass": false,
+      "verdict": "PASS",
+      "evidence": "tests/sprint-05-orient-search/aggregate-owner-routing.test.ts:77",
+      "reason": "Real Git comparison and nonempty actual routing data were exercised."
+    }
+  ],
+  "validation": {
+    "git_diff_check": "PASS",
+    "scope_check": "PASS: no path outside approved write_allowed",
+    "historical_receipt_identity": "PASS: red.json, green.json and run.json exactly match 3dc22d71",
+    "routing_test": {
+      "command": "pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts",
+      "exit": 0,
+      "result": "1 passed"
+    },
+    "typecheck": {
+      "command": "pnpm typecheck",
+      "exit": 0
+    },
+    "scoped_biome": {
+      "exit": 0,
+      "result": "Checked 5 files; no fixes applied"
+    },
+    "isolated_negative_probes": {
+      "method": "Parsed the actual candidate functions with ts-morph, compiled them in memory without modifying their bodies, and called the actual functions on malformed proof inputs. No service, transport or native driver was mocked.",
+      "output": [
+        "nonexistent_raw_receipts: ACCEPTED",
+        "six_duplicate_non_native_selectors: ACCEPTED",
+        "green_exit_without_collected_tests: ACCEPTED",
+        "five_duplicate_platform_legs: ACCEPTED"
+      ]
+    },
+    "full_aggregate": "NOT_RUN",
+    "native_tests": "NOT_RUN",
+    "final_harness": "NOT_RUN",
+    "worktree_status_after": "clean",
+    "main_before": "962f724943e4a841860b694b476099e69d537671",
+    "main_after": "962f724943e4a841860b694b476099e69d537671",
+    "edits": "Only this authorized verdict metadata file",
+    "shallow_checkout_constraint": "Parent independently verified default-depth detached CI checkout lacks historical objects; this review verified the candidate code calls those unavailable objects during ordinary recorded-proof verification. No separate CI audit performed."
+  },
+  "summary": "The checkpoint contains the missing repairs and passes isolated routing/static verification, but it must not land. Fix the demonstrated proof-verifier defects and shallow-checkout dependency while native execution is pending; then complete real native proof and obtain a new all-AC review on the final candidate."
+}

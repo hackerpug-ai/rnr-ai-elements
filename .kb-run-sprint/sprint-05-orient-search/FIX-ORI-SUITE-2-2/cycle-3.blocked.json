@@ -1,0 +1,16 @@
+{
+  "status": "blocked",
+  "commit_sha": "e7fe88a4df745556b13c7eead07dfc93833ec89d",
+  "summary": "F3 is corrected and committed. Both routing evidence files are byte-bound to immutable f9d30b09 pins, execution mode validates the real Git blobs, and real-filesystem owner/inventory tampering is rejected. Routing tests, Biome, typecheck, and commit hooks passed. Native proof and the full aggregate were not run.",
+  "assumptions": [],
+  "blockers": [
+    "Fresh six-target NativeWind AC2 proof and the final aggregate require the reviewed FIX-ORI-RN-004-4 disposition and a released native device window."
+  ],
+  "scope_impact": [
+    {
+      "target": "FIX-ORI-RN-004-4",
+      "found": "Its reviewed native disposition and device window remain prerequisites for fresh Suite2 AC2 proof.",
+      "change": "Finish the existing task, release the devices, then resume Suite2 AC2. No new scope is required."
+    }
+  ]
+}

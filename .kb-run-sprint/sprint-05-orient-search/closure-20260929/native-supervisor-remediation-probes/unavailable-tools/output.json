@@ -1,0 +1,41 @@
+{
+  "status": "completed",
+  "result": {
+    "listener_processes_inspected": [],
+    "rejected_unowned_listeners": [],
+    "terminated_owned_process_groups": [],
+    "escalated_owned_process_groups": [],
+    "removed_reverse_mappings": [],
+    "restored_appearances": [],
+    "deadline_ms": 180000,
+    "completed_within_deadline": true,
+    "command_ledger": [
+      {
+        "command": [
+          "lsof",
+          "-nP",
+          "-t",
+          "-iTCP:65500",
+          "-sTCP:LISTEN"
+        ],
+        "started_at": "2026-09-29T19:18:23.022Z",
+        "exit": 1,
+        "stdout": "spawnSync lsof ENOENT",
+        "timedOut": false
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "emulator-5554",
+          "reverse",
+          "--list"
+        ],
+        "started_at": "2026-09-29T19:18:23.024Z",
+        "exit": 1,
+        "stdout": "spawnSync adb ENOENT",
+        "timedOut": false
+      }
+    ]
+  }
+}

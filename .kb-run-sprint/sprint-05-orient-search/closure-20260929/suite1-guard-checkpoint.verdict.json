@@ -1,0 +1,110 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/green.json",
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:21"
+      ],
+      "reason": "Prior focused selector receipts are present; this bounded guard review did not rerun the three expensive selectors or certify the full acceptance criterion."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "PARTIAL",
+      "evidence": [
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/green.json",
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:42"
+      ],
+      "reason": "Prior real Playwright receipts are present; this bounded guard review did not rerun the four browser selectors or certify the full acceptance criterion."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "FAIL",
+      "evidence": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:79",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:771",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:1119",
+        ".tmp/FIX-ORI-SUITE-1/cycle-2/run.json:65"
+      ],
+      "reason": "Ordinary test execution still follows the historical-Git-dependent green path; aggregate exit is null. Static checks passed."
+    }
+  ],
+  "task": "FIX-ORI-SUITE-1",
+  "review_type": "independent checkpoint code review only",
+  "candidate": "e2a734a64c0596d1ef82a69559951236d0db99ac",
+  "comparison_base": "0fef9cc8dbeab38c6fe3974fb66154726ac4f882",
+  "task_base": "09123090d57f7747ac3760055a5932392b598351",
+  "verdict": "NEEDS_FIXES",
+  "whole_task_approved": false,
+  "findings": [
+    {
+      "id": "S1-GUARD-001",
+      "severity": "HIGH",
+      "verdict": "NEEDS_FIXES",
+      "title": "Shallow proof mode is not wired to the ordinary test entrypoint",
+      "location": "tests/sprint-05-orient-search/suite-repair-proof.test.ts:79",
+      "supporting_locations": [
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:771",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:975",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:991",
+        "tests/sprint-05-orient-search/suite-repair-proof.test.ts:1119",
+        "package.json:17",
+        "vitest.config.ts:21"
+      ],
+      "evidence": "MODE defaults to green. The test calls runSuiteRepairProof, which dispatches green to runGreen. runGreen still calls git merge-base HEAD main after the expensive seven selector runs. Only the dedicated scopeSelector helper supplies SUITE_REPAIR_PROOF_MODE=scope. Neither package.json nor Vitest configuration supplies that mode for pnpm test. Therefore the shallow proof does not exercise the ordinary aggregate path, whose missing-main and later-main defects remain.",
+      "fix": "Separate the portable recorded-proof verifier from the dedicated shallow-fixture shape assertions, and wire ordinary selector/aggregate execution to that portable verifier. Keep actual immutable task-base/history auditing in task-time proof capture, keep the seven real focused selector runs and full external aggregate mandatory for task completion, and validate durable boundary/current source and receipt bytes rather than status flags. Do not simply make scope the default: its strict depth-one/detached/no-main assertions would reject normal local checkouts. Add real plain-mode verification in clean shallow and normal full-history checkouts plus source/evidence tamper rejection.",
+      "validation_limit": "No full aggregate or seven-selector heavy rerun was started, per dispatch. The independent depth-one fetch succeeded, but the detached checkout was rejected by the main-folder guard with exit 126; no bypass was attempted."
+    }
+  ],
+  "checks": {
+    "typecheck": "PASS",
+    "scoped_biome": "PASS: 8 files",
+    "diff_check": "PASS",
+    "scenario_contract": "PASS: 3 scenarios",
+    "historical_recorded_boundary": "PASS: real Git inventory matches all 21 recorded paths",
+    "current_recorded_bytes": "PASS: all 14 implementation/drill receipt hashes match",
+    "explicit_stub_scan": "PASS: no matches in changed harness",
+    "independent_shallow_runtime": "BLOCKED: detached checkout denied by main-folder guard, exit 126",
+    "independent_tamper_runtime": "NOT RUN after checkout was denied",
+    "later_metadata_runtime": "NOT RUN after checkout was denied",
+    "aggregate": "NOT RUN; still pending prerequisites"
+  },
+  "evidence_root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-guard-checkpoint-review",
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "source_mutated": false,
+  "shared_worktree_mutated": false,
+  "workflow_files_changed": [],
+  "workflow_approval": "None. All 12 workflow-specific security checks are not applicable to this guard-only delta. No workflow is approved by this report.",
+  "five_domain_review": {
+    "author_manage_workflows": "F1 ordinary mode wiring",
+    "consume_troubleshoot": "F1 custom proof mode does not exercise normal entrypoint",
+    "author_maintain_actions": "Not applicable: no action delta",
+    "enterprise_governance": "No mutation; real history audit retained and checked",
+    "secure_optimize": "No secret, shell-string execution, or workflow changes; runtime proof gap blocks checkpoint acceptance"
+  },
+  "fakeability_audit": [
+    {
+      "ac": "AC-1",
+      "could_stub_pass": "not fully adjudicated in checkpoint review",
+      "seeded_real": "historical real selector receipts present; fresh heavyweight runs excluded",
+      "watched_red": "historical RED present, not freshly reproduced",
+      "verdict": "PARTIAL"
+    },
+    {
+      "ac": "AC-2",
+      "could_stub_pass": "not fully adjudicated in checkpoint review",
+      "seeded_real": "historical real selector receipts present; fresh heavyweight runs excluded",
+      "watched_red": "historical RED present, not freshly reproduced",
+      "verdict": "PARTIAL"
+    },
+    {
+      "ac": "AC-3",
+      "could_stub_pass": "not fully adjudicated in checkpoint review",
+      "seeded_real": "historical real selector receipts present; fresh heavyweight runs excluded",
+      "watched_red": "historical RED present, not freshly reproduced",
+      "verdict": "FAIL"
+    }
+  ]
+}

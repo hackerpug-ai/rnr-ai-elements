@@ -1,0 +1,32 @@
+{
+  "verdict": "NEEDS_FIXES",
+  "commit_sha": "3dc22d71154d0bd43764cc33f4b8f78d2530aa75",
+  "reviewer": "ghactions-reviewer",
+  "requirements": [
+    {
+      "id": "AC-1",
+      "satisfied": true,
+      "evidence": "In 3dc22d71, red.json records the three pre-change selector failures (docs-collection build exits, FUSE-05 tracked public fonts, stale static expo/fetch). green.json records the same selectors at exit 0: docs-collection 4/4, docs-data-prebuild 4/4, live-example-api AC-4 1/1. The commit only changes the chartered fixture mirror, the public/r tracked-files scope, and the lazy await import('expo/fetch') oracle."
+    },
+    {
+      "id": "AC-2",
+      "satisfied": true,
+      "evidence": "green.json records both marathon selectors at exit 0 with manifest_completed true and fresh teardowns (abort-error-retry finished_at 2026-09-28T05:39:11.293Z, 4 aborted and 20 completed provider records; fail-closed-cleanup finished_at 2026-09-28T06:27:44.105Z). nativewind-live-example.test.ts is not in the commit, so budgets and assertions were not changed. run.json notes that file passed 4/4 in the aggregate, so the device-contention exception does not apply."
+    },
+    {
+      "id": "AC-3",
+      "satisfied": false,
+      "evidence": "Committed TASK-FIX-ORI-SUITE-2.md AC-3 and SC-FIX-ORI-SUITE-2-3 must_observe still require the one pnpm test failing inventory to be exactly FLOW-DELIV-01-ci-chain-order and nothing else. This commit does not show that. .tmp/FIX-ORI-SUITE-2/run.json records pnpm test exit 1 (36 failed files, 40 failed tests), collected_ori_vis_005_ac_5 false, and charter_residual_match false; ci-chain-order also failed its AC-1 docs-build token, not only the residual token. The nine commit paths are inside writeAllowed, DIFF_ALLOWED was not widened, and the extra failures are not skipped or folded into the residual. FIX-ORI-SUITE-2-1 on main (f9d30b09, merge c1785cf8, completion 40e84949) keeps residual_tokens as only FLOW-DELIV-01-ci-chain-order with residual_widened false, and pnpm exec vitest run tests/sprint-05-orient-search/aggregate-owner-routing.test.ts passed from the primary checkout. That routing is not this commit, does not edit TASK-FIX-ORI-SUITE-2.md, and does not change run.json.",
+      "fix": "Do not treat the main owner map as satisfying AC-3. Leave the residual token list, the four chartered suites, and the extra failures unmasked. AC-3 stays open until a recorded aggregate failing inventory is exactly FLOW-DELIV-01-ci-chain-order and nothing else, or a planner revision changes that must_observe text. This commit does neither.",
+      "fix_location": ".tmp/FIX-ORI-SUITE-2/run.json aggregate.charter_residual_match against .spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2.md AC-3 must_observe"
+    }
+  ],
+  "flows": [],
+  "stubs": [],
+  "verification": {
+    "typecheck": "not_rerun",
+    "lint": "not_rerun",
+    "tests": "not_rerun"
+  },
+  "summary": "AC-1 and AC-2 remain satisfied by the recorded standalone selector exits in this commit. AC-3 is not. The charter still requires the one aggregate failing inventory to be exactly FLOW-DELIV-01-ci-chain-order and nothing else, and run.json honestly records charter_residual_match false with 36 failed files. Owner-routing on main did not widen that residual and did not edit the four suites, but it is a different task and does not make this commit meet the exact-inventory clause."
+}

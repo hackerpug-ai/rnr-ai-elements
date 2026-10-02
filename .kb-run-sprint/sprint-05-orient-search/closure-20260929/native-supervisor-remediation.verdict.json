@@ -1,0 +1,61 @@
+{
+  "task_id": "FIX-ORI-RN-004-4",
+  "review_type": "read_only_supervisor_checkpoint_remediation",
+  "verdict": "NEEDS_FIXES",
+  "candidate_sha": "160e6fb2f90736fb5a1cc74db8b0a79514cb3258",
+  "previous_candidate_sha": "db04b8e56ebacef38d2fb38210141db033170b69",
+  "prior_verdict_sha256": "8c7745fe9f853c65da0ee0790065d9216c392d73ea9cc0da8548f4ad992e92df",
+  "main_before": "53ad890807079e0afdc256f602455bebaaf56949",
+  "main_after": "53ad890807079e0afdc256f602455bebaaf56949",
+  "wrapper_sha256": "a334365e9f821f5934755b77f04fb4170f2fbd88d84d6652de1ee62f7e32a7f9",
+  "finding_disposition": {
+    "NS-01": "Main reported phase/clock defects resolved in focused code review and bounded probes. No full native behavior claim.",
+    "NS-02": "Timeout enforcement works, but fail-closed error handling remains incomplete as detailed below."
+  },
+  "findings": [
+    {
+      "id": "NS-02-R1",
+      "severity": "error",
+      "path": "tests/sprint-05-orient-search/native-live-repair-proof_test.ts",
+      "lines": [
+        176,
+        192,
+        1247,
+        1257,
+        1310,
+        1319,
+        1389,
+        1398,
+        1465,
+        1525,
+        1529
+      ],
+      "summary": "Cleanup treats failed external observations as success unless the failure is a timeout.",
+      "failure_scenario": "If lsof or adb cannot execute, or an observation/restoration command fails, commandOutput returns a nonzero result but cleanupOwnedRuntime.run rejects only timedOut. listenerPids translates lsof failures into an empty list and the reverse-map path parses adb error text as if it were data. runInternalCleanup writes status completed and exits 0; runCleanupPhase accepts that completed receipt.",
+      "independent_reproduction": "Ran the actual candidate wrapper --internal-cleanup using a real empty PATH directory, ports [65500], no recorded process group and empty appearance inputs. Neither lsof nor adb could execute, so neither device was contacted. Command ledger contains spawnSync lsof ENOENT and spawnSync adb ENOENT, both exit 1, timedOut false. Actual wrapper exit was 0 and output.status was completed.",
+      "required_fix": "Preserve structured spawn errors and fail cleanup on unavailable/failed observations or restoration commands. Treat lsof exit 1 with genuinely empty output/no spawn error as the documented no-listener case; do not conflate it with ENOENT, permission errors, signals or other failures. Return a failed durable cleanup receipt with the failed command and reason. Rerun the missing-tool and actual-hanging-child probes; preserve successful cleanup and foreign-resource ownership rules.",
+      "scope": "Same NS-02 supervisor cleanup boundary; no native, caller or product changes required."
+    }
+  ],
+  "checks": {
+    "typecheck": "pnpm typecheck: exit 0",
+    "biome": "scoped biome ci: exit 0",
+    "diff_check": "git diff previous..candidate --check: exit 0",
+    "nativewind_initial_budget": "Actual retained NativeWind journal selects consumer stage with 3600000 ms budget.",
+    "android_classification": "Real harmless child command with caller iOS flag and Maestro Android argv shape selected android, 2400000 ms.",
+    "monotonic_leg": "After the real child exited, Android stage and exact startedAtMs remained unchanged.",
+    "hanging_cleanup": "Actual cleanup subprocess with a real owned TCP listener and a hanging lsof executable exited 1 in 15374 ms; failed receipt named lsof timeout; recorded group absent and port free afterward.",
+    "missing_tools": "Actual cleanup incorrectly exited 0/completed on ENOENT for both lsof and adb.",
+    "source_changes": false,
+    "device_calls": false,
+    "native_matrix_runs": false,
+    "wip": "Ten dirty ORI-RN-004 paths and untracked cycle-4 preserved."
+  },
+  "evidence_directory": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/closure-20260929/native-supervisor-remediation-probes",
+  "limits": [
+    "No six-target proof or whole-task approval.",
+    "Harmless subprocesses, actual journal bytes and real command availability/timeout fault conditions were used; no native service result was simulated as success.",
+    "Remediation scope stayed on NS-01 and NS-02."
+  ],
+  "observed_at": "2026-09-29T19:19:57.132137+00:00"
+}

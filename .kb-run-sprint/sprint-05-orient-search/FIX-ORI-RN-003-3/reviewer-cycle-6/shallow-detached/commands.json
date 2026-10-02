@@ -1,0 +1,123 @@
+{
+  "root": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+  "commands": [
+    {
+      "label": "candidate",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 0,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/candidate.log"
+    },
+    {
+      "label": "shallow-state",
+      "argv": [
+        "git",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 0,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/shallow-state.log"
+    },
+    {
+      "label": "detached-state",
+      "argv": [
+        "git",
+        "symbolic-ref",
+        "-q",
+        "HEAD"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 1,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/detached-state.log"
+    },
+    {
+      "label": "missing-base",
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "09123090d57f7747ac3760055a5932392b598351^{tree}"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 128,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/missing-base.log"
+    },
+    {
+      "label": "missing-main",
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "main"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 128,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/missing-main.log"
+    },
+    {
+      "label": "shallow-clean",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "-t",
+        "driveWebActionTimeoutStaysFinite"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 0,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/shallow-clean.log"
+    },
+    {
+      "label": "mutated-current-source",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "-t",
+        "driveWebActionTimeoutStaysFinite"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 1,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/mutated-current-source.log"
+    },
+    {
+      "label": "mutated-recorded-paths",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "-t",
+        "driveWebActionTimeoutStaysFinite"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 1,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/mutated-recorded-paths.log"
+    },
+    {
+      "label": "shallow-restored",
+      "argv": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "tests/sprint-05-orient-search/drive-web-return-proof.test.ts",
+        "-t",
+        "driveWebActionTimeoutStaysFinite"
+      ],
+      "cwd": "/Users/justinrich/.cache/agent-scratch/rnr-review-shallow-kqvbwgjb-detached",
+      "exit": 0,
+      "log": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/sprint-05-orient-search/FIX-ORI-RN-003-3/reviewer-cycle-6/shallow-detached/shallow-restored.log"
+    }
+  ]
+}

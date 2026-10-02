@@ -1,0 +1,139 @@
+{
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:58",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:67",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:143",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:162"
+      ],
+      "reason": "The contract retains all three bounded repairs and requires real selector exits plus execution of the exact final harness after its last byte change."
+    },
+    {
+      "id": "AC-2",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:59",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:79",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:81",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:82",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:83",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:119"
+      ],
+      "reason": "Retained-bound mode now requires identifiable original immutable raw logs, manifests, teardowns and provider correlations with complete execution-input identity. It rejects summary-only or later same-path outputs. Real rerun is the expected path if any original binding is missing or invalid, and the required runtime artifacts are explicitly allowed."
+    },
+    {
+      "id": "AC-3",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:60",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:95",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:97",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:177"
+      ],
+      "reason": "The exact historical owner map and immutable Git boundary are preserved. Historical ownership no longer asserts a current publication dependency; new failures require their own diagnosis."
+    },
+    {
+      "id": "DONE-WHEN-4",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:61",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:178",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:179"
+      ],
+      "reason": "The final implementation remains subject to exact-candidate static gates and independent enumeration of every AC."
+    }
+  ],
+  "verdict": "APPROVED",
+  "task": "FIX-ORI-SUITE-2-2",
+  "commit_sha": "b1a5a533484d2a385fc71172dfb06db950800a72",
+  "base_sha": "53034655a3062e9fa0e9f942e271d12418fb7a62",
+  "reviewer": "ghactions-reviewer",
+  "review_scope": "Docs-only remediation contract and its two index additions. This approval does not complete FIX-ORI-SUITE-2-2, approve a product implementation, or close Sprint 05.",
+  "prior_review_commit": "e19759dec45f4c5a1a67a029319b28394a035c87",
+  "resolved_findings": [
+    {
+      "id": "F1",
+      "verdict": "PASS",
+      "evidence": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:34",
+      "resolution": "Proposed By now names ghactions-implementer and the failed-review origin."
+    },
+    {
+      "id": "F2",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:95",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:97",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:189"
+      ],
+      "resolution": "Historical residual and owner assignments are explicitly historical. Aggregate and publication gates remain separate; current failure ownership requires fresh evidence."
+    },
+    {
+      "id": "F3",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:79",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:81",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:82",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:83",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:85"
+      ],
+      "resolution": "The contract identifies the unavailable/mismatched raw capture problem; enumerates original raw receipt and execution-input bindings; requires consistent run identity, completed legs and provider outcomes; prohibits manufactured retrospective proof; and defaults to real native reruns."
+    },
+    {
+      "id": "F4",
+      "verdict": "PASS",
+      "evidence": [
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:107",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:119",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:129",
+        ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md:239"
+      ],
+      "resolution": "Implementation commit paths and bounded runtime artifact paths are separate in prose and structured guardrails. Exact native positive/negative-case output paths and selector logs are allowed at runtime; imported historical summaries remain immutable and runtime outputs cannot enter the implementation diff."
+    }
+  ],
+  "findings": [],
+  "fakeability_audit": [
+    {
+      "ac": "AC-1",
+      "could_stub_pass": false,
+      "verdict": "PASS",
+      "reason": "Contract requires actual selectors with 4/4, 4/4 and 1/1 results and matching executed harness bytes."
+    },
+    {
+      "ac": "AC-2",
+      "could_stub_pass": false,
+      "verdict": "PASS",
+      "reason": "Contract rejects summary-only proof and requires complete immutable original evidence or real native/provider execution. Implementation enforcement remains to be reviewed."
+    },
+    {
+      "ac": "AC-3",
+      "could_stub_pass": false,
+      "verdict": "PASS",
+      "reason": "Contract requires real immutable Git comparison and nonempty unchanged historical routing evidence."
+    }
+  ],
+  "validation": {
+    "git_diff_scope": "PASS: only new TASK-FIX-ORI-SUITE-2-2.md, SPRINT.md and ROADMAP.md versus 53034655",
+    "correction_diff_scope": "PASS: only TASK-FIX-ORI-SUITE-2-2.md versus e19759de",
+    "git_diff_check": "PASS",
+    "task_bytes_match_candidate": "PASS",
+    "worktree_clean": "PASS",
+    "requirement_contract_json": "PASS",
+    "scenario_validator": {
+      "exit": 0,
+      "ok": true,
+      "scenario_count": 3,
+      "violations": []
+    },
+    "runtime_tests": "Not run: docs-only review",
+    "workflows_changed": false,
+    "actionlint": "Not rerun: no workflow changes",
+    "main_before": "09123090d57f7747ac3760055a5932392b598351",
+    "main_after": "09123090d57f7747ac3760055a5932392b598351",
+    "task_or_state_edits": "None; only this authorized review metadata file written"
+  },
+  "summary": "All four prior contract findings are resolved on the exact candidate. Approve the docs/index contract for registration and implementation dispatch. Actual implementation, fresh final-harness proof, native evidence and independent final review remain required."
+}

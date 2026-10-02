@@ -1,0 +1,87 @@
+{
+  "item_id": "FIX-ORI-SUITE-1:blocked:3:scope_impact:0:0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf",
+  "wave_id": "wave-28",
+  "source_task": "FIX-ORI-SUITE-1",
+  "source_kind": "blocked",
+  "report_sha256": "0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf",
+  "field": "scope_impact",
+  "index": 0,
+  "outcome": "nothing",
+  "answers": [
+    {
+      "question": 1,
+      "answer": true,
+      "reason": "The report names the existing dependency.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-implementation-cycle3.response.json",
+          "sha256": "0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "answer": false,
+      "reason": "This is an implementer dependency report, not a failed review finding.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-implementation-cycle3.response.json",
+          "sha256": "0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "answer": true,
+      "reason": "The Suite 1 aggregate is a Sprint 5 acceptance gate.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-implementation-cycle3.response.json",
+          "sha256": "0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "answer": false,
+      "reason": "Waiting for the existing owner changes no product or gate definition.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-implementation-cycle3.response.json",
+          "sha256": "0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    },
+    {
+      "question": 5,
+      "answer": false,
+      "reason": "The pending .spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md already owns this proof. Continue that task, then resume Suite 1 unchanged.",
+      "evidence": [
+        {
+          "path": ".kb-run-sprint/sprint-05-orient-search/closure-20260929/suite1-implementation-cycle3.response.json",
+          "sha256": "0942870949a2cbf109c38d166436ae9d2c9d66d9dbf029e16632b10b3c6c41cf"
+        },
+        {
+          "path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/TASK-FIX-ORI-SUITE-2-2.md",
+          "sha256": "af854136caf3b08720262d5cc26b47da1738eaf235f8dd439cadecdb8f6f3403"
+        }
+      ]
+    }
+  ]
+}

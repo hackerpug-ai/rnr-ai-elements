@@ -1,0 +1,74 @@
+{
+  "candidate": "db04b8e56ebacef38d2fb38210141db033170b69",
+  "root": "/Users/justinrich/.cache/agent-scratch/rnr-supervisor-review-Iz835a",
+  "notes": "Unmodified function bodies, CLI invocation removed and HERE rebound to original source directory. Actual journal/log bytes copied read-only; process-only probes are not native product proof.",
+  "probes": [
+    {
+      "name": "nativewind actual journal plus completed driver log, no active subprocess",
+      "result": {
+        "phase": "nativewind:reject:backend-start",
+        "timeoutMs": 120000,
+        "source": "caller-journal"
+      }
+    },
+    {
+      "name": "real process group with caller iOS flag and Android Maestro argv shape",
+      "commands": "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node -e setInterval(()=>{},1000) -- 81487B1E-A4D1-45AE-9BCE-D675802BACD1 maestro test --udid emulator-5554",
+      "result": {
+        "phase": "nativewind:reject:ios-leg",
+        "timeoutMs": 2400000,
+        "source": "owned-process-group"
+      }
+    },
+    {
+      "name": "real detached TERM-resistant child, overall timeout and escalation",
+      "result": {
+        "command": [
+          "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node",
+          "-e",
+          "process.on(\"SIGTERM\",()=>{}); console.log(\"ready\");setInterval(()=>{},1000)"
+        ],
+        "started_at": "2026-09-29T18:55:25.934Z",
+        "ended_at": "2026-09-29T18:55:36.440Z",
+        "child_pid": 53286,
+        "process_group_id": 53286,
+        "last_observed_phase": "process-start",
+        "last_observed_phase_source": "supervisor",
+        "timed_out_phase": "overall",
+        "last_child_output_at": "2026-09-29T18:55:25.952Z",
+        "timeout_ms": 500,
+        "timed_out": true,
+        "exit_code": null,
+        "signal": "SIGKILL",
+        "log": "../../../../../../.cache/agent-scratch/rnr-supervisor-review-Iz835a/timeout/child.log",
+        "heartbeat_log": "../../../../../../.cache/agent-scratch/rnr-supervisor-review-Iz835a/timeout/supervisor-heartbeat.jsonl"
+      },
+      "membersAfter": []
+    },
+    {
+      "name": "real detached child, enforced injected phase deadline",
+      "result": {
+        "command": [
+          "/Users/justinrich/.nvm/versions/node/v24.14.0/bin/node",
+          "-e",
+          "console.log(\"phase probe ready\");setInterval(()=>{},1000)"
+        ],
+        "started_at": "2026-09-29T18:56:42.497Z",
+        "ended_at": "2026-09-29T18:56:47.502Z",
+        "child_pid": 63825,
+        "process_group_id": 63825,
+        "last_observed_phase": "owned-process-probe",
+        "last_observed_phase_source": "real-child-boundary-probe",
+        "timed_out_phase": "phase:owned-process-probe",
+        "last_child_output_at": "2026-09-29T18:56:42.516Z",
+        "timeout_ms": 20000,
+        "timed_out": true,
+        "exit_code": null,
+        "signal": "SIGTERM",
+        "log": "../../../../../../.cache/agent-scratch/rnr-supervisor-review-Iz835a/phase-timeout/child.log",
+        "heartbeat_log": "../../../../../../.cache/agent-scratch/rnr-supervisor-review-Iz835a/phase-timeout/supervisor-heartbeat.jsonl"
+      },
+      "membersAfter": []
+    }
+  ]
+}
