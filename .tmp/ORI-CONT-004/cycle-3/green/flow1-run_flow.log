@@ -1,0 +1,13 @@
+@@RUN-FLOW flow=FLOW-DOCS-01-getting-started-engine-decision sprint=sprint-05-orient-search expect=green cmd_sha=2bf73cbb245302f1ca4226300199253f1846e042e458802dd643c6c5dcab5d9a head=47424da481d4af89b92fea350ac9be48cc0991fd+dirty at=2026-09-28T12:24:09Z@@
++ pnpm exec playwright test tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts --grep FLOW-DOCS-01-getting-started-engine-decision
+
+Running 12 tests using 1 worker
+(node:37340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+····(node:63880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+····(node:74238) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+····
+  12 passed (3.1m)
+@@GATE-EXIT=0@@

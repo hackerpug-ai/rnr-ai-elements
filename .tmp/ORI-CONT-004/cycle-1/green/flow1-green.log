@@ -1,0 +1,19 @@
+@@RUN-FLOW flow=FLOW-DOCS-01-getting-started-engine-decision sprint=sprint-05-orient-search expect=green cmd_sha=2bf73cbb245302f1ca4226300199253f1846e042e458802dd643c6c5dcab5d9a head=ce1cd537fc30e2957ae6cf376c93250fef19c8ba+dirty at=2026-09-26T00:09:09Z@@
++ pnpm exec playwright test tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts --grep FLOW-DOCS-01-getting-started-engine-decision
+
+Running 12 tests using 1 worker
+
+[1/12] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:211:1 › FLOW-DOCS-01-getting-started-engine-decision: locked 6-step sequence
+[2/12] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:247:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 boundary search answers transport
+[3/12] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:313:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 unknown-route recovery
+[4/12] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:346:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 claim ledger and content gates
+[5/12] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:211:1 › FLOW-DOCS-01-getting-started-engine-decision: locked 6-step sequence
+[6/12] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:247:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 boundary search answers transport
+[7/12] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:313:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 unknown-route recovery
+[8/12] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:346:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 claim ledger and content gates
+[9/12] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:211:1 › FLOW-DOCS-01-getting-started-engine-decision: locked 6-step sequence
+[10/12] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:247:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 boundary search answers transport
+[11/12] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:313:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 unknown-route recovery
+[12/12] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:346:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 claim ledger and content gates
+  12 passed (2.8m)
+@@GATE-EXIT=0@@

@@ -1,0 +1,13 @@
+@@RUN-FLOW flow=FLOW-DOCS-01-theming-and-section-nav sprint=sprint-05-orient-search expect=green cmd_sha=158596498416fb7512f273e4672c4e012c8e72cc51acb4d3e47981ae8b6503f8 head=47424da481d4af89b92fea350ac9be48cc0991fd+dirty at=2026-09-28T12:27:25Z@@
++ pnpm exec playwright test tests/sprint-05-orient-search/theming-and-section-nav.spec.ts --grep FLOW-DOCS-01-theming-and-section-nav
+
+Running 9 tests using 1 worker
+(node:88867) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+···(node:89953) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+···(node:90598) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+···
+  9 passed (9.5s)
+@@GATE-EXIT=0@@

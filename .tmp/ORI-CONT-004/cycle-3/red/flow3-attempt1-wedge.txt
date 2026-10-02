@@ -1,0 +1,12 @@
+Attempt 1 of cycle 3 was killed with SIGTERM (exit 143) after the worker stopped making progress.
+This is not a functional assertion failure and not a down preview.
+
+Observed:
+- Native seed screenshots for nativewind and uniwind, light and dark, were written.
+- Uniwind expo export --platform web produced index.html (react-native-web pin held; the old InputAccessoryView failure did not recur).
+- The worker then listened on 127.0.0.1:8610, which is the negative-control webSubmit port range (8500-8899), so runAllLegs had returned.
+- A second Playwright client loaded that page in under a second: HTTP 200, Seed turn 24 visible, scroll to Seed turn 01 succeeded in 206 ms.
+- The in-process driveWeb call did not return. support/quickstart-web.ts uses scrollIntoViewIfNeeded and fill without an action timeout. Playwright's default action timeout is 0, so that wait does not fail the test.
+- The owned spec cannot change that driver. The file is outside writeAllowed.
+
+Attempt 2 reruns the same locked command.

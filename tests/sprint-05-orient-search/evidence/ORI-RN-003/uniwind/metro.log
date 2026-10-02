@@ -9,3 +9,562 @@ iOS Bundled 4276ms node_modules/.pnpm/expo-router@57.0.21_1c823d226e4e1e128d0e7f
 iOS Bundled 76ms node_modules/.pnpm/expo-router@57.0.21_1c823d226e4e1e128d0e7f07e365c485/node_modules/expo-router/entry.js (1 module)
 Android Bundled 838ms node_modules/.pnpm/expo-router@57.0.21_1c823d226e4e1e128d0e7f07e365c485/node_modules/expo-router/entry.js (3835 modules)
 Android Bundled 83ms node_modules/.pnpm/expo-router@57.0.21_1c823d226e4e1e128d0e7f07e365c485/node_modules/expo-router/entry.js (1 module)
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /Users/justinrich/.cache/agent-scratch/ori-rn-003-uniwind-KJ3bkQ[39m
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[31m[1miOS[22m Bundling failed [39m[2m5678ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1931 modules)[22m[0m
+Unable to resolve "@/components/ai/message" from "shared/quickstart-screen.tsx"
+[0m [90m 1 |[39m [36mimport[39m { [33mConversation[39m[33m,[39m [33mConversationScrollButton[39m } [36mfrom[39m [32m'@/components/ai/conversation'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m { [33mMessage[39m[33m,[39m [33mMessageContent[39m[33m,[39m [33mMessageResponse[39m } [36mfrom[39m [32m'@/components/ai/message'[39m[33m;[39m
+ [90m   |[39m                                                           [31m[1m^[22m[39m
+ [90m 3 |[39m [36mimport[39m {
+ [90m 4 |[39m   [33mPromptInput[39m[33m,[39m
+ [90m 5 |[39m   [33mPromptInputBody[39m[33m,[39m[0m
+
+[1mImport stack:[22m
+
+[90m [39mshared/quickstart-screen.tsx
+[90m |[39m [36mimport[39m [32m"@/components/ai/message"[39m
+
+[90m [39mapp/index.tsx
+[90m |[39m [36mimport[39m [32m"@/shared/quickstart-screen"[39m
+
+[90m [39mapp[2m (require.context)[22m
+
+[31m[1miOS[22m Bundling failed [39m[2m448ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1786 modules)[22m[0m
+Unable to resolve "@/components/ai/message" from "shared/quickstart-screen.tsx"
+[0m [90m 1 |[39m [36mimport[39m { [33mConversation[39m[33m,[39m [33mConversationScrollButton[39m } [36mfrom[39m [32m'@/components/ai/conversation'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m { [33mMessage[39m[33m,[39m [33mMessageContent[39m[33m,[39m [33mMessageResponse[39m } [36mfrom[39m [32m'@/components/ai/message'[39m[33m;[39m
+ [90m   |[39m                                                           [31m[1m^[22m[39m
+ [90m 3 |[39m [36mimport[39m {
+ [90m 4 |[39m   [33mPromptInput[39m[33m,[39m
+ [90m 5 |[39m   [33mPromptInputBody[39m[33m,[39m[0m
+
+[1mImport stack:[22m
+
+[90m [39mshared/quickstart-screen.tsx
+[90m |[39m [36mimport[39m [32m"@/components/ai/message"[39m
+
+[90m [39mapp/index.tsx
+[90m |[39m [36mimport[39m [32m"@/shared/quickstart-screen"[39m
+
+[90m [39mapp[2m (require.context)[22m
+
+[31m[1mAndroid[22m Bundling failed [39m[2m4087ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (2026 modules)[22m[0m
+Unable to resolve "@/components/ai/message" from "shared/quickstart-screen.tsx"
+[0m [90m 1 |[39m [36mimport[39m { [33mConversation[39m[33m,[39m [33mConversationScrollButton[39m } [36mfrom[39m [32m'@/components/ai/conversation'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m { [33mMessage[39m[33m,[39m [33mMessageContent[39m[33m,[39m [33mMessageResponse[39m } [36mfrom[39m [32m'@/components/ai/message'[39m[33m;[39m
+ [90m   |[39m                                                           [31m[1m^[22m[39m
+ [90m 3 |[39m [36mimport[39m {
+ [90m 4 |[39m   [33mPromptInput[39m[33m,[39m
+ [90m 5 |[39m   [33mPromptInputBody[39m[33m,[39m[0m
+
+[1mImport stack:[22m
+
+[90m [39mshared/quickstart-screen.tsx
+[90m |[39m [36mimport[39m [32m"@/components/ai/message"[39m
+
+[90m [39mapp/index.tsx
+[90m |[39m [36mimport[39m [32m"@/shared/quickstart-screen"[39m
+
+[90m [39mapp[2m (require.context)[22m
+
+[31m[1mAndroid[22m Bundling failed [39m[2m385ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1622 modules)[22m[0m
+Unable to resolve "@/components/ai/message" from "shared/quickstart-screen.tsx"
+[0m [90m 1 |[39m [36mimport[39m { [33mConversation[39m[33m,[39m [33mConversationScrollButton[39m } [36mfrom[39m [32m'@/components/ai/conversation'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m { [33mMessage[39m[33m,[39m [33mMessageContent[39m[33m,[39m [33mMessageResponse[39m } [36mfrom[39m [32m'@/components/ai/message'[39m[33m;[39m
+ [90m   |[39m                                                           [31m[1m^[22m[39m
+ [90m 3 |[39m [36mimport[39m {
+ [90m 4 |[39m   [33mPromptInput[39m[33m,[39m
+ [90m 5 |[39m   [33mPromptInputBody[39m[33m,[39m[0m
+
+[1mImport stack:[22m
+
+[90m [39mshared/quickstart-screen.tsx
+[90m |[39m [36mimport[39m [32m"@/components/ai/message"[39m
+
+[90m [39mapp/index.tsx
+[90m |[39m [36mimport[39m [32m"@/shared/quickstart-screen"[39m
+
+[90m [39mapp[2m (require.context)[22m
+
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-8abkMc[39m
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m5751ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (3782 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m84ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m4101ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m69ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-Q3rzZw[39m
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1166ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (3528 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m50ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m569ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m52ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_61d29d3810b20eb760f998dd67323937/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-KDtFBD[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m28805ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3782 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m502ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m24333ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m386ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-3UG3E7[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1451ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3573 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m62ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m735ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3820 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m388ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-supqdq[39m
+› Port [1m8094[22m is running [36mdocs-snippets-uniwind-consumer[39m in another window
+[90m  /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-3UG3E7 [90m(pid 86284)[39m[90m[39m
+[33m[33mInput is required, but 'npx expo' is in non-interactive mode.[39m[33m[39m
+[33m[33mRequired input:[39m[33m[39m
+[33m[33m> Use port 8095 instead?[39m[33m[39m
+› Skipping dev server
+[32m[1miOS[22m Bundled [39m[2m66ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m62ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m66ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m54ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-JgzLhW[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1981ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3647 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m85ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m739ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3759 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m62ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-1uSXh6[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1818ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3705 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m109ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m1382ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3860 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m107ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-d4YTiz[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m4150ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3782 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m114ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m2053ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3871 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m125ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[7m[31m[1m ERROR [22m[39m[27m Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component. Move this work to useEffect instead. 
+
+[1mCall Stack[22m
+[2m[90m  apply (<native>)[39m[22m
+[2m[90m  NamelessError (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.25_react-dom@19.2.3_react@19_e8409cdfdd5d91dfbbdf836427490718/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:105)[39m[22m
+[2m[90m  captureCurrentStack (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.25_react-dom@19.2.3_react@19_e8409cdfdd5d91dfbbdf836427490718/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:110:27)[39m[22m
+[2m[90m  HMRClient.log (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.25_react-dom@19.2.3_react@19_e8409cdfdd5d91dfbbdf836427490718/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:42:79)[39m[22m
+[2m[90m  console.level (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Core/setUpDeveloperTools.js:41:24)[39m[22m
+[2m[90m  runWithFiberInDEV$argument_1 (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15178:26)[39m[22m
+[2m[90m  run (<native>)[39m[22m
+[2m[90m  runWithFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:697:33)[39m[22m
+[2m[90m  warnAboutUpdateOnNotYetMountedFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15177:28)[39m[22m
+[2m[90m  getRootForUpdatedFiber (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5123:51)[39m[22m
+[2m[90m  enqueueConcurrentHookUpdate (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5067:36)[39m[22m
+[2m[90m  dispatchSetStateInternal (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6991:45)[39m[22m
+[2m[90m  dispatchSetState (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6951:31)[39m[22m
+[2m[90m  url.then$argument_0 (node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/build/fork/useLinking.native.js:127:47)[39m[22m
+[2m[90m  tryCallOne (address at (InternalBytecode.js:1:1296)[39m[22m
+[2m[90m  anonymous (address at (InternalBytecode.js:1:4984)[39m[22m 
+
+[1mCode: ExpoRoot.js[22m
+[0m [90m 133 |[39m         }
+ [90m 134 |[39m     }
+[31m[1m>[22m[39m[90m 135 |[39m     [36mreturn[39m (([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(storeContext_1[33m.[39m[33mStoreContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m store[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mNavigationContainer_1[39m[33m.[39m[33mNavigationContainer[39m[33m,[39m { ref[33m:[39m store[33m.[39mnavigationRef[33m,[39m initialState[33m:[39m store[33m.[39mstate[33m,[39m linking[33m:[39m store[33m.[39mlinking[33m,[39m onUnhandledAction[33m:[39m onUnhandledAction[33m,[39m onStateChange[33m:[39m store[33m.[39monStateChange[33m,[39m documentTitle[33m:[39m documentTitle[33m,[39m onReady[33m:[39m onNavigationReady[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(serverLocationContext_1[33m.[39m[33mServerContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m serverContext[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mWrapperComponent[39m[33m,[39m { children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mContent[39m[33m,[39m {}) }) }) }) }))[33m;[39m
+ [90m     |[39m                                                                                                                         [31m[1m^[22m[39m
+ [90m 136 |[39m }
+ [90m 137 |[39m [36mfunction[39m [33mContent[39m() {
+ [90m 138 |[39m     [36mconst[39m children [33m=[39m [([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(primitives_1[33m.[39m[33mScreen[39m[33m,[39m { name[33m:[39m constants_1[33m.[39m[33mINTERNAL_SLOT_NAME[39m[33m,[39m component[33m:[39m router_store_1[33m.[39mstore[33m.[39mrootComponent })][33m;[39m[0m
+[1mCall Stack[22m
+[2m[90m  ContextNavigator (node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/build/ExpoRoot.js:135:121)[39m[22m
+[2m[90m  ExpoRoot (node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/build/ExpoRoot.js:85:33)[39m[22m
+[2m[90m  App (node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/build/qualified-entry.js:20:91)[39m[22m
+[2m[90m  WithDevTools (node_modules/.pnpm/expo@57.0.25_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_c0cefbab1f07504008af4994badb81c4/node_modules/expo/src/launch/withDevTools.tsx:21:12)[39m[22m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-WIFUIH[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m2755ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3780 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m135ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m1427ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+(node:32290) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-z8urMr[39m
+(node:32374) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[33m|[39m (node:32374) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[33m|[39m (Use `node --trace-warnings ...` to show where the warning was created)
+[32m[1miOS[22m Bundled [39m[2m1828ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3758 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m106ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m880ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3747 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m74ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+(node:2607) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-pxsBMm[39m
+(node:2736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[33m|[39m (node:2736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[33m|[39m (Use `node --trace-warnings ...` to show where the warning was created)
+[32m[1miOS[22m Bundled [39m[2m1250ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3501 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m58ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m683ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m65ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+(node:31135) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-JQorKm[39m
+(node:31222) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[33m|[39m (node:31222) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[33m|[39m (Use `node --trace-warnings ...` to show where the warning was created)
+[32m[1miOS[22m Bundled [39m[2m1534ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3462 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m62ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m870ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3763 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m79ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+(node:8078) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-zNSjK4[39m
+(node:8188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[33m|[39m (node:8188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[33m|[39m (Use `node --trace-warnings ...` to show where the warning was created)
+[32m[1miOS[22m Bundled [39m[2m2001ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3668 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m126ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m989ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3830 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m76ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+(node:63875) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-9B35Iz[39m
+(node:64014) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[33m|[39m (node:64014) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[33m|[39m (Use `node --trace-warnings ...` to show where the warning was created)
+[32m[1miOS[22m Bundled [39m[2m2145ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3705 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m112ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m1135ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m87ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+(node:95149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-u9eCGP[39m
+(node:95290) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[33m|[39m (node:95290) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[33m|[39m (Use `node --trace-warnings ...` to show where the warning was created)
+[32m[1miOS[22m Bundled [39m[2m2598ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3674 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m89ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m892ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (3690 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m79ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.23_7fd00f0b140fc75c2d34b28d7aa52190/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-ESDhZB[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m6319ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3782 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m91ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m2455ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m58ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-1rBq42[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1107ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3647 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m58ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m513ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3687 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m62ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-KjyMPL[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1483ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3647 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m101ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m600ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3830 modules)[22m[0m
+[7m[31m[1m ERROR [22m[39m[27m Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component. Move this work to useEffect instead. 
+
+[1mCall Stack[22m
+[2m[90m  apply (<native>)[39m[22m
+[2m[90m  NamelessError (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:105)[39m[22m
+[2m[90m  captureCurrentStack (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:110:27)[39m[22m
+[2m[90m  HMRClient.log (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:42:79)[39m[22m
+[2m[90m  console.level (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Core/setUpDeveloperTools.js:41:24)[39m[22m
+[2m[90m  runWithFiberInDEV$argument_1 (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15178:26)[39m[22m
+[2m[90m  run (<native>)[39m[22m
+[2m[90m  runWithFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:697:33)[39m[22m
+[2m[90m  warnAboutUpdateOnNotYetMountedFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15177:28)[39m[22m
+[2m[90m  getRootForUpdatedFiber (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5123:51)[39m[22m
+[2m[90m  enqueueConcurrentHookUpdate (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5067:36)[39m[22m
+[2m[90m  dispatchSetStateInternal (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6991:45)[39m[22m
+[2m[90m  dispatchSetState (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6951:31)[39m[22m
+[2m[90m  url.then$argument_0 (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/fork/useLinking.native.js:127:47)[39m[22m
+[2m[90m  tryCallOne (address at (InternalBytecode.js:1:1296)[39m[22m
+[2m[90m  anonymous (address at (InternalBytecode.js:1:4984)[39m[22m 
+
+[1mCode: ExpoRoot.js[22m
+[0m [90m 133 |[39m         }
+ [90m 134 |[39m     }
+[31m[1m>[22m[39m[90m 135 |[39m     [36mreturn[39m (([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(storeContext_1[33m.[39m[33mStoreContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m store[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mNavigationContainer_1[39m[33m.[39m[33mNavigationContainer[39m[33m,[39m { ref[33m:[39m store[33m.[39mnavigationRef[33m,[39m initialState[33m:[39m store[33m.[39mstate[33m,[39m linking[33m:[39m store[33m.[39mlinking[33m,[39m onUnhandledAction[33m:[39m onUnhandledAction[33m,[39m onStateChange[33m:[39m store[33m.[39monStateChange[33m,[39m documentTitle[33m:[39m documentTitle[33m,[39m onReady[33m:[39m onNavigationReady[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(serverLocationContext_1[33m.[39m[33mServerContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m serverContext[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mWrapperComponent[39m[33m,[39m { children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mContent[39m[33m,[39m {}) }) }) }) }))[33m;[39m
+ [90m     |[39m                                                                                                                         [31m[1m^[22m[39m
+ [90m 136 |[39m }
+ [90m 137 |[39m [36mfunction[39m [33mContent[39m() {
+ [90m 138 |[39m     [36mconst[39m children [33m=[39m [([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(primitives_1[33m.[39m[33mScreen[39m[33m,[39m { name[33m:[39m constants_1[33m.[39m[33mINTERNAL_SLOT_NAME[39m[33m,[39m component[33m:[39m router_store_1[33m.[39mstore[33m.[39mrootComponent })][33m;[39m[0m
+[1mCall Stack[22m
+[2m[90m  ContextNavigator (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/ExpoRoot.js:135:121)[39m[22m
+[2m[90m  ExpoRoot (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/ExpoRoot.js:85:33)[39m[22m
+[2m[90m  App (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/qualified-entry.js:20:91)[39m[22m
+[2m[90m  WithDevTools (node_modules/.pnpm/expo@57.0.26_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_132706d322f1c1df5a3af0336bbca91e/node_modules/expo/src/launch/withDevTools.tsx:21:12)[39m[22m
+[32m[1mAndroid[22m Bundled [39m[2m57ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-7AJv77[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1369ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3508 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m53ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m665ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m59ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[7m[31m[1m ERROR [22m[39m[27m Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component. Move this work to useEffect instead. 
+
+[1mCall Stack[22m
+[2m[90m  apply (<native>)[39m[22m
+[2m[90m  NamelessError (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:105)[39m[22m
+[2m[90m  captureCurrentStack (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:110:27)[39m[22m
+[2m[90m  HMRClient.log (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:42:79)[39m[22m
+[2m[90m  console.level (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Core/setUpDeveloperTools.js:41:24)[39m[22m
+[2m[90m  runWithFiberInDEV$argument_1 (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15178:26)[39m[22m
+[2m[90m  run (<native>)[39m[22m
+[2m[90m  runWithFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:697:33)[39m[22m
+[2m[90m  warnAboutUpdateOnNotYetMountedFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15177:28)[39m[22m
+[2m[90m  getRootForUpdatedFiber (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5123:51)[39m[22m
+[2m[90m  enqueueConcurrentHookUpdate (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5067:36)[39m[22m
+[2m[90m  dispatchSetStateInternal (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6991:45)[39m[22m
+[2m[90m  dispatchSetState (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6951:31)[39m[22m
+[2m[90m  url.then$argument_0 (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/fork/useLinking.native.js:127:47)[39m[22m
+[2m[90m  tryCallOne (address at (InternalBytecode.js:1:1296)[39m[22m
+[2m[90m  anonymous (address at (InternalBytecode.js:1:4984)[39m[22m 
+
+[1mCode: ExpoRoot.js[22m
+[0m [90m 133 |[39m         }
+ [90m 134 |[39m     }
+[31m[1m>[22m[39m[90m 135 |[39m     [36mreturn[39m (([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(storeContext_1[33m.[39m[33mStoreContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m store[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mNavigationContainer_1[39m[33m.[39m[33mNavigationContainer[39m[33m,[39m { ref[33m:[39m store[33m.[39mnavigationRef[33m,[39m initialState[33m:[39m store[33m.[39mstate[33m,[39m linking[33m:[39m store[33m.[39mlinking[33m,[39m onUnhandledAction[33m:[39m onUnhandledAction[33m,[39m onStateChange[33m:[39m store[33m.[39monStateChange[33m,[39m documentTitle[33m:[39m documentTitle[33m,[39m onReady[33m:[39m onNavigationReady[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(serverLocationContext_1[33m.[39m[33mServerContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m serverContext[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mWrapperComponent[39m[33m,[39m { children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mContent[39m[33m,[39m {}) }) }) }) }))[33m;[39m
+ [90m     |[39m                                                                                                                         [31m[1m^[22m[39m
+ [90m 136 |[39m }
+ [90m 137 |[39m [36mfunction[39m [33mContent[39m() {
+ [90m 138 |[39m     [36mconst[39m children [33m=[39m [([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(primitives_1[33m.[39m[33mScreen[39m[33m,[39m { name[33m:[39m constants_1[33m.[39m[33mINTERNAL_SLOT_NAME[39m[33m,[39m component[33m:[39m router_store_1[33m.[39mstore[33m.[39mrootComponent })][33m;[39m[0m
+[1mCall Stack[22m
+[2m[90m  ContextNavigator (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/ExpoRoot.js:135:121)[39m[22m
+[2m[90m  ExpoRoot (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/ExpoRoot.js:85:33)[39m[22m
+[2m[90m  App (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/qualified-entry.js:20:91)[39m[22m
+[2m[90m  WithDevTools (node_modules/.pnpm/expo@57.0.26_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_132706d322f1c1df5a3af0336bbca91e/node_modules/expo/src/launch/withDevTools.tsx:21:12)[39m[22m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-OkFsJz[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1397ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3782 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m52ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m911ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[7m[31m[1m ERROR [22m[39m[27m Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component. Move this work to useEffect instead. 
+
+[1mCall Stack[22m
+[2m[90m  apply (<native>)[39m[22m
+[2m[90m  NamelessError (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:105)[39m[22m
+[2m[90m  captureCurrentStack (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:110:27)[39m[22m
+[2m[90m  HMRClient.log (node_modules/.pnpm/@expo+metro-runtime@57.0.16_@expo+log-box@57.0.4_expo@57.0.26_react-dom@19.2.3_react@19_b3a3eae515a422ad24bbe1d122632e4a/node_modules/@expo/metro-runtime/src/metroServerLogs.native.ts:42:79)[39m[22m
+[2m[90m  console.level (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Core/setUpDeveloperTools.js:41:24)[39m[22m
+[2m[90m  runWithFiberInDEV$argument_1 (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15178:26)[39m[22m
+[2m[90m  run (<native>)[39m[22m
+[2m[90m  runWithFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:697:33)[39m[22m
+[2m[90m  warnAboutUpdateOnNotYetMountedFiberInDEV (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15177:28)[39m[22m
+[2m[90m  getRootForUpdatedFiber (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5123:51)[39m[22m
+[2m[90m  enqueueConcurrentHookUpdate (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:5067:36)[39m[22m
+[2m[90m  dispatchSetStateInternal (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6991:45)[39m[22m
+[2m[90m  dispatchSetState (node_modules/.pnpm/react-native@0.86.3_@babel+core@7.29.7_@react-native+metro-config@0.86.3_@babel+core@7._dcc1ba86c4f0f476b4029bc2604f6bbc/node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:6951:31)[39m[22m
+[2m[90m  url.then$argument_0 (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/fork/useLinking.native.js:127:47)[39m[22m
+[2m[90m  tryCallOne (address at (InternalBytecode.js:1:1296)[39m[22m
+[2m[90m  anonymous (address at (InternalBytecode.js:1:4984)[39m[22m 
+
+[1mCode: ExpoRoot.js[22m
+[0m [90m 133 |[39m         }
+ [90m 134 |[39m     }
+[31m[1m>[22m[39m[90m 135 |[39m     [36mreturn[39m (([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(storeContext_1[33m.[39m[33mStoreContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m store[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mNavigationContainer_1[39m[33m.[39m[33mNavigationContainer[39m[33m,[39m { ref[33m:[39m store[33m.[39mnavigationRef[33m,[39m initialState[33m:[39m store[33m.[39mstate[33m,[39m linking[33m:[39m store[33m.[39mlinking[33m,[39m onUnhandledAction[33m:[39m onUnhandledAction[33m,[39m onStateChange[33m:[39m store[33m.[39monStateChange[33m,[39m documentTitle[33m:[39m documentTitle[33m,[39m onReady[33m:[39m onNavigationReady[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(serverLocationContext_1[33m.[39m[33mServerContext[39m[33m.[39m[33mProvider[39m[33m,[39m { value[33m:[39m serverContext[33m,[39m children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mWrapperComponent[39m[33m,[39m { children[33m:[39m ([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)([33mContent[39m[33m,[39m {}) }) }) }) }))[33m;[39m
+ [90m     |[39m                                                                                                                         [31m[1m^[22m[39m
+ [90m 136 |[39m }
+ [90m 137 |[39m [36mfunction[39m [33mContent[39m() {
+ [90m 138 |[39m     [36mconst[39m children [33m=[39m [([35m0[39m[33m,[39m jsx_runtime_1[33m.[39mjsx)(primitives_1[33m.[39m[33mScreen[39m[33m,[39m { name[33m:[39m constants_1[33m.[39m[33mINTERNAL_SLOT_NAME[39m[33m,[39m component[33m:[39m router_store_1[33m.[39mstore[33m.[39mrootComponent })][33m;[39m[0m
+[1mCall Stack[22m
+[2m[90m  ContextNavigator (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/ExpoRoot.js:135:121)[39m[22m
+[2m[90m  ExpoRoot (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/ExpoRoot.js:85:33)[39m[22m
+[2m[90m  App (node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/build/qualified-entry.js:20:91)[39m[22m
+[2m[90m  WithDevTools (node_modules/.pnpm/expo@57.0.26_@babel+core@7.29.7_@expo+dom-webview@57.0.1_@expo+metro-runtime@57.0.16_ex_132706d322f1c1df5a3af0336bbca91e/node_modules/expo/src/launch/withDevTools.tsx:21:12)[39m[22m
+[32m[1mAndroid[22m Bundled [39m[2m65ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-vzHBf0[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1178ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3509 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m74ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m1887ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3879 modules)[22m[0m
+[7m[33m[1m WARN [22m[39m[27m [Reanimated] Reduced motion setting is enabled on this device. This warning is visible only in the development mode. Some animations will be disabled by default. You can override the behavior for individual animations, see https://docs.swmansion.com/react-native-reanimated/docs/guides/troubleshooting#reduced-motion-setting-is-enabled-on-this-device.
+[32m[1mAndroid[22m Bundled [39m[2m54ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[7m[33m[1m WARN [22m[39m[27m [Reanimated] Reduced motion setting is enabled on this device. This warning is visible only in the development mode. Some animations will be disabled by default. You can override the behavior for individual animations, see https://docs.swmansion.com/react-native-reanimated/docs/guides/troubleshooting#reduced-motion-setting-is-enabled-on-this-device.
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-0Rrsq4[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1302ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3529 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m52ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m646ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3603 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m56ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-t9DB1Q[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1887ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3781 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m75ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m647ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3516 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m56ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+[90mStarting project at /private/tmp/ori-ai-002-scratch/ori-rn-003-uniwind-le0VQA[39m
+Metro is running in CI mode, reloads are disabled. Remove [1mCI=true[22m to enable watch mode.
+[2mStarting Metro Bundler[22m
+
+Waiting on [4mhttp://localhost:8094[24m
+
+Logs for your project will appear below.
+[1mTypeScript[22m: The [36mtsconfig.json#include[39m property has been updated
+[32m[1miOS[22m Bundled [39m[2m1118ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3625 modules)[22m[0m
+[32m[1miOS[22m Bundled [39m[2m49ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m645ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (3567 modules)[22m[0m
+[32m[1mAndroid[22m Bundled [39m[2m57ms[22m[0m[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)[22m[0m

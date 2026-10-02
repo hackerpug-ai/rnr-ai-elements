@@ -1,0 +1,59 @@
+
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/registry-items.json'
+
+   at sprint-01-docs-spike-skeleton/component-page.spec.ts:20
+
+  18 |   for (;;) {
+  19 |     try {
+> 20 |       return JSON.parse(readFileSync(url, 'utf8')) as T;
+     |                         ^
+  21 |     } catch (error) {
+  22 |       const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+  23 |       if (!retryable || Date.now() > deadline) throw error;
+    at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:20:25)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:88:15
+
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/registry-items.json'
+
+   at sprint-01-docs-spike-skeleton/ledger.spec.ts:64
+
+  62 |     try {
+  63 |       return JSON.parse(
+> 64 |         readFileSync(join(process.cwd(), 'apps/docs/src/data/registry-items.json'), 'utf8'),
+     |         ^
+  65 |       ) as LedgerItem[];
+  66 |     } catch (error) {
+  67 |       const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+    at readGeneratedDataset (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:64:9)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:74:15
+
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/registry-items.json'
+
+   at sprint-02-shell-hero/dependency-panels.spec.ts:38
+
+  36 |   for (;;) {
+  37 |     try {
+> 38 |       return JSON.parse(readFileSync(url, 'utf8')) as T;
+     |                         ^
+  39 |     } catch (error) {
+  40 |       const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+  41 |       if (!retryable || Date.now() > deadline) throw error;
+    at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-02-shell-hero/dependency-panels.spec.ts:38:25)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-02-shell-hero/dependency-panels.spec.ts:54:15
+
+Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/registry-items.json'
+
+   at sprint-02-shell-hero/item-install-copy.spec.ts:74
+
+  72 |   for (;;) {
+  73 |     try {
+> 74 |       return JSON.parse(readFileSync(url, 'utf8')) as T;
+     |                         ^
+  75 |     } catch (error) {
+  76 |       const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+  77 |       if (!retryable || Date.now() > deadline) throw error;
+    at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-02-shell-hero/item-install-copy.spec.ts:74:25)
+    at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-02-shell-hero/item-install-copy.spec.ts:93:15
+
+
+P1=1

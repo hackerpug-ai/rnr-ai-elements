@@ -1,0 +1,106 @@
+PASS (62) FAIL (57) skipped (46)
+
+1. FAM-003-family-gridF··F°°°°··FF···F°°°··FFFF°°°F°°FFFFFFFFFFFFe
+   Error: the slot precedes every family section
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m7[39m
+   Received: [31m8[39m
+   
+     444 |     await page.locator('main div.family-grid-slot ~ section').count(),
+     445 |     'the slot precedes every family section',
+   > 446 |   ).toBe(componentFamilies.length);
+         |     ^
+     447 |
+     448 |   // data-filter-text: every card carries it, names its item, and sits in its
+     449 |   // family section (the family dimension rides the section ancestor).
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:446:5
+2. FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+   Error: ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/registry-items.json'
+   
+     18 |   for (;;) {
+     19 |     try {
+   > 20 |       return JSON.parse(readFileSync(url, 'utf8')) as T;
+        |                         ^
+     21 |     } catch (error) {
+     22 |       const retryable = (error as NodeJS.ErrnoException).code === 'ENOENT';
+     23 |       if (!retryable || Date.now() > deadline) throw error;
+       at readJson (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:20:25)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:88:15
+3. FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+   Error: the slot precedes every family section
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m7[39m
+   Received: [31m8[39m
+   
+     444 |     await page.locator('main div.family-grid-slot ~ section').count(),
+     445 |     'the slot precedes every family section',
+   > 446 |   ).toBe(componentFamilies.length);
+         |     ^
+     447 |
+     448 |   // data-filter-text: every card carries it, names its item, and sits in its
+     449 |   // family section (the family dimension rides the section ancestor).
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:446:5
+4. family pager walks each component family exactly
+   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4321/components/question
+   Call log:
+   [2m  - navigating to "http://localhost:4321/components/question", waiting until "load"[22m
+   
+   
+     332 |     for (const family of componentFamilies) {
+     333 |       for (const member of family.itemNames) {
+   > 334 |         await page.goto(`${PREVIEW_URL}/components/${member}`);
+         |                    ^
+     335 |         for (const rel of ['prev', 'next'] as const) {
+     336 |           const href = await page.locator(`${PAGER} a[rel="${rel}"]`).getAttribute('href');
+     337 |           const target = href?.replace('/components/', '') ?? '';
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:334:20
+5. FLOW-DELIV-03-112-file-completeness
+   Error: Command failed: pnpm --filter @rnr-ai-elements/docs prebuild
+   /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/gates.ts:341
+     if (violations.length > 0) throw new GateError(violations);
+                                      ^
+   
+   GateError: [docs-data] matrix: item "<matrix>" dev-client-matrix.json unreadable — restore apps/docs/src/data/dev-client-matrix.json (ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/dev-client-matrix.json')
+   
+      at ../scripts/docs-data/gates.ts:341
+   
+     339 |     ...gateImagery(dataset),
+     340 |   ];
+   > 341 |   if (violations.length > 0) throw new GateError(violations);
+         |                                    ^
+     342 |   return violations;
+     343 | }
+     344 |
+       at runAllGates (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/gates.ts:341:36)
+       at main (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/prebuild.ts:253:3)
+       at <anonymous> (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/prebuild.ts:342:3)
+   [90m    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)[39m
+   [90m    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26)[39m
+   [90m    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)[39m {
+     violations: [
+       {
+         gate: [32m'matrix'[39m,
+         item: [32m'<matrix>'[39m,
+         detail: [32m"dev-client-matrix.json unreadable — restore apps/docs/src/data/dev-client-matrix.json (ENOENT: no such file or directory, open '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/apps/docs/src/data/dev-client-matrix.json')"[39m
+       }
+     ]
+   }
+   
+   Node.js v24.14.0
+   
+       at runAllGates (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/gates.ts:341:36)
+       at main (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/prebuild.ts:253:3)
+       at <anonymous> (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/scripts/docs-data/prebuild.ts:342:3)
+       at runPrebuild (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:135:3)
+       at FLOW_DELIV_03_112_file_completeness (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:101:3)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CONT-004/tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:190:3
+
+... +52 more failures
+
+Time: 1013060ms
+[full output: ~/Library/Application Support/rtk/tee/1790389872_playwright.log]
+PW_EXIT=1
