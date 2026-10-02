@@ -38357,6 +38357,12 @@
    "blocker_discharged": {
     "by": "FIX-ORI-SUITE-2-2 reviewed merge ad747617 (2026-10-02)",
     "effect": "Repairs + real proof landed on main. AC-3 aggregate refresh (full pnpm test) may proceed. Device window remains with ORI-CONT-004 rerun \u2014 vitest aggregate does not need it."
+   },
+   "waiting_on": {
+    "as_of": "2026-10-02 cycle 3 (blocked report, evidence cycle-8)",
+    "scope_state": "Own seven repairs + harness green (verify-mode + standalone fresh receipts at branch 6bd68858). Branch integrated with main at 313ef28c (SUITE-2-2 repairs 9be71b2d present; run.json conflict resolved to main's reviewed receipt).",
+    "remaining": "AC-3 full-aggregate exit 0 is structurally end-of-sprint: the only residual red is FLOW-DELIV-01-ci-chain-order, owner-routed to ORI-DEP-002/003 (per SUITE-2-1 landed audit), and it also needs a free 4321 window (ORI-CONT-004 rerun holds it). Fresh integrated-tree aggregate acceptance is owned by ORI-CI-003/004; SUITE-1 closes citing that receipt once DEP-002/003 land.",
+    "note": "Aggregate does NOT exit 0 on current main either \u2014 expected, not a regression. Killed-run landmine: cycle-1 aggregate worktrees may carry deleted tracked dev-client-matrix.json/token-usage.json (docs build ENOENT at gates.ts:341); SUITE-1's worktree restored."
    }
   },
   "FIX-ORI-SUITE-2": {
