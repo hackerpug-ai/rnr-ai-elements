@@ -42169,9 +42169,18 @@
    "merge_sha": null,
    "points": 2,
    "reviewer": "cloudflare-workers-reviewer",
-   "status": "pending",
+   "status": "in_progress",
    "wave": 19,
-   "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-DEP-002"
+   "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-DEP-002",
+   "waiting_on": {
+    "as_of": "2026-10-03 cycle 1 (fail-closed blocked handoff, ruling (a) accepted)",
+    "blocked_on": [
+     "USER: GitHub push decision + CLOUDFLARE_API_TOKEN Actions secret (local .env exists; GitHub secret unconfirmed) + main sync",
+     "CI-004 fresh acceptance session at final candidate -> accepted-artifact.json mints"
+    ],
+    "cycle_2_plan": "prepare.ts completed-mode byte assertion; ONE wrangler versions upload; suite re-run against new version URL (AC-1/2/3); AC-4 apex-stability re-verify",
+    "landed": "cycle-1 blocked baseline under review (dep002-review); live fact: deployed apex serves a 0-byte 404 (deployment 19b366d7 predates branded-404 work) \u2014 the branded 404 ships with the candidate version"
+   }
   },
   "ORI-DEP-003": {
    "branch": "kb-run-sprint/sprint-05-orient-search/ORI-DEP-003",
