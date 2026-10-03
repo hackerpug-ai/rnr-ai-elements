@@ -500,6 +500,11 @@ if (manifest !== null) {
       async () => {
         mkdirSync(scratchRoot, { recursive: true });
         const candidate = sessionCandidate();
+        // The tree the refusal trials execute against: evidence commits land
+        // after the session, so the recorded candidate can lag the live HEAD
+        // these trials must satisfy (each trial exercises ITS OWN refusal —
+        // identity trials below use a deliberately wrong SHA).
+        const liveHead = git(['rev-parse', 'HEAD']).stdout.trim();
 
         // --- Workflow configuration (the protected dispatch surface) ---------
         const workflow = parseWorkflowYaml(workflowPath) as {
@@ -649,7 +654,7 @@ if (manifest !== null) {
           'negative-control',
         ]);
         expect(mismatch.status, 'identity mismatch must exit nonzero').not.toBe(0);
-        expect(mismatch.stderr).toContain(candidate);
+        expect(mismatch.stderr).toContain(liveHead);
         expect(mismatch.stderr).toContain(parentSha);
         const mismatchPreflight = readJson<{ outcome: string; reason: string }>(
           join(mismatchDir, 'runner-preflight.json'),
@@ -664,7 +669,7 @@ if (manifest !== null) {
         rmSync(deviceDir, { recursive: true, force: true });
         const device = runAcceptance([
           '--candidate',
-          candidate,
+          liveHead,
           '--run-id',
           'ORI-CI-004-refused-device',
           '--output',
@@ -716,7 +721,7 @@ if (manifest !== null) {
           rmSync(portDir, { recursive: true, force: true });
           const port = runAcceptance([
             '--candidate',
-            candidate,
+            liveHead,
             '--run-id',
             'ORI-CI-004-refused-port',
             '--output',
@@ -1111,6 +1116,9 @@ if (manifest !== null) {
         await backend.stop();
 
         // --- Cancelled session: teardown terminates owned children -------------
+        // The cancelled session must get PAST identity to really start its
+        // prepare phase, so it runs against the live HEAD (the recorded
+        // candidate lags post-session evidence commits).
         const cancelDir = join(scratchRoot, 'cancelled-session');
         rmSync(cancelDir, { recursive: true, force: true });
         const cancelledChild = spawn(
@@ -1118,7 +1126,7 @@ if (manifest !== null) {
           [
             runnerPath,
             '--candidate',
-            sessionCandidate(),
+            git(['rev-parse', 'HEAD']).stdout.trim(),
             '--run-id',
             'ORI-CI-004-cancelled',
             '--output',
