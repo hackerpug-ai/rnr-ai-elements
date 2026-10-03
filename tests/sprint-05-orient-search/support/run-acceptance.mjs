@@ -182,6 +182,8 @@ class AcceptanceSession {
     this.exitedPids = [];
     this.teardownPromise = null;
     this.phases = [];
+    this.createdAt = null;
+    this.completed = undefined; // undefined = never finished; false = in-flight; true = done
     this.reservations = null;
     this.preRunAppearance = null;
     this.cancelled = false;
@@ -192,11 +194,15 @@ class AcceptanceSession {
   }
 
   loadOrCreateManifest() {
+    // Session start only: refuses a foreign run-id's directory and adopts a
+    // continued same-run-id session's history. Later saves go through
+    // saveManifest, which writes in-memory state through — re-reading here
+    // would discard every phase record pushed since the last write (the
+    // disk copy is always stale between recordPhase calls).
     mkdirSync(this.outputDir, { recursive: true });
     const path = this.manifestPath();
-    let existing = null;
     if (existsSync(path)) {
-      existing = JSON.parse(readFileSync(path, 'utf8'));
+      const existing = JSON.parse(readFileSync(path, 'utf8'));
       if (existing.run_id !== this.runId) {
         throw new RefusalError(
           'foreign-session-dir',
@@ -210,27 +216,33 @@ class AcceptanceSession {
       // completion belongs to THIS invocation's requested phases only. Prior
       // phase records carry forward: a continued session APPENDS, never
       // replaces, the recorded history of its run-id.
-      existing.source_digests = sourceDigests();
-      existing.completed = false;
-      delete existing.completedPhases;
-      delete existing.failures;
+      if (Array.isArray(existing.phases)) this.phases = existing.phases;
+      this.createdAt = existing.created_at ?? new Date().toISOString();
+      this.completed = false;
     }
-    // Prior phases of this run-id carry into this invocation's record; on
-    // later in-session saves the disk already holds this array (same
-    // reference), so the assignment is a no-op — never a duplication.
-    if (Array.isArray(existing?.phases)) this.phases = existing.phases;
-    const manifest = {
+    this.createdAt = this.createdAt ?? new Date().toISOString();
+    this.saveManifest();
+    return this.currentManifest();
+  }
+
+  currentManifest() {
+    return {
       schema: `${TASK}-manifest/1`,
       task: TASK,
       run_id: this.runId,
       label: this.label,
       planning_source_sha: PLANNING_SOURCE_SHA,
-      created_at: existing?.created_at ?? new Date().toISOString(),
-      source_digests: existing?.source_digests ?? sourceDigests(),
-      phases: existing?.phases ?? this.phases,
+      created_at: this.createdAt,
+      source_digests: sourceDigests(),
+      phases: this.phases,
+      ...(this.completed === undefined
+        ? {}
+        : {
+            completed: this.completed,
+            ...(this.completed ? { completedPhases: this.completedPhases ?? [] } : {}),
+            ...(this.failures?.length ? { failures: this.failures } : {}),
+          }),
     };
-    writeJson(path, manifest);
-    return manifest;
   }
 
   /** Snapshot of untracked files under a directory, for owner-dir hygiene. */
@@ -255,9 +267,11 @@ class AcceptanceSession {
   }
 
   saveManifest() {
-    // this.phases already carries the full run-id history (loaded at session
-    // start, appended per phase), so the write is the merged record.
-    this.loadOrCreateManifest();
+    // Write-through of the in-memory session history (run-id adoption and
+    // foreign-dir refusal happened once at session start). The digests are
+    // recomputed on every save so the final manifest describes the bytes
+    // that produced the final receipts.
+    writeJson(this.manifestPath(), this.currentManifest());
   }
 
   recordPhase(phase) {
@@ -1178,17 +1192,14 @@ async function main() {
     // Mark the session complete for its requested phases so post-session gates
     // can distinguish "phases attempted and recorded" from "session aborted
     // mid-phase" — a refused preflight never reaches this marker.
-    const manifest = existsSync(session.manifestPath())
-      ? JSON.parse(readFileSync(session.manifestPath(), 'utf8'))
-      : null;
-    if (manifest && !refused) {
-      manifest.completed = true;
-      manifest.completedPhases = phases;
-      manifest.failures = failures.map((failure) => ({
+    if (!refused) {
+      session.completed = true;
+      session.completedPhases = phases;
+      session.failures = failures.map((failure) => ({
         reason: failure instanceof RefusalError ? failure.reason : 'error',
         detail: failure.message,
       }));
-      writeJson(session.manifestPath(), manifest);
+      session.saveManifest();
     }
     if (session.cancelled) {
       process.exit(130);
