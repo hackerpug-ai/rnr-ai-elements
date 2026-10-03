@@ -1,0 +1,122 @@
+{
+  "schema": "ORI-DEP-002-release/1",
+  "task": "ORI-DEP-002",
+  "cycle": 1,
+  "run_id": "ori-dep-002-c1-2026-10-03T15-54-38Z",
+  "recorded_at": "2026-10-03T15:56:53Z",
+  "git_head": "a01238575fbfb036dd87df37801649ad33f98f81",
+  "implementer": "cloudflare-workers-implementer",
+  "prerequisites": {
+    "ORI-DEP-001": {
+      "status": "accepted",
+      "receipt": "tests/sprint-05-orient-search/evidence/ORI-DEP-001/release.json",
+      "release_sha": "ad650d363104077c942444d0045bbd75fcae22b6",
+      "initial_version_id": "bb65ae86-7586-45da-8bdb-27d734ded8b9",
+      "deployment_id": "19b366d7-a31b-4f1f-9e39-446d3789a694",
+      "asset_manifest_sha256": "00af4d7ff7d5a5c336cbfe50c4cd3aaa0c6b3fe61c160e68e734d4edf7e2a278"
+    },
+    "ORI-CI-004": {
+      "status": "completed-as-scoped",
+      "accepted_artifact_receipt": null,
+      "blocker": "tests/sprint-05-orient-search/evidence/ORI-CI-004/accepted-artifact.json does not exist. verify-acceptance.mjs mints it only on hosted-terminal success; hosted-run.json records verdict 'rejected' (prepare-phase-failed) and status 'blocked' with a real gh api observation of total_count:0 workflow runs for candidate 2e03edef (the candidate was never pushed to GitHub). The CI-004 completion record lists pending final-session conditions: user GitHub push decision + CLOUDFLARE_API_TOKEN secret, and one fresh session at the final candidate."
+    },
+    "ORI-AST-009": {
+      "status": "landed",
+      "note": "branded 404 page (apps/docs/src/pages/404.astro + not-found manuscript) is in the source tree, but the DEPLOYED artifact (ORI-DEP-001 asset-manifest, 193 assets, release ad650d36, built 2026-09-16) contains no 404.html — the branded page reaches a deployed surface only through a future candidate version upload."
+    },
+    "ORI-VIS-005": {
+      "status": "landed",
+      "note": "reviewed missing-page presentation consumed for selectors (title/explanation/hint from src/content/system/not-found.md; recovery links /components and /registry; [data-recovery-search] trigger)."
+    }
+  },
+  "upload": {
+    "status": "blocked",
+    "attempted": false,
+    "reason": "CRITICAL CONSTRAINT: 'Never upload before ORI-CI-004 acceptance and completed-mode identity verification.' ORI-CI-004's accepted-artifact.json does not exist (hosted acceptance never ran), so there is no accepted artifact to bind and no authorized upload target. No wrangler versions upload was executed in this run.",
+    "candidate_version_id": null,
+    "candidate_version_url": null,
+    "authorized_command_not_run": "pnpm --dir apps/docs exec wrangler versions upload --config wrangler.jsonc --message \"$RELEASE_SHA\""
+  },
+  "verified_surface": {
+    "version_id": "bb65ae86-7586-45da-8bdb-27d734ded8b9",
+    "origin": "https://rnraielements.com",
+    "origin_kind": "apex custom domain — the recorded version serves through the active deployment (100% allocation); wrangler 4.81.0 `versions view bb65ae86-…` exposes no distinct version preview URL for this deploy-created version",
+    "deployment_id": "19b366d7-a31b-4f1f-9e39-446d3789a694",
+    "allocation": {
+      "version_id": "bb65ae86-7586-45da-8bdb-27d734ded8b9",
+      "percentage": 100
+    },
+    "release_sha": "ad650d363104077c942444d0045bbd75fcae22b6",
+    "deployed_asset_manifest_sha256": "00af4d7ff7d5a5c336cbfe50c4cd3aaa0c6b3fe61c160e68e734d4edf7e2a278",
+    "dist_404_html_sha256": null,
+    "dist_404_note": "no accepted dist manifest exists (ORI-CI-004 acceptance receipt absent) and the deployed artifact contains no 404.html asset; this hash binds when an accepted candidate version is uploaded in a future run",
+    "observed_live_404": {
+      "url": "https://rnraielements.com/__sprint05_missing__",
+      "status": 404,
+      "content_length": 0,
+      "content_type": null,
+      "observed_at": "2026-10-03T15:43:09Z",
+      "client": "curl (HTTP/2, cf-ray a44d0f94b90ec639-DEN)",
+      "interpretation": "generic Cloudflare assets 404 with an empty body — the branded 404 page is NOT on the deployed surface"
+    }
+  },
+  "eligible_origins": ["https://rnraielements.com"],
+  "eligible_origins_note": "charter maximum is the recorded version origin plus https://rnraielements.com; they coincide for this run because the recorded version serves through the apex custom domain",
+  "apex_baseline": {
+    "queried_at": "2026-10-03T15:43:00Z",
+    "command": "pnpm --dir apps/docs exec wrangler deployments list --config wrangler.jsonc --json",
+    "deployments": [
+      {
+        "id": "f4f2c958-86f0-4077-9b0c-02d75cfe5bc6",
+        "created_on": "2026-09-15T03:12:07.665401Z",
+        "versions": [{ "version_id": "0da617cb-56e4-4e15-ace9-9a905f7b4405", "percentage": 100 }]
+      },
+      {
+        "id": "2ae21f3c-54ff-44a8-8a66-a627250cfffc",
+        "created_on": "2026-09-15T03:14:36.955389Z",
+        "versions": [{ "version_id": "38dc062d-9110-4355-aebd-87f9c7903872", "percentage": 100 }]
+      },
+      {
+        "id": "3a46d447-ff9d-4353-a097-858497e3ae62",
+        "created_on": "2026-09-15T03:25:31.584901Z",
+        "versions": [{ "version_id": "2aef7463-0e76-4655-8a67-051bf970f06f", "percentage": 100 }]
+      },
+      {
+        "id": "19b366d7-a31b-4f1f-9e39-446d3789a694",
+        "created_on": "2026-09-16T01:39:14.852682Z",
+        "versions": [{ "version_id": "bb65ae86-7586-45da-8bdb-27d734ded8b9", "percentage": 100 }]
+      }
+    ],
+    "active_deployment_id": "19b366d7-a31b-4f1f-9e39-446d3789a694"
+  },
+  "registry_prerequisite": {
+    "source_receipt": "tests/sprint-05-orient-search/evidence/ORI-DEP-001/release.json",
+    "urls": {
+      "https://rnraielements.com/r/nativewind/conversation.json": "c84d855da4e4e557705d5b93727f5fda186b177b1071bf0a3dc374575b43576f",
+      "https://rnraielements.com/r/uniwind/conversation.json": "2b7018011145effab45555d3400f17809fbab1cd4751fcdad60ac56cafb0e7db"
+    },
+    "live_verified": {
+      "https://rnraielements.com/r/nativewind/conversation.json": {
+        "status": 200,
+        "sha256_match": true,
+        "observed_at": "2026-10-03T15:54:40Z",
+        "verified_by": "ORI-DEP-002 AC-4 test (Playwright request context) and curl"
+      },
+      "https://rnraielements.com/r/uniwind/conversation.json": {
+        "status": 200,
+        "sha256_match": true,
+        "observed_at": "2026-10-03T15:54:40Z",
+        "verified_by": "ORI-DEP-002 AC-4 test (Playwright request context)"
+      }
+    }
+  },
+  "handoff_to_ori_dep_003": {
+    "verified_version_id": "bb65ae86-7586-45da-8bdb-27d734ded8b9",
+    "verified_origin": "https://rnraielements.com",
+    "verified_deployment_id": "19b366d7-a31b-4f1f-9e39-446d3789a694",
+    "candidate_upload": "blocked-pending-ori-ci-004-acceptance",
+    "promotion_prerequisite": "ORI-CI-004's accepted-artifact.json must exist (hosted acceptance passed at a real GitHub Actions run) before the candidate version upload; ORI-DEP-003 promotes that exact version. No second artifact may be uploaded for the accepted candidate.",
+    "branded_404_on_live_apex": false,
+    "branded_404_note": "the live apex currently returns an empty generic 404; the branded page ships with the candidate version"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "ac2Direct404": {
+    "runId": "ori-dep-002-1791043516191-934522992",
+    "recordedAt": "2026-10-03T16:05:16.345Z",
+    "project": "chromium-mobile",
+    "root": {
+      "url": "https://rnraielements.com/__sprint05_missing__",
+      "status": 404,
+      "contentType": null,
+      "contentLengthHeader": "0",
+      "locationHeader": null,
+      "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bodyBytes": 0
+    },
+    "deep": {
+      "url": "https://rnraielements.com/docs/__sprint05_missing__/nested",
+      "status": 404,
+      "contentType": null,
+      "contentLengthHeader": "0",
+      "locationHeader": null,
+      "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bodyBytes": 0
+    },
+    "acceptedDist404Sha256": null
+  },
+  "ac3RenderedVisits": {
+    "runId": "ori-dep-002-1791043516532-92414224",
+    "recordedAt": "2026-10-03T16:05:16.966Z",
+    "project": "chromium-mobile",
+    "visits": [
+      {
+        "path": "/__sprint05_missing__",
+        "status": 404,
+        "bodyBytes": 0,
+        "hasTitle": false,
+        "hasComponentsLink": false,
+        "hasRegistryLink": false
+      },
+      {
+        "path": "/docs/__sprint05_missing__/nested",
+        "status": 404,
+        "bodyBytes": 0,
+        "hasTitle": false,
+        "hasComponentsLink": false,
+        "hasRegistryLink": false
+      }
+    ],
+    "stylesheetResponses": []
+  },
+  "ac4Deployments": {
+    "runId": "ori-dep-002-1791043517179-805071370",
+    "recordedAt": "2026-10-03T16:05:17.872Z",
+    "project": "chromium-mobile",
+    "baselineActiveId": "19b366d7-a31b-4f1f-9e39-446d3789a694",
+    "currentLatestId": "19b366d7-a31b-4f1f-9e39-446d3789a694",
+    "currentActiveVersions": [
+      {
+        "version_id": "bb65ae86-7586-45da-8bdb-27d734ded8b9",
+        "percentage": 100
+      }
+    ],
+    "deploymentCount": 4
+  },
+  "ac4RegistryBytes": {
+    "runId": "ori-dep-002-1791043517179-805071370",
+    "recordedAt": "2026-10-03T16:05:18.097Z",
+    "project": "chromium-mobile",
+    "registryChecks": {
+      "https://rnraielements.com/r/nativewind/conversation.json": {
+        "status": 200,
+        "sha256": "c84d855da4e4e557705d5b93727f5fda186b177b1071bf0a3dc374575b43576f",
+        "matchesReceipt": true,
+        "bytes": 9175
+      },
+      "https://rnraielements.com/r/uniwind/conversation.json": {
+        "status": 200,
+        "sha256": "2b7018011145effab45555d3400f17809fbab1cd4751fcdad60ac56cafb0e7db",
+        "matchesReceipt": true,
+        "bytes": 9154
+      }
+    }
+  },
+  "ac4Handoff": {
+    "runId": "ori-dep-002-1791043517179-805071370",
+    "recordedAt": "2026-10-03T16:05:18.097Z",
+    "project": "chromium-mobile",
+    "verifiedVersionId": "bb65ae86-7586-45da-8bdb-27d734ded8b9",
+    "verifiedOrigin": "https://rnraielements.com",
+    "uploadStatus": "blocked"
+  },
+  "ac1OriginGuard": {
+    "runId": "ori-dep-002-1791043515799-881985109",
+    "recordedAt": "2026-10-03T16:05:15.826Z",
+    "project": "chromium-mobile",
+    "rejections": {
+      "missingReceipt": "[ORI-DEP-002] configuration rejected: missing run receipt (tests/sprint-05-orient-search/evidence/ORI-DEP-002/release.json). This lane runs only against this run’s recorded Cloudflare surface; it never falls back to localhost or the apex.",
+      "localhostOverride": "[ORI-DEP-002] configuration rejected: requested origin http://localhost:4321 is not the recorded version origin (https://rnraielements.com)",
+      "exampleComOverride": "[ORI-DEP-002] configuration rejected: requested origin https://example.com is not the recorded version origin (https://rnraielements.com)"
+    },
+    "eligible": [
+      "https://rnraielements.com"
+    ],
+    "selected": "https://rnraielements.com"
+  },
+  "ac1MissingPathProbe": {
+    "runId": "ori-dep-002-1791043515799-881985109",
+    "recordedAt": "2026-10-03T16:05:15.984Z",
+    "project": "chromium-mobile",
+    "url": "https://rnraielements.com/__sprint05_missing__",
+    "status": 404,
+    "contentType": null,
+    "contentLengthHeader": "0",
+    "locationHeader": null,
+    "bodySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bodyBytes": 0
+  }
+}

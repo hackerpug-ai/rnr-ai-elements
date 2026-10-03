@@ -1,0 +1,119 @@
+{
+  "schema": "ORI-DEP-002-review/1",
+  "task": "ORI-DEP-002",
+  "cycle": 1,
+  "run_id": "ori-dep-002-c1-2026-10-03T15-54-38Z",
+  "author": "cloudflare-workers-implementer (self-record; independent review pending)",
+  "verdict": null,
+  "status": "awaiting-independent-review",
+  "verdict_note": "No approval is recorded here. cloudflare-workers-reviewer (plus the charter's frontend-designer presentation review) must issue the verdict on this exact run.",
+  "scope_compliance": {
+    "files_written": [
+      "tests/sprint-05-orient-search/cloudflare.playwright.config.ts",
+      "tests/sprint-05-orient-search/custom-404.remote.spec.ts",
+      "tests/sprint-05-orient-search/evidence/ORI-DEP-002/release.json",
+      "tests/sprint-05-orient-search/evidence/ORI-DEP-002/public-http.json",
+      "tests/sprint-05-orient-search/evidence/ORI-DEP-002/404-desktop.png",
+      "tests/sprint-05-orient-search/evidence/ORI-DEP-002/404-mobile.png",
+      "tests/sprint-05-orient-search/evidence/ORI-DEP-002/review.json"
+    ],
+    "upload_executed": false,
+    "promotion_or_domain_changes": false,
+    "product_content_edits": false
+  },
+  "command_receipts": {
+    "typecheck": { "command": "pnpm typecheck", "exit": 0 },
+    "lint": {
+      "command": "./node_modules/.bin/biome ci tests/sprint-05-orient-search/cloudflare.playwright.config.ts tests/sprint-05-orient-search/custom-404.remote.spec.ts",
+      "exit": 0,
+      "note": "direct biome binary per known OOM flake; 0 errors (first commit attempt hit the documented biome OOM flake in the pre-commit hook; full `biome ci .` rerun with the same staged files exited 0)"
+    },
+    "fallow": {
+      "command": "./node_modules/.bin/fallow audit --base HEAD",
+      "exit": 0,
+      "note": "initial draft had 3 complexity findings in the spec (CRAP 106.4/97.0/31.6); fixed by decomposing the test bodies into focused helpers (deploymentComparison, originGuardObservations, visitMissingPathsAndCapture, linkRecovery, searchRecovery, assertRegistryBytes) — no suppression markers used; audit gate excludes 74 inherited findings unrelated to this task"
+    },
+    "suite": {
+      "command": "pnpm exec playwright test --config tests/sprint-05-orient-search/cloudflare.playwright.config.ts tests/sprint-05-orient-search/custom-404.remote.spec.ts",
+      "exit": 1,
+      "result": "2 passed (AC-4 x2 projects), 6 failed (AC-1/AC-2/AC-3 x2 projects) — every failure at its intended fail-closed oracle",
+      "runs": [
+        "run2 15:54Z full suite",
+        "run3 15:55Z full suite after AC-1 introspection fix",
+        "run4 15:59Z full suite after fallow-driven decomposition — identical oracle outcomes, evidence refreshed"
+      ]
+    },
+    "per_tc": {
+      "TC-1": { "exit": 1, "note": "2 failed at the acceptance-binding oracle only (origin guard, config shape, and real missing-path probe all pass first)" },
+      "TC-4": { "exit": 0, "note": "2 passed" },
+      "TC-2_TC-3": "exercised in three full-suite runs; failures at the text/html and branding oracles respectively"
+    }
+  },
+  "clients_used": {
+    "note": "parity precedent from ORI-CI-004 review: vary the client before concluding an edge block. No edge block was observed — curl HTTP/2 and Playwright Chromium (request context and browser contexts) returned consistent responses, so no client variation was needed.",
+    "clients": ["curl (HTTP/2, cf-ray a44d0f94b90ec639-DEN)", "Playwright APIRequestContext (Chromium)", "Playwright Chromium desktop context", "Playwright Chromium mobile context (Pixel 5)"]
+  },
+  "screenshot_inspection": {
+    "404-desktop.png": {
+      "inspected": true,
+      "observed": "entirely blank white page (1280x720 fullPage capture) — the live 404 body is zero bytes, so Chromium renders an empty document",
+      "matches_ac3_expectation": false,
+      "note": "this is the honest negative-control observation for the CURRENT surface: AC-3's must_not_observe ('blank screenshots') is exactly what the deployed reality produces, recorded as gap evidence per the public-recovery precedent, not as AC satisfaction"
+    },
+    "404-mobile.png": {
+      "inspected": true,
+      "observed": "entirely blank white page (Pixel 5 viewport fullPage capture, 2695x4986) — same zero-byte body",
+      "matches_ac3_expectation": false,
+      "note": "same gap-evidence status as the desktop capture"
+    }
+  },
+  "per_ac": {
+    "AC-1": {
+      "state": "partially-verified_blocked",
+      "verified_now": [
+        "configuration entrypoint shape: no webServer, retries 0, strict certificate validation (effective per-project use), only *.remote.spec.ts tests, receipt-bound baseURL",
+        "origin guard rejects missing receipt, http://localhost:4321, and https://example.com before network activity",
+        "eligible origins are exactly the recorded version origin plus https://rnraielements.com (they coincide for this run)",
+        "real /__sprint05_missing__ request against the recorded origin returns HTTP 404"
+      ],
+      "blocked": "the receipt cannot bind ORI-CI-004's accepted artifact or an accepted apps/docs/dist/404.html SHA-256 — accepted-artifact.json does not exist (hosted acceptance never ran; gh api observed total_count:0 workflow runs)"
+    },
+    "AC-2": {
+      "state": "blocked-red",
+      "verified_now": [
+        "both direct reads (root and deep missing paths) return HTTP 404 with redirects disabled: no 3xx, no Location header",
+        "byte-level observations recorded: both bodies are 0 bytes, sha256 e3b0c442…855 (empty-string hash), no Content-Type"
+      ],
+      "blocked": "text/html media type and accepted-byte equality cannot pass: the deployed artifact (release ad650d36, 2026-09-16) contains no 404.html asset, so Cloudflare serves a generic empty 404"
+    },
+    "AC-3": {
+      "state": "blocked-red",
+      "verified_now": [
+        "real Chromium desktop and mobile contexts visited both missing paths; visits, statuses, and stylesheet activity recorded (0 stylesheets — empty body)",
+        "both screenshots captured before navigating away and visually inspected (blank, per above)"
+      ],
+      "blocked": "visible 404 heading, site branding, applied styles, plain-link recovery, and shared-search recovery cannot run: the branded page does not exist on the deployed surface; the recovery controls do not render"
+    },
+    "AC-4": {
+      "state": "verified",
+      "verified_now": [
+        "real wrangler deployments list: initial deployment 19b366d7 still exists, is still the latest deployment, with byte-identical version allocations (bb65ae86 @ 100%) — no newer deployment, no promotion",
+        "both ORI-DEP-001 registry URLs return HTTP 200 over trusted HTTPS with SHA-256 exactly matching the prerequisite receipt (c84d855d… / 2b701801…)",
+        "handoff binds the verified version id bb65ae86-7586-45da-8bdb-27d734ded8b9, origin, deployment id, and the explicit blocked-upload state for ORI-DEP-003"
+      ]
+    }
+  },
+  "blocker": {
+    "summary": "The one authorized candidate-version upload — and therefore the branded-404 verification on a version URL — is fail-closed blocked on ORI-CI-004's acceptance receipt.",
+    "exact_gap": "tests/sprint-05-orient-search/evidence/ORI-CI-004/accepted-artifact.json does not exist. verify-acceptance.mjs mints it only when every acceptance check passes AND hosted terminal success is verified. hosted-run.json records verdict 'rejected' (prepare-phase-failed) and hosted status 'blocked' (GitHub API observed 0 workflow runs for candidate 2e03edef — the candidate was never pushed).",
+    "orchestrator_ruling": "cycle-1 stands as an honest blocked handoff; no charter deviation; the upload stays forbidden until acceptance mints the artifact",
+    "unblock_path": [
+      "user: GitHub push decision for the final candidate (local main is the trunk; GitHub main is far behind)",
+      "user: confirm/set the CLOUDFLARE_API_TOKEN GitHub Actions secret — UNCONFIRMED as of cycle 1; the 2026-10-01 sprint-07 note records the user's intention, not a verified secret; the local .env token exists for wrangler but is not the Actions secret",
+      "user/orchestrator: sync GitHub main with local main",
+      "one fresh ORI-CI-004 acceptance session at the final candidate (digest binding forbids reusing session ORI-CI-004-2026-10-03T04-32-37Z); verify-acceptance.mjs mints accepted-artifact.json",
+      "re-run ORI-DEP-002 cycle 2: prepare.ts completed-mode byte assertion, ONE wrangler versions upload, then this suite passes AC-1/AC-2/AC-3 against the new version URL with AC-4 unchanged"
+    ]
+  },
+  "recorded_at": "2026-10-03T15:56:53Z"
+}
