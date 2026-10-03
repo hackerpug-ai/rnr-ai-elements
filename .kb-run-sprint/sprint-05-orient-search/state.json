@@ -41091,9 +41091,27 @@
    "merge_sha": null,
    "points": 5,
    "reviewer": "ghactions-reviewer",
-   "status": "pending",
+   "status": "completed",
    "wave": 18,
-   "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-004"
+   "worktree": ".kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-004",
+   "completion_note": {
+    "branch_tip": "a44b2f58b7de7cb2a88c44054343876cbc9f4969",
+    "merge_commit": "454e86ab",
+    "verdict": "APPROVED as far as scope permits (ghactions-reviewer, cycle-1.verdict.json)",
+    "ac_state": "AC-2 green (re-run by reviewer); AC-1/AC-3 honestly RED owner-blocked; AC-4 in-gate green incl. cancellation trial; terminal verification fails closed on real gh api total_count:0",
+    "ratified_deviation": ".github/actionlint.yaml (empirically necessary; declares one custom label; weakens nothing)",
+    "final_session_conditions": [
+     "FIX-ORI-CI-004-1 server env-init fix (in flight)",
+     "nativewind 45-min pipeline hang \u2014 diagnose after env fix lands (72 real records precede it)",
+     "device cold-boot before session; suite re-baseline (FIX-ORI-CI-003-1 landed, ~62-failure attribution in routed_findings)",
+     "USER: GitHub push decision + CLOUDFLARE_API_TOKEN secret",
+     "ONE fresh session at final candidate \u2014 digest binding forbids reusing session ORI-CI-004-2026-10-03T04-32-37Z"
+    ],
+    "routed": [
+     "grandchild-listener teardown sweep (implementer MEDIUM) \u2014 fold into final session prep",
+     "stray scratch tree at .kb-run-sprint/worktrees/sprint-05-orient-search/tests/ (uncommitted, guard-blocked)"
+    ]
+   }
   },
   "ORI-CONT-001": {
    "approved_sha": "2483187d3822799b32045c17d92d0b1002e910ca",
