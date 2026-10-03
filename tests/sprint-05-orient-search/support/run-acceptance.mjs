@@ -673,7 +673,20 @@ async function runPreparationPhase(session) {
     'owner-quickstart',
     'pnpm',
     ['exec', 'tsx', ...QUICKSTART_CLI, '--engines', 'nativewind,uniwind', '--platforms', 'ios,android,web'],
-    { logPath: quickstartLog, timeoutMs: 90 * 60_000 },
+    {
+      logPath: quickstartLog,
+      timeoutMs: 90 * 60_000,
+      // The Quickstart owner reads its reserved devices from the environment
+      // (native-session.ts reserveDevices). The session's flags/env resolved
+      // them for preflight; the same identities must reach the owner child —
+      // flags on this runner alone are not a reservation the owner can see.
+      env: {
+        RNR_S05_IOS_UDID: session.reservations.ios.udid,
+        RNR_S05_ANDROID_SERIAL: session.reservations.android.serial,
+        RNR_S05_CANDIDATE_SHA: session.candidate,
+        RNR_S05_RUN_ID: session.runId,
+      },
+    },
   );
   const quickstartExit = await waitForExit(quickstart.child, 90 * 60_000);
   commands.push({
