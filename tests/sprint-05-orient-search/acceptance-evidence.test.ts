@@ -1116,17 +1116,26 @@ if (manifest !== null) {
         await backend.stop();
 
         // --- Cancelled session: teardown terminates owned children -------------
-        // The cancelled session must get PAST identity to really start its
-        // prepare phase, so it runs against the live HEAD (the recorded
-        // candidate lags post-session evidence commits).
+        // The cancelled session must get PAST identity AND reserve the real
+        // devices to really start its prepare phase, so it runs against the
+        // live HEAD with the session's recorded reservations (the recorded
+        // candidate lags post-session evidence commits; the runner refuses
+        // device-less preflights — never the first booted device).
         const cancelDir = join(scratchRoot, 'cancelled-session');
         rmSync(cancelDir, { recursive: true, force: true });
+        const sessionPreflight = readJson<{
+          reservations: { ios: { udid: string }; android: { serial: string } };
+        }>(join(evidenceDir, 'runner-preflight.json'));
         const cancelledChild = spawn(
           'node',
           [
             runnerPath,
             '--candidate',
             git(['rev-parse', 'HEAD']).stdout.trim(),
+            '--ios-udid',
+            sessionPreflight.reservations.ios.udid,
+            '--android-serial',
+            sessionPreflight.reservations.android.serial,
             '--run-id',
             'ORI-CI-004-cancelled',
             '--output',
