@@ -106,10 +106,12 @@
   "blocker": {
     "summary": "The one authorized candidate-version upload — and therefore the branded-404 verification on a version URL — is fail-closed blocked on ORI-CI-004's acceptance receipt.",
     "exact_gap": "tests/sprint-05-orient-search/evidence/ORI-CI-004/accepted-artifact.json does not exist. verify-acceptance.mjs mints it only when every acceptance check passes AND hosted terminal success is verified. hosted-run.json records verdict 'rejected' (prepare-phase-failed) and hosted status 'blocked' (GitHub API observed 0 workflow runs for candidate 2e03edef — the candidate was never pushed).",
+    "orchestrator_ruling": "cycle-1 stands as an honest blocked handoff; no charter deviation; the upload stays forbidden until acceptance mints the artifact",
     "unblock_path": [
-      "user decision: GitHub push of the final candidate + CLOUDFLARE_API_TOKEN secret (CI-004 recorded final-session conditions)",
-      "one fresh ORI-CI-004 acceptance session at the final candidate (digest binding forbids reusing session ORI-CI-004-2026-10-03T04-32-37Z)",
-      "verify-acceptance.mjs mints accepted-artifact.json for that candidate",
+      "user: GitHub push decision for the final candidate (local main is the trunk; GitHub main is far behind)",
+      "user: confirm/set the CLOUDFLARE_API_TOKEN GitHub Actions secret — UNCONFIRMED as of cycle 1; the 2026-10-01 sprint-07 note records the user's intention, not a verified secret; the local .env token exists for wrangler but is not the Actions secret",
+      "user/orchestrator: sync GitHub main with local main",
+      "one fresh ORI-CI-004 acceptance session at the final candidate (digest binding forbids reusing session ORI-CI-004-2026-10-03T04-32-37Z); verify-acceptance.mjs mints accepted-artifact.json",
       "re-run ORI-DEP-002 cycle 2: prepare.ts completed-mode byte assertion, ONE wrangler versions upload, then this suite passes AC-1/AC-2/AC-3 against the new version URL with AC-4 unchanged"
     ]
   },
