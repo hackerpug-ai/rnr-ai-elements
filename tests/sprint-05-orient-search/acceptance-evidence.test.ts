@@ -778,13 +778,26 @@ if (manifest !== null) {
             preparation?: { quickstartLegs: number; correlatedTargets: number } | null;
           } | null;
         }>(genuineReportPath);
-        expect(
-          genuineReport.checks?.preparation,
-          'preparation checks recorded before the failing gate',
-        ).toEqual({ quickstartLegs: 6, correlatedTargets: 6 });
+        // Two honest shapes, never a third: either the matrices completed and
+        // the report carries their full preparation record before failing a
+        // downstream gate, or the owner-routed live-example blocker failed the
+        // prepare phase itself (the verifier stops at the first failed gate,
+        // so preparation is null — the failure reason proves which gate). A
+        // passing/absent failure here would mean the verifier accepted
+        // incomplete evidence, which is the one thing this gate exists to
+        // make impossible.
+        if (genuineReport.failure?.reason === 'prepare-phase-failed') {
+          expect(genuineReport.checks?.preparation).toBeNull();
+        } else {
+          expect(genuineReport.checks?.preparation).toEqual({
+            quickstartLegs: 6,
+            correlatedTargets: 6,
+          });
+        }
         expect(genuineReport.checks?.identity).not.toBeNull();
         expect(
           [
+            'prepare-phase-failed',
             'test-suite-failed',
             'docs-e2e-suite-failed',
             'hosted-acceptance-absent',
