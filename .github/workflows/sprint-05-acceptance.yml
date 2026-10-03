@@ -1,0 +1,234 @@
+name: sprint-05-acceptance
+
+# ORI-CI-004 — protected fresh-evidence acceptance before publication.
+#
+# Final acceptance lane. A reviewer dispatches it on an explicitly reviewed
+# same-repository candidate; preflight re-runs ORI-CI-003's credential-free
+# candidate checks pinned at the exact candidate revision, then the protected
+# native jobs prepare fresh owner proof (six-target Quickstart + six-target
+# live-example matrices on real devices and the real provider backend) and run
+# the complete suites. verify-acceptance validates the evidence and mints an
+# accepted-artifact identity ONLY on complete terminal hosted success.
+#
+# Action pins reuse ORI-CI-003's verified provenance:
+#   actions/checkout       11bd71901bbe5b1630ceea73d27597364c9af683 (v4.2.2)
+#   actions/setup-node     49933ea5288caeca8642d1e84afbd3f7d6820020 (v4.4.0)
+#   pnpm/action-setup      a7487c7e89a18df4991f7f222e4898a00d66ddda (v4.1.0)
+#   actions/upload-artifact ea165f8d65b6e75b540449e92b4886f43607fa02 (v4.6.2)
+#
+# Failure posture: every refusal fails the job. No absent-prerequisite success,
+# no port shifting, no fallback device selection, no skipped native targets.
+# This workflow never deploys, attaches domains, or touches Cloudflare
+# credentials; it emits verified acceptance evidence for the Cloudflare owner's
+# separately controlled publication sequence.
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_sha:
+        description: >-
+          Exact 40-hex reviewed candidate revision. Must equal the dispatched
+          event SHA and the workflow revision; every job re-verifies it.
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+# One acceptance session per reserved runner/device pool; a queued session waits
+# instead of cancelling the running one (cancel-in-progress: false, task
+# contract). The group carries the event name so an acceptance dispatch never
+# shares a group with an automatic run of the same ref.
+concurrency:
+  group: sprint-05-acceptance-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '24'
+
+jobs:
+  preflight:
+    name: preflight (credential-free candidate checks at the candidate revision)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      # Dispatch identity: the declared candidate must be the dispatched event
+      # SHA AND the revision this workflow file was loaded from. Dispatching on
+      # main while declaring a different input SHA is invalid, and pinning only
+      # the callee's checked-out tree would leave the callee workflow-file
+      # revision unpinned — github.workflow_sha closes exactly that gap.
+      - name: Verify dispatch identity
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          EVENT_SHA: ${{ github.sha }}
+          WORKFLOW_REVISION: ${{ github.workflow_sha }}
+        run: |
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ -z "$(printf '%s' "$DECLARED_CANDIDATE" | tr -d '0-9a-f')" ] \
+            && [ "$DECLARED_CANDIDATE" = "$EVENT_SHA" ] \
+            && [ "$DECLARED_CANDIDATE" = "$WORKFLOW_REVISION" ]; then
+            echo "dispatch identity verified: candidate == event SHA == workflow revision ($DECLARED_CANDIDATE)"
+          else
+            echo "::error::refusing acceptance: declared candidate '$DECLARED_CANDIDATE' must be the 40-hex event SHA '$EVENT_SHA' and the workflow revision '$WORKFLOW_REVISION'"
+            exit 1
+          fi
+      # ORI-CI-003's reusable candidate checks, invoked at the exact candidate
+      # revision (file AND tree). Expressions are not allowed in a reusable
+      # workflow ref (no context is available there), so the callee is pinned
+      # structurally instead: a same-repository reusable call without a ref
+      # loads ci.yml from the SAME commit as this caller workflow file, and the
+      # dispatch guard above proves that commit == candidate_sha == event SHA.
+      # The callee then independently re-verifies its checked-out tree SHA ==
+      # candidate_sha, closing the tree half.
+      - name: Credential-free candidate checks (ci.yml at the candidate revision)
+        uses: ./.github/workflows/ci.yml
+        with:
+          candidate_sha: ${{ inputs.candidate_sha }}
+
+  test:
+    name: test (fresh native/provider preparation + complete suite)
+    needs: preflight
+    # Protected admission: the sprint-05-real-proof environment requires an
+    # independent approval before any native runner or provider credential is
+    # released. The runner label set is the task's proposed prerequisite; an
+    # unregistered label leaves this job queued, never weakened.
+    runs-on: [self-hosted, macOS, ARM64, rnr-s05-native]
+    environment: sprint-05-real-proof
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_sha }}
+          persist-credentials: false
+      - name: Verify checkout identity
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          HEAD_SHA="$(git rev-parse HEAD)"
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ "$DECLARED_CANDIDATE" = "$HEAD_SHA" ] \
+            && [ "$DECLARED_CANDIDATE" = "$EVENT_SHA" ]; then
+            echo "checkout identity verified: HEAD == candidate == event SHA ($DECLARED_CANDIDATE)"
+          else
+            echo "::error::refusing native execution: HEAD '$HEAD_SHA' != candidate '$DECLARED_CANDIDATE' or event SHA '$EVENT_SHA'"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # run-acceptance preflight validates identity + reservations, then the
+      # prepare phase invokes the native/live-example owner runners for fresh
+      # six-target matrices and the test phase runs the complete suite.
+      # OPENAI_API_KEY reaches only this trusted launcher child; the runner
+      # strips it from every other child environment and records the scoping.
+      - name: Prepare fresh owner proof and run the complete test suite
+        env:
+          CI: 'true'
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EXAMPLE_CHAT_MODEL: gpt-4.1-mini-2025-04-14
+          RNR_S05_CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          RNR_S05_RUN_ID: sprint-05-acceptance-${{ github.run_id }}
+          RNR_S05_IOS_UDID: ${{ vars.RNR_S05_IOS_UDID }}
+          RNR_S05_ANDROID_SERIAL: ${{ vars.RNR_S05_ANDROID_SERIAL }}
+        run: |
+          set -eo pipefail
+          node tests/sprint-05-orient-search/support/run-acceptance.mjs \
+            --candidate "${{ inputs.candidate_sha }}" \
+            --run-id "$RNR_S05_RUN_ID" \
+            --output tests/sprint-05-orient-search/evidence/ORI-CI-004 \
+            --phases preflight,prepare,test
+      - name: Upload acceptance test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: acceptance-test-evidence
+          path: tests/sprint-05-orient-search/evidence/ORI-CI-004
+          retention-days: 7
+          if-no-files-found: error
+
+  docs-e2e:
+    name: docs-e2e (complete browser suite in a fresh owned workspace)
+    needs: [preflight, test]
+    runs-on: [self-hosted, macOS, ARM64, rnr-s05-native]
+    environment: sprint-05-real-proof
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_sha }}
+          persist-credentials: false
+      - name: Verify checkout identity
+        env:
+          DECLARED_CANDIDATE: ${{ inputs.candidate_sha }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          HEAD_SHA="$(git rev-parse HEAD)"
+          if [ "${#DECLARED_CANDIDATE}" -eq 40 ] \
+            && [ "$DECLARED_CANDIDATE" = "$HEAD_SHA" ] \
+            && [ "$DECLARED_CANDIDATE" = "$EVENT_SHA" ]; then
+            echo "checkout identity verified: HEAD == candidate == event SHA ($DECLARED_CANDIDATE)"
+          else
+            echo "::error::refusing docs-e2e execution: HEAD '$HEAD_SHA' != candidate '$DECLARED_CANDIDATE' or event SHA '$EVENT_SHA'"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: 10.32.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # The exact verbatim browser suite (CI=true, strict localhost:4321
+      # preview contract; an occupied unowned port fails the run, never shifts).
+      - name: Run the complete docs browser suite
+        env:
+          CI: 'true'
+          RNR_S05_CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          RNR_S05_RUN_ID: sprint-05-acceptance-${{ github.run_id }}
+        run: |
+          set -eo pipefail
+          node tests/sprint-05-orient-search/support/run-acceptance.mjs \
+            --candidate "${{ inputs.candidate_sha }}" \
+            --run-id "$RNR_S05_RUN_ID" \
+            --output tests/sprint-05-orient-search/evidence/ORI-CI-004 \
+            --phases preflight,docs-e2e
+      # Terminal verification records the run/attempt identity and validates
+      # the evidence; inside the run it can never mint accepted-artifact.json
+      # (an in-progress run is not terminal success — the orchestrator runs
+      # final verify-acceptance after this run reaches a terminal state).
+      - name: Record terminal verification (no acceptance minting in-run)
+        if: always()
+        env:
+          CI: 'true'
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GH_REPOSITORY: ${{ github.repository }}
+          GH_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          node tests/sprint-05-orient-search/support/verify-acceptance.mjs \
+            --candidate "${{ inputs.candidate_sha }}" \
+            --run-id "sprint-05-acceptance-${{ github.run_id }}" \
+            --evidence tests/sprint-05-orient-search/evidence/ORI-CI-004 \
+            --github-run-id "$GH_RUN_ID" \
+            --github-run-attempt "$GH_RUN_ATTEMPT" \
+            --github-repository "$GH_REPOSITORY" \
+            --workflow-sha "$GH_WORKFLOW_SHA" \
+            --in-run-validation
+      - name: Upload acceptance docs-e2e evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: acceptance-docs-e2e-evidence
+          path: |
+            tests/sprint-05-orient-search/evidence/ORI-CI-004/docs-e2e
+            tests/sprint-05-orient-search/evidence/ORI-CI-004/manifest.json
+            tests/sprint-05-orient-search/evidence/ORI-CI-004/teardown.json
+          retention-days: 7
+          if-no-files-found: error

@@ -1,0 +1,23 @@
+{
+ "schema": "ORI-CI-004-manual-corruption-receipts/1",
+ "run_id": "ORI-CI-004-2026-10-03T04-32-37Z",
+ "note": "manual corruption trials whose rejection checks precede digest comparison (unconfounded by post-session gate-fix digest drift); the four mandatory trials (missing Android result, altered source hash, omitted correlation, truncated references) need the complete owner matrices and a digest-matched tree — blocked with them",
+ "trials": [
+  {
+   "name": "earlier-run-manifest",
+   "exit": 1,
+   "rejection": "[ORI-CI-004] rejected: run-id-mismatch — evidence manifest run_id 'ORI-CI-004-earlier-session-0000' != declared 'ORI-CI-004-2026-10-03T04-32-37Z'"
+  },
+  {
+   "name": "missing-manifest",
+   "exit": 1,
+   "rejection": "[ORI-CI-004] rejected: missing-evidence-file — missing evidence file: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-004/.tmp/ORI-CI-004/manual-trials/missing-manifest/manifest.json"
+  },
+  {
+   "name": "stale-artifact-removed",
+   "exit": 1,
+   "rejection": "artifactRemoved=true :: [ORI-CI-004] rejected: source-hash-mismatch — source hash mismatch for tests/sprint-05-orient-search/acceptance-evidence.test.ts: expected (recorded) 5978c18c617a1da7b1c606a3564e9951e0839c30bd2e2e0a58c4d3db17132ea5, observed b628e9b9516e1e3f7f0bcbec7d2d65813b49ad6cc9172d7d9d34771791bd7ff4"
+  }
+ ],
+ "recordedAt": "2026-10-03T15:20:53.347Z"
+}

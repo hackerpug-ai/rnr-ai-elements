@@ -1,0 +1,9 @@
+# ORI-CI-004 — declare the protected acceptance runner's custom self-hosted
+# label so `actionlint .github/workflows/sprint-05-acceptance.yml` (the task's
+# exact verification command) validates the label instead of flagging it as
+# unknown. The label is the task contract's proposed prerequisite; no runner
+# with it is registered yet, so the protected jobs stay queued rather than
+# weaken the label set.
+self-hosted-runner:
+  labels:
+    - rnr-s05-native
