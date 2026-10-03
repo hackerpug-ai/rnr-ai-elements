@@ -1,5 +1,16 @@
 // fallow-ignore-file unused-file
+/**
+ * Entry-module contract: importing this module NEVER starts the server — the
+ * proof drivers (live-example-proof.ts et al.) import `createChatServer` and
+ * call `serve()` themselves with a minimal env, and an import-time `main()`
+ * rejected that env before `serve()` could configure it (FIX-ORI-CI-004-1).
+ * The server boots only when this file is the executed entry (`pnpm exec tsx
+ * apps/example/server/index.ts`, the documented run command), detected with
+ * the repo's standard ESM guard: `process.argv[1]` vs `import.meta.url`.
+ */
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { type UIMessage, validateUIMessages } from 'ai';
 
@@ -163,4 +174,10 @@ export function main(): void {
   });
 }
 
-main();
+const isMain =
+  process.argv[1] !== undefined &&
+  resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
+
+if (isMain) {
+  main();
+}
