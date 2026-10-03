@@ -41101,7 +41101,6 @@
     "ac_state": "AC-2 green (re-run by reviewer); AC-1/AC-3 honestly RED owner-blocked; AC-4 in-gate green incl. cancellation trial; terminal verification fails closed on real gh api total_count:0",
     "ratified_deviation": ".github/actionlint.yaml (empirically necessary; declares one custom label; weakens nothing)",
     "final_session_conditions": [
-     "FIX-ORI-CI-004-1 server env-init fix (in flight)",
      "nativewind 45-min pipeline hang \u2014 diagnose after env fix lands (72 real records precede it)",
      "device cold-boot before session; suite re-baseline (FIX-ORI-CI-003-1 landed, ~62-failure attribution in routed_findings)",
      "USER: GitHub push decision + CLOUDFLARE_API_TOKEN secret",
@@ -44077,6 +44076,23 @@
      "environmental": "2 (device UDID lane config, mobile scroll)",
      "low": "no try/finally around deliv-03-112 wipe-to-restore window (pre-existing)"
     }
+   }
+  },
+  "FIX-ORI-CI-004-1": {
+   "status": "completed",
+   "cycle": 1,
+   "task_path": ".spec/prds/docs-site/tasks/sprint-05-orient-search/FIX-ORI-CI-004-1-server-main-at-import-rejects-minimal-env.md",
+   "implementer": "aisdk-implementer",
+   "reviewer": "aisdk-reviewer",
+   "completion_note": {
+    "branch_tip": "424f958f741ebf2a309db8c82f5d21e24789a3c0",
+    "verdict": "APPROVED (cycle-1.verdict.json)",
+    "effect": "env-init blocker discharged for CI-004 final session; AC-3 accepted on mechanism-proof (historical death not reproducible \u2014 poisoned shell env since mitigated), full matrix rerun delegated to CI-004 final session per contract",
+    "nits": [
+     "stale pre-fix comment in nativewind-baseline-ordering-proof.test.ts:622 (outside write_allowed)",
+     "symlinked-entry theoretical edge",
+     "fallow 'clean' wording loose (3 pre-existing issues, zero new)"
+    ]
    }
   }
  },
