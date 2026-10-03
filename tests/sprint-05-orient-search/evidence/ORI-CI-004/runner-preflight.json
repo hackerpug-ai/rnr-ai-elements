@@ -1,0 +1,53 @@
+{
+ "schema": "ORI-CI-004-preflight/1",
+ "run_id": "ORI-CI-004-2026-10-03T04-32-37Z",
+ "label": "acceptance-cycle1",
+ "outcome": "ok",
+ "identity": {
+  "head": "2e03edef5549721e005579f5dd5b0ad0c7bfb1ff",
+  "declaredCandidate": "2e03edef5549721e005579f5dd5b0ad0c7bfb1ff",
+  "githubSha": null,
+  "descendedFromPlanningSource": true,
+  "ok": true
+ },
+ "runner": {
+  "mode": "local-owner",
+  "expectedLabels": [
+   "self-hosted",
+   "macOS",
+   "ARM64",
+   "rnr-s05-native"
+  ],
+  "environment": "sprint-05-real-proof",
+  "note": "local owner runs use the same commands for development/review but never impersonate hosted checks"
+ },
+ "reservations": {
+  "ios": {
+   "udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+   "name": "iPhone 17",
+   "state": "Booted",
+   "bootedNow": true
+  },
+  "android": {
+   "serial": "emulator-5554"
+  },
+  "appearancePreRun": "light"
+ },
+ "previewPort": {
+  "port": 4321,
+  "status": "free",
+  "sweptOrphanPids": []
+ },
+ "credentials": {
+  "openAiKeyPresent": true,
+  "receivingRoles": [
+   "trusted-launcher",
+   "backend"
+  ]
+ },
+ "toolchain": {
+  "node": "v24.14.0",
+  "pnpm": "10.32.1"
+ },
+ "recordedAt": "2026-10-03T04:32:37.848Z"
+}

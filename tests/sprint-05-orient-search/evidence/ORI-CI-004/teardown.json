@@ -1,0 +1,74 @@
+{
+ "schema": "ORI-CI-004-teardown/1",
+ "run_id": "ORI-CI-004-2026-10-03T04-32-37Z",
+ "trigger": "completion",
+ "cancelled": false,
+ "recordedChildren": [
+  {
+   "pid": 78491,
+   "role": "owner-quickstart",
+   "command": "pnpm exec tsx tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind --platforms ios,android,web",
+   "detached": true,
+   "receivedOpenAiKey": false,
+   "disposition": "exited-before-teardown"
+  },
+  {
+   "pid": 75413,
+   "role": "trusted-launcher",
+   "command": "node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines uniwind --platforms ios,android,web --output /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-004/tests/sprint-05-orient-search/evidence/ORI-CI-004/test/preparation/live-example --run-id ORI-CI-004-2026-10-03T04-32-37Z-live",
+   "detached": true,
+   "receivedOpenAiKey": true,
+   "disposition": "exited-before-teardown"
+  },
+  {
+   "pid": 78852,
+   "role": "trusted-launcher",
+   "command": "node tests/sprint-05-orient-search/run-live-example-proof.mjs --engines nativewind --platforms ios,android,web --output /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-004/tests/sprint-05-orient-search/evidence/ORI-CI-004/test/preparation/live-example --run-id ORI-CI-004-2026-10-03T04-32-37Z-live",
+   "detached": true,
+   "receivedOpenAiKey": true,
+   "disposition": "exited-before-teardown"
+  },
+  {
+   "pid": 37353,
+   "role": "compilers",
+   "command": "pnpm test",
+   "detached": true,
+   "receivedOpenAiKey": false,
+   "disposition": "exited-before-teardown"
+  },
+  {
+   "pid": 53134,
+   "role": "browsers",
+   "command": "pnpm e2e:docs",
+   "detached": true,
+   "receivedOpenAiKey": false,
+   "disposition": "terminated"
+  }
+ ],
+ "terminatedOwnedPids": [
+  53134
+ ],
+ "exitedOwnedPids": [
+  78491,
+  75413,
+  78852,
+  37353
+ ],
+ "residualOwnedLivePids": 0,
+ "ownedListeners": [
+  {
+   "port": 4321,
+   "listenerPids": 2,
+   "residualOwnedPids": 0
+  }
+ ],
+ "residualOwnedListeners": 0,
+ "residualReservations": 0,
+ "androidMappingsRemoved": 0,
+ "deviceAppearance": {
+  "preRun": "light",
+  "postRun": "dark",
+  "restoredTo": "light"
+ },
+ "finishedAt": "2026-10-03T08:37:03.200Z"
+}

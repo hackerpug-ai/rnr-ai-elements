@@ -149,3 +149,30 @@ attaches domains, or reads deployment credentials.
   digests describe the bytes that produced the final receipts). Any later
   edit to those files invalidates the session — fresh acceptance is
   required. That is the contract, not a bug.
+
+## Cycle-1 session findings (run ORI-CI-004-2026-10-03T04-32-37Z, candidate 2e03edef)
+
+- **Teardown does not reap grandchild listeners**: the docs-e2e phase's
+  playwright webServer spawned an astro preview whose process group escaped
+  the runner's recorded-child teardown; the preview survived on
+  localhost:4321 with its cwd inside the session worktree and had to be
+  swept by hand after the session. The teardown's owned-listener check only
+  counts RECORDED children — recommend a final own-orphan port sweep in
+  teardown (same ownership rule as the preflight sweep).
+- **Device wear is real and monotone**: the same reserved devices produced
+  6/6 Quickstart legs in two morning sessions and 5/6 in the afternoon one
+  (`uniwind android dark`, maestro_exit nonzero) with no code change.
+  Cold-boot both devices immediately before any acceptance session; the
+  emulator cold-boot remedy is `emu kill` + normal boot (a
+  `-no-snapshot-load` cold boot wedged at GPU init on this machine —
+  snapshot restore boots in under a minute and keeps
+  `window_animation_scale=0`).
+- **Digest binding disciplines the commit order**: every acceptance-relevant
+  file (both scripts, the gate file, the workflow, the policies, the owner
+  drivers, the lockfile) is digested at session time. Post-session fixes to
+  any of them — including the gate fixes this cycle made after the session —
+  leave the recorded digests stale, and the verifier correctly rejects the
+  session for `source-hash-mismatch`. A fully green gate re-run therefore
+  requires a fresh session after the owner blockers clear; never "re-bind"
+  a session to a tree it did not verify against (the same-run-id
+  continuation exists for resumed sessions, not for post-hoc edits).

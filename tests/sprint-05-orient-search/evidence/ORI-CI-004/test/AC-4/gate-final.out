@@ -1,0 +1,37 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-004
+
+ ❯ tests/sprint-05-orient-search/acceptance-evidence.test.ts (4 tests | 1 failed | 3 skipped) 312898ms
+     × ORI-CI-004-terminal-handoff 312897ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/acceptance-evidence.test.ts > ORI-CI-004 acceptance evidence > ORI-CI-004-terminal-handoff
+AssertionError: prepare phase really started before cancellation: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/sprint-05-orient-search/acceptance-evidence.test.ts:1151:92
+    1149|           await new Promise((r) => setTimeout(r, 1000));
+    1150|         }
+    1151|         expect(existsSync(prepareLog), 'prepare phase really started b…
+       |                                                                                            ^
+    1152|           true,
+    1153|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  08:43:06
+   Duration  313.25s (transform 25ms, setup 0ms, import 34ms, tests 312.90s, environment 0ms)
+
+AC4=0

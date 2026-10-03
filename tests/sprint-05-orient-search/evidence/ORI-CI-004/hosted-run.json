@@ -1,0 +1,38 @@
+{
+ "schema": "ORI-CI-004-verification/1",
+ "task": "ORI-CI-004",
+ "candidate": "2e03edef5549721e005579f5dd5b0ad0c7bfb1ff",
+ "run_id": "ORI-CI-004-2026-10-03T04-32-37Z",
+ "verdict": "rejected",
+ "failure": {
+  "reason": "prepare-phase-failed",
+  "detail": "prepare phase outcome 'failed'"
+ },
+ "checks": {
+  "identity": {
+   "runIdBound": true,
+   "preflightOutcome": "ok"
+  },
+  "preparation": null,
+  "suites": null,
+  "teardown": null,
+  "dist": null,
+  "publicRegistry": null
+ },
+ "distFiles": null,
+ "hosted": {
+  "status": "blocked",
+  "reason": "No hosted GitHub Actions run exists for candidate 2e03edef5549721e005579f5dd5b0ad0c7bfb1ff (GitHub API observed 0 run(s) for this head SHA). Hosted acceptance stays blocked until a real protected dispatch runs; local evidence can never populate hosted success.",
+  "observation": {
+   "repoSlug": "hackerpug-ai/rnr-ai-elements",
+   "api": {
+    "exit": 0,
+    "stdout": "{\"total_count\":0,\"workflow_runs\":[]}",
+    "stderr": ""
+   }
+  },
+  "recordedAt": "2026-10-03T14:40:59.344Z"
+ },
+ "inRunValidation": false,
+ "recordedAt": "2026-10-03T14:40:59.345Z"
+}

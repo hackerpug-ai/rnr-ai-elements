@@ -1,0 +1,16 @@
+{
+ "schema": "ORI-CI-004-manual-cancel-receipt/1",
+ "run_id": "ORI-CI-004-manual-cancel",
+ "note": "manual execution of the AC-4 cancelled-session trial after the gate spawn omitted device reservations (fixed in commit history); same assertions as the gate",
+ "teardownTrigger": "signal:SIGINT",
+ "cancelled": true,
+ "terminatedOwnedPids": [
+  6316,
+  7643,
+  8038
+ ],
+ "residualOwnedLivePids": 0,
+ "residualOwnedListeners": 0,
+ "manifestCompletedAbsent": true,
+ "acceptedArtifactAbsent": true
+}

@@ -1,0 +1,20 @@
+{
+ "schema": "ORI-CI-004-proof-red/1",
+ "ac": "AC-1",
+ "test_function": "ORI-CI-004-fresh-acceptance",
+ "verify_command": "pnpm exec vitest run tests/sprint-05-orient-search/acceptance-evidence.test.ts -t ORI-CI-004-fresh-acceptance",
+ "candidate_sha": "3f39bed3868e11f25fae7491b1b6778dc824fdeb",
+ "run_id": "ORI-CI-004-2026-10-02T19-40-00Z",
+ "session_state": "preflight-only real session (identity, device reservations, port check all green); prepare/test/docs-e2e not yet executed",
+ "source_identities": {
+  ".github/workflows/sprint-05-acceptance.yml": "written this task",
+  "tests/sprint-05-orient-search/support/run-acceptance.mjs": "written this task",
+  "tests/sprint-05-orient-search/support/verify-acceptance.mjs": "written this task",
+  "tests/sprint-05-orient-search/acceptance-evidence.test.ts": "written this task"
+ },
+ "failure": "Error: ENOENT: no such file or directory, open '.../evidence/ORI-CI-004/test/preparation/quickstart/run-manifest.json' \u2014 the session has no fresh Quickstart matrix: preflight-only session, prepare phase never executed.",
+ "captured_at": "2026-10-02T19:56:10.131211+00:00",
+ "raw_outputs": {
+  "ac-1": ".tmp/ORI-CI-004/red/ac-1.out"
+ }
+}
