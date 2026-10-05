@@ -44110,6 +44110,23 @@
      "fallow 'clean' wording loose (3 pre-existing issues, zero new)"
     ]
    }
+  },
+  "FIX-SHELL-15-16": {
+   "status": "completed",
+   "cycle": 1,
+   "implementer": "astro-implementer",
+   "reviewer": "astro-reviewer",
+   "completion_note": {
+    "branch_tip": "db222f81bd01ba4af0de6de8936284fc34b878e2",
+    "merge_commit": "bffa1bbf",
+    "verdict": "APPROVED (cycle-1.verdict.json)",
+    "ruling": "spec drift \u2014 90cbe643 added dialog close button; slot hosts 2 buttons by design",
+    "effect": "gate steps 10/12 unblocked; search-slot failures 14 -> 0",
+    "routed": {
+     "MEDIUM": "authored-snippets consumer gate installs cli@latest from live registry \u2014 pin CLI + registry inputs (gate owner)",
+     "LOW": "search-dialog.ts bare querySelector('button') \u2014 follow-up candidate"
+    }
+   }
   }
  },
  "trunk": "main",
