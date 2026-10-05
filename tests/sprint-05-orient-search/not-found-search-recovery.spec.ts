@@ -76,7 +76,9 @@ function manuscriptHintPhrase(parts: { hint: string }): string {
 }
 
 const RECOVERY_SEARCH_TRIGGER = '[data-recovery-search]';
-const HEADER_SEARCH_TRIGGER = '[data-search-slot] button';
+// The trigger only: the slot also hosts the dialog's close button (ORI-VIS-003)
+// inside the closed <dialog> panel, so a bare button selector is ambiguous.
+const HEADER_SEARCH_TRIGGER = '[data-search-slot] button.search-dialog__trigger';
 const OPEN_SEARCH_DIALOG = 'dialog[aria-modal="true"][open]';
 const SEARCH_INPUT = 'dialog[aria-modal="true"] input[type="search"]';
 const SEARCH_RESULT_LINK = 'dialog[aria-modal="true"] a[data-search-result]';

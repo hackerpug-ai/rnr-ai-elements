@@ -77,7 +77,9 @@ function queryForDestination(destination: string): string {
   return DESTINATION_QUERIES[destination] ?? destination.split('/').pop() ?? destination;
 }
 
-const SEARCH_TRIGGER = '[data-search-slot] button';
+// The trigger only: the slot also hosts the dialog's close button (ORI-VIS-003)
+// inside the closed <dialog> panel, so a bare button selector is ambiguous.
+const SEARCH_TRIGGER = '[data-search-slot] button.search-dialog__trigger';
 const SEARCH_DIALOG = 'dialog[aria-modal="true"]';
 // A closed native <dialog> stays in the DOM: assert the OPEN state, not element count.
 const OPEN_SEARCH_DIALOG = 'dialog[aria-modal="true"][open]';

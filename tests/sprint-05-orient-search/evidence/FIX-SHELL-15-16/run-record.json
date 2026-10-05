@@ -1,0 +1,38 @@
+{
+  "runs": "CI=true, scoped --grep, workers=1, built worktree dist (main 37c2a5e6), strict preview 127.0.0.1:4321",
+  "red": {
+    "date": "2026-10-05",
+    "specs_under_test": "unmodified (bare '[data-search-slot] button')",
+    "flow-shell-15": {
+      "spec": "tests/sprint-05-orient-search/search-contract.spec.ts",
+      "grep": "FLOW-SHELL-15-search-contract-before-recovery",
+      "exit": 1,
+      "expected": 5,
+      "unexpected": 10,
+      "error": "strict mode violation: locator('[data-search-slot] button') resolved to 2 elements (search-dialog__trigger 'Search documentation' + search-dialog__close 'Close search')"
+    },
+    "flow-shell-16": {
+      "spec": "tests/sprint-05-orient-search/not-found-search-recovery.spec.ts",
+      "grep": "FLOW-SHELL-16-not-found-search-recovery",
+      "exit": 1,
+      "expected": 11,
+      "unexpected": 4,
+      "error": "same strict mode violation at HEADER_SEARCH_TRIGGER click (lines 488, 706)"
+    }
+  },
+  "green": {
+    "date": "2026-10-05",
+    "specs_under_test": "narrowed '[data-search-slot] button.search-dialog__trigger'",
+    "flow-shell-15": { "grep": "FLOW-SHELL-15-search-contract-before-recovery", "exit": 0, "passed": 15, "failed": 0 },
+    "flow-shell-16": { "grep": "FLOW-SHELL-16-not-found-search-recovery", "exit": 0, "passed": 15, "failed": 0 },
+    "flow-shell-07-cross-check": {
+      "spec": "tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts",
+      "grep": "FLOW-SHELL-07-cmdk-open-search-navigate",
+      "exit": 0,
+      "passed": 3,
+      "failed": 0,
+      "note": "green lane before the fix (per FIX-ORI-CI-003-1 full suite) and after (this run) — selector pattern already narrowed"
+    }
+  },
+  "totals": { "before": "14 failed / 31 passed across the two lanes", "after": "0 failed / 33 passed across the two lanes, FLOW-SHELL-07 unaffected" }
+}
