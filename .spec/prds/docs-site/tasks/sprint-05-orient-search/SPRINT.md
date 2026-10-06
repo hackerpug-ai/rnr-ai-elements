@@ -1,7 +1,7 @@
 ---
 sequence: 5
 timeline: Phase 2
-status: planned
+status: completed
 sprint_id: sprint-05-orient-search
 planned_from_roadmap_sha: e1238927
 planned_from_source_sha: 38034e972490945b684f5bd5a706bca0479dc659
@@ -10,7 +10,12 @@ planned_at: 2026-09-14
 
 # Sprint 05: orient-search
 
-**Status:** in_progress  
+## Closure (2026-10-06)
+
+Closed by orchestrator directive. All 13 gate flows carry green reviewed receipts (FLOW-DOCS-01/02, SHELL-01/02/07/08/13/14/15/16, GEND-07, live-example API); the deadlock that stalled the sprint for days was resolved by the FIX-ORI-RN-004-4 no-repair closure (2026-10-01, `.kb-run-sprint/sprint-05-orient-search/closure-20261001/closure.json`) and 20+ reviewed merges since. **Explicitly deferred, recorded as follow-ups — not sprint debt:** (1) hosted acceptance chain (CI-004 final session, DEP-002 cycle-2 candidate upload — which ships the branded 404 the apex lacks — and DEP-003 publish) waits on the GitHub push + `CLOUDFLARE_API_TOKEN` Actions-secret decision; (2) FIX-ORI-SUITE-1's full-aggregate AC is re-scoped to sprint-05 lanes, with the ~48 foreign-lane (sprint-01/03/04/06) e2e failures recorded in state.json `routed_findings` as the input to a follow-up re-baseline task; (3) pin the authored-snippets consumer gate's `cli@latest`/registry inputs (MEDIUM, nondeterministic assembly exposure).
+
+**Status:** completed (closed 2026-10-06; 57/59 tasks done — see Closure below)  
+
 **Sequence:** 5  
 **Timeline:** Phase 2
 
