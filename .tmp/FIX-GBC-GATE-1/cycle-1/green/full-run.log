@@ -1,0 +1,1126 @@
+
+> rnr-ai-elements@0.2.1 e2e:docs /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1
+> pnpm --filter @rnr-ai-elements/docs build && pnpm exec playwright install chromium && pnpm exec playwright test
+
+
+> @rnr-ai-elements/docs@0.1.0 build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs
+> pnpm -w run registry:build && pnpm -w run gallery:manifest && pnpm run prebuild && pnpm run check:snippets && astro build && pnpm run search:index && pnpm run check:links
+
+
+> rnr-ai-elements@0.2.1 registry:build /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1
+> tsx packages/registry/scripts/build-registry.ts
+
+registry built — 56 item(s) x 2 engine(s) = 112 file(s) under public/r/
+
+> rnr-ai-elements@0.2.1 gallery:manifest /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1
+> tsx scripts/build-gallery-manifest.ts
+
+gallery manifest — 56 item(s) (3 kinds) -> apps/example/gallery/manifest.ts, apps/docs/src/data/gallery-manifest.json
+
+> @rnr-ai-elements/docs@0.1.0 prebuild /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs
+> tsx ../../scripts/docs-data/prebuild.ts
+
+[docs-data] changelog: 3 tags, 3 entries — one-to-one, reverse-chronological
+[docs-data] porting: 40 mapped, 9 not-ported of 49 upstream elements — every mapping slug resolves against 56 registry items, notPorted is the exact complement, gaps cross-check passes
+[docs-data] prebuild: 56 items; props resolved for 39/39 component items; 9 families; public/r copy 114 files; site-facts aiSdkPeers ai@^7.0.89, @ai-sdk/react@^4.0.92
+
+> @rnr-ai-elements/docs@0.1.0 check:snippets /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs
+> tsx ../../scripts/docs-data/authored-snippets.ts
+
+{
+  "ok": true,
+  "root": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1",
+  "docsRoot": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs",
+  "documents": [
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/cli.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/dark-mode.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/guides/customize-rendering.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/guides/preview-on-device.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/guides/re-theme.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/guides/troubleshooting.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/guides/update-installed-items.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/installation.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/introduction.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/owns-vs-does-not-own.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/porting.md",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/quickstart.mdx",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/src/content/docs/theming.mdx"
+  ],
+  "blocks": [
+    {
+      "doc": "apps/docs/src/content/docs/cli.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/nativewind.sh",
+      "region": {
+        "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91",
+        "length": 105
+      },
+      "byteLength": 105,
+      "sha256": "97761277ab70e48cd68036e590bed17364c559767461ee1b41117fd1fd182b91"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-0",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/example/components/ai/message.tsx",
+      "region": {
+        "sha256": "272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222",
+        "length": 302
+      },
+      "byteLength": 302,
+      "sha256": "272fd3912c11a2d509c0ed818bce766c0de8897382f8344955131471e1d13222"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-1",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/example/components/ai/reasoning.tsx",
+      "region": {
+        "sha256": "5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313",
+        "length": 689
+      },
+      "byteLength": 689,
+      "sha256": "5910ecbf944ae87d4c2f116e397227287cb5d00640c01b81d097d0c87d5c2313"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/customize-rendering.md",
+      "snippet": "fence-2",
+      "kind": "tsx",
+      "flavor": "fence",
+      "source": "apps/harness/src/stories/Chat.stories.tsx",
+      "region": {
+        "sha256": "0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89",
+        "length": 529
+      },
+      "byteLength": 529,
+      "sha256": "0d66186c70a4be3d95185f08a1a5750a3ae69a314adc6ac1f3358b4716296c89"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9",
+        "length": 186
+      },
+      "byteLength": 186,
+      "sha256": "8017c29e7e88c25b48ea4afe70852fcc29acbaf24152109d3dccf4d914d852d9"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-1",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/re-theme.md",
+      "snippet": "fence-2",
+      "kind": "configuration",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/nativewind/tailwind.config.js",
+      "region": {
+        "sha256": "673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870",
+        "length": 276
+      },
+      "byteLength": 276,
+      "sha256": "673d6c96b05fb563d1c9742a5d7d9f5ca208b5f24078a40c2f03700bf9515870"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/guides/update-installed-items.md",
+      "snippet": "fence-0",
+      "kind": "shell",
+      "flavor": "fence",
+      "source": "packages/docs-snippets/commands/update.sh",
+      "region": {
+        "sha256": "27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d",
+        "length": 195
+      },
+      "byteLength": 195,
+      "sha256": "27d596dd2d00c865c95f062ea8ac11c4d2b236917f8a70aa64a8dab32eec3f8d"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "messagesSource",
+      "kind": "ts",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-messages.ts",
+      "region": null,
+      "byteLength": 3895,
+      "sha256": "fba7e6844e9ddc8ab6e4b8e638cda926a8123cb3629b3e329cc82a364f68c322"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "screenSource",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/shared/quickstart-screen.tsx",
+      "region": null,
+      "byteLength": 3138,
+      "sha256": "270a1c140af7b0095259bed4c8cb417fc231127469836565bed1453a1e8a91a2"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointNativewind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/nativewind/app/index.tsx",
+      "region": null,
+      "byteLength": 411,
+      "sha256": "af11e01b3cf55b807e259e3b426b19245ffebba5898aa20bf73234c54969497b"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/quickstart.mdx",
+      "snippet": "entrypointUniwind",
+      "kind": "tsx",
+      "flavor": "source-bound",
+      "source": "packages/docs-snippets/uniwind/app/index.tsx",
+      "region": null,
+      "byteLength": 408,
+      "sha256": "2152e4cbcc3241dd45592baf380a6657ef6e1c26389a6467f1a1e25a8d4fecd4"
+    },
+    {
+      "doc": "apps/docs/src/content/docs/theming.mdx",
+      "snippet": "fence-0",
+      "kind": "css",
+      "flavor": "fence",
+      "source": "apps/example/global.css",
+      "region": {
+        "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e",
+        "length": 838
+      },
+      "byteLength": 838,
+      "sha256": "218d3c0c7bfa84a664eed364afc513d7ba3344eb374c7dc5eb4ac1682216430e"
+    }
+  ],
+  "kindCoverage": {
+    "shell": 2,
+    "tsx": 7,
+    "css": 3,
+    "configuration": 16,
+    "ts": 2
+  },
+  "configurationInputs": [
+    "packages/docs-snippets/nativewind/package.json",
+    "packages/docs-snippets/nativewind/tsconfig.json",
+    "packages/docs-snippets/nativewind/tailwind.config.js",
+    "packages/docs-snippets/nativewind/babel.config.js",
+    "packages/docs-snippets/nativewind/metro.config.js",
+    "packages/docs-snippets/nativewind/components.json",
+    "packages/docs-snippets/nativewind/app.json",
+    "packages/docs-snippets/nativewind/global.css",
+    "packages/docs-snippets/nativewind/nativewind-env.d.ts",
+    "packages/docs-snippets/uniwind/package.json",
+    "packages/docs-snippets/uniwind/tsconfig.json",
+    "packages/docs-snippets/uniwind/metro.config.js",
+    "packages/docs-snippets/uniwind/components.json",
+    "packages/docs-snippets/uniwind/app.json",
+    "packages/docs-snippets/uniwind/global.css",
+    "packages/docs-snippets/uniwind/uniwind-types.d.ts"
+  ],
+  "compilerReceipts": [
+    {
+      "engine": "nativewind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-nativewind-case-xvmnIj",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 1356,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "uniwind",
+      "executable": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-uniwind-case-W0wfeK",
+      "config": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff/tsconfig.json",
+      "args": [
+        "--noEmit"
+      ],
+      "exit": 0,
+      "durationMs": 965,
+      "typescriptVersion": "6.0.3"
+    },
+    {
+      "engine": "live-chat",
+      "executable": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/example/node_modules/.bin/tsc",
+      "cwd": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/example",
+      "config": "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/example/tsconfig.live-chat.json",
+      "args": [
+        "-p",
+        "tsconfig.live-chat.json"
+      ],
+      "exit": 0,
+      "durationMs": 1171,
+      "typescriptVersion": "6.0.3"
+    }
+  ],
+  "consumerCache": {
+    "nativewind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/nativewind-bf4f7977c6d0f6e4",
+    "uniwind": "/Users/justinrich/.cache/agent-scratch/ori-ast-005-consumers/uniwind-f49305e2646283ff"
+  },
+  "emitted": null,
+  "errors": []
+}
+10:44:36 [content] Syncing content
+10:44:36 [content] Synced content
+10:44:36 [types] Generated 243ms
+10:44:36 [build] output: "static"
+10:44:36 [build] mode: "static"
+10:44:36 [build] directory: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/dist/
+10:44:36 [build] Collecting build info...
+10:44:36 [build] ✓ Completed in 290ms.
+10:44:36 [build] Building static entrypoints...
+10:44:36 [vite] ✓ built in 230ms
+10:44:36 [vite] ✓ built in 48ms
+10:44:36 [build] Rearranging server assets...
+
+ generating static routes 
+[docs-data] guides: 5 guides — cap satisfied
+10:44:36   ├─ /404.html (+6ms) 
+10:44:36   ├─ /changelog/0.2.1/index.html (+2ms) 
+10:44:36   ├─ /changelog/0.2.0/index.html (+1ms) 
+10:44:36   ├─ /changelog/0.1.0/index.html (+1ms) 
+10:44:36   ├─ /changelog/index.html (+2ms) 
+10:44:36   ├─ /components/streamdown/index.html (+1ms) 
+10:44:36   ├─ /components/shimmer/index.html (+5ms) 
+10:44:36   ├─ /components/checkpoint/index.html (+2ms) 
+10:44:36   ├─ /components/image/index.html (+1ms) 
+10:44:36   ├─ /components/persona/index.html (+2ms) 
+10:44:36   ├─ /components/speech-input/index.html (+2ms) 
+10:44:36   ├─ /components/kbd/index.html (+1ms) 
+10:44:36   ├─ /components/breadcrumb/index.html (+1ms) 
+10:44:36   ├─ /components/button-group/index.html (+1ms) 
+10:44:36   ├─ /components/slider/index.html (+1ms) 
+10:44:36   ├─ /components/table/index.html (+1ms) 
+10:44:36   ├─ /components/command/index.html (+1ms) 
+10:44:36   ├─ /components/mono/index.html (+1ms) 
+10:44:36   ├─ /components/markdown/index.html (+1ms) 
+10:44:36   ├─ /components/code-block/index.html (+1ms) 
+10:44:36   ├─ /components/conversation/index.html (+1ms) 
+10:44:36   ├─ /components/message/index.html (+1ms) 
+10:44:36   ├─ /components/prompt-input/index.html (+1ms) 
+10:44:36   ├─ /components/empty/index.html (+1ms) 
+10:44:36   ├─ /components/item/index.html (+1ms) 
+10:44:36   ├─ /components/input-group/index.html (+1ms) 
+10:44:36   ├─ /components/sheet/index.html (+1ms) 
+10:44:36   ├─ /components/suggestion/index.html (+3ms) 
+10:44:36   ├─ /components/status/index.html (+5ms) 
+10:44:36   ├─ /components/reasoning-lifecycle/index.html (+1ms) 
+10:44:36   ├─ /components/tool/index.html (+1ms) 
+10:44:36   ├─ /components/reasoning/index.html (+1ms) 
+10:44:36   ├─ /components/task/index.html (+1ms) 
+10:44:36   ├─ /components/question/index.html (+1ms) 
+10:44:36   ├─ /components/agent/index.html (+1ms) 
+10:44:36   ├─ /components/chain-of-thought/index.html (+1ms) 
+10:44:36   ├─ /components/plan/index.html (+1ms) 
+10:44:36   ├─ /components/confirmation/index.html (+1ms) 
+10:44:36   ├─ /components/queue/index.html (+1ms) 
+10:44:36   ├─ /components/url/index.html (+1ms) 
+10:44:36   ├─ /components/sources/index.html (+1ms) 
+10:44:36   ├─ /components/inline-citation/index.html (+1ms) 
+10:44:36   ├─ /components/artifact/index.html (+4ms) 
+10:44:36   ├─ /components/snippet/index.html (+2ms) 
+10:44:36   ├─ /components/commit/index.html (+1ms) 
+10:44:36   ├─ /components/attachments/index.html (+1ms) 
+10:44:36   ├─ /components/context/index.html (+1ms) 
+10:44:36   ├─ /components/open-in-chat/index.html (+1ms) 
+10:44:36   ├─ /components/model-selector/index.html (+12ms) 
+10:44:36   ├─ /components/mic-selector/index.html (+1ms) 
+10:44:36   ├─ /components/voice-selector/index.html (+1ms) 
+10:44:36   ├─ /components/audio-player/index.html (+1ms) 
+10:44:36   ├─ /components/transcription/index.html (+1ms) 
+10:44:36   ├─ /components/terminal/index.html (+1ms) 
+10:44:36   ├─ /components/file-tree/index.html (+1ms) 
+10:44:36   ├─ /components/environment-variables/index.html (+1ms) 
+10:44:36   ├─ /components/package-info/index.html (+1ms) 
+10:44:36   ├─ /components/stack-trace-parser/index.html (+1ms) 
+10:44:36   ├─ /components/stack-trace/index.html (+1ms) 
+10:44:36   ├─ /components/schema-display/index.html (+1ms) 
+10:44:36   ├─ /components/test-results/index.html (+1ms) 
+10:44:36   ├─ /components/web-preview/index.html (+1ms) 
+10:44:36   ├─ /components/index.html (+3ms) 
+10:44:36   ├─ /docs/theming/index.html (+5ms) 
+10:44:36   ├─ /docs/introduction/index.html (+1ms) 
+10:44:36   ├─ /docs/installation/index.html (+2ms) 
+10:44:36   ├─ /docs/quickstart/index.html (+2ms) 
+10:44:36   ├─ /docs/cli/index.html (+0ms) 
+10:44:36   ├─ /docs/dark-mode/index.html (+1ms) 
+10:44:36   ├─ /docs/owns-vs-does-not-own/index.html (+1ms) 
+10:44:36   ├─ /guides/re-theme/index.html (+1ms) 
+10:44:36   ├─ /guides/update-installed-items/index.html (+0ms) 
+10:44:36   ├─ /guides/preview-on-device/index.html (+0ms) 
+10:44:36   ├─ /guides/customize-rendering/index.html (+0ms) 
+10:44:36   ├─ /guides/troubleshooting/index.html (+0ms) 
+10:44:36   ├─ /guides/index.html (+1ms) 
+10:44:36   ├─ /islands/copy-button/index.html (+1ms) 
+10:44:36   ├─ /porting/index.html (+1ms) 
+10:44:36   ├─ /registry/index.html (+2ms) 
+10:44:36   ├─ /index.html (+1ms) 
+10:44:36 ✓ Completed in 166ms.
+
+10:44:36 [build] ✓ Completed in 467ms.
+10:44:36 [build] 80 page(s) built in 785ms
+10:44:36 [build] Complete!
+
+> @rnr-ai-elements/docs@0.1.0 search:index /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs
+> tsx ../../scripts/docs-data/search-index.ts
+
+[search-index] 64 expected destinations (56 items, 8 docs) derived from the real sources
+[search-index] all expected destinations emitted under /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs/dist
+Running Pagefind v1.5.2 (Extended)
+Running from: "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1"
+Source:       "apps/docs/dist"
+Output:       "apps/docs/dist/pagefind"
+
+[Walking source directory]
+Found 80 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: en
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 70 pages
+  Indexed 7419 words
+  Indexed 0 filters
+  Indexed 0 sorts
+
+Finished in 0.091 seconds
+[search-index] index complete: 70 pages cover all 64 expected destinations
+
+> @rnr-ai-elements/docs@0.1.0 check:links /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/apps/docs
+> tsx ../../scripts/docs-data/check-dist-links.ts
+
+[docs-data] link-check: warning docs/cli/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/cli.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/dark-mode/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/dark-mode.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/installation/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/installation.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/introduction/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/introduction.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/owns-vs-does-not-own/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/owns-vs-does-not-own.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/quickstart/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/quickstart.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning docs/theming/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/theming.mdx: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/customize-rendering/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/customize-rendering.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/preview-on-device/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/preview-on-device.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/re-theme/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/re-theme.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/troubleshooting/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/troubleshooting.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning guides/update-installed-items/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/guides/update-installed-items.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: warning porting/index.html -> https://github.com/hackerpug-ai/rnr-ai-elements/blob/main/apps/docs/src/content/docs/porting.md: external link failed (HTTP 404) (HTTP 404)
+[docs-data] link-check: 80 html files, 3106 links (3086 internal, 20 external), 0 error(s), 13 warning(s)
+
+Running 516 tests using 1 worker
+
+[1/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:143:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[2/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:301:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[3/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:356:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — /components renders the seven-family card grid
+[4/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:415:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+[5/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[6/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[7/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[8/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:193:1 › FLOW-DELIV-03-112-file-completeness
+[chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:193:1 › FLOW-DELIV-03-112-file-completeness
+
+
+
+
+
+
+[9/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:217:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[10/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[11/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[12/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[13/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+[14/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:225:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[15/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:264:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+[16/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:130:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[17/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:200:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[18/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:224:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[19/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:265:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[20/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:296:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[21/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[22/516] [chromium-desktop] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[23/516] [chromium-desktop] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[24/516] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[25/516] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[26/516] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[27/516] [chromium-desktop] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[28/516] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:171:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[29/516] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:320:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[30/516] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:394:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[31/516] [chromium-desktop] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:449:1 › SHELL-012-engine-follow-and-zerojs: persisted rnr-engine follows across cold navigations; zero un-tabbed duplicates on every page
+[32/516] [chromium-desktop] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[33/516] [chromium-desktop] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:97:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[34/516] [chromium-desktop] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[35/516] [chromium-desktop] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families
+[36/516] [chromium-desktop] › tests/sprint-03-family-browse/home-family-teaser.spec.ts:102:1 › FAM-006-home-family-teaser: seven anchored family sections below the intact hero, 39 verdict-badged cards, computed hero counters
+[37/516] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:108:1 › FAM-004-filter-narrows-and-clears
+[38/516] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:146:1 › FAM-004-no-results-url-stability
+[39/516] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:173:1 › FAM-004-nojs-full-grid
+[40/516] [chromium-desktop] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:204:1 › FAM-004-a11y-and-init
+[41/516] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+[42/516] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:110:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+[43/516] [chromium-desktop] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:207:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[44/516] [chromium-desktop] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+[45/516] [chromium-desktop] › tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts:147:1 › FLOW-GEND-21-dependency-panel-peers
+[46/516] [chromium-desktop] › tests/sprint-04-generated-reference/dev-client-matrix.spec.ts:70:1 › T-GEND-020-dev-client-matrix
+[47/516] [chromium-desktop] › tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts:159:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[48/516] [chromium-desktop] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[49/516] [chromium-desktop] › tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts:145:1 › FLOW-GEND-15-family-pager-stays-in-family
+[50/516] [chromium-desktop] › tests/sprint-04-generated-reference/preview-omission-nojs.spec.ts:69:1 › T-GEND-021-preview-omission-nojs
+[51/516] [chromium-desktop] › tests/sprint-04-generated-reference/props-table-generated.spec.ts:144:1 › FLOW-GEND-34-props-table-generated
+[52/516] [chromium-desktop] › tests/sprint-04-generated-reference/qr-panel.spec.ts:68:1 › T-GEND-017-qr-panel
+[53/516] [chromium-desktop] › tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts:159:1 › FLOW-GEND-14-reference-page-anatomy
+[54/516] [chromium-desktop] › tests/sprint-04-generated-reference/site-crawl.spec.ts:91:1 › T-GEND-016-site-crawl
+[55/516] [chromium-desktop] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[56/516] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:92:1 › ORI-CONT-005-AC-1
+[57/516] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:124:1 › ORI-CONT-005-AC-2
+[58/516] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:197:1 › ORI-CONT-005-AC-3
+[59/516] [chromium-desktop] › tests/sprint-05-orient-search/boundary-content.spec.ts:274:1 › ORI-CONT-005-AC-4
+[60/516] [chromium-desktop] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:177:1 › FLOW-SHELL-07-cmdk-open-search-navigate
+[61/516] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:200:1 › ORI-AST-002-AC-1
+[62/516] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:321:1 › ORI-AST-002-AC-2
+[63/516] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:470:1 › ORI-AST-002-AC-3
+[64/516] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:611:1 › ORI-AST-002-AC-4
+[65/516] [chromium-desktop] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:673:1 › ORI-AST-002-AC-5
+[66/516] [chromium-desktop] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[67/516] [chromium-desktop] › tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts:53:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[68/516] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:204:1 › FLOW-DOCS-01-getting-started-engine-decision: locked 6-step sequence
+[69/516] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:242:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 boundary search answers transport
+[70/516] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:307:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 unknown-route recovery
+[71/516] [chromium-desktop] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:340:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 claim ledger and content gates
+[72/516] [chromium-desktop] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:349:1 › ORI-VIS-004-AC-1: filtered conversation row keeps verdict, complete uniwind command and Docs link
+[73/516] [chromium-desktop] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:459:1 › ORI-VIS-004-AC-2: All + clear restores all rows; the real no-results state appears and recovers
+[74/516] [chromium-desktop] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:551:1 › ORI-VIS-004-AC-3: mobile scroll stays in the wrapper; sticky column, header, zebra and mono tokens hold
+[75/516] [chromium-desktop] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:690:1 › ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible
+[chromium-desktop] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:690:1 › ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible
+
+
+[76/516] [chromium-desktop] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:381:1 › FLOW-SHELL-16-not-found-search-recovery: locked 8-step sequence
+[77/516] [chromium-desktop] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:565:1 › FLOW-SHELL-16-not-found-search-recovery: AC-1 recover to Message through shared search
+[78/516] [chromium-desktop] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:615:1 › FLOW-SHELL-16-not-found-search-recovery: AC-2 manuscript-backed recovery document and retained shell
+[79/516] [chromium-desktop] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:680:1 › FLOW-SHELL-16-not-found-search-recovery: AC-3 focus restoration and index exclusion
+[80/516] [chromium-desktop] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:760:1 › FLOW-SHELL-16-not-found-search-recovery: AC-4 recover through ordinary links without JavaScript
+[81/516] [chromium-desktop] › tests/sprint-05-orient-search/orientation-content.spec.ts:113:1 › ORI-CONT-001-identity
+[82/516] [chromium-desktop] › tests/sprint-05-orient-search/orientation-content.spec.ts:191:1 › ORI-CONT-001-engine-decision
+[83/516] [chromium-desktop] › tests/sprint-05-orient-search/orientation-content.spec.ts:305:1 › ORI-CONT-001-cli-reference
+[84/516] [chromium-desktop] › tests/sprint-05-orient-search/orientation-content.spec.ts:370:1 › ORI-CONT-001-content-contract
+[85/516] [chromium-desktop] › tests/sprint-05-orient-search/pagefind-lazy-load-on-first-open.spec.ts:95:1 › FLOW-SHELL-08-pagefind-lazy-load-on-first-open
+[86/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:168:1 › FLOW-DOCS-02-quickstart-chat-screen: locked tutorial reading
+[87/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:176:1 › ORI-CONT-004-quickstart-reading-floor: engine panels readable without enhanced interaction
+[88/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation
+  1) [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation 
+
+    Error: the seed matrix must complete in a fresh child process (exit 1; the driver fails closed on any missing leg)
+    /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/support/native-session.ts:289
+      if (!existsSync(apkPath)) throw new Error(`Expo Go Android APK missing at ${apkPath}`);
+                                      ^
+
+    Error: Expo Go Android APK missing at /Users/justinrich/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk
+        at installExpoGoAndroid (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/support/native-session.ts:289:35)
+        at prepareInfrastructure (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/support/quickstart-proof.test.ts:413:5)
+        at runQuickstartProof (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/support/quickstart-proof.test.ts:542:23)
+        at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/[eval1]:2:22
+
+    Node.js v24.14.0
+
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+        at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/[eval1]:2:22
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:291:5
+
+    Error Context: test-results/sprint-05-orient-search-qu-11591--awaited-in-this-invocation-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-qu-11591--awaited-in-this-invocation-chromium-desktop/error-context.md
+
+
+[89/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-content.spec.ts:228:1 › ORI-CONT-003-AC-1
+[90/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-content.spec.ts:282:1 › ORI-CONT-003-AC-2
+[91/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-content.spec.ts:517:1 › ORI-CONT-003-AC-3
+[92/516] [chromium-desktop] › tests/sprint-05-orient-search/quickstart-content.spec.ts:902:1 › ORI-CONT-003-AC-4
+[93/516] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:186:1 › ORI-VIS-001-AC-1
+[94/516] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:252:1 › ORI-VIS-001-AC-2
+[95/516] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:375:1 › ORI-VIS-001-AC-3
+[96/516] [chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:542:1 › ORI-VIS-001-AC-4
+[chromium-desktop] › tests/sprint-05-orient-search/reading-presentation.spec.ts:542:1 › ORI-VIS-001-AC-4
+
+
+[97/516] [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:407:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations
+[chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:407:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations
+
+
+[98/516] [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:506:1 › ORI-VIS-005-ac-2: shared search recovers to canonical content
+[chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:506:1 › ORI-VIS-005-ac-2: shared search recovers to canonical content
+
+
+[99/516] [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:575:1 › ORI-VIS-005-ac-3: no-JavaScript recovery remains useful
+[chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:575:1 › ORI-VIS-005-ac-3: no-JavaScript recovery remains useful
+
+
+[100/516] [chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:659:1 › ORI-VIS-005-ac-4: theme and mobile presentation
+[chromium-desktop] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:659:1 › ORI-VIS-005-ac-4: theme and mobile presentation
+
+
+[101/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:221:1 › ORI-AST-008-destinations
+[102/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:303:1 › ORI-AST-008-engine-copy
+[103/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:447:1 › ORI-AST-008-source-bytes
+[104/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:519:1 › ORI-AST-008-component-regression
+[105/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:650:1 › ORI-AST-008-search-metadata
+[106/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:127:1 › FLOW-GEND-07-registry-ledger-controls AC-1: category totals, category/text filtering, recovery of ledger and grid
+[107/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:234:1 › FLOW-GEND-07-registry-ledger-controls AC-2: displayed engine command equals the real clipboard, shared state survives navigation
+[108/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:345:1 › FLOW-GEND-07-registry-ledger-controls AC-3: conversation, item and stack-trace-parser Docs links reach real references
+[109/516] [chromium-desktop] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:415:1 › FLOW-GEND-07-registry-ledger-controls AC-4: 56 rows, both labeled commands, no inert controls, working Docs links without JavaScript
+[110/516] [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:351:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence
+[111/516] [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:577:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content
+[112/516] [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:667:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-2 open immediately, load Pagefind only on demand
+[113/516] [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:740:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus
+[114/516] [chromium-desktop] › tests/sprint-05-orient-search/search-contract.spec.ts:823:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text
+[115/516] [chromium-desktop] › tests/sprint-05-orient-search/search-presentation.spec.ts:399:1 › ORI-VIS-003-AC-1
+[chromium-desktop] › tests/sprint-05-orient-search/search-presentation.spec.ts:399:1 › ORI-VIS-003-AC-1
+
+
+[116/516] [chromium-desktop] › tests/sprint-05-orient-search/search-presentation.spec.ts:494:1 › ORI-VIS-003-AC-2
+[117/516] [chromium-desktop] › tests/sprint-05-orient-search/search-presentation.spec.ts:599:1 › ORI-VIS-003-AC-3
+[118/516] [chromium-desktop] › tests/sprint-05-orient-search/search-presentation.spec.ts:685:1 › ORI-VIS-003-AC-4
+[119/516] [chromium-desktop] › tests/sprint-05-orient-search/tab-panels-in-initial-html.spec.ts:112:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[120/516] [chromium-desktop] › tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts:101:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[121/516] [chromium-desktop] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:166:1 › FLOW-DOCS-01-theming-and-section-nav: locked 4-step sequence
+[122/516] [chromium-desktop] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:202:1 › FLOW-DOCS-01-theming-and-section-nav: AC-2 seam anchors resolve to current interfaces
+[123/516] [chromium-desktop] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:231:1 › FLOW-DOCS-01-theming-and-section-nav: AC-2 reading floor without JavaScript
+[124/516] [chromium-desktop] › tests/sprint-05-orient-search/token-presentation.spec.ts:192:1 › ORI-VIS-002-AC-1
+[125/516] [chromium-desktop] › tests/sprint-05-orient-search/token-presentation.spec.ts:285:1 › ORI-VIS-002-AC-2
+[126/516] [chromium-desktop] › tests/sprint-05-orient-search/token-presentation.spec.ts:431:1 › ORI-VIS-002-AC-3
+[127/516] [chromium-desktop] › tests/sprint-05-orient-search/token-presentation.spec.ts:547:1 › ORI-VIS-002-AC-4
+[chromium-desktop] › tests/sprint-05-orient-search/token-presentation.spec.ts:547:1 › ORI-VIS-002-AC-4
+
+
+[128/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts
+  2) [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts 
+
+    Error: the term 'useChat' never appears in a prose paragraph
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      129 |     expect(cellCount, `the term '${term}' sits inside a td or th`).toBeGreaterThan(0);
+      130 |     const paragraphs = page.locator('main p').filter({ hasText: new RegExp(term, 'i') });
+    > 131 |     expect(await paragraphs.count(), `the term '${term}' never appears in a prose paragraph`).toBe(
+          |                                                                                               ^
+      132 |       0,
+      133 |     );
+      134 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:131:95
+
+    Error Context: test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-desktop/error-context.md
+
+
+[129/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:145:1 › FLOW-DOCS-04-boundary-ownership-tables AC-2 ownership-split table and honest gaps list
+[130/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:212:1 › FLOW-DOCS-04-boundary-ownership-tables AC-3 example-app link resolves
+[131/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page
+[132/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:311:1 › FLOW-DOCS-04-boundary-ownership-tables AC-5 no ownership overclaim
+[133/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:341:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-1 index title anchors reverse-chronological
+[134/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:364:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-2 newest release page date and three headings
+[135/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:383:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-3 prebuild gate anchor count phantom routes 404
+[136/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:412:1 › FLOW-DOCS-06-changelog-release-pages GBC-007-AC-1 prebuild gate one-to-one with run-time git tags
+[137/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:427:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-4 every release article component link resolves in the ledger
+[138/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:455:1 › FLOW-DOCS-06-changelog-release-pages GBC-015-AC-2 rows newest-first with one date chip each
+[139/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:478:1 › FLOW-DOCS-06-changelog-release-pages GBC-015-AC-4 touched anchors are row-title siblings that resolve
+[140/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:500:1 › FLOW-DOCS-06-changelog-release-pages GBC-016-AC-2 section-index shell Changelog Releases no rail
+[141/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:531:1 › FLOW-DOCS-06-changelog-release-pages GBC-016-AC-5 docs-section nav carries the three groups
+[142/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:563:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-1 index newest-first and newest release page complete
+[143/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:600:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-2 every release page 200 with UTC date and three headings
+[144/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:623:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-3 newest release row and article link the same titled slugs
+[145/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:225:1 › journeys/docs-integrator-arc AC-1 desktop arc: engine pick, quickstart command, registry copy, boundary example-app, and the header's five section links answer 200
+[146/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:373:1 › journeys/docs-integrator-arc AC-1 mobile arc: the same walk through the drawer, whose five section links answer 200
+[147/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:469:1 › journeys/docs-integrator-arc AC-2 one uniwind pick holds engine state across five pages and never reaches a URL
+[148/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts:195:1 › journeys/docs-themer-arc AC-3 themer arc: the swatch flips live, the reload's first frame is dark, and the header's Guides link reaches the re-theme guide
+[149/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts:304:1 › journeys/docs-themer-arc AC-4 both seam Callout links on /components/message land on the customize-rendering guide's matching sections
+[150/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:220:1 › FLOW-DOCS-03-five-guides-index AC-1 the guides index responds 200 with exactly five rows whose titles equal their destinations' h1, under an All guides header counting 5 and no ToC rail
+[151/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:281:1 › FLOW-DOCS-03-five-guides-index AC-2 every guides-index row href is a distinct /guides/ path answering 200
+[152/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:314:1 › FLOW-DOCS-03-five-guides-index AC-3 the row href set is exactly the five launch guides with no porting, engine or theming row
+[153/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:354:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-1 re-theme returns 200 with oklch and @theme, one goal sentence, a theming link out, and exactly one index anchor
+[154/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:390:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-2 update-installed-items carries the literal absolute-URL add command, no short-name or relative adds
+[155/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:439:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-3 customize-rendering documents both seams once and the message page seam Callout links it, never the old theming anchors
+[156/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:478:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-4 preview-on-device opens from the index click, scopes Expo Go vs the four dev-client items, one goal sentence, no supported-in-Expo-Go pairing
+[157/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:525:1 › FLOW-DOCS-03-five-guides-index GBC-002/AC-1 troubleshooting has exactly four Symptom/Cause/Fix entries, no stubs, and exactly one index anchor
+[158/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:559:1 › FLOW-DOCS-03-five-guides-index GBC-002/AC-2 the dependency-panel footer Callout links troubleshooting and the registry, and installation links the guide
+[159/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:598:1 › FLOW-DOCS-03-five-guides-index GBC-009/AC-1 the five guides publish at /guides/slug with h1 equal to frontmatter title, no /docs aliases, no /guides/guides hrefs
+[160/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:641:1 › FLOW-DOCS-03-five-guides-index GBC-015/AC-1 the single index list holds exactly the five destinations, each description equal to its destination meta description
+[161/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:683:1 › FLOW-DOCS-03-five-guides-index GBC-015/AC-3 the five rows are relative LI touch targets of 44px with an absolute stretch, and no nested anchors in the raw HTML
+[162/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:748:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-1 the shell renders the Guides masthead, one All guides header whose chip equals the row count, and no ToC
+[163/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:793:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-3 the short index serves the entry list with neither ToC form
+[164/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:811:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-4 at a 393px viewport the section index is single-track, the docs nav is a visible 44px touch surface, and nothing overflows
+[165/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:69:1 › GBC-013-header-section-links: the desktop header and the footer carry the five section links, each resolving 200
+[166/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:110:1 › GBC-013-drawer-section-links: the mobile drawer opens with one click and carries the same five links, each resolving 200
+[167/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:128:1 › FLOW-DOCS-05-porting-map-and-prior-art AC-2 porting publishes at /porting with the mapping table and no docs alias
+[168/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:155:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-004-AC-1 mapping table anatomy resolves the 56-item ledger
+[169/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:201:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-004-AC-3 prior-art credits and the why-differs statement
+[170/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:239:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-006-AC-3 boundary stays on the boundary page and the phantoms stay 404
+[171/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:289:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-012-AC-1 mapping and not-ported close over the registry upstream set
+[172/516] [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:336:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-017-AC-2 the scannable prose presentation
+[173/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:143:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[174/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:301:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[175/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:356:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — /components renders the seven-family card grid
+[176/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:415:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+[177/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[178/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[179/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[180/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:193:1 › FLOW-DELIV-03-112-file-completeness
+[181/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:217:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[182/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[183/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[184/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[185/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+[186/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:225:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[187/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:264:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+[188/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:130:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[189/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:200:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[190/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:224:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[191/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:265:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[192/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:296:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[193/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[194/516] [chromium-mobile] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[195/516] [chromium-mobile] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[196/516] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[197/516] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[198/516] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[199/516] [chromium-mobile] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[200/516] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:171:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[201/516] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:320:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[202/516] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:394:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[203/516] [chromium-mobile] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:449:1 › SHELL-012-engine-follow-and-zerojs: persisted rnr-engine follows across cold navigations; zero un-tabbed duplicates on every page
+[204/516] [chromium-mobile] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[205/516] [chromium-mobile] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:97:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[206/516] [chromium-mobile] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[207/516] [chromium-mobile] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families
+[208/516] [chromium-mobile] › tests/sprint-03-family-browse/home-family-teaser.spec.ts:102:1 › FAM-006-home-family-teaser: seven anchored family sections below the intact hero, 39 verdict-badged cards, computed hero counters
+[209/516] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:108:1 › FAM-004-filter-narrows-and-clears
+[210/516] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:146:1 › FAM-004-no-results-url-stability
+[211/516] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:173:1 › FAM-004-nojs-full-grid
+[212/516] [chromium-mobile] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:204:1 › FAM-004-a11y-and-init
+[213/516] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+[214/516] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:110:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+[215/516] [chromium-mobile] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:207:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[216/516] [chromium-mobile] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+[217/516] [chromium-mobile] › tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts:147:1 › FLOW-GEND-21-dependency-panel-peers
+[218/516] [chromium-mobile] › tests/sprint-04-generated-reference/dev-client-matrix.spec.ts:70:1 › T-GEND-020-dev-client-matrix
+[219/516] [chromium-mobile] › tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts:159:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[220/516] [chromium-mobile] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[221/516] [chromium-mobile] › tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts:145:1 › FLOW-GEND-15-family-pager-stays-in-family
+[222/516] [chromium-mobile] › tests/sprint-04-generated-reference/preview-omission-nojs.spec.ts:69:1 › T-GEND-021-preview-omission-nojs
+[223/516] [chromium-mobile] › tests/sprint-04-generated-reference/props-table-generated.spec.ts:144:1 › FLOW-GEND-34-props-table-generated
+[224/516] [chromium-mobile] › tests/sprint-04-generated-reference/qr-panel.spec.ts:68:1 › T-GEND-017-qr-panel
+[225/516] [chromium-mobile] › tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts:159:1 › FLOW-GEND-14-reference-page-anatomy
+[226/516] [chromium-mobile] › tests/sprint-04-generated-reference/site-crawl.spec.ts:91:1 › T-GEND-016-site-crawl
+[227/516] [chromium-mobile] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[228/516] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:92:1 › ORI-CONT-005-AC-1
+[229/516] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:124:1 › ORI-CONT-005-AC-2
+[230/516] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:197:1 › ORI-CONT-005-AC-3
+[231/516] [chromium-mobile] › tests/sprint-05-orient-search/boundary-content.spec.ts:274:1 › ORI-CONT-005-AC-4
+[232/516] [chromium-mobile] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:177:1 › FLOW-SHELL-07-cmdk-open-search-navigate
+[233/516] [chromium-mobile] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:200:1 › ORI-AST-002-AC-1
+[234/516] [chromium-mobile] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:321:1 › ORI-AST-002-AC-2
+[235/516] [chromium-mobile] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:470:1 › ORI-AST-002-AC-3
+[236/516] [chromium-mobile] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:611:1 › ORI-AST-002-AC-4
+[237/516] [chromium-mobile] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:673:1 › ORI-AST-002-AC-5
+[238/516] [chromium-mobile] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[239/516] [chromium-mobile] › tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts:53:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[240/516] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:204:1 › FLOW-DOCS-01-getting-started-engine-decision: locked 6-step sequence
+[241/516] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:242:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 boundary search answers transport
+[242/516] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:307:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 unknown-route recovery
+[243/516] [chromium-mobile] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:340:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 claim ledger and content gates
+[244/516] [chromium-mobile] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:349:1 › ORI-VIS-004-AC-1: filtered conversation row keeps verdict, complete uniwind command and Docs link
+[245/516] [chromium-mobile] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:459:1 › ORI-VIS-004-AC-2: All + clear restores all rows; the real no-results state appears and recovers
+[246/516] [chromium-mobile] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:551:1 › ORI-VIS-004-AC-3: mobile scroll stays in the wrapper; sticky column, header, zebra and mono tokens hold
+[247/516] [chromium-mobile] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:690:1 › ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible
+[chromium-mobile] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:690:1 › ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible
+
+
+[248/516] [chromium-mobile] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:381:1 › FLOW-SHELL-16-not-found-search-recovery: locked 8-step sequence
+[249/516] [chromium-mobile] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:565:1 › FLOW-SHELL-16-not-found-search-recovery: AC-1 recover to Message through shared search
+[250/516] [chromium-mobile] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:615:1 › FLOW-SHELL-16-not-found-search-recovery: AC-2 manuscript-backed recovery document and retained shell
+[251/516] [chromium-mobile] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:680:1 › FLOW-SHELL-16-not-found-search-recovery: AC-3 focus restoration and index exclusion
+[252/516] [chromium-mobile] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:760:1 › FLOW-SHELL-16-not-found-search-recovery: AC-4 recover through ordinary links without JavaScript
+[253/516] [chromium-mobile] › tests/sprint-05-orient-search/orientation-content.spec.ts:113:1 › ORI-CONT-001-identity
+[254/516] [chromium-mobile] › tests/sprint-05-orient-search/orientation-content.spec.ts:191:1 › ORI-CONT-001-engine-decision
+[255/516] [chromium-mobile] › tests/sprint-05-orient-search/orientation-content.spec.ts:305:1 › ORI-CONT-001-cli-reference
+[256/516] [chromium-mobile] › tests/sprint-05-orient-search/orientation-content.spec.ts:370:1 › ORI-CONT-001-content-contract
+[257/516] [chromium-mobile] › tests/sprint-05-orient-search/pagefind-lazy-load-on-first-open.spec.ts:95:1 › FLOW-SHELL-08-pagefind-lazy-load-on-first-open
+[258/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:168:1 › FLOW-DOCS-02-quickstart-chat-screen: locked tutorial reading
+[259/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:176:1 › ORI-CONT-004-quickstart-reading-floor: engine panels readable without enhanced interaction
+[260/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation
+[261/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-content.spec.ts:228:1 › ORI-CONT-003-AC-1
+[262/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-content.spec.ts:282:1 › ORI-CONT-003-AC-2
+[263/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-content.spec.ts:517:1 › ORI-CONT-003-AC-3
+[264/516] [chromium-mobile] › tests/sprint-05-orient-search/quickstart-content.spec.ts:902:1 › ORI-CONT-003-AC-4
+[265/516] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:186:1 › ORI-VIS-001-AC-1
+[266/516] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:252:1 › ORI-VIS-001-AC-2
+[267/516] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:375:1 › ORI-VIS-001-AC-3
+[268/516] [chromium-mobile] › tests/sprint-05-orient-search/reading-presentation.spec.ts:542:1 › ORI-VIS-001-AC-4
+[269/516] [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:407:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations
+[chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:407:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations
+
+
+[270/516] [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:506:1 › ORI-VIS-005-ac-2: shared search recovers to canonical content
+[chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:506:1 › ORI-VIS-005-ac-2: shared search recovers to canonical content
+
+
+[271/516] [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:575:1 › ORI-VIS-005-ac-3: no-JavaScript recovery remains useful
+[chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:575:1 › ORI-VIS-005-ac-3: no-JavaScript recovery remains useful
+
+
+[272/516] [chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:659:1 › ORI-VIS-005-ac-4: theme and mobile presentation
+[chromium-mobile] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:659:1 › ORI-VIS-005-ac-4: theme and mobile presentation
+
+
+[273/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:221:1 › ORI-AST-008-destinations
+[274/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:303:1 › ORI-AST-008-engine-copy
+[275/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:447:1 › ORI-AST-008-source-bytes
+[276/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:519:1 › ORI-AST-008-component-regression
+[277/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:650:1 › ORI-AST-008-search-metadata
+[278/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:127:1 › FLOW-GEND-07-registry-ledger-controls AC-1: category totals, category/text filtering, recovery of ledger and grid
+[279/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:234:1 › FLOW-GEND-07-registry-ledger-controls AC-2: displayed engine command equals the real clipboard, shared state survives navigation
+[280/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:345:1 › FLOW-GEND-07-registry-ledger-controls AC-3: conversation, item and stack-trace-parser Docs links reach real references
+[281/516] [chromium-mobile] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:415:1 › FLOW-GEND-07-registry-ledger-controls AC-4: 56 rows, both labeled commands, no inert controls, working Docs links without JavaScript
+[282/516] [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:351:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence
+[283/516] [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:577:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content
+[284/516] [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:667:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-2 open immediately, load Pagefind only on demand
+[285/516] [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:740:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus
+[286/516] [chromium-mobile] › tests/sprint-05-orient-search/search-contract.spec.ts:823:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text
+[287/516] [chromium-mobile] › tests/sprint-05-orient-search/search-presentation.spec.ts:399:1 › ORI-VIS-003-AC-1
+[288/516] [chromium-mobile] › tests/sprint-05-orient-search/search-presentation.spec.ts:494:1 › ORI-VIS-003-AC-2
+[289/516] [chromium-mobile] › tests/sprint-05-orient-search/search-presentation.spec.ts:599:1 › ORI-VIS-003-AC-3
+[290/516] [chromium-mobile] › tests/sprint-05-orient-search/search-presentation.spec.ts:685:1 › ORI-VIS-003-AC-4
+[291/516] [chromium-mobile] › tests/sprint-05-orient-search/tab-panels-in-initial-html.spec.ts:112:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[292/516] [chromium-mobile] › tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts:101:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[293/516] [chromium-mobile] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:166:1 › FLOW-DOCS-01-theming-and-section-nav: locked 4-step sequence
+[294/516] [chromium-mobile] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:202:1 › FLOW-DOCS-01-theming-and-section-nav: AC-2 seam anchors resolve to current interfaces
+[295/516] [chromium-mobile] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:231:1 › FLOW-DOCS-01-theming-and-section-nav: AC-2 reading floor without JavaScript
+[296/516] [chromium-mobile] › tests/sprint-05-orient-search/token-presentation.spec.ts:192:1 › ORI-VIS-002-AC-1
+[297/516] [chromium-mobile] › tests/sprint-05-orient-search/token-presentation.spec.ts:285:1 › ORI-VIS-002-AC-2
+[298/516] [chromium-mobile] › tests/sprint-05-orient-search/token-presentation.spec.ts:431:1 › ORI-VIS-002-AC-3
+[299/516] [chromium-mobile] › tests/sprint-05-orient-search/token-presentation.spec.ts:547:1 › ORI-VIS-002-AC-4
+[300/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts
+  3) [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts 
+
+    Error: the term 'useChat' never appears in a prose paragraph
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      129 |     expect(cellCount, `the term '${term}' sits inside a td or th`).toBeGreaterThan(0);
+      130 |     const paragraphs = page.locator('main p').filter({ hasText: new RegExp(term, 'i') });
+    > 131 |     expect(await paragraphs.count(), `the term '${term}' never appears in a prose paragraph`).toBe(
+          |                                                                                               ^
+      132 |       0,
+      133 |     );
+      134 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:131:95
+
+    Error Context: test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-mobile/error-context.md
+
+    Error Context: test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-mobile/error-context.md
+
+
+[301/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:145:1 › FLOW-DOCS-04-boundary-ownership-tables AC-2 ownership-split table and honest gaps list
+[302/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:212:1 › FLOW-DOCS-04-boundary-ownership-tables AC-3 example-app link resolves
+[303/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page
+[304/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:311:1 › FLOW-DOCS-04-boundary-ownership-tables AC-5 no ownership overclaim
+[305/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:341:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-1 index title anchors reverse-chronological
+[306/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:364:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-2 newest release page date and three headings
+[307/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:383:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-3 prebuild gate anchor count phantom routes 404
+[308/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:412:1 › FLOW-DOCS-06-changelog-release-pages GBC-007-AC-1 prebuild gate one-to-one with run-time git tags
+[309/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:427:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-4 every release article component link resolves in the ledger
+[310/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:455:1 › FLOW-DOCS-06-changelog-release-pages GBC-015-AC-2 rows newest-first with one date chip each
+[311/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:478:1 › FLOW-DOCS-06-changelog-release-pages GBC-015-AC-4 touched anchors are row-title siblings that resolve
+[312/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:500:1 › FLOW-DOCS-06-changelog-release-pages GBC-016-AC-2 section-index shell Changelog Releases no rail
+[313/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:531:1 › FLOW-DOCS-06-changelog-release-pages GBC-016-AC-5 docs-section nav carries the three groups
+[314/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:563:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-1 index newest-first and newest release page complete
+[315/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:600:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-2 every release page 200 with UTC date and three headings
+[316/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:623:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-3 newest release row and article link the same titled slugs
+[317/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:225:1 › journeys/docs-integrator-arc AC-1 desktop arc: engine pick, quickstart command, registry copy, boundary example-app, and the header's five section links answer 200
+[318/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:373:1 › journeys/docs-integrator-arc AC-1 mobile arc: the same walk through the drawer, whose five section links answer 200
+[319/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:469:1 › journeys/docs-integrator-arc AC-2 one uniwind pick holds engine state across five pages and never reaches a URL
+[320/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts:195:1 › journeys/docs-themer-arc AC-3 themer arc: the swatch flips live, the reload's first frame is dark, and the header's Guides link reaches the re-theme guide
+[321/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts:304:1 › journeys/docs-themer-arc AC-4 both seam Callout links on /components/message land on the customize-rendering guide's matching sections
+[322/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:220:1 › FLOW-DOCS-03-five-guides-index AC-1 the guides index responds 200 with exactly five rows whose titles equal their destinations' h1, under an All guides header counting 5 and no ToC rail
+[323/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:281:1 › FLOW-DOCS-03-five-guides-index AC-2 every guides-index row href is a distinct /guides/ path answering 200
+[324/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:314:1 › FLOW-DOCS-03-five-guides-index AC-3 the row href set is exactly the five launch guides with no porting, engine or theming row
+[325/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:354:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-1 re-theme returns 200 with oklch and @theme, one goal sentence, a theming link out, and exactly one index anchor
+[326/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:390:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-2 update-installed-items carries the literal absolute-URL add command, no short-name or relative adds
+[327/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:439:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-3 customize-rendering documents both seams once and the message page seam Callout links it, never the old theming anchors
+[328/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:478:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-4 preview-on-device opens from the index click, scopes Expo Go vs the four dev-client items, one goal sentence, no supported-in-Expo-Go pairing
+[329/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:525:1 › FLOW-DOCS-03-five-guides-index GBC-002/AC-1 troubleshooting has exactly four Symptom/Cause/Fix entries, no stubs, and exactly one index anchor
+[330/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:559:1 › FLOW-DOCS-03-five-guides-index GBC-002/AC-2 the dependency-panel footer Callout links troubleshooting and the registry, and installation links the guide
+[331/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:598:1 › FLOW-DOCS-03-five-guides-index GBC-009/AC-1 the five guides publish at /guides/slug with h1 equal to frontmatter title, no /docs aliases, no /guides/guides hrefs
+[332/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:641:1 › FLOW-DOCS-03-five-guides-index GBC-015/AC-1 the single index list holds exactly the five destinations, each description equal to its destination meta description
+[333/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:683:1 › FLOW-DOCS-03-five-guides-index GBC-015/AC-3 the five rows are relative LI touch targets of 44px with an absolute stretch, and no nested anchors in the raw HTML
+[334/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:748:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-1 the shell renders the Guides masthead, one All guides header whose chip equals the row count, and no ToC
+[335/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:793:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-3 the short index serves the entry list with neither ToC form
+[336/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:811:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-4 at a 393px viewport the section index is single-track, the docs nav is a visible 44px touch surface, and nothing overflows
+[337/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:69:1 › GBC-013-header-section-links: the desktop header and the footer carry the five section links, each resolving 200
+[338/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:110:1 › GBC-013-drawer-section-links: the mobile drawer opens with one click and carries the same five links, each resolving 200
+[339/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:128:1 › FLOW-DOCS-05-porting-map-and-prior-art AC-2 porting publishes at /porting with the mapping table and no docs alias
+[340/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:155:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-004-AC-1 mapping table anatomy resolves the 56-item ledger
+[341/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:201:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-004-AC-3 prior-art credits and the why-differs statement
+[342/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:239:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-006-AC-3 boundary stays on the boundary page and the phantoms stay 404
+[343/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:289:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-012-AC-1 mapping and not-ported close over the registry upstream set
+[344/516] [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:336:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-017-AC-2 the scannable prose presentation
+[345/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:143:1 › FLOW-GEND-14-reference-page-anatomy — conversation anatomy, all 39 pages, byte-matched source
+[346/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:301:3 › FLOW-GEND-15-family-pager-stays-in-family › family pager walks each component family exactly
+[347/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:356:3 › FLOW-GEND-15-family-pager-stays-in-family › FUSE-07-components-index — /components renders the seven-family card grid
+[348/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/component-page.spec.ts:415:1 › FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-text coverage
+[349/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:35:1 › FUSE-09 TC-1 copy places the exact command on the clipboard
+[350/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:56:1 › FUSE-09 TC-2 success state becomes copied within 500ms of the click
+[351/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/copy-button.spec.ts:72:1 › FUSE-09 TC-2 zero-JS fallback serves 200 with the full command selectable
+[352/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:193:1 › FLOW-DELIV-03-112-file-completeness
+[353/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-112-file-completeness.spec.ts:217:1 › FLOW-DELIV-03-112-file-completeness TC-1 — same-origin sweep: all 112 registry JSONs serve 200 application/json
+[354/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/deliv-03-live-registry-round-trip.spec.ts:49:1 › FLOW-DELIV-03-live-registry-round-trip TC-2 TC-3 — served conversation.json is real registry JSON byte-identical to the generated file
+[355/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:40:1 › FLOW-GEND-02-hero-install-command-copy
+[356/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:73:1 › FLOW-GEND-02 zero-JS fallback serves 200 with the full command selectable
+[357/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:174:1 › FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package, computed counters, Button CTAs on the DocsLayout home variant
+[358/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:225:1 › FLOW-GEND-02-hero-install-command-copy: one hero click yields the exact active-panel engine command
+[359/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/home.spec.ts:264:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: / renders BOTH engine commands selectable on 200
+[360/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:130:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: 56 generated rows name-for-name with verdicts, note, base URLs, bulk-add before the table
+[361/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:200:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls zero-JS: full unfiltered table, base URLs, and note render on a 200 response
+[362/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:224:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: all 56 row docs links resolve 200; component rows link /components/{item}
+[363/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:265:1 › FLOW-GEND-40-ledger-56-rows-and-base-urls: nativewind base-URL copy places the URL on the clipboard
+[364/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/ledger.spec.ts:296:1 › FLOW-GEND-41-ledger-filter-and-row-copy: copy button on all 56 rows; sampled copies equal the displayed absolute-URL command
+[365/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/runner.spec.ts:6:1 › FUSE-10-runner-turnkey
+[366/516] [chromium-nojs] › tests/sprint-01-docs-spike-skeleton/spike-flow.spec.ts:43:1 › spike-walk FLOW-DELIV-03-live-registry-round-trip AC-3 TC-4 — home, /registry (56 rows), /components/conversation, copy command, same-origin JSON fetch
+[367/516] [chromium-nojs] › tests/sprint-02-shell-hero/dependency-panels.spec.ts:87:1 › FLOW-GEND-21-dependency-panel-peers
+[368/516] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:108:1 › FLOW-GEND-01-home-hero-evaluation-contract: one-screen 1440x900 fold — statement, NOT-an-npm-package, computed counters, tabbed install, 200 CTAs
+[369/516] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:190:1 › FLOW-GEND-02-hero-install-command-copy: default-tab copy is the exact displayed command, success within 500 ms, URL stays clean
+[370/516] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:243:1 › FLOW-GEND-02-hero-install-command-copy: uniwind tab copy + rnr-engine persistence across a cold reload (click-path and pre-seeded)
+[371/516] [chromium-nojs] › tests/sprint-02-shell-hero/home-hero.spec.ts:336:1 › FLOW-GEND-02-hero-install-command-copy zero-JS: BOTH engine commands selectable on 200
+[372/516] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:171:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[373/516] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:320:1 › FLOW-GEND-20-exact-absolute-url-command-copy: per-engine clipboard on every enumerated page — exact command, success by value within 500 ms
+[374/516] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:394:1 › FLOW-GEND-20-exact-absolute-url-command-copy zero-JS: both engines' panel text server-rendered and selectable on every page
+[375/516] [chromium-nojs] › tests/sprint-02-shell-hero/item-install-copy.spec.ts:449:1 › SHELL-012-engine-follow-and-zerojs: persisted rnr-engine follows across cold navigations; zero un-tabbed duplicates on every page
+[376/516] [chromium-nojs] › tests/sprint-02-shell-hero/theme-first-paint.spec.ts:78:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[377/516] [chromium-nojs] › tests/sprint-02-shell-hero/theme-toggle.spec.ts:97:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[378/516] [chromium-nojs] › tests/sprint-03-family-browse/card-anatomy.spec.ts:90:1 › FLOW-GEND-08-family-card-anatomy
+[379/516] [chromium-nojs] › tests/sprint-03-family-browse/components-family-grid.spec.ts:82:1 › FLOW-GEND-07-components-page-39-in-7-families
+[380/516] [chromium-nojs] › tests/sprint-03-family-browse/home-family-teaser.spec.ts:102:1 › FAM-006-home-family-teaser: seven anchored family sections below the intact hero, 39 verdict-badged cards, computed hero counters
+[381/516] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:108:1 › FAM-004-filter-narrows-and-clears
+[382/516] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:146:1 › FAM-004-no-results-url-stability
+[383/516] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:173:1 › FAM-004-nojs-full-grid
+[384/516] [chromium-nojs] › tests/sprint-03-family-browse/ledger-filter-island.spec.ts:204:1 › FAM-004-a11y-and-init
+[385/516] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:69:1 › FAM-005-item-pages-badge-wiring: all 39 item pages render the Badge verdict matching item.expoGo
+[386/516] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:110:1 › FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors resolve, affordances survive the retarget
+[387/516] [chromium-nojs] › tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts:207:1 › FAM-005-served-registry-identity: >=10 sampled /r/nativewind/{item}.json serve 200 with a matching name
+[388/516] [chromium-nojs] › tests/sprint-04-generated-reference/code-view-byte-identical-to-shipped-source.spec.ts:147:1 › FLOW-GEND-35-code-view-byte-identical-to-shipped-source
+[389/516] [chromium-nojs] › tests/sprint-04-generated-reference/dependency-panel-peers.spec.ts:147:1 › FLOW-GEND-21-dependency-panel-peers
+[390/516] [chromium-nojs] › tests/sprint-04-generated-reference/dev-client-matrix.spec.ts:70:1 › T-GEND-020-dev-client-matrix
+[391/516] [chromium-nojs] › tests/sprint-04-generated-reference/engine-tab-persists-across-pages.spec.ts:159:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[392/516] [chromium-nojs] › tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts:162:1 › FLOW-GEND-20-exact-absolute-url-command-copy
+[393/516] [chromium-nojs] › tests/sprint-04-generated-reference/family-pager-stays-in-family.spec.ts:145:1 › FLOW-GEND-15-family-pager-stays-in-family
+[394/516] [chromium-nojs] › tests/sprint-04-generated-reference/preview-omission-nojs.spec.ts:69:1 › T-GEND-021-preview-omission-nojs
+[395/516] [chromium-nojs] › tests/sprint-04-generated-reference/props-table-generated.spec.ts:144:1 › FLOW-GEND-34-props-table-generated
+[396/516] [chromium-nojs] › tests/sprint-04-generated-reference/qr-panel.spec.ts:68:1 › T-GEND-017-qr-panel
+[397/516] [chromium-nojs] › tests/sprint-04-generated-reference/reference-page-anatomy.spec.ts:159:1 › FLOW-GEND-14-reference-page-anatomy
+[398/516] [chromium-nojs] › tests/sprint-04-generated-reference/site-crawl.spec.ts:91:1 › T-GEND-016-site-crawl
+[399/516] [chromium-nojs] › tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts:146:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[400/516] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:92:1 › ORI-CONT-005-AC-1
+[401/516] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:124:1 › ORI-CONT-005-AC-2
+[402/516] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:197:1 › ORI-CONT-005-AC-3
+[403/516] [chromium-nojs] › tests/sprint-05-orient-search/boundary-content.spec.ts:274:1 › ORI-CONT-005-AC-4
+[404/516] [chromium-nojs] › tests/sprint-05-orient-search/cmdk-open-search-navigate.spec.ts:177:1 › FLOW-SHELL-07-cmdk-open-search-navigate
+[405/516] [chromium-nojs] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:200:1 › ORI-AST-002-AC-1
+[406/516] [chromium-nojs] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:321:1 › ORI-AST-002-AC-2
+[407/516] [chromium-nojs] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:470:1 › ORI-AST-002-AC-3
+[408/516] [chromium-nojs] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:611:1 › ORI-AST-002-AC-4
+[409/516] [chromium-nojs] › tests/sprint-05-orient-search/engine-state-contract.spec.ts:673:1 › ORI-AST-002-AC-5
+[410/516] [chromium-nojs] › tests/sprint-05-orient-search/engine-tab-persists-across-pages.spec.ts:183:1 › FLOW-SHELL-13-engine-tab-persists-across-pages
+[411/516] [chromium-nojs] › tests/sprint-05-orient-search/first-visit-prefers-dark-no-flash.spec.ts:53:1 › FLOW-SHELL-02-first-visit-prefers-dark-no-flash
+[412/516] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:204:1 › FLOW-DOCS-01-getting-started-engine-decision: locked 6-step sequence
+[413/516] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:242:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 boundary search answers transport
+[414/516] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:307:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 unknown-route recovery
+[415/516] [chromium-nojs] › tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts:340:1 › FLOW-DOCS-01-getting-started-engine-decision: AC-4 claim ledger and content gates
+[416/516] [chromium-nojs] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:349:1 › ORI-VIS-004-AC-1: filtered conversation row keeps verdict, complete uniwind command and Docs link
+[417/516] [chromium-nojs] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:459:1 › ORI-VIS-004-AC-2: All + clear restores all rows; the real no-results state appears and recovers
+[418/516] [chromium-nojs] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:551:1 › ORI-VIS-004-AC-3: mobile scroll stays in the wrapper; sticky column, header, zebra and mono tokens hold
+[419/516] [chromium-nojs] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:690:1 › ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible
+[chromium-nojs] › tests/sprint-05-orient-search/ledger-presentation.spec.ts:690:1 › ORI-VIS-004-AC-4: no-JS serves the full ledger and both base URLs; keyboard focus stays visible
+
+
+[420/516] [chromium-nojs] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:381:1 › FLOW-SHELL-16-not-found-search-recovery: locked 8-step sequence
+[421/516] [chromium-nojs] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:565:1 › FLOW-SHELL-16-not-found-search-recovery: AC-1 recover to Message through shared search
+[422/516] [chromium-nojs] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:615:1 › FLOW-SHELL-16-not-found-search-recovery: AC-2 manuscript-backed recovery document and retained shell
+[423/516] [chromium-nojs] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:680:1 › FLOW-SHELL-16-not-found-search-recovery: AC-3 focus restoration and index exclusion
+[424/516] [chromium-nojs] › tests/sprint-05-orient-search/not-found-search-recovery.spec.ts:760:1 › FLOW-SHELL-16-not-found-search-recovery: AC-4 recover through ordinary links without JavaScript
+[425/516] [chromium-nojs] › tests/sprint-05-orient-search/orientation-content.spec.ts:113:1 › ORI-CONT-001-identity
+[426/516] [chromium-nojs] › tests/sprint-05-orient-search/orientation-content.spec.ts:191:1 › ORI-CONT-001-engine-decision
+[427/516] [chromium-nojs] › tests/sprint-05-orient-search/orientation-content.spec.ts:305:1 › ORI-CONT-001-cli-reference
+[428/516] [chromium-nojs] › tests/sprint-05-orient-search/orientation-content.spec.ts:370:1 › ORI-CONT-001-content-contract
+[429/516] [chromium-nojs] › tests/sprint-05-orient-search/pagefind-lazy-load-on-first-open.spec.ts:95:1 › FLOW-SHELL-08-pagefind-lazy-load-on-first-open
+[430/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:168:1 › FLOW-DOCS-02-quickstart-chat-screen: locked tutorial reading
+[431/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:176:1 › ORI-CONT-004-quickstart-reading-floor: engine panels readable without enhanced interaction
+[432/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation
+[433/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-content.spec.ts:228:1 › ORI-CONT-003-AC-1
+[434/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-content.spec.ts:282:1 › ORI-CONT-003-AC-2
+[435/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-content.spec.ts:517:1 › ORI-CONT-003-AC-3
+[436/516] [chromium-nojs] › tests/sprint-05-orient-search/quickstart-content.spec.ts:902:1 › ORI-CONT-003-AC-4
+[437/516] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:186:1 › ORI-VIS-001-AC-1
+[438/516] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:252:1 › ORI-VIS-001-AC-2
+[439/516] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:375:1 › ORI-VIS-001-AC-3
+[440/516] [chromium-nojs] › tests/sprint-05-orient-search/reading-presentation.spec.ts:542:1 › ORI-VIS-001-AC-4
+[441/516] [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:407:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations
+[chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:407:1 › ORI-VIS-005-ac-1: unknown-path composition and ordinary destinations
+
+
+[442/516] [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:506:1 › ORI-VIS-005-ac-2: shared search recovers to canonical content
+[443/516] [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:575:1 › ORI-VIS-005-ac-3: no-JavaScript recovery remains useful
+[chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:575:1 › ORI-VIS-005-ac-3: no-JavaScript recovery remains useful
+
+
+[444/516] [chromium-nojs] › tests/sprint-05-orient-search/recovery-presentation.spec.ts:659:1 › ORI-VIS-005-ac-4: theme and mobile presentation
+[445/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:221:1 › ORI-AST-008-destinations
+[446/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:303:1 › ORI-AST-008-engine-copy
+[447/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:447:1 › ORI-AST-008-source-bytes
+[448/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:519:1 › ORI-AST-008-component-regression
+[449/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts:650:1 › ORI-AST-008-search-metadata
+[450/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:127:1 › FLOW-GEND-07-registry-ledger-controls AC-1: category totals, category/text filtering, recovery of ledger and grid
+[451/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:234:1 › FLOW-GEND-07-registry-ledger-controls AC-2: displayed engine command equals the real clipboard, shared state survives navigation
+[452/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:345:1 › FLOW-GEND-07-registry-ledger-controls AC-3: conversation, item and stack-trace-parser Docs links reach real references
+[453/516] [chromium-nojs] › tests/sprint-05-orient-search/registry-ledger-controls.spec.ts:415:1 › FLOW-GEND-07-registry-ledger-controls AC-4: 56 rows, both labeled commands, no inert controls, working Docs links without JavaScript
+[454/516] [chromium-nojs] › tests/sprint-05-orient-search/search-contract.spec.ts:351:1 › FLOW-SHELL-15-search-contract-before-recovery: locked 13-step sequence
+[455/516] [chromium-nojs] › tests/sprint-05-orient-search/search-contract.spec.ts:577:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-1 find real published content
+[456/516] [chromium-nojs] › tests/sprint-05-orient-search/search-contract.spec.ts:667:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-2 open immediately, load Pagefind only on demand
+[457/516] [chromium-nojs] › tests/sprint-05-orient-search/search-contract.spec.ts:740:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-3 keyboard navigation and invoker focus
+[458/516] [chromium-nojs] › tests/sprint-05-orient-search/search-contract.spec.ts:823:1 › FLOW-SHELL-15-search-contract-before-recovery: AC-4 empty and error states, safe query text
+[459/516] [chromium-nojs] › tests/sprint-05-orient-search/search-presentation.spec.ts:399:1 › ORI-VIS-003-AC-1
+[460/516] [chromium-nojs] › tests/sprint-05-orient-search/search-presentation.spec.ts:494:1 › ORI-VIS-003-AC-2
+[461/516] [chromium-nojs] › tests/sprint-05-orient-search/search-presentation.spec.ts:599:1 › ORI-VIS-003-AC-3
+[462/516] [chromium-nojs] › tests/sprint-05-orient-search/search-presentation.spec.ts:685:1 › ORI-VIS-003-AC-4
+[463/516] [chromium-nojs] › tests/sprint-05-orient-search/tab-panels-in-initial-html.spec.ts:112:1 › FLOW-SHELL-14-tab-panels-in-initial-html
+[464/516] [chromium-nojs] › tests/sprint-05-orient-search/theme-toggle-persisted-flash-free.spec.ts:101:1 › FLOW-SHELL-01-theme-toggle-persisted-flash-free
+[465/516] [chromium-nojs] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:166:1 › FLOW-DOCS-01-theming-and-section-nav: locked 4-step sequence
+[466/516] [chromium-nojs] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:202:1 › FLOW-DOCS-01-theming-and-section-nav: AC-2 seam anchors resolve to current interfaces
+[467/516] [chromium-nojs] › tests/sprint-05-orient-search/theming-and-section-nav.spec.ts:231:1 › FLOW-DOCS-01-theming-and-section-nav: AC-2 reading floor without JavaScript
+[468/516] [chromium-nojs] › tests/sprint-05-orient-search/token-presentation.spec.ts:192:1 › ORI-VIS-002-AC-1
+[469/516] [chromium-nojs] › tests/sprint-05-orient-search/token-presentation.spec.ts:285:1 › ORI-VIS-002-AC-2
+[470/516] [chromium-nojs] › tests/sprint-05-orient-search/token-presentation.spec.ts:431:1 › ORI-VIS-002-AC-3
+[471/516] [chromium-nojs] › tests/sprint-05-orient-search/token-presentation.spec.ts:547:1 › ORI-VIS-002-AC-4
+[472/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts
+  4) [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts 
+
+    Error: the term 'useChat' never appears in a prose paragraph
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      129 |     expect(cellCount, `the term '${term}' sits inside a td or th`).toBeGreaterThan(0);
+      130 |     const paragraphs = page.locator('main p').filter({ hasText: new RegExp(term, 'i') });
+    > 131 |     expect(await paragraphs.count(), `the term '${term}' never appears in a prose paragraph`).toBe(
+          |                                                                                               ^
+      132 |       0,
+      133 |     );
+      134 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:131:95
+
+    Error Context: test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-nojs/error-context.md
+
+    Error Context: test-results/sprint-06-guides-boundary--2a92d-h-ships-does-not-ship-facts-chromium-nojs/error-context.md
+
+
+[473/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:145:1 › FLOW-DOCS-04-boundary-ownership-tables AC-2 ownership-split table and honest gaps list
+[474/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:212:1 › FLOW-DOCS-04-boundary-ownership-tables AC-3 example-app link resolves
+[475/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:242:1 › FLOW-DOCS-04-boundary-ownership-tables AC-4 single-canonical boundary page
+[476/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:311:1 › FLOW-DOCS-04-boundary-ownership-tables AC-5 no ownership overclaim
+[477/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:341:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-1 index title anchors reverse-chronological
+[478/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:364:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-2 newest release page date and three headings
+[479/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:383:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-3 prebuild gate anchor count phantom routes 404
+[480/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:412:1 › FLOW-DOCS-06-changelog-release-pages GBC-007-AC-1 prebuild gate one-to-one with run-time git tags
+[481/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:427:1 › FLOW-DOCS-06-changelog-release-pages GBC-005-AC-4 every release article component link resolves in the ledger
+[482/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:455:1 › FLOW-DOCS-06-changelog-release-pages GBC-015-AC-2 rows newest-first with one date chip each
+[483/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:478:1 › FLOW-DOCS-06-changelog-release-pages GBC-015-AC-4 touched anchors are row-title siblings that resolve
+[484/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:500:1 › FLOW-DOCS-06-changelog-release-pages GBC-016-AC-2 section-index shell Changelog Releases no rail
+[485/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:531:1 › FLOW-DOCS-06-changelog-release-pages GBC-016-AC-5 docs-section nav carries the three groups
+[486/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:563:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-1 index newest-first and newest release page complete
+[487/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:600:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-2 every release page 200 with UTC date and three headings
+[488/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/changelog-release-pages.spec.ts:623:1 › FLOW-DOCS-06-changelog-release-pages GBC-008-AC-3 newest release row and article link the same titled slugs
+[489/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:225:1 › journeys/docs-integrator-arc AC-1 desktop arc: engine pick, quickstart command, registry copy, boundary example-app, and the header's five section links answer 200
+[490/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:373:1 › journeys/docs-integrator-arc AC-1 mobile arc: the same walk through the drawer, whose five section links answer 200
+[491/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/docs-integrator-arc.spec.ts:469:1 › journeys/docs-integrator-arc AC-2 one uniwind pick holds engine state across five pages and never reaches a URL
+[492/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts:195:1 › journeys/docs-themer-arc AC-3 themer arc: the swatch flips live, the reload's first frame is dark, and the header's Guides link reaches the re-theme guide
+[493/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/docs-themer-arc.spec.ts:304:1 › journeys/docs-themer-arc AC-4 both seam Callout links on /components/message land on the customize-rendering guide's matching sections
+[494/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:220:1 › FLOW-DOCS-03-five-guides-index AC-1 the guides index responds 200 with exactly five rows whose titles equal their destinations' h1, under an All guides header counting 5 and no ToC rail
+[495/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:281:1 › FLOW-DOCS-03-five-guides-index AC-2 every guides-index row href is a distinct /guides/ path answering 200
+[496/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:314:1 › FLOW-DOCS-03-five-guides-index AC-3 the row href set is exactly the five launch guides with no porting, engine or theming row
+[497/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:354:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-1 re-theme returns 200 with oklch and @theme, one goal sentence, a theming link out, and exactly one index anchor
+[498/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:390:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-2 update-installed-items carries the literal absolute-URL add command, no short-name or relative adds
+[499/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:439:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-3 customize-rendering documents both seams once and the message page seam Callout links it, never the old theming anchors
+[500/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:478:1 › FLOW-DOCS-03-five-guides-index GBC-001/AC-4 preview-on-device opens from the index click, scopes Expo Go vs the four dev-client items, one goal sentence, no supported-in-Expo-Go pairing
+[501/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:525:1 › FLOW-DOCS-03-five-guides-index GBC-002/AC-1 troubleshooting has exactly four Symptom/Cause/Fix entries, no stubs, and exactly one index anchor
+[502/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:559:1 › FLOW-DOCS-03-five-guides-index GBC-002/AC-2 the dependency-panel footer Callout links troubleshooting and the registry, and installation links the guide
+[503/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:598:1 › FLOW-DOCS-03-five-guides-index GBC-009/AC-1 the five guides publish at /guides/slug with h1 equal to frontmatter title, no /docs aliases, no /guides/guides hrefs
+[504/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:641:1 › FLOW-DOCS-03-five-guides-index GBC-015/AC-1 the single index list holds exactly the five destinations, each description equal to its destination meta description
+[505/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:683:1 › FLOW-DOCS-03-five-guides-index GBC-015/AC-3 the five rows are relative LI touch targets of 44px with an absolute stretch, and no nested anchors in the raw HTML
+[506/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:748:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-1 the shell renders the Guides masthead, one All guides header whose chip equals the row count, and no ToC
+[507/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:793:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-3 the short index serves the entry list with neither ToC form
+[508/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/guides-index.spec.ts:811:1 › FLOW-DOCS-03-five-guides-index GBC-016/AC-4 at a 393px viewport the section index is single-track, the docs nav is a visible 44px touch surface, and nothing overflows
+[509/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:69:1 › GBC-013-header-section-links: the desktop header and the footer carry the five section links, each resolving 200
+[510/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/header-nav.spec.ts:110:1 › GBC-013-drawer-section-links: the mobile drawer opens with one click and carries the same five links, each resolving 200
+[511/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:128:1 › FLOW-DOCS-05-porting-map-and-prior-art AC-2 porting publishes at /porting with the mapping table and no docs alias
+[512/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:155:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-004-AC-1 mapping table anatomy resolves the 56-item ledger
+[513/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:201:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-004-AC-3 prior-art credits and the why-differs statement
+[514/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:239:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-006-AC-3 boundary stays on the boundary page and the phantoms stay 404
+[515/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:289:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-012-AC-1 mapping and not-ported close over the registry upstream set
+[516/516] [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/porting-map.spec.ts:336:1 › FLOW-DOCS-05-porting-map-and-prior-art GBC-017-AC-2 the scannable prose presentation
+  4 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation 
+    [chromium-desktop] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts 
+    [chromium-mobile] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts 
+    [chromium-nojs] › tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts:103:1 › FLOW-DOCS-04-boundary-ownership-tables AC-1 boundary renders as tables with ships/does-not-ship facts 
+  34 skipped
+  478 passed (17.5m)
+ ELIFECYCLE  Command failed with exit code 1.

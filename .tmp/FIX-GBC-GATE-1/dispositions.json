@@ -1,0 +1,148 @@
+{
+  "task": "FIX-GBC-GATE-1",
+  "review_base": "main@59ba52491f7ae07d0c32bb77c73ba0ddea306178",
+  "checkpoint_commit": "319487356c38fdd0011165b34df396f37afd6e79",
+  "groups": [
+    {
+      "id": 1,
+      "group": "tests/sprint-01-docs-spike-skeleton/component-page.spec.ts",
+      "inventory": "component-page.spec.ts:415 FAM-003 family sections expected 7, received 8",
+      "rule": "a",
+      "citation": "GBC-013 landed the dev-client matrix as a lawful NON-family section after the seven family sections; checkpoint hunk on this branch updates the expected count with that citation (git diff main...HEAD -- tests/sprint-01-docs-spike-skeleton/component-page.spec.ts).",
+      "closing_change": "spec expectation 7 \u2192 8 with inline GBC-013 citation"
+    },
+    {
+      "id": 2,
+      "group": "tests/sprint-01-docs-spike-skeleton/home.spec.ts",
+      "inventory": "home.spec.ts:174 FLOW-GEND-01 aside count expected 0, received 1",
+      "rule": "a",
+      "citation": "ORI-CONT-005 landed the boundary Callout as a lawful content aside; checkpoint hunk scopes the zero-aside assertion past content asides (git diff main...HEAD -- tests/sprint-01-docs-spike-skeleton/home.spec.ts).",
+      "closing_change": "aside count assertion scoped to layout asides; content Callout aside cited as lawful"
+    },
+    {
+      "id": 3,
+      "group": "tests/sprint-01-docs-spike-skeleton/ledger.spec.ts",
+      "inventory": "ledger.spec.ts lines 116/184/204/269/298 \u2014 renderedTypes, bulk-add strict-mode, docs-link timeout, copy triggers 112-vs-56",
+      "rule": "a",
+      "citation": "ORI-AST-007/ORI-VIS-004 rebuilt the ledger through shared DataTable (stripped Category cell, Badge in td:nth-child(4), both-engine CopyButtons \u2192 112 triggers); ORI-AST-008 retargeted every Docs link to /components/{name}. Checkpoint hunk updates selectors and counts with those citations (git diff main...HEAD -- tests/sprint-01-docs-spike-skeleton/ledger.spec.ts).",
+      "closing_change": "selectors/counts updated to DataTable surface; bulk-add scoped past rnr-copy-button; clipboard + base-URL assertions retained"
+    },
+    {
+      "id": 4,
+      "group": "tests/sprint-02-shell-hero/item-install-copy.spec.ts",
+      "inventory": "item-install-copy.spec.ts:320 FLOW-GEND-20 mobile tab-click intercepted by page-header overlay",
+      "rule": "b",
+      "proving_assertion": "locator.click on main > section[data-section=install] [role=tab][data-engine=nativewind] \u2014 <p class=item-description> from <header class=page-header> subtree intercepts pointer events (cycle-1 red full-run-48-failures.log #25)",
+      "closing_change": "apps/docs/src/pages/components/[item].astro \u2014 overflow-wrap:anywhere on .item-description (checkpoint product hunk); cycle-1 green shows this lane passed after the product fix; no spec edit"
+    },
+    {
+      "id": 5,
+      "group": "tests/sprint-03-family-browse/ledger-filter-island.spec.ts",
+      "inventory": "ledger-filter-island.spec.ts:204 FAM-004 [role=search] landmarks expected 1, received 2",
+      "rule": "a",
+      "citation": "sprint-05 FLOW-SHELL-15 shipped the site-wide search dialog as a second lawful [role=search] landmark; checkpoint hunk updates the expected landmark count with that citation (git diff main...HEAD -- tests/sprint-03-family-browse/ledger-filter-island.spec.ts).",
+      "closing_change": "landmark count 1 \u2192 2 with FLOW-SHELL-15 citation"
+    },
+    {
+      "id": 6,
+      "group": "tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts",
+      "inventory": "verdict-badge-wiring.spec.ts:110 FAM-005 timeout on td.ledger-docs a at row-shimmer",
+      "rule": "a",
+      "citation": "ORI-AST-007 places the verdict Badge in the 4th DataTable cell; ORI-AST-008 retargets Docs links to /components/{name} with data-docs-link. Checkpoint hunk retargets selectors accordingly (git diff main...HEAD -- tests/sprint-03-family-browse/verdict-badge-wiring.spec.ts).",
+      "closing_change": "Badge/Docs selectors updated to DataTable + ORI-AST-008 surface"
+    },
+    {
+      "id": 7,
+      "group": "tests/sprint-04-generated-reference/exact-absolute-url-command-copy.spec.ts",
+      "inventory": "exact-absolute-url-command-copy.spec.ts:162 FLOW-GEND-20 mobile same tab-click interception as #8",
+      "rule": "b",
+      "proving_assertion": "locator.click on install-section nativewind tab \u2014 item-description from page-header intercepts pointer events (cycle-1 red full-run-48-failures.log #28)",
+      "closing_change": "same [item].astro overflow-wrap:anywhere product fix as group 4; cycle-1 green shows this lane passed; no spec edit"
+    },
+    {
+      "id": 8,
+      "group": "tests/sprint-04-generated-reference/site-crawl.spec.ts",
+      "inventory": "site-crawl.spec.ts:91 T-GEND-016 crawl purity \u2014 2 short-name/relative/un-tabbed command forms",
+      "rule": "a",
+      "citation": "GBC-001/AC-2's reviewed --overwrite flag and expressive-code rendering artifacts (0x7F separators, data-code copies) are not add-argument violations; checkpoint hunk excludes those reviewed forms (git diff main...HEAD -- tests/sprint-04-generated-reference/site-crawl.spec.ts).",
+      "closing_change": "crawl purity allowlist updated for reviewed --overwrite + expressive-code artifacts; absolute tabbed form contract retained"
+    },
+    {
+      "id": 9,
+      "group": "tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts",
+      "inventory": "tab-panels-in-initial-html.spec.ts:146 FLOW-SHELL-14 per-engine install panels count 0 in initial HTML",
+      "rule": "a",
+      "citation": "ORI-AST-002 TabGroup island scopes every panel id behind a per-instance group prefix; checkpoint hunk anchors the served-bytes probe on role+data-engine (git diff main...HEAD -- tests/sprint-04-generated-reference/tab-panels-in-initial-html.spec.ts).",
+      "closing_change": "panel probe updated to role+data-engine under ORI-AST-002 group-prefixed ids"
+    },
+    {
+      "id": 10,
+      "group": "tests/sprint-05-orient-search/boundary-content.spec.ts",
+      "inventory": "boundary-content.spec.ts:197 ORI-CONT-005-AC-3 heading at #rendermarkdown expected 'renderMarkdown seam'",
+      "rule": "a",
+      "citation": "ORI-CONT-004 heading-text change at #rendermarkdown (anchor rides the h2; text is 'renderMarkdown'); example-app /live-chat shipped, superseding the old 'does not yet include' caveat. Checkpoint hunk updates both; cycle-2 further aligns Callout prose expectation to FIX-GBC-003-1 / f042f5eb ('the AI SDK v7 chat hook') so AC1_TERMS stay table-cell-only (git diff main...HEAD -- tests/sprint-05-orient-search/boundary-content.spec.ts plus cycle-2 working-tree edit).",
+      "closing_change": "heading text + honest-prose expectations updated to ORI-CONT-004 / f042f5eb reviewed truth"
+    },
+    {
+      "id": 11,
+      "group": "tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts",
+      "inventory": "getting-started-engine-decision.spec.ts:340 FLOW-DOCS-01 AC-4 ENOENT on owns-vs-does-not-own.md",
+      "rule": "a",
+      "citation": "GBC-003 / ORI-CONT-005 landed the boundary as owns-vs-does-not-own.mdx (Callouts); checkpoint hunk retargets the filesystem probe to the .mdx path (git diff main...HEAD -- tests/sprint-05-orient-search/getting-started-engine-decision.spec.ts).",
+      "closing_change": "source-path probe .md \u2192 .mdx with ORI-CONT-005 citation"
+    },
+    {
+      "id": 12,
+      "group": "tests/sprint-05-orient-search/orientation-content.spec.ts",
+      "inventory": "orientation-content.spec.ts:370 ORI-CONT-001 no-troubleshooting-link guard now finds /guides/troubleshooting",
+      "rule": "a",
+      "citation": "GBC-002 shipped /guides/troubleshooting; the obsolete negative guard becomes the positive required-link expectation (git diff main...HEAD -- tests/sprint-05-orient-search/orientation-content.spec.ts).",
+      "closing_change": "negative unimplemented guard \u2192 positive /guides/troubleshooting link assertion citing GBC-002"
+    },
+    {
+      "id": 13,
+      "group": "tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts",
+      "inventory": "quickstart-chat-screen.spec.ts:205 FLOW-DOCS-02 fail-closed env gate \u2014 RNR_S05_IOS_UDID / RNR_S05_ANDROID_SERIAL / OPENAI_API_KEY absent",
+      "rule": "b",
+      "proving_assertion": "fail-closed refusal when RNR_S05_IOS_UDID / RNR_S05_ANDROID_SERIAL / OPENAI_API_KEY are empty (cycle-1 green full-run.log #1 also surfaced Expo Go APK missing at ~/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk \u2014 APK now present; devices booted)",
+      "closing_change": "no spec edit; acceptance run exports RNR_S05_IOS_UDID=81487B1E-A4D1-45AE-9BCE-D675802BACD1, RNR_S05_ANDROID_SERIAL=emulator-5554, with OPENAI_API_KEY already set (length>0) and Expo Go APK present at the documented scratch path"
+    },
+    {
+      "id": 14,
+      "group": "tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts",
+      "inventory": "registry-item-reference-pages.spec.ts:519 ORI-AST-008 /components/message link to /docs/theming#rendermarkdown count 0",
+      "rule": "a",
+      "citation": "GBC-001 retargeted SEAM_LINK_TARGETS to /guides/customize-rendering#rendermarkdown (+ #textclasscontext); checkpoint hunk updates the expected seam href (git diff main...HEAD -- tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts).",
+      "closing_change": "seam-link expectation retargeted to GBC-001 customize-rendering guide anchors"
+    },
+    {
+      "id": 15,
+      "group": "tests/sprint-05-orient-search/token-presentation.spec.ts",
+      "inventory": "token-presentation.spec.ts:547 ORI-VIS-002-AC-4 mobile token-table horizontal scrollLeft stays 0",
+      "rule": "b",
+      "proving_assertion": "expect(geometry.afterScrollLeft).toBeGreaterThan(0) \u2014 'the container actually scrolled horizontally' Expected >0 Received 0 (cycle-1 red full-run-48-failures.log #35)",
+      "closing_change": "apps/docs/src/components/Prose.astro \u2014 scope GBC-017 display:block prose-table rule to table:not(.data-table) so DataTable-composed TokenTable keeps its .data-table__scroll wrapper (checkpoint product hunk); cycle-1 green shows this lane passed; no spec edit"
+    },
+    {
+      "id": 16,
+      "group": "tests/sprint-06-guides-boundary-changelog/boundary-tables.spec.ts",
+      "inventory": "boundary-tables.spec.ts:103 FLOW-DOCS-04 AC-1 (3 chromium projects) \u2014 useChat in Callout prose at owns-vs-does-not-own.mdx:90",
+      "rule": "b",
+      "proving_assertion": "expect(await paragraphs.count(), `the term 'useChat' never appears in a prose paragraph`).toBe(0) \u2014 Expected 0 Received 1 (cycle-1 green full-run.log instances #2/#3/#4 across chromium-desktop/mobile/nojs)",
+      "closing_change": "apps/docs/src/content/docs/owns-vs-does-not-own.mdx Callout body reword byte-identical to f042f5eb: 'around AI SDK v7 useChat, streaming' \u2192 'around the AI SDK v7 chat hook, streaming'; tables and every other byte untouched; boundary-tables.spec.ts untouched"
+    }
+  ],
+  "cycle_2_full_suite": {
+    "log": ".tmp/FIX-GBC-GATE-1/cycle-2/green/e2e-docs.log",
+    "exit": 1,
+    "summary": "477 passed, 34 skipped, 5 failed, retries 0, 2.4h",
+    "failures": [
+      "tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205",
+      "tests/sprint-05-orient-search/quickstart-content.spec.ts:517",
+      "tests/sprint-05-orient-search/quickstart-content.spec.ts:902",
+      "tests/sprint-05-orient-search/search-contract.spec.ts:667",
+      "tests/sprint-05-orient-search/search-contract.spec.ts:740"
+    ],
+    "boundary_ac1": "green in all three chromium projects"
+  }
+}

@@ -246,7 +246,9 @@ test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
   // The example app SHIPPED its /live-chat route (the worked example), so the
   // old 'does not yet include' caveat is superseded by the current honest
   // phrasing: what the example composes, and what stays the app's own wiring.
-  expect(body).toContain('composes the same registry items around AI SDK v7 useChat');
+  // FIX-GBC-003-1 / f042f5eb keeps AC1_TERMS (useChat) out of Callout prose —
+  // the reviewed reword names "the AI SDK v7 chat hook" instead.
+  expect(body).toContain('composes the same registry items around the AI SDK v7 chat hook');
   expect(body).toContain('the model-side wiring your app owns');
 
   // Both internal destinations were also fetched over the real preview HTTP.
@@ -261,7 +263,7 @@ test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
     },
     exampleSourceHref: EXAMPLE_SOURCE_URL,
     localExampleSource: [EXAMPLE_README, EXAMPLE_APP_JSON],
-    honestProse: 'composes the same registry items around AI SDK v7 useChat',
+    honestProse: 'composes the same registry items around the AI SDK v7 chat hook',
     anchorTexts: await main.getByRole('link').evaluateAll((elements) =>
       elements.map((element) => ({
         text: element.textContent?.trim() ?? '',
