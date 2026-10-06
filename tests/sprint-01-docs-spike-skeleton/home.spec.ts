@@ -180,10 +180,14 @@ test('FLOW-GEND-01-home-hero-evaluation-contract: statement, NOT-an-npm-package,
   expect(response?.status()).toBe(200);
 
   // The DocsLayout home variant: the shell header renders, and the home body
-  // suppresses the sidebar/ToC regions (no aside, no ToC landmark).
+  // suppresses the reading-rail regions (no docs nav/ToC asides, no ToC
+  // landmark). Content asides are lawful: the boundary Callout (ORI-CONT-005)
+  // renders an <aside class="callout"> on the home hero.
   await expect(page.locator('[data-layout="home"]')).toHaveCount(1);
   await expect(page.locator('header.site-header')).toBeVisible();
-  await expect(page.locator('aside')).toHaveCount(0);
+  await expect(
+    page.locator('aside[class*="markdown-doc__"], aside[class*="section-index__"]'),
+  ).toHaveCount(0);
   await expect(page.locator('[data-toc]')).toHaveCount(0);
 
   const hero = page.locator(HERO);

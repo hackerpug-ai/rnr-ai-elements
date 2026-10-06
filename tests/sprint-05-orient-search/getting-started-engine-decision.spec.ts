@@ -364,8 +364,9 @@ test(`${FLOW_TOKEN}: AC-4 claim ledger and content gates`, async ({ page }, test
   }
 
   // The boundary page links the verified live run guide, and the guide exists.
+  // (The boundary source is .mdx since ORI-CONT-005 composed Callouts into it.)
   const boundarySource = readFileSync(
-    join(repoRoot, 'apps/docs/src/content/docs/owns-vs-does-not-own.md'),
+    join(repoRoot, 'apps/docs/src/content/docs/owns-vs-does-not-own.mdx'),
     'utf8',
   );
   expect(
@@ -376,11 +377,11 @@ test(`${FLOW_TOKEN}: AC-4 claim ledger and content gates`, async ({ page }, test
   if (!isNoJs(testInfo)) {
     await navigateLocalhost(page, '/docs/owns-vs-does-not-own');
     await settle(page, testInfo);
-    const guideHref = await page
-      .locator(`main a[href*="${LIVE_GUIDE_PATH}"]`)
-      .first()
-      .getAttribute('href');
-    expect(guideHref, 'the rendered boundary must carry the live-guide link').toContain(
+    // The rendered boundary NAMES the verified run guide in prose (the
+    // boundary rework presents the repo path as text next to the example-app
+    // Callout); the guide file itself must exist on the candidate.
+    const bodyText = (await page.locator('main').innerText()).replace(/\s+/g, ' ');
+    expect(bodyText, 'the rendered boundary must carry the live-guide path').toContain(
       LIVE_GUIDE_PATH,
     );
   }

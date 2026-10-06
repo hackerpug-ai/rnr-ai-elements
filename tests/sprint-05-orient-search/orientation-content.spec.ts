@@ -423,7 +423,15 @@ test('ORI-CONT-001-content-contract', async ({ page }, testInfo) => {
   expect.soft(internalLinks.has('/docs/theming'), 'links Theming').toBe(true);
   expect.soft(internalLinks.has('/docs/dark-mode'), 'links Dark mode').toBe(true);
   const troubleshoot = [...internalLinks].filter((href) => /troubleshoot/i.test(href));
-  expect.soft(troubleshoot, 'no troubleshooting-guide link (unimplemented Sprint 06)').toEqual([]);
+  // Sprint 06 (GBC-002) shipped the troubleshooting guide and the
+  // installation page links it — the once-unimplemented destination is now a
+  // required live link (the loop below asserts it resolves 200).
+  expect
+    .soft(troubleshoot.length, 'links the shipped troubleshooting guide (/guides/troubleshooting)')
+    .toBeGreaterThan(0);
+  expect
+    .soft(troubleshoot, 'the troubleshooting link is the shipped guide')
+    .toEqual(['/guides/troubleshooting']);
 
   // Every internal link resolves — no placeholder onward destinations.
   for (const href of internalLinks) {

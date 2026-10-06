@@ -213,12 +213,18 @@ test('FAM-004-a11y-and-init', async ({ page }, testInfo) => {
   expect(await page.locator('rnr-ledger-filter').count(), 'exactly one island on the page').toBe(1);
 
   // WAI-ARIA search-box pattern: one named input inside one search landmark.
+  // The site-wide search dialog (sprint-05 FLOW-SHELL-15) is a second,
+  // separately labeled role=search landmark; the filter island's landmark is
+  // the rnr-ledger-filter host itself.
   const input = page.locator(INPUT);
   const ariaLabel = await input.getAttribute('aria-label');
   expect(ariaLabel?.trim().length ?? 0, 'the input announces an accessible name').toBeGreaterThan(
     0,
   );
-  expect(await page.locator('[role="search"]').count(), 'one role=search landmark').toBe(1);
+  expect(
+    await page.locator('rnr-ledger-filter[role="search"]').count(),
+    'one role=search landmark on the filter island',
+  ).toBe(1);
   await expect(input, 'the live input is enabled').toBeEnabled();
 
   // Focus ring: a text input focused via keyboard always matches

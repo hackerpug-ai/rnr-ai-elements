@@ -217,7 +217,9 @@ test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
   expect(themingResponse?.status()).toBe(200);
   const seamAnchor = page.locator('#rendermarkdown');
   await expect(seamAnchor).toBeAttached();
-  await expect(seamAnchor.getByRole('heading')).toContainText('renderMarkdown seam');
+  // The anchor sits ON the heading itself (the github-slugger id rides the
+  // h2), so the heading text is the anchor's own text — 'renderMarkdown'.
+  await expect(seamAnchor).toContainText('renderMarkdown');
 
   // Onward reference 2: the Message item destination — back on the boundary
   // page first (the Theming navigation left the article's DOM).
@@ -241,7 +243,11 @@ test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
   await expect(exampleLink).toBeVisible();
   expect(await exampleLink.getAttribute('href')).toBe(EXAMPLE_SOURCE_URL);
   const body = (await main.innerText()).replace(/\s+/g, ' ');
-  expect(body).toContain('does not yet include a live streaming chat');
+  // The example app SHIPPED its /live-chat route (the worked example), so the
+  // old 'does not yet include' caveat is superseded by the current honest
+  // phrasing: what the example composes, and what stays the app's own wiring.
+  expect(body).toContain('composes the same registry items around AI SDK v7 useChat');
+  expect(body).toContain('the model-side wiring your app owns');
 
   // Both internal destinations were also fetched over the real preview HTTP.
   const themingFetch = await request.get(`${new URL('/', page.url()).origin}/docs/theming`);
@@ -255,7 +261,7 @@ test('ORI-CONT-005-AC-3', async ({ page, request }, testInfo) => {
     },
     exampleSourceHref: EXAMPLE_SOURCE_URL,
     localExampleSource: [EXAMPLE_README, EXAMPLE_APP_JSON],
-    honestProse: 'does not yet include a live streaming chat',
+    honestProse: 'composes the same registry items around AI SDK v7 useChat',
     anchorTexts: await main.getByRole('link').evaluateAll((elements) =>
       elements.map((element) => ({
         text: element.textContent?.trim() ?? '',

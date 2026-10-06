@@ -130,18 +130,19 @@ test('FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors
     const row = (await rowById.count()) === 1 ? rowById : rows.nth(index);
     if ((await rowById.count()) === 1) anchoredRows += 1;
 
-    const verdict = row.locator('td.ledger-verdict .badge');
+    // The verdict Badge rides the ledger row's 4th cell (ORI-AST-007's
+    // DataTable composition: th, Category, Engines, Expo Go, Install, Docs).
+    const verdict = row.locator('td:nth-child(4) .badge');
     const badgeCount = await verdict.count();
     const badgeText = badgeCount === 1 ? ((await verdict.textContent()) ?? '').trim() : '';
     const badgeClass = badgeCount === 1 ? ((await verdict.getAttribute('class')) ?? '') : '';
     const expectedText = verdictText(item.expoGo);
     const expectedTone = toneClass(item.expoGo);
 
-    // The docs link: component rows keep /components/{item}; every other row
-    // anchors its own row in-page (derived from the dataset, never literals).
-    const docsHref =
-      item.type === 'registry:component' ? `/components/${item.name}` : `#row-${item.name}`;
-    const renderedHref = await row.locator('td.ledger-docs a').getAttribute('href');
+    // ORI-AST-008 retarget: every row's Docs link is a real /components/{name}
+    // reference page (all 56 registry items carry one).
+    const docsHref = `/components/${item.name}`;
+    const renderedHref = await row.locator('a[data-docs-link]').getAttribute('href');
 
     if (
       badgeCount === 1 &&
@@ -163,7 +164,8 @@ test('FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors
   expect(verdictMatches, 'ledger rows with a matching Badge verdict').toBe(items.length);
   expect(anchoredRows, 'every row carries its in-page #row- anchor target').toBe(items.length);
 
-  // 0 dead docs anchors: each non-component href names a tr that exists above.
+  // The tr#row-{name} anchors survive as the rows' structural ids (the retarget
+  // no longer points Docs links at them, but the anchor targets still exist).
   for (const item of nonComponents) {
     expect(
       await page.locator(`tbody tr#row-${item.name}`).count(),
@@ -172,18 +174,24 @@ test('FAM-005-ledger-badge-wiring: 56 rows render the Badge verdict, row anchors
   }
 
   // The retarget survivors: both engine base URLs (rendered + copyable), the
-  // generated-at-build note, and the per-row copy affordances.
+  // generated-at-build note, and the per-row copy affordances. Each li hosts a
+  // plain <code> next to a CopyButton whose inner code repeats the URL — the
+  // plain text is the unclassed code.
   const bulkAdd = page.locator('section.ledger__bulk-add');
-  await expect(bulkAdd.locator('code', { hasText: NATIVEWIND_BASE })).toBeVisible();
-  await expect(bulkAdd.locator('code', { hasText: UNIWIND_BASE })).toBeVisible();
+  await expect(
+    bulkAdd.locator('code:not(.copy-button__command)', { hasText: NATIVEWIND_BASE }),
+  ).toBeVisible();
+  await expect(
+    bulkAdd.locator('code:not(.copy-button__command)', { hasText: UNIWIND_BASE }),
+  ).toBeVisible();
   await expect(bulkAdd.locator('rnr-copy-button button')).toHaveCount(2);
   const note = (await page.locator('p.ledger__note').textContent()) ?? '';
   expect(note, 'the generated-at-build note survives').toMatch(/generated at build/i);
   expect(note, 'the note still names public/r/').toContain('public/r/');
   expect(
     await page.locator('tbody tr rnr-copy-button button').count(),
-    'the per-row copy affordance survives on all 56 rows',
-  ).toBe(items.length);
+    'the per-row copy affordances survive: BOTH engine buttons on all 56 rows',
+  ).toBe(items.length * 2);
 
   writeEvidence({
     lane: 'FAM-005-verdict-badge-wiring',

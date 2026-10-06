@@ -626,8 +626,12 @@ test('ORI-AST-008-component-regression', async ({ page, request }, testInfo) => 
 
   // The landed seam guarantee: message keeps its renderMarkdown seam link.
   await navigateLocalhost(page, '/components/message');
-  const seamLinks = await page.locator('main a[href="/docs/theming#rendermarkdown"]').count();
-  soft(seamLinks, 'message: renderMarkdown seam link preserved').toBe(1);
+  // GBC-001 retargeted SEAM_LINK_TARGETS at the customize-rendering guide's
+  // anchored sections — the item pages' seam Callouts link the guide now.
+  const seamLinks = await page
+    .locator('main a[href="/guides/customize-rendering#rendermarkdown"]')
+    .count();
+  soft(seamLinks, 'message: renderMarkdown seam link preserved (GBC-001 guide target)').toBe(1);
   ok &&= seamLinks === 1;
 
   if (ok) {
