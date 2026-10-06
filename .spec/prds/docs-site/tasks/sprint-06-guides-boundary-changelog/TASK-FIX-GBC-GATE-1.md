@@ -148,7 +148,7 @@ retries 0.
         EVIDENCE: file_artifact
         - START_REF: trunk_with_48_frozen_failures
           ACTION: ['enumerate the tracked diff (git diff --name-only against the review base) and confirm every path is write_allowed', 'for each of the 16 groups, read the disposition ledger entry and the cited source (landed task/commit/manuscript) or the quoted proving assertion; diff the owns-vs-does-not-own.mdx hunk against f042f5eb byte-for-byte', 'run pnpm exec biome ci . and pnpm exec tsc --noEmit on the candidate']
-          MUST_OBSERVE: ['dispositions.json enumerates all 16 groups, each closed by exactly one rule with its citation (rule a: the landed task id and/or commit that superseded the pinned truth) or its proof (rule b: the quoted failing assertion that the product broke)', 'the owns-vs-does-not-own.mdx hunk is byte-identical to f042f5eb\'s Callout-body reword — one line changed, no table row touched, boundary-tables.spec.ts untouched', 'every stale-update hunk carries an inline citation comment naming its reviewed-truth source; the bulk-add lanes still assert the exact base-URL text AND the clipboard copy; crawl purity still demands 0 non-absolute command forms against the reviewed surface', 'every product-file hunk names its proving assertion in the handoff; the tracked diff touches only the 15 spec files, owns-vs-does-not-own.mdx, tests/harness/** where a lane\'s failure was proven harness-caused, evidenced product files under apps/docs/src/**, and .tmp/FIX-GBC-GATE-1/**', 'biome ci and tsc --noEmit exit 0 on the candidate (or a stash-proven pre-existing failure is recorded, never assumed)']
+          MUST_OBSERVE: ['dispositions.json enumerates all 16 groups, each closed by exactly one rule with its citation (rule a: the landed task id and/or commit that superseded the pinned truth) or its proof (rule b: the quoted failing assertion that the product broke)', 'the owns-vs-does-not-own.mdx hunk is byte-identical to f042f5eb\'s Callout-body reword — one line changed, no table row touched, boundary-tables.spec.ts untouched', 'every stale-update hunk carries an inline citation comment naming its reviewed-truth source; the bulk-add lanes still assert the exact base-URL text AND the clipboard copy; crawl purity still demands 0 non-absolute command forms against the reviewed surface', 'every product-file hunk names its proving assertion in the handoff; the tracked diff touches only the 15 spec files, owns-vs-does-not-own.mdx, tests/harness/** where a lane\'s failure was proven harness-caused, evidenced product files under apps/docs/src/**, tests/sprint-05-orient-search/support/nativewind-live-example.ts, tests/sprint-05-orient-search/live-example-proof.ts, apps/example/** where the nativewind Live chat screen failure is proven, and .tmp/FIX-GBC-GATE-1/**', 'biome ci and tsc --noEmit exit 0 on the candidate (or a stash-proven pre-existing failure is recorded, never assumed)']
           MUST_NOT_OBSERVE: ['an uncited repoint, a count relaxed without a reviewed source, or a selector broadened past the one element the contract names', 'a product edit justified only by preference — every product hunk must quote the assertion that failed', 'a write-prohibited path (the sprint-06 lane specs, playwright.config.ts, package.json, planning artifacts) in the diff', 'a disposition ledger that is empty or omits one of the 16 groups']
 
 ## Test Criteria
@@ -180,6 +180,8 @@ WRITE-ALLOWED:
 - tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts (MODIFY)
 - tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts (MODIFY)
 - tests/sprint-05-orient-search/token-presentation.spec.ts (MODIFY)
+- tests/sprint-05-orient-search/support/nativewind-live-example.ts (MODIFY — nativewind live driver only; do not edit tests/sprint-05-orient-search/support/quickstart-web.ts)
+- tests/sprint-05-orient-search/live-example-proof.ts (MODIFY — verifyRestoredModel and the restore journal only)
 - apps/docs/src/content/docs/owns-vs-does-not-own.mdx (MODIFY — exactly the f042f5eb Callout-body reword; tables and every other byte untouched)
 - tests/harness/** (MODIFY — only where a lane's failure is proven harness-caused, each edit named in the handoff)
 - apps/docs/src/pages/** (MODIFY — only files proven wrong by a lane, each with its proving assertion)
@@ -188,14 +190,15 @@ WRITE-ALLOWED:
 - apps/docs/src/content/** (MODIFY — same rule; e.g. non-absolute command copy on the new /guides /porting /changelog pages)
 - apps/docs/src/data/** (MODIFY — same rule)
 - apps/docs/src/styles/** (MODIFY — same rule)
+- apps/example/** (MODIFY — only where the nativewind Live chat screen failure is proven, each edit named in the handoff)
 - .tmp/FIX-GBC-GATE-1/** (NEW — evidence: dispositions.json, red/green segment logs, green/run.json, run logs)
 WRITE-PROHIBITED:
 - tests/sprint-06-guides-boundary-changelog/** (the boundary fix is content-only; the lane specs belong to landed tasks)
-- tests/** — every other spec file outside the 15-file inventory
+- tests/** — every other spec file outside the 15-file inventory (exceptions: tests/sprint-05-orient-search/support/nativewind-live-example.ts and tests/sprint-05-orient-search/live-example-proof.ts; tests/sprint-05-orient-search/support/quickstart-web.ts and every other tests/** path stay prohibited)
 - tests/tooling/** and tests/*.test.ts (the vitest logic lanes are not in scope)
 - playwright.config.ts (retries pinned 0; suite shape unchanged)
 - package.json · pnpm-lock.yaml (no dependency or script changes)
-- apps/example/** · packages/**
+- packages/**
 - scripts/** (build/gate scripts are not in scope)
 - .spec/** · human-flows.json · gate-plan.json · .kb-run-sprint/** · .github/**
 
@@ -222,6 +225,7 @@ Blocks:     the sprint-06 human gate's step 5 outright — this task owns all 48
 ## Amendments
 - 2026-10-06 (pre-publication, orchestrator): scope extended from the 45 earlier-sprint failures to all 48 — the three boundary-tables.spec.ts:103 instances join via the f042f5eb-proven content reword; acceptance tightened from "modulo the boundary lane" to 0 failures / exit 0
 - 2026-10-06 (repair 3, publish-plan flow validator): every verify command re-anchored to exactly one write_allowed lane spec (BROAD_PROOF_COMMAND findings on the former `pnpm e2e:docs` and static-gate verifies and the multi-lane chain); the aggregate full-suite green stays in the AC/TC descriptions and evidence expectations and is re-checked by the human gate
+- 2026-10-06 (revise ask-fix-gbc-gate-1-expand-write, blocked report 85e1fe35bb360d6ae95223b6083e74496eb295224be770edc687f482c9b7e8c5): WRITE-ALLOWED expanded to the nativewind live driver, live-example-proof.ts, and apps/example so the nativewind teardown restore and Live chat failure can be fixed. Gate step 5 and AC acceptance stay pnpm e2e:docs exit 0, retries 0, zero failures.
 
 <!-- REQUIREMENT-CONTRACT v1 -->
 <!--
@@ -265,6 +269,8 @@ Blocks:     the sprint-06 human gate's step 5 outright — this task owns all 48
    "tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts",
    "tests/sprint-05-orient-search/registry-item-reference-pages.spec.ts",
    "tests/sprint-05-orient-search/token-presentation.spec.ts",
+   "tests/sprint-05-orient-search/support/nativewind-live-example.ts (MODIFY - nativewind live driver only; do not edit tests/sprint-05-orient-search/support/quickstart-web.ts)",
+   "tests/sprint-05-orient-search/live-example-proof.ts (MODIFY - verifyRestoredModel and the restore journal only)",
    "apps/docs/src/content/docs/owns-vs-does-not-own.mdx (MODIFY - exactly the f042f5eb Callout-body reword; tables and every other byte untouched)",
    "tests/harness/** (MODIFY - only where a lane's failure is proven harness-caused, each edit named in the handoff)",
    "apps/docs/src/pages/** (MODIFY - only files proven wrong by a lane, each with its proving assertion)",
@@ -273,16 +279,16 @@ Blocks:     the sprint-06 human gate's step 5 outright — this task owns all 48
    "apps/docs/src/content/** (MODIFY - same rule)",
    "apps/docs/src/data/** (MODIFY - same rule)",
    "apps/docs/src/styles/** (MODIFY - same rule)",
+   "apps/example/** (MODIFY - only where the nativewind Live chat screen failure is proven, each edit named in the handoff)",
    ".tmp/FIX-GBC-GATE-1/** (NEW - evidence: dispositions.json, green/run.json, run logs)"
   ],
   "write_prohibited": [
    "tests/sprint-06-guides-boundary-changelog/**",
-   "tests/** (every spec file outside the 15-file inventory)",
+   "tests/** (every spec file outside the 15-file inventory; exceptions: tests/sprint-05-orient-search/support/nativewind-live-example.ts and tests/sprint-05-orient-search/live-example-proof.ts; tests/sprint-05-orient-search/support/quickstart-web.ts and every other tests/** path stay prohibited)",
    "tests/tooling/**",
    "playwright.config.ts",
    "package.json",
    "pnpm-lock.yaml",
-   "apps/example/**",
    "packages/**",
    "scripts/**",
    ".spec/**",
@@ -413,7 +419,7 @@ Blocks:     the sprint-06 human gate's step 5 outright — this task owns all 48
         "dispositions.json enumerates all 16 groups, each closed by exactly one rule with its citation (rule a: the landed task id and/or commit that superseded the pinned truth) or its proof (rule b: the quoted failing assertion that the product broke)",
         "the owns-vs-does-not-own.mdx hunk is byte-identical to f042f5eb's Callout-body reword - one line changed, no table row touched, boundary-tables.spec.ts untouched",
         "every stale-update hunk carries an inline citation comment naming its reviewed-truth source; the bulk-add lanes still assert the exact base-URL text AND the clipboard copy; crawl purity still demands 0 non-absolute command forms against the reviewed surface",
-        "every product-file hunk names its proving assertion in the handoff; the tracked diff touches only the 15 spec files, owns-vs-does-not-own.mdx, tests/harness/** where a lane's failure was proven harness-caused, evidenced product files under apps/docs/src/**, and .tmp/FIX-GBC-GATE-1/**",
+        "every product-file hunk names its proving assertion in the handoff; the tracked diff touches only the 15 spec files, owns-vs-does-not-own.mdx, tests/harness/** where a lane's failure was proven harness-caused, evidenced product files under apps/docs/src/**, tests/sprint-05-orient-search/support/nativewind-live-example.ts, tests/sprint-05-orient-search/live-example-proof.ts, apps/example/** where the nativewind Live chat screen failure is proven, and .tmp/FIX-GBC-GATE-1/**",
         "biome ci and tsc --noEmit exit 0 on the candidate (or a stash-proven pre-existing failure is recorded, never assumed)"
        ],
        "must_not_observe": [
