@@ -1,7 +1,7 @@
 ---
 sequence: 1
 timeline: Phase 1
-status: planned
+status: completed
 sprint_id: sprint-01-docs-spike-skeleton
 planned_from_roadmap_sha: a1bb92338982e59f6c7923151710f1f8aa60ed3e7a0320dd2ac10b89ca5b2ae9
 planned_from_source_sha: ac5363358c122eb9b5e17cfe4065c94c1945448a

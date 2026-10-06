@@ -22,10 +22,10 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 | # | Milestone | Sprint | Gate | Tasks | Dependencies | Status |
 |---|-----------|--------|------|-------|--------------|--------|
-| 1 | — | [Sprint 01: docs-spike-skeleton](#sprint-01-docs-spike-skeleton) | Walk find-and-install on the built site (ledger → component page → copy command → same-origin JSON), proven by `pnpm e2e:docs` green, retries: 0 | 12 | — | In Progress |
-| 2 | — | [Sprint 02: shell-hero](#sprint-02-shell-hero) | Hero fits one 1440×900 screen: statement, counters, copyable engine-tabbed command, both CTAs (T-GEND-002) | 13 | Sprint 01 | In Progress |
-| 3 | — | [Sprint 03: family-browse](#sprint-03-family-browse) | /components counts 7 anchored families, 39 cards, verdict badges | 6 | Sprint 01 | In Progress |
-| 4 | — | [Sprint 04: generated-reference](#sprint-04-generated-reference) | Mutate any enriched field → build fails naming the item; props/deps/source byte-match the served JSON | 11 | Sprint 01, Sprint 03 | In Progress |
+| 1 | — | [Sprint 01: docs-spike-skeleton](#sprint-01-docs-spike-skeleton) | Walk find-and-install on the built site (ledger → component page → copy command → same-origin JSON), proven by `pnpm e2e:docs` green, retries: 0 | 12 | — | Completed |
+| 2 | — | [Sprint 02: shell-hero](#sprint-02-shell-hero) | Hero fits one 1440×900 screen: statement, counters, copyable engine-tabbed command, both CTAs (T-GEND-002) | 13 | Sprint 01 | Completed |
+| 3 | — | [Sprint 03: family-browse](#sprint-03-family-browse) | /components counts 7 anchored families, 39 cards, verdict badges | 6 | Sprint 01 | Completed |
+| 4 | — | [Sprint 04: generated-reference](#sprint-04-generated-reference) | Mutate any enriched field → build fails naming the item; props/deps/source byte-match the served JSON | 11 | Sprint 01, Sprint 03 | Completed |
 | 5 | — | [Sprint 05: orient-search](#sprint-05-orient-search) | Stranger reads /docs/introduction in one pass (T-DOCS-002) | — | Sprint 01, Sprint 02 | Completed 2026-10-06 |
 | 6 | — | [Sprint 06: guides-boundary-changelog](#sprint-06-guides-boundary-changelog) | Boundary gaps cross-check vs ledger + porting not-ported: zero contradictions (T-DOCS-018) | 17 | Sprint 05 | In Progress |
 | 7 | — | [Sprint 07: deploy-live-at-apex](#sprint-07-deploy-live-at-apex) | Live curl shows the three cache tiers + security headers, www 301s to apex, all 112 JSON at max-age=300; real CLI add still exits 0 (T-DELIV-005..007, 011..013) | 18 | Sprint 01 | In Progress |
@@ -44,7 +44,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 **Sequence:** 1
 **Timeline:** Phase 1
-**Status:** In Progress
+**Status:** Completed
 **Fidelity:** committed
 **Proposed by:** astro-planner + react-native-reusables-planner (fused; convergence rulings staged at `.tmp/kb-sprint-plan/docs-site/fusion/`)
 **Milestone:** —
@@ -128,7 +128,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 **Sequence:** 2
 **Timeline:** Phase 1
-**Status:** In Progress
+**Status:** Completed
 **Fidelity:** committed
 **Proposed by:** frontend-designer (lead) + react-native-reusables-planner + astro-planner + techwriting-planner (promotion dispatch 2026-09-10; proposals + convergence rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-02-shell-hero/`)
 **Milestone:** —
@@ -213,7 +213,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 **Sequence:** 3
 **Timeline:** Phase 1
-**Status:** In Progress
+**Status:** Completed
 **Fidelity:** committed
 **Proposed by:** react-native-reusables-planner (lead) + astro-planner + frontend-designer (promotion dispatch 2026-09-12; proposals + convergence rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-03-family-browse/`)
 **Milestone:** —
@@ -275,7 +275,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 
 **Sequence:** 4
 **Timeline:** Phase 2
-**Status:** In Progress
+**Status:** Completed
 **Fidelity:** committed
 **Proposed by:** react-native-reusables-planner (lead) + astro-planner + frontend-designer (promotion dispatch 2026-09-12; proposals, fusion positions, and rulings staged at `.tmp/kb-sprint-tasks-plan/sprint-04-generated-reference/`)
 **Milestone:** —

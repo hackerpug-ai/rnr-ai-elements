@@ -1,7 +1,7 @@
 ---
 sequence: 3
 timeline: Phase 1
-status: planned
+status: completed
 sprint_id: sprint-03-family-browse
 planned_from_roadmap_sha: 42f586c8010e1bda469da9d0a8baee50e2db64751324a2438df94771536b6eda
 planned_from_source_sha: 101409df0a44272fe61e7764e499b980b39c7448
