@@ -1,0 +1,38 @@
+{
+  "iteration": "cycle-3 live-matrix retry (grep seed and live matrices)",
+  "exit": 1,
+  "devices": {
+    "ios_udid": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+    "android_serial": "emulator-5554",
+    "openai_api_key_len": 164
+  },
+  "failure": "seed matrix child process exit 1 (ORI-RN-003 run-manifest completed:false)",
+  "cycle2_provider_quote": {
+    "manifest_phase_web_self_error": "web-self first prompt never completed (tee status 200, record error, after one bounded retry)",
+    "teardown_restore_verification_errorText": "An error occurred while generating the response.",
+    "adb_reverse_remaining": "error: no devices/emulators found"
+  },
+  "checkpoint_commit": "9b640bf2ed679f54241a7af41480d54a3c9be476",
+  "note": "Per FIX-GBC-GATE-1 order step 9: stop; do not start another full pnpm e2e:docs suite.",
+  "cycle3_seed_failure": {
+    "run_id": "ORI-CONT-004-2026-10-06T13-24-00-679Z",
+    "completed": false,
+    "failed_legs": [
+      {
+        "engine": "uniwind",
+        "platform": "android",
+        "theme": null,
+        "status": "failed",
+        "diagnostic_head": "Running on Pixel_7_API_34\n > Flow quickstart-expo-go.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nAssert that \"Seed turn 24: Ready for your message.\" is visible... COMPLETED\nAssert that \"Seed turn 24: Ready for your message.\" is visible... COM"
+      },
+      {
+        "engine": "uniwind",
+        "platform": "android",
+        "theme": null,
+        "status": "failed",
+        "diagnostic_head": "Running on Pixel_7_API_34\n\n--- metro log ---\nid\u001b[22m Bundled \u001b[39m\u001b[2m57ms\u001b[22m\u001b[0m\u001b[2m node_modules/.pnpm/expo-router@57.0.24_10e4e0b64fd243de3f082354ba6a4ce3/node_modules/expo-router/entry.js (1 module)\u001b[22m\u001b[0m\nnpm warn Unknown env config \"npm-globalconfig\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"verify-deps-before-run\". This will stop working in t"
+      }
+    ],
+    "assertion": "the seed matrix must complete in a fresh child process (exit 1; the driver fails closed on any missing leg)"
+  }
+}

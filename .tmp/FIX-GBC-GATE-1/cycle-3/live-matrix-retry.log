@@ -1,0 +1,25 @@
+PASS (0) FAIL (1) skipped (2)
+
+1. FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation
+   Error: the seed matrix must complete in a fresh child process (exit 1; the driver fails closed on any missing leg)
+   {"runId":"ORI-CONT-004-2026-10-06T13-24-00-679Z","completed":false}
+   (node:72745) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+   (Use `node --trace-warnings ...` to show where the warning was created)
+   
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m0[39m
+   Received: [31m1[39m
+   
+     289 |     seedChild.status,
+     290 |     `the seed matrix must complete in a fresh child process (exit ${seedChild.status}; the driver fails closed on any missing leg)\n${`${seedChild.stdout ?? ''}${seedChild.stderr ?? ''}`.slice(-4000)}`,
+   > 291 |   ).toBe(0);
+         |     ^
+     292 |   const seedManifest = JSON.parse(readFileSync(join(repoRoot, SEED_MANIFEST_PATH), 'utf8'));
+     293 |   const seed = {
+     294 |     legs: seedManifest.legs ?? [],
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:291:5
+
+Time: 5064477ms
+[full output: ~/Library/Application Support/rtk/tee/1791298102_playwright.log]

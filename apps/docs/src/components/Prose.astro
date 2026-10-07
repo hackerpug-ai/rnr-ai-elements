@@ -114,8 +114,15 @@
    * (DataTable's opaque var(--card) base exists only to cover scrolled content
    * under the pin). The accessibility floor for scope/caption is content's:
    * this block styles a caption when one is authored; it cannot add one.
+   *
+   * :not(.data-table): a DataTable composition rendered inside a prose body
+   * (TokenTable on /docs/theming) owns its chrome and its OWN scroll wrapper
+   * (DataTable.astro's .data-table__scroll); display:block here would turn the
+   * table element itself into the scroll container, leaving that wrapper with
+   * nothing to scroll and breaking the mobile pinned-column contract the
+   * reading/token lanes assert.
    */
-  .prose :global(table) {
+  .prose :global(table:not(.data-table)) {
     display: block;
     overflow-x: auto;
     margin: 0 0 1rem;
@@ -139,10 +146,11 @@
     background: var(--muted);
   }
   /* Below 48rem the first column caps at a label width, keeping the wrapped
-     deviation cells a scannable band rather than a crushed sliver. */
+     deviation cells a scannable band rather than a crushed sliver. DataTable
+     compositions keep their own pinned-column mobile behavior. */
   @media (max-width: 48rem) {
-    .prose :global(th:first-child),
-    .prose :global(td:first-child) {
+    .prose :global(table:not(.data-table) th:first-child),
+    .prose :global(table:not(.data-table) td:first-child) {
       max-width: 10rem;
     }
   }

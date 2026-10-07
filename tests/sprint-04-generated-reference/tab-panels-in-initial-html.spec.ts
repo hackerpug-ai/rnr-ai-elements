@@ -176,10 +176,14 @@ test('FLOW-SHELL-14-tab-panels-in-initial-html', async ({ page, request, browser
     literalsOk &&= nativewind >= 1 && uniwind >= 1;
 
     // Both engines' panels are server-rendered into the raw HTML — never only
-    // the active engine (the pages carry more than one tab group, so assert
-    // each engine's panel id, not a page-wide count).
+    // the active engine. The pages carry more than one tab group and the
+    // ORI-AST-002 island scopes every panel id behind a per-instance group
+    // prefix (`{groupId}-panel-{engine}`), so the served-bytes probe anchors on
+    // the contract attributes themselves: role + data-engine per panel.
     for (const engine of ['nativewind', 'uniwind'] as const) {
-      const panelId = (html.match(new RegExp(`id="panel-${engine}"`, 'g')) ?? []).length;
+      const panelId = (
+        html.match(new RegExp(`role="tabpanel"[^>]*data-engine="${engine}"`, 'g')) ?? []
+      ).length;
       soft(
         panelId,
         `${item.name}: the ${engine} panel is server-rendered in the initial HTML`,

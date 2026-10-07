@@ -113,14 +113,27 @@ test('T-GEND-016-site-crawl', async ({ page, request }, testInfo) => {
 
     // Command purity on the raw served bytes: every add invocation's
     // arguments are absolute registry URLs — no short-name, no relative form.
+    // The served bytes run through expressive-code, which interleaves span
+    // markup, control characters (0x7F line separators), and a data-code
+    // attribute copy of the command; the token cleanup strips those rendering
+    // artifacts so the check sees the commands a user reads. CLI flags (e.g.
+    // the update-installed-items guide's `--overwrite`, GBC-001/AC-2) are not
+    // add ARGUMENTS — every argument that is not a flag must be an absolute
+    // registry URL or the page violates purity.
     const segments = html.split(CLI_PREFIX);
     for (let index = 1; index < segments.length; index++) {
-      // The invocation text ends at the first markup boundary.
+      // The invocation text ends at the first markup or attribute boundary.
       const segment = segments[index].split('<')[0];
       for (const argument of segment.split(/\s+/)) {
-        if (argument === '' || argument === 'add') continue;
-        if (!ABSOLUTE_ARG.test(argument)) {
-          violations.push(`${path}: non-absolute add argument "${argument}"`);
+        // Attribute-close markup (">) rides the last token of a data-code
+        // attribute copy; strip it with the control characters and quotes.
+        // Constructor form: the literal-class form trips biome's
+        // noControlCharactersInRegex (the control range is the point here).
+        const token = argument.replace(new RegExp(`[\\u0000-\\u001f\\u007f"'>]`, 'g'), '');
+        if (token === '' || token === 'add') continue;
+        if (/^--[a-z][a-z0-9-]*$/.test(token)) continue;
+        if (!ABSOLUTE_ARG.test(token)) {
+          violations.push(`${path}: non-absolute add argument "${token}"`);
         }
       }
     }

@@ -1,0 +1,37 @@
+
+Running 3 tests using 1 worker
+(node:22425) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F(node:60973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+°(node:61099) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+°
+
+  1) [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation 
+
+    Error: the nativewind live matrix must complete and validate (exit 1); the runner exits nonzero on any missing or mismatched receipt
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      357 |       result.status,
+      358 |       `the ${engine} live matrix must complete and validate (exit ${result.status}); the runner exits nonzero on any missing or mismatched receipt`,
+    > 359 |     ).toBe(0);
+          |       ^
+      360 |
+      361 |     const manifestPath = join(repoRoot, LIVE_EVIDENCE_ROOT, engine, 'manifest.json');
+      362 |     expect(existsSync(manifestPath), `the ${engine} live manifest must exist`).toBe(true);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-1/tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:359:7
+
+    Error Context: test-results/sprint-05-orient-search-qu-11591--awaited-in-this-invocation-chromium-desktop/error-context.md
+
+    Error Context: test-results/sprint-05-orient-search-qu-11591--awaited-in-this-invocation-chromium-desktop/error-context.md
+
+  Slow test file: [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts (2.7h)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium-desktop] › tests/sprint-05-orient-search/quickstart-chat-screen.spec.ts:205:1 › FLOW-DOCS-02-quickstart-chat-screen: seed and live matrices awaited in this invocation 
+  2 skipped

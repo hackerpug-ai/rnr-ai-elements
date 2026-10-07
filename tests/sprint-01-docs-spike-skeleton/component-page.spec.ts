@@ -440,8 +440,11 @@ test('FAM-003-family-grid-extras — jump nav, empty mount slot, data-filter-tex
     await slot.evaluate((el) => el.children.length),
     'empty structural slot — zero element children',
   ).toBe(0);
+  // GBC-013's dev-client matrix added a lawful NON-family section after the
+  // grid (class only, no id); the families are the id'd sections the slot
+  // still precedes.
   expect(
-    await page.locator('main div.family-grid-slot ~ section').count(),
+    await page.locator('main div.family-grid-slot ~ section[id]').count(),
     'the slot precedes every family section',
   ).toBe(componentFamilies.length);
 

@@ -212,6 +212,14 @@ const qrSvg = await QRCode.toString(item.qrDeepLink, { type: 'svg' });
     flex-direction: column;
     gap: 0.5rem;
   }
+  /* Generated descriptions carry unbreakable slash-joined tokens (upstream
+     part lists like WebPreview/WebPreviewNavigation/...). Without a break
+     opportunity the paragraph's min-content overruns the phone viewport,
+     which zooms mobile Chrome out to fit and drags every layout coordinate
+     with it (six item pages overflowed at 393px). */
+  .item-description {
+    overflow-wrap: anywhere;
+  }
   .breadcrumb {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   }

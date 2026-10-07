@@ -1,0 +1,34 @@
+{
+  "task": "FIX-GBC-GATE-1",
+  "cycle": 6,
+  "phase": "green",
+  "candidate_sha_before_commit": "f59104e6105418eb5d9c388fa54f69c9e9fecc34",
+  "command": "pnpm e2e:docs",
+  "exit_code": 0,
+  "retries": 0,
+  "summary": {
+    "passed": 482,
+    "failed": 0,
+    "skipped": 34
+  },
+  "failing_tests": [],
+  "log": ".tmp/FIX-GBC-GATE-1/cycle-6/green/e2e-docs-acceptance.log",
+  "started_at": "2026-10-07T01:13:52Z",
+  "ended_at": "2026-10-07T03:07:50Z",
+  "devices": {
+    "RNR_S05_IOS_UDID": "81487B1E-A4D1-45AE-9BCE-D675802BACD1",
+    "RNR_S05_ANDROID_SERIAL": "emulator-5554"
+  },
+  "apps_example_edits": [
+    {
+      "path": "apps/example/app/live-chat.tsx",
+      "change": "module-level LIVE_CHAT_SCREEN_OPTIONS for Stack.Screen",
+      "proving_assertion": "uniwind iOS/dark Maestro assertVisible MARKER failed while hierarchy_has_marker true; screenshot LogBox Maximum update depth exceeded"
+    },
+    {
+      "path": "apps/example/app/_layout.tsx",
+      "change": "module-level INDEX_SCREEN_OPTIONS for Stack.Screen name=index",
+      "proving_assertion": "same Expo Router setOptions loop class as live-chat after appearance flip"
+    }
+  ]
+}
