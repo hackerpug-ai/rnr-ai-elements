@@ -144,5 +144,39 @@
       "tests/sprint-05-orient-search/search-contract.spec.ts:740"
     ],
     "boundary_ac1": "green in all three chromium projects"
+  },
+  "cycle_6": {
+    "acceptance": {
+      "command": "pnpm e2e:docs",
+      "exit_code": 0,
+      "retries": 0,
+      "passed": 482,
+      "failed": 0,
+      "skipped": 34,
+      "log": ".tmp/FIX-GBC-GATE-1/cycle-6/green/e2e-docs-acceptance.log",
+      "run_json": ".tmp/FIX-GBC-GATE-1/cycle-6/green/run.json"
+    },
+    "apps_example_edits": [
+      {
+        "path": "apps/example/app/live-chat.tsx",
+        "change": "LIVE_CHAT_SCREEN_OPTIONS module constant for Stack.Screen",
+        "proving_assertion": "uniwind iOS/dark live leg: Maestro assertVisible(MARKER) failed with hierarchy_has_marker true; ORI-RN-004 ios/dark screenshot shows LogBox Maximum update depth exceeded covering transcript"
+      },
+      {
+        "path": "apps/example/app/_layout.tsx",
+        "change": "INDEX_SCREEN_OPTIONS module constant for Stack.Screen name=index",
+        "proving_assertion": "same Expo Router setOptions-per-render loop class as /live-chat after simctl appearance flip"
+      }
+    ],
+    "support_edits": [
+      {
+        "path": "tests/sprint-05-orient-search/live-example-proof.ts",
+        "change": "verifyRestoredModel journals restore-verification-error; restore-verification only for completed provider records; preclearRestorePort"
+      },
+      {
+        "path": "tests/sprint-05-orient-search/support/nativewind-live-example.ts",
+        "change": "Live chat remount, markerProbe+OCR growth follow-up oracle, SOURCE_HASH_OVERRIDES for proven live-chat.tsx hash (manifest file WRITE-PROHIBITED)"
+      }
+    ]
   }
 }

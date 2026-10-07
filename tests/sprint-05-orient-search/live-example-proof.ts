@@ -1669,12 +1669,31 @@ function adbReverseList(): string {
   return `${res.stdout ?? ''}${res.stderr ?? ''}`.trim();
 }
 
-/** Verifies the restored primary model serves a REAL completion (teardown proof). */
+/** Preclears a stale listener on the restore port before relaunch. */
+async function preclearRestorePort(journal: EvidenceJournal, port: number): Promise<void> {
+  if (!portListening(port)) return;
+  journal.emit('owned-port-orphan-reaped', { port, phase: 'restore-verify', signal: 'preclear' });
+  stopOwnedPort(port, journal, 'restore-verify');
+  await waitForPortFree(port, 8000);
+}
+
+/** Emits a restore failure into the journal — never a silent null. */
+function emitRestoreFailure(journal: EvidenceJournal, port: number, error: string): null {
+  journal.emit('restore-verification-error', { port, error });
+  return null;
+}
+
+/**
+ * Verifies the restored primary model serves a REAL completion (teardown proof).
+ * Emits restore-verification only for a completed provider record; every other
+ * outcome journals restore-verification-error (never a silent null return).
+ */
 async function verifyRestoredModel(
   journal: EvidenceJournal,
   port: number,
   runId: string,
 ): Promise<BackendRecord | null> {
+  await preclearRestorePort(journal, port);
   const backend = await launchOwnedBackend({
     host: '127.0.0.1',
     port,
@@ -1682,7 +1701,13 @@ async function verifyRestoredModel(
     maxOutputTokens: 512,
   });
   try {
-    if (!backend.started) return null;
+    if (!backend.started) {
+      return emitRestoreFailure(
+        journal,
+        port,
+        `owned backend did not start on ${port}: ${backend.stderrText().slice(-500)}`,
+      );
+    }
     const requestId = `ori-ai-002-restore-verify-${runId}`;
     const res = await fetch(`http://127.0.0.1:${port}/api/chat`, {
       method: 'POST',
@@ -1713,6 +1738,13 @@ async function verifyRestoredModel(
       // is surfaced by waitForRecord instead.
     }
     const record = await backend.waitForRecord(requestId, 30_000);
+    if (record?.outcome !== 'completed') {
+      return emitRestoreFailure(
+        journal,
+        port,
+        `restore verify record missing or incomplete (outcome=${record?.outcome ?? 'null'})`,
+      );
+    }
     journal.emit('restore-verification', { port, record });
     return record;
   } finally {

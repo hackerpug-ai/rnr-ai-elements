@@ -1,0 +1,47 @@
+{
+  "cycle": 6,
+  "phase": "red",
+  "source": "cycle-4 nativewind live matrix evidence preserved before fix",
+  "failures": [
+    "verifyRestoredModel returned null with no restore-verification / restore-verification-error journal event when owned backend did not start",
+    "teardown.model_restored=false; validation rejected: teardown does not record the restored primary model",
+    "nativewind live iOS/Android: Live chat never appeared \u2014 Expo Go remained on home while Metro first bundle took ~27s under CI mode; deep link was not retried"
+  ],
+  "teardown": {
+    "run_id": "ORI-CONT-004-2026-10-06T14-57-29-738Z-live-nativewind",
+    "finished_at": "2026-10-06T17:12:24.647Z",
+    "model_restored": false,
+    "final_model": "gpt-4.1-mini-2025-04-14",
+    "restore_verification": null,
+    "appearances_restored": [
+      {
+        "platform": "ios",
+        "from": "light",
+        "to": "light"
+      },
+      {
+        "platform": "android",
+        "from": "light",
+        "to": "light"
+      }
+    ],
+    "reservations_released": true,
+    "owned_listeners_remaining": [],
+    "adb_reverse_remaining": "",
+    "contexts_closed": {
+      "browser": true,
+      "servers": true
+    }
+  },
+  "manifest_validation": {
+    "ok": false,
+    "accepted_targets": [
+      "nativewind-ios",
+      "nativewind-android",
+      "nativewind-web"
+    ],
+    "rejections": [
+      "teardown does not record the restored primary model"
+    ]
+  }
+}

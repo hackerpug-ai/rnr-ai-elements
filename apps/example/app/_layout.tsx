@@ -12,6 +12,9 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
+/** Stable Stack options — same Expo Router setOptions loop as /live-chat. */
+const INDEX_SCREEN_OPTIONS = { headerShown: false } as const;
+
 export default function RootLayout() {
   const { theme } = useUniwind();
   const isDark = theme === 'dark';
@@ -21,7 +24,7 @@ export default function RootLayout() {
       <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
         <StatusBar style={isDark ? 'light' : 'dark'} />
         <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={INDEX_SCREEN_OPTIONS} />
         </Stack>
         {/*
           PortalHost lives in the ROOT layout — portalled overlays (popover, dialog,
