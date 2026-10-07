@@ -36,7 +36,7 @@
  */
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { createServer, type Server } from 'node:http';
+import { createServer, type Server, type ServerResponse } from 'node:http';
 import { tmpdir } from 'node:os';
 import { dirname, extname, join, resolve } from 'node:path';
 import { Readable } from 'node:stream';
@@ -1930,9 +1930,41 @@ const MIME: Record<string, string> = {
 };
 
 /**
+ * Headers must arrive before this or the owned backend is treated as down.
+ * A pooled keep-alive socket to a dead process would otherwise sit until the
+ * driver's Retry wait (30s) expires. Cleared once headers arrive so a live
+ * stream is not aborted mid-body.
+ */
+const UPSTREAM_HEADERS_BOUND_MS = 4_000;
+
+async function fetchOwnedChatUpstream(url: string, body: Buffer): Promise<Response | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), UPSTREAM_HEADERS_BOUND_MS);
+  try {
+    return await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body,
+      signal: controller.signal,
+    });
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function writeUpstreamUnavailable(res: ServerResponse): void {
+  res.writeHead(502, { 'content-type': 'application/json' });
+  res.end(JSON.stringify({ error: 'upstream unavailable' }));
+}
+
+/**
  * Serves the static web export and forwards POST /api/chat to the real backend on the
  * same origin — the browser never crosses origins, so no CORS preflight is required.
- * The upstream SSE response is streamed back verbatim.
+ * The upstream SSE response is streamed back verbatim. A dead upstream is a fast
+ * 502 JSON error, the same fail-closed shape as the teeing proxy, never a hang
+ * and never a generic 404.
  */
 function serveWithChatProxy(
   distDir: string,
@@ -1951,14 +1983,14 @@ function serveWithChatProxy(
           }
           // Read the CURRENT handle per request: the retry leg restarts the owned
           // backend (same host:port), and the proxy must forward to the new child.
-          const upstream = await fetch(
+          const upstream = await fetchOwnedChatUpstream(
             `http://${session.current.host}:${session.current.port}/api/chat`,
-            {
-              method: 'POST',
-              headers: { 'content-type': 'application/json' },
-              body: Buffer.concat(chunks),
-            },
+            Buffer.concat(chunks),
           );
+          if (upstream === null) {
+            writeUpstreamUnavailable(res);
+            return;
+          }
           res.writeHead(upstream.status, {
             'content-type': upstream.headers.get('content-type') ?? 'text/event-stream',
           });
@@ -2191,6 +2223,9 @@ async function driveLiveWeb(
 
     // Endpoint loss + retry (AC-3 case 2).
     await session.stop();
+    // Owner-backed runs keep every prior record in one file. Baseline 0 treats
+    // the last already-completed record as this retry. Count before the probe.
+    const recordsBeforeProbe = session.current.records().length;
     await textarea.fill(RETRY_PROBE_PROMPT);
     await send.click().catch(() => {});
     const retry = page.getByLabel('Retry', { exact: true });
@@ -2209,7 +2244,12 @@ async function driveLiveWeb(
     await session.restart();
     assertBackendReady(session.current);
     await retry.click().catch(() => {});
-    result.retryCompleted = await waitForRecordOutcome(session.current, 0, 'completed', 120_000);
+    result.retryCompleted = await waitForRecordOutcome(
+      session.current,
+      recordsBeforeProbe,
+      'completed',
+      120_000,
+    );
     result.retrySingleUserTurn =
       (await page
         .getByText(RETRY_PROBE_PROMPT, { exact: true })
