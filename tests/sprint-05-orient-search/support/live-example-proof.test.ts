@@ -1307,9 +1307,33 @@ async function runAndroidInputFlow(
     // SLOW VERIFIED FALLBACK — only when the fast taps failed to abort anything.
     for (let tapAttempt = 0; tapAttempt < 3 && !stopExercised; tapAttempt += 1) {
       const records = session.current.records();
-      // A terminal record that is not aborted means the essay ended (completed or
-      // errored) before any stop landed — retry the whole turn with a fresh send.
-      if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') {
+      // A completed essay finished before the stop landed — retry the whole turn.
+      // An immediate provider error leaves the composer in the error pose (Send
+      // stays disabled, Retry is the recovery). Retyping into that pose is what
+      // the 2026-10-09 uniwind/android/light leg did: the field kept a partial
+      // essay under the IME and Send never enabled. Tap Retry, then stop the
+      // new stream, instead of calling prepareTurn again.
+      const lastOutcome = records[records.length - 1]?.outcome;
+      if (records.length > baseline && lastOutcome === 'error') {
+        logs.push('WARN: long prompt generation errored — tap Retry, then stop the new stream');
+        if (!dismissThenTap(serial, 'Retry')) {
+          return fail(`could not tap Retry after the long prompt errored ${stateSummary(serial)}`);
+        }
+        const afterError = session.current.records().length;
+        spawnSync('sleep', ['2']);
+        const retryCenter = sendButtonCenter(serial);
+        if (!retryCenter) {
+          return fail(`could not locate the send/stop button after Retry ${stateSummary(serial)}`);
+        }
+        adbExec(serial, ['shell', 'input', 'tap', String(retryCenter.x), String(retryCenter.y)]);
+        logs.push(`OK: stop tap after error Retry at ${retryCenter.x},${retryCenter.y}`);
+        stopExercised = await waitForRecordOutcome(session.current, afterError, 'aborted', 20_000);
+        if (stopExercised) break;
+        return fail(
+          `Retry of the errored long prompt did not abort the stream ${stateSummary(serial)}`,
+        );
+      }
+      if (records.length > baseline && lastOutcome !== 'aborted' && lastOutcome !== undefined) {
         break;
       }
       // No terminal record at all: either the stream is still running (tap again)
@@ -1377,6 +1401,9 @@ async function runAndroidInputFlow(
   logs.push('OK: endpoint loss surfaced a sanitized error with an accessible Retry');
   await session.restart();
   assertBackendReady(session.current);
+  // The owner record file is NOT cleared on restart. Count from here, the same
+  // way the web leg does, so an older completed row cannot satisfy the gate.
+  let recordsBeforeRetry = session.current.records().length;
   const retryTapped = await boundWait(
     'android/endpoint-loss/retry-tap',
     BACKEND_PORT,
@@ -1386,12 +1413,35 @@ async function runAndroidInputFlow(
   if (!retryTapped) {
     return fail(`could not tap "Retry" ${stateSummary(serial)}`);
   }
-  const retryCompleted = await boundWait(
+  let retryCompleted = await boundWait(
     'android/endpoint-loss/retry-record',
     BACKEND_PORT,
     WAIT_BOUND_NATIVE_SEGMENT_MS,
-    async () => waitForRecordOutcome(session.current, 0, 'completed', 120_000),
+    async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
   );
+  if (!retryCompleted) {
+    const records = session.current.records();
+    const last = records[records.length - 1];
+    if (last !== undefined && last.outcome === 'error' && records.length > recordsBeforeRetry) {
+      logs.push('WARN: first Retry produced a provider error — tap Retry once more');
+      const again = await boundWait(
+        'android/endpoint-loss/retry-tap-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => dismissThenTap(serial, 'Retry'),
+      );
+      if (!again) {
+        return fail(`could not tap "Retry" again ${stateSummary(serial)}`);
+      }
+      recordsBeforeRetry = records.length;
+      retryCompleted = await boundWait(
+        'android/endpoint-loss/retry-record-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
+      );
+    }
+  }
   if (!retryCompleted) {
     return fail(
       `retry never produced a completed provider record — observed: ${JSON.stringify(
@@ -1901,6 +1951,9 @@ async function runIosEndpointLossRetry(
   }
   await session.restart();
   assertBackendReady(session.current);
+  // The owner record file is NOT cleared on restart. Count from here, the same
+  // way the web leg does, so an older completed row cannot satisfy the gate.
+  let recordsBeforeRetry = session.current.records().length;
   const retryTapped = await boundWait(
     'ios/endpoint-loss/retry-tap',
     BACKEND_PORT,
@@ -1910,12 +1963,34 @@ async function runIosEndpointLossRetry(
   if (!retryTapped) {
     return { ok: false, log: 'could not tap "Retry"' };
   }
-  const retryCompleted = await boundWait(
+  let retryCompleted = await boundWait(
     'ios/endpoint-loss/retry-record',
     BACKEND_PORT,
     WAIT_BOUND_NATIVE_SEGMENT_MS,
-    async () => waitForRecordOutcome(session.current, 0, 'completed', 120_000),
+    async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
   );
+  if (!retryCompleted) {
+    const records = session.current.records();
+    const last = records[records.length - 1];
+    if (last !== undefined && last.outcome === 'error' && records.length > recordsBeforeRetry) {
+      const again = await boundWait(
+        'ios/endpoint-loss/retry-tap-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => dismissThenTap(deviceId, 'Retry'),
+      );
+      if (!again) {
+        return { ok: false, log: 'could not tap "Retry" again after the provider error' };
+      }
+      recordsBeforeRetry = records.length;
+      retryCompleted = await boundWait(
+        'ios/endpoint-loss/retry-record-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
+      );
+    }
+  }
   if (!retryCompleted) {
     return {
       ok: false,
