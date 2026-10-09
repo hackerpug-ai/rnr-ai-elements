@@ -1,7 +1,7 @@
 # HANDOFF — Sprint 6 gate fix (FIX-GBC-GATE-2)
 
 **Written** 2026-10-09T18:30+02:00 by Claude Code / claude-opus-5-5
-**Repo** rnr-ai-elements · **Trunk** local `main` at `c9a03ce4` plus the one commit that adds this file · **Work branch** `kb-run-sprint/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2` at `73bb9814`
+**Repo** rnr-ai-elements · **Trunk** local `main` at `c9a03ce4` plus the two commits that add and correct this file · **Work branch** `kb-run-sprint/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2` at `bb388d54`
 **Work happens in this worktree, not the repo root:**
 `/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2` (called `$W` below)
 
@@ -9,9 +9,10 @@
 VERIFIED / CLAIMED / ASSUMED. Re-verify anything not VERIFIED before you rely on it. Raw
 evidence is in §10.
 
-**STALENESS WARNING**: a device test run was live when this was written. See §4 for its
-final observed state and how to re-check it. Do not start any other simulator, emulator, or
-Maestro run until you have checked it.
+**CORRECTED 18:53**: §2, §3, §4 and §6 changed after this was first written. The device run
+that was live at writing time has ended: exit 1 at 18:50:41, and the run is **invalid**
+because the laptop slept in the middle of it. Nothing is running now (`VERIFIED` 18:50:
+`pgrep -f quickstart-proof.test.ts` → none).
 
 ## 1. Mission
 
@@ -40,33 +41,37 @@ takes, and why.
 
 ## 2. Start Here
 
-1. Check the phone-half run that was started at 18:27:06 (expected about 13 minutes):
+1. Rerun the phone half from the committed code (command in §9, about 13 minutes). The
+   18:27 run does not count: the lid was closed and the charger unplugged from 18:34:53 to
+   18:44:24, and the combination in flight was killed by its 5-minute limit (§3, §6).
+   Before starting, confirm all three:
 
    ```bash
-   W=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2
-   grep -E '^(start|EXIT|end)' $W/.tmp/FIX-GBC-GATE-2/cycle-3/matrix-at-73bb9814.log
-   pgrep -fl quickstart-proof.test.ts
+   pmset -g batt | head -1                      # must say 'AC Power'
+   pgrep -fl 'quickstart-proof|maestro'         # must print nothing
+   adb devices; xcrun simctl list devices booted | grep 81487B1E
    ```
 
-   - `EXIT:0` present: it passed. Read the per-combination result with the python one-liner
-     in §9, then commit the log as evidence (`git add -f` that one file) on the work branch.
-   - `EXIT:` non-zero: read `$W/tests/sprint-05-orient-search/evidence/ORI-RN-003/run-manifest.json`
-     (each failed leg has `diagnostic` and `evidence.maestro_output`).
-   - No `EXIT:` line and no process: the run died with its session. Rerun it (§9).
-   - No `EXIT:` line and a live process: wait. Do not start another device run.
+   Then tell the user in plain words that the lid must stay open for the next 15 minutes,
+   or ask them to run `sudo pmset -a disablesleep 1` first (undo with `0`). That setting is
+   the user's to change, not yours. Afterwards check the sleep log (§6) before believing
+   any failure.
 2. Run the two short checks the first reviewer asked for (§3 "Owed"), using the probe (§9).
 3. Run the real-AI half for `uniwind` alone (§9). It is the unproven part. Estimated 40
    minutes. If it fails, diagnose from its own evidence before any full-suite run.
 4. Start two fresh reviewer sessions (the original sessions cannot be resumed from a new
-   session) and give each the new commits and results. Then get the user's two decisions
+   session) and give each the new commits and results. The two reviewer roles are defined
+   at `~/Projects/brain/agents/react-native-reusables-reviewer` and `…/aisdk-reviewer`, but
+   the writing session stopped offering them as dispatchable roles at about 18:50. Check
+   what your session offers before planning around them. Then get the user's two decisions
    (§7). Then run the full `pnpm e2e:docs` (about 2 hours), then the human testing gate.
 
 ## 3. State of Play
 
-**Landed on `main`**: no code from this session, only the commit that adds this file on top
-of `c9a03ce4` — `VERIFIED` 18:28 (before that commit): `git -C /Users/justinrich/Projects/rnr-ai-elements rev-parse --short HEAD`.
+**Landed on `main`**: no code from this session, only the two commits that add and correct this file on
+top of `c9a03ce4` — `VERIFIED` 18:28 (before that commit): `git -C /Users/justinrich/Projects/rnr-ai-elements rev-parse --short HEAD`.
 
-**On the work branch, 4 commits ahead of `main`, not merged** — `VERIFIED` 18:28:
+**On the work branch, 5 commits not on `main`, not merged** (the branch is also 1 commit behind `main`: the handoff file) — `VERIFIED` 18:28:
 `git -C $W log --oneline main..HEAD`:
 
 | Commit | What | Review status |
@@ -75,6 +80,7 @@ of `c9a03ce4` — `VERIFIED` 18:28 (before that commit): `git -C /Users/justinri
 | `c43f1e15` | The Maestro flow dismisses one known developer-only warning toast right before tapping the message box | Reviewed: needs fixes → remediated in `c08723ea`. Not re-reviewed |
 | `c08723ea` | Every dismissal is recorded: `dev_error_toast_dismissed` per leg, `dev_error_toast_dismissed_legs` in the run manifest. Comment reworded to observed facts | Not reviewed |
 | `73bb9814` | The web Retry check counts backend records after the backend restart, not before | Not reviewed |
+| `bb388d54` | Evidence only: the invalid 18:27 run and the sleep log that explains it | n/a |
 
 **Phone half — fixed and proven on real devices** (`VERIFIED` this session; evidence under
 `$W/.tmp/FIX-GBC-GATE-2/cycle-2/`):
@@ -94,7 +100,11 @@ of `c9a03ce4` — `VERIFIED` 18:28 (before that commit): `git -C /Users/justinri
 
 **Owed for the phone half** (first reviewer's asks, none done):
 
-- A 10-combination run from the committed code. In flight, see §4.
+- A 10-combination run from the committed code. Attempted at 18:27, **invalid**: 9 of 10
+  passed; `nativewind/android/dark` was in flight when the laptop slept and Maestro was
+  killed at its 300 s limit (exit 143) after it had typed the marker — `VERIFIED`:
+  `.tmp/FIX-GBC-GATE-2/cycle-3/matrix-at-73bb9814.summary.json` and
+  `laptop-sleep-1834.pmset.log` beside it. Must be repeated.
 - The different-error-toast check on iPhone (done on Android only).
 - Launch the unmodified tutorial app about ten times on Android, count how often the toast
   appears, and capture its stack. The trigger is **not isolated**: the stack names only
@@ -131,18 +141,16 @@ in the worktree's sprint folder). Steps 3 and 6 fail on the gate's own wording, 
 
 ## 4. Perishable — Check Before Touching Anything
 
-- **Live device run** (observed 18:28:54): PIDs 78083–78116, command
-  `pnpm exec tsx tests/sprint-05-orient-search/support/quickstart-proof.test.ts …`, started
-  18:27:06 at HEAD `73bb9814`, log `$W/.tmp/FIX-GBC-GATE-2/cycle-3/matrix-at-73bb9814.log`.
-  It was started as a background command of the Claude Code session and may die when that
-  session ends. Re-check with the commands in §2 step 1. Its last observed state is at the
-  end of this section.
+- **No device run is live** (observed 18:50:49). The run started at 18:27:06 ended at
+  18:50:41 with exit 1, see §3. Re-check before starting anything:
+  `pgrep -fl 'quickstart-proof|maestro|playwright test|e2e:docs'`.
 - **Reserved devices** (observed 18:27): iPhone 17 simulator
   `81487B1E-A4D1-45AE-9BCE-D675802BACD1`, Android emulator `emulator-5554`. A second booted
   simulator (`9051A0C2-…`) and a second emulator (`Pixel_8_API_34`) belong to other
   sessions. Leave them alone.
-- **Power** (observed 18:28): on AC, 34 %, charging. The lid must stay open. It was on
-  battery from about 12:26 to some time before 18:26.
+- **Power** (observed 18:50): on AC, 51 %, charging. The lid must stay open. Today the
+  laptop slept mid-run twice: 12:43–14:07 and 18:34:53–18:44:24 (lid closed, charger
+  unplugged). Each time it killed the run in flight.
 - **Expo Go APK** (observed 18:27): `~/.cache/agent-scratch/opencode/ori-rn-003/Expo-Go-57.0.9.apk`
   exists. That folder is cleaned by a reaper; if the file is gone, the driver throws before
   any leg runs.
@@ -169,9 +177,8 @@ in the worktree's sprint folder). Steps 3 and 6 fail on the gate's own wording, 
 session: gate result files from the 04:08Z run plus the same kind of evidence rewrite.
 Uncommitted changes are invisible to a new session and get destroyed by cleanups.
 
-**Final observed state of the live run (18:31:26)**: still running, no `EXIT:` line yet.
-Its first Maestro leg started at 18:30:54 (`~/.maestro/tests/2026-10-09_183054`). Expected to
-finish about 18:40. Power at that moment: AC, 38 %, charging.
+**Final observed state of that run (18:50:49)**: ended, `EXIT:1`, invalid because of the
+sleep. Nothing running.
 
 ## 5. Decisions — Do Not Undo Without Reading
 
@@ -197,6 +204,10 @@ finish about 18:40. Power at that moment: AC, 38 %, charging.
   17 minutes each. Cause: lid closed on battery, 12:43–14:07; the cadence was the machine's
   periodic dark wake. Check `pmset -g log | grep -E " (Sleep|Wake|DarkWake)  "` and
   `pmset -g batt` first. `caffeinate` does not prevent lid-close sleep on battery.
+- **It happened again in this session.** I asked for the lid to stay open, started a
+  13-minute run at 18:27, and the lid was closed at 18:34:53. Do not start a device run on
+  an instruction the user may not have seen; confirm it, or have the user disable lid-close
+  sleep.
 - **Trap: the earlier agent's notes say Maestro "spends about 17 minutes per absent optional
   tap".** False. In normal runs those taps cost seconds.
 - **Trap: one failure hides behind another.** The toast failure surfaces at "Send", not at
@@ -345,10 +356,21 @@ git stash list → 4 entries, newest "orchestrator: park uncommitted evidence be
 git worktree list → 65 worktrees; sprint-06 ones include FIX-GBC-003-1 (f042f5eb), FIX-GBC-GATE-1 (58cf2623),
                     FIX-GBC-GATE-2 (73bb9814)
 
-## live at 18:28:54
+## live at 18:28:54 (this run has since ended, see the correction at the top)
 ps: 78083 pnpm exec tsx tests/sprint-05-orient-search/support/quickstart-proof.test.ts --engines nativewind,uniwind …
     78084 caffeinate -dimsu pnpm exec tsx …   78085 node …/tsx/dist/cli.mjs …   (elapsed 01:48)
 log head: start 18:27:06 / 73bb98147d05b6d96ff802e79b044ef54a92f0ef / Now drawing from 'AC Power'
 pmset -g batt: AC Power, 34%, charging
 lsof listeners on 8093, 8094, 4321, 7001: none at that instant
+```
+
+```text
+## after the run ended (18:50:49)
+grep -E '^(start|EXIT|end)' …/cycle-3/matrix-at-73bb9814.log → start 18:27:06 / EXIT:1 / end 18:50:41
+run-manifest: head 73bb9814 · completed False · wall 1414 s · dev_error_toast_dismissed_legs 0
+  9 legs passed; nativewind android dark failed, maestro_exit=143
+pmset -g log: 18:34:53 DarkWake 'Clamshell Sleep' (AC) · 18:35:03 Sleep 'Clamshell Sleep' (Batt)
+              18:35:51 Maintenance Sleep 513 s · 18:44:24 Wake (USB-C_plug, AC)
+~/.maestro/tests/2026-10-09_183427/maestro.log: 18:34:55 'Run flow when …' RUNNING → next line 18:44:27
+work branch HEAD now bb388d54 (evidence commit)
 ```
