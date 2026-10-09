@@ -1,7 +1,7 @@
 # HANDOFF — Sprint 6 gate fix (FIX-GBC-GATE-2)
 
 **Written** 2026-10-09T18:30+02:00 by Claude Code / claude-opus-5-5
-**Repo** rnr-ai-elements · **Trunk** local `main` at `c9a03ce4` plus the two commits that add and correct this file · **Work branch** `kb-run-sprint/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2` at `bb388d54`
+**Repo** rnr-ai-elements · **Trunk** local `main` at `c9a03ce4` plus the commits that add and correct this file · **Work branch** `kb-run-sprint/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2` at `bb388d54`
 **Work happens in this worktree, not the repo root:**
 `/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-06-guides-boundary-changelog/FIX-GBC-GATE-2` (called `$W` below)
 
@@ -48,7 +48,7 @@ takes, and why.
 
    ```bash
    pmset -g batt | head -1                      # must say 'AC Power'
-   pgrep -fl 'quickstart-proof|maestro'         # must print nothing
+   /bin/ps -axo pid,etime,command | grep -E 'quickstart-proof|maestro test|playwright test|e2e:docs' | grep -v grep   # must print nothing
    adb devices; xcrun simctl list devices booted | grep 81487B1E
    ```
 
@@ -68,7 +68,7 @@ takes, and why.
 
 ## 3. State of Play
 
-**Landed on `main`**: no code from this session, only the two commits that add and correct this file on
+**Landed on `main`**: no code from this session, only the commits that add and correct this file on
 top of `c9a03ce4` — `VERIFIED` 18:28 (before that commit): `git -C /Users/justinrich/Projects/rnr-ai-elements rev-parse --short HEAD`.
 
 **On the work branch, 5 commits not on `main`, not merged** (the branch is also 1 commit behind `main`: the handoff file) — `VERIFIED` 18:28:
@@ -143,7 +143,9 @@ in the worktree's sprint folder). Steps 3 and 6 fail on the gate's own wording, 
 
 - **No device run is live** (observed 18:50:49). The run started at 18:27:06 ended at
   18:50:41 with exit 1, see §3. Re-check before starting anything:
-  `pgrep -fl 'quickstart-proof|maestro|playwright test|e2e:docs'`.
+  `/bin/ps -axo pid,etime,command | grep -E 'quickstart-proof|maestro test|playwright test|e2e:docs' | grep -v grep`.
+  Do not use `pgrep -f maestro` for this: it matches about 20 unrelated helper processes
+  whose environment contains `.maestro/bin`.
 - **Reserved devices** (observed 18:27): iPhone 17 simulator
   `81487B1E-A4D1-45AE-9BCE-D675802BACD1`, Android emulator `emulator-5554`. A second booted
   simulator (`9051A0C2-…`) and a second emulator (`Pixel_8_API_34`) belong to other
