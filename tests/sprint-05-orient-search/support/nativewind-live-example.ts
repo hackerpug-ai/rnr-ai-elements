@@ -1948,6 +1948,7 @@ async function fetchOwnedChatUpstream(url: string, body: Buffer): Promise<Respon
       signal: controller.signal,
     });
   } catch {
+    // Any fetch failure, not only a dead upstream, is answered as unavailable (fail closed).
     return null;
   } finally {
     clearTimeout(timer);
@@ -2223,9 +2224,6 @@ async function driveLiveWeb(
 
     // Endpoint loss + retry (AC-3 case 2).
     await session.stop();
-    // Owner-backed runs keep every prior record in one file. Baseline 0 treats
-    // the last already-completed record as this retry. Count before the probe.
-    const recordsBeforeProbe = session.current.records().length;
     await textarea.fill(RETRY_PROBE_PROMPT);
     await send.click().catch(() => {});
     const retry = page.getByLabel('Retry', { exact: true });
@@ -2242,11 +2240,15 @@ async function driveLiveWeb(
       !alertText.includes('sk-') &&
       !alertText.includes('OPENAI_API_KEY');
     await session.restart();
+    // A restarted handle may start empty (an owned child) or re-read every prior
+    // record (an owner file), so count on the handle the retry is observed through:
+    // after the restart, before the click. Nothing records between stop and restart.
+    const recordsBeforeRetry = session.current.records().length;
     assertBackendReady(session.current);
     await retry.click().catch(() => {});
     result.retryCompleted = await waitForRecordOutcome(
       session.current,
-      recordsBeforeProbe,
+      recordsBeforeRetry,
       'completed',
       120_000,
     );
