@@ -170,6 +170,8 @@ function makeOutcome(
       hierarchy: hierarchy.slice(0, 4000),
       hierarchy_has_marker: hierarchy.includes(marker),
       composer_visible: hierarchyHasComposer,
+      // The flow dismisses one known dev-only LogBox toast before composing. Record it.
+      dev_error_toast_dismissed: /Tap on "Dismiss"\.\.\. COMPLETED/.test(flow.output),
     },
   };
 }
@@ -516,6 +518,9 @@ function writeManifest(
       : null,
     passed_legs: passedLegs,
     completed,
+    dev_error_toast_dismissed_legs: legs.filter(
+      (leg) => leg.evidence.dev_error_toast_dismissed === true,
+    ).length,
     legs,
     negative_control: negativeControl,
   };
