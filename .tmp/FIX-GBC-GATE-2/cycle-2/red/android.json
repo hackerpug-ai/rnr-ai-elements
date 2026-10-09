@@ -1,0 +1,12 @@
+{
+  "platform": "android",
+  "device": "emulator-5554",
+  "flow": ".tmp/FIX-GBC-GATE-2/cycle-2/red/flow-at-HEAD.maestro.yaml",
+  "flow_sha256": "2d0c877bf117e08087f303a0488010372f5932fb3f365d2e7e56f8e7b656a4a0",
+  "seed_screen_loaded": true,
+  "toast_on_screen_before_flow": true,
+  "marker": "FIX-GBC-GATE-2:android:1791550721098",
+  "maestro_exit": 1,
+  "marker_in_transcript_after": false,
+  "maestro_output_tail": "l \"${OLDER_SEED}\" is visible with speed 40, visibility percentage 100%, timeout 30000 ms, with centering disabled... COMPLETED\nAssert that \"${OLDER_SEED}\" is visible... COMPLETED\nAssert that \"Scroll to latest message\" is visible... COMPLETED\nTap on \"Scroll to latest message\"... COMPLETED\nAssert that \"Seed turn 24: Ready for your message.\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on \"Send message\"... FAILED\n\nElement not found: Text matching regex: Send message\n\nElement with Text matching regex: Send message not found. Check the UI hierarchy in debug artifacts to verify if the element exists.\n\nPossible causes:\n- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.\n- Element may be temporarily unavailable due to loading state.\n- This could be a real regression that needs to be addressed.\n\n==== Debug output (logs & screenshots) ====\n\n/Users/justinrich/.maestro/tests/2026-10-09_145842\n╭────────────────────────────────────────────────────────────────────────────────────────────────╮\n│                                                                                                │\n│   Debug tests faster by easy access to test recordings, maestro logs, screenshots, and more.   │\n│                                                                                                │\n│   Run your flows on Maestro Cloud:                                                             │\n│   maestro cloud app_file flows_folder/                                                         │\n│                                                                                                │\n╰────────────────────────────────────────────────────────────────────────────────────────────────╯\n\n"
+}

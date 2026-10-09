@@ -50,6 +50,16 @@ appId: host.exp.Exponent
 # the newest turn), so the submitted marker lands within one swipe of the viewport.
 - tapOn: "Scroll to latest message"
 - assertVisible: "Seed turn 24: Ready for your message."
+# Expo Router can log one dev-only console error while it mounts. Its LogBox toast sits on
+# the composer and swallows the composer tap, so the marker is never typed and Send is
+# never found. Open that one toast and dismiss it. The toast's own close button exposes
+# no accessible text. Any other toast stays put and still fails the leg.
+- runFlow:
+    when:
+      visible: ".*Can't perform a React state update on a component that hasn't mounted yet.*"
+    commands:
+      - tapOn: ".*Can't perform a React state update on a component that hasn't mounted yet.*"
+      - tapOn: "Dismiss"
 # Focus the composer (accessibility label "Message"; iOS appends the placeholder, Android
 # does not, so "Message.*" matches both), type the fresh marker, submit via the send button.
 - tapOn: "Message.*"
