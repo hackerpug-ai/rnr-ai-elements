@@ -1214,8 +1214,57 @@ async function runAndroidInputFlow(
     return null;
   };
 
-  // One conversational turn: prepare → baseline the records → send → gate on the
-  // turn's record outcome. Returns null on success, or the failure result.
+  // An immediate provider error leaves Send disabled. Waiting out the whole
+  // timeout and then failing is what uniwind Android light did on
+  // uniwind-4ca0fba1-20261010T0001 (seed request NOK29Wus3g6a06eq, outcome
+  // error, 600ms, 0 deltas). Tap Retry once. A second Retry is not attempted.
+  // `afterError` is the record count that already includes the error row.
+  // The Retry tap takes longer than a fast completion, so reading the length
+  // after the tap can hide the new completed row behind the baseline.
+  const retryErroredTurn = async (
+    label: string,
+    afterError: number,
+    timeoutMs: number,
+  ): Promise<MaestroResult | null> => {
+    logs.push(`WARN: ${label} generation errored — tap Retry once`);
+    if (!dismissThenTap(serial, 'Retry')) {
+      return fail(`could not tap Retry after the ${label} turn errored ${stateSummary(serial)}`);
+    }
+    const completed = await waitForRecordOutcome(
+      session.current,
+      afterError,
+      'completed',
+      timeoutMs,
+    );
+    if (!completed) {
+      return fail(
+        `${label} turn errored and one Retry did not produce a completed provider record`,
+      );
+    }
+    logs.push(`OK: ${label} recovered after one Retry`);
+    return null;
+  };
+
+  const awaitTurnRecord = async (
+    label: string,
+    baseline: number,
+    gate: { outcome: 'completed' | 'aborted'; timeoutMs: number },
+  ): Promise<MaestroResult | null> => {
+    const deadline = Date.now() + gate.timeoutMs;
+    while (Date.now() < deadline) {
+      const records = session.current.records();
+      const last = records[records.length - 1];
+      const arrived = records.length > baseline;
+      if (arrived && last?.outcome === gate.outcome) return null;
+      if (arrived && gate.outcome === 'completed' && last?.outcome === 'error') {
+        const remaining = Math.max(1_000, deadline - Date.now());
+        return retryErroredTurn(label, records.length, remaining);
+      }
+      await new Promise((resolveTick) => setTimeout(resolveTick, 1000));
+    }
+    return fail(`${label} turn never produced a ${gate.outcome} provider record`);
+  };
+
   const runTurn = async (
     label: string,
     text: string,
@@ -1227,11 +1276,9 @@ async function runAndroidInputFlow(
     if (!dismissThenTap(serial, 'Send message')) {
       return fail(`could not tap "Send message" (${label}) ${stateSummary(serial)}`);
     }
-    if (
-      gate &&
-      !(await waitForRecordOutcome(session.current, baseline, gate.outcome, gate.timeoutMs))
-    ) {
-      return fail(`${label} turn never produced a ${gate.outcome} provider record`);
+    if (gate) {
+      const waited = await awaitTurnRecord(label, baseline, gate);
+      if (waited) return waited;
     }
     return null;
   };
