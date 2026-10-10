@@ -1,0 +1,31 @@
+@@RED AC=AC-2-loud-failure grep=APX-002-loud-failure at=2026-10-10T10:40:03Z@@
++ CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts --grep APX-002-loud-failure
+
+Running 1 test using 1 worker
+(node:26413) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:56:3 › APX-002 zone-wiring › APX-002-loud-failure 
+
+    Error: zone-wiring.ts must exist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      56 |   test('APX-002-loud-failure', () => {
+      57 |     test.setTimeout(120_000);
+    > 58 |     expect(existsSync(SCRIPT), 'zone-wiring.ts must exist').toBe(true);
+         |                                                             ^
+      59 |
+      60 |     const before = runWiring(['--probe-www']);
+      61 |     const beforeClass = classificationToken(before.combined);
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-002/tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:58:61
+
+    Error Context: test-results/zone-wiring.remote-APX-002-zone-wiring-APX-002-loud-failure-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:56:3 › APX-002 zone-wiring › APX-002-loud-failure 
+@@GATE-EXIT=1@@

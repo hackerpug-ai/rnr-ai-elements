@@ -1,0 +1,9 @@
+@@GREEN AC=AC-3-probe-classifies grep=APX-002-probe-classifies at=2026-10-10T10:46:12Z@@
++ CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts --grep APX-002-probe-classifies
+
+Running 1 test using 1 worker
+(node:98020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+·
+  1 passed (1.1s)
+@@GATE-EXIT=0@@
