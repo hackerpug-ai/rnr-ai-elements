@@ -1,0 +1,143 @@
+[run_flow] sprint=sprint-07-deploy-live-at-apex root=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-007 head=cbeaf038f904d85a6ed6a3dcea0f0dc0ecaa472f+dirty expect=red flows=1/5
+[run_flow] FLOW-DELIV-03-112-file-completeness (steps 8): $ CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts --grep FLOW-DELIV-03-112-file-completeness
+
+Running 1 test using 1 worker
+(node:21919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts:260:1 › FLOW-DELIV-03-112-file-completeness 
+
+    Error: FLOW-DELIV-03-112-file-completeness RED against live apex:
+    - https://rnraielements.com/r/nativewind/shimmer.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/checkpoint.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/image.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/persona.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/speech-input.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/kbd.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/breadcrumb.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/button-group.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/slider.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/table.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/command.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/mono.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/markdown.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/code-block.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/conversation.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/message.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/prompt-input.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/empty.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/item.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/input-group.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/sheet.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/suggestion.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/status.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/reasoning-lifecycle.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/tool.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/reasoning.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/task.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/question.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/agent.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/chain-of-thought.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/plan.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/confirmation.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/queue.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/url.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/sources.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/inline-citation.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/artifact.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/snippet.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/commit.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/attachments.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/context.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/open-in-chat.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/model-selector.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/mic-selector.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/voice-selector.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/audio-player.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/transcription.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/terminal.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/file-tree.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/environment-variables.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/package-info.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/stack-trace-parser.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/stack-trace.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/schema-display.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/test-results.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/nativewind/web-preview.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/shimmer.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/checkpoint.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/image.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/persona.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/speech-input.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/kbd.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/breadcrumb.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/button-group.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/slider.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/table.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/command.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/mono.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/markdown.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/code-block.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/conversation.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/message.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/prompt-input.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/empty.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/item.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/input-group.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/sheet.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/suggestion.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/status.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/reasoning-lifecycle.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/tool.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/reasoning.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/task.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/question.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/agent.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/chain-of-thought.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/plan.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/confirmation.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/queue.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/url.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/sources.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/inline-citation.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/artifact.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/snippet.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/commit.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/attachments.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/context.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/open-in-chat.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/model-selector.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/mic-selector.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/voice-selector.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/audio-player.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/transcription.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/terminal.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/file-tree.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/environment-variables.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/package-info.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/stack-trace-parser.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/stack-trace.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/schema-display.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/test-results.json: cache-control "public, max-age=0, must-revalidate"
+    - https://rnraielements.com/r/uniwind/web-preview.json: cache-control "public, max-age=0, must-revalidate"
+    - tally engine=nativewind present=0 expected=56
+    - tally engine=uniwind present=0 expected=56
+    engine=nativewind present=0 expected=56
+    engine=uniwind present=0 expected=56
+
+      305 |
+      306 |   if (failures.length > 0) {
+    > 307 |     throw new Error(
+          |           ^
+      308 |       `FLOW-DELIV-03-112-file-completeness RED against live apex:\n- ${failures.join('\n- ')}\n${tally.text.join('\n')}`,
+      309 |     );
+      310 |   }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-007/tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts:307:11
+
+    Error Context: test-results/registry-completeness.remo-20c18-IV-03-112-file-completeness-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts:260:1 › FLOW-DELIV-03-112-file-completeness 
+[run_flow] FLOW-DELIV-03-112-file-completeness (steps 8): RED — exit=1; watched failing run saved as red proof → /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-007/tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-03-112-file-completeness/proof.red
+[run_flow] 1/1 flows RED
