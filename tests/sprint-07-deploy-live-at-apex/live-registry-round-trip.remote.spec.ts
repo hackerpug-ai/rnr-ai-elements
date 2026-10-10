@@ -765,10 +765,19 @@ function releaseAllHeld(): void {
   for (const held of [...heldRoots]) releaseHeld(held);
 }
 
+const PROMPT_LINE =
+  /Would you like[^\n]*|What would you like to do\?[^\n]*|Ok to proceed\?[^\n]*|Which components would you like[^\n]*|Select components to add[^\n]*|How would you like to proceed\?[^\n]*|Installation cancelled[^\n]*/;
+
 function spawnInConsumer(command: string, root: string, timeoutMs: number): RunResult {
   assertNodeEnvCleared();
   assertRootPresent(root);
-  return run(command, root, timeoutMs);
+  const result = run(command, root, timeoutMs);
+  const prompt = result.output.match(PROMPT_LINE);
+  if (result.exit !== 0 || !prompt) return result;
+  return {
+    ...result,
+    output: `${result.output}\n[non-interactive prompt closed; refusing to treat exit 0 as success]\n${prompt[0]}`,
+  };
 }
 
 function cliAddCommand(engine: Engine): string {
@@ -887,6 +896,38 @@ function requirePrepared(engine: Engine): PreparedConsumer {
   const row = preparedConsumers.get(engine);
   if (!row) throw new Error(`missing prepared ${engine} consumer`);
   return row;
+}
+
+function exitsClean(row: PreparedConsumer): boolean {
+  return row.installExit === 0 && row.expoExit === 0 && row.cliExit === 0;
+}
+
+function nonEmptyRegistryFile(root: string, rel: string): boolean {
+  const abs = join(root, rel);
+  if (!existsSync(abs)) return false;
+  const stat = lstatSync(abs);
+  return stat.isFile() && stat.size > 0;
+}
+
+function registryFilesReady(row: PreparedConsumer): boolean {
+  if (!exitsClean(row) || row.created.length !== EXPECTED_CREATED.length) return false;
+  return EXPECTED_CREATED.every(
+    (rel) => row.created.includes(rel) && nonEmptyRegistryFile(row.held.root, rel),
+  );
+}
+
+function registryFilesMessage(row: PreparedConsumer): string {
+  return [
+    `${row.engine} CLI result is not the 5 non-empty registry files`,
+    `install_exit ${row.installExit}`,
+    `expo_exit ${row.expoExit}`,
+    `cli_exit ${row.cliExit}`,
+    `files ${row.created.join(' ') || '(none)'}`,
+    'expo output:',
+    row.expoOutput.slice(-800),
+    'cli output:',
+    row.cliOutput.slice(-800),
+  ].join('\n');
 }
 
 function allowlistFromGit(engine: Engine): string[] {
@@ -1097,6 +1138,7 @@ test.describe('FLOW-DELIV-03-live-registry-round-trip', () => {
   }) => {
     for (const engine of CONSUMER_ENGINES) {
       const row = requirePrepared(engine);
+      expect(registryFilesReady(row), registryFilesMessage(row)).toBe(true);
       const aliases = readAliases(row.held.root);
       expect(aliases.utils, `${engine} aliases.utils`).toBe(EXPECTED_ALIASES_UTILS);
       const changed: AliasChangedLines = { conversation: [], empty: [] };
