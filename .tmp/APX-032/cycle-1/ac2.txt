@@ -1,0 +1,22 @@
+PASS (0) FAIL (1)
+
+1. APX-032-AC2 Stored light theme applies before first paint under the CSP
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32mtrue[39m
+   Received: [31mfalse[39m
+   
+   Call Log:
+   - Timeout 10000ms exceeded while waiting on the predicate
+   
+     462 |           timeout: 10_000,
+     463 |         })
+   > 464 |         .toBe(true);
+         |          ^
+     465 |
+     466 |       const classAtBody = String(await page.evaluate(`window.__rnrClassAtBody`));
+     467 |       expect(
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-032/tests/sprint-07-deploy-live-at-apex/csp-compat.spec.ts:464:10
+
+Time: 14821ms
+[full output: ~/Library/Application Support/rtk/tee/1791641336_playwright.log]
