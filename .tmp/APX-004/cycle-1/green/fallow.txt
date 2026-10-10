@@ -1,0 +1,46 @@
+
+> rnr-ai-elements@0.2.1 check:fallow /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004
+> fallow audit --base HEAD
+
+loaded config: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/.fallowrc.json
+   0.532876250s  WARN fallow: skipped 2 hidden directories that contain source files (apps/harness/.storybook-web, apps/harness-nativewind/.storybook-web). Hidden directories are not traversed and no config field adds one: analyze one with fallow --root <dir> if it holds first-party source, or add '<dir>/**' to ignorePatterns to silence this.
+   0.602328667s  WARN Skipped 4 package.json entry points outside project root or containing parent directory traversal: ../../scripts/docs-data/authored-snippets.ts, ../../scripts/docs-data/check-dist-links.ts, ../../scripts/docs-data/prebuild.ts, ../../scripts/docs-data/search-index.ts
+
+Audit scope: 5 changed files vs HEAD (c8c47f23..HEAD)
+■ Metrics: dead code 74 · complexity 0 · duplication 0
+
+── Dead Code ──────────────────────────────────────
+
+── Dependencies ─────────────────────────────────────
+
+● Unused dependencies (68)
+  @expo/ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-device (apps/example/package.json) (caveat: incomplete import graph)
+  expo-font (apps/example/package.json) (caveat: incomplete import graph)
+  expo-glass-effect (apps/example/package.json) (caveat: incomplete import graph)
+  expo-image (apps/example/package.json) (caveat: incomplete import graph)
+  expo-splash-screen (apps/example/package.json) (caveat: incomplete import graph)
+  expo-symbols (apps/example/package.json) (caveat: incomplete import graph)
+  expo-system-ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-web-browser (apps/example/package.json) (caveat: incomplete import graph)
+  react-native-web (apps/example/package.json) (caveat: incomplete import graph)
+  ... and 58 more (--format json for full list)
+  Listed in dependencies but never imported — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+● Unused devDependencies (6)
+  @storybook/icons (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/icons (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  Listed in devDependencies but never imported or referenced — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+✗ 68 unused dependencies · 6 dev/optional dependencies (0.32s)
+  74 issues · 21 suppressed · 0 stale suppressions
+
+── Styling ────────────────────────────────────────
+  2 styling candidates (run `fallow health --css` for detail)
+note: skipped 180 files matching default duplicates ignores (use --explain-skipped for the list)
+✓ No issues in 5 changed files (1.25s)
+  audit gate excluded 74 inherited findings (run with --gate all to enforce)

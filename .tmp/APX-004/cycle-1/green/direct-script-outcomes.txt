@@ -1,0 +1,15 @@
+--- real config ---
+[docs-deploy] preflight-edge ok: assets-only (no main, no bindings); 404.html present
+EXIT:0
+--- www served-directly ---
+[docs-deploy] preflight-edge FAILED: www redirect served-directly (host=rnraielements.com, apex=rnraielements.com)
+EXIT:1
+--- www unresolved ---
+[docs-deploy] preflight-edge FAILED: www redirect unresolved (host=no-such-host-apx004.rnraielements.com, apex=rnraielements.com)
+EXIT:1
+--- www redirect-ok ---
+[docs-deploy] preflight-edge ok: assets-only (no main, no bindings); 404.html present; www redirect-ok
+EXIT:0
+--- www wrong-target ---
+[docs-deploy] preflight-edge FAILED: www redirect wrong-target (host=www.github.com, apex=rnraielements.com)
+EXIT:1

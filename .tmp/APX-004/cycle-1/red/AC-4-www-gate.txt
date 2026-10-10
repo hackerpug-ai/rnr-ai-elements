@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+(node:5714) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F
+
+  1) [chromium-desktop] › tests/sprint-07-deploy-live-at-apex/preflight-edge.spec.ts:146:3 › APX-004 preflight-edge › APX-004-www-gate 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "served-directly"
+    Received string:    "
+    (node:5730) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    node:internal/modules/esm/resolve:275
+        throw new ERR_MODULE_NOT_FOUND(
+              ^·
+    Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/scripts/docs-deploy/preflight-edge.ts' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/
+        at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+        at moduleResolve (node:internal/modules/esm/resolve:865:10)
+        at defaultResolve (node:internal/modules/esm/resolve:991:11)
+        at #cachedDefaultResolve (node:internal/modules/esm/loader:719:20)
+        at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:736:38)
+        at nextStep (node:internal/modules/customization_hooks:189:26)
+        at resolveBaseSync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10932)
+        at resolveDirectorySync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:12238)
+        at resolveTsPathsSync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13445)
+        at resolve (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:15991) {
+      code: 'ERR_MODULE_NOT_FOUND',
+      url: 'file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/scripts/docs-deploy/preflight-edge.ts'
+    }·
+    Node.js v24.14.0
+    "
+
+      155 |     ]);
+      156 |     expect(served.exit, served.combined).toBe(1);
+    > 157 |     expect(served.combined).toContain('served-directly');
+          |                             ^
+      158 |
+      159 |     const unresolved = runPreflight([
+      160 |       ...base,
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/tests/sprint-07-deploy-live-at-apex/preflight-edge.spec.ts:157:29
+
+    Error Context: test-results/sprint-07-deploy-live-at-a-6e1fb-light-edge-APX-004-www-gate-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests/sprint-07-deploy-live-at-apex/preflight-edge.spec.ts:146:3 › APX-004 preflight-edge › APX-004-www-gate 
