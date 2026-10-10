@@ -443,7 +443,7 @@ Added 2026-09-29 via ask `ask-wave26-add-native-live-repair`: FIX-ORI-RN-004-4 o
 
 **Sequence:** 6
 **Timeline:** Phase 2
-**Status:** In Progress
+**Status:** Closed 2026-10-10 (rerun waived)
 **Fidelity:** committed
 **Proposed by:** techwriting-planner (lead) + astro-planner + frontend-designer (promotion dispatch 2026-09-15; proposals staged at `.tmp/kb-sprint-tasks-plan/sprint-06-guides-boundary-changelog/proposals/`)
 **Milestone:** —

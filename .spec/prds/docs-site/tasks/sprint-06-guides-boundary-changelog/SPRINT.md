@@ -1,7 +1,7 @@
 ---
 sequence: 6
 timeline: Phase 2
-status: planned
+status: completed
 sprint_id: sprint-06-guides-boundary-changelog
 prd: ../..
 planned_from_roadmap_sha: c8f15a4732af8b6de4db4f44ac599303c597ba00d21e63d699d9d08bdaac06da
