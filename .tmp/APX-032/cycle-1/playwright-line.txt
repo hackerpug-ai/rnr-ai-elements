@@ -1,0 +1,21 @@
+PASS (1) FAIL (1) skipped (2)
+
+1. APX-032-AC2 Stored light theme applies before first paint under the CSP
+   Error: class at <body> insertion must contain light (got )
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+   
+   Expected substring: [32m"light"[39m
+   Received string:    [31m""[39m
+   
+     456 |         classAtBody,
+     457 |         `class at <body> insertion must contain light (got ${classAtBody})`,
+   > 458 |       ).toContain('light');
+         |         ^
+     459 |       expect(
+     460 |         classAtBody.includes('dark'),
+     461 |         `class at <body> insertion must not contain dark (got ${classAtBody})`,
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-032/tests/sprint-07-deploy-live-at-apex/csp-compat.spec.ts:458:9
+
+Time: 8250ms
+[full output: ~/Library/Application Support/rtk/tee/1791641175_playwright.log]
