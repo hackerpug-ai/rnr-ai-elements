@@ -11,7 +11,7 @@ planned_at: 2026-09-29
 
 # Sprint 06: guides-boundary-changelog
 
-**Status:** in_progress
+**Status:** closed 2026-10-10. The user waived the remaining full-suite rerun and the human-gate rerun. The six gate checkboxes below stay open because those steps were not run again.
 **Sequence:** 6
 **Timeline:** Phase 2
 

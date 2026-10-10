@@ -14,7 +14,7 @@ pr_sequencing: false
 
 **Sprints:** 13  (6 committed · 7 provisional)
 **Total Tasks:** 77  (committed sprints only; provisional sprints carry a size band)
-**Current Sprint:** Sprint 01 (all 12 FUSE tasks landed) — Sprint 02 completed; Sprint 03 promoted + expanded to task files by `/kb-sprint-tasks-plan` on 2026-09-12 — Sprint 04 promoted the same day — Sprint 05 promoted 2026-09-14 (36 tasks + 23 remediation; **completed 2026-10-06**; hosted-publish tail + e2e re-baseline deferred as recorded follow-ups) — Sprint 06 promoted 2026-09-15 (17 tasks / 63 pts) — Sprint 07 promoted 2026-09-29 (18 tasks / 50 pts; re-gated)
+**Current Sprint:** Sprint 01 (all 12 FUSE tasks landed) — Sprint 02 completed; Sprint 03 promoted + expanded to task files by `/kb-sprint-tasks-plan` on 2026-09-12 — Sprint 04 promoted the same day — Sprint 05 promoted 2026-09-14 (36 tasks + 23 remediation; **completed 2026-10-06**; hosted-publish tail + e2e re-baseline deferred as recorded follow-ups) — Sprint 06 promoted 2026-09-15 (17 tasks / 63 pts; **closed 2026-10-10**; full-suite and human-gate rerun waived by the user) — Sprint 07 promoted 2026-09-29 (18 tasks / 50 pts; re-gated)
 
 All 28 in-scope use cases are demonstrated by exactly the gate of the sprint that ships them. Sprints 01–11 were authored by the dispatched specialist set (astro-planner, cloudflare-workers-planner, techwriting-planner, react-native-reusables-planner, frontend-designer) through fusion and convergence rounds staged verbatim at `.tmp/kb-sprint-plan/docs-site/`; sprints 12–13 were added by the v2.0.0 delta replan (flue-planner + ghactions-planner + techwriting-planner, staged at `.tmp/kb-sprint-plan/docs-site-delta/`).
 
@@ -27,7 +27,7 @@ All 28 in-scope use cases are demonstrated by exactly the gate of the sprint tha
 | 3 | — | [Sprint 03: family-browse](#sprint-03-family-browse) | /components counts 7 anchored families, 39 cards, verdict badges | 6 | Sprint 01 | Completed |
 | 4 | — | [Sprint 04: generated-reference](#sprint-04-generated-reference) | Mutate any enriched field → build fails naming the item; props/deps/source byte-match the served JSON | 11 | Sprint 01, Sprint 03 | Completed |
 | 5 | — | [Sprint 05: orient-search](#sprint-05-orient-search) | Stranger reads /docs/introduction in one pass (T-DOCS-002) | — | Sprint 01, Sprint 02 | Completed 2026-10-06 |
-| 6 | — | [Sprint 06: guides-boundary-changelog](#sprint-06-guides-boundary-changelog) | Boundary gaps cross-check vs ledger + porting not-ported: zero contradictions (T-DOCS-018) | 17 | Sprint 05 | In Progress |
+| 6 | — | [Sprint 06: guides-boundary-changelog](#sprint-06-guides-boundary-changelog) | Boundary gaps cross-check vs ledger + porting not-ported: zero contradictions (T-DOCS-018) | 17 | Sprint 05 | Closed 2026-10-10 (rerun waived) |
 | 7 | — | [Sprint 07: deploy-live-at-apex](#sprint-07-deploy-live-at-apex) | Live curl shows the three cache tiers + security headers, www 301s to apex, all 112 JSON at max-age=300; real CLI add still exits 0 (T-DELIV-005..007, 011..013) | 18 | Sprint 01 | In Progress |
 | 8 | — | [Sprint 08: preview-rollback-drill](#sprint-08-preview-rollback-drill) | One-command rollback returns prior content within 60s (T-DELIV-010) | — | Sprint 07 | Planned |
 | 9 | — | [Sprint 09: live-gallery-qr-phone](#sprint-09-live-gallery-qr-phone) | Phone with Expo Go scans a live QR → gallery opens in 30s (T-GEND-018) | — | Sprint 07, Sprint 04 | Planned |
