@@ -1,0 +1,37 @@
+
+Running 1 test using 1 worker
+
+(node:81507) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+APX-041 resolved @latest CLI version 1.0.0
+APX-041 nativewind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+APX-041 uniwind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+  ✘  1 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1067:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform (31ms)
+
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1067:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform 
+
+    Error: nativewind aliases.ui
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "@/ui"
+    Received: "@/components/ui"
+
+      1071 |       const row = requirePrepared(engine);
+      1072 |       const aliases = readAliases(row.held.root);
+    > 1073 |       expect(aliases.ui, `${engine} aliases.ui`).toBe(EXPECTED_ALIASES_UI);
+           |                                                  ^
+      1074 |       expect(aliases.utils, `${engine} aliases.utils`).toBe(EXPECTED_ALIASES_UTILS);
+      1075 |       const changed: AliasChangedLines = { conversation: [], empty: [] };
+      1076 |       for (const file of COMPARED_FILES) {
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-041/tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1073:50
+
+    Error Context: test-results/live-registry-round-trip.r-708ed-PX-041-AC-2-alias-transform-live-edge/error-context.md
+
+    Error Context: test-results/live-registry-round-trip.r-708ed-PX-041-AC-2-alias-transform-live-edge/error-context.md
+
+    Error Context: test-results/live-registry-round-trip.r-708ed-PX-041-AC-2-alias-transform-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1067:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform 

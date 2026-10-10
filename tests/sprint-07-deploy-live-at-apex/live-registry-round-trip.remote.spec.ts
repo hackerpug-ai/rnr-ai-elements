@@ -1,10 +1,33 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import {
+  closeSync,
+  copyFileSync,
+  existsSync,
+  lstatSync,
+  mkdirSync,
+  mkdtempSync,
+  openSync,
+  readdirSync,
+  readFileSync,
+  realpathSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import type { APIRequestContext } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 import { require as tsxRequire } from 'tsx/cjs/api';
+import {
+  cleanupConsumer,
+  compileConsumer,
+  REPO_ROOT as HELPER_REPO_ROOT,
+  type RunResult,
+  resolveCliVersion,
+  run,
+  sha256,
+  TEMPLATE_FILES,
+} from '../sprint-05-orient-search/support/quickstart-consumer';
 
 /**
  * packages/registry/package.json is not `"type": "module"`, so a native import
@@ -67,6 +90,11 @@ const REQUIRED_FLOW_TESTS: string[] = [
   'APX-040-refuses-unfaithful-commit',
   'APX-040-live-deploy-identity',
   'APX-040-same-deploy',
+  'APX-041-AC-1-cli-add',
+  'APX-041-AC-2-alias-transform',
+  'APX-041-AC-3-template-allowlist',
+  'APX-041-AC-4-consumer-compiles',
+  'APX-041-AC-5-install-failure-not-retried',
 ];
 
 type HeaderLine = { name: string; value: string };
@@ -88,15 +116,42 @@ type EngineReceipt = {
   built_sha256: string | null;
 };
 
+type AliasChangedLines = {
+  conversation: number[];
+  empty: number[];
+};
+
 type RoundTripReceipt = {
   deployment_id: string;
   version_id: string;
   commit: string | null;
   engines: Record<string, EngineReceipt>;
+  cli_version?: string;
+  created_files?: Record<string, string[]>;
+  changed_lines?: Record<string, AliasChangedLines>;
+  tsc_exits?: Record<string, number>;
+  install_output_tails?: Record<string, string | null>;
+};
+
+const CONSUMER_ENGINES = ['nativewind', 'uniwind'] as const satisfies readonly Engine[];
+
+type InstallProof = {
+  cliVersion: string;
+  createdFiles: Record<string, string[]>;
+  changedLines: Record<string, AliasChangedLines>;
+  tscExits: Partial<Record<Engine, number>>;
+  installOutputTails: Partial<Record<Engine, string | null>>;
 };
 
 const flowResults = new Map<string, string>();
 let receiptDraft: RoundTripReceipt | null = null;
+const installProof: InstallProof = {
+  cliVersion: '',
+  createdFiles: {},
+  changedLines: {},
+  tscExits: {},
+  installOutputTails: {},
+};
 
 delete process.env.NODE_ENV;
 loadTokenFromDotenv();
@@ -447,14 +502,45 @@ function requiredFlowPassed(): boolean {
   return REQUIRED_FLOW_TESTS.every((token) => flowResults.get(token) === 'passed');
 }
 
+function attachInstallProof(draft: RoundTripReceipt): RoundTripReceipt {
+  if (!/^\d+\.\d+\.\d+$/.test(installProof.cliVersion)) {
+    throw new Error(`APX-041 cli_version missing from receipt: ${installProof.cliVersion}`);
+  }
+  const created_files: Record<string, string[]> = {};
+  const changed_lines: Record<string, AliasChangedLines> = {};
+  const tsc_exits: Record<string, number> = {};
+  const install_output_tails: Record<string, string | null> = {};
+  for (const engine of CONSUMER_ENGINES) {
+    const created = installProof.createdFiles[engine];
+    const changed = installProof.changedLines[engine];
+    const tscExit = installProof.tscExits[engine];
+    if (!created || !changed || tscExit === undefined) {
+      throw new Error(`APX-041 receipt is missing install proof for ${engine}`);
+    }
+    created_files[engine] = created;
+    changed_lines[engine] = changed;
+    tsc_exits[engine] = tscExit;
+    install_output_tails[engine] = installProof.installOutputTails[engine] ?? null;
+  }
+  return {
+    ...draft,
+    cli_version: installProof.cliVersion,
+    created_files,
+    changed_lines,
+    tsc_exits,
+    install_output_tails,
+  };
+}
+
 function writeReceiptIfComplete(): void {
   if (!requiredFlowPassed() || !receiptDraft) return;
-  if (!receiptDraft.commit || !/^[0-9a-f]{40}$/.test(receiptDraft.commit)) return;
-  if (containsToken(receiptDraft)) {
+  const receipt = attachInstallProof(receiptDraft);
+  if (!receipt.commit || !/^[0-9a-f]{40}$/.test(receipt.commit)) return;
+  if (containsToken(receipt)) {
     throw new Error('refusing to write run.json because it contains CLOUDFLARE_API_TOKEN');
   }
   mkdirSync(dirname(RUN_JSON), { recursive: true });
-  writeFileSync(RUN_JSON, `${JSON.stringify(receiptDraft, null, 2)}\n`);
+  writeFileSync(RUN_JSON, `${JSON.stringify(receipt, null, 2)}\n`);
 }
 
 test.afterEach(
@@ -560,4 +646,459 @@ test('FLOW-DELIV-03-live-registry-round-trip APX-040-same-deploy', async ({ requ
     engines,
   };
   expect.soft(containsToken(receiptDraft), 'token substring in receipt draft').toBe(false);
+});
+
+/**
+ * Expected aliases.ui target. The mutation check changes this string to `@/ui`.
+ * The alias map itself is read from the consumer's components.json.
+ */
+const EXPECTED_ALIASES_UI = '@/components/ui';
+const EXPECTED_ALIASES_UTILS = '@/lib/utils';
+const CONSUMER_PHASE_TIMEOUT_MS = 10 * 60_000;
+const PROBE_INSTALL_TIMEOUT_MS = 45_000;
+const EXPECTED_CREATED = [
+  'components/ai/conversation.tsx',
+  'components/ui/button.tsx',
+  'components/ui/empty.tsx',
+  'components/ui/icon.tsx',
+  'components/ui/text.tsx',
+];
+const ABSENT_PACKAGE_JSON =
+  '{"name":"apx041-probe","version":"0.0.0","dependencies":{"apx041-definitely-absent-package-2026":"1.0.0"}}\n';
+
+type HeldRoot = { root: string; lease: number; released: boolean };
+type InstallPhaseResult = {
+  exit: number;
+  output: string;
+  attempts: number;
+  retried: boolean;
+  firstOutputTail: string | null;
+  root: string;
+};
+type PreparedConsumer = {
+  engine: Engine;
+  held: HeldRoot;
+  installExit: number;
+  installAttempts: number;
+  installRetried: boolean;
+  expoExit: number;
+  expoOutput: string;
+  componentsBefore: boolean;
+  cliCommand: string;
+  cliExit: number;
+  cliOutput: string;
+  created: string[];
+};
+type ComparedFile = {
+  item: 'conversation' | 'empty';
+  installedPath: string;
+  changed: readonly number[];
+  specifiers: readonly string[];
+};
+type ConsumerAliases = { ui: string; utils: string };
+
+const heldRoots: HeldRoot[] = [];
+const preparedConsumers = new Map<Engine, PreparedConsumer>();
+const COMPARED_FILES: readonly ComparedFile[] = [
+  {
+    item: 'conversation',
+    installedPath: 'components/ai/conversation.tsx',
+    changed: [1, 2, 3, 4],
+    specifiers: [
+      `${EXPECTED_ALIASES_UI}/button`,
+      `${EXPECTED_ALIASES_UI}/empty`,
+      `${EXPECTED_ALIASES_UI}/icon`,
+      EXPECTED_ALIASES_UTILS,
+    ],
+  },
+  {
+    item: 'empty',
+    installedPath: 'components/ui/empty.tsx',
+    changed: [1, 2, 4],
+    specifiers: [
+      `${EXPECTED_ALIASES_UI}/text`,
+      EXPECTED_ALIASES_UTILS,
+      `${EXPECTED_ALIASES_UI}/icon`,
+    ],
+  },
+];
+
+function assertNodeEnvCleared(): void {
+  if (process.env.NODE_ENV === 'test') {
+    throw new Error('NODE_ENV=test survived the module-top delete; refusing to spawn');
+  }
+}
+
+function assertRootPresent(root: string): void {
+  if (!existsSync(root)) throw new Error(`consumer root vanished: ${root}`);
+}
+
+function assertConsumerRoot(root: string): void {
+  expect(root.startsWith(tmpdir())).toBe(true);
+  expect(root.startsWith(HELPER_REPO_ROOT)).toBe(false);
+}
+
+function createHeldRoot(label: string): HeldRoot {
+  const root = mkdtempSync(join(tmpdir(), `apx041-${label}-`));
+  assertRootPresent(root);
+  const held = { root, lease: openSync(join(root, '.apx041-lease'), 'a'), released: false };
+  heldRoots.push(held);
+  return held;
+}
+
+function releaseHeld(held: HeldRoot): void {
+  if (held.released) return;
+  held.released = true;
+  try {
+    closeSync(held.lease);
+  } catch {
+    // The lease fd is already closed.
+  }
+  cleanupConsumer(held.root);
+  const index = heldRoots.indexOf(held);
+  if (index >= 0) heldRoots.splice(index, 1);
+}
+
+function releaseAllHeld(): void {
+  for (const held of [...heldRoots]) releaseHeld(held);
+}
+
+function spawnInConsumer(command: string, root: string, timeoutMs: number): RunResult {
+  assertNodeEnvCleared();
+  assertRootPresent(root);
+  return run(command, root, timeoutMs);
+}
+
+function cliAddCommand(engine: Engine): string {
+  const url = `https://rnraielements.com/r/${engine}/conversation.json`;
+  return `npx @react-native-reusables/cli@latest add ${url}`;
+}
+
+function copyTemplate(engine: Engine, root: string): void {
+  assertRootPresent(root);
+  const sourceRoot = join(HELPER_REPO_ROOT, 'packages/docs-snippets', engine);
+  for (const rel of TEMPLATE_FILES[engine]) {
+    const src = join(sourceRoot, rel);
+    if (!existsSync(src)) throw new Error(`template file missing: ${src}`);
+    const dst = join(root, rel);
+    mkdirSync(dirname(dst), { recursive: true });
+    copyFileSync(src, dst);
+  }
+}
+
+function installPhase(root: string, renew: () => string, timeoutMs: number): InstallPhaseResult {
+  const first = spawnInConsumer('pnpm install', root, timeoutMs);
+  if (first.exit === 0 || !first.output.includes('react-native-web')) {
+    return {
+      exit: first.exit,
+      output: first.output,
+      attempts: 1,
+      retried: false,
+      firstOutputTail: null,
+      root,
+    };
+  }
+  const next = renew();
+  const second = spawnInConsumer('pnpm install', next, timeoutMs);
+  return {
+    exit: second.exit,
+    output: second.output,
+    attempts: 2,
+    retried: true,
+    firstOutputTail: first.output.slice(-800),
+    root: next,
+  };
+}
+
+function listComponentFiles(root: string): string[] {
+  const base = join(root, 'components');
+  if (!existsSync(base)) return [];
+  const prefix = root.endsWith('/') ? root : `${root}/`;
+  const found: string[] = [];
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const abs = join(dir, entry.name);
+      if (entry.isDirectory()) walk(abs);
+      else found.push(abs.slice(prefix.length));
+    }
+  };
+  walk(base);
+  return found.sort();
+}
+
+function assertCreatedFile(root: string, rel: string): void {
+  const abs = join(root, rel);
+  const stat = lstatSync(abs);
+  expect(stat.isSymbolicLink(), rel).toBe(false);
+  expect(stat.size, rel).toBeGreaterThan(0);
+  expect(realpathSync(abs).startsWith(HELPER_REPO_ROOT), rel).toBe(false);
+}
+
+function prepareEngine(engine: Engine): PreparedConsumer {
+  let held = createHeldRoot(engine);
+  copyTemplate(engine, held.root);
+  const install = installPhase(
+    held.root,
+    () => {
+      releaseHeld(held);
+      held = createHeldRoot(engine);
+      copyTemplate(engine, held.root);
+      return held.root;
+    },
+    CONSUMER_PHASE_TIMEOUT_MS,
+  );
+  if (install.root !== held.root) {
+    throw new Error(`install root ${install.root} is not the leased root ${held.root}`);
+  }
+  const expo = spawnInConsumer('npx expo install', held.root, CONSUMER_PHASE_TIMEOUT_MS);
+  const componentsBefore = existsSync(join(held.root, 'components'));
+  const cliCommand = cliAddCommand(engine);
+  const cli = spawnInConsumer(cliCommand, held.root, CONSUMER_PHASE_TIMEOUT_MS);
+  const created = listComponentFiles(held.root);
+  installProof.createdFiles[engine] = created;
+  installProof.installOutputTails[engine] = install.firstOutputTail;
+  console.log(
+    `APX-041 ${engine} install_exit ${install.exit} attempts ${install.attempts} expo_exit ${expo.exit} cli_exit ${cli.exit} files ${created.length}`,
+  );
+  return {
+    engine,
+    held,
+    installExit: install.exit,
+    installAttempts: install.attempts,
+    installRetried: install.retried,
+    expoExit: expo.exit,
+    expoOutput: expo.output,
+    componentsBefore,
+    cliCommand,
+    cliExit: cli.exit,
+    cliOutput: cli.output,
+    created,
+  };
+}
+
+function requirePrepared(engine: Engine): PreparedConsumer {
+  const row = preparedConsumers.get(engine);
+  if (!row) throw new Error(`missing prepared ${engine} consumer`);
+  return row;
+}
+
+function allowlistFromGit(engine: Engine): string[] {
+  const prefix = `packages/docs-snippets/${engine}/`;
+  const listed = gitResult(['ls-files', '--', `packages/docs-snippets/${engine}`]);
+  expect(listed.status, listed.stderr).toBe(0);
+  const tracked = listed.stdout
+    .split('\n')
+    .filter((line) => line.startsWith(prefix))
+    .map((line) => line.slice(prefix.length))
+    .filter((rel) => rel.length > 0);
+  expect(tracked, `${engine} git ls-files`).toContain('app/index.tsx');
+  return tracked.filter((rel) => rel !== 'app/index.tsx');
+}
+
+function readAliases(root: string): ConsumerAliases {
+  const parsed = JSON.parse(readFileSync(join(root, 'components.json'), 'utf8')) as {
+    aliases?: { ui?: unknown; utils?: unknown };
+  };
+  const ui = parsed.aliases?.ui;
+  const utils = parsed.aliases?.utils;
+  if (typeof ui !== 'string' || ui.length === 0) {
+    throw new Error(`aliases.ui missing in ${root}/components.json`);
+  }
+  if (typeof utils !== 'string' || utils.length === 0) {
+    throw new Error(`aliases.utils missing in ${root}/components.json`);
+  }
+  return { ui, utils };
+}
+
+function mapRegistryLine(line: string, engine: Engine, aliases: ConsumerAliases): string {
+  return line
+    .replace(`@/registry/${engine}/components/ui/`, `${aliases.ui}/`)
+    .replace(`@/registry/${engine}/lib/utils`, aliases.utils);
+}
+
+function mapServedContent(served: string, engine: Engine, aliases: ConsumerAliases): string {
+  return served
+    .split('\n')
+    .map((line) => mapRegistryLine(line, engine, aliases))
+    .join('\n');
+}
+
+function changedLineNumbers(served: string, installed: string): number[] {
+  const servedLines = served.split('\n');
+  const installedLines = installed.split('\n');
+  const count = Math.max(servedLines.length, installedLines.length);
+  const changed: number[] = [];
+  for (let index = 0; index < count; index++) {
+    if (servedLines[index] !== installedLines[index]) changed.push(index + 1);
+  }
+  return changed;
+}
+
+function assertAliasTransform(
+  engine: Engine,
+  aliases: ConsumerAliases,
+  served: string,
+  installed: string,
+  file: ComparedFile,
+): number[] {
+  expect(served.length, `${engine} ${file.item} served`).toBeGreaterThan(0);
+  expect(installed.length, `${engine} ${file.item} installed`).toBeGreaterThan(0);
+  expect(file.specifiers, `${engine} ${file.item} specifiers`).toHaveLength(file.changed.length);
+  const numbers = changedLineNumbers(served, installed);
+  expect(numbers, `${engine} ${file.item} changed lines`).toEqual([...file.changed]);
+  const servedLines = served.split('\n');
+  const installedLines = installed.split('\n');
+  for (let index = 0; index < numbers.length; index++) {
+    const lineNo = numbers[index] ?? 0;
+    const servedLine = servedLines[lineNo - 1] ?? '';
+    const installedLine = installedLines[lineNo - 1] ?? '';
+    expect(servedLine, `${engine} ${file.item} line ${lineNo}`).toContain(`@/registry/${engine}/`);
+    expect(installedLine, `${engine} ${file.item} line ${lineNo}`).toContain(
+      file.specifiers[index] ?? '',
+    );
+    expect(mapRegistryLine(servedLine, engine, aliases), `${engine} line ${lineNo}`).toBe(
+      installedLine,
+    );
+  }
+  const mapped = mapServedContent(served, engine, aliases);
+  expect(mapped, `${engine} ${file.item} mapped bytes`).toBe(installed);
+  expect(sha256(mapped), `${engine} ${file.item} sha256`).toBe(sha256(installed));
+  expect(installed.includes('@/registry/'), `${engine} ${file.item} registry prefix`).toBe(false);
+  return numbers;
+}
+
+async function fetchServedContent(
+  request: APIRequestContext,
+  engine: Engine,
+  item: string,
+): Promise<string> {
+  const url = `https://rnraielements.com/r/${engine}/${item}.json`;
+  const response = await request.get(url, { maxRedirects: 0 });
+  expect(response.status(), url).toBe(200);
+  const parsed = JSON.parse(await response.text()) as { files?: { content?: unknown }[] };
+  const content = parsed.files?.[0]?.content;
+  if (typeof content !== 'string') throw new Error(`${url} files[0].content is missing`);
+  return content;
+}
+
+function consumerTypescriptVersion(root: string): string {
+  const pkgPath = join(root, 'node_modules', 'typescript', 'package.json');
+  const parsed = JSON.parse(readFileSync(pkgPath, 'utf8')) as { version?: unknown };
+  return typeof parsed.version === 'string' ? parsed.version : '';
+}
+
+test('FLOW-DELIV-03-live-registry-round-trip APX-041-AC-3-template-allowlist', () => {
+  test.setTimeout(60_000);
+  const owned: HeldRoot[] = [];
+  try {
+    for (const engine of CONSUMER_ENGINES) {
+      const allow = allowlistFromGit(engine).sort();
+      const copied = [...TEMPLATE_FILES[engine]].sort();
+      expect(copied, `${engine} allowlist`).toEqual(allow);
+      expect(copied, `${engine} app/index.tsx`).not.toContain('app/index.tsx');
+      expect(allow, `${engine} count`).toHaveLength(engine === 'nativewind' ? 12 : 10);
+      const held = createHeldRoot(`allowlist-${engine}`);
+      owned.push(held);
+      assertConsumerRoot(held.root);
+    }
+  } finally {
+    for (const held of owned) releaseHeld(held);
+  }
+});
+
+test('FLOW-DELIV-03-live-registry-round-trip APX-041-AC-5-install-failure-not-retried', () => {
+  test.setTimeout(60_000);
+  const owned: HeldRoot[] = [];
+  const makeProbe = (): HeldRoot => {
+    const held = createHeldRoot('probe');
+    owned.push(held);
+    writeFileSync(join(held.root, 'package.json'), ABSENT_PACKAGE_JSON);
+    return held;
+  };
+  const first = makeProbe();
+  try {
+    const phase = installPhase(first.root, () => makeProbe().root, PROBE_INSTALL_TIMEOUT_MS);
+    expect(phase.exit, phase.output.slice(-800)).not.toBe(0);
+    expect(phase.output).toContain('ERR_PNPM');
+    expect(phase.attempts).toBe(1);
+    expect(phase.retried).toBe(false);
+  } finally {
+    for (const held of owned) releaseHeld(held);
+  }
+});
+
+test.describe('FLOW-DELIV-03-live-registry-round-trip', () => {
+  test.describe.configure({ mode: 'serial', timeout: 50 * 60_000 });
+
+  test.beforeAll(() => {
+    test.setTimeout(50 * 60_000);
+    assertNodeEnvCleared();
+    installProof.cliVersion = resolveCliVersion();
+    console.log(`APX-041 resolved @latest CLI version ${installProof.cliVersion}`);
+    for (const engine of CONSUMER_ENGINES) {
+      preparedConsumers.set(engine, prepareEngine(engine));
+    }
+  });
+
+  test.afterAll(() => {
+    releaseAllHeld();
+  });
+
+  test('FLOW-DELIV-03-live-registry-round-trip APX-041-AC-1-cli-add', () => {
+    expect(installProof.cliVersion).toMatch(/^\d+\.\d+\.\d+$/);
+    console.log(`APX-041 resolved @latest CLI version ${installProof.cliVersion}`);
+    for (const engine of CONSUMER_ENGINES) {
+      const row = requirePrepared(engine);
+      const literal = cliAddCommand(engine);
+      assertConsumerRoot(row.held.root);
+      expect(row.cliCommand).toBe(literal);
+      expect(row.cliCommand).not.toContain('--yes');
+      expect(row.cliCommand).not.toContain('--overwrite');
+      expect(row.installExit, `${engine} pnpm install`).toBe(0);
+      expect(row.installAttempts, `${engine} pnpm attempts`).toBe(row.installRetried ? 2 : 1);
+      expect(row.expoExit, row.expoOutput.slice(-800)).toBe(0);
+      expect(row.componentsBefore, `${engine} components before add`).toBe(false);
+      expect(row.cliExit, row.cliOutput.slice(-800)).toBe(0);
+      expect(row.created, `${engine} created files`).toEqual(EXPECTED_CREATED);
+      for (const rel of EXPECTED_CREATED) assertCreatedFile(row.held.root, rel);
+    }
+  });
+
+  test('FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform', async ({
+    request,
+  }) => {
+    for (const engine of CONSUMER_ENGINES) {
+      const row = requirePrepared(engine);
+      const aliases = readAliases(row.held.root);
+      expect(aliases.ui, `${engine} aliases.ui`).toBe(EXPECTED_ALIASES_UI);
+      expect(aliases.utils, `${engine} aliases.utils`).toBe(EXPECTED_ALIASES_UTILS);
+      const changed: AliasChangedLines = { conversation: [], empty: [] };
+      for (const file of COMPARED_FILES) {
+        const served = await fetchServedContent(request, engine, file.item);
+        const installed = readFileSync(join(row.held.root, file.installedPath), 'utf8');
+        const numbers = assertAliasTransform(engine, aliases, served, installed, file);
+        if (file.item === 'conversation') changed.conversation = numbers;
+        if (file.item === 'empty') changed.empty = numbers;
+      }
+      installProof.changedLines[engine] = changed;
+      console.log(`APX-041 ${engine} changed_lines ${JSON.stringify(changed)}`);
+    }
+  });
+
+  test('FLOW-DELIV-03-live-registry-round-trip APX-041-AC-4-consumer-compiles', () => {
+    for (const engine of CONSUMER_ENGINES) {
+      const row = requirePrepared(engine);
+      assertNodeEnvCleared();
+      assertRootPresent(row.held.root);
+      const compiled = compileConsumer(row.held.root);
+      installProof.tscExits[engine] = compiled.exit;
+      expect(compiled.command).toBe('pnpm exec tsc --noEmit');
+      expect(compiled.cwd).toBe(row.held.root);
+      expect(compiled.cwd.startsWith(HELPER_REPO_ROOT)).toBe(false);
+      expect(compiled.exit, compiled.output.slice(-800)).toBe(0);
+      expect(compiled.output.includes('TS2307')).toBe(false);
+      expect(consumerTypescriptVersion(row.held.root)).toMatch(/^6\.0\.\d+$/);
+      console.log(`APX-041 ${engine} tsc_exit ${compiled.exit}`);
+    }
+  });
 });
