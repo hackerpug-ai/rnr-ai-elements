@@ -1,0 +1,31 @@
+@@RED AC=AC-4-runbook-matches-script grep=APX-002-runbook-matches-script at=2026-10-10T10:40:05Z@@
++ CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts --grep APX-002-runbook-matches-script
+
+Running 1 test using 1 worker
+(node:26637) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:95:3 › APX-002 zone-wiring › APX-002-runbook-matches-script 
+
+    Error: zone-wiring.ts must exist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       95 |   test('APX-002-runbook-matches-script', () => {
+       96 |     test.setTimeout(60_000);
+    >  97 |     expect(existsSync(SCRIPT), 'zone-wiring.ts must exist').toBe(true);
+          |                                                             ^
+       98 |     expect(existsSync(RUNBOOK), 'EDGE-RUNBOOK.md must exist').toBe(true);
+       99 |
+      100 |     const runbook = readFileSync(RUNBOOK, 'utf8');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-002/tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:97:61
+
+    Error Context: test-results/zone-wiring.remote-APX-002-99952--002-runbook-matches-script-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:95:3 › APX-002 zone-wiring › APX-002-runbook-matches-script 
+@@GATE-EXIT=1@@

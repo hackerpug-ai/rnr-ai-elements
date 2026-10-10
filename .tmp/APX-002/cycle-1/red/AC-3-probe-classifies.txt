@@ -1,0 +1,31 @@
+@@RED AC=AC-3-probe-classifies grep=APX-002-probe-classifies at=2026-10-10T10:40:04Z@@
++ CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts --grep APX-002-probe-classifies
+
+Running 1 test using 1 worker
+(node:26544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:76:3 › APX-002 zone-wiring › APX-002-probe-classifies 
+
+    Error: zone-wiring.ts must exist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      76 |   test('APX-002-probe-classifies', () => {
+      77 |     test.setTimeout(120_000);
+    > 78 |     expect(existsSync(SCRIPT), 'zone-wiring.ts must exist').toBe(true);
+         |                                                             ^
+      79 |
+      80 |     const direct = runWiring(['--probe-www', '--host', 'rnraielements.com']);
+      81 |     expect(direct.combined, 'apex host classification').toContain('served-directly');
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-002/tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:78:61
+
+    Error Context: test-results/zone-wiring.remote-APX-002-7390a-ng-APX-002-probe-classifies-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/zone-wiring.remote.spec.ts:76:3 › APX-002 zone-wiring › APX-002-probe-classifies 
+@@GATE-EXIT=1@@
