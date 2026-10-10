@@ -5,21 +5,21 @@
  "generatedBy": "tests/sprint-05-orient-search/support/candidate-preflight.mjs",
  "runs": [
   {
-   "runId": "run-1790952592170-33a5fc",
-   "recordedAt": "2026-10-02T14:49:52.170Z",
+   "runId": "run-1791659255658-2b4c49",
+   "recordedAt": "2026-10-10T19:07:35.658Z",
    "mode": "execute",
    "invokedAs": [
     "node",
-    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-05-orient-search/ORI-CI-003/tests/sprint-05-orient-search/support/candidate-preflight.mjs",
+    "/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-022/tests/sprint-05-orient-search/support/candidate-preflight.mjs",
     "--candidate",
-    "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+    "b876c194cead940a638afef386bc32b176471e72",
     "--output",
-    "tests/sprint-05-orient-search/evidence/ORI-CI-003"
+    ".tmp/APX-022/ori-ci-003-rerun"
    ],
    "candidate": {
-    "sha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+    "sha": "b876c194cead940a638afef386bc32b176471e72",
     "parents": [
-     "fdf6ec33ab1c069b2cd2f622f428efd3e7675da1"
+     "49119680e32bb011be60aea2c7d9b9dc15115e13"
     ],
     "gitStatus": ""
    },
@@ -30,7 +30,7 @@
      "command": "actionlint .github/workflows/ci.yml",
      "exit": 0,
      "error": null,
-     "durationMs": 34,
+     "durationMs": 102,
      "skipped": false
     },
     {
@@ -43,7 +43,7 @@
      "command": "pnpm install --frozen-lockfile",
      "exit": 0,
      "error": null,
-     "durationMs": 1740,
+     "durationMs": 2110,
      "skipped": false
     },
     {
@@ -52,7 +52,7 @@
      "command": "pnpm gallery:manifest",
      "exit": 0,
      "error": null,
-     "durationMs": 410,
+     "durationMs": 536,
      "skipped": false
     },
     {
@@ -61,7 +61,7 @@
      "command": "pnpm --filter @rnr-ai-elements/docs run prebuild",
      "exit": 0,
      "error": null,
-     "durationMs": 3926,
+     "durationMs": 4407,
      "skipped": false
     },
     {
@@ -72,7 +72,7 @@
      "command": "pnpm --dir apps/example exec tsc --noEmit -p tsconfig.live-chat.json",
      "exit": 0,
      "error": null,
-     "durationMs": 1151,
+     "durationMs": 1416,
      "skipped": false
     },
     {
@@ -83,7 +83,7 @@
      "command": "pnpm typecheck",
      "exit": 0,
      "error": null,
-     "durationMs": 1570,
+     "durationMs": 1907,
      "skipped": false
     },
     {
@@ -92,10 +92,10 @@
      "command": "pnpm --dir apps/example exec tsc --noEmit",
      "exit": 2,
      "error": null,
-     "durationMs": 1400,
+     "durationMs": 1481,
      "skipped": false,
      "diagnosticExcerpt": [
-      "app/_layout.tsx(21,29): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<\"light\" | \"dark\", NativeTheme>'.",
+      "app/_layout.tsx(24,29): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<\"light\" | \"dark\", NativeTheme>'.",
       "app/gallery/[item].tsx(45,19): error TS2769: No overload matches this call.",
       "    Type '{ children: (false | Element)[]; contentContainerClassName: string; }' is not assignable to type 'IntrinsicAttributes & IntrinsicClassAttributes<ScrollView> & Readonly<ScrollViewProps>'.",
       "app/gallery/index.tsx(59,19): error TS2769: No overload matches this call.",
@@ -145,7 +145,7 @@
      "command": "pnpm lint",
      "exit": 0,
      "error": null,
-     "durationMs": 585,
+     "durationMs": 650,
      "skipped": false
     },
     {
@@ -156,7 +156,7 @@
      "command": "pnpm check:tokens",
      "exit": 0,
      "error": null,
-     "durationMs": 219,
+     "durationMs": 277,
      "skipped": false
     },
     {
@@ -167,7 +167,7 @@
      "command": "pnpm check:contract",
      "exit": 0,
      "error": null,
-     "durationMs": 390,
+     "durationMs": 416,
      "skipped": false
     },
     {
@@ -178,7 +178,7 @@
      "command": "pnpm registry:build",
      "exit": 0,
      "error": null,
-     "durationMs": 259,
+     "durationMs": 319,
      "skipped": false
     },
     {
@@ -198,11 +198,11 @@
      "command": "pnpm --filter @rnr-ai-elements/docs build",
      "exit": 0,
      "error": null,
-     "durationMs": 46253,
+     "durationMs": 57494,
      "skipped": false,
      "dist": {
-      "fileCount": 323,
-      "digest": "015522d81021bd9a430d60b03aed0735e09a64ea3543155bc0a1ac5179924380",
+      "fileCount": 324,
+      "digest": "39d0da2aafeb3b7bd2800f0aeee395610404adf4f590d952f361ad8ea7c519a7",
       "registryJsonCount": 114
      }
     }
@@ -218,9 +218,9 @@
   }
  ],
  "candidate": {
-  "sha": "4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72",
+  "sha": "b876c194cead940a638afef386bc32b176471e72",
   "parents": [
-   "fdf6ec33ab1c069b2cd2f622f428efd3e7675da1"
+   "49119680e32bb011be60aea2c7d9b9dc15115e13"
   ],
   "gitStatus": ""
  },
@@ -248,7 +248,7 @@
  },
  "workflow": {
   "path": ".github/workflows/ci.yml",
-  "sha256": "980bdcdafa1e7d92016431c90429f1bfdd31c0908d4b4233b409c8b696e14f15"
+  "sha256": "f6d22ce58ee470ee717c8f5ef22199180bc57078da37a5206925512df0716529"
  },
  "lockfile": {
   "path": "pnpm-lock.yaml",
@@ -278,11 +278,11 @@
     "bytes": 81
    },
    "whole-example-diagnostic.log": {
-    "sha256": "e39a900379501ebbfc42fa807562ee3550332f0a8cf4fb0689bb55919ab92b76",
-    "bytes": 37814
+    "sha256": "9f2fcbd96b13789552f0bb1563e70d663ce45bec145fdf81a0c74ff1c4f057e2",
+    "bytes": 38234
    },
    "generated-artifacts.json": {
-    "sha256": "6abb3684187185bff4b036722a0a3577390813fe71168f48939ed3da6c53dff7",
+    "sha256": "95b59074a314d4f013263f98da104de48d1cdff9a61f2a597bf254057b0e2300",
     "bytes": 19135
    }
   },
@@ -290,14 +290,14 @@
  },
  "hostedStatus": {
   "status": "blocked",
-  "reason": "No hosted GitHub Actions run exists for candidate 4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72. The candidate is 655 commits ahead of origin/main (5bfa77283a1182891ac8780fe477c3d676e2d918); it has never been pushed, so no hosted run can exist. GitHub API observed 0 run(s) for this head SHA. Pushing local main (654+ commits) to origin and observing hosted runs is an orchestrator decision; the preflight records the absence instead of fabricating runs.",
-  "observedAt": "2026-10-02T14:50:50.161Z",
+  "reason": "No hosted GitHub Actions run exists for candidate b876c194cead940a638afef386bc32b176471e72. The candidate is 759 commits ahead of origin/main (5bfa77283a1182891ac8780fe477c3d676e2d918); it has never been pushed, so no hosted run can exist. GitHub API observed 0 run(s) for this head SHA. Pushing local main (654+ commits) to origin and observing hosted runs is an orchestrator decision; the preflight records the absence instead of fabricating runs.",
+  "observedAt": "2026-10-10T19:08:46.828Z",
   "observation": {
-   "attemptedAt": "2026-10-02T14:50:50.161Z",
+   "attemptedAt": "2026-10-10T19:08:46.828Z",
    "originUrl": "git@github.com:hackerpug-ai/rnr-ai-elements.git",
    "repoSlug": "hackerpug-ai/rnr-ai-elements",
    "originMainSha": "5bfa77283a1182891ac8780fe477c3d676e2d918",
-   "localAheadOfOriginBy": 655,
+   "localAheadOfOriginBy": 759,
    "githubApi": {
     "exit": 0,
     "stdout": "{\"run_ids\":[],\"total_count\":0}",
