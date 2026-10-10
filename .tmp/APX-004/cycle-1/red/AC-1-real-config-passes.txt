@@ -1,0 +1,48 @@
+PASS (0) FAIL (1)
+
+1. APX-004-real-config-passes
+   Error: exit=1
+   
+   (node:4850) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+   (Use `node --trace-warnings ...` to show where the warning was created)
+   node:internal/modules/esm/resolve:275
+       throw new ERR_MODULE_NOT_FOUND(
+             ^
+   
+   Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/scripts/docs-deploy/preflight-edge.ts' imported from /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/
+   
+     91 |   test('APX-004-real-config-passes', () => {
+     92 |     const result = runPreflight(['--dist', REAL_DIST, '--config', REAL_CONFIG]);
+   > 93 |     expect(result.exit, `exit=${result.exit}\n${result.combined}`).toBe(0);
+        |                                                                    ^
+     94 |     const lines = result.stdout
+     95 |       .split('\n')
+     96 |       .map((l) => l.trim())
+       at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+       at moduleResolve (node:internal/modules/esm/resolve:865:10)
+       at defaultResolve (node:internal/modules/esm/resolve:991:11)
+       at #cachedDefaultResolve (node:internal/modules/esm/loader:719:20)
+       at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:736:38)
+       at nextStep (node:internal/modules/customization_hooks:189:26)
+       at resolveBaseSync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10932)
+       at resolveDirectorySync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:12238)
+       at resolveTsPathsSync (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13445)
+       at resolve (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:15991) {
+     code: 'ERR_MODULE_NOT_FOUND',
+     url: 'file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/scripts/docs-deploy/preflight-edge.ts'
+   }
+   
+   Node.js v24.14.0
+   
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m0[39m
+   Received: [31m1[39m
+       at resolveBaseSync (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:10932)
+       at resolveDirectorySync (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:12238)
+       at resolveTsPathsSync (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/node_modules/.pnpm/tsx@4.23.13/node_modules/tsx/dist/register-SoqaU4rg.mjs:2:13445)
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-004/tests/sprint-07-deploy-live-at-apex/preflight-edge.spec.ts:93:68
+
+Time: 1310ms
+[full output: ~/Library/Application Support/rtk/tee/1791621193_playwright.log]
