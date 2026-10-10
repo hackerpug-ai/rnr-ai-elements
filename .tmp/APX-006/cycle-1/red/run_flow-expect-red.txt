@@ -1,0 +1,50 @@
+[run_flow] sprint=sprint-07-deploy-live-at-apex root=/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-006 head=c8c47f23e63675d80bf67fbe292d4882695f24e0+dirty expect=red flows=1/5
+[run_flow] FLOW-DELIV-02-header-and-domain-contract (steps 5,6,7): $ CI=1 pnpm exec playwright test -c tests/sprint-07-deploy-live-at-apex/live.playwright.config.ts tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts --grep FLOW-DELIV-02-header-and-domain-contract
+
+Running 1 test using 1 worker
+(node:59984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+F
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts:307:1 › FLOW-DELIV-02-header-and-domain-contract 
+
+    Error: FLOW-DELIV-02-header-and-domain-contract RED against live apex:
+    - /docs/introduction contract: /docs/introduction status
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+    - /_astro css contract: cache-control: expected exactly "public, max-age=31536000, immutable", got "public, max-age=0, must-revalidate"
+    - registry JSON contract: cache-control: expected exactly "public, max-age=300", got "public, max-age=0, must-revalidate"
+    - /no-such-page contract: cache-control: expected exactly one header line, found 0
+    - https://www.rnraielements.com/docs/introduction: apiRequestContext.get: getaddrinfo ENOTFOUND www.rnraielements.com
+    Call log:
+      - → GET https://www.rnraielements.com/docs/introduction
+        - user-agent: Playwright/1.63.0 (arm64; macOS 26.4) node/24.14 CI/1
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+
+    - https://www.rnraielements.com/: apiRequestContext.get: getaddrinfo ENOTFOUND www.rnraielements.com
+    Call log:
+      - → GET https://www.rnraielements.com/
+        - user-agent: Playwright/1.63.0 (arm64; macOS 26.4) node/24.14 CI/1
+        - accept: */*
+        - accept-encoding: gzip,deflate,br
+
+
+      341 |
+      342 |     if (failures.length > 0) {
+    > 343 |       throw new Error(
+          |             ^
+      344 |         `FLOW-DELIV-02-header-and-domain-contract RED against live apex:\n- ${failures.join('\n- ')}`,
+      345 |       );
+      346 |     }
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-006/tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts:343:13
+
+    Error Context: test-results/edge-contract.remote-FLOW--6da3c--header-and-domain-contract-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts:307:1 › FLOW-DELIV-02-header-and-domain-contract 
+[run_flow] FLOW-DELIV-02-header-and-domain-contract (steps 5,6,7): RED — exit=1; watched failing run saved as red proof → /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-006/tests/sprint-07-deploy-live-at-apex/evidence/FLOW-DELIV-02-header-and-domain-contract/proof.red
+[run_flow] 1/1 flows RED
