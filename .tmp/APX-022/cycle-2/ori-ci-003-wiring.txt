@@ -1,0 +1,40 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vitest.config.ts:13:30). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-022
+
+ ❯ tests/sprint-05-orient-search/ci-build-gate-wiring.test.ts (4 tests | 1 failed | 3 skipped) 59ms
+     × ORI-CI-003-candidate-identity 59ms
+     ↓ ORI-CI-003-required-inputs
+     ↓ ORI-CI-003-registry-drift
+     ↓ ORI-CI-003-docs-build-failure
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sprint-05-orient-search/ci-build-gate-wiring.test.ts > ORI-CI-003 credential-free candidate checks > ORI-CI-003-candidate-identity
+AssertionError: expected 1 to be 7 // Object.is equality
+
+- Expected
++ Received
+
+- 7
++ 1
+
+ ❯ tests/sprint-05-orient-search/ci-build-gate-wiring.test.ts:295:41
+    293|         const with_ = step.with as { 'if-no-files-found'?: string; 're…
+    294|         expect(with_['if-no-files-found']).toBe('error');
+    295|         expect(with_['retention-days']).toBe(7);
+       |                                         ^
+    296|       }
+    297|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  20:47:18
+   Duration  152ms (transform 17ms, setup 0ms, import 24ms, tests 59ms, environment 0ms)
+
+vitest_exit=1

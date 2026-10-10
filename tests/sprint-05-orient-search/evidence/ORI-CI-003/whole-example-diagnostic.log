@@ -1,6 +1,6 @@
 $ pnpm --dir apps/example exec tsc --noEmit
 # exit 2
-app/_layout.tsx(21,29): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<"light" | "dark", NativeTheme>'.
+app/_layout.tsx(24,29): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Record<"light" | "dark", NativeTheme>'.
   No index signature with a parameter of type 'string' was found on type 'Record<"light" | "dark", NativeTheme>'.
 app/gallery/[item].tsx(45,19): error TS2769: No overload matches this call.
   Overload 1 of 2, '(props: ScrollViewProps): ScrollView', gave the following error.
@@ -203,17 +203,19 @@ gallery/chrome.tsx(31,31): error TS2345: Argument of type '"light" | "dark" | nu
   Type 'null' is not assignable to type 'ColorSchemeName'.
 server/chat.ts(2,28): error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
 server/chat.ts(3,37): error TS2591: Cannot find name 'node:http'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(2,73): error TS2591: Cannot find name 'node:http'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(23,23): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(31,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(32,17): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(35,16): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(35,25): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(35,58): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(42,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(45,32): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(66,30): error TS7006: Parameter 'request' implicitly has an 'any' type.
-server/index.ts(66,39): error TS7006: Parameter 'response' implicitly has an 'any' type.
-server/index.ts(78,43): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-server/index.ts(142,37): error TS2694: Namespace 'NodeJS' has no exported member 'ErrnoException'.
+server/index.ts(11,73): error TS2591: Cannot find name 'node:http'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(12,25): error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(13,31): error TS2591: Cannot find name 'node:url'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(34,23): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(42,20): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(43,17): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(46,16): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(46,25): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(46,58): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(53,18): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(56,32): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(77,30): error TS7006: Parameter 'request' implicitly has an 'any' type.
+server/index.ts(77,39): error TS7006: Parameter 'response' implicitly has an 'any' type.
+server/index.ts(89,43): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+server/index.ts(153,37): error TS2694: Namespace 'NodeJS' has no exported member 'ErrnoException'.
 

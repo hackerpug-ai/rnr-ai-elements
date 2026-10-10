@@ -290,9 +290,15 @@ describe('ORI-CI-003 credential-free candidate checks', () => {
         );
       }
       if (typeof step.uses === 'string' && step.uses.startsWith('actions/upload-artifact@')) {
-        const with_ = step.with as { 'if-no-files-found'?: string; 'retention-days'?: number };
+        const with_ = step.with as {
+          name?: string;
+          'if-no-files-found'?: string;
+          'retention-days'?: number;
+        };
         expect(with_['if-no-files-found']).toBe('error');
-        expect(with_['retention-days']).toBe(7);
+        // docs-dist is the run-bound deploy handoff (APX-022): one day, not the
+        // seven-day evidence retention used by every other upload.
+        expect(with_['retention-days']).toBe(with_.name === 'docs-dist' ? 1 : 7);
       }
     }
     // Runner/toolchain pins.

@@ -1,0 +1,66 @@
+{
+  "job_ids": [
+    "typecheck",
+    "lint",
+    "registry",
+    "docs-build"
+  ],
+  "needs": {
+    "typecheck": null,
+    "lint": null,
+    "registry": null,
+    "docs-build": [
+      "typecheck",
+      "lint",
+      "registry"
+    ]
+  },
+  "e2e_docs_steps": {
+    "typecheck": [
+
+    ],
+    "lint": [
+
+    ],
+    "registry": [
+
+    ],
+    "docs-build": [
+
+    ]
+  },
+  "upload_names": [
+    {
+      "job": "typecheck",
+      "name": "Upload typecheck evidence",
+      "artifact": "typecheck-log",
+      "path": "typecheck.log",
+      "retention_days": 7,
+      "if": "always()"
+    },
+    {
+      "job": "lint",
+      "name": "Upload lint evidence",
+      "artifact": "lint-log",
+      "path": "lint.log",
+      "retention_days": 7,
+      "if": "always()"
+    },
+    {
+      "job": "registry",
+      "name": "Upload registry evidence",
+      "artifact": "registry-log",
+      "path": "registry.log",
+      "retention_days": 7,
+      "if": "always()"
+    },
+    {
+      "job": "docs-build",
+      "name": "Upload docs-build evidence",
+      "artifact": "docs-build-log",
+      "path": "docs-build.log",
+      "retention_days": 7,
+      "if": "always()"
+    }
+  ]
+}
