@@ -239,7 +239,10 @@ export function latestPushRunOnMain(): WorkflowRun {
   return parseRun(payload[0]);
 }
 
-/** Job graph for one run, including timestamps exactly as GitHub recorded them. */
+/**
+ * Job graph for one run. Timestamps are returned as GitHub recorded them.
+ * A skipped job may have started_at after completed_at; that order is not rejected.
+ */
 export function jobs(runId: number): WorkflowJob[] {
   assertRunId(runId);
   const slug = readRepoSlug();

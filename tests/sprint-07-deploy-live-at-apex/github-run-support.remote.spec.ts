@@ -14,6 +14,7 @@ import {
   jobLog,
   jobs,
   latestPushRunOnMain,
+  type WorkflowJob,
   workerVersionMessage,
 } from './support/github-run.ts';
 
@@ -128,6 +129,19 @@ function independentJobs(runId: number): GhJob[] {
   return jobsOut;
 }
 
+function skippedJobsKeptOutOfOrder(got: WorkflowJob[], independent: GhJob[]): string[] {
+  const inverted: string[] = [];
+  for (const row of independent) {
+    if (row.conclusion !== 'skipped' || row.started_at <= row.completed_at) continue;
+    const match = got.find((job) => job.id === row.id);
+    expect(match, `skipped ${row.name} was dropped or reordered`).toBeTruthy();
+    expect(match?.started_at).toBe(row.started_at);
+    expect(match?.completed_at).toBe(row.completed_at);
+    inverted.push(row.name);
+  }
+  return inverted;
+}
+
 function expectRejected(label: string, fn: () => unknown): string {
   try {
     fn();
@@ -157,7 +171,6 @@ test('APX-021-jobs-graph', () => {
   const names = got.map((job) => job.name);
   for (const name of JOB_NAMES) expect(names, `missing ${name}`).toContain(name);
 
-  const inverted: string[] = [];
   for (const job of got) {
     const live = independent.find((row) => row.id === job.id);
     expect(live, `independent job ${job.id}`).toBeTruthy();
@@ -168,9 +181,9 @@ test('APX-021-jobs-graph', () => {
     expect(job.completed_at).toBe(live.completed_at);
     expect(job.started_at).toMatch(ISO_TIMESTAMP);
     expect(job.completed_at).toMatch(ISO_TIMESTAMP);
-    if (job.started_at > job.completed_at) inverted.push(job.name);
   }
 
+  const startedAfterCompleted = skippedJobsKeptOutOfOrder(got, independent);
   capture('jobs-graph.json', {
     run_id: runId,
     jobs: got.map((job) => ({
@@ -180,9 +193,7 @@ test('APX-021-jobs-graph', () => {
       started_at: job.started_at,
       completed_at: job.completed_at,
     })),
-    // GitHub can record a skipped job with started_at one second after completed_at.
-    // The helper returns that pair unchanged; it does not invent an order.
-    started_after_completed: inverted,
+    started_after_completed: startedAfterCompleted,
   });
 });
 
@@ -243,8 +254,8 @@ test('APX-021-job-log', () => {
     run_id: runId,
     job_id: typecheck.id,
     chars: log.length,
-    contains_set_up_job: log.includes('Set up job'),
     contains_current_runner_version: log.includes('Current runner version'),
+    contains_complete_job_name_typecheck: log.includes('Complete job name: typecheck'),
     excerpt: log.slice(0, 400),
   });
   capture('job-log-missing.txt', `${missing}\n`);
