@@ -46,7 +46,7 @@ const COMMAND_SCRIPT: Record<Engine, string> = {
 const EVIDENCE_DIR = join(REPO_ROOT, 'tests/sprint-05-orient-search/evidence/ORI-RN-001');
 
 /** Committed template files copied into each consumer (mirrors the task allowlist). */
-const TEMPLATE_FILES: Record<Engine, string[]> = {
+export const TEMPLATE_FILES: Record<Engine, string[]> = {
   nativewind: [
     'package.json',
     'app.json',

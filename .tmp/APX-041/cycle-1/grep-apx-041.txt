@@ -1,0 +1,20 @@
+
+Running 5 tests using 1 worker
+
+(node:74661) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:990:1 › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-3-template-allowlist (43ms)
+  ✓  2 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1009:1 › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-5-install-failure-not-retried (284ms)
+APX-041 resolved @latest CLI version 1.0.0
+APX-041 nativewind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+APX-041 uniwind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+APX-041 resolved @latest CLI version 1.0.0
+  ✓  3 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1047:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-1-cli-add (7ms)
+APX-041 nativewind changed_lines {"conversation":[1,2,3,4],"empty":[1,2,4]}
+APX-041 uniwind changed_lines {"conversation":[1,2,3,4],"empty":[1,2,4]}
+  ✓  4 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1067:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform (404ms)
+APX-041 nativewind tsc_exit 0
+APX-041 uniwind tsc_exit 0
+  ✓  5 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1088:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-4-consumer-compiles (2.4s)
+
+  5 passed (43.1s)
