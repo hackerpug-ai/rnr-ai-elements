@@ -1,0 +1,19 @@
+
+Running 5 tests using 1 worker
+
+  ✓  1 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1011:1 › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-3-template-allowlist (46ms)
+ ERR_PNPM_FETCH_404  GET https://registry.npmjs.org/apx041-definitely-absent-package-2026: Not Found - 404
+  ✓  2 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1030:1 › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-5-install-failure-not-retried (702ms)
+APX-041 resolved @latest CLI version 1.0.0
+APX-041 nativewind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+APX-041 uniwind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+APX-041 resolved @latest CLI version 1.0.0
+  ✓  3 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1075:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-1-cli-add (8ms)
+APX-041 nativewind changed_lines {"conversation":[1,2,3,4],"empty":[1,2,4]}
+APX-041 uniwind changed_lines {"conversation":[1,2,3,4],"empty":[1,2,4]}
+  ✓  4 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1095:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform (625ms)
+APX-041 nativewind tsc_exit 0
+APX-041 uniwind tsc_exit 0
+  ✓  5 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1122:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-4-consumer-compiles (2.3s)
+
+  5 passed (59.2s)

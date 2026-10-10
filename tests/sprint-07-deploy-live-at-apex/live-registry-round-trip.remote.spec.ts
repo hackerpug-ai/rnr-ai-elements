@@ -649,13 +649,15 @@ test('FLOW-DELIV-03-live-registry-round-trip APX-040-same-deploy', async ({ requ
 });
 
 /**
- * Expected aliases.ui target. The mutation check changes this string to `@/ui`.
- * The alias map itself is read from the consumer's components.json.
+ * Expected aliases.ui target, passed into the served-to-installed mapping.
+ * The mutation check changes this string to `@/ui`. utils still comes from
+ * the consumer's components.json.
  */
 const EXPECTED_ALIASES_UI = '@/components/ui';
 const EXPECTED_ALIASES_UTILS = '@/lib/utils';
 const CONSUMER_PHASE_TIMEOUT_MS = 10 * 60_000;
 const PROBE_INSTALL_TIMEOUT_MS = 45_000;
+const PROBE_INSTALL_COMMAND = 'pnpm install --fetch-retries 0';
 const EXPECTED_CREATED = [
   'components/ai/conversation.tsx',
   'components/ui/button.tsx',
@@ -786,8 +788,13 @@ function copyTemplate(engine: Engine, root: string): void {
   }
 }
 
-function installPhase(root: string, renew: () => string, timeoutMs: number): InstallPhaseResult {
-  const first = spawnInConsumer('pnpm install', root, timeoutMs);
+function installPhase(
+  root: string,
+  renew: () => string,
+  timeoutMs: number,
+  command = 'pnpm install',
+): InstallPhaseResult {
+  const first = spawnInConsumer(command, root, timeoutMs);
   if (first.exit === 0 || !first.output.includes('react-native-web')) {
     return {
       exit: first.exit,
@@ -799,7 +806,7 @@ function installPhase(root: string, renew: () => string, timeoutMs: number): Ins
     };
   }
   const next = renew();
-  const second = spawnInConsumer('pnpm install', next, timeoutMs);
+  const second = spawnInConsumer(command, next, timeoutMs);
   return {
     exit: second.exit,
     output: second.output,
@@ -910,16 +917,26 @@ function readAliases(root: string): ConsumerAliases {
   return { ui, utils };
 }
 
-function mapRegistryLine(line: string, engine: Engine, aliases: ConsumerAliases): string {
+function mapRegistryLine(
+  line: string,
+  engine: Engine,
+  aliases: ConsumerAliases,
+  uiTarget: string,
+): string {
   return line
-    .replace(`@/registry/${engine}/components/ui/`, `${aliases.ui}/`)
+    .replace(`@/registry/${engine}/components/ui/`, `${uiTarget}/`)
     .replace(`@/registry/${engine}/lib/utils`, aliases.utils);
 }
 
-function mapServedContent(served: string, engine: Engine, aliases: ConsumerAliases): string {
+function mapServedContent(
+  served: string,
+  engine: Engine,
+  aliases: ConsumerAliases,
+  uiTarget: string,
+): string {
   return served
     .split('\n')
-    .map((line) => mapRegistryLine(line, engine, aliases))
+    .map((line) => mapRegistryLine(line, engine, aliases, uiTarget))
     .join('\n');
 }
 
@@ -940,6 +957,7 @@ function assertAliasTransform(
   served: string,
   installed: string,
   file: ComparedFile,
+  uiTarget: string,
 ): number[] {
   expect(served.length, `${engine} ${file.item} served`).toBeGreaterThan(0);
   expect(installed.length, `${engine} ${file.item} installed`).toBeGreaterThan(0);
@@ -953,14 +971,17 @@ function assertAliasTransform(
     const servedLine = servedLines[lineNo - 1] ?? '';
     const installedLine = installedLines[lineNo - 1] ?? '';
     expect(servedLine, `${engine} ${file.item} line ${lineNo}`).toContain(`@/registry/${engine}/`);
+    const mappedLine = mapRegistryLine(servedLine, engine, aliases, uiTarget);
+    expect(mappedLine, `${engine} ${file.item} line ${lineNo}`).toBe(installedLine);
+    expect(
+      mapRegistryLine(servedLine, engine, aliases, aliases.ui),
+      `${engine} line ${lineNo}`,
+    ).toBe(installedLine);
     expect(installedLine, `${engine} ${file.item} line ${lineNo}`).toContain(
       file.specifiers[index] ?? '',
     );
-    expect(mapRegistryLine(servedLine, engine, aliases), `${engine} line ${lineNo}`).toBe(
-      installedLine,
-    );
   }
-  const mapped = mapServedContent(served, engine, aliases);
+  const mapped = mapServedContent(served, engine, aliases, uiTarget);
   expect(mapped, `${engine} ${file.item} mapped bytes`).toBe(installed);
   expect(sha256(mapped), `${engine} ${file.item} sha256`).toBe(sha256(installed));
   expect(installed.includes('@/registry/'), `${engine} ${file.item} registry prefix`).toBe(false);
@@ -1017,7 +1038,14 @@ test('FLOW-DELIV-03-live-registry-round-trip APX-041-AC-5-install-failure-not-re
   };
   const first = makeProbe();
   try {
-    const phase = installPhase(first.root, () => makeProbe().root, PROBE_INSTALL_TIMEOUT_MS);
+    const phase = installPhase(
+      first.root,
+      () => makeProbe().root,
+      PROBE_INSTALL_TIMEOUT_MS,
+      PROBE_INSTALL_COMMAND,
+    );
+    const errLine = phase.output.split('\n').find((line) => line.includes('ERR_PNPM')) ?? '';
+    console.log(errLine);
     expect(phase.exit, phase.output.slice(-800)).not.toBe(0);
     expect(phase.output).toContain('ERR_PNPM');
     expect(phase.attempts).toBe(1);
@@ -1070,13 +1098,19 @@ test.describe('FLOW-DELIV-03-live-registry-round-trip', () => {
     for (const engine of CONSUMER_ENGINES) {
       const row = requirePrepared(engine);
       const aliases = readAliases(row.held.root);
-      expect(aliases.ui, `${engine} aliases.ui`).toBe(EXPECTED_ALIASES_UI);
       expect(aliases.utils, `${engine} aliases.utils`).toBe(EXPECTED_ALIASES_UTILS);
       const changed: AliasChangedLines = { conversation: [], empty: [] };
       for (const file of COMPARED_FILES) {
         const served = await fetchServedContent(request, engine, file.item);
         const installed = readFileSync(join(row.held.root, file.installedPath), 'utf8');
-        const numbers = assertAliasTransform(engine, aliases, served, installed, file);
+        const numbers = assertAliasTransform(
+          engine,
+          aliases,
+          served,
+          installed,
+          file,
+          EXPECTED_ALIASES_UI,
+        );
         if (file.item === 'conversation') changed.conversation = numbers;
         if (file.item === 'empty') changed.empty = numbers;
       }

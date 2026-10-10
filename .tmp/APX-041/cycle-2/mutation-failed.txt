@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+APX-041 resolved @latest CLI version 1.0.0
+APX-041 nativewind install_exit 0 attempts 1 expo_exit 1 cli_exit 0 files 5
+APX-041 uniwind install_exit 0 attempts 1 expo_exit 0 cli_exit 0 files 5
+  ✘  1 [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1095:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform (339ms)
+
+
+  1) [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1095:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform 
+
+    Error: nativewind conversation line 1
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "import { Button } from '@/components/ui/button';"
+    Received: "import { Button } from '@/ui/button';"
+
+      973 |     expect(servedLine, `${engine} ${file.item} line ${lineNo}`).toContain(`@/registry/${engine}/`);
+      974 |     const mappedLine = mapRegistryLine(servedLine, engine, aliases, uiTarget);
+    > 975 |     expect(mappedLine, `${engine} ${file.item} line ${lineNo}`).toBe(installedLine);
+          |                                                                 ^
+      976 |     expect(
+      977 |       mapRegistryLine(servedLine, engine, aliases, aliases.ui),
+      978 |       `${engine} line ${lineNo}`,
+        at assertAliasTransform (/Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-041/tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:975:65)
+        at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-041/tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1106:25
+
+    Error Context: test-results/live-registry-round-trip.r-708ed-PX-041-AC-2-alias-transform-live-edge/error-context.md
+
+    Error Context: test-results/live-registry-round-trip.r-708ed-PX-041-AC-2-alias-transform-live-edge/error-context.md
+
+    Error Context: test-results/live-registry-round-trip.r-708ed-PX-041-AC-2-alias-transform-live-edge/error-context.md
+
+  1 failed
+    [live-edge] › tests/sprint-07-deploy-live-at-apex/live-registry-round-trip.remote.spec.ts:1095:3 › FLOW-DELIV-03-live-registry-round-trip › FLOW-DELIV-03-live-registry-round-trip APX-041-AC-2-alias-transform 
