@@ -1,0 +1,17 @@
+PASS (3) FAIL (1)
+
+1. APX-030 edge config files are committable APX-030-AC1: edge config sources are not ignored
+   AssertionError: apps/docs/public/_headers must not match an ignore rule
+   apps/docs/.gitignore:4:public/	apps/docs/public/_headers
+   : expected +0 to be 1 // Object.is equality
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/tests/sprint-07-deploy-live-at-apex/edge-files-tracked.test.ts:32:88
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+       at new Promise (<anonymous>)
+       at runWithCancel (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+       at new Promise (<anonymous>)
+       at runWithTimeout (file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+       at file:///Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-030/node_modules/.pnpm/@vitest+runner@4.1.11/node_modules/@vitest/runner/dist/chunk-artifact.js:2956:64
+[full output: ~/Library/Application Support/rtk/tee/1791620777_vitest_run.log]
