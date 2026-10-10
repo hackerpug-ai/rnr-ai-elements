@@ -1,0 +1,39 @@
+PASS (0) FAIL (1)
+
+1. FLOW-DELIV-02-header-and-domain-contract
+   Error: FLOW-DELIV-02-header-and-domain-contract RED against live apex:
+   - /docs/introduction contract: /docs/introduction status
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m200[39m
+   Received: [31m404[39m
+   - /_astro css contract: cache-control: expected exactly "public, max-age=31536000, immutable", got "public, max-age=0, must-revalidate"
+   - registry JSON contract: cache-control: expected exactly "public, max-age=300", got "public, max-age=0, must-revalidate"
+   - /no-such-page contract: cache-control: expected exactly one header line, found 0
+   - https://www.rnraielements.com/docs/introduction: apiRequestContext.get: getaddrinfo ENOTFOUND www.rnraielements.com
+   Call log:
+   [2m  - → GET https://www.rnraielements.com/docs/introduction[22m
+   [2m    - user-agent: Playwright/1.63.0 (arm64; macOS 26.4) node/24.14 CI/1[22m
+   [2m    - accept: */*[22m
+   [2m    - accept-encoding: gzip,deflate,br[22m
+   
+   - https://www.rnraielements.com/: apiRequestContext.get: getaddrinfo ENOTFOUND www.rnraielements.com
+   Call log:
+   [2m  - → GET https://www.rnraielements.com/[22m
+   [2m    - user-agent: Playwright/1.63.0 (arm64; macOS 26.4) node/24.14 CI/1[22m
+   [2m    - accept: */*[22m
+   [2m    - accept-encoding: gzip,deflate,br[22m
+   
+   
+     341 |
+     342 |     if (failures.length > 0) {
+   > 343 |       throw new Error(
+         |             ^
+     344 |         `FLOW-DELIV-02-header-and-domain-contract RED against live apex:\n- ${failures.join('\n- ')}`,
+     345 |       );
+     346 |     }
+       at /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-001/tests/sprint-07-deploy-live-at-apex/edge-contract.remote.spec.ts:343:13
+
+Time: 633ms
+[full output: ~/Library/Application Support/rtk/tee/1791635607_playwright.log]
