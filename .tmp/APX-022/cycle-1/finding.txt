@@ -1,0 +1,45 @@
+blocking: criterion-contradicts-oracle
+
+Sentence (TASK-APX-022 AC-1 / AC-3):
+  the docs-e2e job has a step named `Upload docs dist` after the step running `pnpm e2e:docs`
+  job ids typecheck, lint, test, registry and docs-e2e are all present
+  docs-e2e needs equals [typecheck, lint, test, registry]
+  the `docs-playwright-report` upload step exists with `if: always() && steps.guard.outputs.ready == 'true'`
+
+Command:
+  ruby -ryaml -rjson -e 'YAML.load_file(".github/workflows/ci.yml")' 
+  file: .github/workflows/ci.yml
+  HEAD: 00283d9c6d32a11f80b1d9b5c77f35a81cfa9cea
+
+Observed:
+  job_ids = typecheck, lint, registry, docs-build
+  docs-build.needs = [typecheck, lint, registry]
+  no job id test
+  no job id docs-e2e
+  no step run containing e2e:docs
+  no artifact docs-playwright-report
+  no step Upload docs dist
+  upload retention-days on every existing upload-artifact step = 7
+
+Task prose that disagrees with those AC sentences:
+  "If Sprint 05's ORI-CI-003 has changed it, keep its job ids and confirm docs-e2e still needs the four jobs."
+  Confirmation failed. ORI-CI-003 (4bb20eaee4c5bc7fd6812329fb8f77ceafde3d72) replaced docs-e2e with docs-build and moved test/docs-e2e to the protected workflow.
+
+Landed tests that forbid restoring the AC shape (WRITE-PROHIBITED: tests/sprint-05-orient-search/**):
+  tests/sprint-05-orient-search/ci-build-gate-wiring.test.ts expects job ids
+    docs-build, lint, registry, typecheck
+    and retention-days 7 on every actions/upload-artifact step.
+  tests/sprint-01-docs-spike-skeleton/ci-chain-order.test.ts expects the same four job ids
+    and forbids a run step matching e2e:docs inside ci.yml.
+
+WRITE-PROHIBITED file that still contains docs-e2e:
+  .github/workflows/sprint-05-acceptance.yml
+  needs: [preflight, test]
+  does not run `pnpm e2e:docs` as a step.
+
+No ci.yml edit is legal: the named docs-e2e job is not in the file, and inventing it contradicts ORI-CI-003 plus the task instruction to keep those job ids.
+
+actionlint .github/workflows/ci.yml exit 0 (empty diagnostics).
+gh api repos/actions/upload-artifact/commits/v4.6.2 --jq .sha
+  = ea165f8d65b6e75b540449e92b4886f43607fa02
+  (same SHA already pinned in ci.yml; not applied, because there is no legal step to pin).

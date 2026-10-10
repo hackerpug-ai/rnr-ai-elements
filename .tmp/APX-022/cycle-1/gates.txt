@@ -1,0 +1,4 @@
+pnpm typecheck: exit 0 (after pnpm gallery:manifest and pnpm --filter @rnr-ai-elements/docs run prebuild; generated files are gitignored and not committed)
+pnpm check:fallow: exit 0 (0 changed files vs HEAD)
+node ~/.bun/bin/pnpm lint: exit 0 (biome ci ., 241 files, warnings only)
+playwright four-test gate: not run. The spec file was not written. It would assert a docs-e2e job, a pnpm e2e:docs step, and a docs-playwright-report upload that .github/workflows/ci.yml does not contain.
