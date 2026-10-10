@@ -1,0 +1,28 @@
+scripts/docs-deploy/preflight-dist.ts:23:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━
+
+  ! This variable ROOT_PUBLIC_R is unused.
+  
+    21 │ const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+    22 │ const DIST_DEFAULT = join(REPO_ROOT, 'apps', 'docs', 'dist');
+  > 23 │ const ROOT_PUBLIC_R = join(REPO_ROOT, 'public', 'r');
+       │       ^^^^^^^^^^^^^
+    24 │ const HEADERS_SRC = join(REPO_ROOT, 'apps', 'docs', 'public', '_headers');
+    25 │ const REDIRECTS_SRC = join(REPO_ROOT, 'apps', 'docs', 'public', '_redirects');
+  
+  i Unused variables are often the result of typos, incomplete refactors, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend ROOT_PUBLIC_R with an underscore.
+  
+     21  21 │   const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+     22  22 │   const DIST_DEFAULT = join(REPO_ROOT, 'apps', 'docs', 'dist');
+     23     │ - const·ROOT_PUBLIC_R·=·join(REPO_ROOT,·'public',·'r');
+         23 │ + const·_ROOT_PUBLIC_R·=·join(REPO_ROOT,·'public',·'r');
+     24  24 │   const HEADERS_SRC = join(REPO_ROOT, 'apps', 'docs', 'public', '_headers');
+     25  25 │   const REDIRECTS_SRC = join(REPO_ROOT, 'apps', 'docs', 'public', '_redirects');
+  
+
+Skipped 1 suggested fixes.
+If you wish to apply the suggested (unsafe) fixes, use the command biome check --write --unsafe
+
+Checked 2 files in 7ms. Fixed 2 files.
+Found 1 warning.
