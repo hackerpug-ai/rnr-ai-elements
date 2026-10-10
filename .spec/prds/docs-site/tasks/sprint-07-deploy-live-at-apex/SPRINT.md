@@ -1,7 +1,7 @@
 ---
 sequence: 7
 timeline: Phase 3
-status: planned
+status: in_progress
 sprint_id: sprint-07-deploy-live-at-apex
 prd: ../..
 planned_from_roadmap_sha: b2465d409edcfac63b6fa04bd38cf360655930db2b96578774406ba3ce0bdeb1
@@ -11,7 +11,7 @@ planned_at: 2026-09-30
 
 # Sprint 07: deploy-live-at-apex
 
-**Status:** Planned
+**Status:** in_progress
 **Sequence:** 7
 **Timeline:** Phase 3
 
