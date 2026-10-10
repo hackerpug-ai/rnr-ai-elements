@@ -3153,16 +3153,47 @@ class OwnerBackendHandle implements OwnedBackendHandle {
     appendFileSync(this.cmdPath, `${JSON.stringify({ id: this.cmdSeq, op, model })}\n`);
   }
 
-  private async awaitStatus(
+  /** Status lines already on disk. A wait must ignore these: the last line is
+   * often still `listening` from the previous serve when a slow close has not
+   * finished, and treating that line as the new serve lets the retry click
+   * land before the port accepts again (uniwind web live, run
+   * uniwind-a34418c6-20261009T2307: click at .925, listen at .969, no record). */
+  private statusLineCount(): number {
+    try {
+      return readFileSync(this.statusPath, 'utf8')
+        .split('\n')
+        .filter((line) => line.trim().length > 0).length;
+    } catch {
+      return 0;
+    }
+  }
+
+  private async awaitStatusAfter(
     kind: 'listening' | 'stopped',
     model: string | null,
     timeoutMs: number,
+    priorCount: number,
   ): Promise<OwnerStatus | null> {
     const deadline = Date.now() + timeoutMs;
     while (Date.now() < deadline) {
-      const status = this.lastStatus();
-      if (status !== null && status.kind === kind && (model === null || status.model === model)) {
-        return status;
+      let lines: string[] = [];
+      try {
+        lines = readFileSync(this.statusPath, 'utf8')
+          .split('\n')
+          .filter((line) => line.trim().length > 0);
+      } catch {
+        lines = [];
+      }
+      for (let index = lines.length - 1; index >= priorCount; index -= 1) {
+        let status: OwnerStatus;
+        try {
+          status = JSON.parse(lines[index] ?? '') as OwnerStatus;
+        } catch {
+          continue;
+        }
+        if (status.kind === kind && (model === null || status.model === model)) {
+          return status;
+        }
       }
       await sleep(150);
     }
@@ -3171,8 +3202,9 @@ class OwnerBackendHandle implements OwnedBackendHandle {
 
   async stop(): Promise<void> {
     if (this.exitCodeValue !== null || this.exitSignalValue !== null) return;
+    const priorCount = this.statusLineCount();
     this.sendCommand('stop');
-    await this.awaitStatus('stopped', null, 10_000);
+    await this.awaitStatusAfter('stopped', null, 10_000, priorCount);
   }
 
   /**
@@ -3191,8 +3223,9 @@ class OwnerBackendHandle implements OwnedBackendHandle {
 
   async restart(options: BackendLaunchOptions = {}): Promise<OwnedBackendHandle> {
     const nextModel = options.model ?? this.modelValue;
+    const priorCount = this.statusLineCount();
     this.sendCommand('restart', nextModel);
-    const status = await this.awaitStatus('listening', nextModel, 15_000);
+    const status = await this.awaitStatusAfter('listening', nextModel, 15_000, priorCount);
     if (status === null) {
       throw new Error(`backend owner did not relisten on ${nextModel} within 15s`);
     }

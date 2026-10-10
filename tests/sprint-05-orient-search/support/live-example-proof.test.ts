@@ -27,7 +27,7 @@
  */
 import { spawnSync } from 'node:child_process';
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { createServer, type Server } from 'node:http';
+import { createServer, type Server, type ServerResponse } from 'node:http';
 import { tmpdir } from 'node:os';
 import { extname, join, resolve } from 'node:path';
 import { Readable } from 'node:stream';
@@ -1214,8 +1214,57 @@ async function runAndroidInputFlow(
     return null;
   };
 
-  // One conversational turn: prepare → baseline the records → send → gate on the
-  // turn's record outcome. Returns null on success, or the failure result.
+  // An immediate provider error leaves Send disabled. Waiting out the whole
+  // timeout and then failing is what uniwind Android light did on
+  // uniwind-4ca0fba1-20261010T0001 (seed request NOK29Wus3g6a06eq, outcome
+  // error, 600ms, 0 deltas). Tap Retry once. A second Retry is not attempted.
+  // `afterError` is the record count that already includes the error row.
+  // The Retry tap takes longer than a fast completion, so reading the length
+  // after the tap can hide the new completed row behind the baseline.
+  const retryErroredTurn = async (
+    label: string,
+    afterError: number,
+    timeoutMs: number,
+  ): Promise<MaestroResult | null> => {
+    logs.push(`WARN: ${label} generation errored — tap Retry once`);
+    if (!dismissThenTap(serial, 'Retry')) {
+      return fail(`could not tap Retry after the ${label} turn errored ${stateSummary(serial)}`);
+    }
+    const completed = await waitForRecordOutcome(
+      session.current,
+      afterError,
+      'completed',
+      timeoutMs,
+    );
+    if (!completed) {
+      return fail(
+        `${label} turn errored and one Retry did not produce a completed provider record`,
+      );
+    }
+    logs.push(`OK: ${label} recovered after one Retry`);
+    return null;
+  };
+
+  const awaitTurnRecord = async (
+    label: string,
+    baseline: number,
+    gate: { outcome: 'completed' | 'aborted'; timeoutMs: number },
+  ): Promise<MaestroResult | null> => {
+    const deadline = Date.now() + gate.timeoutMs;
+    while (Date.now() < deadline) {
+      const records = session.current.records();
+      const last = records[records.length - 1];
+      const arrived = records.length > baseline;
+      if (arrived && last?.outcome === gate.outcome) return null;
+      if (arrived && gate.outcome === 'completed' && last?.outcome === 'error') {
+        const remaining = Math.max(1_000, deadline - Date.now());
+        return retryErroredTurn(label, records.length, remaining);
+      }
+      await new Promise((resolveTick) => setTimeout(resolveTick, 1000));
+    }
+    return fail(`${label} turn never produced a ${gate.outcome} provider record`);
+  };
+
   const runTurn = async (
     label: string,
     text: string,
@@ -1227,11 +1276,9 @@ async function runAndroidInputFlow(
     if (!dismissThenTap(serial, 'Send message')) {
       return fail(`could not tap "Send message" (${label}) ${stateSummary(serial)}`);
     }
-    if (
-      gate &&
-      !(await waitForRecordOutcome(session.current, baseline, gate.outcome, gate.timeoutMs))
-    ) {
-      return fail(`${label} turn never produced a ${gate.outcome} provider record`);
+    if (gate) {
+      const waited = await awaitTurnRecord(label, baseline, gate);
+      if (waited) return waited;
     }
     return null;
   };
@@ -1307,9 +1354,33 @@ async function runAndroidInputFlow(
     // SLOW VERIFIED FALLBACK — only when the fast taps failed to abort anything.
     for (let tapAttempt = 0; tapAttempt < 3 && !stopExercised; tapAttempt += 1) {
       const records = session.current.records();
-      // A terminal record that is not aborted means the essay ended (completed or
-      // errored) before any stop landed — retry the whole turn with a fresh send.
-      if (records.length > baseline && records[records.length - 1].outcome !== 'aborted') {
+      // A completed essay finished before the stop landed — retry the whole turn.
+      // An immediate provider error leaves the composer in the error pose (Send
+      // stays disabled, Retry is the recovery). Retyping into that pose is what
+      // the 2026-10-09 uniwind/android/light leg did: the field kept a partial
+      // essay under the IME and Send never enabled. Tap Retry, then stop the
+      // new stream, instead of calling prepareTurn again.
+      const lastOutcome = records[records.length - 1]?.outcome;
+      if (records.length > baseline && lastOutcome === 'error') {
+        logs.push('WARN: long prompt generation errored — tap Retry, then stop the new stream');
+        if (!dismissThenTap(serial, 'Retry')) {
+          return fail(`could not tap Retry after the long prompt errored ${stateSummary(serial)}`);
+        }
+        const afterError = session.current.records().length;
+        spawnSync('sleep', ['2']);
+        const retryCenter = sendButtonCenter(serial);
+        if (!retryCenter) {
+          return fail(`could not locate the send/stop button after Retry ${stateSummary(serial)}`);
+        }
+        adbExec(serial, ['shell', 'input', 'tap', String(retryCenter.x), String(retryCenter.y)]);
+        logs.push(`OK: stop tap after error Retry at ${retryCenter.x},${retryCenter.y}`);
+        stopExercised = await waitForRecordOutcome(session.current, afterError, 'aborted', 20_000);
+        if (stopExercised) break;
+        return fail(
+          `Retry of the errored long prompt did not abort the stream ${stateSummary(serial)}`,
+        );
+      }
+      if (records.length > baseline && lastOutcome !== 'aborted' && lastOutcome !== undefined) {
         break;
       }
       // No terminal record at all: either the stream is still running (tap again)
@@ -1377,6 +1448,9 @@ async function runAndroidInputFlow(
   logs.push('OK: endpoint loss surfaced a sanitized error with an accessible Retry');
   await session.restart();
   assertBackendReady(session.current);
+  // The owner record file is NOT cleared on restart. Count from here, the same
+  // way the web leg does, so an older completed row cannot satisfy the gate.
+  let recordsBeforeRetry = session.current.records().length;
   const retryTapped = await boundWait(
     'android/endpoint-loss/retry-tap',
     BACKEND_PORT,
@@ -1386,12 +1460,35 @@ async function runAndroidInputFlow(
   if (!retryTapped) {
     return fail(`could not tap "Retry" ${stateSummary(serial)}`);
   }
-  const retryCompleted = await boundWait(
+  let retryCompleted = await boundWait(
     'android/endpoint-loss/retry-record',
     BACKEND_PORT,
     WAIT_BOUND_NATIVE_SEGMENT_MS,
-    async () => waitForRecordOutcome(session.current, 0, 'completed', 120_000),
+    async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
   );
+  if (!retryCompleted) {
+    const records = session.current.records();
+    const last = records[records.length - 1];
+    if (last !== undefined && last.outcome === 'error' && records.length > recordsBeforeRetry) {
+      logs.push('WARN: first Retry produced a provider error — tap Retry once more');
+      const again = await boundWait(
+        'android/endpoint-loss/retry-tap-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => dismissThenTap(serial, 'Retry'),
+      );
+      if (!again) {
+        return fail(`could not tap "Retry" again ${stateSummary(serial)}`);
+      }
+      recordsBeforeRetry = records.length;
+      retryCompleted = await boundWait(
+        'android/endpoint-loss/retry-record-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
+      );
+    }
+  }
   if (!retryCompleted) {
     return fail(
       `retry never produced a completed provider record — observed: ${JSON.stringify(
@@ -1453,9 +1550,42 @@ const MIME: Record<string, string> = {
 };
 
 /**
+ * Headers must arrive before this or the owned backend is treated as down.
+ * A pooled keep-alive socket to a dead process would otherwise sit until the
+ * driver's Retry wait (30s) expires. Cleared once headers arrive so a live
+ * stream is not aborted mid-body.
+ */
+const UPSTREAM_HEADERS_BOUND_MS = 4_000;
+
+async function fetchOwnedChatUpstream(url: string, body: Buffer): Promise<Response | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), UPSTREAM_HEADERS_BOUND_MS);
+  try {
+    return await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body,
+      signal: controller.signal,
+    });
+  } catch {
+    // Any fetch failure, not only a dead upstream, is answered as unavailable (fail closed).
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function writeUpstreamUnavailable(res: ServerResponse): void {
+  res.writeHead(502, { 'content-type': 'application/json' });
+  res.end(JSON.stringify({ error: 'upstream unavailable' }));
+}
+
+/**
  * Serves the static web export and forwards POST /api/chat to the real backend on the
  * same origin — the browser never crosses origins, so no CORS preflight is required.
- * The upstream SSE response is streamed back verbatim.
+ * The upstream SSE response is streamed back verbatim. A dead upstream is a fast
+ * 502 JSON error, the same fail-closed shape as the teeing proxy, never a hang
+ * and never a generic 404.
  */
 export function serveWithChatProxy(
   distDir: string,
@@ -1475,14 +1605,14 @@ export function serveWithChatProxy(
           }
           // Read the CURRENT handle per request: the retry leg restarts the owned
           // backend (same host:port), and the proxy must forward to the new child.
-          const upstream = await fetch(
+          const upstream = await fetchOwnedChatUpstream(
             `http://${session.current.host}:${session.current.port}/api/chat`,
-            {
-              method: 'POST',
-              headers: { 'content-type': 'application/json' },
-              body: Buffer.concat(chunks),
-            },
+            Buffer.concat(chunks),
           );
+          if (upstream === null) {
+            writeUpstreamUnavailable(res);
+            return;
+          }
           res.writeHead(upstream.status, {
             'content-type': upstream.headers.get('content-type') ?? 'text/event-stream',
           });
@@ -1784,6 +1914,10 @@ async function driveLiveWeb(
       forcePageClose,
     );
     await session.restart();
+    // A restarted handle may start empty (an owned child) or re-read every prior
+    // record (an owner file), so count on the handle the retry is observed through:
+    // after the restart, before the click. Nothing records between stop and restart.
+    const recordsBeforeRetry = session.current.records().length;
     await boundWait(
       'web/endpoint-loss/retry-click',
       BACKEND_PORT,
@@ -1793,7 +1927,12 @@ async function driveLiveWeb(
       },
       forcePageClose,
     );
-    result.retryCompleted = await waitForRecordOutcome(session.current, 0, 'completed', 120_000);
+    result.retryCompleted = await waitForRecordOutcome(
+      session.current,
+      recordsBeforeRetry,
+      'completed',
+      120_000,
+    );
     result.retrySingleUserTurn =
       (await page
         .getByText(RETRY_PROBE_PROMPT, { exact: true })
@@ -1859,6 +1998,9 @@ async function runIosEndpointLossRetry(
   }
   await session.restart();
   assertBackendReady(session.current);
+  // The owner record file is NOT cleared on restart. Count from here, the same
+  // way the web leg does, so an older completed row cannot satisfy the gate.
+  let recordsBeforeRetry = session.current.records().length;
   const retryTapped = await boundWait(
     'ios/endpoint-loss/retry-tap',
     BACKEND_PORT,
@@ -1868,12 +2010,34 @@ async function runIosEndpointLossRetry(
   if (!retryTapped) {
     return { ok: false, log: 'could not tap "Retry"' };
   }
-  const retryCompleted = await boundWait(
+  let retryCompleted = await boundWait(
     'ios/endpoint-loss/retry-record',
     BACKEND_PORT,
     WAIT_BOUND_NATIVE_SEGMENT_MS,
-    async () => waitForRecordOutcome(session.current, 0, 'completed', 120_000),
+    async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
   );
+  if (!retryCompleted) {
+    const records = session.current.records();
+    const last = records[records.length - 1];
+    if (last !== undefined && last.outcome === 'error' && records.length > recordsBeforeRetry) {
+      const again = await boundWait(
+        'ios/endpoint-loss/retry-tap-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => dismissThenTap(deviceId, 'Retry'),
+      );
+      if (!again) {
+        return { ok: false, log: 'could not tap "Retry" again after the provider error' };
+      }
+      recordsBeforeRetry = records.length;
+      retryCompleted = await boundWait(
+        'ios/endpoint-loss/retry-record-again',
+        BACKEND_PORT,
+        WAIT_BOUND_NATIVE_SEGMENT_MS,
+        async () => waitForRecordOutcome(session.current, recordsBeforeRetry, 'completed', 120_000),
+      );
+    }
+  }
   if (!retryCompleted) {
     return {
       ok: false,

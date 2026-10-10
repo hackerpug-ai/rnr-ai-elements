@@ -1,0 +1,30 @@
+diff --git a/tests/sprint-05-orient-search/quickstart-expo-go.maestro.yaml b/tests/sprint-05-orient-search/quickstart-expo-go.maestro.yaml
+index 611e2864..84247159 100644
+--- a/tests/sprint-05-orient-search/quickstart-expo-go.maestro.yaml
++++ b/tests/sprint-05-orient-search/quickstart-expo-go.maestro.yaml
+@@ -25,6 +25,8 @@ appId: host.exp.Exponent
+ ---
+ # First launch of a new project in Expo Go shows its developer-menu onboarding, then the
+ # dev menu itself; dismiss both when present. Optional so a warm session is unaffected.
++# Do not add more optional taps here. Maestro 2.5.1 spends about 17 minutes searching
++# for each optional label that is absent, and six of those ate the seed child's budget.
+ - tapOn:
+     text: "Continue"
+     optional: true
+@@ -54,6 +56,16 @@ appId: host.exp.Exponent
+ # does not, so "Message.*" matches both), type the fresh marker, submit via the send button.
+ - tapOn: "Message.*"
+ - inputText: ${MARKER}
++# Expo Router raises a dev-only LogBox ("Can't perform a React state update on a
++# component that hasn't mounted yet" in useLinking) that covers Send. Dismiss only
++# after the marker is typed, and only when the overlay is up. hideKeyboard runs first
++# so a present Dismiss is not left under the keyboard.
++- hideKeyboard
++- runFlow:
++    when:
++      visible: "Dismiss"
++    commands:
++      - tapOn: "Dismiss"
+ - tapOn: "Send message"
+ # PromptInput clears its own field only after a successful onSubmit.
+ - assertVisible: "Message.*"

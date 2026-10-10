@@ -57,9 +57,30 @@ appId: host.exp.Exponent
     optional: true
 - tapOn: "Send message"
 # The accepted turn lands as exactly one user message; PromptInput clears its own field.
+# A long reply can push that message above the keyboard-shrunk viewport before Maestro
+# ever samples it (uniwind iOS light, uniwind-4ca0fba1-20261010T0001: the model
+# explained the id and the exact marker was off screen). Give the bubble 8s to be
+# on screen. If it is still off screen, wait until Send returns, resign the composer
+# with a transcript tap (Maestro's hideKeyboard does not dismiss this keyboard), and
+# scroll UP to the older user turn. The assert stays the exact marker string.
 - extendedWaitUntil:
     visible: ${MARKER}
-    timeout: 30000
+    timeout: 8000
+    optional: true
+- runFlow:
+    when:
+      notVisible: ${MARKER}
+    commands:
+      - extendedWaitUntil:
+          visible: "Send message"
+          timeout: 90000
+      - tapOn:
+          point: "50%, 30%"
+      - scrollUntilVisible:
+          element:
+            text: ${MARKER}
+          direction: UP
+          timeout: 30000
 - assertVisible: ${MARKER}
 # AC-2: seed the real exchange. The prompt asks the model to repeat the marker and give
 # three short facts about rain.

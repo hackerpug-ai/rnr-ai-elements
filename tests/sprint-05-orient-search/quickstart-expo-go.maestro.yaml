@@ -50,6 +50,24 @@ appId: host.exp.Exponent
 # the newest turn), so the submitted marker lands within one swipe of the viewport.
 - tapOn: "Scroll to latest message"
 - assertVisible: "Seed turn 24: Ready for your message."
+# In Expo Go dev mode one console error can be logged while the app mounts. Its component
+# stack names only Expo Router's root (ContextNavigator, ExpoRoot); the trigger is not
+# isolated. Open that one toast and dismiss it. Its close button exposes no accessible
+# text. The banner's accessibility text is "!, " plus the message. On iOS the banner
+# sits below the composer, so a different message does not block the tap (observed
+# 2026-10-09: the different toast stayed up, the known-text dismiss was skipped, and
+# the leg still exited 0). Any other "!, " banner is not dismissed. If one is still
+# visible here, the leg fails. The driver records every dismissal in the leg evidence
+# and the run manifest (dev_error_toast_dismissed), so it is never silent.
+- runFlow:
+    when:
+      visible: ".*Can't perform a React state update on a component that hasn't mounted yet.*"
+    commands:
+      - tapOn: ".*Can't perform a React state update on a component that hasn't mounted yet.*"
+      - tapOn: "Dismiss"
+- extendedWaitUntil:
+    notVisible: "!, .*"
+    timeout: 5000
 # Focus the composer (accessibility label "Message"; iOS appends the placeholder, Android
 # does not, so "Message.*" matches both), type the fresh marker, submit via the send button.
 - tapOn: "Message.*"

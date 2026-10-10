@@ -1,0 +1,12 @@
+{
+  "platform": "android",
+  "device": "emulator-5554",
+  "flow": "tests/sprint-05-orient-search/quickstart-expo-go.maestro.yaml",
+  "flow_sha256": "85c1cdb6bca9a10789355467ce972f5fe4b9e890c17670ca8d19d975f61182a8",
+  "seed_screen_loaded": true,
+  "toast_on_screen_before_flow": true,
+  "marker": "FIX-GBC-GATE-2:android:1791550822211",
+  "maestro_exit": 0,
+  "marker_in_transcript_after": true,
+  "maestro_output_tail": "Running on Pixel_7_API_34\n > Flow quickstart-expo-go.maestro\nTap on (Optional) \"Continue\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Continue\nTap on (Optional) \"Close\"... WARNED\n\n\n Warning: Element not found: Text matching regex: Close\nAssert that \"Seed turn 24: Ready for your message.\" is visible... COMPLETED\nAssert that \"Seed turn 24: Ready for your message.\" is visible... COMPLETED\nAssert that \"Send message\" is visible... COMPLETED\nScrolling UP until \"${OLDER_SEED}\" is visible with speed 40, visibility percentage 100%, timeout 30000 ms, with centering disabled... COMPLETED\nAssert that \"${OLDER_SEED}\" is visible... COMPLETED\nAssert that \"Scroll to latest message\" is visible... COMPLETED\nTap on \"Scroll to latest message\"... COMPLETED\nAssert that \"Seed turn 24: Ready for your message.\" is visible... COMPLETED\nRun flow when \".*Can't perform a React state update on a component that hasn't mounted yet.*\" is visible...\n  Tap on \".*Can't perform a React state update on a component that hasn't mounted yet.*\"... COMPLETED\n  Tap on \"Dismiss\"... COMPLETED\nRun flow when \".*Can't perform a React state update on a component that hasn't mounted yet.*\" is visible... COMPLETED\nTap on \"Message.*\"... COMPLETED\nInput text ${MARKER}... COMPLETED\nTap on \"Send message\"... COMPLETED\nAssert that \"Message.*\" is visible... COMPLETED\nScrolling DOWN until \"${MARKER}\" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED\nAssert that \"${MARKER}\" is visible... COMPLETED\n"
+}

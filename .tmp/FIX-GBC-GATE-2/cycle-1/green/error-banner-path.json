@@ -1,0 +1,27 @@
+{
+  "response": {
+    "status": 502,
+    "body": "{\"error\":\"upstream unavailable\"}"
+  },
+  "why_this_renders_retry": "DefaultChatTransport throws when the response is not ok, and the thrown Error message is the raw body. useLiveChat returns that error as chat.error. LiveChatScreen already renders ErrorBanner only when chat.error is set. The banner is role alert and its button accessibilityLabel is Retry. The body has no sk- and no OPENAI_API_KEY, so retryErrorSanitized passes. No second error UI was added.",
+  "quotes": [
+    {
+      "file": "node_modules/ai/dist/index.js",
+      "symbol": "HttpChatTransport.sendMessages",
+      "text": "if (!response.ok) { throw new Error((await response.text()) ?? \"Failed to fetch the chat response.\"); }"
+    },
+    {
+      "file": "apps/example/lib/use-live-chat.ts",
+      "text": "error: chat.error,"
+    },
+    {
+      "file": "apps/example/components/live-chat-screen.tsx",
+      "text": "{chat.error ? (<ErrorBanner message={chat.error.message} onRetry={chat.retry} />) : null}"
+    },
+    {
+      "file": "apps/example/components/live-chat-screen.tsx",
+      "symbol": "ErrorBanner",
+      "text": "accessibilityRole=\"alert\" ... accessibilityLabel=\"Retry\""
+    }
+  ]
+}

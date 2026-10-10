@@ -1,0 +1,90 @@
+{
+  "run_id": "ORI-RN-003-2026-10-09T16-27-07-322Z",
+  "candidate_head_sha": "73bb98147d05b6d96ff802e79b044ef54a92f0ef",
+  "wall_ms": 1414260,
+  "completed": false,
+  "dev_error_toast_dismissed_legs": 0,
+  "verdict": "INVALID RUN: the laptop slept (lid closed, charger unplugged) from 18:34:53 to 18:44:24. The leg in flight, nativewind/android/dark, started 18:34:27 and was killed by the 300 s Maestro limit (exit 143) after it had typed the marker. The other 9 legs passed.",
+  "legs": [
+    {
+      "engine": "nativewind",
+      "platform": "ios",
+      "appearance": "light",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "nativewind",
+      "platform": "ios",
+      "appearance": "dark",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "nativewind",
+      "platform": "android",
+      "appearance": "light",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "nativewind",
+      "platform": "android",
+      "appearance": "dark",
+      "status": "failed",
+      "maestro_exit": 143,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "nativewind",
+      "platform": "web",
+      "appearance": "web",
+      "status": "passed",
+      "maestro_exit": null,
+      "dev_error_toast_dismissed": null
+    },
+    {
+      "engine": "uniwind",
+      "platform": "ios",
+      "appearance": "light",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "uniwind",
+      "platform": "ios",
+      "appearance": "dark",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "uniwind",
+      "platform": "android",
+      "appearance": "light",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "uniwind",
+      "platform": "android",
+      "appearance": "dark",
+      "status": "passed",
+      "maestro_exit": 0,
+      "dev_error_toast_dismissed": false
+    },
+    {
+      "engine": "uniwind",
+      "platform": "web",
+      "appearance": "web",
+      "status": "passed",
+      "maestro_exit": null,
+      "dev_error_toast_dismissed": null
+    }
+  ]
+}
