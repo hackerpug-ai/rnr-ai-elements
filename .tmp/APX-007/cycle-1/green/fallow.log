@@ -1,0 +1,72 @@
+
+> rnr-ai-elements@0.2.1 check:fallow /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-007
+> fallow audit --base HEAD
+
+loaded config: /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-007/.fallowrc.json
+   1.074355084s  WARN fallow: skipped 2 hidden directories that contain source files (apps/harness/.storybook-web, apps/harness-nativewind/.storybook-web). Hidden directories are not traversed and no config field adds one: analyze one with fallow --root <dir> if it holds first-party source, or add '<dir>/**' to ignorePatterns to silence this.
+   1.305244834s  WARN Skipped 4 package.json entry points outside project root or containing parent directory traversal: ../../scripts/docs-data/authored-snippets.ts, ../../scripts/docs-data/check-dist-links.ts, ../../scripts/docs-data/prebuild.ts, ../../scripts/docs-data/search-index.ts
+
+Audit scope: 4 changed files vs HEAD (cbeaf038..HEAD)
+
+── Dead Code ──────────────────────────────────────
+
+── Dependencies ─────────────────────────────────────
+
+● Unused dependencies (68)
+  @expo/ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-device (apps/example/package.json) (caveat: incomplete import graph)
+  expo-font (apps/example/package.json) (caveat: incomplete import graph)
+  expo-glass-effect (apps/example/package.json) (caveat: incomplete import graph)
+  expo-image (apps/example/package.json) (caveat: incomplete import graph)
+  expo-splash-screen (apps/example/package.json) (caveat: incomplete import graph)
+  expo-symbols (apps/example/package.json) (caveat: incomplete import graph)
+  expo-system-ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-web-browser (apps/example/package.json) (caveat: incomplete import graph)
+  react-native-web (apps/example/package.json) (caveat: incomplete import graph)
+  ... and 58 more (--format json for full list)
+  Listed in dependencies but never imported — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+● Unused devDependencies (6)
+  @storybook/icons (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/icons (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  Listed in devDependencies but never imported or referenced — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+✗ 68 unused dependencies · 6 dev/optional dependencies (0.52s)
+  74 issues · 21 suppressed · 0 stale suppressions
+
+── Complexity ─────────────────────────────────────
+
+■ Metrics: 315 LOC · dead files 0.0% · dead exports 0.0% · avg cyclomatic 2.0 · p90 cyclomatic 4 · maintainability 94.3 (good)
+  Cyclomatic units: functions 30, module scopes 0, templates 0
+
+  Render fan-in: <Text> 131 parents (183 incl. repeats) · <Text> 121 parents (166 incl. repeats) · <Icon> 86 parents (97 incl. repeats) · <Icon> 84 parents (95 incl. repeats) · <Button> 39 parents (42 incl. repeats)
+
+● High complexity functions (1)
+  CRAP scores are estimated from export references; run `fallow health --coverage <coverage-final.json>` for exact scores.
+  tests/sprint-07-deploy-live-at-apex/registry-completeness.remote.spec.ts
+    :118 evaluateSweepResponse
+          11   cyclomatic   11   cognitive   51 lines
+          37.1 ! CRAP
+  Functions exceeding cyclomatic, cognitive, or CRAP thresholds; ! marks the dimension that breached (https://docs.fallow.tools/explanations/health#complexity-metrics)
+
+
+CSS health
+  Styling health: 80 B (CSS quality, scored separately from the code health score)
+  Deductions: duplication -17.8 · token erosion -2.0
+  5 stylesheets · 19 rules · 0.0% !important · 2 empty · max nesting 0
+  value sprawl: 51 distinct colors · 7 font sizes · 0 z-index values
+  value sprawl (cont.): 5 line-heights (candidates; tokenize repeated values via custom properties)
+  custom properties: 31 defined, 17 unreferenced in CSS (candidates; may be set from JS)
+  font sizes mix 3 units (5 rem, 1 em, 1 px; candidate, standardize unless intentional)
+✗ 1 above threshold · 30 analyzed (0.01s)
+
+── Styling ────────────────────────────────────────
+  2 styling candidates (run `fallow health --css` for detail)
+note: skipped 183 files matching default duplicates ignores (use --explain-skipped for the list)
+✗ dead code: 74 issues · complexity: 1 finding · 4 changed files (8.50s)
+  audit gate excluded 74 inherited findings (run with --gate all to enforce)
+ ELIFECYCLE  Command failed with exit code 1.
