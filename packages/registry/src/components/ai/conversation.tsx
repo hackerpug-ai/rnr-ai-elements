@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
  * The registry item is published with the docs from the same apex deploy.
  * A follow-up deploy publishes the same item again.
  * The delivery arc measures that publish while it is still fresh.
+ * Local trunk and the apex Worker message are this commit.
  *
  * The single highest-risk component in the port. The web original is `use-stick-to-bottom`
  * over a non-virtualized div: ResizeObserver plus scrollHeight arithmetic, and it renders
