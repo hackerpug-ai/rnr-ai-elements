@@ -94,7 +94,7 @@ jobs:
           pnpm typecheck 2>&1 | tee -a typecheck.log
       - name: Upload typecheck evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: typecheck-log
           path: typecheck.log
@@ -138,7 +138,7 @@ jobs:
           pnpm check:contract 2>&1 | tee -a lint.log
       - name: Upload lint evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: lint-log
           path: lint.log
@@ -195,7 +195,7 @@ jobs:
           echo 'public/r fresh: no tracked drift, no untracked generated output' | tee -a registry.log
       - name: Upload registry evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: registry-log
           path: registry.log
@@ -247,7 +247,7 @@ jobs:
             exit 1
           fi
       - name: Upload docs dist
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: docs-dist
           path: apps/docs/dist
@@ -255,7 +255,7 @@ jobs:
           if-no-files-found: error
       - name: Upload docs-build evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: docs-build-log
           path: docs-build.log
