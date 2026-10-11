@@ -19,6 +19,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 /**
  * Conversation — the transcript scroller.
  *
+ * The registry item is published with the docs from the same apex deploy.
+ *
  * The single highest-risk component in the port. The web original is `use-stick-to-bottom`
  * over a non-virtualized div: ResizeObserver plus scrollHeight arithmetic, and it renders
  * every message because the DOM tolerates that. Neither survives.
