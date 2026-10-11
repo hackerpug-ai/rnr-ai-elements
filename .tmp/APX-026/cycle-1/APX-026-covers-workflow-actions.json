@@ -1,0 +1,50 @@
+{
+  "workflows": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/sprint-05-acceptance.yml"
+  ],
+  "probes": [
+    {
+      "repo": "actions/checkout",
+      "status": 200,
+      "statusLine": "HTTP/2.0 200 OK",
+      "fullName": "actions/checkout",
+      "requestId": "A983:336AEA:200B6C9:30B3B33:6ACB5AAB"
+    },
+    {
+      "repo": "actions/download-artifact",
+      "status": 200,
+      "statusLine": "HTTP/2.0 200 OK",
+      "fullName": "actions/download-artifact",
+      "requestId": "A984:199B26:20DA9E2:3215047:6ACB5AAC"
+    },
+    {
+      "repo": "actions/setup-node",
+      "status": 200,
+      "statusLine": "HTTP/2.0 200 OK",
+      "fullName": "actions/setup-node",
+      "requestId": "A985:18B036:1FC6AB3:305FD5B:6ACB5AAD"
+    },
+    {
+      "repo": "actions/upload-artifact",
+      "status": 200,
+      "statusLine": "HTTP/2.0 200 OK",
+      "fullName": "actions/upload-artifact",
+      "requestId": "A986:1D3D5B:2002A10:30759EE:6ACB5AAE"
+    },
+    {
+      "repo": "cloudflare/wrangler-action",
+      "status": 200,
+      "statusLine": "HTTP/2.0 200 OK",
+      "fullName": "cloudflare/wrangler-action",
+      "requestId": "A987:1D67:202A031:30E8A18:6ACB5AAF"
+    },
+    {
+      "repo": "pnpm/action-setup",
+      "status": 200,
+      "statusLine": "HTTP/2.0 200 OK",
+      "fullName": "pnpm/action-setup",
+      "requestId": "A989:3F61DA:203ABE9:30DBB20:6ACB5AB0"
+    }
+  ]
+}

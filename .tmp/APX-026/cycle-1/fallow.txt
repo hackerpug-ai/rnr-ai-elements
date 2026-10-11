@@ -1,0 +1,31 @@
+
+> rnr-ai-elements@0.2.1 check:fallow /Users/justinrich/Projects/rnr-ai-elements/.kb-run-sprint/worktrees/sprint-07-deploy-live-at-apex/APX-026
+> fallow audit --base HEAD
+
+■ Metrics: dead code 74 · complexity 0 · duplication 0
+── Dependencies ─────────────────────────────────────
+
+● Unused dependencies (68)
+  @expo/ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-device (apps/example/package.json) (caveat: incomplete import graph)
+  expo-font (apps/example/package.json) (caveat: incomplete import graph)
+  expo-glass-effect (apps/example/package.json) (caveat: incomplete import graph)
+  expo-image (apps/example/package.json) (caveat: incomplete import graph)
+  expo-splash-screen (apps/example/package.json) (caveat: incomplete import graph)
+  expo-symbols (apps/example/package.json) (caveat: incomplete import graph)
+  expo-system-ui (apps/example/package.json) (caveat: incomplete import graph)
+  expo-web-browser (apps/example/package.json) (caveat: incomplete import graph)
+  react-native-web (apps/example/package.json) (caveat: incomplete import graph)
+  ... and 58 more (--format json for full list)
+  Listed in dependencies but never imported — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+● Unused devDependencies (6)
+  @storybook/icons (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness/package.json) (caveat: incomplete import graph)
+  @storybook/icons (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @storybook/react-native-web-vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  @tailwindcss/vite (apps/harness-nativewind/package.json) (caveat: incomplete import graph)
+  Listed in devDependencies but never imported or referenced — https://docs.fallow.tools/explanations/dead-code#unused-dependencies
+
+  2 styling candidates (run `fallow health --css` for detail)
