@@ -55,6 +55,8 @@ jobs:
         with:
           persist-credentials: false
           fetch-tags: true
+      - name: Fetch version tags
+        run: git fetch --force origin '+refs/tags/*:refs/tags/*'
       - name: Verify candidate identity
         if: github.event_name == 'workflow_call'
         env:
@@ -211,6 +213,8 @@ jobs:
         with:
           persist-credentials: false
           fetch-tags: true
+      - name: Fetch version tags
+        run: git fetch --force origin '+refs/tags/*:refs/tags/*'
       - name: Verify candidate identity
         if: github.event_name == 'workflow_call'
         env:
