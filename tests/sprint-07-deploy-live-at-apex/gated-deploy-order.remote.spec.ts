@@ -356,6 +356,7 @@ function assertDeployLog(log: string): void {
 
 async function readApex(request: APIRequestContext): Promise<ApexRead> {
   const response = await request.get('https://rnraielements.com/');
+  expect(response.url(), 'live apex response URL').toContain('rnraielements.com/');
   const status = response.status();
   const contentType = response.headers()['content-type'] ?? '';
   if (status !== 200) throw new Error(`apex status equals ${status}, expected 200`);

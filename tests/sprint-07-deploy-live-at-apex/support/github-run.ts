@@ -317,7 +317,10 @@ export function downloadArtifact(runId: number, name: string): string {
   assertArtifactName(name);
   const slug = readRepoSlug();
   const destination = artifactDestination(runId, name);
-  const existed = existsSync(destination);
+  // A previous extract of this same run leaves files in the cache directory.
+  // gh run download then fails with "file exists" and the next proof cannot run.
+  if (existsSync(destination)) rmSync(destination, { recursive: true, force: true });
+  const existed = false;
   const args = [
     'run',
     'download',
