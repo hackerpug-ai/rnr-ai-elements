@@ -146,7 +146,7 @@ jobs:
             --phases preflight,prepare,test
       - name: Upload acceptance test evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: acceptance-test-evidence
           path: tests/sprint-05-orient-search/evidence/ORI-CI-004
@@ -223,7 +223,7 @@ jobs:
             --in-run-validation
       - name: Upload acceptance docs-e2e evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: acceptance-docs-e2e-evidence
           path: |
