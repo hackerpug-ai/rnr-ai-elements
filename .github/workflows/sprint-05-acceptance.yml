@@ -51,7 +51,7 @@ jobs:
     name: preflight (credential-free candidate checks at the candidate revision)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       # Dispatch identity: the declared candidate must be the dispatched event
@@ -97,7 +97,7 @@ jobs:
     runs-on: [self-hosted, macOS, ARM64, rnr-s05-native]
     environment: sprint-05-real-proof
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.candidate_sha }}
           persist-credentials: false
@@ -159,7 +159,7 @@ jobs:
     runs-on: [self-hosted, macOS, ARM64, rnr-s05-native]
     environment: sprint-05-real-proof
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.candidate_sha }}
           persist-credentials: false
